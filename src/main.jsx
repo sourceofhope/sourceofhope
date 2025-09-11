@@ -10,6 +10,7 @@ const router = createBrowserRouter([
     element: <AppLayout />,
     children: [
       { path: "/", element: <Home /> },
+      { path: "*", element: <div className="p-6"><p>404: Page Not Found</p></div> }
     ],
   },
 ])
