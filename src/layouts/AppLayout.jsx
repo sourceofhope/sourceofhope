@@ -4,12 +4,12 @@ import Footer from "../components/Footer"
 
 export default function AppLayout() {
   return (
-    <>
+    <div className="bg-primary-background">
       <Header />
-      <main className="bg-primary-background min-h-[50vh] px-10">
+      <main className="min-h-[50vh] px-10">
         <Outlet />
       </main>
       <Footer />
-    </>
+    </div>
   )
 }
