@@ -7,6 +7,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-html { 
-  height: 100%; 
+@theme {
+  --color-primary-background: white;
+  --color-primary-identity: #24388a;
+
+  --color-accent-background: #b5d9d8;
+  --color-accent-identity: #1b75bc;
+
+  --font-inter: "Inter", sans-serif;
 }
