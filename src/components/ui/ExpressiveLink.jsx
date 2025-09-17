@@ -1,3 +1,1 @@
-export default function ExpressiveLink() {
-
-}
+export default function ExpressiveLink() {}

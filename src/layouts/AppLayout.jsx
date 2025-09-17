@@ -1,6 +1,6 @@
-import { NavLink, Link, Outlet } from "react-router-dom"
-import Header from "../components/layout/Header"
-import Footer from "../components/layout/Footer"
+import { NavLink, Link, Outlet } from "react-router-dom";
+import Header from "../components/layout/Header";
+import Footer from "../components/layout/Footer";
 
 export default function AppLayout() {
   return (
@@ -11,5 +11,5 @@ export default function AppLayout() {
       </main>
       <Footer />
     </div>
-  )
+  );
 }

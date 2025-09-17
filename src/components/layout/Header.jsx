@@ -17,8 +17,6 @@ export default function Header() {
       className={`sticky top-0 w-full min-h-[10vh] px-5 transition-colors duration-300 ${
         scrolled ? "bg-transparent" : "bg-primary-identity"
       }`}
-    >
-      
-    </header>
+    ></header>
   );
 }
