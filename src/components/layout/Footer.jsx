@@ -27,19 +27,19 @@ export default function Footer() {
           <FooterColumn title="QUICK LINKS">
             <ul className="grid gap-1">
               <li>
-                <ExpressiveLink href="">GET INVOLVED</ExpressiveLink>
+                <ExpressiveLink to="">GET INVOLVED</ExpressiveLink>
                </li>
               <li>
-                <ExpressiveLink href="">DONATE</ExpressiveLink>
+                <ExpressiveLink to="">DONATE</ExpressiveLink>
               </li>
               <li>
-                <ExpressiveLink href="">VOLUNTEER</ExpressiveLink>
+                <ExpressiveLink to="">VOLUNTEER</ExpressiveLink>
               </li>
               <li>
-                <ExpressiveLink href="">CAREERS</ExpressiveLink>
+                <ExpressiveLink to="">CAREERS</ExpressiveLink>
                 </li>
               <li>
-                <ExpressiveLink href="">SITE MAP</ExpressiveLink>
+                <ExpressiveLink to="">SITE MAP</ExpressiveLink>
               </li>
             </ul>
           </FooterColumn>

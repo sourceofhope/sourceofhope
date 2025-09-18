@@ -36,11 +36,11 @@ export default function Header() {
 function Navigator({ clicked, setClicked }) {
   return (
     <nav>
-      <button onClick={() => setClicked(!clicked)} className="block :md:hidden">
+      <button onClick={() => setClicked(!clicked)} className="block md:hidden">
         <Bars2Icon className="w-[1em] h-[1em]" aria-hidden="true" />
       </button>
       <section className={`${clicked ? "block" : "hidden md:flex"}`}>
-
+        
       </section>
       <section className="hidden :md:block">
 
