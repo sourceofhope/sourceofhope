@@ -1,50 +1,63 @@
 import { useState, useEffect } from "react";
-import { Bars2Icon } from "@heroicons/react/20/solid";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/20/solid";
+import ExpressiveLink from "../ui/ExpressiveLink";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 0);
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 0);
     window.addEventListener("scroll", handleScroll);
-
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const [clicked, setClicked] = useState(false);
-
   return (
     <header
-      className={`sticky top-0 z-9999 w-full transition-colors duration-300 ${
-        clicked ? "h-[40vh]" : "h-[10vh]"
-      }   ${
+      className={`fixed top-0 z-50 w-full transition-all duration-300 ${
+        open ? "h-[40vh] md:h-[10vh]" : "h-[10vh]"
+      } ${
         scrolled
           ? "bg-primary-identity text-primary-background"
           : "bg-transparent text-primary-identity"
       }`}
     >
-      <div className="flex w-full h-[10vh] justify-between items-center px-5">
+      <div className="flex w-full h-[10vh] items-center justify-between px-5">
         <h1 className="text-lg">The Source Of Hope</h1>
-        <Navigator clicked={clicked} setClicked={setClicked} />        
+        <nav className="hidden md:flex gap-6">
+          <HeaderNavigator />
+        </nav>
+        <HeaderMenu open={open} setOpen={setOpen} />
       </div>
+      {open ? (
+        <nav className="flex flex-col justify-end items-center gap-5 p-5 h-[30vh] md:hidden">
+          <HeaderNavigator />
+        </nav>
+      ) : null}
     </header>
   );
 }
 
-function Navigator({ clicked, setClicked }) {
+function HeaderMenu({ open, setOpen }) {
   return (
-    <nav>
-      <button onClick={() => setClicked(!clicked)} className="block md:hidden">
-        <Bars2Icon className="w-[1em] h-[1em]" aria-hidden="true" />
-      </button>
-      <section className={`${clicked ? "block" : "hidden md:flex"}`}>
-        
-      </section>
-      <section className="hidden :md:block">
+    <button onClick={() => setOpen(!open)} className="block md:hidden">
+      {open ? (
+        <XMarkIcon className="w-[1em] h-[1em]" aria-hidden="true" />
+      ) : (
+        <Bars3Icon className="w-[1em] h-[1em]" aria-hidden="true" />
+      )}
+    </button>
+  );
+}
 
-      </section>
-    </nav>
+function HeaderNavigator() {
+  return (
+    <>
+      <ExpressiveLink>About</ExpressiveLink>
+      <ExpressiveLink>Serve</ExpressiveLink>
+      <ExpressiveLink>Connect</ExpressiveLink>
+      <ExpressiveLink>Media</ExpressiveLink>
+      <ExpressiveLink>Resources</ExpressiveLink>
+    </>
   );
 }

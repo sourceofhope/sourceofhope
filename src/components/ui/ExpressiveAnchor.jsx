@@ -1,3 +1,5 @@
+import { ArrowUpRightIcon } from "@heroicons/react/20/solid";
+
 export default function ExpressiveAnchor({ href, children}) {
   return (
     <a
@@ -7,8 +9,8 @@ export default function ExpressiveAnchor({ href, children}) {
       className="group inline-flex w-full justify-between items-center gap-1 focus:outline-none"
     >
       <span>{children}</span>
-      <ArrowRightIcon
-        className="w-[1em] h-[1em] transition-transform duration-300 group-hover:translate-x-1"
+      <ArrowUpRightIcon
+        className="w-[1em] h-[1em] transition-transform duration-300 group-hover:translate-x-1 group-hover:translate-y-1"
         aria-hidden="true"
       />
     </a>
