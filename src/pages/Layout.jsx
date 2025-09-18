@@ -6,7 +6,7 @@ export default function AppLayout() {
   return (
     <div className="bg-primary-background">
       <Header />
-      <main className="min-h-[50vh] px-5">
+      <main className="w-screen min-h-screen">
         <Outlet />
       </main>
       <Footer />
