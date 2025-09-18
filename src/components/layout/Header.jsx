@@ -53,11 +53,11 @@ function HeaderMenu({ open, setOpen }) {
 function HeaderNavigator() {
   return (
     <>
-      <ExpressiveLink>About</ExpressiveLink>
-      <ExpressiveLink>Serve</ExpressiveLink>
-      <ExpressiveLink>Connect</ExpressiveLink>
-      <ExpressiveLink>Media</ExpressiveLink>
-      <ExpressiveLink>Resources</ExpressiveLink>
+      <ExpressiveLink to="">About</ExpressiveLink>
+      <ExpressiveLink to="">Serve</ExpressiveLink>
+      <ExpressiveLink to="">Connect</ExpressiveLink>
+      <ExpressiveLink to="">Media</ExpressiveLink>
+      <ExpressiveLink to="">Resources</ExpressiveLink>
     </>
   );
 }
