@@ -1,4 +1,4 @@
-import ExpressiveLink from "../ui/common/ExpressiveLink";
+import ExpressiveLink from "../ui/ExpressiveLink";
 
 export default function Footer() {
   return (

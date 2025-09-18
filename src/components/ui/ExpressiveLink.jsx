@@ -30,7 +30,7 @@ export default function ExpressiveLink({ href, children }) {
   return (
     <NavLink
       to={href}
-      className="group inline-flex items-center gap-1  focus:outline-none"
+      className="group inline-flex w-full justify-between items-center gap-1  focus:outline-none"
     >
       <span>{children}</span>
       <Arrow />
