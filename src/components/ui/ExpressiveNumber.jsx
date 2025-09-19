@@ -12,6 +12,7 @@ export default function ExpressiveNumber({
   start = 0,
   end,
   duration = 2000,
+  threshold = 0.1,
   generator = LINEAR,
 }) {
   const reference = useRef(null);
@@ -26,7 +27,7 @@ export default function ExpressiveNumber({
           observer.disconnect();
         }
       },
-      { threshold: 0.1 }
+      { threshold: threshold }
     );
 
     if (reference.current) observer.observe(reference.current);
