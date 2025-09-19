@@ -1,3 +1,5 @@
+import { NavLink } from "react-router-dom";
+
 export default function Missing() {
   return (
     <main className="w-screen min-h-screen flex justify-center items-center px-5">
@@ -12,12 +14,12 @@ export default function Missing() {
         </div>
         <div className="bg-primary-background p-5 grid gap-5 text-center">
           <p>Sorry, we couldn’t find the page you were looking for.</p>
-          <a
-            href="/"
+          <NavLink
+            to="/"
             className="bg-accent-identity p-5 text-primary-background rounded-2xl justify-self-center w-fit inline-flex"
           >
             Go Home
-          </a>
+          </NavLink>
         </div>
       </section>
     </main>

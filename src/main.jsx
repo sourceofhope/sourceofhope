@@ -10,10 +10,11 @@ const router = createBrowserRouter([
   {
     element: <AppLayout />,
     children: [
-      { index: true, element: <Home /> },
+      { path: "/", element: <Home /> },
+      { path: "/sourceofhope", element: <Home /> },
       { path: "*", element: <Missing /> },
     ],
-  }
+  },
   { basename: import.meta.env.BASE_URL },
 ]);
 
