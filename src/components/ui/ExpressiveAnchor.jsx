@@ -1,6 +1,6 @@
 import { ArrowUpRightIcon } from "@heroicons/react/20/solid";
 
-export default function ExpressiveAnchor({ href, children}) {
+export default function ExpressiveAnchor({ href, children }) {
   return (
     <a
       href={href}

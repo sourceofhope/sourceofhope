@@ -1,7 +1,7 @@
 export default function Missing() {
   return (
     <main className="w-screen min-h-screen flex justify-center items-center px-5">
-      <section className="md:w-[35%] rounded-2xl shadow-2xl overflow-hidden">
+      <section className="rounded-2xl shadow-2xl overflow-hidden">
         <div className="bg-accent-identity p-5 text-center">
           <h2 className="text-lg hidden md:block text-white font-semibold">
             404: Page Not Found

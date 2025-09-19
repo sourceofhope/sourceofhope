@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/20/solid";
 import ExpressiveLink from "../ui/ExpressiveLink";
+import { NavLink } from "react-router-dom";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -23,7 +24,9 @@ export default function Header() {
       }`}
     >
       <div className="flex w-full h-[10vh] items-center justify-between px-5">
-        <h1 className="text-lg">The Source Of Hope</h1>
+        <NavLink to="/" className="text-lg">
+          The Source Of Hope
+        </NavLink>
         <nav className="hidden md:flex gap-6">
           <HeaderNavigator />
         </nav>
