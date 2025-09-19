@@ -1,25 +1,56 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 
-export default function ExpressiveNumber({ start = 0, end, duration = 5000 }) {
+const LINEAR = (interval) => interval;
+const EASE_IN = (interval) => interval * interval;
+const EASE_OUT = (interval) => 1 - Math.pow(1 - interval, 2);
+const EASE_IN_OUT = (interval) =>
+  interval < 0.5
+    ? 2 * interval * interval
+    : 1 - Math.pow(-2 * interval + 2, 2) / 2;
+
+export default function ExpressiveNumber({
+  start = 0,
+  end,
+  duration = 2000,
+  generator = LINEAR,
+}) {
+  const reference = useRef(null);
+  const [inView, setInView] = useState(false);
   const [value, setValue] = useState(start);
 
   useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (reference.current) observer.observe(reference.current);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!inView) return;
+
     let startTime = null;
 
-    function animate(currentTime) {
+    const animate = (currentTime) => {
       if (!startTime) startTime = currentTime;
-      const progress = Math.pow(Math.E , Math.min((currentTime - startTime) / duration, 1));
-      const currentValue = Math.round(start + (end - start) * progress);
+      const rawProgress = Math.min((currentTime - startTime) / duration, 1);
+      const generatedProgress = generator(rawProgress);
 
+      const currentValue = Math.round(start + (end - start) * generatedProgress);
       setValue(currentValue);
 
-      if (progress < 1) {
-        requestAnimationFrame(animate);
-      }
-    }
+      if (rawProgress < 1) requestAnimationFrame(animate);
+    };
 
     requestAnimationFrame(animate);
-  }, [start, end, duration]);
+  }, [inView, start, end, duration, generator]);
 
-  return <p>{value}</p>;
+  return <p ref={reference}>{value}</p>;
 }
