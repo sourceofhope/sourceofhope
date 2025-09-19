@@ -53,25 +53,25 @@ export default function Home() {
           />
           <HomeResourceCard
             title="EDUCATION FOR HOPE"
-            caption=""
+            caption="The Education For Hope program offers tutoring services, supports cosmetology students, and provides opportunities through the Federal Work-Study program in partnership with The University of Texas at Dallas. We assist students of all ages by offering scholarships to low-income cosmetology students, facilitating advanced beauty education, and hiring for operations roles through Work-Study."
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
             to=""
           />
           <HomeResourceCard
             title="INTERNATIONAL PARTNER SERVING"
-            caption=""
+            caption="At The Source of Hope, our mission extends beyond borders because we believe hope and compassion should know no limits. Through our International Partner Serving initiative, we collaborate with organizations, volunteers, and communities worldwide to provide essential resources, training, and empowerment for those in need. From offering vocational scholarships and educational tools to students in developing regions, to restoring dignity and confidence through beauty and wellness services, to supporting communities with food distribution, hygiene kits, and mentorship programs, our efforts are rooted in a shared commitment to uplift underserved populations, promote self-sufficiency, and create lasting impact. By building international relationships founded on trust and mutual respect, we strive to amplify hope and healing on a global scale—one life and one community at a time."
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
             to=""
           />
           <HomeResourceCard
             title="WELLNESS OF HOPE CLINIC"
-            caption=""
+            caption="The Wellness of Hope Clinic provides holistic treatments like fire cupping and lymphatic drainage to low-income individuals, including senior citizens, teachers, first responders, and others in need. In partnership with Stone International Wellness Center, the clinic offers both therapeutic and cosmetic services to improve well-being and boost confidence. These services make a life-changing impact for those who may not otherwise afford such care. The clinic also provides reduced cosmetic services and classes to the general public."
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
             to=""
           />
           <HomeResourceCard
             title="HOPE FOR THE GREAT OUTDOORS"
-            caption=""
+            caption="Hope for the Great Outdoors is a program dedicated to bringing outdoor experiences and education to our community. Many individuals, especially those from urban backgrounds, may never have had the opportunity to explore nature. Our initiative aims to bridge that gap by offering hands-on learning and immersive outdoor experiences in a safe, inclusive, and supportive environment."
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
             to=""
           />
