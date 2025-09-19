@@ -12,18 +12,23 @@ export default function Home() {
           loop
           className="absolute left-0 top-0 z-0 h-full w-full object-cover"
           style={{
-            WebkitMaskImage: 'linear-gradient(to bottom, white 70%, transparent 100%)',
-            maskImage: 'linear-gradient(to bottom, white 70%, transparent 100%)',
+            WebkitMaskImage:
+              "linear-gradient(to bottom, white 70%, transparent 100%)",
+            maskImage:
+              "linear-gradient(to bottom, white 70%, transparent 100%)",
           }}
           preload="auto"
           disablePictureInPicture
         >
-          <source src="https://static.vecteezy.com/system/resources/previews/041/753/968/mp4/time-lapse-sayans-foggy-mountains-of-russia-free-video.mp4" type="video/mp4" />
+          <source
+            src="https://static.vecteezy.com/system/resources/previews/041/753/968/mp4/time-lapse-sayans-foggy-mountains-of-russia-free-video.mp4"
+            type="video/mp4"
+          />
         </video>
-        <div className="grid gap-3 absolute w-full md:w-[45%] md:m-35 md:p-0 p-5 justify-self-center opacity-90">
-          <h2 className="text-accent-identity text-md md:text-lg ">
-            Empower and provide hope to individuals in need through health and
-            wellness.
+        <div className="grid gap-3 absolute w-full md:w-[50%] md:m-35 md:p-0 p-5 justify-self-center opacity-90">
+          <h2 className="text-accent-identity text-sm md:text-lg ">
+            EMPOWERING AND PROVIDING HOPE TO INDIVIDUALS IN NEED THROUGH HEALTH
+            AND WELLNESS.
           </h2>
           <p className="hidden md:block text-accent-background text-justify text-sm">
             We are a non-profit organization dedicated to providing holistic
@@ -38,48 +43,62 @@ export default function Home() {
           </button>
         </div>
       </section>
-      <section className="px-5 mt-10 lg:px-35 w-full h-full grid grid-flow-row md:grid-cols-3 md:grid-rows-2 gap-5 justify-center items-center">
-        <HomeResourceCard
-          title="Serving Hope"
-          caption="Serving Hope is a volunteer-driven initiative dedicated to serving organic, home-cooked meals to those in need—homeless individuals, veterans, nursing home residents, and at-risk families throughout the Dallas-Fort Worth community. Each event provides fresh, holistic meals that nourish both the body and spirit."
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
-          to=""
-        />
-        <HomeResourceCard
-          title="Education for Hope"
-          caption=""
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
-          to=""
-        />
-        <HomeResourceCard
-          title="International Partner Serving"
-          caption=""
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
-          to=""
-        />
-        <HomeResourceCard
-          title="Wellness of Hope Clinic"
-          caption=""
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
-          to=""
-        />
-        <HomeResourceCard
-          title="Hope for the Great Outdoors"
-          caption=""
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
-          to=""
-        />
-        <HomeResourceCard
-          title="Sharing Hope"
-          caption="Sharing Hope began when generous food donations exceeded our immediate needs. Now, The Source of Hope collaborates with 50+ nonprofits to share surplus food across the region. This helps reduce food waste and support families struggling with food insecurity."
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
-          to=""
-        />
-      </section>
-      <section className="mt-10 px-5 lg:px-35 w-full h-full flex justify-items-center items-center">
-          <h2>Celebrating Our Impact</h2>
-      </section>
+      <HomeSection title="" caption="MORE RESOURCES" to="">
+        <div className="w-full h-full grid grid-flow-row md:grid-cols-3 md:grid-rows-2 gap-5 justify-center items-center">
+          <HomeResourceCard
+            title="SERVING HOPE"
+            caption="Serving Hope is a volunteer-driven initiative dedicated to serving organic, home-cooked meals to those in need—homeless individuals, veterans, nursing home residents, and at-risk families throughout the Dallas-Fort Worth community. Each event provides fresh, holistic meals that nourish both the body and spirit."
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
+            to=""
+          />
+          <HomeResourceCard
+            title="EDUCATION FOR HOPE"
+            caption=""
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
+            to=""
+          />
+          <HomeResourceCard
+            title="INTERNATIONAL PARTNER SERVING"
+            caption=""
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
+            to=""
+          />
+          <HomeResourceCard
+            title="WELLNESS OF HOPE CLINIC"
+            caption=""
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
+            to=""
+          />
+          <HomeResourceCard
+            title="HOPE FOR THE GREAT OUTDOORS"
+            caption=""
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
+            to=""
+          />
+          <HomeResourceCard
+            title="SHARING HOPE"
+            caption="Sharing Hope began when generous food donations exceeded our immediate needs. Now, The Source of Hope collaborates with 50+ nonprofits to share surplus food across the region. This helps reduce food waste and support families struggling with food insecurity."
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
+            to=""
+          />
+        </div>
+      </HomeSection>
+      <HomeSection title="IMPACT" caption="MORE IMPACT" to=""></HomeSection>
     </>
+  );
+}
+
+function HomeSection({ children, title, caption, to }) {
+  return (
+    <section className="mt-10 px-5 lg:px-35 w-full h-full justify-items-center items-center grid gap-5">
+      <div>
+        <h2 className="text-lg font-bold text-center w-full">{title}</h2>
+      </div>
+      {children}
+      <div className="justify-self-end w-fit">
+        <ExpressiveLink to={to}>{caption}</ExpressiveLink>
+      </div>
+    </section>
   );
 }
 

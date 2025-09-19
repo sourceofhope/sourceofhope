@@ -7,7 +7,7 @@ export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [showItems, setShowItems] = useState(false);
-  const menuRef = useRef(null);
+  const menuReference = useRef(null);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 0);
@@ -16,15 +16,19 @@ export default function Header() {
   }, []);
 
   useEffect(() => {
-    if (open && menuRef.current) {
+    if (open && menuReference.current) {
+      if(!window.scrollY > 0) {
+        setShowItems(true)
+        return;
+      }
       const handleTransitionEnd = () => {
         setShowItems(true);
-        menuRef.current.removeEventListener(
+        menuReference.current.removeEventListener(
           "transitionend",
           handleTransitionEnd
         );
       };
-      menuRef.current.addEventListener("transitionend", handleTransitionEnd);
+      menuReference.current.addEventListener("transitionend", handleTransitionEnd);
     } else {
       setShowItems(false);
     }
@@ -39,11 +43,11 @@ export default function Header() {
           ? "bg-primary-identity text-primary-background"
           : "bg-transparent text-primary-identity"
       }`}
-      ref={menuRef}
+      ref={menuReference}
     >
       <div className="flex w-full h-[10vh] items-center justify-between px-5">
         <NavLink to="/" className="text-lg">
-          The Source Of Hope
+          THE SOURCE OF HOPE
         </NavLink>
         <nav className="hidden md:flex gap-6">
           <HeaderNavigator />
@@ -74,11 +78,11 @@ function HeaderMenu({ open, setOpen }) {
 function HeaderNavigator() {
   return (
     <>
-      <ExpressiveLink to="">About</ExpressiveLink>
-      <ExpressiveLink to="">Serve</ExpressiveLink>
-      <ExpressiveLink to="">Connect</ExpressiveLink>
-      <ExpressiveLink to="">Media</ExpressiveLink>
-      <ExpressiveLink to="">Resources</ExpressiveLink>
+      <ExpressiveLink to="">ABOUT</ExpressiveLink>
+      <ExpressiveLink to="">SERVE</ExpressiveLink>
+      <ExpressiveLink to="">CONNECT</ExpressiveLink>
+      <ExpressiveLink to="">MEDIA</ExpressiveLink>
+      <ExpressiveLink to="">RESOURCES</ExpressiveLink>
     </>
   );
 }

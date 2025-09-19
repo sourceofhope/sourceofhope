@@ -1,4 +1,5 @@
 import ExpressiveLink from "../ui/ExpressiveLink";
+import ExpressiveAnchor from "../ui/ExpressiveAnchor";
 
 export default function Footer() {
   return (
@@ -7,39 +8,54 @@ export default function Footer() {
         <div className="bg-primary-background" />
         <div className="bg-accent-background" />
       </div>
-      <div className="relative z-10 flex flex-col items-center gap-5">
+      <div className="relative z-10 flex flex-col items-center gap-5 w-full md:max-w-[50%] lg:max-w-[40%] mx-auto">
         <FooterCard />
-        <section className="grid gap-15 w-full md:grid-flow-col md:auto-cols-fr md:w-fit ">
-          <FooterColumn title="LOCATION">
-            <p>
-              1108 W PARKER RD <br /> STE 102 <br /> PLANO, TX 75078
-            </p>
-          </FooterColumn>
+        <section className="grid gap-15 w-full md:grid-flow-col md:auto-cols-fr">
           <FooterColumn title="CONNECT">
             <ul className="grid gap-1">
-              <li>INSTAGRAM</li>
-              <li>FACEBOOK</li>
-              <li>TWITTER</li>
-              <li>YOUTUBE</li>
-              <li>EMAIL</li>
+              <li>
+                <ExpressiveAnchor href="https://www.instagram.com/sourceofhope/">
+                  Instagram
+                </ExpressiveAnchor>
+              </li>
+              <li>
+                <ExpressiveAnchor href="https://www.facebook.com/sourceofhope/">
+                  Facebook
+                </ExpressiveAnchor>
+              </li>
+              <li>
+                <ExpressiveAnchor href="https://x.com/thesourceofhope/">
+                  Twitter
+                </ExpressiveAnchor>
+              </li>
+              <li>
+                <ExpressiveAnchor href="https://www.youtube.com/@thesourceofhope">
+                  YouTube
+                </ExpressiveAnchor>
+              </li>
             </ul>
+          </FooterColumn>
+          <FooterColumn title="LOCATION">
+            <p>
+              1108 W Parker Rd <br /> Ste 102 <br /> Plano, TX 75078
+            </p>
           </FooterColumn>
           <FooterColumn title="QUICK LINKS">
             <ul className="grid gap-1">
               <li>
-                <ExpressiveLink to="">GET INVOLVED</ExpressiveLink>
+                <ExpressiveLink to="">Get Involved</ExpressiveLink>
               </li>
               <li>
-                <ExpressiveLink to="">DONATE</ExpressiveLink>
+                <ExpressiveLink to="">Donate</ExpressiveLink>
               </li>
               <li>
-                <ExpressiveLink to="">VOLUNTEER</ExpressiveLink>
+                <ExpressiveLink to="">Volunteer</ExpressiveLink>
               </li>
               <li>
-                <ExpressiveLink to="">CAREERS</ExpressiveLink>
+                <ExpressiveLink to="">Careers</ExpressiveLink>
               </li>
               <li>
-                <ExpressiveLink to="">SITE MAP</ExpressiveLink>
+                <ExpressiveLink to="">Site Map</ExpressiveLink>
               </li>
             </ul>
           </FooterColumn>
@@ -52,22 +68,24 @@ export default function Footer() {
 
 function FooterColumn({ title, children }) {
   return (
-    <div>
-      <h2 className="text-lg border-b-2 w-fit mb-2">{title}</h2>
+    <div className="w-fit">
+      <h2 className="text-lg font-bold whitespace-nowrap border-b-2 w-fit mb-2">{title}</h2>
       {children}
     </div>
   );
 }
 
 function FooterBottom() {
-  <section>
-    <p>Copyright © {new Date().getFullYear()} The Source Of Hope</p>
-  </section>;
+  return (
+    <section className="text-center mt-5">
+      <p>Copyright © {new Date().getFullYear()} The Source Of Hope</p>
+    </section>
+  );
 }
 
 function FooterCard() {
   return (
-    <section className="max-w-150 rounded-2xl shadow-2xl overflow-hidden">
+    <section className={`rounded-2xl shadow-2xl overflow-hidden w-full`}>
       <div className="bg-accent-identity p-5 text-center">
         <h2 className="text-lg hidden md:block text-white font-semibold">
           BE THE FIRST TO KNOW ABOUT UPCOMING EVENTS

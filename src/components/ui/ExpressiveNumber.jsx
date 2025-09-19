@@ -41,13 +41,13 @@ export default function ExpressiveNumber({
 
     const animate = (currentTime) => {
       if (!startTime) startTime = currentTime;
-      const rawProgress = Math.min((currentTime - startTime) / duration, 1);
-      const generatedProgress = generator(rawProgress);
+      const normalProgress = Math.min((currentTime - startTime) / duration, 1);
+      const generatedProgress = generator(normalProgress);
 
       const currentValue = Math.round(start + (end - start) * generatedProgress);
       setValue(currentValue);
 
-      if (rawProgress < 1) requestAnimationFrame(animate);
+      if (normalProgress < 1) requestAnimationFrame(animate);
     };
 
     requestAnimationFrame(animate);
