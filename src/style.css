@@ -15,4 +15,7 @@
   --color-accent-identity: #1b75bc;
 
   --font-inter: "Inter", sans-serif;
+
+  --text-xxlg: 2em;
+  --text-xlg: 1.5em;
 }

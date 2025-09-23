@@ -8,9 +8,9 @@ export default function Footer() {
         <div className="bg-primary-background" />
         <div className="bg-accent-background" />
       </div>
-      <div className="relative z-10 flex flex-col items-center gap-5 w-full md:max-w-[50%] lg:max-w-[40%] mx-auto">
+      <div className="relative z-10 flex flex-col items-center gap-5 w-full md:max-w-[50%] lg:max-w-[35%] mx-auto">
         <FooterCard />
-        <section className="grid gap-15 w-full md:grid-flow-col md:auto-cols-fr">
+        <section className="flex w-full gap-5 flex-col md:justify-between md:flex-row">
           <FooterColumn title="CONNECT">
             <ul className="grid gap-1">
               <li>
