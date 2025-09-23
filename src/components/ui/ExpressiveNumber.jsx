@@ -1,17 +1,17 @@
 import { useEffect, useState, useRef } from "react";
 
-const LINEAR = (interval) => interval;
-const EASE_IN = (interval) => interval * interval;
-const EASE_OUT = (interval) => 1 - Math.pow(1 - interval, 2);
-const EASE_IN_OUT = (interval) =>
+export const LINEAR = (interval) => interval;
+export const EASE_IN = (interval) => interval * interval * interval;
+export const EASE_OUT = (interval) => 1 - Math.pow(1 - interval, 3);
+export const EASE_IN_OUT = (interval) =>
   interval < 0.5
-    ? 2 * interval * interval
-    : 1 - Math.pow(-2 * interval + 2, 2) / 2;
+    ? 4 * interval * interval * interval
+    : 1 - Math.pow(-2 * interval + 2, 3) / 2;
 
 export default function ExpressiveNumber({
   start = 0,
   end,
-  duration = 2000,
+  duration = 5000,
   threshold = 0.1,
   generator = LINEAR,
 }) {
@@ -54,4 +54,4 @@ export default function ExpressiveNumber({
   }, [inView, start, end, duration, generator]);
 
   return <p ref={reference}>{value}</p>;
-}
+} 
