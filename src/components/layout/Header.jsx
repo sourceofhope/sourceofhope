@@ -50,7 +50,7 @@ export default function Header() {
     >
       <div className="flex w-full h-[10vh] items-center justify-between px-5">
         <NavLink to="/" className="text-lg">
-          THE SOURCE OF HOPE
+          ICON
         </NavLink>
         <nav className="hidden md:flex gap-6">
           <HeaderNavigator />
@@ -58,7 +58,7 @@ export default function Header() {
         <HeaderMenu open={open} setOpen={setOpen} />
       </div>
       {showItems ? (
-        <nav className="flex flex-col justify-end items-center mt-15 gap-5 p-5 h-[20vh] md:hidden">
+        <nav className="flex flex-col justify-end items-center mt-10 gap-5 p-5 h-[20vh] md:hidden">
           <HeaderNavigator />
         </nav>
       ) : null}

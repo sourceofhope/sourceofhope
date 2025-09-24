@@ -29,9 +29,11 @@ export default function Home() {
           />
         </video>
         <div className="grid gap-3 absolute w-full md:w-[50%] md:m-35 md:p-0 p-5 justify-self-center opacity-90">
-          <h2 className="text-accent-identity text-sm md:text-lg ">
-            EMPOWERING AND PROVIDING HOPE TO INDIVIDUALS IN NEED THROUGH HEALTH
-            AND WELLNESS.
+          <h2 className="text-primary-background text-sm md:text-lg">
+            THE SOURCE OF HOPE
+          </h2>
+          <h2 className="text-primary-background text-lg md:text-xlg">
+            EMPOWERING AND PROVIDING THROUGH HEALTH AND WELLNESS.
           </h2>
           <p className="hidden md:block text-accent-background text-justify text-sm">
             We are a non-profit organization dedicated to providing holistic
@@ -41,12 +43,17 @@ export default function Home() {
             donation helps us ensure that those in need have access to health,
             safety, and resources to live healthier, fulfilling lives.
           </p>
-          <button className="border-4 rounded-2xl w-fit px-5 py-2 border-accent-identity text-accent-identity">
-            <ExpressiveLink>DONATE</ExpressiveLink>
-          </button>
+          <div className="flex gap-5 flex-col md:flex-row">
+            <button className="border-4 rounded-2xl w-fit px-10 py-2 border-transparent bg-accent-identity text-primary-background/90">
+              <ExpressiveLink>DONATE</ExpressiveLink>
+            </button>
+            <button className="border-4 rounded-2xl w-fit px-10 py-2 border-accent-identity bg-primary-background/90 text-accent-identity">
+              <ExpressiveLink>SERVE</ExpressiveLink>
+            </button>
+          </div>
         </div>
       </section>
-      <HomeSection title="" caption="MORE RESOURCES" to="">
+      <HomeSection title="RESOURCES" caption="MORE RESOURCES" to="">
         <div className="w-full h-full grid grid-flow-row md:grid-cols-3 md:grid-rows-2 gap-5 justify-center items-center">
           <HomeResourceCard
             title="SERVING HOPE"
@@ -151,22 +158,31 @@ export default function Home() {
           <video className="w-full h-full bg-accent-identity rounded-2xl"></video>
         </div>
       </HomeSection>
+      <HomeSection title="LATEST NEWS" caption="MORE NEWS" to="">
+        <div className="flex w-full h-fit gap-10 flex-col md:justify-between md:flex-row">
+          <HomeNewsCard title="Serving Hope" caption="" src="" to="" />
+          <HomeNewsCard title="Serving Hope" caption="" src="" to="" />
+          <HomeNewsCard title="Serving Hope" caption="" src="" to="" />
+        </div>
+      </HomeSection>
     </>
   );
 }
 
-function HomeSection({ children, title, caption, to }) {
+function HomeSection({ className, children, title, caption, to }) {
   return (
-    <section className="mt-10 px-5 lg:px-35 w-full h-full justify-items-center items-center grid gap-5">
+    <section
+      className={`mt-10 px-5 lg:px-35 w-full h-full justify-items-center items-center grid gap-5 ${className}`}
+    >
       <div>
         <h2 className="text-(length:--text-xxlg) font-bold text-center w-full">
           {title}
         </h2>
       </div>
       {children}
-      <div className="justify-self-end w-fit">
+      <button className="justify-self-end w-fit">
         <ExpressiveLink to={to}>{caption}</ExpressiveLink>
-      </div>
+      </button>
     </section>
   );
 }
@@ -175,6 +191,26 @@ function HomeImpactColumn({ children }) {
   return (
     <article className="w-full grid justify-items-center grid-flow-row">
       {children}
+    </article>
+  );
+}
+
+function HomeNewsCard({ title, caption, src, to }) {
+  return (
+    <article
+      to={to}
+      className="relative w-full h-full rounded-xl p-5 flex flex-col items-center bg-accent-background"
+    >
+      <img src={src} alt={caption} className="w-full h-fit rounded-x1" />
+      <h2 className="text-lg">{title}</h2>
+      <div>
+        <p>{caption}</p>
+        <div className="bg-accent-identity p-5 text-primary-background rounded-2xl justify-self-start w-fit inline-flex">
+          <ExpressiveLink className="text-accent-background" href="">
+            MORE
+          </ExpressiveLink>
+        </div>
+      </div>
     </article>
   );
 }
