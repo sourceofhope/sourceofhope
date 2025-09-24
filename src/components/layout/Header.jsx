@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/20/solid";
-import ExpressiveLink from "../ui/ExpressiveLink";
+import ExpressiveLink from "../ui/expressive/ExpressiveLink";
 import { NavLink } from "react-router-dom";
 
 export default function Header() {
@@ -17,8 +17,8 @@ export default function Header() {
 
   useEffect(() => {
     if (open && menuReference.current) {
-      if(!window.scrollY > 0) {
-        setShowItems(true)
+      if (!window.scrollY > 0) {
+        setShowItems(true);
         return;
       }
       const handleTransitionEnd = () => {
@@ -28,7 +28,10 @@ export default function Header() {
           handleTransitionEnd
         );
       };
-      menuReference.current.addEventListener("transitionend", handleTransitionEnd);
+      menuReference.current.addEventListener(
+        "transitionend",
+        handleTransitionEnd
+      );
     } else {
       setShowItems(false);
     }
@@ -55,7 +58,7 @@ export default function Header() {
         <HeaderMenu open={open} setOpen={setOpen} />
       </div>
       {showItems ? (
-        <nav className="flex flex-col justify-end items-center mt-10 gap-5 p-5 h-[20vh] md:hidden">
+        <nav className="flex flex-col justify-end items-center mt-15 gap-5 p-5 h-[20vh] md:hidden">
           <HeaderNavigator />
         </nav>
       ) : null}

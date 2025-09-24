@@ -1,11 +1,9 @@
 import { NavLink } from "react-router-dom";
 import { ArrowRightIcon } from "@heroicons/react/20/solid";
-import ExpressiveLink from "../components/ui/ExpressiveLink";
+import ExpressiveLink from "../components/ui/expressive/ExpressiveLink";
 import ExpressiveNumber, {
-  EASE_IN,
-  EASE_IN_OUT,
-  EASE_OUT,
-} from "../components/ui/ExpressiveNumber";
+  Generator,
+} from "../components/ui/expressive/ExpressiveNumber";
 
 export default function Home() {
   return (
@@ -89,50 +87,69 @@ export default function Home() {
         </div>
       </HomeSection>
       <HomeSection title="IMPACT" caption="MORE IMPACT" to="">
-        <p>
-          Real Results and Powerful Change in Our Community
-        </p>
+        <p>Real Results and Powerful Change in Our Community</p>
         <div className="flex w-full h-fit gap-10 flex-col md:justify-between md:flex-row">
           <HomeImpactColumn>
             <b className="text-(length:--text-xlg)">
-              <ExpressiveNumber end="16" generator={EASE_IN_OUT} />
+              <ExpressiveNumber
+                start={1}
+                end={16}
+                generator={Generator.LINEAR}
+              />
             </b>
             <p className="text-sm">Years of Service</p>
           </HomeImpactColumn>
           <HomeImpactColumn>
             <b className="flex text-(length:--text-xlg)">
-              $<ExpressiveNumber end="900" generator={EASE_IN_OUT} />K
+              $
+              <ExpressiveNumber
+                start={1}
+                end={900}
+                generator={Generator.EASE_IN_OUT}
+              />
+              K
             </b>
             <p className="text-sm"> Wellness Aid</p>
           </HomeImpactColumn>
           <HomeImpactColumn>
             <b className="flex text-(length:--text-xlg)">
-              <ExpressiveNumber end="353" generator={EASE_IN_OUT} />K
+              <ExpressiveNumber
+                start={1}
+                end={353}
+                generator={Generator.EASE_IN_OUT}
+              />
+              K
             </b>
             <p className="text-sm">Meals Served</p>
           </HomeImpactColumn>
           <HomeImpactColumn>
             <b className="flex text-(length:--text-xlg)">
-              $<ExpressiveNumber end="500" generator={EASE_IN_OUT} />K
+              $
+              <ExpressiveNumber
+                start={1}
+                end={500}
+                generator={Generator.EASE_IN_OUT}
+              />
+              K
             </b>
             <p className="text-sm">Donations Received</p>
           </HomeImpactColumn>
           <HomeImpactColumn>
             <b className="flex text-(length:--text-xlg)">
-              <ExpressiveNumber end="273" generator={EASE_IN_OUT} />K
+              <ExpressiveNumber
+                start={1}
+                end={273}
+                generator={Generator.EASE_IN_OUT}
+              />
+              K
             </b>
             <p className="text-sm">Hours Served</p>
           </HomeImpactColumn>
         </div>
         <div className="flex gap-10 w-full flex-col md:flex-row">
-          <video className="w-full h-full bg-accent-identity rounded-2xl">
-
-          </video>
-          <video className="w-full h-full bg-accent-identity rounded-2xl">
-
-          </video>          
+          <video className="w-full h-full bg-accent-identity rounded-2xl"></video>
+          <video className="w-full h-full bg-accent-identity rounded-2xl"></video>
         </div>
-
       </HomeSection>
     </>
   );
@@ -142,7 +159,9 @@ function HomeSection({ children, title, caption, to }) {
   return (
     <section className="mt-10 px-5 lg:px-35 w-full h-full justify-items-center items-center grid gap-5">
       <div>
-        <h2 className="text-(length:--text-xxlg) font-bold text-center w-full">{title}</h2>
+        <h2 className="text-(length:--text-xxlg) font-bold text-center w-full">
+          {title}
+        </h2>
       </div>
       {children}
       <div className="justify-self-end w-fit">
@@ -164,7 +183,7 @@ function HomeResourceCard({ title, caption, src, to }) {
   return (
     <NavLink
       to={to}
-      className="relative w-full h-full group overflow-hidden rounded-xl text-primary-background"
+      className="relative w-full h-full group overflow-hidden rounded-xl text-accent-background"
     >
       <img
         src={src}

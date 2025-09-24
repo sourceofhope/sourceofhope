@@ -1,19 +1,22 @@
 import { useEffect, useState, useRef } from "react";
 
-export const LINEAR = (interval) => interval;
-export const EASE_IN = (interval) => interval * interval * interval;
-export const EASE_OUT = (interval) => 1 - Math.pow(1 - interval, 3);
-export const EASE_IN_OUT = (interval) =>
-  interval < 0.5
-    ? 4 * interval * interval * interval
-    : 1 - Math.pow(-2 * interval + 2, 3) / 2;
+export const Generator = {
+  LINEAR: (interval) => interval,
+  EASE_IN: (interval) => Math.pow(interval, Math.E),
+  EASE_OUT: (interval) => 1 - Math.pow(1 - interval, Math.E),
+  EASE_IN_OUT: (interval) =>
+    interval < 1 / 2
+      ? 4 * Math.pow(interval, 3)
+      : 1 - Math.pow(-2 * interval + 2, 3) / 2,
+};
 
 export default function ExpressiveNumber({
   start = 0,
   end,
   duration = 5000,
   threshold = 0.1,
-  generator = LINEAR,
+  generator = Generator.LINEAR,
+  ariaLive = "polite",
 }) {
   const reference = useRef(null);
   const [inView, setInView] = useState(false);
@@ -44,7 +47,9 @@ export default function ExpressiveNumber({
       const normalProgress = Math.min((currentTime - startTime) / duration, 1);
       const generatedProgress = generator(normalProgress);
 
-      const currentValue = Math.round(start + (end - start) * generatedProgress);
+      const currentValue = Math.round(
+        start + (end - start) * generatedProgress
+      );
       setValue(currentValue);
 
       if (normalProgress < 1) requestAnimationFrame(animate);
@@ -53,5 +58,9 @@ export default function ExpressiveNumber({
     requestAnimationFrame(animate);
   }, [inView, start, end, duration, generator]);
 
-  return <p ref={reference}>{value}</p>;
-} 
+  return (
+    <p aria-live={ariaLive} ref={reference}>
+      {value}
+    </p>
+  );
+}

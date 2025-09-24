@@ -1,5 +1,5 @@
-import ExpressiveLink from "../ui/ExpressiveLink";
-import ExpressiveAnchor from "../ui/ExpressiveAnchor";
+import ExpressiveLink from "../ui/expressive/ExpressiveLink";
+import ExpressiveAnchor from "../ui/expressive/ExpressiveAnchor";
 
 export default function Footer() {
   return (
@@ -69,7 +69,9 @@ export default function Footer() {
 function FooterColumn({ title, children }) {
   return (
     <div className="w-fit">
-      <h2 className="text-lg font-bold whitespace-nowrap border-b-2 w-fit mb-2">{title}</h2>
+      <h2 className="text-lg font-bold whitespace-nowrap border-b-2 w-fit mb-2">
+        {title}
+      </h2>
       {children}
     </div>
   );
