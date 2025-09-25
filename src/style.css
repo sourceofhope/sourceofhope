@@ -14,7 +14,8 @@
   --color-accent-background: #b5d9d8;
   --color-accent-identity: #1b75bc;
 
-  --font-inter: "Inter", sans-serif;
+  --font-urbanist: "Urbanist", Helvetica, Arial;
+  --font-inter: "Inter", Helvetica, Arial;
 
   --text-xxlg: 2em;
   --text-xlg: 1.5em;

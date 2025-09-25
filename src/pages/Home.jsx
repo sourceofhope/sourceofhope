@@ -8,12 +8,12 @@ import ExpressiveNumber, {
 export default function Home() {
   return (
     <>
-      <section className="flex justify-start items-end w-full min-h-screen">
+<section className="flex justify-start items-end w-full min-h-[80vh] md:min-h-screen">
         <video
           autoPlay
           muted
           loop
-          className="absolute left-0 top-0 z-0 h-full w-full object-cover"
+          className="absolute left-0 top-0 z-0 h-[80vh] md:h-full w-full object-cover"
           style={{
             WebkitMaskImage:
               "linear-gradient(to bottom, white 70%, transparent 100%)",
@@ -28,11 +28,11 @@ export default function Home() {
             type="video/mp4"
           />
         </video>
-        <div className="grid gap-3 absolute w-full md:w-[50%] md:m-35 md:p-0 p-5 justify-self-center opacity-90">
-          <h2 className="text-primary-background text-sm md:text-lg">
+        <div className="grid gap-3 absolute w-full md:w-[70vh] md:m-35 md:p-0 p-5 justify-self-center opacity-90">
+          <h2 className="text-primary-background font-urbanist text-sm md:text-lg">
             THE SOURCE OF HOPE
           </h2>
-          <h2 className="text-primary-background text-lg md:text-xlg">
+          <h2 className="text-primary-background font-urbanist text-lg md:text-xlg font-bold">
             EMPOWERING AND PROVIDING THROUGH HEALTH AND WELLNESS.
           </h2>
           <p className="hidden md:block text-accent-background text-justify text-sm">
@@ -44,10 +44,10 @@ export default function Home() {
             safety, and resources to live healthier, fulfilling lives.
           </p>
           <div className="flex gap-5 flex-col md:flex-row">
-            <button className="border-4 rounded-2xl w-fit px-10 py-2 border-transparent bg-accent-identity text-primary-background/90">
+            <button className="border-4 rounded-2xl font-bold w-fit px-10 py-2 border-transparent bg-accent-identity text-primary-background/90">
               <ExpressiveLink>DONATE</ExpressiveLink>
             </button>
-            <button className="border-4 rounded-2xl w-fit px-10 py-2 hover:bg-primary-background/95 border-accent-identity bg-primary-background/75 text-accent-identity transition-colors">
+            <button className="border-4 rounded-2xl font-bold w-fit px-10 py-2 hover:bg-primary-background/95 border-accent-identity bg-primary-background/75 text-accent-identity transition-colors">
               <ExpressiveLink>SERVE</ExpressiveLink>
             </button>
           </div>

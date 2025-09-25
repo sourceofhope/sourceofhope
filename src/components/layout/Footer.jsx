@@ -3,7 +3,7 @@ import ExpressiveAnchor from "../ui/expressive/ExpressiveAnchor";
 
 export default function Footer() {
   return (
-    <footer className="relative w-full bg-accent-background px-5 pb-10 mt-10">
+    <footer className="relative w-full px-5 pb-10 mt-10">
       <div className="absolute inset-0 grid grid-rows-[30%_70%]">
         <div className="bg-primary-background" />
         <div className="bg-accent-background" />
