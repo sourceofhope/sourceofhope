@@ -47,7 +47,7 @@ export default function Home() {
             <button className="border-4 rounded-2xl w-fit px-10 py-2 border-transparent bg-accent-identity text-primary-background/90">
               <ExpressiveLink>DONATE</ExpressiveLink>
             </button>
-            <button className="border-4 rounded-2xl w-fit px-10 py-2 border-accent-identity bg-primary-background/90 text-accent-identity">
+            <button className="border-4 rounded-2xl w-fit px-10 py-2 hover:bg-primary-background/95 border-accent-identity bg-primary-background/75 text-accent-identity transition-colors">
               <ExpressiveLink>SERVE</ExpressiveLink>
             </button>
           </div>
@@ -94,7 +94,7 @@ export default function Home() {
         </div>
       </HomeSection>
       <HomeSection title="IMPACT" caption="MORE IMPACT" to="">
-        <p>Real Results and Powerful Change in Our Community</p>
+        <p className="text-center">Real Results and Powerful Change in Our Community</p>
         <div className="flex w-full h-fit gap-10 flex-col md:justify-between md:flex-row">
           <HomeImpactColumn>
             <b className="text-(length:--text-xlg)">
