@@ -24,7 +24,7 @@ export default function Header() {
             : "bg-transparent text-primary-identity"
         }`}
     >
-      <section className="flex w-full h-[10vh] items-center justify-between px-5">
+      <section className="flex w-full h-[10vh] items-center justify-between px-5 lg:px-35">
         <NavLink to="/" className="text-lg">
           ICON
         </NavLink>
@@ -76,8 +76,8 @@ function HeaderNavigator() {
   return (
     <>
       {links.map(({ label, to }) => (
-        <div className="py-2.5 h-full w-full">
-          <ExpressiveLink key={label} to={to}>
+        <div key={label} className="py-2.5 h-full w-full font-bold">
+          <ExpressiveLink to={to}>
             {label}
           </ExpressiveLink>
         </div>
