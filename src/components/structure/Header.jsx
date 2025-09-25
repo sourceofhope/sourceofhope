@@ -17,14 +17,14 @@ export default function Header() {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 w-full overflow-hidden transition-all duration-300
-        ${open ? "h-[40vh] md:h-[10vh]" : "h-[10vh]"}
+        ${open ? "h-85 md:h-25" : "h-25"}
         ${
           scrolled
             ? "bg-primary-700 text-accent-50"
             : "bg-transparent text-primary-700"
         }`}
     >
-      <section className="flex w-full h-[10vh] items-center justify-between px-5 lg:px-35">
+      <section className="flex w-full h-25 items-center justify-between px-5 lg:px-35">
         <Favicon className="w-[60px] h-[60px]"/>
         <nav className="hidden md:flex gap-6">
           <HeaderNavigator />

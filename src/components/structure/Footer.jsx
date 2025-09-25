@@ -34,7 +34,7 @@ export default function Footer() {
             <FooterColumn>
               <div className="grid gap-3">
                 <Favicon className="w-[60px] h-[60px]" />
-                <p className="text-neutral-300">info@thesourceofhope.org</p>
+                <p className="text-neutral-300 text-sm">info@thesourceofhope.org</p>
               </div>
             </FooterColumn>
             <FooterColumn title="CONNECT">
@@ -86,9 +86,9 @@ export default function Footer() {
               </ul>
             </FooterColumn>
           </div>
-          <FooterBottom />
         </div>
       </section>
+      <FooterBottom />
     </footer>
   );
 }
@@ -106,7 +106,7 @@ function FooterColumn({ title = "", children }) {
 
 function FooterBottom() {
   return (
-    <section className="text-center mt-5">
+    <section className="text-center p-5 w-full text-md bg-primary-900 text-neutral-50">
       <p>Copyright © {new Date().getFullYear()} The Source Of Hope</p>
     </section>
   );
@@ -117,7 +117,7 @@ function FooterCard() {
     <article
       className={`flex flex-col gap-3 rounded-2xl shadow-2x overflow-hidden w-175 h-fit p-5 bg-neutral-50 text-neutral-950`}
     >
-      <div className="h-fit w-full text-md font-bold">
+      <div className="h-fit w-full text-lg font-bold">
         <h2 className="hidden md:block">
           Be The First To Know About Upcoming Events
         </h2>

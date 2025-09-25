@@ -30,7 +30,7 @@ export default function Home() {
             type="video/mp4"
           />
         </video>
-        <div className="grid gap-3 absolute w-full md:w-[70vh] md:m-35 md:p-0 p-5 justify-self-center opacity-90">
+        <div className="grid gap-3 absolute w-full md:w-[70vw] md:m-35 md:p-0 p-5 justify-self-center opacity-90">
           <h2 className="text-neutral-50 font-urbanist text-md md:text-lg font-bold">
             THE SOURCE OF HOPE
           </h2>
