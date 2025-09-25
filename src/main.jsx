@@ -2,17 +2,19 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AppLayout from "./pages/Layout.jsx";
-import Home from "./pages/Home.jsx";
+import HomePage from "./pages/HomePage.jsx";
+import ErrorPage from "./pages/ErrorPage.jsx";
+import ErrorBoundary from "./pages/ErrorBoundary.jsx";
+
 import "./style.css";
-import Missing from "./pages/Missing.jsx";
 
 const router = createBrowserRouter([
   {
     element: <AppLayout />,
+    errorElement: <ErrorBoundary />,
     children: [
-      { path: "/", element: <Home /> },
-      { path: "/sourceofhope", element: <Home /> },
-      { path: "*", element: <Missing /> },
+      { path: "/", element: <HomePage /> },
+      { path: "/sourceofhope", element: <HomePage /> },
     ],
   },
   { basename: import.meta.env.BASE_URL },

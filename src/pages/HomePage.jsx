@@ -8,7 +8,7 @@ import ExpressiveNumber, {
 export default function Home() {
   return (
     <>
-<section className="flex justify-start items-end w-full min-h-[80vh] md:min-h-screen">
+      <section className="flex justify-start items-end w-full min-h-[80vh] md:min-h-screen">
         <video
           autoPlay
           muted
@@ -44,7 +44,7 @@ export default function Home() {
             safety, and resources to live healthier, fulfilling lives.
           </p>
           <div className="flex gap-5 flex-col md:flex-row">
-            <button className="border-4 rounded-2xl font-bold w-fit px-10 py-2 border-transparent bg-accent-identity text-primary-background/90">
+            <button className="border-4 rounded-2xl font-bold w-fit px-10 py-2 bg-accent-identity border-accent-identity text-primary-background/75 hover:text-primary-background/95 transition-colors">
               <ExpressiveLink>DONATE</ExpressiveLink>
             </button>
             <button className="border-4 rounded-2xl font-bold w-fit px-10 py-2 hover:bg-primary-background/95 border-accent-identity bg-primary-background/75 text-accent-identity transition-colors">
@@ -56,20 +56,8 @@ export default function Home() {
       <HomeSection title="RESOURCES" caption="MORE RESOURCES" to="">
         <div className="w-full h-full grid grid-flow-row md:grid-cols-3 md:grid-rows-2 gap-5 justify-center items-center">
           <HomeResourceCard
-            title="SERVING HOPE"
-            caption="Serving Hope is a volunteer-driven initiative dedicated to providing organic, home-cooked meals to those in need across the Dallas–Fort Worth area. Through partnerships and community support, we nourish homeless individuals, veterans, nursing home residents, and at-risk families. Each event focuses on fresh food, dignity, and connection, ensuring both body and spirit are cared for while building stronger, more compassionate communities."
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
-            to=""
-          />
-          <HomeResourceCard
             title="EDUCATION FOR HOPE"
             caption="Education for Hope supports students of all ages through tutoring, scholarships, and workforce opportunities. We provide low-income cosmetology students with access to advanced training, partner with The University of Texas at Dallas through the Federal Work-Study program, and offer operational roles that build professional experience. By removing barriers to education, we empower individuals to learn, grow, and create brighter futures for themselves and their families."
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
-            to=""
-          />
-          <HomeResourceCard
-            title="INTERNATIONAL PARTNER SERVING"
-            caption="Our International Partner Serving program extends hope worldwide by collaborating with organizations and volunteers to deliver resources, training, and empowerment. We provide scholarships, educational tools, wellness services, and food support to underserved communities in developing regions. By fostering relationships based on trust and respect, we amplify dignity and self-sufficiency, ensuring that compassion knows no borders and hope reaches people across the globe."
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
             to=""
           />
@@ -80,8 +68,8 @@ export default function Home() {
             to=""
           />
           <HomeResourceCard
-            title="HOPE FOR THE GREAT OUTDOORS"
-            caption="Hope for the Great Outdoors introduces individuals and families to nature through hands-on learning and immersive outdoor experiences. From camping and fishing to survival skills, participants gain confidence while developing a lifelong respect for the environment. By making the outdoors accessible and inclusive, the program creates opportunities for growth, bonding, and wellness in a safe and supportive setting."
+            title="SERVING HOPE"
+            caption="Serving Hope is a volunteer-driven initiative dedicated to providing organic, home-cooked meals to those in need across the Dallas–Fort Worth area. Through partnerships and community support, we nourish homeless individuals, veterans, nursing home residents, and at-risk families. Each event focuses on fresh food, dignity, and connection, ensuring both body and spirit are cared for while building stronger, more compassionate communities."
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
             to=""
           />
@@ -91,13 +79,27 @@ export default function Home() {
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
             to=""
           />
+          <HomeResourceCard
+            title="HOPE FOR THE GREAT OUTDOORS"
+            caption="Hope for the Great Outdoors introduces individuals and families to nature through hands-on learning and immersive outdoor experiences. From camping and fishing to survival skills, participants gain confidence while developing a lifelong respect for the environment. By making the outdoors accessible and inclusive, the program creates opportunities for growth, bonding, and wellness in a safe and supportive setting."
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
+            to=""
+          />
+          <HomeResourceCard
+            title="INTERNATIONAL PARTNER SERVING"
+            caption="Our International Partner Serving program extends hope worldwide by collaborating with organizations and volunteers to deliver resources, training, and empowerment. We provide scholarships, educational tools, wellness services, and food support to underserved communities in developing regions. By fostering relationships based on trust and respect, we amplify dignity and self-sufficiency, ensuring that compassion knows no borders and hope reaches people across the globe."
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
+            to=""
+          />
         </div>
       </HomeSection>
       <HomeSection title="IMPACT" caption="MORE IMPACT" to="">
-        <p className="text-center">Real Results and Powerful Change in Our Community</p>
+        <p className="text-center">
+          Real Results and Powerful Change in Our Community
+        </p>
         <div className="flex w-full h-fit gap-10 flex-col md:justify-between md:flex-row">
           <HomeImpactColumn>
-            <b className="text-(length:--text-xlg)">
+            <b className="text-(length:--text-lg)">
               <ExpressiveNumber
                 start={1}
                 end={16}
@@ -107,7 +109,7 @@ export default function Home() {
             <p className="text-sm">Years of Service</p>
           </HomeImpactColumn>
           <HomeImpactColumn>
-            <b className="flex text-(length:--text-xlg)">
+            <b className="flex text-(length:--text-lg)">
               $
               <ExpressiveNumber
                 start={1}
@@ -119,7 +121,7 @@ export default function Home() {
             <p className="text-sm"> Wellness Aid</p>
           </HomeImpactColumn>
           <HomeImpactColumn>
-            <b className="flex text-(length:--text-xlg)">
+            <b className="flex text-(length:--text-lg)">
               <ExpressiveNumber
                 start={1}
                 end={353}
@@ -130,7 +132,7 @@ export default function Home() {
             <p className="text-sm">Meals Served</p>
           </HomeImpactColumn>
           <HomeImpactColumn>
-            <b className="flex text-(length:--text-xlg)">
+            <b className="flex text-(length:--text-lg)">
               $
               <ExpressiveNumber
                 start={1}
@@ -142,7 +144,7 @@ export default function Home() {
             <p className="text-sm">Donations Received</p>
           </HomeImpactColumn>
           <HomeImpactColumn>
-            <b className="flex text-(length:--text-xlg)">
+            <b className="flex text-(length:--text-lg)">
               <ExpressiveNumber
                 start={1}
                 end={273}
@@ -175,7 +177,7 @@ function HomeSection({ className, children, title, caption, to }) {
       className={`mt-10 px-5 lg:px-35 w-full h-full justify-items-center items-center grid gap-5 ${className}`}
     >
       <div>
-        <h2 className="text-(length:--text-xxlg) font-bold text-center w-full">
+        <h2 className="text-(length:--text-xlg) font-bold text-center w-full">
           {title}
         </h2>
       </div>
