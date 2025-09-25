@@ -1,6 +1,8 @@
 import { NavLink } from "react-router-dom";
 import Header from "../structure/Header";
 import Footer from "../structure/Footer";
+import ExpressiveLink from "../ui/expressive/ExpressiveLink";
+import Favicon from "../ui/Favicon";
 
 export default function ErrorLayout({ code = 500, message }) {
   const defaults = {
@@ -14,26 +16,20 @@ export default function ErrorLayout({ code = 500, message }) {
   return (
     <div className="bg-neutral-50">
       <Header />
-      <main className="w-screen min-h-screen flex justify-center items-center px-5">
-        <section className="w-full md:max-w-[50%] lg:max-w-[35%] rounded-2xl shadow-2xl overflow-hidden">
-          <div className="bg-accent-500 p-5 text-center">
-            <h2 className="text-lg hidden md:block text-accent-50 font-semibold">
-              {code} : {message}
-            </h2>
-            <h2 className="text-lg block md:hidden text-accent-50 font-semibold">
-              {code}
-            </h2>
-          </div>
-          <div className="bg-neutral-50 p-5 grid gap-5 text-center">
-            <p>{display}</p>
-            <NavLink
-              to="/"
-              className="bg-accent-500 p-5 text-neutral-50 rounded-2xl justify-self-center w-fit inline-flex"
-            >
-              Go Home
-            </NavLink>
-          </div>
-        </section>
+      <main className="w-screen min-h-screen flex flex-col justify-center items-start gap-5 px-5 lg:px-35">
+        <Favicon className="w-[60px] h-[60px]"/>
+        <h2 className="text-lg font-semibold">
+          Error {code}: {message}
+        </h2>
+        <p className="text-md">
+          {display}
+        </p>
+        <p className="text-md">
+          If you are unable to resolve this error, please contact <a className="font-semibold text-accent-500" href={`mailto:info@thesourceofhope.org?subject=Website Error Code ${code} : ${message}`}>info@thesourceofhope.org</a> to resolve this issue.
+        </p>
+        <button className="border-5 rounded-2xl font-bold w-fit px-10 py-5 bg-accent-500 border-accent-500 text-neutral-50/75 hover:text-neutral-50/95 transition-colors">
+          <ExpressiveLink to="/">GO HOME</ExpressiveLink>
+        </button>
       </main>
       <Footer />
     </div>

@@ -17,7 +17,7 @@ export default function ParallaxLayer({
 
   const overflowAmount = overflow * viewportHeight;
   const sectionTranslate = useMemo(() => {
-    const maxOffset = overflow / 2 * viewportHeight * ratio;
+    const maxOffset = (overflow / 2) * viewportHeight * ratio;
     return (progress - 0.5) * 2 * maxOffset;
   }, [ratio, viewportHeight, progress]);
 

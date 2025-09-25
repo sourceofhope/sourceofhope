@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/20/solid";
 import ExpressiveLink from "../ui/expressive/ExpressiveLink";
-import { NavLink } from "react-router-dom";
+import Favicon from "../ui/Favicon";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -25,12 +25,7 @@ export default function Header() {
         }`}
     >
       <section className="flex w-full h-[10vh] items-center justify-between px-5 lg:px-35">
-        <NavLink
-          to="/"
-          className="text-lg w-[60px] h-[60px] flex items-center border-2 border-primary-700"
-        >
-          <p className="text-center w-full">ICON</p>
-        </NavLink>
+        <Favicon className="w-[60px] h-[60px]"/>
         <nav className="hidden md:flex gap-6">
           <HeaderNavigator />
         </nav>

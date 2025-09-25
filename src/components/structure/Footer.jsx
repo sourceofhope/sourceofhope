@@ -1,14 +1,14 @@
 import ExpressiveLink from "../ui/expressive/ExpressiveLink";
 import ExpressiveAnchor from "../ui/expressive/ExpressiveAnchor";
-import { NavLink } from "react-router-dom";
 import ParallaxSection from "../ui/parallax/ParallaxSection";
 import ParallaxLayer from "../ui/parallax/ParallaxLayer";
+import Favicon from "../ui/Favicon";
 
 export default function Footer() {
   return (
     <footer className="relative w-full">
-      <ParallaxSection className="relative h-[40vh] overflow-hidden" >
-        <ParallaxLayer layer={0} ratio={1}             >
+      <ParallaxSection className="relative h-95 overflow-hidden">
+        <ParallaxLayer layer={0} ratio={1}>
           <img
             className="w-full h-full object-cover"
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
@@ -16,31 +16,27 @@ export default function Footer() {
             style={{
               WebkitMaskImage:
                 "linear-gradient(to top, white 80%, transparent 100%)",
-              maskImage:
-                "linear-gradient(to top, white 80%, transparent 100%)",
+              maskImage: "linear-gradient(to top, white 80%, transparent 100%)",
             }}
           />
         </ParallaxLayer>
-
         <ParallaxLayer
           layer={1}
           ratio={0}
-          className="flex items-center justify-center"
+          className="flex items-center justify-end p-5 lg:px-35"
         >
-          <h2 className="text-4xl font-bold text-white drop-shadow">
-            Hello World!
-          </h2>
+          <FooterCard />
         </ParallaxLayer>
       </ParallaxSection>
       <section className="w-full h-full bg-primary-800 text-neutral-50 p-5 py-10 z-10">
         <div className="relative z-10 flex flex-col items-center gap-5 w-full md:max-w-[50%] lg:max-w-[35%] mx-auto">
           <div className="flex w-full gap-5 flex-col md:justify-between md:flex-row">
-            <NavLink
-              to="/"
-              className="text-lg w-[60px] h-[60px] flex items-center border-2 border-neutral-50"
-            >
-              <p className="text-center w-full">ICON</p>
-            </NavLink>
+            <FooterColumn>
+              <div className="grid gap-3">
+                <Favicon className="w-[60px] h-[60px]" />
+                <p className="text-neutral-300">info@thesourceofhope.org</p>
+              </div>
+            </FooterColumn>
             <FooterColumn title="CONNECT">
               <ul className="grid gap-1">
                 <li>
@@ -97,7 +93,7 @@ export default function Footer() {
   );
 }
 
-function FooterColumn({ title, children }) {
+function FooterColumn({ title = "", children }) {
   return (
     <div className="w-fit">
       <h2 className="text-lg font-bold whitespace-nowrap w-fit mb-2">
@@ -118,27 +114,26 @@ function FooterBottom() {
 
 function FooterCard() {
   return (
-    <section className={`rounded-2xl shadow-2xl overflow-hidden w-full`}>
-      <div className="bg-accent-500 p-5 text-center">
-        <h2 className="text-lg hidden md:block text-white font-semibold">
-          BE THE FIRST TO KNOW ABOUT UPCOMING EVENTS
+    <article
+      className={`flex flex-col gap-3 rounded-2xl shadow-2x overflow-hidden w-175 h-fit p-5 bg-neutral-50 text-neutral-950`}
+    >
+      <div className="h-fit w-full text-md font-bold">
+        <h2 className="hidden md:block">
+          Be The First To Know About Upcoming Events
         </h2>
-        <h2 className="text-lg block md:hidden text-white font-semibold">
-          GET UPDATES
+        <h2 className="block md:hidden">
+          Get Updates
         </h2>
       </div>
-      <div className="bg-accent-300 p-5 grid gap-5">
-        <p>
-          Join our family of supporters and receive inspiring stories, holistic
-          wellness tips, and community updates right to your inbox.
-        </p>
-        <div className="bg-accent-identity p-5 text-primary-50 rounded-2xl justify-self-start w-fit inline-flex">
-          <ExpressiveLink className="text-accent-300" href="">
-            SUBSCRIBE
-          </ExpressiveLink>
-        </div>
-        <p className="text-sm text-gray-500">No spam, unsubscribe anytime.</p>
-      </div>
-    </section>
+      <p className="text-sm">
+        Join our family of supporters and receive inspiring stories, holistic
+        wellness tips, and community updates right to your inbox by subscribing
+        to our newsletter.
+      </p>
+      <button className="border-5 rounded-2xl font-bold w-fit px-10 py-5 bg-accent-500 border-accent-500 text-neutral-50/75 hover:text-neutral-50/95 transition-colors">
+        <ExpressiveLink>SUBSCRIBE</ExpressiveLink>
+      </button>
+      <p className="text-sm text-neutral-500">No spam, unsubscribe anytime.</p>
+    </article>
   );
 }
