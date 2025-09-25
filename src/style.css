@@ -8,15 +8,46 @@
 }
 
 @theme {
-  --color-primary-background: white;
-  --color-primary-identity: #24388a;
+  --color-primary-50:   #f5f7fb;
+  --color-primary-100:  #e6ebf5;
+  --color-primary-200:  #c2c9e0;
+  --color-primary-300:  #909ac3;
+  --color-primary-400:  #5b6ca8;
+  --color-primary-500:  #3a4e95;
+  --color-primary-600:  #24388a; 
+  --color-primary-700:  #1b2b69;
+  --color-primary-800:  #141f49;
+  --color-primary-900:  #0b1026;
 
-  --color-accent-background: #b5d9d8;
-  --color-accent-identity: #1b75bc;
+  --color-accent-50:    #f2faf9;
+  --color-accent-100:   #dff2f1;
+  --color-accent-200:   #b5d9d8;
+  --color-accent-300:   #7fbfcf;
+  --color-accent-400:   #4aa8c9;
+  --color-accent-500:   #1b75bc;
+  --color-accent-600:   #165e96;
+  --color-accent-700:   #12466f;
+  --color-accent-800:   #0c304b;
+  --color-accent-900:   #061724;
 
-  --font-urbanist: "Urbanist", Helvetica, Arial;
-  --font-inter: "Inter", Helvetica, Arial;
+  --color-neutral-50:   #ffffff;
+  --color-neutral-100:  #f9fafb;
+  --color-neutral-200:  #f0f1f3;
+  --color-neutral-300:  #d9dce1;
+  --color-neutral-400:  #a0a5ad;
+  --color-neutral-500:  #6b7280;
+  --color-neutral-600:  #4b5563;
+  --color-neutral-700:  #374151;
+  --color-neutral-800:  #1f2937;
+  --color-neutral-900:  #111827; 
+
+  --font-urbanist: "Urbanist", Helvetica, Arial, sans-serif;
+  --font-inter: "Inter", Helvetica, Arial, sans-serif;
 
   --text-xxlg: 2em;
   --text-xlg: 1.5em;
+  --text-lg: 1.25em;
+  --text-md: 1em;
+  --text-sm: 0.875em;
+  --text-xs: 0.75em;
 }

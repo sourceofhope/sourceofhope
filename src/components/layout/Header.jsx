@@ -20,14 +20,14 @@ export default function Header() {
         ${open ? "h-[40vh] md:h-[10vh]" : "h-[10vh]"}
         ${
           scrolled
-            ? "bg-primary-identity text-primary-background"
-            : "bg-transparent text-primary-identity"
+            ? "bg-primary-700 text-accent-50"
+            : "bg-transparent text-primary-700"
         }`}
     >
       <section className="flex w-full h-[10vh] items-center justify-between px-5 lg:px-35">
-        <NavLink to="/" className="text-lg">
-          ICON
-        </NavLink>
+          <NavLink to="/" className="text-lg w-[60px] h-[60px] flex items-center border-2 border-primary-700">
+            <p className="text-center w-full">ICON</p>
+          </NavLink>
         <nav className="hidden md:flex gap-6">
           <HeaderNavigator />
         </nav>
@@ -50,15 +50,15 @@ export default function Header() {
 function HeaderMenu({ open, setOpen }) {
   return (
     <button
-      onClick={() => setOpen((v) => !v)}
+      onClick={() => setOpen((open) => !open)}
       className="block md:hidden"
       aria-expanded={open}
       aria-label={open ? "Close menu" : "Open menu"}
     >
       {open ? (
-        <XMarkIcon className="w-[1.25em] h-[1.25em]" aria-hidden="true" />
+        <XMarkIcon className="w-[16px] h-[16px]" aria-hidden="true" />
       ) : (
-        <Bars3Icon className="w-[1em] h-[1em]" aria-hidden="true" />
+        <Bars3Icon className="w-[16px] h-[16px]" aria-hidden="true" />
       )}
     </button>
   );

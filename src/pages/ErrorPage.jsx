@@ -13,19 +13,19 @@ export default function ErrorPage({ code = 500, message }) {
   return (
     <main className="w-screen min-h-screen flex justify-center items-center px-5">
       <section className="w-full md:max-w-[50%] lg:max-w-[35%] rounded-2xl shadow-2xl overflow-hidden">
-        <div className="bg-accent-identity p-5 text-center">
-          <h2 className="text-lg hidden md:block text-white font-semibold">
+        <div className="bg-accent-500 p-5 text-center">
+          <h2 className="text-lg hidden md:block text-accent-50 font-semibold">
             {code} : {message}
           </h2>
-          <h2 className="text-lg block md:hidden text-white font-semibold">
+          <h2 className="text-lg block md:hidden text-accent-50 font-semibold">
             {code}
           </h2>
         </div>
-        <div className="bg-primary-background p-5 grid gap-5 text-center">
+        <div className="bg-neutral-50 p-5 grid gap-5 text-center">
           <p>{display}</p>
           <NavLink
             to="/"
-            className="bg-accent-identity p-5 text-primary-background rounded-2xl justify-self-center w-fit inline-flex"
+            className="bg-accent-500 p-5 text-neutral-50 rounded-2xl justify-self-center w-fit inline-flex"
           >
             Go Home
           </NavLink>

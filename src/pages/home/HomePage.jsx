@@ -1,18 +1,20 @@
 import { NavLink } from "react-router-dom";
 import { ArrowRightIcon } from "@heroicons/react/20/solid";
-import ExpressiveLink from "../components/ui/expressive/ExpressiveLink";
+import ExpressiveLink from "../../components/ui/expressive/ExpressiveLink";
 import ExpressiveNumber, {
   Generator,
-} from "../components/ui/expressive/ExpressiveNumber";
+} from "../../components/ui/expressive/ExpressiveNumber";
 
 export default function Home() {
   return (
     <>
       <section className="flex justify-start items-end w-full min-h-[80vh] md:min-h-screen">
         <video
+          controls={false}
           autoPlay
           muted
           loop
+          playsInline
           className="absolute left-0 top-0 z-0 h-[80vh] md:h-full w-full object-cover"
           style={{
             WebkitMaskImage:
@@ -29,13 +31,13 @@ export default function Home() {
           />
         </video>
         <div className="grid gap-3 absolute w-full md:w-[70vh] md:m-35 md:p-0 p-5 justify-self-center opacity-90">
-          <h2 className="text-primary-background font-urbanist text-sm md:text-lg">
+          <h2 className="text-neutral-50 font-urbanist text-md md:text-lg font-bold">
             THE SOURCE OF HOPE
           </h2>
-          <h2 className="text-primary-background font-urbanist text-lg md:text-xlg font-bold">
+          <h2 className="text-neutral-50 font-urbanist text-lg md:text-xlg font-bold">
             EMPOWERING AND PROVIDING THROUGH HEALTH AND WELLNESS.
           </h2>
-          <p className="hidden md:block text-accent-background text-justify text-sm">
+          <p className="hidden md:block text-neutral-300 text-justify text-sm">
             We are a non-profit organization dedicated to providing holistic
             health and wellness, education, and support to individuals in need.
             Our team of volunteers is committed to serving the DFW community,
@@ -44,11 +46,11 @@ export default function Home() {
             safety, and resources to live healthier, fulfilling lives.
           </p>
           <div className="flex gap-5 flex-col md:flex-row">
-            <button className="border-4 rounded-2xl font-bold w-fit px-10 py-2 bg-accent-identity border-accent-identity text-primary-background/75 hover:text-primary-background/95 transition-colors">
-              <ExpressiveLink>DONATE</ExpressiveLink>
-            </button>
-            <button className="border-4 rounded-2xl font-bold w-fit px-10 py-2 hover:bg-primary-background/95 border-accent-identity bg-primary-background/75 text-accent-identity transition-colors">
+            <button className="border-5 rounded-2xl font-bold w-fit px-10 py-5 bg-accent-500 border-accent-500 text-neutral-50/75 hover:text-neutral-50/95 transition-colors">
               <ExpressiveLink>SERVE</ExpressiveLink>
+            </button>
+            <button className="border-5 rounded-2xl font-bold w-fit px-10 py-5 hover:bg-neutral-50/95 border-accent-500 bg-neutral-50/85 text-accent-500 transition-colors">
+              <ExpressiveLink>DONATE</ExpressiveLink>
             </button>
           </div>
         </div>
@@ -94,7 +96,7 @@ export default function Home() {
         </div>
       </HomeSection>
       <HomeSection title="IMPACT" caption="MORE IMPACT" to="">
-        <p className="text-center">
+        <p className="text-center text-md">
           Real Results and Powerful Change in Our Community
         </p>
         <div className="flex w-full h-fit gap-10 flex-col md:justify-between md:flex-row">
@@ -103,10 +105,11 @@ export default function Home() {
               <ExpressiveNumber
                 start={1}
                 end={16}
+                duration={7500}
                 generator={Generator.LINEAR}
               />
             </b>
-            <p className="text-sm">Years of Service</p>
+            <p className="text-md">Years of Service</p>
           </HomeImpactColumn>
           <HomeImpactColumn>
             <b className="flex text-(length:--text-lg)">
@@ -114,22 +117,24 @@ export default function Home() {
               <ExpressiveNumber
                 start={1}
                 end={900}
+                duration={7500}
                 generator={Generator.EASE_IN_OUT}
               />
               K
             </b>
-            <p className="text-sm"> Wellness Aid</p>
+            <p className="text-md"> Wellness Aid</p>
           </HomeImpactColumn>
           <HomeImpactColumn>
             <b className="flex text-(length:--text-lg)">
               <ExpressiveNumber
                 start={1}
                 end={353}
+                duration={7500}
                 generator={Generator.EASE_IN_OUT}
               />
               K
             </b>
-            <p className="text-sm">Meals Served</p>
+            <p className="text-md">Meals Served</p>
           </HomeImpactColumn>
           <HomeImpactColumn>
             <b className="flex text-(length:--text-lg)">
@@ -137,27 +142,29 @@ export default function Home() {
               <ExpressiveNumber
                 start={1}
                 end={500}
+                duration={7500}
                 generator={Generator.EASE_IN_OUT}
               />
               K
             </b>
-            <p className="text-sm">Donations Received</p>
+            <p className="text-md">Donations Received</p>
           </HomeImpactColumn>
           <HomeImpactColumn>
             <b className="flex text-(length:--text-lg)">
               <ExpressiveNumber
                 start={1}
                 end={273}
+                duration={7500}
                 generator={Generator.EASE_IN_OUT}
               />
               K
             </b>
-            <p className="text-sm">Hours Served</p>
+            <p className="text-md">Hours Served</p>
           </HomeImpactColumn>
         </div>
         <div className="flex gap-10 w-full flex-col md:flex-row">
-          <video className="w-full h-full bg-accent-identity rounded-2xl"></video>
-          <video className="w-full h-full bg-accent-identity rounded-2xl"></video>
+          <video className="w-full h-full bg-accent-500 rounded-2xl"></video>
+          <video className="w-full h-full bg-accent-500 rounded-2xl"></video>
         </div>
       </HomeSection>
       <HomeSection title="LATEST NEWS" caption="MORE NEWS" to="">
@@ -201,13 +208,13 @@ function HomeNewsCard({ title, caption, src, to }) {
   return (
     <article
       to={to}
-      className="relative w-full h-full rounded-xl p-5 flex flex-col items-center bg-accent-background"
+      className="relative w-full h-full rounded-xl p-5 flex flex-col items-center bg-neutral-400"
     >
       <img src={src} alt={caption} className="w-full h-fit rounded-x1" />
-      <h2 className="text-lg">{title}</h2>
+      <h2 className="text-lg text-neutral-50">{title}</h2>
       <div>
         <p>{caption}</p>
-        <div className="bg-accent-identity p-5 text-primary-background rounded-2xl justify-self-start w-fit inline-flex">
+        <div className="bg-accent-500 p-5 text-neutral-50 rounded-2xl justify-self-start w-fit inline-flex">
           <ExpressiveLink className="text-accent-background" href="">
             MORE
           </ExpressiveLink>

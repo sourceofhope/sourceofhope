@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import AppLayout from "./pages/Layout.jsx";
-import HomePage from "./pages/HomePage.jsx";
+import HomePage from "./pages/home/HomePage.jsx";
 import ErrorPage from "./pages/ErrorPage.jsx";
 import ErrorBoundary from "./pages/ErrorBoundary.jsx";
 

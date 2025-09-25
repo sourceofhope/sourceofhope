@@ -4,7 +4,7 @@ import Footer from "../components/layout/Footer";
 
 export default function AppLayout() {
   return (
-    <div className="bg-primary-background">
+    <div className="bg-neutral-50">
       <Header />
       <main className="w-screen min-h-screen">
         <Outlet />
