@@ -25,9 +25,12 @@ export default function Header() {
         }`}
     >
       <section className="flex w-full h-[10vh] items-center justify-between px-5 lg:px-35">
-          <NavLink to="/" className="text-lg w-[60px] h-[60px] flex items-center border-2 border-primary-700">
-            <p className="text-center w-full">ICON</p>
-          </NavLink>
+        <NavLink
+          to="/"
+          className="text-lg w-[60px] h-[60px] flex items-center border-2 border-primary-700"
+        >
+          <p className="text-center w-full">ICON</p>
+        </NavLink>
         <nav className="hidden md:flex gap-6">
           <HeaderNavigator />
         </nav>
@@ -77,9 +80,7 @@ function HeaderNavigator() {
     <>
       {links.map(({ label, to }) => (
         <div key={label} className="py-2.5 h-full w-full font-bold">
-          <ExpressiveLink to={to}>
-            {label}
-          </ExpressiveLink>
+          <ExpressiveLink to={to}>{label}</ExpressiveLink>
         </div>
       ))}
     </>
