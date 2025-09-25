@@ -6,28 +6,31 @@ import { Parallax, ParallaxLayer } from "@react-spring/parallax";
 export default function Footer() {
   return (
     <footer className="relative w-full mt-10">
-    <div className="relative w-full h-[100vh]">
-      <Parallax pages={2} style={{ height: "100%", width: "100%" }}>
-        <ParallaxLayer
-          offset={0}
-          factor={2}
-          speed={-0.2}
-          style={{
-            backgroundImage:
-              'url("https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344")',
-            backgroundSize: "cover",
-            backgroundPosition: "center top",
-          }}
-        />
-        <ParallaxLayer sticky={{ start: 0, end: 1 }}>
-          <div className="h-screen flex items-center justify-center">
-            <h2 className="text-5xl font-bold text-white drop-shadow-lg">
-              Subscription Card
-            </h2>
-          </div>
-        </ParallaxLayer>
-      </Parallax>
-    </div>
+      <div className="relative w-full h-[50vh]">
+        <Parallax pages={1.25} style={{ height: "100%", width: "100%", overscrollBehavior: "none"}}>
+          <ParallaxLayer
+            offset={0}
+            factor={1.25}
+            speed={-0.2}
+            style={{
+              backgroundImage:
+                'url("https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344")',
+              backgroundSize: "cover",
+              backgroundPosition: "center top",
+            }}
+          />
+          <ParallaxLayer
+            offset={0} 
+            factor={1} 
+            speed={-0.01}>
+            <div className="h-full flex items-center justify-center">
+              <h2 className="text-5xl font-bold text-white drop-shadow-lg">
+                Subscription Card
+              </h2>
+            </div>
+          </ParallaxLayer>
+        </Parallax>
+      </div>
       <section className="w-full h-full bg-primary-800 text-neutral-50 p-5 z-10">
         <div className="relative z-10 flex flex-col items-center gap-5 w-full md:max-w-[50%] lg:max-w-[35%] mx-auto">
           <div className="flex w-full gap-5 flex-col md:justify-between md:flex-row">
