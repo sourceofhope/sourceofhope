@@ -6,8 +6,8 @@ import Favicon from "../ui/Favicon";
 
 export default function Footer() {
   return (
-    <footer className="relative w-full mt-5">
-      <ParallaxSection className="relative h-95 overflow-hidden [mask-image:linear-gradient(to_top,white_85%,transparent_100%)] [webkit-mask-image:linear-gradient(to_top,white_85%,transparent_100%)]">
+    <footer className="relative w-full mt-15">
+      <ParallaxSection className="relative h-95 overflow-hidden [mask-image:linear-gradient(to_top,white_87.5%,transparent_100%)] [webkit-mask-image:linear-gradient(to_top,white_87.5%,transparent_100%)]">
         <ParallaxLayer layer={0} ratio={1}>
           <img
             className="w-full h-full object-cover brightness-[.8] contrast-[1.1]"
@@ -18,8 +18,8 @@ export default function Footer() {
 
         <ParallaxLayer
           layer={1}
-          ratio={1/4}
-          className="flex items-center justify-end p-5 lg:px-[35px]"
+          ratio={1 / 4}
+          className="flex w-full items-center justify-center p-5 lg:px-35"
         >
           <FooterCard />
         </ParallaxLayer>
@@ -27,14 +27,7 @@ export default function Footer() {
       <section className="w-full h-full bg-primary-800 text-neutral-50 p-5 py-10 z-10">
         <div className="relative z-10 flex flex-col md:items-center gap-5 w-full">
           <div className="flex w-fit gap-10 flex-col md:justify-between md:flex-row">
-            <FooterColumn>
-              <div className="grid gap-3">
-                <Favicon className="w-[60px] h-[60px]" />
-                <p className="text-neutral-300 text-sm">
-                  info@thesourceofhope.org
-                </p>
-              </div>
-            </FooterColumn>
+            <Favicon className="w-[60px] h-[60px]" />
             <FooterColumn title="CONNECT">
               <ul className="grid gap-1">
                 <li>
@@ -80,6 +73,16 @@ export default function Footer() {
                 </li>
                 <li>
                   <ExpressiveLink to="">Site Map</ExpressiveLink>
+                </li>
+              </ul>
+            </FooterColumn>
+            <FooterColumn title="CONTACT">
+              <ul className="grid gap-1">
+                <li>
+                  <p>info@thesourceofhope.org</p>
+                </li>
+                <li>
+                  <p>(469) 969-0244</p>
                 </li>
               </ul>
             </FooterColumn>

@@ -44,10 +44,10 @@
   --font-urbanist: "Urbanist", Helvetica, Arial, sans-serif;
   --font-inter: "Inter", Helvetica, Arial, sans-serif;
 
-  --text-xxlg: 2em;
-  --text-xlg: 1.5em;
-  --text-lg: 1.25em;
-  --text-md: 1em;
-  --text-sm: 0.875em;
-  --text-xs: 0.75em;
+  --text-xxlg: 2rem;
+  --text-xlg: 1.5rem;
+  --text-lg: 1.25rem;
+  --text-md: 1rem;
+  --text-sm: 0.875rem;
+  --text-xs: 0.75rem;
 }

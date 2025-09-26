@@ -1,7 +1,9 @@
 import { DefaultGenerator } from "../../components/ui/expressive/DefaultGenerator";
 import ExpressiveLink from "../../components/ui/expressive/ExpressiveLink";
 import { HighlightedText } from "../../components/ui/expressive/ExpressiveText";
-import HomeVisionSection from "./HomeVisionSection";
+import HomeImpactSection from "./sections/HomeImpactSection";
+import HomeMissionSection from "./sections/HomeMissionSection";
+import HomeResourcesSection from "./sections/HomeResourcesSection";
 
 export default function Home() {
   return (
@@ -53,6 +55,9 @@ export default function Home() {
           </div>
         </div>
       </section>
+      <HomeMissionSection />
+      <HomeImpactSection />
+      <HomeResourcesSection />
     </>
   );
 }
@@ -60,16 +65,18 @@ export default function Home() {
 export function HomeSection({ className, children, title, caption, to }) {
   return (
     <section
-      className={`my-5 px-5 lg:px-35 w-full h-full justify-items-center items-center grid gap-5 ${className}`}
+      className={`my-5 px-5 lg:px-35 w-full h-full justify-items-center items-center grid gap-5`}
     >
       <HighlightedText generator={DefaultGenerator.EASE_IN}>
-        <h2 className="text-lg">
-          {title}
-        </h2>
+        <h2 className="text-xlg font-semibold font-urbanist">{title}</h2>
       </HighlightedText>
-      {children}
+      <div className={className}>
+        {children}
+      </div>
       <button className="justify-self-end w-fit text-neutral-600">
-        <ExpressiveLink className="text-sm" to={to}>{caption}</ExpressiveLink>
+        <ExpressiveLink className="text-sm" to={to}>
+          {caption}
+        </ExpressiveLink>
       </button>
     </section>
   );

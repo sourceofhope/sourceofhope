@@ -8,6 +8,7 @@ export default function ExpressiveNumber({
   threshold = 0.1,
   generator = DefaultGenerator.LINEAR,
   ariaLive = "polite",
+  className
 }) {
   const reference = useRef(null);
   const [inView, setInView] = useState(false);
@@ -50,7 +51,7 @@ export default function ExpressiveNumber({
   }, [inView, start, end, duration, generator]);
 
   return (
-    <p aria-live={ariaLive} ref={reference}>
+    <p className={className} aria-live={ariaLive} ref={reference}>
       {value}
     </p>
   );
