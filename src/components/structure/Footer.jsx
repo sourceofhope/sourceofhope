@@ -6,7 +6,7 @@ import Favicon from "../ui/Favicon";
 
 export default function Footer() {
   return (
-    <footer className="relative w-full">
+    <footer className="relative w-full mt-5">
       <ParallaxSection className="relative h-95 overflow-hidden [mask-image:linear-gradient(to_top,white_85%,transparent_100%)] [webkit-mask-image:linear-gradient(to_top,white_85%,transparent_100%)]">
         <ParallaxLayer layer={0} ratio={1}>
           <img
@@ -18,7 +18,7 @@ export default function Footer() {
 
         <ParallaxLayer
           layer={1}
-          ratio={0}
+          ratio={1/4}
           className="flex items-center justify-end p-5 lg:px-[35px]"
         >
           <FooterCard />

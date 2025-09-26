@@ -16,8 +16,8 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 w-full overflow-hidden transition-all duration-300
-        ${open ? "h-85 md:h-25" : "h-25"}
+      className={`backdrop-filter fixed top-0 left-0 right-0 z-50 w-full overflow-hidden transition-all duration-300
+        ${open ? "h-85 md:h-25 backdrop-blur-sm" : "h-25 backdrop-blur-none"}
         ${
           scrolled
             ? "bg-primary-700 text-accent-50"
