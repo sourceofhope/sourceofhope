@@ -7,23 +7,19 @@ import Favicon from "../ui/Favicon";
 export default function Footer() {
   return (
     <footer className="relative w-full">
-      <ParallaxSection className="relative h-95 overflow-hidden">
+      <ParallaxSection className="relative h-95 overflow-hidden [mask-image:linear-gradient(to_top,white_85%,transparent_100%)] [webkit-mask-image:linear-gradient(to_top,white_85%,transparent_100%)]">
         <ParallaxLayer layer={0} ratio={1}>
           <img
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover brightness-[.8] contrast-[1.1]"
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
             alt=""
-            style={{
-              WebkitMaskImage:
-                "linear-gradient(to top, white 80%, transparent 100%)",
-              maskImage: "linear-gradient(to top, white 80%, transparent 100%)",
-            }}
           />
         </ParallaxLayer>
+
         <ParallaxLayer
           layer={1}
           ratio={0}
-          className="flex items-center justify-end p-5 lg:px-35"
+          className="flex items-center justify-end p-5 lg:px-[35px]"
         >
           <FooterCard />
         </ParallaxLayer>
@@ -34,7 +30,9 @@ export default function Footer() {
             <FooterColumn>
               <div className="grid gap-3">
                 <Favicon className="w-[60px] h-[60px]" />
-                <p className="text-neutral-300 text-sm">info@thesourceofhope.org</p>
+                <p className="text-neutral-300 text-sm">
+                  info@thesourceofhope.org
+                </p>
               </div>
             </FooterColumn>
             <FooterColumn title="CONNECT">
@@ -121,9 +119,7 @@ function FooterCard() {
         <h2 className="hidden md:block">
           Be The First To Know About Upcoming Events
         </h2>
-        <h2 className="block md:hidden">
-          Get Updates
-        </h2>
+        <h2 className="block md:hidden">Get Updates</h2>
       </div>
       <p className="text-sm">
         Join our family of supporters and receive inspiring stories, holistic
