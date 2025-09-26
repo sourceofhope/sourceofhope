@@ -1,21 +1,12 @@
 import { useEffect, useState, useRef } from "react";
-
-export const Generator = {
-  LINEAR: (interval) => interval,
-  EASE_IN: (interval) => Math.pow(interval, Math.E),
-  EASE_OUT: (interval) => 1 - Math.pow(1 - interval, Math.E),
-  EASE_IN_OUT: (interval) =>
-    interval < 0.5
-      ? 0.5 * Math.pow(2 * interval, Math.E)
-      : 1 - 0.5 * Math.pow(2 * (1 - interval), Math.E),
-};
+import { DefaultGenerator } from "./DefaultGenerator";
 
 export default function ExpressiveNumber({
   start = 0,
   end,
   duration = 5000,
   threshold = 0.1,
-  generator = Generator.LINEAR,
+  generator = DefaultGenerator.LINEAR,
   ariaLive = "polite",
 }) {
   const reference = useRef(null);

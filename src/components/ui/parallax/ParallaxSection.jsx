@@ -71,7 +71,7 @@ export default function ParallaxSection({ children, className }) {
   return (
     <section
       ref={sectionReference}
-      className={`${className} relative top-0`}
+      className={`relative top-0 ${className}`}
     >
       <ParallaxContext.Provider value={context}>
         <div className="relative h-full w-full">

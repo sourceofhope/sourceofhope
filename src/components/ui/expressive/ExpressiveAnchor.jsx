@@ -1,12 +1,12 @@
 import { ArrowUpRightIcon } from "@heroicons/react/20/solid";
 
-export default function ExpressiveAnchor({ href, children }) {
+export default function ExpressiveAnchor({ children, className, href }) {
   return (
     <a
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="group inline-flex w-full justify-between items-center gap-1 focus:outline-none"
+      className={`group inline-flex w-full justify-between items-center gap-1 focus:outline-none ${className}`}
     >
       <span>{children}</span>
       <ArrowUpRightIcon

@@ -1,11 +1,11 @@
 import { NavLink } from "react-router-dom";
 import { ArrowRightIcon } from "@heroicons/react/20/solid";
 
-export default function ExpressiveLink({ to, children }) {
+export default function ExpressiveLink({ children, className, to }) {
   return (
     <NavLink
       to={to}
-      className="group inline-flex w-full justify-between items-center gap-1  focus:outline-none"
+      className={`group inline-flex w-full justify-between items-center gap-1 focus:outline-none ${className}`}
     >
       <span>{children}</span>
       <ArrowRightIcon

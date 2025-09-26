@@ -1,5 +1,6 @@
 // ExpressiveText.jsx
 import { useEffect, useMemo, useRef, useState } from "react";
+import { DefaultGenerator } from "./DefaultGenerator";
 
 function mapCurve(
   curveFunction,
@@ -26,26 +27,82 @@ export const States = {
   PAUSE: 2,
 };
 
-export const Generator = {
-  LINEAR: (options) => mapCurve((interval) => interval, options),
-
-  EASE_IN: (options) =>
-    mapCurve((interval) => Math.pow(interval, Math.E), options),
-
-  EASE_OUT: (options) =>
-    mapCurve((interval) => 1 - Math.pow(1 - interval, Math.E), options),
-
-  EASE_IN_PIT: (options) =>
-    mapCurve(
-      (interval) =>
-        interval < 1 / 2
-          ? 4 * Math.pow(interval, 3)
-          : 1 - Math.pow(-2 * interval + 2, 3) / 2,
-      options
-    ),
+export const TypedGenerator = {
+  LINEAR: (options) => mapCurve(DefaultGenerator.LINEAR, options),
+  EASE_IN: (options) => mapCurve(DefaultGenerator.EASE_IN, options),
+  EASE_OUT: (options) => mapCurve(DefaultGenerator.EASE_OUT, options),
+  EASE_IN_OUT: (options) => mapCurve(DefaultGenerator.EASE_IN_OUT, options),
 };
 
-export default function ExpressiveText({
+export function HighlightedText({
+  children,
+  className,
+  start = 0,
+  end = 1,
+  duration = 500,
+  threshold = 0.1,
+  generator = DefaultGenerator.LINEAR,
+  ariaLive = "polite",
+}) {
+  const reference = useRef(null);
+  const [inView, setInView] = useState(false);
+  const [value, setValue] = useState(start);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setInView(true);
+          observer.disconnect();
+        }
+      },
+      { threshold: threshold }
+    );
+
+    if (reference.current) observer.observe(reference.current);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (!inView) return;
+
+    let startTime = null;
+
+    const animate = (currentTime) => {
+      if (!startTime) startTime = currentTime;
+      const normalProgress = Math.min((currentTime - startTime) / duration, 1);
+      const generatedProgress = generator(normalProgress);
+
+      const currentValue = 
+        start + (end - start) * generatedProgress;
+
+      setValue(currentValue);
+
+      if (normalProgress < 1) requestAnimationFrame(animate);
+    };
+
+    requestAnimationFrame(animate);
+  }, [inView, start, end, duration, generator]);
+
+  return (
+    <span
+      ref={reference}
+      aria-live={ariaLive}
+      style={{ ["--hl-w"]: `${value * 100}%` }}
+      className={`
+        relative inline-block align-baseline
+        after:content-[''] after:absolute after:left-0 after:bottom-0
+        after:block after:h-1/2 after:[width:var(--hl-w)]
+        after:bg-yellow-400 after:z-0
+        ${className}
+      `}
+    >
+      <span className="relative z-10">{children}</span>
+    </span>
+  );
+}
+
+export function TypedText({
   items = [],
   initial = States.TYPE,
   generator = LINEAR,

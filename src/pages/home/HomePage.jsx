@@ -1,14 +1,12 @@
-import { NavLink } from "react-router-dom";
-import { ArrowRightIcon } from "@heroicons/react/20/solid";
+import { DefaultGenerator } from "../../components/ui/expressive/DefaultGenerator";
 import ExpressiveLink from "../../components/ui/expressive/ExpressiveLink";
-import ExpressiveNumber, {
-  Generator,
-} from "../../components/ui/expressive/ExpressiveNumber";
+import { HighlightedText } from "../../components/ui/expressive/ExpressiveText";
+import HomeVisionSection from "./HomeVisionSection";
 
 export default function Home() {
   return (
     <>
-      <section className="flex justify-start items-end w-full mb-20 min-h-[80vh] md:min-h-screen">
+      <section className="flex justify-start items-end w-full mb-10 min-h-[80vh] md:min-h-screen">
         <video
           controls={false}
           autoPlay
@@ -47,10 +45,10 @@ export default function Home() {
           </p>
           <div className="flex gap-5 flex-col md:flex-row">
             <button className="border-5 rounded-2xl font-bold w-fit px-10 py-5 bg-accent-500 border-accent-500 text-neutral-50/75 hover:text-neutral-50/95 transition-colors">
-              <ExpressiveLink>SERVE</ExpressiveLink>
+              <ExpressiveLink>DONATE</ExpressiveLink>
             </button>
             <button className="border-5 rounded-2xl font-bold w-fit px-10 py-5 hover:bg-neutral-50/95 border-accent-500 bg-neutral-50/85 text-accent-500 transition-colors">
-              <ExpressiveLink>DONATE</ExpressiveLink>
+              <ExpressiveLink>LEARN MORE</ExpressiveLink>
             </button>
           </div>
         </div>
@@ -59,84 +57,20 @@ export default function Home() {
   );
 }
 
-function HomeSection({ className, children, title, caption, to }) {
+export function HomeSection({ className, children, title, caption, to }) {
   return (
     <section
-      className={`mt-10 px-5 lg:px-35 w-full h-full justify-items-center items-center grid gap-5 ${className}`}
+      className={`my-5 px-5 lg:px-35 w-full h-full justify-items-center items-center grid gap-5 ${className}`}
     >
-      <div>
-        <h2 className="text-(length:--text-xlg) font-bold text-center w-full">
+      <HighlightedText generator={DefaultGenerator.EASE_IN}>
+        <h2 className="text-lg">
           {title}
         </h2>
-      </div>
+      </HighlightedText>
       {children}
-      <button className="justify-self-end w-fit">
-        <ExpressiveLink to={to}>{caption}</ExpressiveLink>
+      <button className="justify-self-end w-fit text-neutral-600">
+        <ExpressiveLink className="text-sm" to={to}>{caption}</ExpressiveLink>
       </button>
     </section>
-  );
-}
-
-function HomeImpactColumn({ children }) {
-  return (
-    <article className="w-full grid justify-items-center grid-flow-row">
-      {children}
-    </article>
-  );
-}
-
-function HomeNewsCard({ title, caption, src, to }) {
-  return (
-    <article
-      to={to}
-      className="relative w-full h-full rounded-xl p-5 flex flex-col items-center bg-neutral-400"
-    >
-      <img src={src} alt={caption} className="w-full h-fit rounded-x1" />
-      <h2 className="text-lg text-neutral-50">{title}</h2>
-      <div>
-        <p>{caption}</p>
-        <div className="bg-accent-500 p-5 text-neutral-50 rounded-2xl justify-self-start w-fit inline-flex">
-          <ExpressiveLink className="text-accent-background" href="">
-            MORE
-          </ExpressiveLink>
-        </div>
-      </div>
-    </article>
-  );
-}
-
-function HomeResourceCard({ title, caption, src, to }) {
-  return (
-    <NavLink
-      to={to}
-      className="relative w-full h-full group overflow-hidden rounded-xl text-accent-background"
-    >
-      <img
-        src={src}
-        alt={caption}
-        className="inset-0 w-full h-full object-cover transition-transform"
-      />
-      <div
-        className="absolute bottom-0 left-0 w-full p-5 
-               bg-gradient-to-t from-black/90 to-transparent
-               rounded-xl flex flex-col justify-start"
-      >
-        <h2 className="text-lg font-bold text-center text-white">{title}</h2>
-
-        <p
-          className="text-sm text-gray-200 mt-2 max-h-0 opacity-0 overflow-hidden
-                 transition-all duration-500
-                 group-hover:max-h-100 group-hover:opacity-100"
-        >
-          {caption}
-        </p>
-      </div>
-      <div className="absolute right-5 top-5 p-1 rounded-4xl bg-black/70 h-fit w-fit">
-        <ArrowRightIcon
-          className="w-[1em] h-[1em] transition-transform duration-300 group-hover:translate-x-0.5"
-          aria-hidden="true"
-        />
-      </div>
-    </NavLink>
   );
 }
