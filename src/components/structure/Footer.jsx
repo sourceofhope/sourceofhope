@@ -29,8 +29,8 @@ export default function Footer() {
         </ParallaxLayer>
       </ParallaxSection>
       <section className="w-full h-full bg-primary-800 text-neutral-50 p-5 py-10 z-10">
-        <div className="relative z-10 flex flex-col items-center gap-5 w-full md:max-w-[50%] lg:max-w-[35%] mx-auto">
-          <div className="flex w-full gap-5 flex-col md:justify-between md:flex-row">
+        <div className="relative z-10 flex flex-col md:items-center gap-5 w-full">
+          <div className="flex w-fit gap-10 flex-col md:justify-between md:flex-row">
             <FooterColumn>
               <div className="grid gap-3">
                 <Favicon className="w-[60px] h-[60px]" />
