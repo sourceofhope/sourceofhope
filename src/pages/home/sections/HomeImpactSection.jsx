@@ -41,9 +41,9 @@ export default function HomeImpactSection() {
             muted
             loop
             playsInline
-            preload="auto"
+            preload="auto"s
             disablePictureInPicture
-            className="w-[500px] h-[500px] bg-accent-900 rounded-2xl object-center object-cover"
+            className="w-[500px] aspect-square bg-accent-900 rounded-2xl object-center object-cover"
           >
             <source
               src="https://static.vecteezy.com/system/resources/previews/041/753/968/mp4/time-lapse-sayans-foggy-mountains-of-russia-free-video.mp4"

@@ -1,4 +1,5 @@
 import { HomeSection } from "../HomePage";
+import Emphasis from "../../../components/ui/Emphasis"
 
 export default function HomeMissionSection() {
   return (
@@ -13,21 +14,21 @@ export default function HomeMissionSection() {
       <article>
         <p className="text-lg lg:text-xxlg text-left max-w-prose leading-relaxed">
           "Bringing hope and healing by providing{" "}
-          <Emphasized>
+          <Emphasis>
             <a href="">meals</a>
-          </Emphasized>
+          </Emphasis>
           ,{" "}
-          <Emphasized>
+          <Emphasis>
             <a href="">education</a>
-          </Emphasized>
+          </Emphasis>
           ,{" "}
-          <Emphasized>
+          <Emphasis>
             <a href="">wellness</a>
-          </Emphasized>
+          </Emphasis>
           , and{" "}
-          <Emphasized>
+          <Emphasis>
             <a href="">resources</a>
-          </Emphasized>{" "}
+          </Emphasis>{" "}
           that uplift and empower communities in need."{" "}
         </p>
 				<p className="pl-10 italic text-md">
@@ -36,8 +37,4 @@ export default function HomeMissionSection() {
       </article>
     </HomeSection>
   );
-}
-
-function Emphasized({ children }) {
-  return <span className="text-accent-500 font-semibold transition-transform hover:scale-115 duration-500">{children}</span>;
 }
