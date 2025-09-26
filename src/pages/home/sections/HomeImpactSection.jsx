@@ -10,7 +10,7 @@ export default function HomeImpactSection() {
       <div className="grid grid-flow-row w-full md:grid-cols-[1fr_1fr] items-center gap-5">
         <article className="flex flex-col gap-5 w-full justify-center items-center">
           <h2 className="text-xlg font-semibold font-urbanist">Our Impact</h2>
-          <p className="text-neutral-400">
+          <p className="text-neutral-400 text-center">
             Real Results and Powerful Change in Our Community
           </p>
           <ImpactNumber end={16} caption="Years of Service" post="+" />
@@ -41,7 +41,7 @@ export default function HomeImpactSection() {
             muted
             loop
             playsInline
-            preload="auto"s
+            preload="auto"
             disablePictureInPicture
             className="w-[500px] aspect-square bg-accent-900 rounded-2xl object-center object-cover"
           >
