@@ -67,7 +67,7 @@ export function HomeSection({ className, children, title, caption, to }) {
     <section
       className={`my-5 px-5 lg:px-35 w-full h-full justify-items-center items-center grid gap-5`}
     >
-      <HighlightedText generator={DefaultGenerator.EASE_IN}>
+      <HighlightedText generator={DefaultGenerator.EASE_IN_OUT}>
         <h2 className="text-xlg font-semibold font-urbanist">{title}</h2>
       </HighlightedText>
       <div className={className}>

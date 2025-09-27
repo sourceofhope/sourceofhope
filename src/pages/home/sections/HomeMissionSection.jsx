@@ -4,7 +4,7 @@ import Emphasis from "../../../components/ui/Emphasis"
 export default function HomeMissionSection() {
   return (
     <HomeSection
-      title="Our Mission"
+      title="Mission"
       className="grid grid-flow-row w-fit md:grid-cols-[1fr_1fr] items-center gap-5"
       caption="LEARN MORE"
     >
