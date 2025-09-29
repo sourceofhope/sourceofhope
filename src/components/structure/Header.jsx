@@ -16,11 +16,11 @@ export default function Header() {
 
   return (
     <header
-      className={`backdrop-filter fixed top-0 left-0 right-0 z-50 w-full overflow-hidden transition-all duration-300
-        ${open ? "h-85 md:h-25 backdrop-blur-sm" : "h-25 backdrop-blur-none"}
+      className={`backdrop-filter fixed top-0 left-0 right-0 z-50 w-full overflow-hidden transition-all duration-500 border-b-4 border-primary-700/0 md:border-none
+        ${open ? "h-85 md:h-25 md:backdrop-blur-none backdrop-blur-sm border-primary-700/100" : "h-25 backdrop-blur-none"}
         ${
           scrolled
-            ? "bg-primary-700 text-accent-50"
+            ? "bg-primary-700 text-accent-50 border-transparent"
             : "bg-transparent text-primary-700"
         }`}
     >
@@ -36,7 +36,7 @@ export default function Header() {
           open
             ? "opacity-100 translate-y-0 pointer-events-auto"
             : "opacity-0 -translate-y-2 pointer-events-none"
-        } will-change-[opacity,transform] transition-all duration-300 ease-out md:hidden flex flex-col justify-end items-center px-5 h-fit`}
+        } will-change-[opacity,transform] transition-all duration-500 ease-out md:hidden flex flex-col justify-end items-center px-5 h-fit`}
         aria-hidden={!open}
       >
         <HeaderNavigator />

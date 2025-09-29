@@ -9,8 +9,8 @@ export default function HomeImpactSection() {
     >
       <div className="grid grid-flow-row w-full md:grid-cols-[1fr_1fr] items-center gap-5">
         <article className="flex flex-col gap-5 w-full justify-center items-center">
-          <h2 className="text-xlg font-semibold font-urbanist">Our Impact</h2>
-          <p className="text-neutral-400 text-center">
+          <h2 className="text-xxlg font-semibold font-urbanist">Community Impact</h2>
+          <p className="text-neutral-300 text-center">
             Real Results and Powerful Change in Our Community
           </p>
           <ImpactNumber end={16} caption="Years of Service" post="+" />
@@ -34,7 +34,7 @@ export default function HomeImpactSection() {
             post="K"
           />
         </article>
-        <article className="flex md:border-l-2 w-full md:border-neutral-500 justify-center">
+        <article className="flex md:border-l-2 w-full px-10 md:border-neutral-500 justify-center">
           <video
             controls={false}
             autoPlay
@@ -74,7 +74,7 @@ function ImpactNumber({ end, caption, pre = "", post = "" }) {
         />
         {post}
       </strong>
-      <p className="border-b-2 pb-2 border-neutral-500">{caption}</p>
+      <p className="border-b-2 pb-2 text-neutral-300 border-neutral-500">{caption}</p>
     </div>
   );
 }

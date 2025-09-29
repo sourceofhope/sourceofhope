@@ -10,7 +10,7 @@ export default function Footer() {
       <ParallaxSection className="relative h-95 overflow-hidden [mask-image:linear-gradient(to_top,white_87.5%,transparent_100%)] [webkit-mask-image:linear-gradient(to_top,white_87.5%,transparent_100%)]">
         <ParallaxLayer layer={0} ratio={1}>
           <img
-            className="w-full h-full object-cover brightness-[.8] contrast-[1.1]"
+            className="w-full overflow-hidden h-full object-cover brightness-[.8] contrast-[1.1]"
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
             alt=""
           />
@@ -100,7 +100,7 @@ function FooterColumn({ title = "", children }) {
       <h2 className="text-lg font-bold whitespace-nowrap w-fit mb-2">
         {title}
       </h2>
-      {children}
+      <div className="text-neutral-300">{children}</div>
     </div>
   );
 }
@@ -132,7 +132,7 @@ function FooterCard() {
       <button className="border-5 rounded-2xl font-bold w-fit px-10 py-5 bg-accent-500 border-accent-500 text-neutral-50/75 hover:text-neutral-50/95 transition-colors">
         <ExpressiveLink>SUBSCRIBE</ExpressiveLink>
       </button>
-      <p className="text-sm text-neutral-500">No spam, unsubscribe anytime.</p>
+      <p className="text-sm text-neutral-600">No spam, unsubscribe anytime.</p>
     </article>
   );
 }

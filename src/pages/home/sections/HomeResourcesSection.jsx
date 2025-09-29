@@ -5,7 +5,7 @@ import Emphasis from "../../../components/ui/Emphasis";
 
 export default function HomeResourcesSection() {
   return (
-    <HomeSection title="Resources" caption="LEARN MORE" className="w-full">
+    <HomeSection title="Our Programs" caption="LEARN MORE" className="w-full">
       <NavLink to="">
         <h2 className="text-lg lg:text-xxlg text-center p-5">
           <Emphasis className="text-accent-500 font-semibold">
@@ -72,19 +72,20 @@ function HomeResourceCard({ title, caption, src, to }) {
                bg-gradient-to-t from-black/90 to-transparent
                rounded-xl flex flex-col justify-start"
       >
-        <h2 className="text-xlg font-bold text-center text-white">{title}</h2>
-
+        <h2 className="md:line-clamp-1 text-md lg:text-lg text-ellipsis lg:group-hover:text-md duration-500 transition-all font-bold text-center text-white">
+          {title}
+        </h2>
         <p
-          className="text-lg text-gray-200 mt-2 max-h-0 opacity-0 overflow-hidden
+          className="text-md hidden lg:block text-gray-200 mt-2 max-h-0 opacity-0 overflow-hidden
                  transition-all duration-500 text-justify
-                 group-hover:max-h-100 group-hover:opacity-100"
+                 group-hover:max-h-50 group-hover:opacity-100"
         >
           {caption}
         </p>
       </div>
       <div className="absolute right-5 top-5 p-1 rounded-4xl bg-black/70 h-fit w-fit text-neutral-50">
         <ArrowRightIcon
-          className="w-[1em] h-[1em] transition-transform duration-300 group-hover:translate-x-0.5"
+          className="w-[1em] h-[1em] transition-transform duration-500 group-hover:translate-x-0.5"
           aria-hidden="true"
         />
       </div>

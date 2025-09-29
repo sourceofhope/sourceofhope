@@ -4,9 +4,9 @@ import Footer from "../structure/Footer";
 
 export default function AppLayout() {
   return (
-    <div className="bg-neutral-50">
+    <div className="w-screen bg-neutral-50">
       <Header />
-      <main className="w-screen min-h-screen">
+      <main className="w-full min-h-screen">
         <Outlet />
       </main>
       <Footer />
