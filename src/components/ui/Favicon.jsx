@@ -4,9 +4,9 @@ export default function Favicon({ className }) {
   return (
     <NavLink
       to="/"
-      className={`${className} text-lg flex items-center border-2`}
+      className={`${className} text-lg flex items-center justify-center border-2`}
     >
-      <p className="text-center w-full">ICON</p>
+      <p className="text-center w-fit">ICON</p>
     </NavLink>
   );
 }

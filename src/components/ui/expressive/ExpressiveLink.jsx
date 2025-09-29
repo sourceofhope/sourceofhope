@@ -9,7 +9,7 @@ export default function ExpressiveLink({ children, className, to }) {
     >
       <span>{children}</span>
       <ArrowRightIcon
-        className="w-[1em] h-[1em] transition-transform duration-300 group-hover:translate-x-1"
+        className="w-[1em] h-[1em] transition-transform duration-500 group-hover:translate-x-1"
         aria-hidden="true"
       />
     </NavLink>

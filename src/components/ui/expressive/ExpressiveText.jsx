@@ -91,7 +91,7 @@ export function HighlightedText({
       style={{ ["--hl-w"]: `${value * 100}%` }}
       className={`
         relative inline-block align-baseline
-        after:content-[''] after:absolute after:left-0 after:bottom-0
+        after:content-[''] after:absolute after:left-0 after:top-1/4
         after:block after:h-1/2 after:[width:var(--hl-w)]
         after:bg-yellow-400 after:z-0
         ${className}
