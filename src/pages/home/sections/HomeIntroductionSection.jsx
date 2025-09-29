@@ -2,14 +2,14 @@ import ExpressiveLink from "../../../components/ui/expressive/ExpressiveLink";
 
 export default function HomeIntroductionSection() {
   return (
-    <section className="flex justify-start items-end w-full mb-10 min-h-[80vh] md:min-h-screen">
+    <section className="relative flex w-full mb-10 min-h-[80vh] md:min-h-screen">
       <video
         controls={false}
         autoPlay
         muted
         loop
         playsInline
-        className="absolute left-0 top-0 z-0 h-[80vh] md:h-full w-full object-cover"
+        className="absolute inset-0 z-0 h-[80vh] md:h-full w-full object-cover"
         style={{
           WebkitMaskImage:
             "linear-gradient(to bottom, white 70%, transparent 100%)",
@@ -23,7 +23,8 @@ export default function HomeIntroductionSection() {
           type="video/mp4"
         />
       </video>
-      <div className="grid gap-3 absolute w-full md:w-[70vw] md:m-35 md:max-w-[70vh] lg:p-0 p-5 justify-self-center opacity-90">
+
+      <div className="relative z-10 w-full max-w-[75ch] md:max-w-[100ch] self-end grid gap-3 opacity-90 p-5 md:pb-35 lg:p-35">
         <h2 className="text-neutral-50 font-urbanist text-md md:text-lg font-bold">
           THE SOURCE OF HOPE
         </h2>
