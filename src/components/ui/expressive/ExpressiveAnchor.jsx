@@ -10,7 +10,7 @@ export default function ExpressiveAnchor({ children, className, href }) {
     >
       <span>{children}</span>
       <ArrowUpRightIcon
-        className="w-[1em] h-[1em] transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1"
+        className="w-[1em] h-[1em] transition-transform duration-500 group-hover:translate-x-1 group-hover:-translate-y-1"
         aria-hidden="true"
       />
     </a>
