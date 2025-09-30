@@ -14,7 +14,7 @@ export default function ErrorLayout({ code = 500, message }) {
   const display = defaults[code] || "An unexpected error occurred.";
 
   return (
-    <div className="bg-neutral-50">
+    <>
       <Header />
       <main className="w-screen min-h-screen flex flex-col justify-center items-start gap-5 px-5 lg:px-35">
         <Favicon className="w-[60px] h-[60px]" />
@@ -26,7 +26,7 @@ export default function ErrorLayout({ code = 500, message }) {
           If you are unable to resolve this error, please contact{" "}
           <a
             className="font-semibold text-accent-500"
-            href={`mailto:info@thesourceofhope.org?subject=Website Error Code ${code} : ${message}`}
+            href={`mailto:info@thesourceofhope.org?subject=Website Error Code ${code}: ${message}`}
           >
             info@thesourceofhope.org
           </a>{" "}
@@ -37,6 +37,6 @@ export default function ErrorLayout({ code = 500, message }) {
         </button>
       </main>
       <Footer />
-    </div>
+    </>
   );
 }

@@ -12,18 +12,25 @@ export default function HomeMissionSection() {
       <article className="flex flex-col">
         <p className="w-fit text-base sm:text-lg md:text-xl lg:text-2xl text-left md:text-balance max-w-prose leading-relaxed">
           "Bringing hope and healing by providing{" "}
-          <Emphasis>
-            <a href="">meals</a>
-          </Emphasis>
-          ,{" "}
-          <Emphasis>
-            <a href="">education</a>
-          </Emphasis>
-          ,{" "}
-          <Emphasis>
-            <a href="">wellness</a>
-          </Emphasis>
-          , and{" "}
+          <span className="inline-block">
+            <Emphasis>
+              <a href="">meals</a>
+            </Emphasis>
+            ,
+          </span>{" "}
+          <span className="inline-block">
+            <Emphasis>
+              <a href="">education</a>
+            </Emphasis>
+            ,
+          </span>{" "}
+          <span className="inline-block">
+            <Emphasis>
+              <a href="">wellness</a>
+            </Emphasis>
+            ,
+          </span>{" "}
+          and{" "}
           <Emphasis>
             <a href="">resources</a>
           </Emphasis>{" "}

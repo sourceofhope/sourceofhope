@@ -79,10 +79,10 @@ export default function Footer() {
             <FooterColumn title="CONTACT">
               <ul className="grid gap-1">
                 <li>
-                  <p>info@thesourceofhope.org</p>
+                  <a href="mailto:info@thesourceofhope.org">info@thesourceofhope.org</a>
                 </li>
                 <li>
-                  <p>(469) 969-0244</p>
+                  <a href="tel:4699690244">(469)-969-0244</a>
                 </li>
               </ul>
             </FooterColumn>
@@ -116,7 +116,7 @@ function FooterBottom() {
 function FooterCard() {
   return (
     <article
-      className={`flex flex-col gap-3 rounded-2xl shadow-2x overflow-hidden w-175 h-fit p-5 bg-neutral-50 text-neutral-950`}
+      className={`flex flex-col gap-3 rounded-2xl shadow-2x overflow-hidden w-150 h-fit p-5 bg-neutral-50 text-neutral-950`}
     >
       <div className="h-fit w-full text-lg font-bold">
         <h2 className="hidden md:block">
@@ -129,8 +129,8 @@ function FooterCard() {
         wellness tips, and community updates right to your inbox by subscribing
         to our newsletter.
       </p>
-      <button className="border-5 rounded-2xl font-bold w-fit px-10 py-5 bg-accent-500 border-accent-500 text-neutral-50/75 hover:text-neutral-50/95 transition-colors">
-        <ExpressiveLink>SUBSCRIBE</ExpressiveLink>
+      <button className="border-5 rounded-2xl font-bold w-fit bg-accent-500 border-accent-500 text-neutral-50/75 hover:text-neutral-50/95 transition-colors">
+        <ExpressiveLink className="px-10 py-5">SUBSCRIBE</ExpressiveLink>
       </button>
       <p className="text-sm text-neutral-600">No spam, unsubscribe anytime.</p>
     </article>

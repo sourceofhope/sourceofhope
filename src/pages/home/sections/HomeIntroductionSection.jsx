@@ -23,9 +23,8 @@ export default function HomeIntroductionSection() {
           type="video/mp4"
         />
       </video>
-
-      <div className="relative z-10 w-full max-w-[75ch] md:max-w-[100ch] self-end grid gap-3 opacity-90 p-5 md:pb-35 lg:p-35">
-        <h2 className="text-neutral-50 font-urbanist text-md md:text-lg font-bold">
+      <div className="relative z-10 w-full max-w-[75ch] md:max-w-[100ch] self-end grid gap-3 p-5 md:pb-35 lg:p-35">
+        <h2 className="text-neutral-50 font-urbanist text-md md:text-lg font-semibold">
           THE SOURCE OF HOPE
         </h2>
         <h2 className="text-neutral-50 font-urbanist text-lg md:text-xlg font-bold">
@@ -40,11 +39,11 @@ export default function HomeIntroductionSection() {
           safety, and resources to live healthier, fulfilling lives.
         </p>
         <div className="flex gap-5 flex-col md:flex-row">
-          <button className="border-5 rounded-2xl font-bold w-fit px-10 py-5 bg-accent-500 border-accent-500 text-neutral-50/75 hover:text-neutral-50/95 transition-colors">
-            <ExpressiveLink>DONATE</ExpressiveLink>
+          <button className="border-5 rounded-2xl font-bold w-fit shadow-sm hover:shadow-lg shadow-accent-500/70 bg-accent-500 border-accent-500 text-neutral-50/75 duration-500 hover:text-neutral-50/95 opacity-85 hover:opacity-100 transition-[shadow_colors]">
+            <ExpressiveLink className="px-10 py-5">DONATE</ExpressiveLink>
           </button>
-          <button className="border-5 rounded-2xl font-bold w-fit px-10 py-5 hover:bg-neutral-50/95 border-accent-500 bg-neutral-50/85 text-accent-500 transition-colors">
-            <ExpressiveLink>LEARN MORE</ExpressiveLink>
+          <button className="border-5 rounded-2xl font-bold w-fit shadow-sm hover:shadow-lg shadow-accent-500/70 hover:bg-neutral-50/95 border-accent-500 bg-neutral-50/90 duration-500 text-accent-500 opacity-85 hover:opacity-100 transition-[shadow_colors]">
+            <ExpressiveLink className="px-10 py-5">LEARN MORE</ExpressiveLink>
           </button>
         </div>
       </div>

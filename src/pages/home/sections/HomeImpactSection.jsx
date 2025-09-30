@@ -30,7 +30,6 @@ export default function HomeImpactSection() {
           <ImpactNumber
             end={273}
             caption="Total Volunteer Hours Served"
-            pre="$"
             post="K"
           />
         </article>

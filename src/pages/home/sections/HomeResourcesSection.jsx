@@ -72,20 +72,20 @@ function HomeResourceCard({ title, caption, src, to }) {
                bg-gradient-to-t from-black/90 to-transparent
                rounded-xl flex flex-col justify-start"
       >
-        <h2 className="md:line-clamp-1 text-md lg:text-lg text-ellipsis lg:group-hover:text-md duration-500 transition-all font-bold text-center text-white">
+        <h2 className="md:line-clamp-1 text-md text-ellipsis lg:group-hover:text-sm duration-1000 transition-all font-bold text-center text-white">
           {title}
         </h2>
         <p
-          className="text-md hidden lg:block text-gray-200 mt-2 max-h-0 opacity-0 overflow-hidden
-                 transition-all duration-500 text-justify
-                 group-hover:max-h-50 group-hover:opacity-100"
+          className="text-sm hidden lg:block text-gray-200 mt-2 max-h-0 opacity-0 overflow-hidden
+                 transition-all duration-1000 text-justify
+                 group-hover:max-h-70 group-hover:opacity-100"
         >
           {caption}
         </p>
       </div>
       <div className="absolute right-5 top-5 p-1 rounded-4xl bg-black/70 h-fit w-fit text-neutral-50">
         <ArrowRightIcon
-          className="w-[1em] h-[1em] transition-transform duration-500 group-hover:translate-x-0.5"
+          className="w-[1em] h-[1em] transition-transform duration-1000 group-hover:translate-x-0.5"
           aria-hidden="true"
         />
       </div>
