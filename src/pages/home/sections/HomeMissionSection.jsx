@@ -9,7 +9,7 @@ export default function HomeMissionSection() {
       caption="LEARN MORE"
     >
       <article className="flex flex-col">
-        <p className="w-fit text-base sm:text-lg md:text-xxlg lg:text-2xl text-left md:text-balance leading-relaxed">
+        <p className="w-fit text-md md:text-lg lg:text-xlg lg:text-2xl text-left md:text-balance leading-relaxed">
           "Bringing hope and healing by providing{" "}
           <span className="inline-block">
             <Emphasis>

@@ -1,17 +1,18 @@
 import { useState } from "react";
 import ExpressiveLink from "../../../components/ui/expressive/ExpressiveLink";
 import { HighlightedText } from "../../../components/ui/expressive/ExpressiveText";
+import { HomeSection } from "../HomePage";
 
 export default function HomePublicationsSection() {
   const [active, setActive] = useState(0);
   const total = 5;
 
   return (
-    <section className="my-5 py-5 px-5 lg:px-35 w-full h-full justify-items-center items-center grid gap-5">
+    <HomeSection>
       <div className="grid grid-flow-row w-full md:grid-cols-[1fr_1fr] items-center gap-5">
-        <article className="flex flex-col gap-5 items-center md:items-start">
+        <article className="flex flex-col gap-5 md:items-start">
           <HighlightedText className="w-fit">
-            <h2 className="text-center w-fit font-urbanist text-xxlg md:text-left font-semibold">
+            <h2 className="text-center w-fit font-urbanist text-xxlg font-semibold">
               Latest Updates
             </h2>
           </HighlightedText>
@@ -42,7 +43,7 @@ export default function HomePublicationsSection() {
           </div>
         </article>
       </div>
-    </section>
+    </HomeSection>
   );
 }
 
