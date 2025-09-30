@@ -5,7 +5,7 @@ import { DefaultGenerator } from "../../../components/ui/expressive/DefaultGener
 export default function HomeImpactSection() {
   return (
     <section
-      className={`my-5 py-5 px-5 lg:px-35 w-full h-full justify-items-center items-center grid gap-5 bg-accent-800 text-neutral-50`}
+      className="my-5 py-5 px-5 lg:px-35 w-full h-full justify-items-center items-center grid gap-5 bg-accent-800 text-neutral-50"
     >
       <div className="grid grid-flow-row w-full md:grid-cols-[1fr_1fr] items-center gap-5">
         <article className="flex flex-col gap-5 w-full justify-center items-center">
@@ -33,7 +33,7 @@ export default function HomeImpactSection() {
             post="K"
           />
         </article>
-        <article className="flex md:border-l-2 w-full px-10 md:border-neutral-500 justify-center">
+        <article className="flex md:border-l-2 w-full pl-10 md:border-neutral-500 justify-center">
           <video
             controls={false}
             autoPlay

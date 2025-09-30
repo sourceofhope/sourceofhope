@@ -6,6 +6,7 @@ import HomeImpactSection from "./sections/HomeImpactSection";
 import HomeIntroductionSection from "./sections/HomeIntroductionSection";
 import HomeMissionSection from "./sections/HomeMissionSection";
 import HomeResourcesSection from "./sections/HomeResourcesSection";
+import HomePublicationsSection from "./sections/HomePublicationsSection";
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
       <HomeMissionSection />
       <HomeImpactSection />
       <HomeResourcesSection />
+      <HomePublicationsSection />
     </>
   );
 }
