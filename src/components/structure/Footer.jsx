@@ -15,7 +15,6 @@ export default function Footer() {
             alt=""
           />
         </ParallaxLayer>
-
         <ParallaxLayer
           layer={1}
           ratio={1 / 4}
@@ -27,7 +26,19 @@ export default function Footer() {
       <section className="w-full h-full bg-primary-800 text-neutral-50 p-5 py-10 z-10">
         <div className="relative z-10 flex flex-col md:items-center gap-5 w-full">
           <div className="flex w-fit gap-10 flex-col md:justify-between md:flex-row">
-            <Favicon className="w-[60px] h-[60px]" />
+            <FooterColumn>
+              <ul className="grid gap-1">
+                <Favicon className="w-[60px] h-[60px]" />
+                <a
+                  href="https://app.candid.org/profile/9393304/the-source-of-hope-46-2491772"
+                  target="_blank"
+                  className="w-[60px] h-[60px]"
+                >
+                  {" "}
+                  <img src="https://widgets.guidestar.org/prod/v1/pdp/transparency-seal/9393304/svg" />{" "}
+                </a>
+              </ul>
+            </FooterColumn>
             <FooterColumn title="CONNECT">
               <ul className="grid gap-1">
                 <li>
@@ -79,7 +90,9 @@ export default function Footer() {
             <FooterColumn title="CONTACT">
               <ul className="grid gap-1">
                 <li>
-                  <a href="mailto:info@thesourceofhope.org">info@thesourceofhope.org</a>
+                  <a href="mailto:info@thesourceofhope.org">
+                    info@thesourceofhope.org
+                  </a>
                 </li>
                 <li>
                   <a href="tel:4699690244">(469)-969-0244</a>
