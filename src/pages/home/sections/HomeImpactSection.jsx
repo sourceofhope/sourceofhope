@@ -33,7 +33,7 @@ export default function HomeImpactSection() {
             post="K"
           />
         </article>
-        <article className="flex md:border-l-2 w-full pl-10 md:border-neutral-500 justify-center">
+        <article className="flex md:border-l-2 w-full md:pl-10 md:border-neutral-500 justify-center">
           <video
             controls={false}
             autoPlay

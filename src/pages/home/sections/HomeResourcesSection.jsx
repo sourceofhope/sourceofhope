@@ -5,15 +5,15 @@ import Emphasis from "../../../components/ui/Emphasis";
 
 export default function HomeResourcesSection() {
   return (
-    <HomeSection title="Our Programs" caption="LEARN MORE" className="w-full">
-      <NavLink to="">
-        <h2 className="text-lg lg:text-xxlg text-center p-5">
-          <Emphasis className="text-accent-500 font-semibold">
-            We provide a number of resources
-          </Emphasis>{" "}
+    <HomeSection title="Resources" caption="LEARN MORE" className="w-full">
+        <h2 className="text-lg lg:text-xxlg pb-5">
+          <NavLink to="">
+            <Emphasis className="text-accent-500 font-semibold">
+              We provide a number of resources
+            </Emphasis>{" "}
+          </NavLink>
           to our community.
         </h2>
-      </NavLink>
       <div className="w-full h-full grid grid-flow-row md:grid-cols-3 md:grid-rows-2 gap-5 justify-center items-center">
         <HomeResourceCard
           title="EDUCATION FOR HOPE"

@@ -4,13 +4,12 @@ import Emphasis from "../../../components/ui/Emphasis";
 export default function HomeMissionSection() {
   return (
     <HomeSection
-      title="Our Mission"
-      className="grid grid-flow-row w-fit md:grid-cols-[1fr_1fr] items-center gap-5"
+      title="Mission"
+      className="flex w-fit items-center justify-start gap-5"
       caption="LEARN MORE"
     >
-      <img className="justify-self-center self-center w-[200px] h-[200px] object-cover rounded-2xl" />
       <article className="flex flex-col">
-        <p className="w-fit text-base sm:text-lg md:text-xl lg:text-2xl text-left md:text-balance max-w-prose leading-relaxed">
+        <p className="w-fit text-base sm:text-lg md:text-xxlg lg:text-2xl text-left md:text-balance leading-relaxed">
           "Bringing hope and healing by providing{" "}
           <span className="inline-block">
             <Emphasis>

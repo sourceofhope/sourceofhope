@@ -10,15 +10,22 @@ export default function HomePublicationsSection() {
     <section className="my-5 py-5 px-5 lg:px-35 w-full h-full justify-items-center items-center grid gap-5">
       <div className="grid grid-flow-row w-full md:grid-cols-[1fr_1fr] items-center gap-5">
         <article className="flex flex-col gap-5 items-center md:items-start">
-					<HighlightedText className="w-fit">
-						<h2 className="text-center w-fit font-urbanist text-xxlg md:text-left font-semibold">Latest Updates</h2>
-					</HighlightedText>
+          <HighlightedText className="w-fit">
+            <h2 className="text-center w-fit font-urbanist text-xxlg md:text-left font-semibold">
+              Latest Updates
+            </h2>
+          </HighlightedText>
           <p className="md:text-balance">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
             ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
             aliquip ex ea commodo consequat.
           </p>
+          <button className="w-fit text-neutral-600">
+            <ExpressiveLink className="text-sm" to="">
+              LEARN MORE
+            </ExpressiveLink>
+          </button>
         </article>
         <article className="flex flex-col gap-5 pt-5 border-t-2 md:border-t-0 md:border-l-2 w-full md:pl-10 border-neutral-400 justify-center">
           {Array.from({ length: total }).map((_, i) => (
@@ -35,11 +42,6 @@ export default function HomePublicationsSection() {
           </div>
         </article>
       </div>
-      <button className="justify-self-end md:justify-self-end w-fit text-neutral-600">
-        <ExpressiveLink className="text-sm" to="">
-          LEARN MORE
-        </ExpressiveLink>
-      </button>
     </section>
   );
 }

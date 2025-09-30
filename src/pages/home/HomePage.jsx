@@ -23,9 +23,9 @@ export default function Home() {
 export function HomeSection({ className, children, title, caption, to }) {
   return (
     <section
-      className={`my-5 px-5 lg:px-35 w-full h-full justify-items-center items-center grid gap-5`}
+      className={`my-5 px-5 lg:px-35 w-full h-full justify-items-left items-center grid gap-5`}
     >
-      <HighlightedText generator={DefaultGenerator.EASE_IN_OUT}>
+      <HighlightedText className="w-fit" generator={DefaultGenerator.EASE_IN_OUT}>
         <h2 className="text-xxlg font-semibold font-urbanist">{title}</h2>
       </HighlightedText>
       <div className={className}>{children}</div>
