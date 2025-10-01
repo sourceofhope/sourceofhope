@@ -11,12 +11,12 @@ export default function HomePublicationsSection() {
     <HomeSection>
       <div className="grid grid-flow-row w-full md:grid-cols-[1fr_1fr] items-center gap-5">
         <article className="flex flex-col gap-5 md:items-start">
-          <HighlightedText className="w-fit">
-            <h2 className="text-center w-fit font-urbanist text-xxlg font-semibold">
+          <HighlightedText className="w-fit self-center md:self-auto">
+            <h2 className="w-fit font-urbanist text-xxlg font-semibold">
               Latest Updates
             </h2>
           </HighlightedText>
-          <p className="md:text-balance">
+          <p className="text-left text-balance">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
             ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
@@ -51,7 +51,7 @@ function CarouselSelector({ selected, onClick }) {
   return (
     <button
       className={`${
-        selected ? "w-1/6 bg-accent-500" : "w-4 bg-neutral-600"
+        selected ? "w-1/6 bg-accent-500" : "w-4 bg-accent-600"
       } h-2 rounded-full  transition-[width_color] duration-500`}
       onClick={onClick}
     ></button>

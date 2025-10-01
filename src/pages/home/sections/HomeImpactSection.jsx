@@ -4,14 +4,15 @@ import { DefaultGenerator } from "../../../components/ui/expressive/DefaultGener
 
 export default function HomeImpactSection() {
   return (
-    <section
-      className="my-5 py-5 px-5 lg:px-35 w-full h-full justify-items-center items-center grid gap-5 bg-accent-800 text-neutral-50"
-    >
-      <div className="grid grid-flow-row w-full md:grid-cols-[1fr_1fr] items-center gap-5">
+    <section className="my-5 py-5 px-5 lg:px-35 w-full h-full grid gap-5 bg-accent-800 text-neutral-50">
+      <div className="grid grid-flow-row w-full md:grid-cols-[1fr_1fr] items-center justify-self-center gap-5">
         <article className="flex flex-col gap-5 w-full justify-center items-center">
-          <h2 className="text-xxlg font-semibold font-urbanist">Community Impact</h2>
+          <h2 className="text-xxlg font-semibold font-urbanist">
+            Community Impact
+          </h2>
           <p className="text-neutral-300 text-center">
-            Real Results and Powerful Change in Our Community
+            Real <strong className="font-semibold">Results</strong> and Powerful{" "}
+            <strong className="font-semibold">Change</strong> in Our Community
           </p>
           <ImpactNumber end={16} caption="Years of Service" post="+" />
           <ImpactNumber
@@ -51,7 +52,7 @@ export default function HomeImpactSection() {
           </video>
         </article>
       </div>
-      <button className="justify-self-end md:justify-self-start w-fit text-neutral-400">
+      <button className="justify-self-end md:justify-self-end w-fit text-neutral-400">
         <ExpressiveLink className="text-sm" to="">
           LEARN MORE
         </ExpressiveLink>
@@ -73,7 +74,9 @@ function ImpactNumber({ end, caption, pre = "", post = "" }) {
         />
         {post}
       </strong>
-      <p className="border-b-2 pb-2 text-neutral-300 border-neutral-500">{caption}</p>
+      <p className="border-b-2 pb-2 text-neutral-300 border-neutral-500">
+        {caption}
+      </p>
     </div>
   );
 }

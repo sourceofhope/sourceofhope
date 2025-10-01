@@ -27,7 +27,7 @@ export default function Footer() {
         <div className="relative z-10 flex flex-col md:items-center gap-5 w-full">
           <div className="flex w-fit gap-10 flex-col md:justify-between md:flex-row">
             <FooterColumn>
-              <ul className="grid gap-1">
+              <ul className="grid gap-5">
                 <Favicon className="w-[60px] h-[60px]" />
                 <a
                   href="https://app.candid.org/profile/9393304/the-source-of-hope-46-2491772"
