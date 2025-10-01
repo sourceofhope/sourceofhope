@@ -16,7 +16,7 @@ export default function Header() {
 
   return (
     <header
-      className={`backdrop-filter fixed top-0 left-0 right-0 z-50 w-full overflow-hidden transition-all duration-500 border-b-4 border-primary-700/0 md:border-none
+      className={`backdrop-filter fixed top-0 left-0 right-0 z-50 w-full overflow-hidden transition-[height_backdrop] duration-500 border-b-4 border-primary-700/0 md:border-none
         ${open ? "h-85 md:h-25 md:backdrop-blur-none backdrop-blur-sm border-primary-700/100" : "h-25 backdrop-blur-none"}
         ${
           scrolled
@@ -26,7 +26,7 @@ export default function Header() {
     >
       <section className="flex w-full h-25 items-center justify-between px-5 lg:px-35">
         <Favicon className="w-[60px] h-[60px]"/>
-        <nav className="hidden md:flex gap-6">
+        <nav className="hidden md:flex gap-5">
           <HeaderNavigator />
         </nav>
         <HeaderMenu open={open} setOpen={setOpen} />
@@ -34,9 +34,9 @@ export default function Header() {
       <nav
         className={`${
           open
-            ? "opacity-100 translate-y-0 pointer-events-auto"
-            : "opacity-0 -translate-y-2 pointer-events-none"
-        } will-change-[opacity,transform] transition-all duration-500 ease-out md:hidden flex flex-col justify-end items-center px-5 h-fit`}
+            ? "opacity-100 pointer-events-auto"
+            : "opacity-0 pointer-events-none"
+        } will-change-[opacity] transition-opacity duration-500 ease-out md:hidden flex flex-col justify-end items-center px-5 h-fit`}
         aria-hidden={!open}
       >
         <HeaderNavigator />

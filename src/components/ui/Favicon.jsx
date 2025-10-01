@@ -6,7 +6,7 @@ export default function Favicon({ className }) {
       to="/"
       className={`${className} text-lg flex items-center justify-center border-2`}
     >
-      <p className="text-center w-fit">ICON</p>
+      <p className="w-fit">ICON</p>
     </NavLink>
   );
 }
