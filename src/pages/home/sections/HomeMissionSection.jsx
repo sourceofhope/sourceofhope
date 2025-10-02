@@ -4,7 +4,7 @@ import ExpressiveAnchor from "../../../components/ui/expressive/ExpressiveAnchor
 
 export default function HomeMissionSection() {
   return (
-    <HomeSection title="Mission" className="flex flex-col w-full gap-5 justify-self-center">
+    <HomeSection className="flex flex-col w-full gap-5 justify-self-center">
       <p className="w-fit text-md md:text-lg lg:text-xxlg lg:text-2xl text-center self-center text-balance leading-relaxed lg:max-w-[50ch]">
         "Bringing hope and healing by providing{" "}
         <span className="inline-block">

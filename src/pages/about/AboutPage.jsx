@@ -23,9 +23,9 @@ export default function AboutPage() {
           life at a time.
         </p>
       </PageSection>
-      <PageSection className="grid-flow-row md:grid-flow-col md:grid-cols-[60%_40%] gap-0 items-start">
+      <PageSection className="grid-flow-row md:grid-flow-col md:grid-cols-[60%_40%] gap-0">
         <article className="flex gap-5 flex-col">
-          <h2 className="text-xlg">
+          <h2 className="text-xxlg">
             Founded in 2014 on <Emphasis>principle</Emphasis>:
           </h2>
           <div className="flex flex-col text-sm md:text-md">
@@ -34,21 +34,21 @@ export default function AboutPage() {
               with lifelong skills, wellness, and community so hope becomes
               sustainable."
             </p>
-            <p className="w-fit font-light ml-3 md:text-left text-neutral-600">
+            <p className="w-fit font-light mx-3 text-neutral-600">
               <ExpressiveAnchor href="https://www.google.com/url?sa=t&source=web&rct=j&opi=89978449&url=https://www.linkedin.com/in/qu%25E1%25BB%25B3nh-ch%25C3%25A2u-qc-stone-87185b34&ved=2ahUKEwjywp_wrYGQAxXtliYFHUMmF_UQFnoECB4QAQ&usg=AOvVaw0atvVnt9I7rD053D7ksuUk">
                 – Co-founder,{" "}
                 <strong className="font-semibold">Quynh Chau Stone</strong>
               </ExpressiveAnchor>
             </p>
           </div>
-          <div>
+          <div className="mx-3 flex flex-col gap-3 text-sm md:text-md">
             <h2 className="font-semibold">Mission</h2>
             <p className="text-balance">
               Bringing hope and healing by providing meals, education, wellness,
               and resources that uplift and empower communities in need.
             </p>
           </div>
-          <div>
+          <div className="mx-3 flex flex-col gap-3 text-sm md:text-md">
             <h2 className="font-semibold">Vision</h2>
             <p className="text-balance">
               A world where every person has the wellness, skills, and community

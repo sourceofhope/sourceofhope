@@ -5,7 +5,7 @@ import Emphasis from "../../../components/ui/Emphasis";
 
 export default function HomeResourcesSection() {
   return (
-    <HomeSection title="Resources" className="w-full">
+    <HomeSection className="w-full">
         <h2 className="text-md md:text-lg lg:text-xxlg pb-5 text-center text-balance">
           <NavLink to="">
             <Emphasis>
