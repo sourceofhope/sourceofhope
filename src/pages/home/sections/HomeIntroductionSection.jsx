@@ -43,7 +43,7 @@ export default function HomeIntroductionSection() {
             <ExpressiveLink className="px-10 py-5">DONATE</ExpressiveLink>
           </button>
           <button className="border-5 rounded-2xl font-bold w-fit shadow-sm hover:shadow-lg shadow-accent-500/70 hover:bg-neutral-50/95 border-accent-500 bg-neutral-50/90 duration-500 text-accent-500 opacity-85 hover:opacity-100 transition-[shadow_colors]">
-            <ExpressiveLink className="px-10 py-5">LEARN MORE</ExpressiveLink>
+            <ExpressiveLink className="px-10 py-5" to="/sourceofhope/about">LEARN MORE</ExpressiveLink>
           </button>
         </div>
       </div>

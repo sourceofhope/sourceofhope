@@ -5,7 +5,7 @@ import Emphasis from "../../../components/ui/Emphasis";
 
 export default function HomeResourcesSection() {
   return (
-    <HomeSection className="w-full">
+    <HomeSection title="Resources" className="w-full">
         <h2 className="text-md md:text-lg lg:text-xxlg pb-5 text-center text-balance">
           <NavLink to="">
             <Emphasis>
@@ -77,7 +77,7 @@ function HomeResourceCard({ title, caption, src, to }) {
         </h2>
         <p
           className="text-sm hidden lg:block text-gray-200 mt-2 max-h-0 opacity-0 overflow-hidden
-                 transition-[height_opacity] duration-750 text-justify
+                 transition-[height_opacity] duration-750 text-left
                  group-hover:max-h-70 group-hover:opacity-100"
         >
           {caption}

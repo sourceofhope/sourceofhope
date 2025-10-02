@@ -6,6 +6,7 @@ import HomePage from "./pages/home/HomePage.jsx";
 import ErrorBoundary from "./pages/ErrorBoundary.jsx";
 
 import "./style.css";
+import AboutPage from "./pages/about/AboutPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -14,6 +15,7 @@ const router = createBrowserRouter([
     children: [
       { path: "/", element: <HomePage /> },
       { path: "/sourceofhope", element: <HomePage /> },
+      { path: "/sourceofhope/about", element: <AboutPage />}
     ],
   },
   { basename: import.meta.env.BASE_URL },

@@ -8,7 +8,9 @@ import HomeMissionSection from "./sections/HomeMissionSection";
 import HomeResourcesSection from "./sections/HomeResourcesSection";
 import HomePublicationsSection from "./sections/HomePublicationsSection";
 
-export default function Home() {
+import PageSection from "../PageSection";
+
+export default function HomePage() {
   return (
     <>
       <HomeIntroductionSection />
@@ -22,9 +24,7 @@ export default function Home() {
 
 export function HomeSection({ title, className, children, caption, to }) {
   return (
-    <section
-      className={`my-5 px-5 lg:px-35 w-full h-full md:justify-items-left items-center grid gap-5`}
-    >
+    <PageSection>
       {title ? (
         <HighlightedText
           className="w-fit justify-self-center"
@@ -45,6 +45,6 @@ export function HomeSection({ title, className, children, caption, to }) {
       ) : (
         <></>
       )}
-    </section>
+    </PageSection>
   );
 }

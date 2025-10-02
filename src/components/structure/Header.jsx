@@ -64,7 +64,7 @@ function HeaderMenu({ open, setOpen }) {
 
 function HeaderNavigator() {
   const links = [
-    { label: "ABOUT", to: "" },
+    { label: "ABOUT", to: "/sourceofhope/about" },
     { label: "SERVE", to: "" },
     { label: "CONNECT", to: "" },
     { label: "MEDIA", to: "" },
