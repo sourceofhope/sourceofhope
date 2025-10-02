@@ -18,7 +18,9 @@ const router = createBrowserRouter([
       { path: "/sourceofhope/about", element: <AboutPage />}
     ],
   },
-  { basename: import.meta.env.BASE_URL },
+  {
+    basename: import.meta.env.BASE_URL,
+  }
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(

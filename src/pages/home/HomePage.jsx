@@ -24,7 +24,7 @@ export default function HomePage() {
 
 export function HomeSection({ title, className, children, caption, to }) {
   return (
-    <PageSection>
+    <PageSection className="gap-5">
       {title ? (
         <HighlightedText
           className="w-fit justify-self-center"

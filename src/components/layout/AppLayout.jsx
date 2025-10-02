@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, ScrollRestoration } from "react-router-dom";
 import Header from "../structure/Header";
 import Footer from "../structure/Footer";
 
@@ -8,6 +8,7 @@ export default function AppLayout() {
       <Header />
       <main className="w-full min-h-screen">
         <Outlet />
+        <ScrollRestoration getKey={(loc) => loc.pathname} />
       </main>
       <Footer />
     </>
