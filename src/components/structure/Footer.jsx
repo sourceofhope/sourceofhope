@@ -134,7 +134,7 @@ function FooterCard() {
   return (
     <article
       className={`flex flex-col gap-3 rounded-2xl shadow-2x overflow-hidden w-150 h-fit p-5 bg-neutral-50 text-neutral-950`}>
-      <div className="h-fit w-full text-lg font-urbanist font-semibold">
+      <div className="h-fit w-full text-lg font-urbanist font-bold">
         <h2 className="hidden md:block">
           Be The First To Know About Upcoming Events
         </h2>
