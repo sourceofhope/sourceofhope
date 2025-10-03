@@ -10,7 +10,7 @@ export default function HomePublicationsSection() {
   return (
     <HomeSection>
       <div className="grid grid-flow-row w-full md:grid-cols-[1fr_1fr] items-center gap-5">
-        <article className="flex flex-col gap-5 md:items-start">
+        <article className="grid gap-5 justify-items-start">
           <HighlightedText className="w-fit self-center md:self-auto">
             <h2 className="w-fit font-urbanist text-xxlg font-semibold">
               Latest Updates
@@ -53,17 +53,17 @@ function CarouselSelector({ selected, onClick }) {
       className={`${
         selected ? "w-1/6 bg-accent-500" : "w-4 bg-accent-600"
       } h-2 rounded-full  transition-[width_color] duration-500`}
-      onClick={onClick}
-    ></button>
+      onClick={onClick}></button>
   );
 }
 
 function CarouselImage({ selected }) {
   return (
-    <img
-      className={`${
-        selected ? "block" : "hidden"
-      } w-full h-full aspect-[16/9] bg-accent-900 rounded-2xl object-center object-cover`}
-    />
+    <div className={`${selected ? "block" : "hidden"} relative`}>
+      <img className="w-full h-full z-10 aspect-[16/9] bg-accent-900 rounded-2xl object-center object-cover" />
+      <p className="absolute top-2 left-2 z-20 bg-accent-600 rounded-2xl px-2 text-sm text-neutral-50 w-fit">
+        March 12, 2025
+      </p>
+    </div>
   );
 }

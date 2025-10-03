@@ -1,8 +1,10 @@
-import { Outlet, ScrollRestoration } from "react-router-dom";
+import { Outlet, ScrollRestoration, useLocation } from "react-router-dom";
 import Header from "../structure/Header";
-import Footer from "../structure/Footer";
+import Footer, { FooterParallax } from "../structure/Footer";
 
 export default function AppLayout() {
+  const location = useLocation(); 
+
   return (
     <>
       <Header />
@@ -10,7 +12,13 @@ export default function AppLayout() {
         <Outlet />
         <ScrollRestoration getKey={(loc) => loc.pathname} />
       </main>
-      <Footer />
+      {!(location.pathname === "/sourceofhope") ? (
+        <Footer>
+          <FooterParallax />
+        </Footer>
+      ) : (
+        <Footer />
+      )}
     </>
   );
 }

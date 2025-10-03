@@ -9,6 +9,8 @@ import HomeResourcesSection from "./sections/HomeResourcesSection";
 import HomePublicationsSection from "./sections/HomePublicationsSection";
 
 import PageSection from "../PageSection";
+import HomeDonationSection from "./sections/HomeDonationSection";
+import { HomeServingSection } from "./sections/HomeServingSection";
 
 export default function HomePage() {
   return (
@@ -17,6 +19,8 @@ export default function HomePage() {
       <HomeMissionSection />
       <HomeImpactSection />
       <HomeResourcesSection />
+      <HomeServingSection />
+      <HomeDonationSection />
       <HomePublicationsSection />
     </>
   );

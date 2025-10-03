@@ -16,14 +16,13 @@ export default function HomeIntroductionSection() {
           maskImage: "linear-gradient(to bottom, white 70%, transparent 100%)",
         }}
         preload="auto"
-        disablePictureInPicture
-      >
+        disablePictureInPicture>
         <source
           src="https://static.vecteezy.com/system/resources/previews/041/753/968/mp4/time-lapse-sayans-foggy-mountains-of-russia-free-video.mp4"
           type="video/mp4"
         />
       </video>
-      <div className="relative z-10 w-full max-w-[75ch] md:max-w-[100ch] self-end grid gap-3 p-5 md:pb-35 lg:p-35">
+      <div className="relative z-10 w-full max-w-[75ch] md:max-w-[100ch] self-end grid gap-3 p-5 md:pb-15 lg:px-35">
         <h2 className="text-neutral-50 font-urbanist text-md md:text-lg font-semibold">
           THE SOURCE OF HOPE
         </h2>
@@ -43,7 +42,9 @@ export default function HomeIntroductionSection() {
             <ExpressiveLink className="px-10 py-5">DONATE</ExpressiveLink>
           </button>
           <button className="border-5 rounded-2xl font-bold w-fit shadow-sm hover:shadow-lg shadow-accent-500/70 hover:bg-neutral-50/95 border-accent-500 bg-neutral-50/90 duration-500 text-accent-500 opacity-85 hover:opacity-100 transition-[shadow_colors]">
-            <ExpressiveLink className="px-10 py-5" to="/sourceofhope/about">LEARN MORE</ExpressiveLink>
+            <ExpressiveLink className="px-10 py-5" to="/sourceofhope/about">
+              LEARN MORE
+            </ExpressiveLink>
           </button>
         </div>
       </div>

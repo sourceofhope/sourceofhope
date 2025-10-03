@@ -4,25 +4,10 @@ import ParallaxSection from "../ui/parallax/ParallaxSection";
 import ParallaxLayer from "../ui/parallax/ParallaxLayer";
 import Favicon from "../ui/Favicon";
 
-export default function Footer() {
+export default function Footer({ children }) {
   return (
     <footer className="relative w-full mt-15">
-      <ParallaxSection className="relative h-95 overflow-hidden [mask-image:linear-gradient(to_top,white_87.5%,transparent_100%)] [webkit-mask-image:linear-gradient(to_top,white_87.5%,transparent_100%)]">
-        <ParallaxLayer layer={0} ratio={1}>
-          <img
-            className="w-full overflow-hidden h-full object-cover brightness-[.8] contrast-[1.1]"
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
-            alt=""
-          />
-        </ParallaxLayer>
-        <ParallaxLayer
-          layer={1}
-          ratio={1 / 4}
-          className="flex w-full items-center justify-center p-5 lg:px-35"
-        >
-          <FooterCard />
-        </ParallaxLayer>
-      </ParallaxSection>
+      { children }
       <section className="w-full h-full bg-primary-800 text-neutral-50 p-5 py-10 z-10">
         <div className="relative z-10 flex flex-col md:items-center gap-5 w-full">
           <div className="flex w-fit gap-10 flex-col md:justify-between md:flex-row">
@@ -32,8 +17,7 @@ export default function Footer() {
                 <a
                   href="https://app.candid.org/profile/9393304/the-source-of-hope-46-2491772"
                   target="_blank"
-                  className="w-[60px] h-[60px]"
-                >
+                  className="w-[60px] h-[60px]">
                   {" "}
                   <img src="https://widgets.guidestar.org/prod/v1/pdp/transparency-seal/9393304/svg" />{" "}
                 </a>
@@ -107,6 +91,26 @@ export default function Footer() {
   );
 }
 
+export function FooterParallax() {
+  return (
+    <ParallaxSection className="relative h-95 overflow-hidden [mask-image:linear-gradient(to_top,white_87.5%,transparent_100%)] [webkit-mask-image:linear-gradient(to_top,white_87.5%,transparent_100%)]">
+      <ParallaxLayer layer={0} ratio={1}>
+        <img
+          className="w-full overflow-hidden h-full object-cover brightness-[.8] contrast-[1.1]"
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
+          alt=""
+        />
+      </ParallaxLayer>
+      <ParallaxLayer
+        layer={1}
+        ratio={1 / 4}
+        className="flex w-full items-center justify-center p-5 lg:px-35">
+        <FooterCard />
+      </ParallaxLayer>
+    </ParallaxSection>
+  );
+}
+
 function FooterColumn({ title = "", children }) {
   return (
     <div className="w-fit">
@@ -129,9 +133,8 @@ function FooterBottom() {
 function FooterCard() {
   return (
     <article
-      className={`flex flex-col gap-3 rounded-2xl shadow-2x overflow-hidden w-150 h-fit p-5 bg-neutral-50 text-neutral-950`}
-    >
-      <div className="h-fit w-full text-lg font-bold">
+      className={`flex flex-col gap-3 rounded-2xl shadow-2x overflow-hidden w-150 h-fit p-5 bg-neutral-50 text-neutral-950`}>
+      <div className="h-fit w-full text-lg font-urbanist font-semibold">
         <h2 className="hidden md:block">
           Be The First To Know About Upcoming Events
         </h2>
