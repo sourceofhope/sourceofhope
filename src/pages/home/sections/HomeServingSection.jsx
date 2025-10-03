@@ -2,10 +2,11 @@ import ParallaxLayer from "../../../components/ui/parallax/ParallaxLayer";
 import ParallaxSection from "../../../components/ui/parallax/ParallaxSection";
 
 import ExpressiveLink from "../../../components/ui/expressive/ExpressiveLink";
+import PageSection from "../../PageSection";
 
 export function HomeServingSection() {
   return (
-    <section className="hidden md:block relative w-full">
+    <PageSection className="hidden md:block relative">
       <ParallaxSection className="relative h-170 overflow-hidden">
         <ParallaxLayer layer={0} ratio={1}>
           <img
@@ -21,7 +22,7 @@ export function HomeServingSection() {
           <ServingCard/>
         </ParallaxLayer>
       </ParallaxSection>
-    </section>
+    </PageSection>
   );
 }
 

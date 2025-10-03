@@ -1,13 +1,14 @@
 import ExpressiveLink from "../../../components/ui/expressive/ExpressiveLink";
 import ExpressiveNumber from "../../../components/ui/expressive/ExpressiveNumber";
 import { DefaultGenerator } from "../../../components/ui/expressive/DefaultGenerator";
+import PageSection from "../../PageSection";
 
 export default function HomeImpactSection() {
   return (
-    <section className="my-5 py-5 px-5 lg:px-35 w-full h-full grid gap-5 bg-accent-800 text-neutral-50">
+    <PageSection className="my-5 py-5 px-5 lg:px-35 grid gap-5 bg-accent-800 text-neutral-50">
       <div className="grid grid-flow-row w-full md:grid-cols-[1fr_1fr] items-center justify-self-center gap-5">
         <article className="flex flex-col gap-5 w-full justify-center items-center">
-          <h2 className="text-xxlg font-semibold font-urbanist">
+          <h2 className="text-xxlg font-semibold font-urbanist text-center">
             COMMUNITY IMPACT
           </h2>
           <p className="text-neutral-300 text-center">
@@ -57,7 +58,7 @@ export default function HomeImpactSection() {
           LEARN MORE
         </ExpressiveLink>
       </button>
-    </section>
+    </PageSection>
   );
 }
 

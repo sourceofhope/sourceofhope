@@ -1,8 +1,9 @@
 import ExpressiveLink from "../../../components/ui/expressive/ExpressiveLink";
+import PageSection from "../../PageSection";
 
 export default function HomeIntroductionSection() {
   return (
-    <section className="relative flex w-full mb-10 min-h-[80vh] md:min-h-screen">
+    <PageSection className="relative flex mb-10 min-h-[80vh] md:min-h-screen">
       <video
         controls={false}
         autoPlay
@@ -48,6 +49,6 @@ export default function HomeIntroductionSection() {
           </button>
         </div>
       </div>
-    </section>
+    </PageSection>
   );
 }

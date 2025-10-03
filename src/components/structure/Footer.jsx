@@ -122,7 +122,7 @@ function FooterColumn({ title = "", children }) {
       <h2 className="text-lg font-bold whitespace-nowrap w-fit mb-2">
         {title}
       </h2>
-      <div className="text-neutral-300">{children}</div>
+      <div className="text-neutral-300 text-sm">{children}</div>
     </div>
   );
 }
