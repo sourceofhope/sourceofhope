@@ -10,7 +10,7 @@ export default function HomeDonationSection() {
       <article className="md:w-1/2 grid gap-5 justify-items-center text-balance text-center">
         <BanknotesIcon className="w-[80px] h-[80px]" />
         <h2 className="text-xxlg font-urbanist font-semibold">
-          Invest in holistic wellness
+          INVEST IN HOLISTIC WELLNESS
         </h2>
         <p className="text-md md:text-lg text-neutral-300">
           Your generosity helps us bless the communities surrounding The Source
@@ -20,7 +20,7 @@ export default function HomeDonationSection() {
           <ExpressiveLink className="px-10 py-5">DONATE</ExpressiveLink>
         </button>
       </article>
-      <ServingCard className="md:hidden w-full max-w-105"/>
+      <ServingCard className="md:hidden w-full max-w-105 bg-neutral-100"/>
     </section>
   );
 }

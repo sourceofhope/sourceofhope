@@ -7,8 +7,8 @@ import Favicon from "../ui/Favicon";
 export default function Footer({ children }) {
   return (
     <footer className="relative w-full mt-15">
-      { children }
-      <section className="w-full h-full bg-primary-800 text-neutral-50 p-5 py-10 z-10">
+      {children}
+      <section className="w-full h-full bg-primary-800 text-neutral-50 p-5 md:py-10 z-10">
         <div className="relative z-10 flex flex-col md:items-center gap-5 w-full">
           <div className="flex w-fit gap-10 flex-col md:justify-between md:flex-row">
             <FooterColumn>
@@ -93,7 +93,8 @@ export default function Footer({ children }) {
 
 export function FooterParallax() {
   return (
-    <ParallaxSection className="relative h-95 overflow-hidden [mask-image:linear-gradient(to_top,white_87.5%,transparent_100%)] [webkit-mask-image:linear-gradient(to_top,white_87.5%,transparent_100%)]">
+    <>
+    <ParallaxSection className="hidden md:block relative h-115 overflow-hidden [mask-image:linear-gradient(to_top,white_87.5%,transparent_100%)] [webkit-mask-image:linear-gradient(to_top,white_87.5%,transparent_100%)]">
       <ParallaxLayer layer={0} ratio={1}>
         <img
           className="w-full overflow-hidden h-full object-cover brightness-[.8] contrast-[1.1]"
@@ -108,6 +109,10 @@ export function FooterParallax() {
         <FooterCard />
       </ParallaxLayer>
     </ParallaxSection>
+    <section className="w-full block md:hidden bg-primary-800 p-5 justify-center">
+      <FooterCard />
+    </section>
+    </>
   );
 }
 
@@ -133,11 +138,12 @@ function FooterBottom() {
 function FooterCard() {
   return (
     <article
-      className={`flex flex-col gap-3 rounded-2xl shadow-2x overflow-hidden w-150 h-fit p-5 bg-neutral-50 text-neutral-950`}>
-      <div className="h-fit w-full text-lg font-urbanist font-bold">
-        <h2 className="hidden md:block">
-          Be The First To Know About Upcoming Events
-        </h2>
+      className={`flex flex-col gap-5 rounded-2xl shadow-2x overflow-hidden w-150 max-w-fit h-fit p-5 bg-neutral-50 text-neutral-950`}>
+      <p className="h-fit w-full text-sm font-bold text-primary-700">
+        SUBSCRIBE TO OUR NEWSLETTER
+      </p>
+      <div className="h-fit w-full text-xlg md:text-xxlg font-urbanist">
+        <h2 className="hidden md:block">Be the first to know about events</h2>
         <h2 className="block md:hidden">Get Updates</h2>
       </div>
       <p className="text-sm">

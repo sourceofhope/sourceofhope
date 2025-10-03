@@ -13,7 +13,7 @@ export default function HomePublicationsSection() {
         <article className="grid gap-5 justify-items-start">
           <HighlightedText className="w-fit self-center md:self-auto">
             <h2 className="w-fit font-urbanist text-xxlg font-semibold">
-              Latest Updates
+              LATEST UPDATES
             </h2>
           </HighlightedText>
           <p className="text-left text-balance">

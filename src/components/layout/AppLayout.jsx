@@ -12,7 +12,7 @@ export default function AppLayout() {
         <Outlet />
         <ScrollRestoration getKey={(loc) => loc.pathname} />
       </main>
-      {!(location.pathname === "/sourceofhope") ? (
+      {!(location.pathname === "/sourceofhope/") ? (
         <Footer>
           <FooterParallax />
         </Footer>

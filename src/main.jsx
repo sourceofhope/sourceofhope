@@ -13,9 +13,9 @@ const router = createBrowserRouter([
     element: <AppLayout />,
     errorElement: <ErrorBoundary />,
     children: [
-      { path: "/", element: <Navigate to="/sourceofhope" replace /> },
-
-      { path: "/sourceofhope", element: <HomePage /> },
+      { path: "/", element: <Navigate to="/sourceofhope/" replace /> },
+      { path: "/sourceofhope", element: <Navigate to="/sourceofhope/" replace /> },
+      { path: "/sourceofhope/", element: <HomePage /> },
       { path: "/sourceofhope/about", element: <AboutPage /> }
     ],
   },

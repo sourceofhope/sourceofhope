@@ -8,7 +8,7 @@ export default function HomeImpactSection() {
       <div className="grid grid-flow-row w-full md:grid-cols-[1fr_1fr] items-center justify-self-center gap-5">
         <article className="flex flex-col gap-5 w-full justify-center items-center">
           <h2 className="text-xxlg font-semibold font-urbanist">
-            Community Impact
+            COMMUNITY IMPACT
           </h2>
           <p className="text-neutral-300 text-center">
             Real <strong className="font-semibold">Results</strong> and Powerful{" "}

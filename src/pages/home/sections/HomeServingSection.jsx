@@ -28,12 +28,12 @@ export function HomeServingSection() {
 export function ServingCard({ className }) {
   return (
     <article
-      className={`flex flex-col gap-3 rounded-2xl shadow-2x overflow-hidden md:w-105 h-fit px-5 py-7.5 bg-neutral-50 text-neutral-950 ${className}`}>
-      <div className="h-fit w-full text-md font-semibold text-accent-800 px-5">
-        <h2>Want to become involved?</h2>
+      className={`flex flex-col gap-3 rounded-2xl shadow-2x overflow-hidden lg:w-1/3 h-fit px-5 py-7.5 bg-neutral-50 text-neutral-950 ${className}`}>
+      <div className="h-fit w-full text-sm font-bold text-primary-700 px-5">
+        <h2>GET INVOLVED</h2>
       </div>
-      <p className="text-xlg md:text-xxlg px-5">Let's Explore Your Next Step Together</p>
-      <ul className="grid text-md font-urbanist font-semibold">
+      <p className="text-lg md:text-xlg px-5 font-urbanist text-balance">Let's Explore Your Next Step Together</p>
+      <ul className="grid text-sm font-semibold">
         <li>
           <ExpressiveLink className="p-5 rounded-2xl hover:bg-neutral-200 duration-500 transition-colors">Apply for Emerging Professional</ExpressiveLink>
         </li>
