@@ -145,7 +145,7 @@ function FooterCard() {
       <p className="h-fit w-full text-sm font-bold text-primary-700">
         SUBSCRIBE TO OUR NEWSLETTER
       </p>
-      <div className="h-fit w-full text-lg md:text-xlg font-urbanist">
+      <div className="h-fit w-full text-lg md:text-xlg font-urbanist font-semibold">
         <h2 className="hidden md:block">Be the first to know about events</h2>
         <h2 className="block md:hidden">Get Updates</h2>
       </div>

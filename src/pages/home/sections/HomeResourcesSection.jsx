@@ -2,6 +2,7 @@ import { HomeSection } from "../HomePage";
 import { NavLink } from "react-router-dom";
 import { ArrowRightIcon } from "@heroicons/react/20/solid";
 import Emphasis from "../../../components/ui/Emphasis";
+import { HighlightedText } from "../../../components/ui/expressive/ExpressiveText";
 
 export default function HomeResourcesSection() {
   return (
@@ -12,7 +13,7 @@ export default function HomeResourcesSection() {
               We provide a number of resources
             </Emphasis>
           </NavLink>{" "}
-          to our community.
+          to <HighlightedText>our community</HighlightedText>.
         </h2>
       <div className="w-full h-full grid grid-flow-row md:grid-cols-3 md:grid-rows-2 gap-5 justify-center items-center">
         <HomeResourceCard

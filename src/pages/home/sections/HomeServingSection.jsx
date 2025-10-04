@@ -33,7 +33,7 @@ export function ServingCard({ className }) {
       <div className="h-fit w-full text-sm font-bold text-primary-700 px-5">
         <h2>GET INVOLVED</h2>
       </div>
-      <p className="text-lg md:text-xlg px-5 font-urbanist text-balance">Let's Explore Your Next Step Together</p>
+      <p className="text-lg md:text-xlg px-5 font-urbanist text-balance font-semibold">Let's Explore Your Next Step Together</p>
       <ul className="grid text-sm font-semibold">
         <li>
           <ExpressiveLink className="p-5 rounded-2xl hover:bg-neutral-200 duration-500 transition-colors">Apply for Emerging Professional</ExpressiveLink>
