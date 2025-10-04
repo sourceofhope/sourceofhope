@@ -92,7 +92,7 @@ export function HighlightedText({
     relative inline-block align-baseline isolate z-0
     after:content-[''] after:absolute after:left-0 after:top-1/4
     after:block after:h-1/2 after:[width:var(--hl-w)]
-    after:bg-yellow-400 after:-z-10 after:pointer-events-none
+    after:bg-yellow-300 after:-z-10 after:pointer-events-none
     ${className}
   `}
     >

@@ -31,10 +31,10 @@ export function HomeSection({ title, className, children, caption, to }) {
     <PageSection className="gap-5 my-5 px-5 lg:px-35">
       {title ? (
         <HighlightedText
-          className="w-fit justify-self-center"
+          className="w-fit justify-self-center text-center"
           generator={DefaultGenerator.EASE_IN_OUT}
         >
-          <h2 className="text-xxlg font-semibold font-urbanist">{title}</h2>
+          <h2 className="text-xlg lg:text-xxlg font-semibold font-urbanist">{title}</h2>
         </HighlightedText>
       ) : (
         <></>

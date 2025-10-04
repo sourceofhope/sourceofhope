@@ -3,11 +3,14 @@ import ExpressiveAnchor from "../ui/expressive/ExpressiveAnchor";
 import ParallaxSection from "../ui/parallax/ParallaxSection";
 import ParallaxLayer from "../ui/parallax/ParallaxLayer";
 import Favicon from "../ui/Favicon";
+import { useLocation } from "react-router-dom";
 
-export default function Footer({ children }) {
+export default function Footer() {
+  const location = useLocation();
+
   return (
     <footer className="relative w-full mt-15">
-      {children}
+      {!(location.pathname === "/sourceofhope/") ? <FooterParallax /> : null}
       <section className="w-full h-full bg-primary-800 text-neutral-50 p-5 md:py-10 z-10">
         <div className="relative z-10 flex flex-col md:items-center gap-5 w-full">
           <div className="flex w-fit gap-10 flex-col md:justify-between md:flex-row">
@@ -91,27 +94,27 @@ export default function Footer({ children }) {
   );
 }
 
-export function FooterParallax() {
+function FooterParallax() {
   return (
     <>
-    <ParallaxSection className="hidden md:block relative h-115 overflow-hidden [mask-image:linear-gradient(to_top,white_87.5%,transparent_100%)] [webkit-mask-image:linear-gradient(to_top,white_87.5%,transparent_100%)]">
-      <ParallaxLayer layer={0} ratio={1}>
-        <img
-          className="w-full overflow-hidden h-full object-cover brightness-[.8] contrast-[1.1]"
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
-          alt=""
-        />
-      </ParallaxLayer>
-      <ParallaxLayer
-        layer={1}
-        ratio={1 / 4}
-        className="flex w-full items-center justify-center p-5 lg:px-35">
+      <ParallaxSection className="hidden md:block relative h-115 overflow-hidden [mask-image:linear-gradient(to_top,white_87.5%,transparent_100%)] [webkit-mask-image:linear-gradient(to_top,white_87.5%,transparent_100%)]">
+        <ParallaxLayer layer={0} ratio={1}>
+          <img
+            className="w-full overflow-hidden h-full object-cover brightness-[.8] contrast-[1.1]"
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
+            alt=""
+          />
+        </ParallaxLayer>
+        <ParallaxLayer
+          layer={1}
+          ratio={1 / 4}
+          className="flex w-full items-center justify-center p-5 lg:px-35">
+          <FooterCard />
+        </ParallaxLayer>
+      </ParallaxSection>
+      <section className="w-full block md:hidden bg-primary-800 p-5 justify-center">
         <FooterCard />
-      </ParallaxLayer>
-    </ParallaxSection>
-    <section className="w-full block md:hidden bg-primary-800 p-5 justify-center">
-      <FooterCard />
-    </section>
+      </section>
     </>
   );
 }
@@ -151,7 +154,7 @@ function FooterCard() {
         wellness tips, and community updates right to your inbox by subscribing
         to our newsletter.
       </p>
-      <button className="border-5 rounded-2xl font-bold w-fit bg-accent-500 border-accent-500 text-neutral-50/75 hover:text-neutral-50/95 transition-colors">
+      <button className="border-5 rounded-2xl font-bold w-fit shadow-sm hover:shadow-lg shadow-accent-500/70 bg-accent-500 border-accent-500 text-neutral-50/75 duration-500 hover:text-neutral-50/95 opacity-85 hover:opacity-100 transition-[shadow_colors]">
         <ExpressiveLink className="px-10 py-5">SUBSCRIBE</ExpressiveLink>
       </button>
       <p className="text-sm text-neutral-600">No spam, unsubscribe anytime.</p>

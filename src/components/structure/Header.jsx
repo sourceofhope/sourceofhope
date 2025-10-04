@@ -2,8 +2,12 @@ import { useState, useEffect } from "react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/20/solid";
 import ExpressiveLink from "../ui/expressive/ExpressiveLink";
 import Favicon from "../ui/Favicon";
+import { useLocation } from "react-router-dom";
 
 export default function Header() {
+  const location = useLocation();
+  const isHomePage = location.pathname === "/sourceofhope/";
+
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -16,16 +20,27 @@ export default function Header() {
 
   return (
     <header
-      className={`backdrop-filter fixed top-0 left-0 right-0 z-50 w-full overflow-hidden transition-[height_backdrop] duration-500 border-b-4 border-primary-700/0 md:border-none
-        ${open ? "h-85 md:h-25 md:backdrop-blur-none backdrop-blur-sm border-primary-700/100" : "h-25 backdrop-blur-none"}
+      className={`backdrop-filter fixed top-0 left-0 right-0 z-50 w-full overflow-hidden transition-[height_backdrop] duration-500 border-b-4 ${
+        isHomePage ? "border-primary-700/0" : "border-accent-900/0"
+      } md:border-none
+        ${
+          open
+            ? `h-85 md:h-25 md:backdrop-blur-none backdrop-blur-sm ${
+                isHomePage ? "border-primary-700/100" : "border-accent-900/100"
+              }`
+            : "h-25 backdrop-blur-none"
+        }
         ${
           scrolled
-            ? "bg-primary-700 text-accent-50 border-transparent"
-            : "bg-transparent text-primary-700"
-        }`}
-    >
+            ? `${
+                isHomePage ? "bg-primary-700" : "bg-accent-900"
+              } text-neutral-50 border-transparent`
+            : `bg-transparent ${
+                isHomePage ? "text-primary-700" : "text-neutral-50"
+              }`
+        }`}>
       <section className="flex w-full h-25 items-center justify-between px-5 lg:px-35">
-        <Favicon className="w-[60px] h-[60px]"/>
+        <Favicon className="w-[60px] h-[60px]" />
         <nav className="hidden md:flex gap-5">
           <HeaderNavigator />
         </nav>
@@ -37,8 +52,7 @@ export default function Header() {
             ? "opacity-100 pointer-events-auto"
             : "opacity-0 pointer-events-none"
         } will-change-[opacity] transition-opacity duration-500 ease-out md:hidden flex flex-col justify-end items-center px-5 h-fit`}
-        aria-hidden={!open}
-      >
+        aria-hidden={!open}>
         <HeaderNavigator />
       </nav>
     </header>
@@ -51,8 +65,7 @@ function HeaderMenu({ open, setOpen }) {
       onClick={() => setOpen((open) => !open)}
       className="block md:hidden"
       aria-expanded={open}
-      aria-label={open ? "Close menu" : "Open menu"}
-    >
+      aria-label={open ? "Close menu" : "Open menu"}>
       {open ? (
         <XMarkIcon className="w-[16px] h-[16px]" aria-hidden="true" />
       ) : (

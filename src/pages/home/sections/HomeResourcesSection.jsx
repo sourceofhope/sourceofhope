@@ -7,11 +7,11 @@ export default function HomeResourcesSection() {
   return (
     <HomeSection className="w-full pb-15">
         <h2 className="text-lg md:text-lg lg:text-xxlg pb-5 text-center text-balance">
-          <NavLink to="">
+          <NavLink to="" className="inline-block">
             <Emphasis>
               We provide a number of resources
-            </Emphasis>{" "}
-          </NavLink>
+            </Emphasis>
+          </NavLink>{" "}
           to our community.
         </h2>
       <div className="w-full h-full grid grid-flow-row md:grid-cols-3 md:grid-rows-2 gap-5 justify-center items-center">
