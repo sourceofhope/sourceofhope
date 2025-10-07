@@ -20,21 +20,15 @@ export default function Header() {
 
   return (
     <header
-      className={`backdrop-filter fixed top-0 left-0 right-0 z-50 w-full overflow-hidden transition-[height_backdrop] duration-500 border-b-4 ${
-        isHomePage ? "border-primary-800/0" : "border-accent-900/0"
-      } md:border-none
+      className={`backdrop-filter fixed top-0 left-0 right-0 z-50 w-full overflow-hidden transition-[height_backdrop] duration-500 border-b-4 border-primary-800/0 md:border-none
         ${
           open
-            ? `h-85 md:h-25 md:backdrop-blur-none backdrop-blur-sm ${
-                isHomePage ? "border-primary-800/100" : "border-accent-900/100"
-              }`
+            ? "h-85 md:h-25 md:backdrop-blur-none backdrop-blur-sm border-primary-800/100"
             : "h-25 backdrop-blur-none"
         }
         ${
           scrolled
-            ? `${
-                isHomePage ? "bg-primary-800" : "bg-accent-900"
-              } text-neutral-50 border-transparent`
+            ? `bg-primary-800 text-neutral-50 border-transparent`
             : `bg-transparent ${
                 isHomePage ? "text-primary-800" : "text-neutral-50"
               }`
