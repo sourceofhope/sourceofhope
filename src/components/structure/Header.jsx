@@ -4,7 +4,7 @@ import ExpressiveLink from "../ui/expressive/ExpressiveLink";
 import Favicon from "../ui/Favicon";
 import { useLocation } from "react-router-dom";
 
-export default function Header() {
+export default function Header({ isError }) {
   const location = useLocation();
   const isHomePage = location.pathname === "/sourceofhope/";
 
@@ -23,14 +23,16 @@ export default function Header() {
       className={`backdrop-filter fixed top-0 left-0 right-0 z-50 w-full overflow-hidden transition-[height_backdrop] duration-500 border-b-4 border-primary-800/0 md:border-none
         ${
           open
-            ? "h-85 md:h-25 md:backdrop-blur-none backdrop-blur-sm border-primary-800/100"
+            ? `h-85 md:h-25 md:backdrop-blur-none backdrop-blur-sm ${
+                isHomePage || isError ? "border-primary-800/100" : "border-neutral-50"
+              }`
             : "h-25 backdrop-blur-none"
         }
         ${
           scrolled
             ? `bg-primary-800 text-neutral-50 border-transparent`
             : `bg-transparent ${
-                isHomePage ? "text-primary-800" : "text-neutral-50"
+                isHomePage || isError ? "text-primary-800" : "text-neutral-50"
               }`
         }`}>
       <section className="flex w-full h-25 items-center justify-between px-5 lg:px-35">

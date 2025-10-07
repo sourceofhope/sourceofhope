@@ -66,7 +66,7 @@ function HomeResourceCard({ title, caption, src, to }) {
       <img
         src={src}
         alt={caption}
-        className="inset-0 w-full h-full object-cover transition-transform"
+        className="inset-0 w-full h-full object-cover transition-transform brightness-[.8] contrast-[1.1]"
       />
       <div
         className="absolute bottom-0 left-0 w-full p-5 

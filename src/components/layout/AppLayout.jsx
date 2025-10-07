@@ -5,7 +5,7 @@ import Footer from "../structure/Footer";
 export default function AppLayout() {
   return (
     <>
-      <Header />
+      <Header isError={false}/>
       <main className="w-full min-h-screen">
         <Outlet />
         <ScrollRestoration getKey={(location) => location.pathname} />

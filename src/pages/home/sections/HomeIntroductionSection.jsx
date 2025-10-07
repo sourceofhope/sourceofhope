@@ -3,14 +3,14 @@ import PageSection from "../../PageSection";
 
 export default function HomeIntroductionSection() {
   return (
-    <PageSection className="relative flex mb-10 min-h-[80vh] md:min-h-screen">
+    <PageSection className="relative flex mb-10 h-[80vh] md:min-h-screen">
       <video
         controls={false}
         autoPlay
         muted
         loop
         playsInline
-        className="absolute inset-0 z-0 h-[80vh] md:h-full w-full object-cover"
+        className="absolute inset-0 z-0 h-full md:h-full w-full object-cover"
         style={{
           WebkitMaskImage:
             "linear-gradient(to bottom, white 70%, transparent 100%)",

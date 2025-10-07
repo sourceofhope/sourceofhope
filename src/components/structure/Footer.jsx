@@ -11,7 +11,7 @@ export default function Footer() {
   return (
     <footer className="relative w-full mt-15">
       {!(location.pathname === "/sourceofhope/") ? <FooterParallax /> : null}
-      <section className="w-full h-full bg-primary-800 text-neutral-50 p-5 md:py-10 z-10">
+      <section className="w-full h-full bg-primary-700 text-neutral-50 p-5 md:py-10 z-10">
         <div className="relative z-10 flex flex-col md:items-center gap-5 w-full">
           <div className="flex w-fit gap-10 flex-col md:justify-between md:flex-row">
             <FooterColumn>
@@ -112,7 +112,7 @@ function FooterParallax() {
           <FooterCard />
         </ParallaxLayer>
       </ParallaxSection>
-      <section className="w-full block md:hidden bg-primary-800 p-5 justify-center">
+      <section className="w-full block md:hidden bg-primary-700 p-5 justify-center">
         <FooterCard />
       </section>
     </>
