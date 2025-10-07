@@ -18,7 +18,7 @@ export default function AboutPage() {
         </h2>
         <p className="font-semibold text-neutral-300 text-sm pb-10">
           EMPOWERING COMMUNITIES THROUGH DIGNITY, WELLNESS, AND COMPASSION SINCE
-          2014.
+          2014
         </p>
       </PageHeader>
       <AboutSection className="justify-items-center py-5 grid gap-3">
