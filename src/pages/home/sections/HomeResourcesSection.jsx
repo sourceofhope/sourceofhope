@@ -73,7 +73,7 @@ function HomeResourceCard({ title, caption, src, to }) {
                bg-gradient-to-t from-black/90 to-transparent
                rounded-xl flex flex-col justify-start"
       >
-        <h2 className="md:line-clamp-1 text-md text-ellipsis lg:group-hover:text-sm duration-750 transition-all font-bold text-center text-white">
+        <h2 className="md:line-clamp-1 text-md text-ellipsis lg:group-hover:text-sm duration-750 transition-all font-semibold text-center text-white">
           {title}
         </h2>
         <p

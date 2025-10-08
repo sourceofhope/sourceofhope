@@ -3,8 +3,9 @@ import ExpressiveLink from "../../../components/ui/expressive/ExpressiveLink";
 import { HighlightedText } from "../../../components/ui/expressive/ExpressiveText";
 import { HomeSection } from "../HomePage";
 
+import Carousel from "../../../components/ui/Carousel";
+
 export default function HomePublicationsSection() {
-  const [active, setActive] = useState(0);
   const total = 5;
 
   return (
@@ -28,41 +29,27 @@ export default function HomePublicationsSection() {
             </ExpressiveLink>
           </button>
         </article>
-        <article className="flex flex-col gap-5 pt-5 border-t-2 md:border-t-0 md:border-l-2 w-full md:pl-10 border-neutral-400 justify-center">
+        <Carousel className="h-full border-t-2 md:border-t-0 md:border-l-2 w-full  py-5 md:pl-10 border-neutral-400">
           {Array.from({ length: total }).map((_, i) => (
-            <CarouselImage key={i} selected={i === active} />
+            <CarouselImage key={i} src="" alt="" date={new Date()}/>
           ))}
-          <div className="flex flex-row items-center justify-center gap-1">
-            {Array.from({ length: total }).map((_, i) => (
-              <CarouselSelector
-                key={i}
-                selected={i === active}
-                onClick={() => setActive(i)}
-              />
-            ))}
-          </div>
-        </article>
+        </Carousel>
       </div>
     </HomeSection>
   );
 }
 
-function CarouselSelector({ selected, onClick }) {
+function CarouselImage({ src, alt, date }) {
   return (
-    <button
-      className={`${
-        selected ? "w-1/6 bg-accent-500" : "w-4 bg-accent-600"
-      } h-2 rounded-full  transition-[width_color] duration-500`}
-      onClick={onClick}></button>
-  );
-}
-
-function CarouselImage({ selected }) {
-  return (
-    <div className={`${selected ? "block" : "hidden"} relative`}>
-      <img className="w-full h-full z-10 aspect-[16/9] bg-accent-900 rounded-2xl object-center object-cover" />
+    <div className="relative h-full w-full">
+      <img
+        className="w-full h-full z-10 aspect-[16/9] bg-accent-900 rounded-2xl object-center object-cover"
+        src={src}
+        alt={alt}
+      />
       <p className="absolute top-2 left-2 z-20 bg-accent-600 rounded-2xl px-2 text-sm text-neutral-50 w-fit">
-        March 12, 2025
+        {date.toLocaleString("default", { month: "short" })} {date.getDay()},{" "}
+        {date.getFullYear()}
       </p>
     </div>
   );
