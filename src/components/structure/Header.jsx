@@ -20,13 +20,13 @@ export default function Header({ isError }) {
 
   return (
     <header
-      className={`backdrop-filter fixed top-0 left-0 right-0 z-50 w-full overflow-hidden transition-[height_backdrop] duration-500 border-b-4 border-primary-800/0 md:border-none
+      className={`backdrop-filter fixed top-0 left-0 right-0 z-50 w-full overflow-hidden transition-[height_backdrop] duration-500 border-b-4 md:border-none
         ${
           open
             ? `h-85 md:h-25 md:backdrop-blur-none backdrop-blur-sm ${
                 isHomePage || isError ? "border-primary-800/100" : "border-neutral-50"
               }`
-            : "h-25 backdrop-blur-none"
+            : "h-25 backdrop-blur-none border-none"
         }
         ${
           scrolled

@@ -28,7 +28,7 @@ export default function HomeIntroductionSection() {
           THE SOURCE OF HOPE
         </h2>
         <h2 className="text-neutral-50 font-urbanist text-lg md:text-xlg font-bold">
-          EMPOWERING AND PROVIDING THROUGH HEALTH AND WELLNESS.
+          EMPOWERING AND PROVIDING THROUGH HEALTH AND WELLNESS
         </h2>
         <p className="hidden md:block text-neutral-300 text-justify text-sm">
           We are a non-profit organization dedicated to providing holistic
