@@ -6,6 +6,7 @@ export default function Carousel({ children = [], className }) {
   const containerReference = useRef(null);
   const [active, setActive] = useState(0);
   const [count, setCount] = useState(1);
+  const resizeObserverRef = useRef(null);
 
   const childArray = Array.isArray(children)
     ? children
@@ -24,10 +25,25 @@ export default function Carousel({ children = [], className }) {
       const fit = Math.max(1, Math.round(containerWidth / childWidth));
       setCount(fit);
     };
+
     update();
+
     window.addEventListener("resize", update);
-    return () => window.removeEventListener("resize", update);
-  }, []);
+
+    if (window.ResizeObserver) {
+      resizeObserverRef.current = new ResizeObserver(update);
+      for (const child of containerReference.current.children) {
+        resizeObserverRef.current.observe(child);
+      }
+    }
+
+    return () => {
+      window.removeEventListener("resize", update);
+      if (resizeObserverRef.current) {
+        resizeObserverRef.current.disconnect();
+      }
+    };
+  }, [children]);
 
   const groups = useMemo(() => {
     const groupings = [];
@@ -38,7 +54,7 @@ export default function Carousel({ children = [], className }) {
           <div
             key={`ghost-${i}-${group.length}`}
             className="invisible pointer-events-none aspect-square"
-						style={{ width: `${100/count}%` }}
+            style={{ width: `${100 / count}%` }}
           />
         );
       }
@@ -62,7 +78,7 @@ export default function Carousel({ children = [], className }) {
         <button
           onClick={() => setActive((active - 1 + total) % total)}
           className={`md:hidden p-1 rounded-full w-fit h-fit text-neutral-50 ${
-            groups.length == 1 ? "bg-black/20" : "bg-black/70"
+            groups.length === 1 ? "bg-black/20" : "bg-black/70"
           }`}>
           <ChevronLeftIcon className="w-[20px] h-[20px] hover:-translate-x-0.5 transition-transform" />
         </button>
@@ -78,7 +94,7 @@ export default function Carousel({ children = [], className }) {
         <button
           onClick={() => setActive((active + 1) % total)}
           className={`md:hidden p-1 rounded-full w-fit h-fit text-neutral-50 ${
-            groups.length == 1 ? "bg-black/20" : "bg-black/70"
+            groups.length === 1 ? "bg-black/20" : "bg-black/70"
           }`}>
           <ChevronRightIcon className="w-[20px] h-[20px] hover:translate-x-0.5 transition-transform" />
         </button>
@@ -92,7 +108,7 @@ function CarouselSelector({ selected, onClick }) {
     <button
       className={`${
         selected ? "w-1/10 bg-accent-500" : "w-5 bg-accent-600"
-      } h-2 rounded-full  transition-[width_color] duration-500`}
+      } h-2 rounded-full transition-[width_color] duration-500`}
       onClick={onClick}></button>
   );
 }
