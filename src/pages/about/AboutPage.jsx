@@ -177,7 +177,7 @@ function CarouselCard({ src, name, title, href, caption }) {
   return (
     <a
       href={href}
-      className="relative h-full md:w-1/2 lg:w-1/3 group overflow-hidden rounded-xl text-accent-background aspect-square">
+      className="relative h-full w-full md:w-1/2 lg:w-1/3 group overflow-hidden rounded-xl text-accent-background aspect-square">
       <img
         src={src}
         alt={caption}
