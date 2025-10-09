@@ -1,5 +1,4 @@
 import { AboutSection } from "../AboutPage";
-
 import { HighlightedText } from "../../../components/ui/expressive/ExpressiveText";
 
 export default function AboutDescriptionSection() {

@@ -1,7 +1,7 @@
 import { AboutSection } from "../AboutPage";
+import { HighlightedText } from "../../../components/ui/expressive/ExpressiveText";
 
 import ExpressiveLink from "../../../components/ui/expressive/ExpressiveLink";
-import { HighlightedText } from "../../../components/ui/expressive/ExpressiveText";
 
 export default function AboutSummarySection() {
   return (

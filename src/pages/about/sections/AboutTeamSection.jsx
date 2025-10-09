@@ -1,8 +1,7 @@
 import { useState } from "react";
+import { ArrowRightIcon, XMarkIcon } from "@heroicons/react/20/solid";
 
 import { AboutSection } from "../AboutPage";
-
-import { ArrowRightIcon, XMarkIcon } from "@heroicons/react/20/solid";
 
 import Carousel from "../../../components/ui/Carousel";
 
@@ -101,7 +100,6 @@ function CarouselCard({ src, name, title, caption }) {
           />
         </div>
       </button>
-
       <section
         className={`
     fixed inset-0 z-50 flex items-center justify-center
@@ -115,8 +113,8 @@ function CarouselCard({ src, name, title, caption }) {
   `}
         onClick={() => setActive(false)}>
         <article className="relative w-full rounded-xl bg-neutral-50 p-5 grid gap-5">
-          <div className="flex justify-between items-center">
-            <h2 className="text-lg font-semibold">{name}</h2>
+          <div className="flex justify-between">
+            <h2 className="text-md font-semibold">{name}</h2>
             <button
               className="justify-self-end text-neutral-50 font-bold p-1 w-fit h-fit bg-neutral-700 rounded-full"
               onClick={() => setActive(false)}>

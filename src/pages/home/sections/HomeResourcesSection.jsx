@@ -1,20 +1,22 @@
-import { HomeSection } from "../HomePage";
+import { useState } from "react";
 import { NavLink } from "react-router-dom";
-import { ArrowRightIcon } from "@heroicons/react/20/solid";
-import Emphasis from "../../../components/ui/Emphasis";
+import { ArrowRightIcon, XMarkIcon } from "@heroicons/react/20/solid";
+
+import { HomeSection } from "../HomePage";
 import { HighlightedText } from "../../../components/ui/expressive/ExpressiveText";
+
+import Emphasis from "../../../components/ui/Emphasis";
+import ExpressiveLink from "../../../components/ui/expressive/ExpressiveLink";
 
 export default function HomeResourcesSection() {
   return (
     <HomeSection className="w-full pb-15">
-        <h2 className="text-lg md:text-lg lg:text-xxlg pb-5 text-center text-balance">
-          <NavLink to="" className="inline-block">
-            <Emphasis>
-              We provide a number of resources
-            </Emphasis>
-          </NavLink>{" "}
-          to <HighlightedText>our community</HighlightedText>.
-        </h2>
+      <h2 className="text-lg md:text-lg lg:text-xxlg pb-5 text-center text-balance">
+        <NavLink to="" className="inline-block">
+          <Emphasis>We provide a number of resources</Emphasis>
+        </NavLink>{" "}
+        to <HighlightedText>our community</HighlightedText>.
+      </h2>
       <div className="w-full h-full grid grid-flow-row md:grid-cols-3 md:grid-rows-2 gap-5 justify-center items-center">
         <HomeResourceCard
           title="EDUCATION FOR HOPE"
@@ -50,7 +52,7 @@ export default function HomeResourcesSection() {
           title="INTERNATIONAL PARTNER SERVING"
           caption="Our International Partner Serving program extends hope worldwide by collaborating with organizations and volunteers to deliver resources, training, and empowerment. We provide scholarships, educational tools, wellness services, and food support to underserved communities in developing regions. By fostering relationships based on trust and respect, we amplify dignity and self-sufficiency, ensuring that compassion knows no borders and hope reaches people across the globe."
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
-          to=""
+          to="/sourceofhope/"
         />
       </div>
     </HomeSection>
@@ -58,11 +60,56 @@ export default function HomeResourcesSection() {
 }
 
 function HomeResourceCard({ title, caption, src, to }) {
+  const [active, setActive] = useState(false);
+
   return (
-    <NavLink
-      to={to}
-      className="relative w-full h-full group overflow-hidden rounded-xl text-accent-background aspect-square"
-    >
+    <>
+      <button
+        onClick={() => setActive(!active)}
+        className="relative md:hidden w-full h-full group overflow-hidden rounded-xl text-accent-background aspect-square">
+        <HomeResourceCardInner src={src} caption={caption} title={title} />
+      </button>
+      <NavLink
+        to={to}
+        className="relative hidden md:block w-full h-full group overflow-hidden rounded-xl text-accent-background aspect-square">
+        <HomeResourceCardInner src={src} caption={caption} title={title} />
+      </NavLink>
+      <section
+        className={`
+    fixed inset-0 z-50 flex items-center justify-center
+    bg-black/80 md:hidden p-5
+    transition-opacity duration-700
+    ${
+      active
+        ? "opacity-100 pointer-events-auto"
+        : "opacity-0 pointer-events-none"
+    }
+  `}
+        onClick={() => setActive(false)}>
+        <article className="relative w-full rounded-xl bg-neutral-50 p-5 grid gap-5">
+          <div className="flex justify-between">
+            <h2 className="text-md font-semibold">{title}</h2>
+            <button
+              className="justify-self-end text-neutral-50 font-bold p-1 w-fit h-fit bg-neutral-700 rounded-full"
+              onClick={() => setActive(false)}>
+              <XMarkIcon className="w-[16px] h-[16px]" aria-hidden="true" />
+            </button>
+          </div>
+          <p className="text-sm text-neutral-700">{caption}</p>
+          <p className="w-fit">
+            <ExpressiveLink to={to} className="text-sm text-neutral-500">
+              LEARN MORE
+            </ExpressiveLink>
+          </p>
+        </article>
+      </section>
+    </>
+  );
+}
+
+function HomeResourceCardInner({ src, caption, title }) {
+  return (
+    <>
       <img
         src={src}
         alt={caption}
@@ -70,17 +117,15 @@ function HomeResourceCard({ title, caption, src, to }) {
       />
       <div
         className="absolute bottom-0 left-0 w-full p-5 
-               bg-gradient-to-t from-black/90 to-transparent
-               rounded-xl flex flex-col justify-start"
-      >
-        <h2 className="md:line-clamp-1 text-md text-ellipsis lg:group-hover:text-sm duration-750 transition-all font-semibold text-center text-white">
+                bg-gradient-to-t from-black/90 to-transparent
+                rounded-xl flex flex-col justify-start">
+        <h2 className="md:line-clamp-1 text-md text-ellipsis lg:group-hover:text-sm duration-750 transition-all font-semibold text-center text-neutral-50">
           {title}
         </h2>
         <p
           className="text-sm hidden lg:block text-gray-200 mt-2 max-h-0 opacity-0 overflow-hidden
-                 transition-[height_opacity] duration-750 text-left
-                 group-hover:max-h-70 group-hover:opacity-100"
-        >
+                  transition-[height_opacity] duration-750 text-left
+                  group-hover:max-h-70 group-hover:opacity-100">
           {caption}
         </p>
       </div>
@@ -90,6 +135,6 @@ function HomeResourceCard({ title, caption, src, to }) {
           aria-hidden="true"
         />
       </div>
-    </NavLink>
+    </>
   );
 }
