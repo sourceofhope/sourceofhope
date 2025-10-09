@@ -1,22 +1,40 @@
-import React from "react";
+import React, { lazy } from "react";
 import ReactDOM from "react-dom/client";
-import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
-import AppLayout from "./components/layout/AppLayout.jsx"
-import HomePage from "./pages/home/HomePage.jsx";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Navigate,
+} from "react-router-dom";
+
+import { ROUTES, CANONICAL } from "./routes.jsx";
+
+import AppLayout from "./components/layout/AppLayout.jsx";
 import ErrorBoundary from "./pages/ErrorBoundary.jsx";
-import AboutPage from "./pages/about/AboutPage.jsx";
+
+const HomePage = lazy(() => import("./pages/home/HomePage.jsx"));
+const AboutPage = lazy(() => import("./pages/about/AboutPage.jsx"));
+const ServePage = lazy(() => import("./pages/serve/ServePage.jsx"));
 
 import "./style.css";
 
-const router = createBrowserRouter([
+const PageMap = {
+  home: <HomePage />,
+  about: <AboutPage />,
+  serve: <ServePage />,
+};
+
+export const router = createBrowserRouter([
   {
     element: <AppLayout />,
     errorElement: <ErrorBoundary />,
     children: [
-      { path: "/", element: <Navigate to="/sourceofhope/" replace /> },
-      { path: "/sourceofhope", element: <Navigate to="/sourceofhope/" replace /> },
-      { path: "/sourceofhope/", element: <HomePage /> },
-      { path: "/sourceofhope/about", element: <AboutPage /> }
+      { path: "/", element: <Navigate to={CANONICAL.home} replace /> },
+      ...Object.entries(ROUTES).flatMap(([key, paths]) =>
+        paths.map((path) => ({
+          path,
+          element: PageMap[key],
+        }))
+      ),
     ],
   },
 ]);

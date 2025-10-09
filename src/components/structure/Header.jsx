@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/20/solid";
+import { useLocation } from "react-router-dom";
+
 import ExpressiveLink from "../ui/expressive/ExpressiveLink";
 import Favicon from "../ui/Favicon";
-import { useLocation } from "react-router-dom";
+
+import { CANONICAL } from "../../routes";
 
 export default function Header({ isError }) {
   const location = useLocation();
@@ -73,8 +76,8 @@ function HeaderMenu({ open, setOpen }) {
 
 function HeaderNavigator() {
   const links = [
-    { label: "ABOUT", to: "/sourceofhope/about" },
-    { label: "SERVE", to: "" },
+    { label: "ABOUT", to: CANONICAL.about },
+    { label: "SERVE", to: CANONICAL.serve },
     { label: "CONNECT", to: "" },
     { label: "MEDIA", to: "" },
     { label: "RESOURCES", to: "" },
