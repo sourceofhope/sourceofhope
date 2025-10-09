@@ -78,7 +78,7 @@ function HomeResourceCard({ title, caption, src, to }) {
         className={`
     fixed inset-0 z-50 flex items-center justify-center
     bg-black/80 md:hidden p-5
-    transition-opacity duration-700
+    transition-opacity duration-700 h-[120vh] w-screen
     ${
       active
         ? "opacity-100 pointer-events-auto"
