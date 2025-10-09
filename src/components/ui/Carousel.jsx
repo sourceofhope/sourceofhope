@@ -6,19 +6,12 @@ export default function Carousel({ children = [], className }) {
   const containerReference = useRef(null);
   const [active, setActive] = useState(0);
   const [count, setCount] = useState(1);
-  const resizeObserverRef = useRef(null);
+  const resizeObserverReference = useRef(null);
 
-  const childArray = Array.isArray(children)
-    ? children
-    : children
-    ? [children]
-    : [];
+  const childArray = Array.isArray(children) ? children : [children];
 
   useLayoutEffect(() => {
     const update = () => {
-      if (!containerReference.current?.children.length) {
-        return;
-      }
       const containerWidth = containerReference.current.offsetWidth;
       const firstChild = containerReference.current.children[0];
       const childWidth = firstChild ? firstChild.offsetWidth : containerWidth;
@@ -28,19 +21,17 @@ export default function Carousel({ children = [], className }) {
 
     update();
 
-    window.addEventListener("resize", update);
-
     if (window.ResizeObserver) {
-      resizeObserverRef.current = new ResizeObserver(update);
-      for (const child of containerReference.current.children) {
-        resizeObserverRef.current.observe(child);
-      }
+      resizeObserverReference.current = new ResizeObserver(update);
+      resizeObserverReference.current.observe(containerReference.current);
     }
+
+    window.addEventListener("resize", update);
 
     return () => {
       window.removeEventListener("resize", update);
-      if (resizeObserverRef.current) {
-        resizeObserverRef.current.disconnect();
+      if (resizeObserverReference.current) {
+        resizeObserverReference.current.disconnect();
       }
     };
   }, [children]);
@@ -107,7 +98,7 @@ function CarouselSelector({ selected, onClick }) {
   return (
     <button
       className={`${
-        selected ? "w-1/10 bg-accent-500" : "w-10 bg-accent-600"
+        selected ? "w-20 bg-accent-500" : "w-10 bg-accent-600"
       } h-3 md:h-5 rounded-full transition-[width_color] duration-500`}
       onClick={onClick}></button>
   );
