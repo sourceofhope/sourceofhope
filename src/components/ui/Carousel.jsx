@@ -17,6 +17,7 @@ export default function Carousel({ children = [], className }) {
       const childWidth = firstChild ? firstChild.offsetWidth : containerWidth;
       const fit = Math.max(1, Math.round(containerWidth / childWidth));
       setCount(fit);
+      setActive(0);
     };
 
     update();
