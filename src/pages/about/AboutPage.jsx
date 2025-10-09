@@ -13,9 +13,8 @@ export default function AboutPage() {
         <h2 className="font-urbanist font-bold text-neutral-50 text-xxlg md:text-xxxlg">
           ABOUT
         </h2>
-        <p className="font-semibold text-neutral-300 text-sm pb-10">
-          EMPOWERING COMMUNITIES THROUGH DIGNITY, WELLNESS, AND COMPASSION SINCE
-          2014
+        <p className="font-semibold text-neutral-200 text-sm pb-10">
+          EMPOWERING COMMUNITIES THROUGH DIGNITY, WELLNESS, AND COMPASSION
         </p>
       </PageHeader>
       <AboutDescriptionSection />
