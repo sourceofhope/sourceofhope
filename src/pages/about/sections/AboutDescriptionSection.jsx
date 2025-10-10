@@ -1,9 +1,9 @@
-import { AboutSection } from "../AboutPage";
+import PageSection from "../../PageSection";
 import { HighlightedText } from "../../../components/ui/expressive/ExpressiveText";
 
 export default function AboutDescriptionSection() {
   return (
-    <AboutSection className="justify-items-center py-5 grid gap-3">
+    <PageSection className="justify-items-center py-5 grid gap-3">
       <h2 className="justify-self-start text-xlg md:text-xxlg text-balance font-urbanist">
         We're a <HighlightedText>501(c)(3)</HighlightedText>{" "}
         <span className="hidden md:inline-block">Non-profit</span> Organization
@@ -17,6 +17,6 @@ export default function AboutDescriptionSection() {
         funding, our impact is powered by volunteers, partners, and
         donors—building stronger communities, one life at a time.
       </p>
-    </AboutSection>
+    </PageSection>
   );
 }

@@ -8,7 +8,6 @@ import HomeMissionSection from "./sections/HomeMissionSection";
 import HomeResourcesSection from "./sections/HomeResourcesSection";
 import HomePublicationsSection from "./sections/HomePublicationsSection";
 
-import PageSection from "../PageSection";
 import HomeDonationSection from "./sections/HomeDonationSection";
 import { HomeServingSection } from "./sections/HomeServingSection";
 import { Helmet } from "react-helmet";
@@ -54,7 +53,7 @@ export default function HomePage() {
 
 export function HomeSection({ title, className, children, caption, to }) {
   return (
-    <PageSection className="gap-5 my-5 px-5 lg:px-35">
+    <HomeContent className="gap-5 my-5 px-5 lg:px-35">
       {title ? (
         <HighlightedText
           className="w-fit justify-self-center text-center"
@@ -76,6 +75,15 @@ export function HomeSection({ title, className, children, caption, to }) {
       ) : (
         <></>
       )}
-    </PageSection>
+    </HomeContent>
+  );
+}
+
+export function HomeContent({ className, children }) {
+  return (
+    <section
+      className={`w-full md:justify-items-left items-center grid ${className}`}>
+      {children}
+    </section>
   );
 }

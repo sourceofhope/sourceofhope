@@ -7,6 +7,7 @@ import { HighlightedText } from "../../../components/ui/expressive/ExpressiveTex
 
 import Emphasis from "../../../components/ui/Emphasis";
 import ExpressiveLink from "../../../components/ui/expressive/ExpressiveLink";
+import { CANONICAL } from "../../../routes";
 
 export default function HomeResourcesSection() {
   return (
@@ -22,44 +23,38 @@ export default function HomeResourcesSection() {
           title="EDUCATION FOR HOPE"
           caption="Education for Hope supports students of all ages through tutoring, scholarships, and workforce opportunities. We provide low-income cosmetology students with access to advanced training, partner with The University of Texas at Dallas through the Federal Work-Study program, and offer operational roles that build professional experience. By removing barriers to education, we empower individuals to learn, grow, and create brighter futures for themselves and their families."
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
-          to=""
         />
         <HomeResourceCard
           title="WELLNESS OF HOPE CLINIC"
           caption="The Wellness of Hope Clinic offers holistic treatments such as fire cupping and lymphatic drainage to low-income individuals, seniors, teachers, and first responders. In partnership with Stone International Wellness Center, we also provide reduced cosmetic services and wellness classes. These therapies restore health, build confidence, and make lasting impacts for people who might otherwise be unable to access care."
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
-          to=""
         />
         <HomeResourceCard
           title="SERVING HOPE"
           caption="Serving Hope is a volunteer-driven initiative dedicated to providing organic, home-cooked meals to those in need across the Dallas–Fort Worth area. Through partnerships and community support, we nourish homeless individuals, veterans, nursing home residents, and at-risk families. Each event focuses on fresh food, dignity, and connection, ensuring both body and spirit are cared for while building stronger, more compassionate communities."
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
-          to=""
         />
         <HomeResourceCard
           title="SHARING HOPE"
           caption="Sharing Hope transforms surplus food donations into community impact. Partnering with over 50 nonprofits, we distribute meals and essential supplies to families facing food insecurity across the region. This initiative reduces food waste, strengthens partnerships, and ensures that resources reach those who need them most, turning generosity into daily nourishment for thousands of lives."
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
-          to=""
         />
         <HomeResourceCard
           title="HOPE FOR THE GREAT OUTDOORS"
           caption="Hope for the Great Outdoors introduces individuals and families to nature through hands-on learning and immersive outdoor experiences. From camping and fishing to survival skills, participants gain confidence while developing a lifelong respect for the environment. By making the outdoors accessible and inclusive, the program creates opportunities for growth, bonding, and wellness in a safe and supportive setting."
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
-          to=""
         />
         <HomeResourceCard
           title="INTERNATIONAL PARTNER SERVING"
           caption="Our International Partner Serving program extends hope worldwide by collaborating with organizations and volunteers to deliver resources, training, and empowerment. We provide scholarships, educational tools, wellness services, and food support to underserved communities in developing regions. By fostering relationships based on trust and respect, we amplify dignity and self-sufficiency, ensuring that compassion knows no borders and hope reaches people across the globe."
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
-          to="/sourceofhope/"
         />
       </div>
     </HomeSection>
   );
 }
 
-function HomeResourceCard({ title, caption, src, to }) {
+function HomeResourceCard({ title, caption, src }) {
   const [active, setActive] = useState(false);
 
   return (
@@ -70,7 +65,7 @@ function HomeResourceCard({ title, caption, src, to }) {
         <HomeResourceCardInner src={src} caption={caption} title={title} />
       </button>
       <NavLink
-        to={to}
+        to={CANONICAL.serve}
         className="relative hidden md:block w-full h-full group overflow-hidden rounded-xl text-accent-background aspect-square">
         <HomeResourceCardInner src={src} caption={caption} title={title} />
       </NavLink>
@@ -97,7 +92,7 @@ function HomeResourceCard({ title, caption, src, to }) {
           </div>
           <p className="text-sm text-neutral-700">{caption}</p>
           <p className="w-fit">
-            <ExpressiveLink to={to} className="text-sm text-neutral-500">
+            <ExpressiveLink to={CANONICAL.serve} className="text-sm text-neutral-500">
               LEARN MORE
             </ExpressiveLink>
           </p>

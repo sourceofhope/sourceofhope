@@ -1,8 +1,7 @@
-import PageSection from "./PageSection";
-
 export default function PageHeader({ children, className }) {
   return (
-    <PageSection className="relative flex mb-10 h-90">
+    <section
+      className={`w-full md:justify-items-left items-center relative flex my-0 mb-10 h-90 ${className}`}>
       <img
         className="absolute inset-0 z-0 h-full w-full object-cover brightness-[.65] contrast-[1.1]"
         style={{
@@ -16,6 +15,6 @@ export default function PageHeader({ children, className }) {
         className={`relative z-10 w-fit self-end grid px-5 py-7.5 lg:px-35 ${className}`}>
         {children}
       </div>
-    </PageSection>
+    </section>
   );
 }

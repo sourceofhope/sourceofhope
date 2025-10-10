@@ -1,11 +1,11 @@
 import ExpressiveLink from "../../../components/ui/expressive/ExpressiveLink";
 import { BanknotesIcon } from "@heroicons/react/20/solid";
 import { ServingCard } from "./HomeServingSection";
-import PageSection from "../../PageSection";
+import { HomeContent } from "../HomePage";
 
 export default function HomeDonationSection() {
   return (
-    <PageSection className="py-10 min-h-100 px-5 lg:px-35 w-full h-full grid gap-15 items-center justify-items-center bg-accent-800 text-neutral-50">
+    <HomeContent className="py-10 min-h-100 px-5 lg:px-35 w-full h-full grid gap-15 items-center justify-items-center bg-accent-800 text-neutral-50">
       <ServingCard className="md:hidden w-full max-w-105 bg-neutral-100" />
       <article className="md:w-1/2 grid gap-5 justify-items-center text-balance text-center">
         <BanknotesIcon className="w-[80px] h-[80px]" />
@@ -20,6 +20,6 @@ export default function HomeDonationSection() {
           <ExpressiveLink className="px-10 py-5">DONATE</ExpressiveLink>
         </button>
       </article>
-    </PageSection>
+    </HomeContent>
   );
 }

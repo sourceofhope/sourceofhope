@@ -1,11 +1,11 @@
-import { AboutSection } from "../AboutPage";
+import PageSection from "../../PageSection";
 import { HighlightedText } from "../../../components/ui/expressive/ExpressiveText";
 
 import ExpressiveLink from "../../../components/ui/expressive/ExpressiveLink";
 
 export default function AboutSummarySection() {
   return (
-    <AboutSection>
+    <PageSection>
       <h2 className="text-xlg md:text-xxlg text-balance font-urbanist">
         Ready to take <HighlightedText>your next step</HighlightedText>?
       </h2>
@@ -44,6 +44,6 @@ export default function AboutSummarySection() {
           Become a Community Sponsor
         </ExpressiveLink>
       </div>
-    </AboutSection>
+    </PageSection>
   );
 }

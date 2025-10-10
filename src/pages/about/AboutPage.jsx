@@ -51,11 +51,3 @@ export default function AboutPage() {
     </>
   );
 }
-
-export function AboutSection({ className, children }) {
-  return (
-    <PageSection className={`gap-5 my-5 px-5 lg:px-35 ${className}`}>
-      {children}
-    </PageSection>
-  );
-}

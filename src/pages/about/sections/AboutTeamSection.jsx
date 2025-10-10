@@ -1,13 +1,12 @@
 import { useState } from "react";
 import { ArrowRightIcon, XMarkIcon } from "@heroicons/react/20/solid";
 
-import { AboutSection } from "../AboutPage";
-
 import Carousel from "../../../components/ui/Carousel";
+import PageSection from "../../PageSection";
 
 export default function AboutTeamSection() {
   return (
-    <AboutSection>
+    <PageSection>
       <h2 className="text-xlg md:text-xxlg text-balance font-urbanist">
         Meet Our Team
       </h2>
@@ -58,7 +57,7 @@ export default function AboutTeamSection() {
           </Carousel>
         </div>
       </div>
-    </AboutSection>
+    </PageSection>
   );
 }
 

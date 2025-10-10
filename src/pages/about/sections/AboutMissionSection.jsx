@@ -1,11 +1,11 @@
-import { AboutSection } from "../AboutPage";
+import PageSection from "../../PageSection";
 
 import ExpressiveAnchor from "../../../components/ui/expressive/ExpressiveAnchor";
 import Emphasis from "../../../components/ui/Emphasis"
 
 export default function AboutMissionSection() {
   return (
-    <AboutSection className="grid md:grid-cols-[6fr_4fr] gap-5 bg-neutral-200 items-center py-10">
+    <PageSection className="grid md:grid-cols-[6fr_4fr] gap-5 bg-neutral-200 items-center py-10">
       <article className="grid gap-5 self-start">
         <div className="grid gap-3">
           <h2 className="text-xlg md:text-xxlg text-balance font-urbanist">
@@ -49,6 +49,6 @@ export default function AboutMissionSection() {
       <article className="grid self-center justify-items-center">
         <img className="block w-full aspect-square bg-accent-900 max-w-[350px] rounded-2xl object-cover object-center" />
       </article>
-    </AboutSection>
+    </PageSection>
   );
 }
