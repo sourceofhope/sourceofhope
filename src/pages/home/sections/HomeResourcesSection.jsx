@@ -76,9 +76,9 @@ function HomeResourceCard({ title, caption, src, to }) {
       </NavLink>
       <section
         className={`
-    fixed inset-0 z-50 flex items-center justify-center
+    fixed inset-0 z-50 left-0 bottom-0 flex items-center justify-center
     bg-black/80 md:hidden p-5
-    transition-opacity duration-700 h-[120vh] w-screen
+    transition-opacity duration-700 h-screen w-screen
     ${
       active
         ? "opacity-100 pointer-events-auto"
