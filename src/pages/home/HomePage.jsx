@@ -12,6 +12,7 @@ import HomeDonationSection from "./sections/HomeDonationSection";
 import { HomeServingSection } from "./sections/HomeServingSection";
 import { Helmet } from "react-helmet";
 import { CANONICAL_URL } from "../../routes";
+import PageSection from "../PageSection";
 
 export default function HomePage() {
   return (
@@ -53,7 +54,7 @@ export default function HomePage() {
 
 export function HomeSection({ title, className, children, caption, to }) {
   return (
-    <HomeContent className="gap-5 my-5 px-5 lg:px-35">
+    <PageSection>
       {title ? (
         <HighlightedText
           className="w-fit justify-self-center text-center"
@@ -75,7 +76,7 @@ export function HomeSection({ title, className, children, caption, to }) {
       ) : (
         <></>
       )}
-    </HomeContent>
+    </PageSection>
   );
 }
 

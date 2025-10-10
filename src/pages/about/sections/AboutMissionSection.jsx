@@ -8,18 +8,18 @@ export default function AboutMissionSection() {
     <PageSection className="grid md:grid-cols-[6fr_4fr] gap-5 bg-neutral-200 items-center py-10">
       <article className="grid gap-5 self-start">
         <div className="grid gap-3">
-          <h2 className="text-xlg md:text-xxlg text-balance font-urbanist">
+          <h2 className="text-xlg md:text-xxlg font-urbanist md:text-balance">
             Founded in 2014 on our{" "}
             <Emphasis>
               <span className="hidden md:inline-block">guiding</span> principle
             </Emphasis>
           </h2>
-          <p className="text-sm md:text-md text-neutral-600 px-5 py-0 border-l-2 text-balance">
+          <p className="text-sm md:text-md md:ml-5 text-neutral-600 pl-5 py-0 border-l-2 text-balance">
             "empower with dignity—meet urgent needs while equipping people with
             lifelong skills, wellness, and community so hope becomes
             sustainable."
           </p>
-          <p className="px-5 w-fit text-neutral-600">
+          <p className="text-sm md:text-md md:ml-5 pl-5 w-fit text-neutral-600">
             <ExpressiveAnchor>
               – Co-founder,{" "}
               <strong className="font-semibold">Quynh Chau Stone</strong>

@@ -111,13 +111,13 @@ function CarouselCard({ src, name, title, caption }) {
     }
   `}
         onClick={() => setActive(false)}>
-        <article className="relative w-full rounded-xl bg-neutral-50 p-5 grid gap-5">
+        <article className="relative w-full rounded-xl bg-neutral-200 p-5 grid gap-5">
           <div className="flex justify-between">
-            <h2 className="text-md font-semibold">{name}</h2>
+            <h2 className="text-md font-semibold">{name.toUpperCase()}</h2>
             <button
-              className="justify-self-end text-neutral-50 font-bold p-1 w-fit h-fit bg-neutral-700 rounded-full"
+              className="justify-self-end font-bold p-1 w-fit h-fit  rounded-full"
               onClick={() => setActive(false)}>
-              <XMarkIcon className="w-[16px] h-[16px]" aria-hidden="true" />
+              <XMarkIcon className="w-[20px] h-[20px]" aria-hidden="true" />
             </button>
           </div>
           <p className="text-sm text-neutral-700">{caption}</p>

@@ -2,6 +2,7 @@ import { Helmet } from "react-helmet";
 
 import { CANONICAL_URL } from "../../routes";
 import PageHeader from "../PageHeader";
+import ServeShowcaseSection from "./sections/ServeShowcaseSection";
 
 export default function SavePage() {
   return (
@@ -31,13 +32,14 @@ export default function SavePage() {
         />
       </Helmet>
       <PageHeader src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344">
-        <h2 className="font-urbanist font-bold text-neutral-50 text-xxlg md:text-xxxlg">
+        <h2 className="font-urbanist font-bold text-neutral-50 text-xxxlg">
           SERVE
         </h2>
         <p className="font-semibold text-neutral-200 text-sm pb-10">
           MAKE AN IMPACT IN YOUR COMMUNITY
         </p>
       </PageHeader>
+      <ServeShowcaseSection />
     </>
   );
 }
