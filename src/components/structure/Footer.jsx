@@ -141,7 +141,7 @@ function FooterBottom() {
 function FooterCard() {
   return (
     <article
-      className={`flex flex-col gap-5 rounded-2xl shadow-2x overflow-hidden w-150 max-w-fit h-fit p-5 bg-neutral-50 text-neutral-950`}>
+      className={`flex flex-col gap-3 rounded-2xl shadow-2x overflow-hidden w-150 max-w-fit h-fit p-5 bg-neutral-50 text-neutral-950`}>
       <p className="h-fit w-full text-sm font-bold text-primary-700">
         SUBSCRIBE TO OUR NEWSLETTER
       </p>

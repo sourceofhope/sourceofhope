@@ -2,7 +2,7 @@ import PageSection from "./PageSection";
 
 export default function PageHeader({ children, className }) {
   return (
-    <PageSection className="relative flex mb-10 h-100 md:h-80">
+    <PageSection className="relative flex mb-10 h-90">
       <img
         className="absolute inset-0 z-0 h-full w-full object-cover brightness-[.65] contrast-[1.1]"
         style={{
@@ -13,7 +13,7 @@ export default function PageHeader({ children, className }) {
         src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
       />
       <div
-        className={`relative z-10 w-fit self-end grid px-5 py-15 lg:px-35 ${className}`}>
+        className={`relative z-10 w-fit self-end grid px-5 py-7.5 lg:px-35 ${className}`}>
         {children}
       </div>
     </PageSection>
