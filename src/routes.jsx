@@ -18,3 +18,11 @@ export const CANONICAL = {
   about: `${BASE}/about`,
   serve: `${BASE}/serve`,
 };
+
+const BASE_URL = "https://thesourceofhope.org"
+
+export const CANONICAL_URL = {
+  home: `${BASE_URL}/`,
+  about: `${BASE_URL}/about`,
+  serve: `${BASE_URL}/serve`,
+}
