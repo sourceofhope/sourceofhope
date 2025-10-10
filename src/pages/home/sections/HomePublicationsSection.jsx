@@ -31,7 +31,7 @@ export default function HomePublicationsSection() {
         </article>
         <Carousel className="h-full border-t-2 md:border-t-0 md:border-l-2 w-full  py-5 md:pl-10 border-neutral-400">
           {Array.from({ length: total }).map((_, i) => (
-            <CarouselImage key={i} src="" alt="" date={new Date()}/>
+            <CarouselImage key={i} src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344" alt="" date={new Date()}/>
           ))}
         </Carousel>
       </div>
