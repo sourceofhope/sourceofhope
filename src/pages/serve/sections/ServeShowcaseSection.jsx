@@ -1,5 +1,7 @@
 import PageSection from "../../PageSection";
 
+import Emphasis from "../../../components/ui/Emphasis";
+
 export default function ServeShowcaseSection() {
   return (
     <PageSection className="justify-items-center grid gap-3">
@@ -48,8 +50,8 @@ export default function ServeShowcaseSection() {
           </p>
           <p>
             That’s our guiding principle—
-            <strong className="font-semibold">
-              empower, educate, and elevate.
+            <strong className="font-normal">
+              <Emphasis>empower</Emphasis>, <Emphasis>educate</Emphasis>, and <Emphasis>elevate</Emphasis>.
             </strong>
           </p>
         </div>

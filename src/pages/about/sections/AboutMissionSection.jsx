@@ -20,7 +20,7 @@ export default function AboutMissionSection() {
             sustainable."
           </p>
           <p className="text-sm md:text-md md:ml-5 pl-5 w-fit text-neutral-600">
-            <ExpressiveAnchor>
+            <ExpressiveAnchor href="https://www.linkedin.com/in/qu%E1%BB%B3nh-ch%C3%A2u-qc-stone-87185b34/">
               – Co-founder,{" "}
               <strong className="font-semibold">Quynh Chau Stone</strong>
             </ExpressiveAnchor>

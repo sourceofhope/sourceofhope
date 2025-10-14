@@ -3,7 +3,7 @@ import { HighlightedText } from "../../../components/ui/expressive/ExpressiveTex
 
 export default function AboutDescriptionSection() {
   return (
-    <PageSection className="justify-items-center py-5 grid gap-3">
+    <PageSection className="justify-items-center grid gap-3">
       <h2 className="justify-self-start text-xlg md:text-xxlg text-balance font-urbanist">
         We're a <HighlightedText>501(c)(3)</HighlightedText>{" "}
         <span className="hidden md:inline-block">Non-profit</span> Organization

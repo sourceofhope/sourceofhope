@@ -11,7 +11,7 @@ import { CANONICAL } from "../../../routes";
 
 export default function HomeResourcesSection() {
   return (
-    <HomeSection className="w-full pb-15">
+    <HomeSection className="w-full md:mb-15">
       <h2 className="text-lg md:text-lg lg:text-xxlg pb-5 text-center text-balance">
         <NavLink to="" className="inline-block">
           <Emphasis>We provide a number of resources</Emphasis>
