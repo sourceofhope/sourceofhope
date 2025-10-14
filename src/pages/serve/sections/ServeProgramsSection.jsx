@@ -59,11 +59,11 @@ function ServingArticle({
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
-    const el = ref.current;
+    const element = ref.current;
     const handleScroll = () => {
-      const rect = el.getBoundingClientRect();
+      const rectangle = element.getBoundingClientRect();
       const height = window.innerHeight;
-      const visible = Math.min(Math.max(rect.top / height, 0), 1);
+      const visible = Math.min(Math.max(rectangle.top / height, 0), 1);
       setProgress(visible);
     };
     window.addEventListener("scroll", handleScroll);
