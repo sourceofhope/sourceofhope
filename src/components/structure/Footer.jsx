@@ -9,7 +9,7 @@ export default function Footer() {
   const location = useLocation();
 
   return (
-    <footer className="relative w-full mt-15">
+    <footer className="relative w-full lg:mt-15">
       {!(location.pathname === "/sourceofhope/") ? <FooterParallax /> : null}
       <section className="w-full h-full bg-primary-700 text-neutral-50 p-5 md:py-10 z-10">
         <div className="relative z-10 flex flex-col md:items-center gap-5 w-full">
@@ -141,7 +141,7 @@ function FooterBottom() {
 function FooterCard() {
   return (
     <article
-      className={`flex flex-col gap-3 rounded-2xl shadow-2x overflow-hidden w-150 max-w-fit h-fit p-5 bg-neutral-50 text-neutral-950`}>
+      className={`flex flex-col gap-3 rounded-2xl shadow-2x overflow-hidden w-150 max-w-fit h-fit py-5 px-10 bg-neutral-50 text-neutral-950`}>
       <p className="h-fit w-full text-sm font-bold text-primary-700">
         SUBSCRIBE TO OUR NEWSLETTER
       </p>
