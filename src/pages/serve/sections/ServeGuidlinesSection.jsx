@@ -13,13 +13,13 @@ export default function ServeGuidelinesSection() {
           Who can volunteer?
         </h3>
         <div className="grid gap-3">
-          <p className="text-balance">
+          <p className="md:text-balance">
             We welcome volunteers of all ages--from kids and students to adults
             and seniors! If you're looking to gain volunteer hours for school,
             participate as a family, or give back to your community, we have
             opportunities for everyone.
           </p>
-          <p className="text-balance">
+          <p className="md:text-balance">
             For students, some local schools offer service hours for
             volunteering with us.{" "}
             <a
@@ -36,7 +36,7 @@ export default function ServeGuidelinesSection() {
           What's expected of me?
         </h3>
         <div className="grid gap-3">
-          <p className="text-balance">
+          <p className="md:text-balance">
             We value every volunteer and their contributions. To ensure a
             meaningful and productive experience:
           </p>
@@ -49,7 +49,7 @@ export default function ServeGuidelinesSection() {
             </li>
             <li>If unsure of what to do, ask a team member for guidance</li>
           </ul>
-          <p className="text-balance">
+          <p className="md:text-balance">
             By signing up, you acknowledge and agree to our volunteer terms and
             guidelines. Thank you for being the Source of Hope in our community!
           </p>
