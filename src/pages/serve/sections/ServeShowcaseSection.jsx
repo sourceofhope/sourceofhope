@@ -33,7 +33,7 @@ export default function ServeShowcaseSection() {
           service, and academic mentorship.
         </p>
         <div className="grid gap-3">
-          <p className="text-sm md:text-md md:ml-5 pl-5 py-0 border-l-2 md:text-balance lg:w-1/2">
+          <p className="text-sm md:text-md pl-5 py-0 border-l-2 md:text-balance lg:w-1/2">
             "Give a man a fish, and you feed him for a day. Teach a man to fish,
             and you feed him for a lifetime."
           </p>

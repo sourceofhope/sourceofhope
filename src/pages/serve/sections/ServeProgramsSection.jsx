@@ -5,6 +5,14 @@ export default function ServeProgramsSection() {
   return (
     <>
       <section className="relative w-full">
+        <div className="grid gap-1 justify-self-start justify-start p-5 md:px-35">
+          <h2 className="text-xlg md:text-xxlg text-balance font-urbanist">
+            Make an Impact
+          </h2>
+          <h3 className="text-sm md:text-md text-accent-700 font-semibold">
+            VOLUNTEER FOR ONE OF OUR PROGRAMS
+          </h3>
+        </div>
         <ServingArticle
           index={1}
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png"
@@ -70,13 +78,15 @@ function ServingArticle({
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const scale = 1 - progress * 0.1;
+  const scale = progress * 0.1;
   const brightness = 1 - progress * 0.3;
 
   return (
     <article
       ref={ref}
-      className={`sticky top-0 h-screen w-full overflow-hidden z-[${index * 10}]`}
+      className={`sticky top-0 h-screen w-full overflow-hidden z-[${
+        index * 10
+      }]`}
       style={{
         filter: `brightness(${brightness})`,
         transition: "filter 0.1s linear",
@@ -86,37 +96,57 @@ function ServingArticle({
         src={src}
         alt={caption}
       />
-      <ServingCard title={title} caption={caption} side={side}
+      <ServingLayer
+        title={title}
+        caption={caption}
+        description={description}
+        tagline={tagline}
+        to={to}
+        side={side}
         style={{
           transform: `scale(${scale})`,
-          transition: "transform 0.1s linear,"
+          transition: "transform 0.1s linear,",
         }}
-      >
-        <p className="text-sm text-balance">{description}</p>
-        <button className="w-fit font-semibold">
-          <ExpressiveLink className="text-sm text-accent-500" to={to}>
-            {tagline}
-          </ExpressiveLink>
-        </button>
-      </ServingCard>
+      />
     </article>
   );
 }
 
+function ServingCard({ title, caption, description, tagline, to }) {
+  return (
+    <div className="lg:w-1/3 flex flex-col gap-3 rounded-2xl shadow-2x overflow-hidden h-fit py-5 px-10 bg-neutral-50 text-neutral-950">
+      <h2 className="text-sm font-bold text-primary-700 uppercase">{title}</h2>
+      <p className="text-lg font-urbanist font-semibold">{caption}</p>
+      <p className="text-sm text-balance">{description}</p>
+      <button className="w-fit font-semibold">
+        <ExpressiveLink className="text-sm text-accent-500" to={to}>
+          {tagline}
+        </ExpressiveLink>
+      </button>
+    </div>
+  );
+}
 
-function ServingCard({ title, caption, children, side = false }) {
+function ServingLayer({
+  title,
+  caption,
+  description,
+  tagline,
+  to,
+  side = false,
+}) {
   return (
     <div
       className={`absolute inset-0 grid items-center justify-items-center p-5 lg:px-35 z-10 ${
         side ? "md:justify-items-start" : "justify-items-end"
       }`}>
-      <div className="lg:w-1/3 flex flex-col gap-3 rounded-2xl shadow-2x overflow-hidden h-fit py-5 px-10 bg-neutral-50 text-neutral-950">
-        <h2 className="text-sm font-bold text-primary-700 uppercase">
-          {title}
-        </h2>
-        <p className="text-lg font-urbanist font-semibold">{caption}</p>
-        {children}
-      </div>
+      <ServingCard
+        title={title}
+        caption={caption}
+        description={description}
+        tagline={tagline}
+        to={to}
+      />
     </div>
   );
 }

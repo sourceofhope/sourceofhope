@@ -4,6 +4,8 @@ import { CANONICAL_URL } from "../../routes";
 import PageHeader from "../PageHeader";
 import ServeShowcaseSection from "./sections/ServeShowcaseSection";
 import ServeProgramsSection from "./sections/ServeProgramsSection";
+import ServeDonationSection from "./sections/ServeDonationSection";
+import ServeGuidelinesSection from "./sections/ServeGuidlinesSection";
 
 export default function SavePage() {
   return (
@@ -42,6 +44,8 @@ export default function SavePage() {
       </PageHeader>
       <ServeShowcaseSection />
       <ServeProgramsSection />
+      <ServeDonationSection />
+      <ServeGuidelinesSection />
     </>
   );
 }

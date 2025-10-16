@@ -14,12 +14,12 @@ export default function AboutMissionSection() {
               <span className="hidden md:inline-block">guiding</span> principle
             </Emphasis>
           </h2>
-          <p className="text-sm md:text-md md:ml-5 text-neutral-600 pl-5 py-0 border-l-2 text-balance">
+          <p className="text-sm md:text-md text-neutral-600 pl-5 py-0 border-l-2 text-balance">
             "empower with dignity—meet urgent needs while equipping people with
             lifelong skills, wellness, and community so hope becomes
             sustainable."
           </p>
-          <p className="text-sm md:text-md md:ml-5 pl-5 w-fit text-neutral-600">
+          <p className="text-sm md:text-md pl-5 w-fit text-neutral-600">
             <ExpressiveAnchor href="https://www.linkedin.com/in/qu%E1%BB%B3nh-ch%C3%A2u-qc-stone-87185b34/">
               – Co-founder,{" "}
               <strong className="font-semibold">Quynh Chau Stone</strong>
