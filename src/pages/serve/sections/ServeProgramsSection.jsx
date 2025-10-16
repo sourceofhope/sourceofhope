@@ -4,8 +4,8 @@ import ExpressiveLink from "../../../components/ui/expressive/ExpressiveLink";
 export default function ServeProgramsSection() {
   return (
     <>
-      <section className="relative w-full p-5 md:px-10 grid gap-5 bg-neutral-200">
-        <div className="grid gap-1 justify-self-start justify-start md:px-25">
+      <section className="relative w-full pt-5 grid gap-5 bg-neutral-200">
+        <div className="grid gap-1 justify-self-start justify-start md:px-35 px-5">
           <h2 className="text-xlg md:text-xxlg text-balance font-urbanist">
             Make an Impact
           </h2>
@@ -84,17 +84,19 @@ function ServingArticle({
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const scale = progress * 0.1;
-  const brightness = 1 - progress * 0.3;
+  const margin = progress * 20;
+  const brightness = 1 - progress * (0.35);
 
   return (
     <article
       ref={ref}
-      className={`sticky top-0 h-screen w-full overflow-hidden z-[${
+      className={`sticky top-0 h-screen w-[calc(100%-${margin}px)] overflow-hidden z-[${
         index * 10
       }]`}
       style={{
         filter: `brightness(${brightness})`,
+        marginLeft: `${margin}px`,
+        marginRight: `${margin}px`,
         transition: "filter 0.1s linear",
       }}>
       <img
@@ -107,11 +109,7 @@ function ServingArticle({
         caption={caption}
         tagline={tagline}
         to={to}
-        side={side}
-        style={{
-          transform: `scale(${scale})`,
-          transition: "transform 0.1s linear,",
-        }}>
+        side={side}>
         {children}
       </ServingLayer>
     </article>
