@@ -12,7 +12,7 @@ export default function PageHeader({ children, className }) {
         src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
       />
       <div
-        className={`relative z-10 w-fit self-end grid p-5 lg:px-35 ${className}`}>
+        className={`absolute z-10 w-fit self-end top-[50%] grid px-5 lg:px-35 items-start ${className}`}>
         {children}
       </div>
     </section>

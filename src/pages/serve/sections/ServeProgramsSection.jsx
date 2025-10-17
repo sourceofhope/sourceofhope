@@ -1,4 +1,6 @@
 import { useRef, useEffect, useState } from "react";
+import { MapPinIcon } from "@heroicons/react/20/solid";
+
 import ExpressiveLink from "../../../components/ui/expressive/ExpressiveLink";
 
 export default function ServeProgramsSection() {
@@ -19,7 +21,14 @@ export default function ServeProgramsSection() {
           title="SERVING HOPE"
           caption="Every meal served. Every smile shared."
           side={true}
+          to="https://www.eventbrite.com/e/october-volunteer-serving-hope-community-harvest-festival-registration-1069415312989?aff=oddtdtcreator"
           tagline="Volunteer at Our Next Event">
+          <div className="flex gap-5 items-center">
+            <MapPinIcon className="w-[16px] h-[16px]" />
+            <p className="text-balance">
+              2627 South Ervay Street Dallas, TX 75215
+            </p>
+          </div>
           <p className="text-balance text-sm">
             Every fourth Friday and Saturday, our volunteers gather to cook,
             package, and serve fresh meals to those experiencing homelessness,
@@ -84,25 +93,25 @@ function ServingArticle({
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const margin = progress * 20;
-  const brightness = 1 - progress * (0.35);
+  const scale = 1 - progress * 0.1;
+  const brightness = 1 - progress * 0.35;
 
   return (
     <article
       ref={ref}
-      className={`sticky top-0 h-screen w-[calc(100%-${margin}px)] overflow-hidden z-[${
+      className={`sticky top-0 h-screen w-screen [--base-margin:20px] md:[--base-margin:40px] overflow-hidden z-[${
         index * 10
       }]`}
       style={{
         filter: `brightness(${brightness})`,
-        marginLeft: `${margin}px`,
-        marginRight: `${margin}px`,
-        transition: "filter 0.1s linear",
       }}>
       <img
-        className="absolute inset-0 w-full h-full object-cover brightness-[.8] contrast-[1.1] rounded-t-4xl"
+        className="absolute inset-0 h-full w-full object-cover brightness-[.8] contrast-[1.1] rounded-t-4xl"
         src={src}
         alt={caption}
+        style={{
+          transform: `scale(${scale})`,
+        }}
       />
       <ServingLayer
         title={title}

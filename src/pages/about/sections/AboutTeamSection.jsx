@@ -113,7 +113,7 @@ function CarouselCard({ src, name, title, caption }) {
         onClick={() => setActive(false)}>
         <article className="relative w-full rounded-xl bg-neutral-200 p-5 grid gap-5">
           <div className="flex justify-between">
-            <h2 className="text-md font-semibold">{name.toUpperCase()}</h2>
+            <h2 className="text-md font-semibold uppercase">{name}</h2>
             <button
               className="justify-self-end font-bold p-1 w-fit h-fit  rounded-full"
               onClick={() => setActive(false)}>

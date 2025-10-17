@@ -38,7 +38,7 @@ export default function SavePage() {
         <h2 className="font-urbanist font-bold text-neutral-50 text-xxxlg">
           SERVE
         </h2>
-        <p className="font-semibold text-neutral-200 text-sm pb-10">
+        <p className="font-semibold text-neutral-200 text-sm">
           MAKE AN IMPACT IN YOUR COMMUNITY
         </p>
       </PageHeader>
