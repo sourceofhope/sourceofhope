@@ -183,7 +183,7 @@ function ServingArticle({ src, title, caption, children, side = false }) {
   return (
     <article
       ref={ref}
-      className={`sticky top-0 h-screen w-screen [--base-margin:20px] md:[--base-margin:40px] overflow-hidden`}
+      className={`sticky top-0 h-screen w-full [--base-margin:20px] md:[--base-margin:40px] overflow-hidden`}
       style={{
         filter: `brightness(${brightness})`,
       }}>
