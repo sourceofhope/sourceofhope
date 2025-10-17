@@ -21,28 +21,30 @@ export default function HomeMissionSection() {
       </div>
       <p className="w-fit text-md md:text-lg lg:text-xxlg lg:text-2xl text-center self-center text-balance leading-relaxed lg:max-w-[50ch]">
         Bringing hope and healing by providing{" "}
-        <span className="inline-block">
+        <span>
+          <span className="inline-block">
+            <Emphasis>
+              <a href="">meals</a>
+            </Emphasis>
+            ,
+          </span>{" "}
+          <span className="inline-block">
+            <Emphasis>
+              <a href="">education</a>
+            </Emphasis>
+            ,
+          </span>{" "}
+          <span className="inline-block">
+            <Emphasis>
+              <a href="">wellness</a>
+            </Emphasis>
+            ,
+          </span>{" "}
+          and{" "}
           <Emphasis>
-            <a href="">meals</a>
-          </Emphasis>
-          ,
-        </span>{" "}
-        <span className="inline-block">
-          <Emphasis>
-            <a href="">education</a>
-          </Emphasis>
-          ,
-        </span>{" "}
-        <span className="inline-block">
-          <Emphasis>
-            <a href="">wellness</a>
-          </Emphasis>
-          ,
-        </span>{" "}
-        and{" "}
-        <Emphasis>
-          <a href="">resources</a>
-        </Emphasis>{" "}
+            <a href="">resources</a>
+          </Emphasis>{" "}          
+        </span>
         that uplift and empower communities in need.
       </p>
     </HomeSection>
