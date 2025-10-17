@@ -193,6 +193,7 @@ function ServingArticle({ src, title, caption, children, side = false }) {
         alt={caption}
         style={{
           transform: `scale(${scale})`,
+          transition: "transform 0.1s",
         }}
       />
       <ServingLayer title={title} caption={caption} side={side}>
