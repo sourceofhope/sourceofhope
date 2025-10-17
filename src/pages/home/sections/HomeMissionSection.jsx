@@ -10,6 +10,7 @@ export default function HomeMissionSection() {
       <div className="flex flex-col gap-5 w-full justify-center">
         <img
           className="aspect-square w-full rounded-2xl hover:bg-neutral-200 transition-colors duration-500 text-center"
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
           alt="The Source of Hope Founder, Quynh Chau Stone"
         />
         <p className="w-fit font-light self-center text-md md:text-lg text-neutral-600">
