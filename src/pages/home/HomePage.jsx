@@ -1,5 +1,3 @@
-import { DefaultGenerator } from "../../components/ui/expressive/DefaultGenerator";
-import { HighlightedText } from "../../components/ui/expressive/ExpressiveText";
 import ExpressiveLink from "../../components/ui/expressive/ExpressiveLink";
 
 import HomeImpactSection from "./sections/HomeImpactSection";
