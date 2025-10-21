@@ -19,13 +19,13 @@ export default function ServeProgramsSection() {
       const visible = 1 - Math.min(Math.max(rectangle.top / height, 0), 1);
       setProgress(visible);
     };
-   
+
     window.addEventListener("scroll", handleScroll);
     handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);  
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-const padding = (1 - progress) * 20;
+  const scale = 1 - progress;
 
   return (
     <>
@@ -40,9 +40,10 @@ const padding = (1 - progress) * 20;
         </div>
         <article
           ref={ref}
+          className="[--base-padding:20px] md:[--base-padding:40px]"
           style={{
-            paddingLeft: `${padding}px`,
-            paddingRight: `${padding}px`,
+            paddingLeft: `calc(${scale} * var(--base-padding))`,
+            paddingRight: `calc(${scale} * var(--base-padding))`,
             transition: "padding 0.15s linear",
             willChange: "padding",
           }}>
@@ -229,8 +230,7 @@ function ServingLayer({ title, caption, children, side = false }) {
     <div
       className={`absolute left-1/2 -translate-x-1/2 inset-y-0 w-screen grid items-center justify-items-center p-5 lg:px-25 z-10 ${
         side ? "md:justify-items-start" : "justify-items-end"
-      }`}
-    >
+      }`}>
       <ServingCard title={title} caption={caption}>
         {children}
       </ServingCard>
