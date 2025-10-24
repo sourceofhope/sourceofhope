@@ -2,7 +2,7 @@ import PageSection from "../../PageSection";
 
 export default function ServeGuidelinesSection() {
   return (
-    <PageSection>
+    <PageSection className="gap-5">
       <div className="grid gap-1 justify-self-start justify-start text-sm md:text-md">
         <h2 className="text-xlg md:text-xxlg text-balance font-urbanist">
           View our Serving Guidelines

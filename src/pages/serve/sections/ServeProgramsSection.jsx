@@ -32,7 +32,7 @@ export default function ServeProgramsSection() {
       <section className="relative w-full pt-5 grid gap-5 bg-neutral-200">
         <div className="grid gap-1 justify-self-start justify-start md:px-35 px-5">
           <h2 className="text-xlg md:text-xxlg text-balance font-urbanist">
-            Make an Impact
+            Make an Impact Today
           </h2>
           <h3 className="text-sm md:text-md text-accent-700 font-semibold">
             VOLUNTEER FOR ONE OF OUR PROGRAMS

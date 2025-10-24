@@ -4,7 +4,7 @@ import Emphasis from "../../../components/ui/Emphasis";
 
 export default function ServeShowcaseSection() {
   return (
-    <PageSection className="justify-items-center grid gap-3">
+    <PageSection className="justify-items-center grid gap-5">
       <div className="grid gap-1 justify-self-start justify-start">
         <h2 className="text-xlg md:text-xxlg text-balance font-urbanist">
           Be the Source Of Hope
@@ -14,7 +14,7 @@ export default function ServeShowcaseSection() {
           DIFFERENCE.
         </h3>
       </div>
-      <div className="text-sm md:text-md grid gap-3 text-neutral-600">
+      <div className="text-sm md:text-md lg:text-lg grid gap-3 text-neutral-600">
         <p>
           At The Source of Hope, we’re not just another nonprofit—we’re a
           movement dedicated to creating{" "}
@@ -33,7 +33,7 @@ export default function ServeShowcaseSection() {
           service, and academic mentorship.
         </p>
         <div className="grid gap-3">
-          <p className="text-sm md:text-md pl-5 py-0 border-l-2 md:text-balance lg:w-1/2">
+          <p className="text-sm md:text-md lg:text-lg pl-5 py-0 border-l-2 md:text-balance lg:w-1/2">
             "Give a man a fish, and you feed him for a day. Teach a man to fish,
             and you feed him for a lifetime."
           </p>
