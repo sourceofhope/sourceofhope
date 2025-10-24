@@ -97,7 +97,7 @@ export default function Footer() {
 function FooterParallax() {
   return (
     <>
-      <ParallaxSection className="hidden md:block relative h-115 overflow-hidden [mask-image:linear-gradient(to_top,white_87.5%,transparent_100%)] [webkit-mask-image:linear-gradient(to_top,white_87.5%,transparent_100%)]">
+      <ParallaxSection className="hidden md:block relative h-115 overflow-hidden">
         <ParallaxLayer layer={0} ratio={1}>
           <img
             className="w-full overflow-hidden h-full object-cover brightness-[.8] contrast-[1.1]"
@@ -107,7 +107,7 @@ function FooterParallax() {
         </ParallaxLayer>
         <ParallaxLayer
           layer={1}
-          ratio={1 / 4}
+          ratio={0}
           className="flex w-full items-center justify-center p-5 lg:px-35">
           <FooterCard />
         </ParallaxLayer>

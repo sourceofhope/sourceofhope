@@ -40,7 +40,7 @@ export default function ServeProgramsSection() {
         </div>
         <article
           ref={ref}
-          className="[--base-padding:20px] md:[--base-padding:40px]"
+          className="[--base-padding:20px] md:[--base-padding:80px]"
           style={{
             paddingLeft: `calc(${scale} * var(--base-padding))`,
             paddingRight: `calc(${scale} * var(--base-padding))`,
@@ -68,9 +68,9 @@ export default function ServeProgramsSection() {
               It’s more than food—we serve dignity, compassion, and connection.
             </p>
             <button className="w-fit font-semibold">
-              <ExpressiveLink className="text-sm text-accent-500" to="">
+              <ExpressiveAnchor className="text-sm text-accent-500" to="">
                 Volunteer at Our Next Event
-              </ExpressiveLink>
+              </ExpressiveAnchor>
             </button>
           </ServingArticle>
           <ServingArticle

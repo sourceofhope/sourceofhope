@@ -7,12 +7,9 @@ import PageSection from "../../PageSection";
 export default function AboutTeamSection() {
   return (
     <PageSection>
-      <h2 className="text-xlg md:text-xxlg text-balance font-urbanist">
-        Meet Our Team
-      </h2>
       <div className="grid gap-5">
-        <div className="grid gap-1">
-          <h3 className="justify-self-center text-md">Executive Board</h3>
+        <div className="grid gap-3">
+          <h3 className="justify-self-center text-lg font-semibold">Executive Board</h3>
           <Carousel>
             <CarouselCard
               name="Wesley A. Stone"
@@ -30,8 +27,8 @@ export default function AboutTeamSection() {
             />
           </Carousel>
         </div>
-        <div className="grid gap-1">
-          <h3 className="justify-self-center text-md">Director Board</h3>
+        <div className="grid gap-3">
+          <h3 className="justify-self-center text-lg font-semibold">Director Board</h3>
           <Carousel>
             <CarouselCard
               name="Nicole Quynh Stone"
