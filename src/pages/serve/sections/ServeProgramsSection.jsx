@@ -40,7 +40,7 @@ export default function ServeProgramsSection() {
         </div>
         <article
           ref={ref}
-          className="[--base-padding:20px] md:[--base-padding:80px]"
+          className="[--base-padding:0px] md:[--base-padding:80px]"
           style={{
             paddingLeft: `calc(${scale} * var(--base-padding))`,
             paddingRight: `calc(${scale} * var(--base-padding))`,
@@ -199,12 +199,12 @@ function ServingArticle({ src, title, caption, children, side = false }) {
   return (
     <article
       ref={ref}
-      className={`sticky top-0 h-screen w-full overflow-hidden`}
+      className={`md:sticky top-0 md:h-screen w-full overflow-hidden [--base-brightness:0] md:[--base-brightness:1]`}
       style={{
-        filter: `brightness(${brightness})`,
+        filter: `brightness(calc(${brightness} * var(--base-padding)))`,
       }}>
       <img
-        className="absolute inset-0 h-full w-full object-cover brightness-[.8] contrast-[1.1] rounded-t-4xl"
+        className="hidden md:block md:absolute inset-0 h-full w-full object-cover brightness-[.8] contrast-[1.1] rounded-t-4xl"
         src={src}
         alt={caption}
       />
@@ -228,7 +228,7 @@ function ServingCard({ title, caption, children }) {
 function ServingLayer({ title, caption, children, side = false }) {
   return (
     <div
-      className={`absolute left-1/2 -translate-x-1/2 inset-y-0 w-screen grid items-center justify-items-center p-5 lg:px-25 z-10 ${
+      className={`md:absolute md:left-1/2 md:-translate-x-1/2 inset-y-0 w-screen grid items-center justify-items-center p-5 lg:px-25 z-10 ${
         side ? "md:justify-items-start" : "justify-items-end"
       }`}>
       <ServingCard title={title} caption={caption}>

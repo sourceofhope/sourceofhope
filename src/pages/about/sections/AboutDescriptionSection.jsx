@@ -10,7 +10,7 @@ export default function AboutDescriptionSection() {
         <span className="hidden md:inline-block">Non-profit</span> Organization
         </h2>
         <h3 className="text-sm md:text-md text-accent-700 font-semibold">
-          HERE TO SERVE, HEAL, AND EMPOWER COMMUNITIES.
+          HERE TO SERVE, HEAL, AND EMPOWER.
         </h3>
       </div>
       <div className="hidden md:flex flex-col gap-3 text-sm md:text-md lg:text-lg text-neutral-600">
