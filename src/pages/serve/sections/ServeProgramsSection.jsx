@@ -199,12 +199,12 @@ function ServingArticle({ src, title, caption, children, side = false }) {
   return (
     <article
       ref={ref}
-      className={`md:sticky top-0 md:h-screen w-full overflow-hidden [--base-brightness:0] md:[--base-brightness:1]`}
+      className={`lg:sticky top-0 lg:h-screen w-full overflow-hidden [--base-brightness:0] lg:[--base-brightness:1]`}
       style={{
         filter: `brightness(calc(${brightness} * var(--base-padding)))`,
       }}>
       <img
-        className="hidden md:block md:absolute inset-0 h-full w-full object-cover brightness-[.8] contrast-[1.1] rounded-t-4xl"
+        className="hidden lg:block lg:absolute inset-0 h-full w-full object-cover brightness-[.8] contrast-[1.1] rounded-t-4xl"
         src={src}
         alt={caption}
       />
@@ -228,8 +228,8 @@ function ServingCard({ title, caption, children }) {
 function ServingLayer({ title, caption, children, side = false }) {
   return (
     <div
-      className={`md:absolute md:left-1/2 md:-translate-x-1/2 inset-y-0 w-screen grid items-center justify-items-center p-5 lg:px-25 z-10 ${
-        side ? "md:justify-items-start" : "justify-items-end"
+      className={`lg:absolute lg:left-1/2 lg:-translate-x-1/2 inset-y-0 w-screen grid items-center justify-items-center p-5 lg:px-25 z-10 ${
+        side ? "lg:justify-items-start" : "justify-items-end"
       }`}>
       <ServingCard title={title} caption={caption}>
         {children}
