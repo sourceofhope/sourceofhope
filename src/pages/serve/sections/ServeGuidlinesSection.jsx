@@ -1,4 +1,7 @@
+import { useState } from "react";
 import PageSection from "../../PageSection";
+
+import { ChevronDownIcon } from "@heroicons/react/20/solid";
 
 export default function ServeGuidelinesSection() {
   return (
@@ -8,10 +11,7 @@ export default function ServeGuidelinesSection() {
           View our Serving Guidelines
         </h2>
       </div>
-      <article className="grid gap-5">
-        <h3 className="text-md md:text-lg">
-          Who can volunteer?
-        </h3>
+      <GuidelinesCard title="Who can volunteer?">
         <div className="grid gap-3">
           <p className="md:text-balance">
             We welcome volunteers of all ages--from kids and students to adults
@@ -30,11 +30,8 @@ export default function ServeGuidelinesSection() {
             to check if your school participates.
           </p>
         </div>
-      </article>
-      <article className="grid gap-5">
-        <h3 className="text-md md:text-lg">
-          What's expected of me?
-        </h3>
+      </GuidelinesCard>
+      <GuidelinesCard title="What's expected of me?">
         <div className="grid gap-3">
           <p className="md:text-balance">
             We value every volunteer and their contributions. To ensure a
@@ -54,7 +51,34 @@ export default function ServeGuidelinesSection() {
             guidelines. Thank you for being the Source of Hope in our community!
           </p>
         </div>
-      </article>
+      </GuidelinesCard>
     </PageSection>
+  );
+}
+
+function GuidelinesCard({ title, children }) {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <div
+      onClick={() => setOpen(!open)}
+      className={`${
+        open ? "bg-neutral-200" : "bg-neutral-50"
+      } hover:bg-neutral-200 flex flex-col rounded-2xl shadow-2x overflow-hidden h-fit p-5 text-neutral-950 transition-colors duration-750`}>
+      <div className="flex justify-between items-center text-primary-700">
+        <h2 className="text-sm font-bold uppercase">{title}</h2>
+        <ChevronDownIcon
+          className={`w-[20px] h-[20px] transition-transform duration-750 ${
+            open ? "rotate-0" : "-rotate-90"
+          }`}
+        />
+      </div>
+      <div
+        className={`${
+          open ? "max-h-70 mt-3 opacity-100" : "max-h-0 mt-0 opacity-0"
+        } overflow-hidden transition-all duration-750`}>
+        {children}
+      </div>
+    </div>
   );
 }

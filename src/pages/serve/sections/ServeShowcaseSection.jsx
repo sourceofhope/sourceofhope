@@ -32,29 +32,28 @@ export default function ServeShowcaseSection() {
           survival skills, entrepreneurship and workforce development, community
           service, and academic mentorship.
         </p>
-        <div className="grid gap-3">
-          <p className="text-sm md:text-md lg:text-lg pl-5 py-0 border-l-2 md:text-balance lg:w-1/2">
-            "Give a man a fish, and you feed him for a day. Teach a man to fish,
-            and you feed him for a lifetime."
-          </p>
-          <p>
-            By equipping individuals with practical tools and real-world
-            experience, we ensure that every dollar invested becomes a ripple of
-            impact—
-            <strong className="font-semibold">
-              creating independent leaders, stronger families, and thriving
-              communities.
-            </strong>{" "}
-            From nourishing the body to uplifting the spirit, we believe that
-            true hope is sustainable when it’s shared.
-          </p>
-          <p>
-            That’s our guiding principle—
-            <strong className="font-normal">
-              <Emphasis>empower</Emphasis>, <Emphasis>educate</Emphasis>, and <Emphasis>elevate</Emphasis>.
-            </strong>
-          </p>
-        </div>
+        <p className="text-sm md:text-md lg:text-lg pl-5 py-0 border-l-2 md:text-balance lg:w-1/2">
+          "Give a man a fish, and you feed him for a day. Teach a man to fish,
+          and you feed him for a lifetime."
+        </p>
+        <p>
+          By equipping individuals with practical tools and real-world
+          experience, we ensure that every dollar invested becomes a ripple of
+          impact—
+          <strong className="font-semibold">
+            creating independent leaders, stronger families, and thriving
+            communities.
+          </strong>{" "}
+          From nourishing the body to uplifting the spirit, we believe that true
+          hope is sustainable when it’s shared.
+        </p>
+        <p>
+          That’s our guiding principle—
+          <strong className="font-normal">
+            <Emphasis>empower</Emphasis>, <Emphasis>educate</Emphasis>, and{" "}
+            <Emphasis>elevate</Emphasis>.
+          </strong>
+        </p>
       </div>
     </PageSection>
   );
