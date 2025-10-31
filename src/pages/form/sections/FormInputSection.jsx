@@ -1,9 +1,37 @@
+import { useState } from "react";
+
 export default function FormInputSection() {
+  const validateName = (event) => {
+    const input = event.target.value;
+    if (typeof input !== "string") return false;
+
+    const trimmed = input.trim();
+    if (trimmed.length === 0 || trimmed.length > 50) return false;
+
+    const allowedCharactersRegex = /^[\p{L}\p{M}'- ]+$/u;
+    const consecutiveCharactersRegex = /--|''|\s{2,}/;
+
+    if (!allowedCharactersRegex.test(trimmed)) return false;
+    if (!consecutiveCharactersRegex.test(trimmed)) return false;
+
+    return true;
+  };
+
   return (
     <form className="flex flex-wrap justify-between gap-y-5 p-5 lg:px-35">
-      <FormInputItem title="First name" htmlFor="fname" type="text" />
-      <FormInputItem title="Last Name" htmlFor="lname" type="text" />
-      <FormInputItem title="E-mail Address" htmlFor="email" type="email" />
+      <FormInputItem
+        title="First name"
+        htmlFor="fname"
+        type="text"
+        onChange={validateName}
+      />
+      <FormInputItem
+        title="Last Name"
+        htmlFor="lname"
+        type="text"
+        onChange={validateName}
+      />
+      <FormInputItem title="Email Address" htmlFor="email" type="email" />
       <FormInputItem title="Phone Number" htmlFor="phone" type="tel" />
       <div className="flex flex-col gap-1 w-full md:w-[49%]">
         <label
@@ -15,8 +43,8 @@ export default function FormInputSection() {
         </label>
         <select
           name="membership"
+          value=""
           className="rounded-sm border-1 w-full h-[4ch] px-2 relative">
-          <option value="empty"></option>
           <option value="bronze">Hope Advocate [Bronze Pin] ($50/month)</option>
           <option value="silver">
             Hope Professional [Silver Pin] ($199/month)
@@ -43,9 +71,21 @@ export default function FormInputSection() {
   );
 }
 
-function FormInputItem({ title, htmlFor, type }) {
+function FormInputItem({
+  title,
+  htmlFor,
+  type,
+  onChange = (event) => {
+    false;
+  },
+}) {
+  const [isValid, setIsValid] = useState(true);
+
   return (
-    <div className="flex flex-col gap-1 w-full md:w-[49%]">
+    <div
+      className={`flex flex-col gap-1 w-full md:w-[49%] ${
+        isValid ? "text-neutral-950" : "text-red-600"
+      }`}>
       <label
         htmlFor={htmlFor}
         className="text-sm md:text-md translate-3.5 md:translate-4 px-1 z-10 w-fit select-none after:content-[''] after:absolute after:left-0 after:top-[7px]
@@ -56,8 +96,14 @@ function FormInputItem({ title, htmlFor, type }) {
       <input
         name={htmlFor}
         type={type}
-        className="rounded-sm border-1 w-full h-[4ch] px-2"
+        onChange={(event) => setIsValid(onChange(event))}
+        className={`rounded-sm border-1 w-full h-[4ch] px-2 ${
+          isValid ? "border-neutral-950" : "border-red-600"
+        }`}
       />
+      <p className={isValid ? "invisible select-none" : "visible"}>
+        {`Please enter a valid ${title.toLowerCase()}`}.
+      </p>
     </div>
   );
 }

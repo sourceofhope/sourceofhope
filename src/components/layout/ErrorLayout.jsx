@@ -1,4 +1,3 @@
-import { NavLink } from "react-router-dom";
 import Header from "../structure/Header";
 import Footer from "../structure/Footer";
 import ExpressiveLink from "../ui/expressive/ExpressiveLink";
@@ -19,16 +18,16 @@ export default function ErrorLayout({ code = 500, message }) {
       <main className="w-screen min-h-screen flex flex-col justify-center items-start gap-5 px-5 lg:px-35">
         <Favicon className="w-[60px] h-[60px]" />
         <h2 className="text-lg font-semibold">
-          Error {code}: {message}
+          Error {code}: <span className="font-mono font-normal">{message}</span>
         </h2>
         <p className="text-md">{display}</p>
         <p className="text-md">
           If you are unable to resolve this error, please contact{" "}
           <a
             className="font-semibold text-accent-500"
-            href={`mailto:info@thesourceofhope.org?subject=Website Error Code ${code}: ${message}`}
+            href={`mailto:it@thesourceofhope.org?subject=Website Error Code ${code}: ${message}`}
           >
-            info@thesourceofhope.org
+            it@thesourceofhope.org
           </a>{" "}
           for further assistance.
         </p>
