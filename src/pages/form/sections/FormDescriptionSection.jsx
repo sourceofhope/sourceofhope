@@ -1,6 +1,6 @@
-export default function ServeDescriptionSection() {
+export default function FormDescriptionSection() {
   return (
-    <section className="flex flex-col gap-5 text-sm md:text-md lg:text-lg text-neutral-600">
+    <section className="flex flex-col gap-5 text-sm md:text-md lg:text-lg text-neutral-600 p-5 lg:px-35">
       <p>
         When you become a member of The Source of Hope, you’re supporting the
         heartbeat of our community — from hospital staff, teachers, veterans,

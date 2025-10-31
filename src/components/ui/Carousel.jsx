@@ -99,7 +99,7 @@ function CarouselSelector({ selected, onClick }) {
   return (
     <button
       className={`${
-        selected ? "w-20 bg-accent-500" : "w-10 bg-accent-600"
+        selected ? "w-20 bg-accent-500" : "w-3 md:w-5 bg-accent-600"
       } h-3 md:h-5 rounded-full transition-[width_color] duration-500`}
       onClick={onClick}></button>
   );

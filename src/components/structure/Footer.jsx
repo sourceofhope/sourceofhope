@@ -149,7 +149,7 @@ function FooterCard() {
         <h2 className="hidden md:block">Be the first to know about events</h2>
         <h2 className="block md:hidden">Get Updates</h2>
       </div>
-      <p className="text-sm">
+      <p className="text-sm md:text-md">
         Join our family of supporters and receive inspiring stories, holistic
         wellness tips, and community updates right to your inbox by subscribing
         to our newsletter.
