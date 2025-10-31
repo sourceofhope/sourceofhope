@@ -9,7 +9,7 @@ export default function FormInputSection() {
         <label
           htmlFor="membership"
           className="text-sm md:text-md translate-3.5 md:translate-4 px-1 z-10 w-fit select-none after:content-[''] after:absolute after:left-0 after:top-[7px]
-    after:block after:h-[5px] after:w-full font-semibold text-neutral-700
+    after:block after:h-[5px] after:w-full font-semibold
     after:bg-neutral-50 after:-z-10 after:pointer-events-none">
           Membership Type
         </label>
