@@ -15,7 +15,7 @@ export default function ErrorLayout({ code = 500, message }) {
 
   return (
     <>
-      <Header isError={true}/>
+      <Header isBlocking={true}/>
       <main className="w-screen min-h-screen flex flex-col justify-center items-start gap-5 px-5 lg:px-35">
         <Favicon className="w-[60px] h-[60px]" />
         <h2 className="text-lg font-semibold">

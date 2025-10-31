@@ -7,7 +7,8 @@ export default function AboutDescriptionSection() {
       <div className="grid gap-1 justify-self-start justify-start">
         <h2 className="text-xlg md:text-xxlg text-balance font-urbanist">
           We're a <HighlightedText>501(c)(3)</HighlightedText>{" "}
-        <span className="hidden md:inline-block">Non-profit</span> Organization
+          <span className="hidden md:inline-block">Non-profit</span>{" "}
+          Organization
         </h2>
         <h3 className="text-sm md:text-md text-accent-700 font-semibold">
           HERE TO SERVE, HEAL, AND EMPOWER.

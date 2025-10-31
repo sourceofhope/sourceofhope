@@ -4,6 +4,7 @@ export const ROUTE_ALIASES = {
   home: ["/", "/home"],
   about: ["/about", "/aboutus"],
   serve: ["/serve", "/serving"],
+  member: ["/members", "/membership", "signup"]
 };
 
 export const ROUTES = Object.fromEntries(
@@ -17,6 +18,7 @@ export const CANONICAL = {
   home: `${BASE}/`,
   about: `${BASE}/about`,
   serve: `${BASE}/serve`,
+  member: `${BASE}/member`
 };
 
 const BASE_URL = "https://thesourceofhope.org"
@@ -25,4 +27,5 @@ export const CANONICAL_URL = {
   home: `${BASE_URL}/`,
   about: `${BASE_URL}/about`,
   serve: `${BASE_URL}/serve`,
+  member: `${BASE}/member`,
 }

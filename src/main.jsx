@@ -1,4 +1,4 @@
-import React, { lazy, Suspense } from "react";
+import React, { lazy } from "react";
 import ReactDOM from "react-dom/client";
 import {
   createBrowserRouter,
@@ -11,11 +11,10 @@ import { ROUTES, CANONICAL } from "./routes.jsx";
 import AppLayout from "./components/layout/AppLayout.jsx";
 import ErrorBoundary from "./pages/ErrorBoundary.jsx";
 
-import Loader from "./components/structure/Loader.jsx";
-
 const HomePage = lazy(() => import("./pages/home/HomePage.jsx"));
 const AboutPage = lazy(() => import("./pages/about/AboutPage.jsx"));
 const ServePage = lazy(() => import("./pages/serve/ServePage.jsx"));
+const FormPage = lazy(() => import("./pages/form/FormPage.jsx"));
 
 import "./style.css";
 
@@ -23,6 +22,7 @@ const PageMap = {
   home: <HomePage />,
   about: <AboutPage />,
   serve: <ServePage />,
+  member: <FormPage />,
 };
 
 export const router = createBrowserRouter([
@@ -43,8 +43,6 @@ export const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <Suspense fallback={<Loader />}>
-      <RouterProvider router={router} />
-    </Suspense>
+    <RouterProvider router={router} />
   </React.StrictMode>
 );

@@ -1,6 +1,5 @@
 import { CANONICAL_URL } from "../../routes";
 import PageHeader from "../PageHeader";
-import PageSection from "../PageSection";
 
 import AboutDescriptionSection from "./sections/AboutDescriptionSection";
 import AboutMissionSection from "./sections/AboutMissionSection";

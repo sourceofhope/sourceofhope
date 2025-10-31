@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext, createContext } from "react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/20/solid";
 import { useLocation } from "react-router-dom";
 
@@ -7,7 +7,7 @@ import Favicon from "../ui/Favicon";
 
 import { CANONICAL } from "../../routes";
 
-export default function Header({ isError }) {
+export default function Header({ isBlocking }) {
   const location = useLocation();
   const isHomePage = location.pathname === "/sourceofhope/";
 
@@ -27,7 +27,7 @@ export default function Header({ isError }) {
         ${
           open
             ? `h-85 md:h-25 md:backdrop-blur-none backdrop-blur-sm ${
-                isHomePage || isError ? "border-primary-800/100" : "border-neutral-50"
+                isHomePage || isBlocking ? "border-primary-800/100" : "border-neutral-50"
               }`
             : "h-25 backdrop-blur-none border-none"
         }
@@ -35,7 +35,7 @@ export default function Header({ isError }) {
           scrolled
             ? `bg-primary-800 text-neutral-50 border-transparent`
             : `bg-transparent ${
-                isHomePage || isError ? "text-primary-800" : "text-neutral-50"
+                isHomePage || isBlocking ? "text-primary-800" : "text-neutral-50"
               }`
         }`}>
       <section className="flex w-full h-25 items-center justify-between px-5 lg:px-35">
@@ -93,3 +93,9 @@ function HeaderNavigator() {
     </>
   );
 }
+
+export const HeaderFlagContext = createContext({
+  isBlocking: false,
+  setIsBlocking: () => {},
+});
+export const useHeaderFlag = () => useContext(HeaderFlagContext);
