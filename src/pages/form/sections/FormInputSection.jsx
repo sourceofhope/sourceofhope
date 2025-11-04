@@ -1,19 +1,22 @@
 import { useState } from "react";
 
 export default function FormInputSection() {
+  const [submit, setSubmit] = useState(false);
+
   const validateName = (event) => {
-    const input = event.target.value;
-    if (typeof input !== "string") return false;
+    if(submit) {
+      const input = event.target.value;
+      if (typeof input !== "string") return false;
 
-    const trimmed = input.trim();
-    if (trimmed.length === 0 || trimmed.length > 50) return false;
+      const trimmed = input.trim();
+      if (trimmed.length === 0 || trimmed.length > 50) return false;      
 
-    const allowedCharactersRegex = /^[\p{L}\p{M}'- ]+$/u;
-    const consecutiveCharactersRegex = /--|''|\s{2,}/;
+    // const allowedCharactersRegex = /^[\p{L}\p{M}'- ]+$/u;
+    // const consecutiveCharactersRegex = /--|''|\s{2,}/;
 
-    if (!allowedCharactersRegex.test(trimmed)) return false;
-    if (!consecutiveCharactersRegex.test(trimmed)) return false;
-
+    // if (!allowedCharactersRegex.test(trimmed)) return false;
+    // if (!consecutiveCharactersRegex.test(trimmed)) return false;
+    }
     return true;
   };
 
@@ -31,8 +34,32 @@ export default function FormInputSection() {
         type="text"
         onChange={validateName}
       />
-      <FormInputItem title="Email Address" htmlFor="email" type="email" />
-      <FormInputItem title="Phone Number" htmlFor="phone" type="tel" />
+      <FormInputItem title="Email Address" htmlFor="email" type="email" onChange={(event) => {
+        if(submit) {
+          const input = event.target.value;
+          if (typeof input !== "string") return false;
+
+          const trimmed = input.trim();
+          if (trimmed.length === 0 || trimmed.length > 50) return false;
+
+          const valid = trimmed.includes('@') && trimmed.substring(trimmed.lastIndexOf('@'), trimmed.length).includes('.') && trimmed.substring(0,trimmed.lastIndexOf('@')).length > 0;
+          return valid;          
+        }
+        return true;
+      }}/>
+      <FormInputItem title="Phone Number" htmlFor="phone" type="tel" onChange={(event) => {
+        if(submit) {
+          const input = event.target.value;
+          if (typeof input !== "string") return false;
+
+          const trimmed = input.trim();
+          if (trimmed.length === 0 || trimmed.length > 50) return false;
+
+          const valid = input.split('-').length == 3 || input.split('.').length == 3 || (input.length >= 11 && input.length <= 13);
+          return valid;          
+        }
+        return true;
+      }}/>
       <div className="flex flex-col gap-1 w-full md:w-[49%]">
         <label
           htmlFor="membership"
@@ -43,8 +70,8 @@ export default function FormInputSection() {
         </label>
         <select
           name="membership"
-          value=""
           className="rounded-sm border-1 w-full h-[4ch] px-2 relative">
+          <option value="empty"></option>
           <option value="bronze">Hope Advocate [Bronze Pin] ($50/month)</option>
           <option value="silver">
             Hope Professional [Silver Pin] ($199/month)
@@ -64,6 +91,10 @@ export default function FormInputSection() {
           name="submit"
           type="submit"
           value="Submit"
+          onSubmit={(event) => {
+            event.preventDefault();
+            setSubmit(true);
+          }}
           className="rounded-sm w-full h-[4ch] px-2 bg-primary-700 text-neutral-50 font-semibold cursor-pointer hover:bg-primary-800 transition-colors duration-300"
         />
       </div>

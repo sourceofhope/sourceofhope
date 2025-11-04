@@ -53,11 +53,11 @@ export default function ServeProgramsSection() {
             caption="Every meal served. Every smile shared. Together."
             side={left}
             tagline="Volunteer at Our Next Event">
-            <div className="flex gap-2 items-center">
-              <p className="text-balance text-sm md:text-md max-w-fit text-neutral-700">
+            <div className="flex gap-2 items-center text-neutral-600">
+              <MapPinIcon className="w-[16px] h-[16px]" />
+              <p className="text-balance text-sm md:text-md max-w-fit">
                 2627 South Ervay Street Dallas, TX 75215
               </p>
-              <MapPinIcon className="w-[16px] h-[16px]" />
             </div>
             <p className="text-balance text-sm md:text-md">
               Every fourth Friday and Saturday, our volunteers gather to cook,
@@ -115,11 +115,11 @@ export default function ServeProgramsSection() {
             title="SHARING HOPE"
             caption="Extending love beyond borders."
             side={right}>
-            <div className="flex gap-2 items-center">
-              <p className="text-balance text-sm md:text-md max-w-fit text-neutral-700">
+            <div className="flex gap-2 items-center text-neutral-600">
+              <MapPinIcon className="w-[16px] h-[16px]" />
+              <p className="text-balance text-sm md:text-md max-w-fit">
                 2627 South Ervay Street Dallas, TX 75215
               </p>
-              <MapPinIcon className="w-[16px] h-[16px]" />
             </div>
             <p className="text-balance text-sm md:text-md">
               Sharing Hope focuses on distributing meals, hygiene kits, and

@@ -26,8 +26,8 @@ function FormShowcaseCard({ title, src, alt }) {
         alt={alt}
         className="w-full aspect-square bg-accent-900 rounded-2xl border-4 border-neutral-300"
       />
-			<div className="absolute flex bottom-0 p-5 h-1/4 w-full rounded-b-2xl border-x-4 border-b-4 border-neutral-300 bg-neutral-100 items-center justify-center">
-				<h2 className="w-fit h-fit text-balance text-center text-md font-semibold font-urbanist">
+			<div className="absolute flex bottom-0 p-5 px-10 h-1/4 w-full rounded-b-2xl border-x-4 border-b-4 border-neutral-300 bg-neutral-100 items-center justify-center">
+				<h2 className="w-fit h-fit text-balance text-center text-md font-semibold">
 					{title}
 				</h2>
 			</div>

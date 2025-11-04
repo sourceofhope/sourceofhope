@@ -9,7 +9,7 @@ export default function AboutSummarySection() {
       <h2 className="text-xlg md:text-xxlg text-balance font-urbanist">
         Ready to take <HighlightedText>your next step</HighlightedText>?
       </h2>
-      <div className="text-sm md:text-md lg:text-lg grid gap-5">
+      <div className="text-sm md:text-md lg:text-lg grid gap-5 text-neutral-600">
         <p>
           <strong className="font-semibold">
             At The Source of Hope, we see every person’s potential—even in the

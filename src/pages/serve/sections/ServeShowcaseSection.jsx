@@ -14,7 +14,7 @@ export default function ServeShowcaseSection() {
           DIFFERENCE.
         </h3>
       </div>
-      <div className="text-sm md:text-md lg:text-lg grid gap-3 text-neutral-600">
+      <div className="hidden text-sm md:text-md lg:text-lg md:grid gap-3 text-neutral-600">
         <p>
           At The Source of Hope, we’re not just another nonprofit—we’re a
           movement dedicated to creating{" "}
@@ -32,7 +32,7 @@ export default function ServeShowcaseSection() {
           survival skills, entrepreneurship and workforce development, community
           service, and academic mentorship.
         </p>
-        <p className="text-sm md:text-md lg:text-lg pl-5 py-0 border-l-2 md:text-balance lg:w-1/2">
+        <p className="lg:text-lg pl-3 py-0 border-l-2 text-balance w-1/2">
           "Give a man a fish, and you feed him for a day. Teach a man to fish,
           and you feed him for a lifetime."
         </p>
@@ -51,6 +51,31 @@ export default function ServeShowcaseSection() {
           That’s our guiding principle—
           <strong className="font-normal">
             <Emphasis>empower</Emphasis>, <Emphasis>educate</Emphasis>, and{" "}
+            <Emphasis>elevate</Emphasis>.
+          </strong>
+        </p>
+      </div>
+      <div className="text-sm grid gap-3 md:hidden text-neutral-600">
+        <p>
+          At The Source of Hope, we’re more than a nonprofit. We’re a movement
+          for lasting change. Our mission is to empower through skills,
+          education, and opportunity that transform lives for generations.
+        </p>
+        <p>
+          <strong className="font-semibold">We’re like five nonprofits in one</strong>, uniting health and wellness, outdoor
+          education, entrepreneurship, community service, and mentorship.
+        </p>
+        <p className="text-sm pl-3 py-0 border-l-2 text-balance">
+          "Teach a man to fish,
+          and you feed him for a lifetime."
+        </p>
+        <p>
+          Every effort creates stronger families and thriving communities. True {" "}
+          <strong className="font-semibold">hope lasts when it’s shared</strong>.
+        </p>
+        <p>
+          <strong className="font-normal">
+            Together we{" "}<Emphasis>empower</Emphasis>, <Emphasis>educate</Emphasis>,{" "} and
             <Emphasis>elevate</Emphasis>.
           </strong>
         </p>

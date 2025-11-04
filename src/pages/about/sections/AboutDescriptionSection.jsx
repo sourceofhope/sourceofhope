@@ -14,7 +14,7 @@ export default function AboutDescriptionSection() {
           HERE TO SERVE, HEAL, AND EMPOWER.
         </h3>
       </div>
-      <div className="hidden md:flex flex-col gap-3 text-sm md:text-md lg:text-lg text-neutral-600">
+      <div className="hidden md:flex flex-col gap-3 text-md lg:text-lg text-neutral-600">
         <p>
           The Source of Hope uplifts individuals and families through{" "}
           <strong>holistic health</strong>,{" "}
@@ -37,7 +37,7 @@ export default function AboutDescriptionSection() {
           time.
         </p>
       </div>
-      <div className="md:hidden flex flex-col gap-5 text-sm md:text-md lg:text-lg text-neutral-600">
+      <div className="md:hidden flex flex-col gap-5 text-sm text-neutral-600">
         <p>
           The Source of Hope uplifts people through <strong>health</strong>,{" "}
           <strong>wellness</strong>, and <strong>community support</strong>
@@ -47,7 +47,7 @@ export default function AboutDescriptionSection() {
           We focus on skills that last, from holistic health education to
           outdoor training and entrepreneurial mentorship. Independent of
           government funding, our impact is powered by volunteers, partners, and
-          donors—building stronger communities, one life at a time.
+          donors—<strong>building stronger communities, one life at a time.</strong>
         </p>
       </div>
     </PageSection>

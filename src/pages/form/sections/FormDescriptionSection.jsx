@@ -1,9 +1,9 @@
 export default function FormDescriptionSection() {
   return (
-    <section className="flex flex-col gap-5 text-sm md:text-md lg:text-lg text-neutral-600 p-5 lg:px-35">
+    <section className="flex flex-col gap-5 text-sm md:text-md lg:text-lg p-5 lg:px-35">
       <p>
         When you become a member of The Source of Hope, you’re supporting the
-        heartbeat of our community — from hospital staff, teachers, veterans,
+        heartbeat of our community—from hospital staff, teachers, veterans,
         and first responders to city workers, police officers, firefighters,
         students, at-risk families, and our unhoused neighbors.
       </p>
@@ -12,7 +12,7 @@ export default function FormDescriptionSection() {
         bedridden seniors, and everyday people working hard to rebuild their
         lives. Together, we’re making a difference through holistic programs in
         education, wellness, and community empowerment. Membership starts at
-        just $50/month — and every dollar helps us feed, educate, and inspire
+        just $50/month—and every dollar helps us feed, educate, and inspire
         hope.
       </p>
       <p>
