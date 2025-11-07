@@ -3,13 +3,14 @@ import { ArrowRightIcon, XMarkIcon } from "@heroicons/react/20/solid";
 
 import Carousel from "../../../components/ui/Carousel";
 import PageSection from "../../PageSection";
+import Heading from "../../../components/ui/text/Heading";
 
 export default function AboutTeamSection() {
   return (
     <PageSection>
       <div className="grid gap-5">
         <div className="grid gap-3">
-          <h3 className="justify-self-center text-lg font-semibold">Executive Board</h3>
+          <Heading>Executive Board</Heading>
           <Carousel>
             <CarouselCard
               name="Wesley A. Stone"
@@ -28,7 +29,7 @@ export default function AboutTeamSection() {
           </Carousel>
         </div>
         <div className="grid gap-3">
-          <h3 className="justify-self-center text-lg font-semibold">Director Board</h3>
+          <Heading>Director Board</Heading>
           <Carousel>
             <CarouselCard
               name="Nicole Quynh Stone"

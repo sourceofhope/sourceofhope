@@ -11,6 +11,7 @@ import { HomeServingSection } from "./sections/HomeServingSection";
 import { Helmet } from "react-helmet";
 import { CANONICAL_URL } from "../../routes";
 import PageSection from "../PageSection";
+import Title from "../../components/ui/text/Title";
 
 export default function HomePage() {
   return (
@@ -54,9 +55,9 @@ export function HomeSection({ title, className, children, caption, to }) {
   return (
     <PageSection>
       {title ? (
-          <h2 className="text-xlg lg:text-xxlg font-semibold font-urbanist justify-self-center">
-            {title}
-          </h2>
+        <Title className="text-xlg lg:text-xxlg font-urbanist justify-self-center">
+          {title}
+        </Title>
       ) : (
         <></>
       )}

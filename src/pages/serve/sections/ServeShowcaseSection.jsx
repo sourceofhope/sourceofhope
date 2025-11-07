@@ -1,18 +1,18 @@
 import PageSection from "../../PageSection";
 
 import Emphasis from "../../../components/ui/Emphasis";
+import Title from "../../../components/ui/text/Title";
+import Heading from "../../../components/ui/text/Heading";
 
 export default function ServeShowcaseSection() {
   return (
     <PageSection className="justify-items-center grid gap-5">
       <div className="grid gap-1 justify-self-start justify-start">
-        <h2 className="text-xlg md:text-xxlg text-balance font-urbanist">
-          Be the Source Of Hope
-        </h2>
-        <h3 className="text-sm md:text-md text-accent-700 font-semibold">
+        <Title>Be the Source Of Hope</Title>
+        <Heading>
           EVERY MEAL SERVED. EVERY SMILE SHARED. EVERY ACT OF LOVE MAKES A
           DIFFERENCE.
-        </h3>
+        </Heading>
       </div>
       <div className="hidden text-sm md:text-md lg:text-lg md:grid gap-3 text-neutral-600">
         <p>

@@ -5,6 +5,8 @@ import {
 } from "../../../components/structure/Header";
 import { useEffect } from "react";
 import ExpressiveAnchor from "../../../components/ui/expressive/ExpressiveAnchor";
+import Heading from "../../../components/ui/text/Heading";
+import Title from "../../../components/ui/text/Title";
 
 export default function ServingHopeProgram() {
   const { setIsBlocking } = useHeaderFlag();
@@ -18,12 +20,8 @@ export default function ServingHopeProgram() {
       <Helmet></Helmet>
       <section className="w-full md:justify-items-left items-center grid gap-5 pt-25 p-5 lg:px-35">
         <div className="grid gap-1 justify-self-start justify-start">
-          <h2 className="text-xlg md:text-xxlg text-balance font-urbanist">
-            Serving & Sharing Hope Program
-          </h2>
-          <h3 className="text-sm md:text-md text-accent-700 font-semibold uppercase">
-            Monthly Feeding with Dignity
-          </h3>
+          <Title>Serving & Sharing Hope Program</Title>
+          <Heading>Monthly Feeding with Dignity</Heading>
         </div>
         <article className="grid gap-3 text-sm md:text-md text-neutral-600">
           <p>
@@ -42,9 +40,7 @@ export default function ServingHopeProgram() {
           </button>
         </article>
         <article className="grid gap-3 text-sm md:text-md text-neutral-600">
-          <h3 className="text-sm md:text-md text-accent-700 font-semibold uppercase">
-            Serving Hope Program
-          </h3>
+          <Heading>Serving Hope Program</Heading>
           <p>
             Serving Hope is a volunteer-driven initiative dedicated to serving
             organic, home-cooked meals to those in need—homeless individuals,
@@ -98,9 +94,7 @@ export default function ServingHopeProgram() {
         </article>
         <article className="grid gap-3 md:gap-5 items-center grid-flow-row md:grid-cols-[3fr_2fr] text-sm md:text-md text-neutral-600">
           <div className="grid gap-3">
-            <h3 className="text-sm md:text-md text-accent-700 font-semibold uppercase">
-              See The Impact. Be The Impact
-            </h3>
+            <Heading>See The Impact. Be The Impact</Heading>
             <p>
               Take a look at the impact we're making! This recap from our
               January 2025 Serving Hope for Hunger event shows how we nourish,

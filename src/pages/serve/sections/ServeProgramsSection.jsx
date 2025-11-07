@@ -5,6 +5,8 @@ import { CANONICAL } from "../../../routes";
 
 import ExpressiveLink from "../../../components/ui/expressive/ExpressiveLink";
 import ExpressiveAnchor from "../../../components/ui/expressive/ExpressiveAnchor";
+import Title from "../../../components/ui/text/Title";
+import Heading from "../../../components/ui/text/Heading";
 
 export default function ServeProgramsSection() {
   const left = true;
@@ -33,12 +35,12 @@ export default function ServeProgramsSection() {
     <>
       <section className="relative w-full pt-5 grid gap-5 bg-neutral-200">
         <div className="grid gap-1 justify-self-start justify-start md:px-35 px-5">
-          <h2 className="text-xlg md:text-xxlg text-balance font-urbanist">
+          <Title className="text-xlg md:text-xxlg text-balance font-urbanist">
             Make an Impact Today
-          </h2>
-          <h3 className="text-sm md:text-md text-accent-700 font-semibold">
+          </Title>
+          <Heading className="text-sm md:text-md text-accent-700 font-semibold">
             VOLUNTEER FOR ONE OF OUR PROGRAMS
-          </h3>
+          </Heading>
         </div>
         <article
           ref={ref}
@@ -222,7 +224,7 @@ function ServingArticle({ src, title, caption, children, side = false }) {
 function ServingCard({ title, caption, children }) {
   return (
     <div className="lg:w-1/3 flex flex-col gap-3 rounded-2xl shadow-2x overflow-hidden h-fit py-5 px-10 bg-neutral-50 text-neutral-950">
-      <h2 className="text-sm font-bold text-primary-700 uppercase">{title}</h2>
+      <Heading>{title}</Heading>
       <p className="text-lg font-urbanist font-semibold">{caption}</p>
       {children}
     </div>

@@ -1,17 +1,19 @@
 import PageSection from "../../PageSection";
 
 import ExpressiveAnchor from "../../../components/ui/expressive/ExpressiveAnchor";
-import Emphasis from "../../../components/ui/Emphasis"
+import Emphasis from "../../../components/ui/Emphasis";
+import Title from "../../../components/ui/text/Title";
 
 export default function AboutMissionSection() {
   return (
     <PageSection className="grid md:grid-cols-[6fr_4fr] gap-5 bg-neutral-200 items-center py-10">
       <article className="grid gap-5 self-start">
         <div className="grid gap-3">
-          <h2 className="text-xlg md:text-xxlg font-urbanist md:text-balance">
+          <Title className="font-semibold md:text-balance">
             Founded in 2014 on{" "}
-              <span className="hidden md:inline-block">our guiding</span> principle
-          </h2>
+            <span className="hidden md:inline-block">our guiding</span>{" "}
+            principle
+          </Title>
           <p className="text-sm md:text-md lg:text-lg text-neutral-600 pl-5 py-0 border-l-2 text-balance">
             "empower with dignity—meet urgent needs while equipping people with
             lifelong skills, wellness, and community so hope becomes

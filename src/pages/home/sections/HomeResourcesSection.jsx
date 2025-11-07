@@ -8,16 +8,17 @@ import { HighlightedText } from "../../../components/ui/expressive/ExpressiveTex
 import Emphasis from "../../../components/ui/Emphasis";
 import ExpressiveLink from "../../../components/ui/expressive/ExpressiveLink";
 import { CANONICAL } from "../../../routes";
+import Title from "../../../components/ui/text/Title";
 
 export default function HomeResourcesSection() {
   return (
     <HomeSection className="w-full md:mb-15">
-      <h2 className="text-lg md:text-lg lg:text-xxlg pb-5 text-center text-balance">
+      <Title className="pb-5 text-center text-balance">
         <NavLink to="" className="inline-block">
           <Emphasis>We provide a number of resources</Emphasis>
         </NavLink>{" "}
         to <HighlightedText>our community</HighlightedText>.
-      </h2>
+      </Title>
       <div className="w-full h-full grid grid-flow-row md:grid-cols-3 md:grid-rows-2 gap-5 justify-center items-center">
         <HomeResourceCard
           title="EDUCATION FOR HOPE"
@@ -92,7 +93,9 @@ function HomeResourceCard({ title, caption, src }) {
           </div>
           <p className="text-sm text-neutral-700">{caption}</p>
           <p className="w-fit">
-            <ExpressiveLink to={CANONICAL.serve} className="text-sm text-neutral-500">
+            <ExpressiveLink
+              to={CANONICAL.serve}
+              className="text-sm text-neutral-500">
               LEARN MORE
             </ExpressiveLink>
           </p>

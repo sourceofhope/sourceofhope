@@ -1,17 +1,18 @@
 import PageSection from "../../PageSection";
 import { HighlightedText } from "../../../components/ui/expressive/ExpressiveText";
+import Title from "../../../components/ui/text/Title";
 
 export default function AboutDescriptionSection() {
   return (
     <PageSection className="justify-items-center grid gap-5">
       <div className="grid gap-1 justify-self-start justify-start">
-        <h2 className="text-xlg md:text-xxlg text-balance font-urbanist">
+        <Title className="font-semibold">
           We're a <HighlightedText>501(c)(3)</HighlightedText>{" "}
           <span className="hidden md:inline-block">Non-profit</span>{" "}
           Organization
-        </h2>
+        </Title>
         <h3 className="text-sm md:text-md text-accent-700 font-semibold">
-          HERE TO SERVE, HEAL, AND EMPOWER.
+          HERE TO SERVE. HEAL. AND EMPOWER.
         </h3>
       </div>
       <div className="hidden md:flex flex-col gap-3 text-md lg:text-lg text-neutral-600">
@@ -47,7 +48,8 @@ export default function AboutDescriptionSection() {
           We focus on skills that last, from holistic health education to
           outdoor training and entrepreneurial mentorship. Independent of
           government funding, our impact is powered by volunteers, partners, and
-          donors—<strong>building stronger communities, one life at a time.</strong>
+          donors—
+          <strong>building stronger communities, one life at a time.</strong>
         </p>
       </div>
     </PageSection>

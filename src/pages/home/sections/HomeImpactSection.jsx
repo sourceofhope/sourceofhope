@@ -3,15 +3,14 @@ import ExpressiveNumber from "../../../components/ui/expressive/ExpressiveNumber
 import { DefaultGenerator } from "../../../components/ui/expressive/DefaultGenerator";
 
 import { HomeContent } from "../HomePage";
+import Title from "../../../components/ui/text/Title";
 
 export default function HomeImpactSection() {
   return (
     <HomeContent className="my-5 py-5 px-5 lg:px-35 grid gap-5 bg-accent-800 text-neutral-50">
       <div className="grid grid-flow-row w-full md:grid-cols-[1fr_1fr] items-center justify-self-center gap-5">
         <article className="flex flex-col gap-5 w-full justify-center items-center">
-          <h2 className="text-xxlg font-semibold font-urbanist text-center">
-            COMMUNITY IMPACT
-          </h2>
+          <Title>COMMUNITY IMPACT</Title>
           <p className="text-neutral-300 text-center">
             Real <strong className="font-semibold">Results</strong> and Powerful{" "}
             <strong className="font-semibold">Change</strong> in Our Community
@@ -45,8 +44,7 @@ export default function HomeImpactSection() {
             playsInline
             preload="auto"
             disablePictureInPicture
-            className="w-[500px] aspect-square bg-accent-900 rounded-2xl object-center object-cover"
-          >
+            className="w-[500px] aspect-square bg-accent-900 rounded-2xl object-center object-cover">
             <source
               src="https://static.vecteezy.com/system/resources/previews/041/753/968/mp4/time-lapse-sayans-foggy-mountains-of-russia-free-video.mp4"
               type="video/mp4"
@@ -55,7 +53,7 @@ export default function HomeImpactSection() {
         </article>
       </div>
       <button className="justify-self-end md:justify-self-end w-fit text-neutral-400">
-        <ExpressiveLink className="text-sm" to="">
+        <ExpressiveLink className="text-sm font-semibold" to="">
           LEARN MORE
         </ExpressiveLink>
       </button>

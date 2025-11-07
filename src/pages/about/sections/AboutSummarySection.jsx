@@ -2,13 +2,14 @@ import PageSection from "../../PageSection";
 import { HighlightedText } from "../../../components/ui/expressive/ExpressiveText";
 
 import ExpressiveLink from "../../../components/ui/expressive/ExpressiveLink";
+import Title from "../../../components/ui/text/Title";
 
 export default function AboutSummarySection() {
   return (
     <PageSection className="grid gap-5">
-      <h2 className="text-xlg md:text-xxlg text-balance font-urbanist">
+      <Title className="font-semibold">
         Ready to take <HighlightedText>your next step</HighlightedText>?
-      </h2>
+      </Title>
       <div className="text-sm md:text-md lg:text-lg grid gap-5 text-neutral-600">
         <p>
           <strong className="font-semibold">

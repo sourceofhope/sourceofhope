@@ -3,14 +3,16 @@ import PageSection from "../../PageSection";
 import { NavLink } from "react-router-dom";
 
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import Title from "../../../components/ui/text/Title";
+import Heading from "../../../components/ui/text/Heading";
 
 export default function ServeGuidelinesSection() {
   return (
     <PageSection className="gap-5">
       <div className="grid gap-1 justify-self-start justify-start text-sm md:text-md">
-        <h2 className="text-xlg md:text-xxlg text-balance font-urbanist">
+        <Title className="text-xlg md:text-xxlg text-balance font-urbanist">
           View our Serving Guidelines
-        </h2>
+        </Title>
       </div>
       <GuidelinesCard title="Who can volunteer?">
         <div className="grid gap-3">
@@ -86,8 +88,7 @@ export default function ServeGuidelinesSection() {
                 className="font-semibold text-accent-500"
                 to="/volunteer"
                 target="_blank"
-                rel="noopener noreferrer"
-              >
+                rel="noopener noreferrer">
                 thesourceofhope.org/volunteer
               </NavLink>
             </li>
@@ -95,8 +96,7 @@ export default function ServeGuidelinesSection() {
               Or email us at{" "}
               <a
                 className="font-semibold text-accent-500"
-                href="mailto:info@thesourceofhope.org?subject=Volunteer Sign-up"
-              >
+                href="mailto:info@thesourceofhope.org?subject=Volunteer Sign-up">
                 info@thesourceofhope.org
               </a>
             </li>
@@ -118,8 +118,7 @@ export default function ServeGuidelinesSection() {
             To coordinate a group, please{" "}
             <a
               className="font-semibold text-accent-500"
-              href="mailto:info@thesourceofhope.org?subject=Group Volunteering Inquiry"
-            >
+              href="mailto:info@thesourceofhope.org?subject=Group Volunteering Inquiry">
               contact us
             </a>{" "}
             in advance so we can plan a project that fits your group size and
@@ -131,8 +130,8 @@ export default function ServeGuidelinesSection() {
         <div className="grid gap-3">
           <p className="md:text-balance">
             We understand that plans can change. If you’re unable to attend for
-            volunteering, please let us know as soon as possible so we can
-            offer your spot to someone else.
+            volunteering, please let us know as soon as possible so we can offer
+            your spot to someone else.
           </p>
           <ul className="list-disc pl-4">
             <li>Notify us at least 24 hours in advance if you can</li>
@@ -140,8 +139,7 @@ export default function ServeGuidelinesSection() {
               Email us at{" "}
               <a
                 className="font-semibold text-accent-500"
-                href="mailto:info@thesourceofhope.org?subject=Volunteer Cancellation"
-              >
+                href="mailto:info@thesourceofhope.org?subject=Volunteer Cancellation">
                 info@thesourceofhope.org
               </a>
             </li>
@@ -179,7 +177,7 @@ function GuidelinesCard({ title, children }) {
         open ? "bg-neutral-200" : "bg-neutral-50"
       } hover:bg-neutral-200 flex flex-col rounded-2xl shadow-2x overflow-hidden h-fit p-5 text-neutral-950 transition-colors duration-750`}>
       <div className="flex justify-between items-center text-primary-700">
-        <h2 className="text-sm font-bold uppercase">{title}</h2>
+        <Heading>{title}</Heading>
         <ChevronDownIcon
           className={`w-[20px] h-[20px] transition-transform duration-750 ${
             open ? "rotate-0" : "-rotate-90"
