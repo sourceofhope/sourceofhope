@@ -4,7 +4,7 @@ import ExpressiveAnchor from "../../../components/ui/expressive/ExpressiveAnchor
 
 export default function HomeMissionSection() {
   return (
-    <HomeSection className="grid grid-flow-row md:grid-flow-col items-center w-full gap-5 justify-center md:justify-between">
+    <HomeSection className="grid grid-flow-row md:grid-cols-[1fr_2fr] pb-5 items-center w-full gap-10 md:gap-5 justify-items-end md:justify-between">
       <div className="grid grid-flow-row gap-5 justify-items-center">
         <h2 className="text-xlg md:hidden lg:text-xxlg font-urbanist font-semibold text-center">
           Our Mission
@@ -20,8 +20,10 @@ export default function HomeMissionSection() {
           Our Mission
         </h2>
         <p className="text-md md:text-lg pl-5 py-0 border-l-2 text-justify">
-          "Bringing hope and healing by providing <Emphasis>meals</Emphasis>, <Emphasis>education</Emphasis>, <Emphasis>wellness</Emphasis>,
-          and <Emphasis>resources</Emphasis> that uplift and empower communities in need."
+          "Bringing hope and healing by providing <Emphasis>meals</Emphasis>,{" "}
+          <Emphasis>education</Emphasis>, <Emphasis>wellness</Emphasis>, and{" "}
+          <Emphasis>resources</Emphasis> that uplift and empower communities in
+          need."
         </p>
         <p className="text-md md:text-lg pl-5 w-fit">
           <ExpressiveAnchor href="https://www.linkedin.com/in/qu%E1%BB%B3nh-ch%C3%A2u-qc-stone-87185b34/">

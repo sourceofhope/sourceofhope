@@ -1,0 +1,123 @@
+import { Helmet } from "react-helmet";
+import {
+  HeaderFlagContext,
+  useHeaderFlag,
+} from "../../../components/structure/Header";
+import { useEffect } from "react";
+import ExpressiveAnchor from "../../../components/ui/expressive/ExpressiveAnchor";
+
+export default function ServingHopeProgram() {
+  const { setIsBlocking } = useHeaderFlag();
+
+  useEffect(() => {
+    setIsBlocking(true);
+    return () => setIsBlocking(false);
+  }, [setIsBlocking]);
+  return (
+    <HeaderFlagContext.Provider value={true}>
+      <Helmet></Helmet>
+      <section className="w-full md:justify-items-left items-center grid gap-5 pt-25 p-5 lg:px-35">
+        <div className="grid gap-1 justify-self-start justify-start">
+          <h2 className="text-xlg md:text-xxlg text-balance font-urbanist">
+            Serving & Sharing Hope Program
+          </h2>
+          <h3 className="text-sm md:text-md text-accent-700 font-semibold uppercase">
+            Monthly Feeding with Dignity
+          </h3>
+        </div>
+        <article className="grid gap-3 text-sm md:text-md text-neutral-600">
+          <p>
+            <strong className="font-semibold">Serving Hope</strong> and{" "}
+            <strong className="font-semibold">Sharing Hope</strong> are two
+            cornerstone programs at The Source of Hope, working together to
+            fight hunger and support vulnerable communities across the DFW area.
+            Whether it's through nourishing meals or distributing donated food
+            to partner organizations, these programs aim to spread compassion,
+            dignity, and hope.
+          </p>
+          <button className="border-5 justify-self-center rounded-2xl font-bold w-fit shadow-sm hover:shadow-lg shadow-accent-500/70 hover:bg-neutral-50/95 border-accent-500 bg-neutral-50/90 duration-500 text-accent-500 opacity-85 hover:opacity-100 transition-[shadow_colors]">
+            <ExpressiveAnchor className="px-10 py-5" to="/sourceofhope/about">
+              VOLUNTEER
+            </ExpressiveAnchor>
+          </button>
+        </article>
+        <article className="grid gap-3 text-sm md:text-md text-neutral-600">
+          <h3 className="text-sm md:text-md text-accent-700 font-semibold uppercase">
+            Serving Hope Program
+          </h3>
+          <p>
+            Serving Hope is a volunteer-driven initiative dedicated to serving
+            organic, home-cooked meals to those in need—homeless individuals,
+            veterans, nursing home residents, and at-risk families throughout
+            the Dallas-Fort Worth community. Each event provides fresh, holistic
+            meals that nourish both the body and spirit.
+          </p>
+        </article>
+        <article className="bg-neutral-50 rounded-2xl shadow-sm p-5 text-sm md:text-md grid gap-2">
+          <h3 className="text-neutral-700 font-semibold tracking-wide border-b-2 border-neutral-300 pb-2">
+            Volunteer Feeding Times
+          </h3>
+          <div className="grid gap-1">
+            <div className="flex justify-between">
+              <span className="font-medium">Friday Prep</span>
+              <span>10:00 AM - 2:00 PM</span>
+            </div>
+            <div className="flex justify-between">
+              <span className="font-medium">Saturday Service</span>
+              <span>6:00 AM - 1:00 PM</span>
+            </div>
+          </div>
+        </article>
+        <article className="bg-neutral-50 rounded-2xl shadow-sm p-5 text-sm md:text-md grid gap-2">
+          <h3 className="text-neutral-700 font-semibold tracking-wide border-b-2 border-neutral-300 pb-2">
+            Why Volunteer With Us?
+          </h3>
+          <ul className="grid gap-2 pl-3 text-neutral-800 list-disc font-medium">
+            <li>Make a real difference in your community</li>
+            <li>Support hunger relief through Serving Hope and Sharing Hope</li>
+            <li>Gain valuable experience while giving back</li>
+            <li>
+              Be part of a growing network of compassion-driven individuals
+            </li>
+          </ul>
+        </article>
+        <article className="grid gap-3 text-sm md:text-md text-neutral-600">
+          <p>
+            Every fourth weekend of the month, we gather in locations across
+            South Dallas and Collin County to offer food, clothing, haircuts,
+            and hygiene services. Visit our Volunteer Page to get involved.
+          </p>
+          <p>
+            Sharing Hope began when generous food donations exceeded our
+            immediate needs. Now, The Source of Hope collaborates with 50+
+            nonprofits to share surplus food across the region. This helps
+            reduce food waste and support families struggling with food
+            insecurity. Students can also earn volunteer hours by donating
+            select items. Ask your school counselor for details!
+          </p>
+        </article>
+        <article className="grid gap-3 md:gap-5 items-center grid-flow-row md:grid-cols-[3fr_2fr] text-sm md:text-md text-neutral-600">
+          <div className="grid gap-3">
+            <h3 className="text-sm md:text-md text-accent-700 font-semibold uppercase">
+              See The Impact. Be The Impact
+            </h3>
+            <p>
+              Take a look at the impact we're making! This recap from our
+              January 2025 Serving Hope for Hunger event shows how we nourish,
+              uplift, and connect with our community through every shared meal
+              and act of service.
+            </p>
+          </div>
+          <iframe
+            className="rounded-2xl justify-self-center aspect-video w-full"
+            src="https://www.youtube.com/embed/Joax8zGMSkM?si=hkYZqUtVdMLZir0l"
+            title="YouTube video player"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            referrerpolicy="strict-origin-when-cross-origin"
+            allowfullscreen></iframe>
+        </article>
+      </section>
+    </HeaderFlagContext.Provider>
+  );
+}

@@ -14,7 +14,7 @@ export default function FormPage() {
 
   useEffect(() => {
     setIsBlocking(true);
-    return () => setIsBlocking(false); // reset on leave
+    return () => setIsBlocking(false);
   }, [setIsBlocking]);
   return (
     <HeaderFlagContext.Provider value={true}>
@@ -56,7 +56,7 @@ export default function FormPage() {
           content="https://sourceofhope.org/assets/social-share-programs.jpg"
         />
       </Helmet>
-      <section className="w-full md:justify-items-left items-center grid gap-5 pt-25 px-5 lg:px-35">
+      <section className="w-full md:justify-items-left items-center grid gap-5 pt-25 p-5 lg:px-35">
         <div className="grid gap-1 justify-self-start justify-start">
           <h2 className="text-xlg md:text-xxlg text-balance font-urbanist">
             Community Impact Form
@@ -69,10 +69,10 @@ export default function FormPage() {
             </span>
           </h3>
         </div>
-			</section>	
-			<FormDescriptionSection />
-			<FormShowcaseSection />
-			<FormInputSection />
+      </section>
+      <FormDescriptionSection />
+      <FormShowcaseSection />
+      <FormInputSection />
     </HeaderFlagContext.Provider>
   );
 }

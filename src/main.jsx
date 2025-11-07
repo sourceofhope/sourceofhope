@@ -14,14 +14,22 @@ import ErrorBoundary from "./pages/ErrorBoundary.jsx";
 const HomePage = lazy(() => import("./pages/home/HomePage.jsx"));
 const AboutPage = lazy(() => import("./pages/about/AboutPage.jsx"));
 const ServePage = lazy(() => import("./pages/serve/ServePage.jsx"));
+const SharingHopeProgram = lazy(() =>
+  import("./pages/serve/programs/ServingHopeProgram.jsx")
+);
+
 const FormPage = lazy(() => import("./pages/form/FormPage.jsx"));
 
 import "./style.css";
 
 const PageMap = {
   home: <HomePage />,
+
   about: <AboutPage />,
+
   serve: <ServePage />,
+  servingHope: <SharingHopeProgram />,
+
   member: <FormPage />,
 };
 

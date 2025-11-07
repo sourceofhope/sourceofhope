@@ -1,6 +1,8 @@
 import { useRef, useEffect, useState } from "react";
 import { MapPinIcon } from "@heroicons/react/20/solid";
 
+import { CANONICAL } from "../../../routes";
+
 import ExpressiveLink from "../../../components/ui/expressive/ExpressiveLink";
 import ExpressiveAnchor from "../../../components/ui/expressive/ExpressiveAnchor";
 
@@ -68,9 +70,11 @@ export default function ServeProgramsSection() {
               It’s more than food—we serve dignity, compassion, and connection.
             </p>
             <button className="w-fit font-semibold">
-              <ExpressiveAnchor className="text-sm text-accent-500" to="">
+              <ExpressiveLink
+                className="text-sm text-accent-500"
+                to={CANONICAL.servingHope}>
                 Volunteer at Our Next Event
-              </ExpressiveAnchor>
+              </ExpressiveLink>
             </button>
           </ServingArticle>
           <ServingArticle

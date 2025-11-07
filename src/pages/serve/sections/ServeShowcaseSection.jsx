@@ -62,20 +62,24 @@ export default function ServeShowcaseSection() {
           education, and opportunity that transform lives for generations.
         </p>
         <p>
-          <strong className="font-semibold">We’re like five nonprofits in one</strong>, uniting health and wellness, outdoor
-          education, entrepreneurship, community service, and mentorship.
+          <strong className="font-semibold">
+            We’re like five nonprofits in one
+          </strong>
+          , uniting health and wellness, outdoor education, entrepreneurship,
+          community service, and mentorship.
         </p>
         <p className="text-sm pl-3 py-0 border-l-2 text-balance">
-          "Teach a man to fish,
-          and you feed him for a lifetime."
+          "Teach a man to fish, and you feed him for a lifetime."
         </p>
         <p>
-          Every effort creates stronger families and thriving communities. True {" "}
-          <strong className="font-semibold">hope lasts when it’s shared</strong>.
+          Every effort creates stronger families and thriving communities. True{" "}
+          <strong className="font-semibold">hope lasts when it’s shared</strong>
+          .
         </p>
         <p>
           <strong className="font-normal">
-            Together we{" "}<Emphasis>empower</Emphasis>, <Emphasis>educate</Emphasis>,{" "} and
+            Together we <Emphasis>empower</Emphasis>,{" "}
+            <Emphasis>educate</Emphasis>, and
             <Emphasis>elevate</Emphasis>.
           </strong>
         </p>
