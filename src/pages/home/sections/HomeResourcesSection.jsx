@@ -14,7 +14,7 @@ export default function HomeResourcesSection() {
   return (
     <HomeSection className="w-full md:mb-15">
       <Title className="pb-5 text-center text-balance">
-        <NavLink to="" className="inline-block">
+        <NavLink to="">
           <Emphasis>We provide a number of resources</Emphasis>
         </NavLink>{" "}
         to <HighlightedText>our community</HighlightedText>.
