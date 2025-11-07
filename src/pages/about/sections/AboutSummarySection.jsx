@@ -7,7 +7,7 @@ import Title from "../../../components/ui/text/Title";
 export default function AboutSummarySection() {
   return (
     <PageSection className="grid gap-5">
-      <Title className="font-semibold">
+      <Title className="font-semibold text-balance">
         Ready to take <HighlightedText>your next step</HighlightedText>?
       </Title>
       <div className="text-sm md:text-md lg:text-lg grid gap-5 text-neutral-600">

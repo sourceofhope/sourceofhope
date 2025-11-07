@@ -34,8 +34,8 @@ export default function EducationHopeProgram() {
             low-income cosmetology students, facilitating advanced beauty
             education, and hiring for operations roles through Work-Study.
           </p>
-          <button className="border-5 justify-self-center rounded-2xl font-bold w-fit shadow-sm hover:shadow-lg shadow-accent-500/70 hover:bg-neutral-50/95 border-accent-500 bg-neutral-50/90 duration-500 text-accent-500 opacity-85 hover:opacity-100 transition-[shadow_colors]">
-            <ExpressiveAnchor className="px-10 py-5" to="/sourceofhope/about">
+          <button className="my-5 border-5 justify-self-center rounded-2xl font-bold w-full md:w-1/3 shadow-sm hover:shadow-lg shadow-accent-500/70 hover:bg-neutral-50/95 border-accent-500 bg-neutral-50/90 duration-500 text-accent-500 opacity-85 hover:opacity-100 transition-[shadow_colors]">
+            <ExpressiveAnchor className="px-10 py-5 w-min" href="">
               APPLY
             </ExpressiveAnchor>
           </button>
@@ -52,7 +52,7 @@ export default function EducationHopeProgram() {
         </article>
         <article>
           <Title>Our Scholarship Programs</Title>
-          <div className="grid gap-5">
+          <div className="grid gap-5 py-5">
             <ExpressiveCard
               className="grid gap-3"
               title="EMERGING PROFESSIONALS PROGRAM">
@@ -160,10 +160,87 @@ export default function EducationHopeProgram() {
         </article>
         <article className="grid gap-5">
           <Title>Tutoring Services</Title>
-          <div className="grid grid-flow-row md:grid-cols-2 gap-5">
-            <div></div>
-            <img />
+          <div className="grid grid-flow-row md:grid-cols-2 gap-5 items-center">
+            <div className="grid gap-5 grid-flow-row order-2 md:order-1">
+              <p>
+                The Source of Hope offers <strong>virtual tutoring</strong> for
+                middle school and high school students—empowering learners to
+                grow from anywhere.
+              </p>
+              <article className="bg-neutral-50 rounded-2xl shadow-sm p-5 text-sm md:text-md grid gap-2 w-full">
+                <h3 className="text-accent-700 font-semibold tracking-wide border-b-2 border-neutral-300 pb-2">
+                  Tutoring Services
+                </h3>
+                <ul className="grid gap-2 pl-3 text-neutral-800 list-disc font-medium">
+                  <li>Test prep for STAAR, SAT, and AP exams</li>
+                  <li>Math subjects such as Algebra and Geometry</li>
+                  <li>English topics including vocabulary and grammar</li>
+                </ul>
+              </article>
+              <p>
+                All tutoring sessions are held <strong>virtually</strong>,
+                allowing students to participate from any location with flexible
+                scheduling options.
+              </p>
+              <p className="pl-5 py-0 border-l-4 border-accent-600">
+                <strong>The Source of Hope</strong> is currently hiring ILA
+                (Integrated Language Arts) tutors. Both students and adults can
+                apply. Tutors receive <strong>50%</strong> of session earnings,
+                while the remaining proceeds support our community programs.
+              </p>
+              <p>
+                If you specialize in a subject not listed above, we still
+                encourage you to apply! We’re always expanding our educational
+                offerings.
+              </p>
+              <div className="flex flex-col gap-3">
+                <button className="w-full rounded-2xl py-3 px-5 bg-accent-500 hover:bg-accent-600 duration-750 transition-colors font-semibold text-neutral-50">
+                  <ExpressiveAnchor to="">GET TUTORING</ExpressiveAnchor>
+                </button>
+                <button className="w-full rounded-2xl py-3 px-5 bg-accent-500 hover:bg-accent-600 duration-750 transition-colors font-semibold text-neutral-50">
+                  <ExpressiveAnchor to="">JOIN OUR TUTORS</ExpressiveAnchor>
+                </button>
+              </div>
+            </div>
+            <div className="flex justify-center order-1 md:order-2">
+              <div className="relative w-full max-w-md">
+                <img
+                  className="rounded-2xl shadow-lg object-cover w-full aspect-square"
+                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
+                  alt="Virtual tutoring session illustration"
+                />
+                <div className="absolute bottom-0 bg-gradient-to-t from-black/60 to-transparent rounded-2xl h-[60%] w-full">
+                  <div className="absolute bottom-0 w-full p-5 text-neutral-50">
+                    <p className="text-sm uppercase font-semibold">
+                      Education For Hope
+                    </p>
+                    <p className="text-lg font-bold">
+                      Empowering minds everywhere
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
+        </article>
+        <article className="grid gap-5">
+          <Title>Mentors</Title>
+          <p>
+            The Source of Hope, offers mentorship opportunities through its TSOH
+            ILA Tutoring Program. This initiative aims to empower students
+            academically by providing individualized virtual mentorship in
+            reading and writing.
+          </p>
+          <p>
+            Tutors can assist students in preparing for standardized tests like
+            STAAR and SAT/ACT, analyzing literature, and developing writing
+            skills.
+          </p>
+          <p>
+            Prospective tutors should have reliable internet access, experience
+            with virtual meeting platforms (e.g., Zoom, Google Meet), and be
+            comfortable with English.
+          </p>
         </article>
       </section>
     </HeaderFlagContext.Provider>

@@ -20,10 +20,10 @@ export default function ServingHopeProgram() {
       <Helmet></Helmet>
       <section className="w-full md:justify-items-left items-center grid gap-5 pt-25 p-5 lg:px-35">
         <div className="grid gap-1 justify-self-start justify-start">
-          <Title>Serving & Sharing Hope Program</Title>
+          <Title>Serving/Sharing Hope Program</Title>
           <Heading>Monthly Feeding with Dignity</Heading>
         </div>
-        <article className="grid gap-3 text-sm md:text-md text-neutral-600">
+        <article className="grid gap-5 text-sm md:text-md text-neutral-600">
           <p>
             <strong className="font-semibold">Serving Hope</strong> and{" "}
             <strong className="font-semibold">Sharing Hope</strong> are two
@@ -33,13 +33,13 @@ export default function ServingHopeProgram() {
             to partner organizations, these programs aim to spread compassion,
             dignity, and hope.
           </p>
-          <button className="border-5 justify-self-center rounded-2xl font-bold w-fit shadow-sm hover:shadow-lg shadow-accent-500/70 hover:bg-neutral-50/95 border-accent-500 bg-neutral-50/90 duration-500 text-accent-500 opacity-85 hover:opacity-100 transition-[shadow_colors]">
-            <ExpressiveAnchor className="px-10 py-5" to="/sourceofhope/about">
+          <button className="my-5 border-5 justify-self-center rounded-2xl font-bold w-full md:w-1/3 shadow-sm hover:shadow-lg shadow-accent-500/70 hover:bg-neutral-50/95 border-accent-500 bg-neutral-50/90 duration-500 text-accent-500 opacity-85 hover:opacity-100 transition-[shadow_colors]">
+            <ExpressiveAnchor className="px-10 py-5 w-min" href="">
               VOLUNTEER
             </ExpressiveAnchor>
           </button>
         </article>
-        <article className="grid gap-3 text-sm md:text-md text-neutral-600">
+        <article className="grid gap-5 text-sm md:text-md text-neutral-600">
           <Heading>Serving Hope Program</Heading>
           <p>
             Serving Hope is a volunteer-driven initiative dedicated to serving
@@ -50,7 +50,7 @@ export default function ServingHopeProgram() {
           </p>
         </article>
         <article className="bg-neutral-50 rounded-2xl shadow-sm p-5 text-sm md:text-md grid gap-2">
-          <h3 className="text-neutral-700 font-semibold tracking-wide border-b-2 border-neutral-300 pb-2">
+          <h3 className="text-accent-700 font-semibold tracking-wide border-b-2 border-neutral-300 pb-2">
             Volunteer Feeding Times
           </h3>
           <div className="grid gap-1">
@@ -65,7 +65,7 @@ export default function ServingHopeProgram() {
           </div>
         </article>
         <article className="bg-neutral-50 rounded-2xl shadow-sm p-5 text-sm md:text-md grid gap-2">
-          <h3 className="text-neutral-700 font-semibold tracking-wide border-b-2 border-neutral-300 pb-2">
+          <h3 className="text-accent-700 font-semibold tracking-wide border-b-2 border-neutral-300 pb-2">
             Why Volunteer With Us?
           </h3>
           <ul className="grid gap-2 pl-3 text-neutral-800 list-disc font-medium">
@@ -77,7 +77,7 @@ export default function ServingHopeProgram() {
             </li>
           </ul>
         </article>
-        <article className="grid gap-3 text-sm md:text-md text-neutral-600">
+        <article className="grid gap-5 text-sm md:text-md text-neutral-600">
           <p>
             Every fourth weekend of the month, we gather in locations across
             South Dallas and Collin County to offer food, clothing, haircuts,
@@ -92,8 +92,8 @@ export default function ServingHopeProgram() {
             select items. Ask your school counselor for details!
           </p>
         </article>
-        <article className="grid gap-3 md:gap-5 items-center grid-flow-row md:grid-cols-[3fr_2fr] text-sm md:text-md text-neutral-600">
-          <div className="grid gap-3">
+        <article className="grid gap-5 md:gap-5 items-center grid-flow-row md:grid-cols-[3fr_2fr] text-sm md:text-md text-neutral-600">
+          <div className="grid gap-5">
             <Heading>See The Impact. Be The Impact</Heading>
             <p>
               Take a look at the impact we're making! This recap from our

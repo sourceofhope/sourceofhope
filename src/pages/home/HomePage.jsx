@@ -55,7 +55,7 @@ export function HomeSection({ title, className, children, caption, to }) {
   return (
     <PageSection>
       {title ? (
-        <Title className="text-xlg lg:text-xxlg font-urbanist justify-self-center">
+        <Title className="text-xlg lg:text-xxlg text-balance font-urbanist justify-self-center">
           {title}
         </Title>
       ) : (

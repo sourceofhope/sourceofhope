@@ -3,6 +3,7 @@ import PageSection from "../../PageSection";
 import Emphasis from "../../../components/ui/Emphasis";
 import Title from "../../../components/ui/text/Title";
 import Heading from "../../../components/ui/text/Heading";
+import Blockquote from "../../../components/ui/text/Blockquote";
 
 export default function ServeShowcaseSection() {
   return (
@@ -32,10 +33,10 @@ export default function ServeShowcaseSection() {
           survival skills, entrepreneurship and workforce development, community
           service, and academic mentorship.
         </p>
-        <p className="lg:text-lg pl-3 py-0 border-l-2 border-accent-600 text-balance w-1/2">
+        <Blockquote className="lg:text-lg border-accent-600 text-balance w-1/2">
           "Give a man a fish, and you feed him for a day. Teach a man to fish,
           and you feed him for a lifetime."
-        </p>
+        </Blockquote>
         <p>
           By equipping individuals with practical tools and real-world
           experience, we ensure that every dollar invested becomes a ripple of
@@ -68,7 +69,7 @@ export default function ServeShowcaseSection() {
           , uniting health and wellness, outdoor education, entrepreneurship,
           community service, and mentorship.
         </p>
-        <p className="text-sm pl-3 py-0 border-l-2 border-accent-600 text-balance">
+        <p className="text-sm pl-3 py-0 border-l-4 border-accent-600 text-balance">
           "Teach a man to fish, and you feed him for a lifetime."
         </p>
         <p>
@@ -78,9 +79,8 @@ export default function ServeShowcaseSection() {
         </p>
         <p>
           <strong className="font-normal">
-            Together we <Emphasis>empower</Emphasis>,{" "}
-            <Emphasis>educate</Emphasis>, and
-            <Emphasis>elevate</Emphasis>.
+            Together we <Emphasis>empower</Emphasis>,
+            <Emphasis>educate</Emphasis>, and <Emphasis>elevate</Emphasis>.
           </strong>
         </p>
       </div>

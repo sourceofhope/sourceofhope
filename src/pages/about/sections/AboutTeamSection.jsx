@@ -7,7 +7,7 @@ import Heading from "../../../components/ui/text/Heading";
 
 export default function AboutTeamSection() {
   return (
-    <PageSection>
+    <PageSection className="pt-5">
       <div className="grid gap-5">
         <div className="grid gap-5">
           <Heading>Executive Board</Heading>
@@ -28,7 +28,7 @@ export default function AboutTeamSection() {
             />
           </Carousel>
         </div>
-        <div className="grid gap-3">
+        <div className="grid gap-5">
           <Heading>Director Board</Heading>
           <Carousel>
             <CarouselCard

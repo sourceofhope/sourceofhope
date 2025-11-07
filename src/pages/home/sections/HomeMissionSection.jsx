@@ -2,6 +2,7 @@ import { HomeSection } from "../HomePage";
 import Emphasis from "../../../components/ui/Emphasis";
 import ExpressiveAnchor from "../../../components/ui/expressive/ExpressiveAnchor";
 import Title from "../../../components/ui/text/Title";
+import Blockquote from "../../../components/ui/text/Blockquote";
 
 export default function HomeMissionSection() {
   return (
@@ -20,12 +21,12 @@ export default function HomeMissionSection() {
         <Title className="hidden text-xlg md:block lg:text-xxlg pl-5 w-fit font-urbanist">
           Our Mission
         </Title>
-        <p className="text-md md:text-lg pl-5 py-0 border-l-2 border-accent-600 text-justify">
+        <Blockquote className="text-md md:text-lg border-accent-600 text-justify">
           "Bringing hope and healing by providing <Emphasis>meals</Emphasis>,{" "}
           <Emphasis>education</Emphasis>, <Emphasis>wellness</Emphasis>, and{" "}
           <Emphasis>resources</Emphasis> that uplift and empower communities in
           need."
-        </p>
+        </Blockquote>
         <p className="text-md md:text-lg pl-5 w-fit">
           <ExpressiveAnchor href="https://www.linkedin.com/in/qu%E1%BB%B3nh-ch%C3%A2u-qc-stone-87185b34/">
             – Co-founder,{" "}

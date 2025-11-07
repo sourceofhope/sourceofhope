@@ -2,6 +2,7 @@ import PageSection from "../../PageSection";
 
 import ExpressiveAnchor from "../../../components/ui/expressive/ExpressiveAnchor";
 import Title from "../../../components/ui/text/Title";
+import Blockquote from "../../../components/ui/text/Blockquote";
 
 export default function AboutMissionSection() {
   return (
@@ -13,11 +14,11 @@ export default function AboutMissionSection() {
             <span className="hidden md:inline-block">our guiding</span>{" "}
             principle
           </Title>
-          <p className="text-sm md:text-md lg:text-lg text-neutral-600 pl-5 py-0 border-l-2 border-accent-600 text-balance">
+          <Blockquote className="text-sm md:text-md lg:text-lg text-neutral-600 border-accent-600 text-balance">
             "empower with dignity—meet urgent needs while equipping people with
             lifelong skills, wellness, and community so hope becomes
             sustainable."
-          </p>
+          </Blockquote>
           <p className="text-sm md:text-md lg:text-lg pl-5 w-fit text-neutral-600">
             <ExpressiveAnchor href="https://www.linkedin.com/in/qu%E1%BB%B3nh-ch%C3%A2u-qc-stone-87185b34/">
               - Co-founder,{" "}

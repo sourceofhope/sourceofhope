@@ -6,7 +6,7 @@ export default function AboutDescriptionSection() {
   return (
     <PageSection className="justify-items-center grid gap-5">
       <div className="grid gap-1 justify-self-start justify-start">
-        <Title className="font-semibold">
+        <Title className="font-semibold text-balance">
           We're a <HighlightedText>501(c)(3)</HighlightedText>{" "}
           <span className="hidden md:inline-block">Non-profit</span>{" "}
           Organization

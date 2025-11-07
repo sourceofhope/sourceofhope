@@ -92,7 +92,9 @@ export default function ServeProgramsSection() {
               goals, we build stronger foundations for brighter futures.
             </p>
             <button className="w-fit font-semibold">
-              <ExpressiveLink className="text-sm text-accent-500" to="">
+              <ExpressiveLink
+                className="text-sm text-accent-500"
+                to={CANONICAL.educationHope}>
                 Become a Tutor
               </ExpressiveLink>
             </button>
@@ -225,7 +227,9 @@ function ServingCard({ title, caption, children }) {
   return (
     <div className="lg:w-1/3 flex flex-col gap-3 rounded-2xl shadow-2x overflow-hidden h-fit py-5 px-10 bg-neutral-50 text-neutral-950">
       <Heading>{title}</Heading>
-      <p className="text-lg font-urbanist font-semibold">{caption}</p>
+      <p className="text-lg font-urbanist font-semibold text-balance">
+        {caption}
+      </p>
       {children}
     </div>
   );
