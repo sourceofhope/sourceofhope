@@ -23,7 +23,7 @@ export default function HomePublicationsSection() {
             aliquip ex ea commodo consequat.
           </p>
           <button className="w-fit text-neutral-600">
-            <ExpressiveLink className="text-sm" to="">
+            <ExpressiveLink className="text-sm font-semibold" to="">
               LEARN MORE
             </ExpressiveLink>
           </button>

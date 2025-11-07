@@ -15,7 +15,7 @@ export default function AboutDescriptionSection() {
           HERE TO SERVE. HEAL. AND EMPOWER.
         </h3>
       </div>
-      <div className="hidden md:flex flex-col gap-3 text-md lg:text-lg text-neutral-600">
+      <div className="hidden md:flex flex-col gap-5 text-md lg:text-lg text-neutral-600">
         <p>
           The Source of Hope uplifts individuals and families through{" "}
           <strong>holistic health</strong>,{" "}

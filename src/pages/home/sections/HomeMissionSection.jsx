@@ -20,7 +20,7 @@ export default function HomeMissionSection() {
         <Title className="hidden text-xlg md:block lg:text-xxlg pl-5 w-fit font-urbanist">
           Our Mission
         </Title>
-        <p className="text-md md:text-lg pl-5 py-0 border-l-2 text-justify">
+        <p className="text-md md:text-lg pl-5 py-0 border-l-2 border-accent-600 text-justify">
           "Bringing hope and healing by providing <Emphasis>meals</Emphasis>,{" "}
           <Emphasis>education</Emphasis>, <Emphasis>wellness</Emphasis>, and{" "}
           <Emphasis>resources</Emphasis> that uplift and empower communities in

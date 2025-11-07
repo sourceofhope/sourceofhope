@@ -9,7 +9,7 @@ export default function AboutTeamSection() {
   return (
     <PageSection>
       <div className="grid gap-5">
-        <div className="grid gap-3">
+        <div className="grid gap-5">
           <Heading>Executive Board</Heading>
           <Carousel>
             <CarouselCard

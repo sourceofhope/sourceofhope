@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
 
-export default function ExpressiveCard({ title, children }) {
+export default function ExpressiveCard({ title, children, className = "" }) {
   const [open, setOpen] = useState(false);
 
   return (
@@ -21,7 +21,7 @@ export default function ExpressiveCard({ title, children }) {
       <div
         className={`${
           open ? "max-h-screen mt-3 opacity-100" : "max-h-0 mt-0 opacity-0"
-        } overflow-hidden transition-all duration-750`}>
+        } overflow-hidden transition-all duration-750 ${className}`}>
         {children}
       </div>
     </div>

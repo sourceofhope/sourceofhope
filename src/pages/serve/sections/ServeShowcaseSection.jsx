@@ -14,7 +14,7 @@ export default function ServeShowcaseSection() {
           DIFFERENCE.
         </Heading>
       </div>
-      <div className="hidden text-sm md:text-md lg:text-lg md:grid gap-3 text-neutral-600">
+      <div className="hidden text-sm md:text-md lg:text-lg md:grid gap-5 text-neutral-600">
         <p>
           At The Source of Hope, we’re not just another nonprofit—we’re a
           movement dedicated to creating{" "}
@@ -32,7 +32,7 @@ export default function ServeShowcaseSection() {
           survival skills, entrepreneurship and workforce development, community
           service, and academic mentorship.
         </p>
-        <p className="lg:text-lg pl-3 py-0 border-l-2 text-balance w-1/2">
+        <p className="lg:text-lg pl-3 py-0 border-l-2 border-accent-600 text-balance w-1/2">
           "Give a man a fish, and you feed him for a day. Teach a man to fish,
           and you feed him for a lifetime."
         </p>
@@ -68,7 +68,7 @@ export default function ServeShowcaseSection() {
           , uniting health and wellness, outdoor education, entrepreneurship,
           community service, and mentorship.
         </p>
-        <p className="text-sm pl-3 py-0 border-l-2 text-balance">
+        <p className="text-sm pl-3 py-0 border-l-2 border-accent-600 text-balance">
           "Teach a man to fish, and you feed him for a lifetime."
         </p>
         <p>
