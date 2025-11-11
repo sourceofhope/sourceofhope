@@ -1,8 +1,13 @@
-import { useState, useRef, useLayoutEffect, useMemo } from "react";
+import { useState, useRef, useLayoutEffect, useMemo, useEffect } from "react";
 import { Fragment } from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 
-export default function Carousel({ children = [], className }) {
+export default function Carousel({
+  children = [],
+  className,
+  controls = true,
+  auto = false,
+}) {
   const containerReference = useRef(null);
   const [active, setActive] = useState(0);
   const [count, setCount] = useState(1);
@@ -57,6 +62,16 @@ export default function Carousel({ children = [], className }) {
 
   const total = groups.length;
 
+  useEffect(() => {
+    if (auto) {
+      const stepper = setInterval(() => {
+        setActive((prev) => (prev - 1 + total) % total);
+      }, 7500);
+
+      return () => clearInterval(stepper);
+    }
+  }, [auto, total]);
+
   return (
     <article className={`flex flex-col gap-5 justify-center ${className}`}>
       <div
@@ -66,31 +81,33 @@ export default function Carousel({ children = [], className }) {
           <Fragment key={i}>{child}</Fragment>
         ))}
       </div>
-      <div className="grid grid-cols-[1fr_10fr_1fr] md:grid-cols-1 gap-3 justify-self-center w-full">
-        <button
-          onClick={() => setActive((active - 1 + total) % total)}
-          className={`md:hidden p-1 rounded-full w-fit h-fit text-neutral-50 ${
-            groups.length === 1 ? "bg-black/20" : "bg-black/70"
-          }`}>
-          <ChevronLeftIcon className="w-[20px] h-[20px] hover:-translate-x-0.5 transition-transform" />
-        </button>
-        <div className="flex flex-row items-center justify-center gap-1">
-          {Array.from({ length: total }).map((_, i) => (
-            <CarouselSelector
-              key={i}
-              selected={i === active}
-              onClick={() => setActive(i)}
-            />
-          ))}
+      {controls ? (
+        <div className="grid grid-cols-[1fr_10fr_1fr] md:grid-cols-1 gap-3 justify-self-center w-full">
+          <button
+            onClick={() => setActive((active - 1 + total) % total)}
+            className={`md:hidden p-1 rounded-full w-fit h-fit text-neutral-50 ${
+              groups.length === 1 ? "bg-black/20" : "bg-black/70"
+            }`}>
+            <ChevronLeftIcon className="w-[20px] h-[20px] hover:-translate-x-0.5 transition-transform" />
+          </button>
+          <div className="flex flex-row items-center justify-center gap-1">
+            {Array.from({ length: total }).map((_, i) => (
+              <CarouselSelector
+                key={i}
+                selected={i === active}
+                onClick={() => setActive(i)}
+              />
+            ))}
+          </div>
+          <button
+            onClick={() => setActive((active + 1) % total)}
+            className={`md:hidden p-1 rounded-full w-fit h-fit text-neutral-50 ${
+              groups.length === 1 ? "bg-black/20" : "bg-black/70"
+            }`}>
+            <ChevronRightIcon className="w-[20px] h-[20px] hover:translate-x-0.5 transition-transform" />
+          </button>
         </div>
-        <button
-          onClick={() => setActive((active + 1) % total)}
-          className={`md:hidden p-1 rounded-full w-fit h-fit text-neutral-50 ${
-            groups.length === 1 ? "bg-black/20" : "bg-black/70"
-          }`}>
-          <ChevronRightIcon className="w-[20px] h-[20px] hover:translate-x-0.5 transition-transform" />
-        </button>
-      </div>
+      ) : null}
     </article>
   );
 }

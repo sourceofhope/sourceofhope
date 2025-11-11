@@ -19,11 +19,11 @@ export default function ServingHopeProgram() {
     <HeaderFlagContext.Provider value={true}>
       <Helmet></Helmet>
       <section className="w-full md:justify-items-left items-center grid gap-5 pt-25 p-5 lg:px-35">
-        <div className="grid gap-1 justify-self-start justify-start">
+        <div className="grid gap-3 justify-self-start justify-start">
           <Title>Serving/Sharing Hope Program</Title>
           <Heading>Monthly Feeding with Dignity</Heading>
         </div>
-        <article className="grid gap-5 text-sm md:text-md text-neutral-600">
+        <article className="grid gap-5 text-sm md:text-md">
           <p>
             <strong className="font-semibold">Serving Hope</strong> and{" "}
             <strong className="font-semibold">Sharing Hope</strong> are two
@@ -33,13 +33,11 @@ export default function ServingHopeProgram() {
             to partner organizations, these programs aim to spread compassion,
             dignity, and hope.
           </p>
-          <button className="my-5 border-5 justify-self-center rounded-2xl font-bold w-full md:w-1/3 shadow-sm hover:shadow-lg shadow-accent-500/70 hover:bg-neutral-50/95 border-accent-500 bg-neutral-50/90 duration-500 text-accent-500 opacity-85 hover:opacity-100 transition-[shadow_colors]">
-            <ExpressiveAnchor className="px-10 py-5 w-min" href="">
-              VOLUNTEER
-            </ExpressiveAnchor>
+          <button className="my-5 md:hidden rounded-2xl p-5 bg-accent-500 md:w-1/3 hover:bg-accent-600 duration-750 transition-colors font-semibold text-neutral-50">
+            <ExpressiveAnchor to="">APPLY</ExpressiveAnchor>
           </button>
         </article>
-        <article className="grid gap-5 text-sm md:text-md text-neutral-600">
+        <article className="grid gap-5 text-sm md:text-md">
           <Heading>Serving Hope Program</Heading>
           <p>
             Serving Hope is a volunteer-driven initiative dedicated to serving
@@ -50,9 +48,9 @@ export default function ServingHopeProgram() {
           </p>
         </article>
         <article className="bg-neutral-50 rounded-2xl shadow-sm p-5 text-sm md:text-md grid gap-2">
-          <h3 className="text-accent-700 font-semibold tracking-wide border-b-2 border-neutral-300 pb-2">
+          <Heading className=" border-b-2 border-neutral-300 pb-2">
             Volunteer Feeding Times
-          </h3>
+          </Heading>
           <div className="grid gap-1">
             <div className="flex justify-between">
               <span className="font-medium">Friday Prep</span>
@@ -65,9 +63,9 @@ export default function ServingHopeProgram() {
           </div>
         </article>
         <article className="bg-neutral-50 rounded-2xl shadow-sm p-5 text-sm md:text-md grid gap-2">
-          <h3 className="text-accent-700 font-semibold tracking-wide border-b-2 border-neutral-300 pb-2">
+          <Heading className="bold tracking-wide border-b-2 border-neutral-300 pb-2">
             Why Volunteer With Us?
-          </h3>
+          </Heading>
           <ul className="grid gap-2 pl-3 text-neutral-800 list-disc font-medium">
             <li>Make a real difference in your community</li>
             <li>Support hunger relief through Serving Hope and Sharing Hope</li>
@@ -92,24 +90,47 @@ export default function ServingHopeProgram() {
             select items. Ask your school counselor for details!
           </p>
         </article>
-        <article className="grid gap-5 md:gap-5 items-center grid-flow-row md:grid-cols-[3fr_2fr] text-sm md:text-md text-neutral-600">
-          <div className="grid gap-5">
-            <Heading>See The Impact. Be The Impact</Heading>
-            <p>
-              Take a look at the impact we're making! This recap from our
-              January 2025 Serving Hope for Hunger event shows how we nourish,
-              uplift, and connect with our community through every shared meal
-              and act of service.
-            </p>
+
+        <article className="grid gap-5">
+          <Heading>See our Community Impact</Heading>
+          <div className="grid gap-5 md:gap-5 items-center grid-flow-row md:grid-cols-[6fr_5fr] text-sm md:text-md">
+            <div className="grid gap-5">
+              <p>
+                This recap from our January 2025 Serving Hope for Hunger event
+                captures the heart of what we do—bringing people together
+                through compassion, service, and community care. From preparing
+                home-cooked meals to serving each guest with dignity and a
+                smile, our volunteers showed what it truly means to nourish both
+                body and soul.
+              </p>
+              <p>
+                Every shared meal represents more than food—it's a reminder that
+                hope grows stronger when we serve side by side. Together, we're
+                building a community filled with kindness, connection, and
+                purpose.
+              </p>
+              <div className="flex-col gap-3 hidden md:flex">
+                <button className="w-full rounded-2xl p-5 bg-accent-500 hover:bg-accent-600 duration-750 transition-colors font-semibold text-neutral-50">
+                  <ExpressiveAnchor to="">SIGN UP</ExpressiveAnchor>
+                </button>
+              </div>
+            </div>
+            <div className="w-full flex flex-col gap-5">
+              <iframe
+                className="rounded-2xl justify-self-center aspect-video w-full"
+                src="https://www.youtube.com/embed/Joax8zGMSkM?si=hkYZqUtVdMLZir0l"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen></iframe>
+              <div className="flex-col gap-3 flex md:hidden">
+                <button className="w-full rounded-2xl p-5 bg-accent-500 hover:bg-accent-600 duration-750 transition-colors font-semibold text-neutral-50">
+                  <ExpressiveAnchor to="">SIGN UP</ExpressiveAnchor>
+                </button>
+              </div>
+            </div>
           </div>
-          <iframe
-            className="rounded-2xl justify-self-center aspect-video w-full"
-            src="https://www.youtube.com/embed/Joax8zGMSkM?si=hkYZqUtVdMLZir0l"
-            title="YouTube video player"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allowfullscreen></iframe>
         </article>
       </section>
     </HeaderFlagContext.Provider>

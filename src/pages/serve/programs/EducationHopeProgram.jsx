@@ -21,7 +21,7 @@ export default function EducationHopeProgram() {
     <HeaderFlagContext.Provider value={true}>
       <Helmet></Helmet>
       <section className="w-full md:justify-items-left items-center grid gap-5 pt-25 p-5 lg:px-35">
-        <article className="grid gap-1 justify-self-start justify-start">
+        <article className="grid gap-3 justify-self-start justify-start">
           <Title>Education for Hope Program</Title>
           <Heading>Teaching our Community</Heading>
         </article>
@@ -34,21 +34,9 @@ export default function EducationHopeProgram() {
             low-income cosmetology students, facilitating advanced beauty
             education, and hiring for operations roles through Work-Study.
           </p>
-          <button className="my-5 border-5 justify-self-center rounded-2xl font-bold w-full md:w-1/3 shadow-sm hover:shadow-lg shadow-accent-500/70 hover:bg-neutral-50/95 border-accent-500 bg-neutral-50/90 duration-500 text-accent-500 opacity-85 hover:opacity-100 transition-[shadow_colors]">
-            <ExpressiveAnchor className="px-10 py-5 w-min" href="">
-              APPLY
-            </ExpressiveAnchor>
+          <button className="my-5 md:hidden rounded-2xl p-5 bg-accent-500 md:w-1/3 hover:bg-accent-600 duration-750 transition-colors font-semibold text-neutral-50">
+            <ExpressiveAnchor to="">APPLY</ExpressiveAnchor>
           </button>
-        </article>
-        <article className="grid gap-5">
-          <Heading>Holistic Practitioners</Heading>
-          <Carousel>
-            <CarouselCard src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344" />
-            <CarouselCard src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344" />
-            <CarouselCard src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344" />
-            <CarouselCard src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344" />
-            <CarouselCard src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344" />
-          </Carousel>
         </article>
         <article>
           <Title>Our Scholarship Programs</Title>
@@ -160,17 +148,17 @@ export default function EducationHopeProgram() {
         </article>
         <article className="grid gap-5">
           <Title>Tutoring Services</Title>
-          <div className="grid grid-flow-row md:grid-cols-2 gap-5 items-center">
-            <div className="grid gap-5 grid-flow-row order-2 md:order-1">
+          <div className="grid grid-flow-row md:grid-cols-[6fr_3fr] gap-5 items-center">
+            <div className="grid gap-5 grid-flow-row order-2 md:order-1 justify-start">
               <p>
                 The Source of Hope offers <strong>virtual tutoring</strong> for
                 middle school and high school students—empowering learners to
                 grow from anywhere.
               </p>
               <article className="bg-neutral-50 rounded-2xl shadow-sm p-5 text-sm md:text-md grid gap-2 w-full">
-                <h3 className="text-accent-700 font-semibold tracking-wide border-b-2 border-neutral-300 pb-2">
+                <Heading className="border-b-2 border-neutral-300 pb-2">
                   Tutoring Services
-                </h3>
+                </Heading>
                 <ul className="grid gap-2 pl-3 text-neutral-800 list-disc font-medium">
                   <li>Test prep for STAAR, SAT, and AP exams</li>
                   <li>Math subjects such as Algebra and Geometry</li>
@@ -193,38 +181,33 @@ export default function EducationHopeProgram() {
                 encourage you to apply! We’re always expanding our educational
                 offerings.
               </p>
-              <div className="flex flex-col gap-3">
-                <button className="w-full rounded-2xl py-3 px-5 bg-accent-500 hover:bg-accent-600 duration-750 transition-colors font-semibold text-neutral-50">
+              <div className="flex flex-col md:flex-row gap-3 w-full">
+                <button className="w-full rounded-2xl p-5 bg-accent-500 hover:bg-accent-600 duration-750 transition-colors font-semibold text-neutral-50">
                   <ExpressiveAnchor to="">GET TUTORING</ExpressiveAnchor>
                 </button>
-                <button className="w-full rounded-2xl py-3 px-5 bg-accent-500 hover:bg-accent-600 duration-750 transition-colors font-semibold text-neutral-50">
+                <button className="w-full rounded-2xl p-5 bg-accent-500 hover:bg-accent-600 duration-750 transition-colors font-semibold text-neutral-50">
                   <ExpressiveAnchor to="">JOIN OUR TUTORS</ExpressiveAnchor>
                 </button>
               </div>
             </div>
-            <div className="flex justify-center order-1 md:order-2">
-              <div className="relative w-full max-w-md">
-                <img
-                  className="rounded-2xl shadow-lg object-cover w-full aspect-square"
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
-                  alt="Virtual tutoring session illustration"
-                />
-                <div className="absolute bottom-0 bg-gradient-to-t from-black/60 to-transparent rounded-2xl h-[60%] w-full">
-                  <div className="absolute bottom-0 w-full p-5 text-neutral-50">
-                    <p className="text-sm uppercase font-semibold">
-                      Education For Hope
-                    </p>
-                    <p className="text-lg font-bold">
-                      Empowering minds everywhere
-                    </p>
-                  </div>
-                </div>
+            <div className="flex flex-col order-1 md:order-2 gap-5 justify-self-end">
+              <div className="relative w-full">
+                <Carousel
+                  className="rounded-2xl object-cover w-full aspect-square"
+                  controls={false}
+                  auto={true}>
+                  <CarouselCard src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344" />
+                  <CarouselCard src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344" />
+                  <CarouselCard src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344" />
+                  <CarouselCard src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344" />
+                  <CarouselCard src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344" />
+                </Carousel>
               </div>
             </div>
           </div>
         </article>
-        <article className="grid gap-5">
-          <Title>Mentors</Title>
+        <article className="grid gap-5 text-neutral-600">
+          <Title className="text-neutral-950">Mentors</Title>
           <p>
             The Source of Hope, offers mentorship opportunities through its TSOH
             ILA Tutoring Program. This initiative aims to empower students
@@ -254,15 +237,19 @@ function CarouselCard({ src, alt }) {
     relative h-full
     shrink-0
     flex-[0_0_calc(100%)] 
-    md:flex-[0_0_calc(50%-0.625rem)] 
-    lg:flex-[0_0_calc(33.333%-0.833rem)]
-    group overflow-hidden rounded-xl text-accent-background aspect-square
+    group overflow-hidden rounded-xl text-accent-background aspect-square shadow-lg
   ">
       <img
         src={src}
         alt={alt}
         className="w-full h-full object-cover transition-transform brightness-[.8] contrast-[1.1]"
       />
+      <div className="absolute bottom-0 bg-gradient-to-t from-black/60 to-transparent rounded-2xl h-[60%] w-full text-left">
+        <div className="absolute bottom-0 w-full p-5 text-neutral-50">
+          <p className="text-sm uppercase font-semibold">Education For Hope</p>
+          <p className="text-lg font-bold">Empowering minds everywhere</p>
+        </div>
+      </div>
     </button>
   );
 }
