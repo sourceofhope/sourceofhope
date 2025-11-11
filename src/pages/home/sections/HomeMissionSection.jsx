@@ -21,7 +21,7 @@ export default function HomeMissionSection() {
         <Title className="hidden text-xlg md:block lg:text-xxlg pl-5 w-fit font-urbanist">
           Our Mission
         </Title>
-        <Blockquote className="text-md md:text-lg border-accent-600 text-justify">
+        <Blockquote className="text-md md:text-lg border-accent-600 md:text-justify">
           "Bringing hope and healing by providing <Emphasis>meals</Emphasis>,{" "}
           <Emphasis>education</Emphasis>, <Emphasis>wellness</Emphasis>, and{" "}
           <Emphasis>resources</Emphasis> that uplift and empower communities in

@@ -51,7 +51,7 @@ function CarouselImage({ src, alt, date }) {
         src={src}
         alt={alt}
       />
-      <p className="absolute top-2 left-2 z-20 bg-accent-600 rounded-2xl px-2 text-sm text-neutral-50 w-fit">
+      <p className="absolute top-2 left-2 z-20 bg-accent-600 rounded-full px-3 py-1 text-sm text-neutral-50 w-fit">
         {date.toLocaleString("default", { month: "short" })} {date.getDay()},{" "}
         {date.getFullYear()}
       </p>

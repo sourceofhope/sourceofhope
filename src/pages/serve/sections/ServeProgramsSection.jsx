@@ -57,10 +57,10 @@ export default function ServeProgramsSection() {
             caption="Every meal served. Every smile shared. Together."
             side={left}
             tagline="Volunteer at Our Next Event">
-            <div className="flex gap-2 items-center text-neutral-600">
+            <div className="flex gap-2 items-center text-neutral-600 rounded-full border-2 border-neutral-500 bg-neutral-300 w-fit px-3 py-1">
               <MapPinIcon className="w-[16px] h-[16px]" />
-              <p className="text-balance text-sm md:text-md max-w-fit">
-                2627 South Ervay Street Dallas, TX 75215
+              <p className="text-sm md:text-md max-w-fit">
+                2627 South Ervay St Dallas, TX
               </p>
             </div>
             <p className="text-balance text-sm md:text-md">
@@ -73,7 +73,7 @@ export default function ServeProgramsSection() {
             </p>
             <button className="w-fit font-semibold">
               <ExpressiveLink
-                className="text-sm text-accent-500"
+                className="text-sm md:text-md text-accent-500"
                 to={CANONICAL.servingHope}>
                 Volunteer at Our Next Event
               </ExpressiveLink>
@@ -93,7 +93,7 @@ export default function ServeProgramsSection() {
             </p>
             <button className="w-fit font-semibold">
               <ExpressiveLink
-                className="text-sm text-accent-500"
+                className="text-sm md:text-md text-accent-500"
                 to={CANONICAL.educationHope}>
                 Become a Tutor
               </ExpressiveLink>
@@ -113,7 +113,9 @@ export default function ServeProgramsSection() {
               follows—because wellness is hope in action.
             </p>
             <button className="w-fit font-semibold">
-              <ExpressiveLink className="text-sm text-accent-500" to="">
+              <ExpressiveLink
+                className="text-sm md:text-md text-accent-500"
+                to="">
                 Support Community Wellness
               </ExpressiveLink>
             </button>
@@ -123,10 +125,10 @@ export default function ServeProgramsSection() {
             title="SHARING HOPE"
             caption="Extending love beyond borders."
             side={right}>
-            <div className="flex gap-2 items-center text-neutral-600">
+            <div className="flex gap-2 items-center text-neutral-600 rounded-full border-2 border-neutral-500 bg-neutral-300 w-fit px-3 py-1">
               <MapPinIcon className="w-[16px] h-[16px]" />
-              <p className="text-balance text-sm md:text-md max-w-fit">
-                2627 South Ervay Street Dallas, TX 75215
+              <p className="text-sm md:text-md max-w-fit">
+                2627 South Ervay St Dallas, TX
               </p>
             </div>
             <p className="text-balance text-sm md:text-md">
@@ -137,7 +139,9 @@ export default function ServeProgramsSection() {
               every donated meal reaches the hands of those who need it most.
             </p>
             <button className="w-fit font-semibold">
-              <ExpressiveLink className="text-sm text-accent-500" to="">
+              <ExpressiveLink
+                className="text-sm md:text-md text-accent-500"
+                to="">
                 Partner with Us
               </ExpressiveLink>
             </button>
@@ -156,7 +160,9 @@ export default function ServeProgramsSection() {
               through annual community camping trips and hands-on training.
             </p>
             <button className="w-fit font-semibold">
-              <ExpressiveLink className="text-sm text-accent-500" to="">
+              <ExpressiveLink
+                className="text-sm md:text-md text-accent-500"
+                to="">
                 Join the Next Outdoor Experience
               </ExpressiveLink>
             </button>
@@ -175,7 +181,9 @@ export default function ServeProgramsSection() {
               and hardship—proving that kindness knows no borders.
             </p>
             <button className="w-fit font-semibold">
-              <ExpressiveLink className="text-sm text-accent-500" to="">
+              <ExpressiveLink
+                className="text-sm md:text-md text-accent-500"
+                to="">
                 Learn About Global Outreach
               </ExpressiveLink>
             </button>

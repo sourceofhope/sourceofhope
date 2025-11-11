@@ -157,7 +157,9 @@ function FooterCard() {
       <button className="border-5 rounded-2xl font-bold w-fit shadow-sm hover:shadow-lg shadow-accent-500/70 bg-accent-500 border-accent-500 text-neutral-50/75 duration-500 hover:text-neutral-50/95 opacity-85 hover:opacity-100 transition-[shadow_colors]">
         <ExpressiveLink className="px-10 py-5">SUBSCRIBE</ExpressiveLink>
       </button>
-      <p className="text-sm text-neutral-600">No spam, unsubscribe anytime.</p>
+      <p className="text-sm text-neutral-600 italic">
+        No spam, unsubscribe anytime.
+      </p>
     </article>
   );
 }
