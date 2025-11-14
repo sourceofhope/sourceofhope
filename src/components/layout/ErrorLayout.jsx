@@ -14,8 +14,8 @@ export default function ErrorLayout({ code = 500, message }) {
 
   return (
     <>
-      <Header isBlocking={true}/>
-      <main className="w-screen min-h-screen flex flex-col justify-center items-start gap-5 px-5 lg:px-35">
+      <Header isBlocking={true} />
+      <main className="w-full min-h-screen flex flex-col justify-center items-start gap-5 px-5 lg:px-35">
         <Favicon className="w-[60px] h-[60px]" />
         <h2 className="text-lg font-semibold">
           Error {code}: <span className="font-mono font-normal">{message}</span>
@@ -25,8 +25,7 @@ export default function ErrorLayout({ code = 500, message }) {
           If you are unable to resolve this error, please contact{" "}
           <a
             className="font-semibold text-accent-500"
-            href={`mailto:it@thesourceofhope.org?subject=Website Error Code ${code}: ${message}`}
-          >
+            href={`mailto:it@thesourceofhope.org?subject=Website Error Code ${code}: ${message}`}>
             it@thesourceofhope.org
           </a>{" "}
           for further assistance.
