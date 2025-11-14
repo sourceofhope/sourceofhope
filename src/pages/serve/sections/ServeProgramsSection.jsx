@@ -104,6 +104,12 @@ export default function ServeProgramsSection() {
             title="WELLNESS OF HOPE"
             caption="Healing body and spirit."
             side={left}>
+            <div className="flex gap-2 items-center text-neutral-600 rounded-full border-2 border-neutral-500 bg-neutral-300 w-fit px-3 py-1">
+              <MapPinIcon className="w-[16px] h-[16px]" />
+              <p className="text-sm md:text-md max-w-fit">
+                1108 W Parker Rd Plano, TX
+              </p>
+            </div>
             <p className="text-balance text-sm md:text-md">
               In partnership with Stone International Wellness Center, the
               Wellness of Hope program offers free or reduced holistic
@@ -115,7 +121,7 @@ export default function ServeProgramsSection() {
             <button className="w-fit font-semibold">
               <ExpressiveLink
                 className="text-sm md:text-md text-accent-500"
-                to="">
+                to={CANONICAL.wellnessHope}>
                 Support Community Wellness
               </ExpressiveLink>
             </button>

@@ -6,8 +6,9 @@ export const ROUTE_ALIASES = {
   about: ["/about", "/aboutus"],
 
   serve: ["/serve", "/serving"],
-  servingHope: ["/serve/servingHope", "/serve/sharingHope", "/serve/hope"],
+  servingHope: ["/serve/servingHope", "/serve/sharingHope"],
   educationHope: ["/serve/educationHope", "/serve/education"],
+  wellnessHope: ["/serve/wellnessHope", "/serve/wellness"],
 
   member: ["/members", "/membership", "signup"],
 };
@@ -27,6 +28,7 @@ export const CANONICAL = {
   serve: `${BASE}/serve`,
   servingHope: `${BASE}/serve/servingHope`,
   educationHope: `${BASE}/serve/educationHope`,
+  wellnessHope: `${BASE}/serve/wellnessHope`,
 
   member: `${BASE}/member`,
 };
@@ -41,6 +43,7 @@ export const CANONICAL_URL = {
   serve: `${BASE_URL}/serve`,
   servingHope: `${BASE_URL}/serve/servingHope`,
   educationHope: `${BASE_URL}/serve/educationHope`,
+  wellnessHope: `${BASE_URL}/serve/wellnessHope`,
 
   member: `${BASE}/member`,
 };

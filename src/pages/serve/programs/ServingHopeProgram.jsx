@@ -18,12 +18,12 @@ export default function ServingHopeProgram() {
   return (
     <HeaderFlagContext.Provider value={true}>
       <Helmet></Helmet>
-      <section className="w-full md:justify-items-left items-center grid gap-5 pt-25 p-5 lg:px-35">
+      <section className="w-full md:justify-items-left items-center grid gap-5 pt-25 p-5 lg:px-35 text-sm md:text-md lg:text-lg">
         <div className="grid gap-3 justify-self-start justify-start">
           <Title>Serving/Sharing Hope Program</Title>
           <Heading>Monthly Feeding with Dignity</Heading>
         </div>
-        <article className="grid gap-5 text-sm md:text-md">
+        <article className="grid gap-5 text-neutral-600">
           <p>
             <strong className="font-semibold">Serving Hope</strong> and{" "}
             <strong className="font-semibold">Sharing Hope</strong> are two
@@ -37,7 +37,7 @@ export default function ServingHopeProgram() {
             <ExpressiveAnchor to="">APPLY</ExpressiveAnchor>
           </button>
         </article>
-        <article className="grid gap-5 text-sm md:text-md">
+        <article className="grid gap-5">
           <Heading>Serving Hope Program</Heading>
           <p>
             Serving Hope is a volunteer-driven initiative dedicated to serving
@@ -47,7 +47,7 @@ export default function ServingHopeProgram() {
             meals that nourish both the body and spirit.
           </p>
         </article>
-        <article className="bg-neutral-50 rounded-2xl shadow-sm p-5 text-sm md:text-md grid gap-2">
+        <article className="bg-neutral-50 rounded-2xl shadow-sm p-5 grid gap-2">
           <Heading className=" border-b-2 border-neutral-300 pb-2">
             Volunteer Feeding Times
           </Heading>
@@ -62,7 +62,7 @@ export default function ServingHopeProgram() {
             </div>
           </div>
         </article>
-        <article className="bg-neutral-50 rounded-2xl shadow-sm p-5 text-sm md:text-md grid gap-2">
+        <article className="bg-neutral-50 rounded-2xl shadow-sm p-5 grid gap-2">
           <Heading className="bold tracking-wide border-b-2 border-neutral-300 pb-2">
             Why Volunteer With Us?
           </Heading>
@@ -75,7 +75,7 @@ export default function ServingHopeProgram() {
             </li>
           </ul>
         </article>
-        <article className="grid gap-5 text-sm md:text-md text-neutral-600">
+        <article className="grid gap-5 text-neutral-600">
           <p>
             Every fourth weekend of the month, we gather in locations across
             South Dallas and Collin County to offer food, clothing, haircuts,
@@ -93,7 +93,7 @@ export default function ServingHopeProgram() {
 
         <article className="grid gap-5">
           <Heading>See our Community Impact</Heading>
-          <div className="grid gap-5 md:gap-5 items-center grid-flow-row md:grid-cols-[6fr_5fr] text-sm md:text-md">
+          <div className="grid gap-5 md:gap-5 items-center grid-flow-row md:grid-cols-[6fr_5fr]">
             <div className="grid gap-5">
               <p>
                 This recap from our January 2025 Serving Hope for Hunger event
@@ -109,7 +109,7 @@ export default function ServingHopeProgram() {
                 building a community filled with kindness, connection, and
                 purpose.
               </p>
-              <div className="flex-col gap-3 hidden md:flex">
+              <div className="flex-col gap-3 flex md:hidden">
                 <button className="w-full rounded-2xl p-5 bg-accent-500 hover:bg-accent-600 duration-750 transition-colors font-semibold text-neutral-50">
                   <ExpressiveAnchor to="">SIGN UP</ExpressiveAnchor>
                 </button>
@@ -124,7 +124,7 @@ export default function ServingHopeProgram() {
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 referrerpolicy="strict-origin-when-cross-origin"
                 allowfullscreen></iframe>
-              <div className="flex-col gap-3 flex md:hidden">
+              <div className="flex-col gap-3 hidden md:flex">
                 <button className="w-full rounded-2xl p-5 bg-accent-500 hover:bg-accent-600 duration-750 transition-colors font-semibold text-neutral-50">
                   <ExpressiveAnchor to="">SIGN UP</ExpressiveAnchor>
                 </button>

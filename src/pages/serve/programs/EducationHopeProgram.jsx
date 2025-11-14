@@ -20,12 +20,12 @@ export default function EducationHopeProgram() {
   return (
     <HeaderFlagContext.Provider value={true}>
       <Helmet></Helmet>
-      <section className="w-full md:justify-items-left items-center grid gap-5 pt-25 p-5 lg:px-35">
+      <section className="w-full md:justify-items-left items-center grid gap-5 pt-25 p-5 lg:px-35 text-sm md:text-md lg:text-lg">
         <article className="grid gap-3 justify-self-start justify-start">
           <Title>Education for Hope Program</Title>
           <Heading>Teaching our Community</Heading>
         </article>
-        <article className="grid gap-3 text-sm md:text-md text-neutral-600">
+        <article className="grid gap-3 text-neutral-600">
           <p>
             The Education For Hope program offers tutoring services, supports
             cosmetology students, and provides opportunities through the Federal
@@ -155,7 +155,7 @@ export default function EducationHopeProgram() {
                 middle school and high school students—empowering learners to
                 grow from anywhere.
               </p>
-              <article className="bg-neutral-50 rounded-2xl shadow-sm p-5 text-sm md:text-md grid gap-2 w-full">
+              <article className="bg-neutral-50 rounded-2xl shadow-sm p-5 grid gap-2 w-full">
                 <Heading className="border-b-2 border-neutral-300 pb-2">
                   Tutoring Services
                 </Heading>

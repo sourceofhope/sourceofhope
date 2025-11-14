@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
+import Heading from "../text/Heading";
 
 export default function ExpressiveCard({ title, children, className = "" }) {
   const [open, setOpen] = useState(false);
@@ -11,7 +12,7 @@ export default function ExpressiveCard({ title, children, className = "" }) {
         open ? "bg-neutral-200" : "bg-neutral-50"
       } hover:bg-neutral-200 flex flex-col rounded-2xl shadow-2x overflow-hidden h-fit p-5 text-neutral-950 transition-colors duration-750`}>
       <div className="flex justify-between items-center text-primary-700">
-        <h2 className="text-sm font-bold uppercase select-none">{title}</h2>
+        <Heading>{title}</Heading>
         <ChevronDownIcon
           className={`w-[20px] h-[20px] transition-transform duration-750 ${
             open ? "rotate-0" : "-rotate-90"
