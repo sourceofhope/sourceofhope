@@ -19,7 +19,44 @@ export default function EducationHopeProgram() {
   }, [setIsBlocking]);
   return (
     <HeaderFlagContext.Provider value={true}>
-      <Helmet></Helmet>
+      <Helmet>
+        <title>Education for Hope Program | The Source of Hope</title>
+        <meta
+          name="description"
+          content="Explore The Source of Hope’s Education for Hope Program, providing virtual tutoring, reading and writing mentorship, and academic support through the TSOH ILA Tutoring Program. Empowering students to excel in literacy, test preparation, and long-term academic success."
+        />
+        <link rel="canonical" href={CANONICAL_URL.educationHope} />
+
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={CANONICAL_URL.educationHope} />
+        <meta
+          property="og:title"
+          content="Education for Hope Program | The Source of Hope"
+        />
+        <meta
+          property="og:description"
+          content="Join the Education for Hope Program to receive free virtual tutoring and academic mentorship. Students gain support in reading, writing, standardized test prep, and literacy development through the TSOH ILA Tutoring Program."
+        />
+        <meta
+          property="og:image"
+          content="https://sourceofhope.org/assets/social-share-education-for-hope.jpg"
+        />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content={CANONICAL_URL.educationHope} />
+        <meta
+          name="twitter:title"
+          content="Education for Hope Program | The Source of Hope"
+        />
+        <meta
+          name="twitter:description"
+          content="Access free academic support through The Source of Hope’s Education for Hope Program—offering virtual tutoring, reading and writing mentorship, and test preparation to help students thrive."
+        />
+        <meta
+          name="twitter:image"
+          content="https://sourceofhope.org/assets/social-share-education-for-hope.jpg"
+        />
+      </Helmet>
       <section className="w-full md:justify-items-left items-center grid gap-5 pt-25 p-5 lg:px-35 text-sm md:text-md lg:text-lg">
         <article className="grid gap-3 justify-self-start justify-start">
           <Title>Education for Hope Program</Title>

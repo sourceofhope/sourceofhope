@@ -17,7 +17,44 @@ export default function WellnessHopeProgram() {
   }, [setIsBlocking]);
   return (
     <HeaderFlagContext.Provider value={true}>
-      <Helmet></Helmet>
+      <Helmet>
+        <title>Wellness of Hope Program | The Source of Hope</title>
+        <meta
+          name="description"
+          content="Discover The Source of Hope’s Wellness of Hope Program, providing free or reduced-cost holistic treatments—fire cupping, lymphatic drainage, detox therapies, and more—to low-income individuals, seniors, teachers, first responders, and families across Dallas–Fort Worth."
+        />
+        <link rel="canonical" href={CANONICAL_URL.wellnessHope} />
+
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={CANONICAL_URL.wellnessHope} />
+        <meta
+          property="og:title"
+          content="Wellness of Hope Program | The Source of Hope"
+        />
+        <meta
+          property="og:description"
+          content="Experience compassionate holistic care through the Wellness of Hope Program. We provide reduced-cost wellness treatments—including fire cupping, lymphatic drainage, ear candling, and detox therapies—to seniors, teachers, first responders, and families in need."
+        />
+        <meta
+          property="og:image"
+          content="https://sourceofhope.org/assets/social-share-wellness-of-hope.jpg"
+        />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content={CANONICAL_URL.wellnessHope} />
+        <meta
+          name="twitter:title"
+          content="Wellness of Hope Program | The Source of Hope"
+        />
+        <meta
+          name="twitter:description"
+          content="Join the Wellness of Hope Program, offering holistic wellness treatments and assessments at reduced cost for low-income individuals, seniors, educators, first responders, and families throughout Dallas–Fort Worth."
+        />
+        <meta
+          name="twitter:image"
+          content="https://sourceofhope.org/assets/social-share-wellness-of-hope.jpg"
+        />
+      </Helmet>
       <section className="w-full md:justify-items-left items-center grid gap-5 pt-25 p-5 lg:px-35 text-sm md:text-md lg:text-lg">
         <div className="grid gap-3 justify-self-start justify-start">
           <Title>Wellness of Hope </Title>
