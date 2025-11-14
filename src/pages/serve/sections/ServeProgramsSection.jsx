@@ -34,7 +34,7 @@ export default function ServeProgramsSection() {
   return (
     <>
       <section className="relative w-full pt-5 grid gap-5 bg-neutral-200">
-        <div className="grid gap-1 justify-self-start justify-start md:px-35 px-5">
+        <div className="grid gap-1 justify-self-start justify-start lg:px-35 px-5">
           <Title className="text-xlg md:text-xxlg text-balance font-urbanist">
             Make an Impact Today
           </Title>
@@ -44,7 +44,7 @@ export default function ServeProgramsSection() {
         </div>
         <article
           ref={ref}
-          className="[--base-padding:0px] md:[--base-padding:80px]"
+          className="[--base-padding:0px] lg:[--base-padding:80px]"
           style={{
             paddingLeft: `calc(${scale} * var(--base-padding))`,
             paddingRight: `calc(${scale} * var(--base-padding))`,
@@ -252,7 +252,7 @@ function ServingCard({ title, caption, children }) {
 function ServingLayer({ title, caption, children, side = false }) {
   return (
     <div
-      className={`lg:absolute lg:left-1/2 lg:-translate-x-1/2 inset-y-0 w-screen grid items-center justify-items-center p-5 lg:px-25 z-10 ${
+      className={`lg:absolute lg:left-1/2 lg:-translate-x-1/2 inset-y-0 lg:w-screen w-full grid items-center justify-items-center p-5 lg:px-25 z-10 ${
         side ? "lg:justify-items-start" : "justify-items-end"
       }`}>
       <ServingCard title={title} caption={caption}>

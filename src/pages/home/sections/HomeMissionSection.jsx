@@ -12,7 +12,7 @@ export default function HomeMissionSection() {
           Our Mission
         </Title>
         <img
-          className="inset-0 w-full object-cover max-w-[400px] aspect-square rounded-2xl hover:shadow-2xl duration-500 transition-all text-center"
+          className="inset-0 w-full object-cover max-w-[400px] aspect-square rounded-2xl text-center"
           src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
           alt="The Source of Hope Founder, Quynh Chau Stone"
         />
