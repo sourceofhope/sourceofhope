@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import ExpressiveAnchor from "../../../components/ui/expressive/ExpressiveAnchor";
 import Heading from "../../../components/ui/text/Heading";
 import Title from "../../../components/ui/text/Title";
+import { CANONICAL_URL } from "../../../routes";
 
 export default function ServingHopeProgram() {
   const { setIsBlocking } = useHeaderFlag();
@@ -75,7 +76,7 @@ export default function ServingHopeProgram() {
           </button>
         </article>
         <article className="grid gap-5">
-          <Heading>Serving Hope Program</Heading>
+          <Title>What Is The Program?</Title>
           <p>
             Serving Hope is a volunteer-driven initiative dedicated to serving
             organic, home-cooked meals to those in need—homeless individuals,
@@ -129,9 +130,9 @@ export default function ServingHopeProgram() {
         </article>
 
         <article className="grid gap-5">
-          <Heading>See our Community Impact</Heading>
+          <Title>See our Community Impact</Title>
           <div className="grid gap-5 md:gap-5 items-center grid-flow-row md:grid-cols-[6fr_5fr]">
-            <div className="grid gap-5">
+            <div className="grid gap-5 row-start-2 md:row-start-1">
               <p>
                 This recap from our January 2025 Serving Hope for Hunger event
                 captures the heart of what we do—bringing people together
@@ -152,7 +153,7 @@ export default function ServingHopeProgram() {
                 </button>
               </div>
             </div>
-            <div className="w-full flex flex-col gap-5">
+            <div className="w-full flex flex-col gap-5 row-start-1 md:row-start-2">
               <iframe
                 className="rounded-2xl justify-self-center aspect-video w-full"
                 src="https://www.youtube.com/embed/Joax8zGMSkM?si=hkYZqUtVdMLZir0l"

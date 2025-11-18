@@ -24,6 +24,9 @@ const EducationHopeProgram = lazy(() =>
 const WellnessHopeProgram = lazy(() =>
   import("./pages/serve/programs/WellnessHopeProgram.jsx")
 );
+const OutdoorHopeProgram = lazy(() =>
+  import("./pages/serve/programs/OutdoorHopeProgram.jsx")
+);
 
 const FormPage = lazy(() => import("./pages/form/FormPage.jsx"));
 
@@ -38,6 +41,7 @@ const PageMap = {
   servingHope: <SharingHopeProgram />,
   educationHope: <EducationHopeProgram />,
   wellnessHope: <WellnessHopeProgram />,
+  outdoorHope: <OutdoorHopeProgram />,
 
   member: <FormPage />,
 };

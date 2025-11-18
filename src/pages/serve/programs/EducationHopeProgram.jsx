@@ -9,6 +9,7 @@ import Carousel from "../../../components/ui/Carousel";
 import Title from "../../../components/ui/text/Title";
 import Heading from "../../../components/ui/text/Heading";
 import ExpressiveCard from "../../../components/ui/expressive/ExpressiveCard";
+import { CANONICAL_URL } from "../../../routes";
 
 export default function EducationHopeProgram() {
   const { setIsBlocking } = useHeaderFlag();
@@ -186,7 +187,7 @@ export default function EducationHopeProgram() {
         <article className="grid gap-5">
           <Title>Tutoring Services</Title>
           <div className="grid grid-flow-row md:grid-cols-[6fr_3fr] gap-5 items-center">
-            <div className="grid gap-5 grid-flow-row order-2 md:order-1 justify-start">
+            <div className="grid gap-5 grid-flow-row row-start-2 md:row-start-1 justify-start">
               <p>
                 The Source of Hope offers <strong>virtual tutoring</strong> for
                 middle school and high school students—empowering learners to
@@ -227,7 +228,7 @@ export default function EducationHopeProgram() {
                 </button>
               </div>
             </div>
-            <div className="flex flex-col order-1 md:order-2 gap-5 justify-self-end">
+            <div className="flex flex-col row-start-1 md:row-start-2 gap-5 justify-self-end">
               <div className="relative w-full">
                 <Carousel
                   className="rounded-2xl object-cover w-full aspect-square"

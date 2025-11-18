@@ -147,7 +147,7 @@ export default function ServeProgramsSection() {
             <button className="w-fit font-semibold">
               <ExpressiveLink
                 className="text-sm md:text-md text-accent-500"
-                to="">
+                to={CANONICAL.servingHope}>
                 Partner with Us
               </ExpressiveLink>
             </button>
@@ -168,7 +168,7 @@ export default function ServeProgramsSection() {
             <button className="w-fit font-semibold">
               <ExpressiveLink
                 className="text-sm md:text-md text-accent-500"
-                to="">
+                to={CANONICAL.outdoorHope}>
                 Join the Next Outdoor Experience
               </ExpressiveLink>
             </button>

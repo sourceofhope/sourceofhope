@@ -117,27 +117,25 @@ export default function WellnessHopeProgram() {
               </button>
             </div>
 
-            <div className="flex flex-col gap-5">
-              <div
-                className="
+            <div
+              className="
           relative h-full w-full group overflow-hidden 
           rounded-xl text-accent-background aspect-square shadow-lg
         ">
-                <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
-                  alt="Holistic wellness care"
-                  className="w-full h-full object-cover brightness-[.85] contrast-[1.1]"
-                />
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
+                alt="Holistic wellness care"
+                className="w-full h-full object-cover brightness-[.85] contrast-[1.1]"
+              />
 
-                <div className="absolute bottom-0 h-[60%] w-full bg-gradient-to-t from-black/60 to-transparent rounded-xl">
-                  <div className="absolute bottom-0 w-full p-5 text-neutral-50">
-                    <p className="text-sm uppercase font-semibold">
-                      Holistic Wellness
-                    </p>
-                    <p className="text-lg font-bold">
-                      Caring for the whole community
-                    </p>
-                  </div>
+              <div className="absolute bottom-0 h-[60%] w-full bg-gradient-to-t from-black/60 to-transparent rounded-xl">
+                <div className="absolute bottom-0 w-full p-5 text-neutral-50">
+                  <p className="text-sm uppercase font-semibold">
+                    Holistic Wellness
+                  </p>
+                  <p className="text-lg font-bold">
+                    Caring for the whole community
+                  </p>
                 </div>
               </div>
             </div>
