@@ -11,6 +11,7 @@ export const ROUTE_ALIASES = {
   educationHope: ["/serve/educationHope", "/serve/education"],
   wellnessHope: ["/serve/wellnessHope", "/serve/wellness"],
   outdoorHope: ["/serve/outdoorHope", "/serve/outdoor"],
+  internationalHope: ["/serve/internationalHope", "/serve/internationalHope"],
 
   member: ["/members", "/membership", "signup"],
 };
@@ -33,6 +34,7 @@ export const CANONICAL = {
   educationHope: `${BASE}/serve/educationHope`,
   wellnessHope: `${BASE}/serve/wellnessHope`,
   outdoorHope: `${BASE}/serve/outdoorHope`,
+  internationalHope: `${BASE}/serve/internationalHope`,
 
   member: `${BASE}/member`,
 };
@@ -49,6 +51,7 @@ export const CANONICAL_URL = {
   educationHope: `${BASE_URL}/serve/educationHope`,
   wellnessHope: `${BASE_URL}/serve/wellnessHope`,
   outdoorHope: `${BASE_URL}/serve/outdoorHope`,
+  internationalHope: `${BASE_URL}/serve/internationalHope`,
 
   member: `${BASE}/member`,
 };

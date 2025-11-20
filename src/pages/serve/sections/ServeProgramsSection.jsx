@@ -189,7 +189,7 @@ export default function ServeProgramsSection() {
             <button className="w-fit font-semibold">
               <ExpressiveLink
                 className="text-sm md:text-md text-accent-500"
-                to="">
+                to={CANONICAL.internationalHope}>
                 Learn About Global Outreach
               </ExpressiveLink>
             </button>

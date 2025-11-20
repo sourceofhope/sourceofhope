@@ -138,9 +138,7 @@ export default function EducationHopeProgram() {
                 Contact us for more information.
               </p>
             </ExpressiveCard>
-            <ExpressiveCard
-              className="grid gap-3"
-              title="TSOH STUDENTS SHADOWING">
+            <ExpressiveCard className="grid gap-3" title="STUDENT SHADOWING">
               <p>
                 The Source of Hope and South Garland High School partnered to
                 send a group of students to the Stone International Wellness

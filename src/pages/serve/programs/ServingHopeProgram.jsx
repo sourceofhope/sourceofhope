@@ -104,7 +104,7 @@ export default function ServingHopeProgram() {
           <Heading className="bold tracking-wide border-b-2 border-neutral-300 pb-2">
             Why Volunteer With Us?
           </Heading>
-          <ul className="grid gap-2 pl-3 text-neutral-800 list-disc font-medium">
+          <ul className="grid gap-2 list-inside text-neutral-800 list-disc font-medium">
             <li>Make a real difference in your community</li>
             <li>Support hunger relief through Serving Hope and Sharing Hope</li>
             <li>Gain valuable experience while giving back</li>
@@ -132,7 +132,7 @@ export default function ServingHopeProgram() {
         <article className="grid gap-5">
           <Title>See our Community Impact</Title>
           <div className="grid gap-5 md:gap-5 items-center grid-flow-row md:grid-cols-[6fr_5fr]">
-            <div className="grid gap-5 row-start-2 md:row-start-1">
+            <div className="grid gap-5 row-start-2 md:row-start-auto">
               <p>
                 This recap from our January 2025 Serving Hope for Hunger event
                 captures the heart of what we do—bringing people together
@@ -153,7 +153,7 @@ export default function ServingHopeProgram() {
                 </button>
               </div>
             </div>
-            <div className="w-full flex flex-col gap-5 row-start-1 md:row-start-2">
+            <div className="w-full flex flex-col gap-5 row-start-1 md:row-start-auto">
               <iframe
                 className="rounded-2xl justify-self-center aspect-video w-full"
                 src="https://www.youtube.com/embed/Joax8zGMSkM?si=hkYZqUtVdMLZir0l"

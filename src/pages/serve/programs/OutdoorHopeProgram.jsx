@@ -110,7 +110,7 @@ export default function EducationHopeProgram() {
         <article className="grid gap-5">
           <Title>Program Benefits</Title>
           <div className="grid grid-flow-row md:grid-cols-[6fr_3fr] gap-5 items-center">
-            <div className="flex flex-col gap-5 row-start-2 md:row-start-1">
+            <div className="flex flex-col gap-5 col-start-auto md:col-start-1">
               <p>
                 Wesley will guide the community through proper hunting
                 practices, including bow and arrow education, hunting calendars,
@@ -135,7 +135,7 @@ export default function EducationHopeProgram() {
               className="
           relative h-full w-full group overflow-hidden 
           rounded-xl text-accent-background aspect-square shadow-lg
-          row-start-1 md:row-start-2
+          col-start-auto md:col-start-2
         ">
               <Carousel
                 className="rounded-2xl object-cover w-full aspect-square"

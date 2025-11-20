@@ -4,6 +4,7 @@ import ParallaxSection from "../ui/parallax/ParallaxSection";
 import ParallaxLayer from "../ui/parallax/ParallaxLayer";
 import Favicon from "../ui/Favicon";
 import { useLocation } from "react-router-dom";
+import { CANONICAL } from "../../routes";
 
 export default function Footer() {
   const location = useLocation();
@@ -58,13 +59,17 @@ export default function Footer() {
             <FooterColumn title="QUICK LINKS">
               <ul className="grid gap-1">
                 <li>
-                  <ExpressiveLink to="">Get Involved</ExpressiveLink>
+                  <ExpressiveLink to={CANONICAL.member}>
+                    Get Involved
+                  </ExpressiveLink>
                 </li>
                 <li>
                   <ExpressiveLink to="">Donate</ExpressiveLink>
                 </li>
                 <li>
-                  <ExpressiveLink to="">Volunteer</ExpressiveLink>
+                  <ExpressiveLink to={CANONICAL.serve}>
+                    Volunteer
+                  </ExpressiveLink>
                 </li>
                 <li>
                   <ExpressiveLink to="">Careers</ExpressiveLink>
