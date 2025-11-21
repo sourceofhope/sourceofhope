@@ -27,7 +27,9 @@ export default function Header({ isBlocking }) {
         ${
           open
             ? `h-85 md:h-25 md:backdrop-blur-none backdrop-blur-sm ${
-                isHomePage || isBlocking ? "border-primary-800/100" : "border-neutral-50"
+                isHomePage || isBlocking
+                  ? "border-primary-800/100"
+                  : "border-neutral-50"
               }`
             : "h-25 backdrop-blur-none border-none"
         }
@@ -35,7 +37,9 @@ export default function Header({ isBlocking }) {
           scrolled
             ? `bg-primary-800 text-neutral-50 border-transparent`
             : `bg-transparent ${
-                isHomePage || isBlocking ? "text-primary-800" : "text-neutral-50"
+                isHomePage || isBlocking
+                  ? "text-primary-800"
+                  : "text-neutral-50"
               }`
         }`}>
       <section className="flex w-full h-25 items-center justify-between px-5 lg:px-35">
@@ -78,7 +82,7 @@ function HeaderNavigator() {
   const links = [
     { label: "ABOUT", to: CANONICAL.about },
     { label: "SERVE", to: CANONICAL.serve },
-    { label: "CONNECT", to: "" },
+    { label: "CONNECT", to: CANONICAL.connect },
     { label: "MEDIA", to: "" },
     { label: "RESOURCES", to: "" },
   ];

@@ -1,6 +1,7 @@
 import Title from "../../../components/ui/text/Title";
 import PageSection from "../../PageSection";
 import Heading from "../../../components/ui/text/Heading";
+import ExpressiveAnchor from "../../../components/ui/expressive/ExpressiveAnchor";
 
 export default function ConnectMapSection() {
   return (
@@ -57,6 +58,23 @@ export default function ConnectMapSection() {
                 assisting with their career development and growth.
               </span>
             </div>
+          </article>
+          <article className="grid gap-5 md:grid-cols-[6fr_3fr] py-5 items-center">
+            <div className="flex flex-col gap-5">
+              <p>
+                Paid positions are available for students attending our
+                partnered universities. Eligible students may be compensated
+                based on project needs and available scholarship funding.
+              </p>
+              <p>
+                Join The Source of Hope and grow with purpose. Whether you’re
+                guiding others or learning new skills, your time with us creates
+                real change in the community.
+              </p>
+            </div>
+            <button className="w-full h-fit rounded-2xl p-5 bg-accent-500 hover:bg-accent-600 duration-750 transition-colors font-semibold text-neutral-50">
+              <ExpressiveAnchor to="">APPLY</ExpressiveAnchor>
+            </button>
           </article>
         </article>
       </article>

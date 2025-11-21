@@ -1,3 +1,5 @@
+import ExpressiveAnchor from "../../../components/ui/expressive/ExpressiveAnchor";
+import Heading from "../../../components/ui/text/Heading";
 import Title from "../../../components/ui/text/Title";
 import PageSection from "../../PageSection";
 
@@ -24,6 +26,54 @@ export default function ConnectMapSection() {
           homelessness.
         </p>
       </article>
+      <article className="w-full grid gap-5">
+        <Title>Events</Title>
+        <MajorEventCard
+          title="Hope Run for Hunger"
+          src="/images/hope-run.jpg"
+          alt="Hope Run for Hunger event photo">
+          <div className="grid grid-flow-row gap-1 items-center">
+            <p>
+              Join us in a powerful community run supporting families across
+              North Texas.
+            </p>
+            <p className="font-semibold">November 23, 2025 · Plano, Texas</p>
+            <button className="w-fit rounded-2xl p-5 px-10 bg-accent-500 hover:bg-accent-600 duration-750 transition-colors font-semibold text-neutral-50">
+              <ExpressiveAnchor to="">REGISTER NOW</ExpressiveAnchor>
+            </button>
+          </div>
+        </MajorEventCard>
+      </article>
     </PageSection>
+  );
+}
+
+function MajorEventCard({ title, src, alt, children }) {
+  return (
+    <article className="relative w-full group">
+      <div className="relative">
+        <img
+          src={src}
+          alt={alt}
+          className="w-full aspect-video rounded-2xl border-4 border-neutral-300 object-cover"
+        />
+        <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-black/40 via-black/10 to-transparent"></div>
+      </div>
+
+      <div
+        className="
+          absolute bottom-0 left-0 w-full
+          p-5
+          rounded-b-2xl border-x-4 border-b-4 border-neutral-300
+          bg-neutral-100/95 backdrop-blur-sm
+          shadow-lg
+          transform transition-all
+        ">
+        <Title className="text-accent-800">{title}</Title>
+        <div className="text-accent-700 leading-relaxed space-y-2">
+          {children}
+        </div>
+      </div>
+    </article>
   );
 }
