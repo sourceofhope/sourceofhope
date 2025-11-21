@@ -91,11 +91,11 @@ export default function ServingHopeProgram() {
           </Heading>
           <div className="grid gap-1">
             <div className="flex justify-between">
-              <span className="font-medium">Friday Prep</span>
+              <span className="font-medium">Friday</span>
               <span>10:00 AM - 2:00 PM</span>
             </div>
             <div className="flex justify-between">
-              <span className="font-medium">Saturday Service</span>
+              <span className="font-medium">Saturday</span>
               <span>6:00 AM - 1:00 PM</span>
             </div>
           </div>

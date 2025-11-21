@@ -1,65 +1,89 @@
 import { useState } from "react";
 
+import Input from "../../../components/ui/Input";
+
 export default function FormInputSection() {
   const [submit, setSubmit] = useState(false);
 
   const validateName = (event) => {
-    if(submit) {
+    if (submit) {
       const input = event.target.value;
       if (typeof input !== "string") return false;
 
       const trimmed = input.trim();
-      if (trimmed.length === 0 || trimmed.length > 50) return false;      
+      if (trimmed.length === 0 || trimmed.length > 50) return false;
 
-    // const allowedCharactersRegex = /^[\p{L}\p{M}'- ]+$/u;
-    // const consecutiveCharactersRegex = /--|''|\s{2,}/;
+      // const allowedCharactersRegex = /^[\p{L}\p{M}'- ]+$/u;
+      // const consecutiveCharactersRegex = /--|''|\s{2,}/;
 
-    // if (!allowedCharactersRegex.test(trimmed)) return false;
-    // if (!consecutiveCharactersRegex.test(trimmed)) return false;
+      // if (!allowedCharactersRegex.test(trimmed)) return false;
+      // if (!consecutiveCharactersRegex.test(trimmed)) return false;
     }
     return true;
   };
 
   return (
     <form className="flex flex-wrap justify-between gap-y-5 p-5 lg:px-35">
-      <FormInputItem
+      <Input
         title="First name"
         htmlFor="fname"
         type="text"
         onChange={validateName}
+        className="w-full md:w-[49%]"
       />
-      <FormInputItem
+      <Input
         title="Last Name"
         htmlFor="lname"
         type="text"
         onChange={validateName}
+        className="w-full md:w-[49%]"
       />
-      <FormInputItem title="Email Address" htmlFor="email" type="email" onChange={(event) => {
-        if(submit) {
-          const input = event.target.value;
-          if (typeof input !== "string") return false;
+      <Input
+        title="Email Address"
+        htmlFor="email"
+        type="email"
+        className="w-full md:w-[49%]"
+        onChange={(event) => {
+          if (submit) {
+            const input = event.target.value;
+            if (typeof input !== "string") return false;
 
-          const trimmed = input.trim();
-          if (trimmed.length === 0 || trimmed.length > 50) return false;
+            const trimmed = input.trim();
+            if (trimmed.length === 0 || trimmed.length > 50) return false;
 
-          const valid = trimmed.includes('@') && trimmed.substring(trimmed.lastIndexOf('@'), trimmed.length).includes('.') && trimmed.substring(0,trimmed.lastIndexOf('@')).length > 0;
-          return valid;          
-        }
-        return true;
-      }}/>
-      <FormInputItem title="Phone Number" htmlFor="phone" type="tel" onChange={(event) => {
-        if(submit) {
-          const input = event.target.value;
-          if (typeof input !== "string") return false;
+            const valid =
+              trimmed.includes("@") &&
+              trimmed
+                .substring(trimmed.lastIndexOf("@"), trimmed.length)
+                .includes(".") &&
+              trimmed.substring(0, trimmed.lastIndexOf("@")).length > 0;
+            return valid;
+          }
+          return true;
+        }}
+      />
+      <Input
+        title="Phone Number"
+        htmlFor="phone"
+        type="tel"
+        className="w-full md:w-[49%]"
+        onChange={(event) => {
+          if (submit) {
+            const input = event.target.value;
+            if (typeof input !== "string") return false;
 
-          const trimmed = input.trim();
-          if (trimmed.length === 0 || trimmed.length > 50) return false;
+            const trimmed = input.trim();
+            if (trimmed.length === 0 || trimmed.length > 50) return false;
 
-          const valid = input.split('-').length == 3 || input.split('.').length == 3 || (input.length >= 11 && input.length <= 13);
-          return valid;          
-        }
-        return true;
-      }}/>
+            const valid =
+              input.split("-").length == 3 ||
+              input.split(".").length == 3 ||
+              (input.length >= 11 && input.length <= 13);
+            return valid;
+          }
+          return true;
+        }}
+      />
       <div className="flex flex-col gap-1 w-full md:w-[49%]">
         <label
           htmlFor="membership"
@@ -99,42 +123,5 @@ export default function FormInputSection() {
         />
       </div>
     </form>
-  );
-}
-
-function FormInputItem({
-  title,
-  htmlFor,
-  type,
-  onChange = (event) => {
-    false;
-  },
-}) {
-  const [isValid, setIsValid] = useState(true);
-
-  return (
-    <div
-      className={`flex flex-col gap-1 w-full md:w-[49%] ${
-        isValid ? "text-neutral-950" : "text-red-600"
-      }`}>
-      <label
-        htmlFor={htmlFor}
-        className="text-sm md:text-md translate-3.5 md:translate-4 px-1 z-10 w-fit select-none after:content-[''] after:absolute after:left-0 after:top-[7px]
-    after:block after:h-[5px] after:w-full font-semibold
-    after:bg-neutral-50 after:-z-10 after:pointer-events-none">
-        {title}
-      </label>
-      <input
-        name={htmlFor}
-        type={type}
-        onChange={(event) => setIsValid(onChange(event))}
-        className={`rounded-sm border-1 w-full h-[4ch] px-2 ${
-          isValid ? "border-neutral-950" : "border-red-600"
-        }`}
-      />
-      <p className={isValid ? "invisible select-none" : "visible"}>
-        {`Please enter a valid ${title.toLowerCase()}`}.
-      </p>
-    </div>
   );
 }
