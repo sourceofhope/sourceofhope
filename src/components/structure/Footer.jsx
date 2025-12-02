@@ -146,7 +146,7 @@ function FooterBottom() {
 function FooterCard() {
   return (
     <article
-      className={`flex flex-col gap-3 rounded-2xl shadow-2x overflow-hidden w-150 max-w-fit h-fit py-5 px-10 bg-neutral-50 text-neutral-950`}>
+      className={`flex flex-col gap-3 rounded-2xl shadow-2x overflow-hidden w-175 max-w-fit h-fit py-5 px-10 bg-neutral-50 text-neutral-950`}>
       <p className="h-fit w-full text-sm font-bold text-primary-700">
         SUBSCRIBE TO OUR NEWSLETTER
       </p>
@@ -154,16 +154,19 @@ function FooterCard() {
         <h2 className="hidden md:block">Be the first to know about events</h2>
         <h2 className="block md:hidden">Get Updates</h2>
       </div>
-      <p className="text-sm md:text-md">
-        Join our family of supporters and receive inspiring stories, holistic
-        wellness tips, and community updates right to your inbox by subscribing
-        to our newsletter.
-      </p>
-      <button className="border-5 rounded-2xl font-bold w-fit shadow-sm hover:shadow-lg shadow-accent-500/70 bg-accent-500 border-accent-500 text-neutral-50/75 duration-500 hover:text-neutral-50/95 opacity-85 hover:opacity-100 transition-[shadow_colors]">
-        <ExpressiveLink className="px-10 py-5" to={CANONICAL.member}>
-          SUBSCRIBE
-        </ExpressiveLink>
-      </button>
+      <div className="flex flex-col md:flex-row gap-5 items-center">
+        <p className="text-sm md:text-md text-balance">
+          Join our family of supporters and receive inspiring stories, holistic
+          wellness tips, and community updates right to your inbox by
+          subscribing to our newsletter.
+        </p>
+        <button className="border-5 h-fit rounded-2xl font-bold w-full shadow-sm hover:shadow-lg shadow-accent-500/70 bg-accent-500 border-accent-500 text-neutral-50/75 duration-500 hover:text-neutral-50/95 opacity-85 hover:opacity-100 transition-[shadow_colors]">
+          <ExpressiveLink className="px-10 py-5" to={CANONICAL.member}>
+            SUBSCRIBE
+          </ExpressiveLink>
+        </button>
+      </div>
+
       <p className="text-sm text-neutral-600 italic">
         No spam, unsubscribe anytime.
       </p>

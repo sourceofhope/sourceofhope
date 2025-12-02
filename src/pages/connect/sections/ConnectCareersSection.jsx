@@ -27,8 +27,8 @@ export default function ConnectMapSection() {
           purpose, contributing to a healthier, more hopeful community through
           work that truly makes a difference.
         </p>
-        <article>
-          <article className="bg-neutral-50 rounded-2xl shadow-sm p-5 grid gap-2 w-full">
+        <article className="grid gap-5">
+          <article className="bg-neutral-50 rounded-2xl shadow-sm p-5 grid gap-3 w-full">
             <Heading className="border-b-2 border-neutral-300 pb-2">
               Career Programs
             </Heading>

@@ -37,28 +37,22 @@ export default function ConnectMapSection() {
           className="w-full aspect-video rounded-2xl border-none"
           loading="lazy"
           referrerpolicy="no-referrer-when-downgrade"></iframe>
-        <div className="grid grid-cols-[1fr] md:grid-flow-col gap-5 text-accent-800 justify-center items-start py-5 md:text-center">
+        <div className="grid grid-cols-[1fr] lg:grid-flow-col gap-5 text-accent-800 justify-center items-start py-5 md:text-center">
           <div className="grid w-full grid-flow-row gap-1 items-start md:justify-items-center h-full p-5 rounded-2xl bg-neutral-200">
-            <div>
-              <EnvelopeIcon className="w-[1em] h-[1em]" />
-            </div>
+            <EnvelopeIcon className="w-[1em] h-[1em]" />
             <h3 className="font-semibold text-accent-400">Phone:</h3>
             <p>+1 (469) 969-0244</p>
             <h3 className="font-semibold text-accent-400">Email:</h3>
             <p>info@thesourceofhope.org</p>
           </div>
           <div className="grid w-full grid-flow-row gap-1 items-start md:justify-items-center h-full p-5 rounded-2xl bg-neutral-200">
-            <div>
-              <BuildingStorefrontIcon className="w-[1em] h-[1em]" />
-            </div>
+            <BuildingStorefrontIcon className="w-[1em] h-[1em]" />
             <h3 className="font-semibold text-accent-400">Hours:</h3>
             <p>Mon - Fri: 10:00 AM - 5:00 PM</p>
             <p>Sat - Sun: Closed</p>
           </div>
           <div className="grid w-full grid-flow-row gap-1 items-start md:justify-items-center h-full p-5 rounded-2xl bg-neutral-200">
-            <div>
-              <MapIcon className="w-[1em] h-[1em]" />
-            </div>
+            <MapIcon className="w-[1em] h-[1em]" />
             <h3 className="font-semibold text-accent-400">Location:</h3>
             <p>1108 W Parker Rd Ste 102, Plano, TX 75075</p>
           </div>
