@@ -7,7 +7,7 @@ import ConnectCareersSection from "./sections/ConnectCareersSection";
 
 import { Helmet } from "react-helmet";
 
-export default function AboutPage() {
+export default function ConnectPage() {
   return (
     <>
       <Helmet></Helmet>
