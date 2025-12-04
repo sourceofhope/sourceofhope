@@ -27,7 +27,7 @@ export default function Input({
         name={htmlFor}
         type={type}
         onChange={(event) => setIsValid(onChange(event))}
-        className={`rounded-sm border-1 w-full h-[4ch] px-2 ${
+        className={`rounded-2xl border-1 w-full h-[4ch] px-2 ${
           isValid ? "border-neutral-950" : "border-red-600"
         }`}
       />

@@ -8,6 +8,7 @@ import ExpressiveAnchor from "../../../components/ui/expressive/ExpressiveAnchor
 import Heading from "../../../components/ui/text/Heading";
 import Title from "../../../components/ui/text/Title";
 import { CANONICAL_URL } from "../../../routes";
+import Button from "../../../components/ui/Button";
 
 export default function ServingHopeProgram() {
   const { setIsBlocking } = useHeaderFlag();
@@ -162,11 +163,7 @@ export default function ServingHopeProgram() {
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 referrerpolicy="strict-origin-when-cross-origin"
                 allowfullscreen></iframe>
-              <div className="flex-col gap-3 hidden md:flex">
-                <button className="w-full rounded-2xl p-5 bg-accent-500 hover:bg-accent-600 duration-750 transition-colors font-semibold text-neutral-50">
-                  <ExpressiveAnchor to="">SIGN UP</ExpressiveAnchor>
-                </button>
-              </div>
+              <Button text="SIGN UP" className="hidden md:flex" />
             </div>
           </div>
         </article>

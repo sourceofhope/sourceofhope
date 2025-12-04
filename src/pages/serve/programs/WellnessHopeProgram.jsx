@@ -7,6 +7,9 @@ import { useEffect } from "react";
 import ExpressiveAnchor from "../../../components/ui/expressive/ExpressiveAnchor";
 import Heading from "../../../components/ui/text/Heading";
 import Title from "../../../components/ui/text/Title";
+import Button from "../../../components/ui/Button";
+
+import { CANONICAL_URL } from "../../../routes";
 
 export default function WellnessHopeProgram() {
   const { setIsBlocking } = useHeaderFlag();
@@ -60,7 +63,7 @@ export default function WellnessHopeProgram() {
           <Title>Wellness of Hope </Title>
           <Heading>Free Holistic Clinic Services</Heading>
         </div>
-        <article className="grid gap-5 text-sm md:text-md">
+        <article className="grid gap-5">
           <p>
             The Wellness of Hope Clinic provides holistic treatments like fire
             cupping and lymphatic drainage to low-income individuals, including
@@ -78,9 +81,7 @@ export default function WellnessHopeProgram() {
             haircuts to senior citizens 65+, teachers, fire fighters, police
             officers, and veterans every month
           </p>
-          <button className="my-5 md:hidden rounded-2xl p-5 bg-accent-500 md:w-1/3 hover:bg-accent-600 duration-750 transition-colors font-semibold text-neutral-50">
-            <ExpressiveAnchor to="">APPLY</ExpressiveAnchor>
-          </button>
+          <Button text="APPLY" className="block md:hidden" />
         </article>
         <article className="grid gap-5">
           <Title>Our Services</Title>
@@ -90,7 +91,7 @@ export default function WellnessHopeProgram() {
             <WellnessShowcaseCard title="PERMANENT COSMETICS" />
           </div>
         </article>
-        <article className="grid gap-5 text-sm md:text-md">
+        <article className="grid gap-5">
           <Title>Holistic Assessment</Title>
 
           <div className="grid grid-cols-1 md:grid-cols-[6fr_3fr] gap-5 items-center">
@@ -103,7 +104,17 @@ export default function WellnessHopeProgram() {
                 variety of rotating holistic treatments, updated every fourth
                 quarter to better meet evolving needs.
               </p>
-
+              <article className="bg-neutral-50 rounded-2xl shadow-sm p-5 grid gap-2">
+                <Heading className=" border-b-2 border-neutral-300 pb-2">
+                  Eligible Individuals
+                </Heading>
+                <div className="grid gap-1">
+                  <div className="flex justify-between">Teachers/Mentors</div>
+                  <div className="flex justify-between">Veterans</div>
+                  <div className="flex justify-between">First Responders</div>
+                  <div className="flex justify-between">Senior Citizens</div>
+                </div>
+              </article>
               <p>
                 We are also excited to provide complimentary holistic
                 assessments— previously valued at $250—to help you better
@@ -112,37 +123,35 @@ export default function WellnessHopeProgram() {
                 partnership with StoneIWC, reinforcing our shared commitment to
                 supporting the community’s complete well-being.
               </p>
-              <button className="my-5 w-full rounded-2xl p-5 bg-accent-500 hover:bg-accent-600 duration-750 transition-colors font-semibold text-neutral-50">
-                <ExpressiveAnchor to="">APPLY</ExpressiveAnchor>
-              </button>
             </div>
+            <div className="flex flex-col gap-5">
+              <div
+                className="
+            relative h-full w-full group overflow-hidden 
+            rounded-xl text-accent-background aspect-square shadow-lg
+          ">
+                <img
+                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
+                  alt="Holistic wellness care"
+                  className="w-full h-full object-cover brightness-[.85] contrast-[1.1]"
+                />
 
-            <div
-              className="
-          relative h-full w-full group overflow-hidden 
-          rounded-xl text-accent-background aspect-square shadow-lg
-        ">
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
-                alt="Holistic wellness care"
-                className="w-full h-full object-cover brightness-[.85] contrast-[1.1]"
-              />
-
-              <div className="absolute bottom-0 h-[60%] w-full bg-gradient-to-t from-black/60 to-transparent rounded-xl">
-                <div className="absolute bottom-0 w-full p-5 text-neutral-50">
-                  <p className="text-sm uppercase font-semibold">
-                    Holistic Wellness
-                  </p>
-                  <p className="text-lg font-bold">
-                    Caring for the whole community
-                  </p>
+                <div className="absolute bottom-0 h-[60%] w-full bg-gradient-to-t from-black/60 to-transparent rounded-xl">
+                  <div className="absolute bottom-0 w-full p-5 text-neutral-50">
+                    <p className="text-sm uppercase font-semibold">
+                      Holistic Wellness
+                    </p>
+                    <p className="text-lg font-bold">
+                      Caring for the whole community
+                    </p>
+                  </div>
                 </div>
               </div>
+              <Button text="APPLY" />
             </div>
           </div>
         </article>
-
-        <article className="bg-neutral-50 rounded-2xl shadow-sm p-5 text-sm md:text-md grid gap-2">
+        <article className="bg-neutral-50 rounded-2xl shadow-sm p-5 grid gap-2">
           <Heading className=" border-b-2 border-neutral-300 pb-2">
             Current Available Time Slots
           </Heading>
@@ -155,17 +164,6 @@ export default function WellnessHopeProgram() {
               <span className="font-medium">Tuesday</span>
               <span>6:00 AM - 2:00 PM</span>
             </div>
-          </div>
-        </article>
-        <article className="bg-neutral-50 rounded-2xl shadow-sm p-5 text-sm md:text-md grid gap-2">
-          <Heading className=" border-b-2 border-neutral-300 pb-2">
-            Eligible Individuals
-          </Heading>
-          <div className="grid gap-1">
-            <div className="flex justify-between">Teachers/Mentors</div>
-            <div className="flex justify-between">First Responders</div>
-            <div className="flex justify-between">Senior Citizens</div>
-            <div className="flex justify-between">Veterans</div>
           </div>
         </article>
       </section>

@@ -2,10 +2,11 @@ import Title from "../../../components/ui/text/Title";
 import PageSection from "../../PageSection";
 import Heading from "../../../components/ui/text/Heading";
 import ExpressiveAnchor from "../../../components/ui/expressive/ExpressiveAnchor";
+import Button from "../../../components/ui/Button";
 
 export default function ConnectMapSection() {
   return (
-    <PageSection className="justify-items-center grid gap-10 relative m-0">
+    <PageSection className="justify-items-center grid gap-10 relative m-0 text-sm md:text-md lg:text-lg">
       <article className="w-full grid gap-5 row-start-2 md:row-start-auto">
         <Title>Careers</Title>
         <p>
@@ -13,10 +14,13 @@ export default function ConnectMapSection() {
           for emerging professionals, volunteers, and mentors who want to grow
           while making a lasting impact. Whether you’re a student looking to
           fulfill service hours, a mentor eager to guide the next generation, or
-          a passionate individual ready to volunteer, we provide real-world
-          opportunities that help you build your future while serving others.
-          Join a movement driven by purpose, empowerment, and heart—and become a
-          part of the change we create together every day.
+          a passionate individual ready to volunteer.
+        </p>
+        <p>
+          We provide real-world opportunities that help you build your future
+          while serving others. Join a movement driven by purpose, empowerment,
+          and heart—and become a part of the change we create together every
+          day.
         </p>
         <p>
           Interns gain real-world experience by working on meaningful projects
@@ -34,7 +38,7 @@ export default function ConnectMapSection() {
             </Heading>
             <div className="grid gap-5 md:grid-cols-[2fr_7fr]">
               <span className="font-medium">Emerging Professional</span>
-              <span>
+              <span className="text-neutral-600">
                 Gain experience in professional settings, working on projects
                 related to IT, logistics, executive assistance, and
                 digital/social media marketing Limited paid opportunities
@@ -43,7 +47,7 @@ export default function ConnectMapSection() {
             </div>
             <div className="grid gap-5 md:grid-cols-[2fr_7fr]">
               <span className="font-medium">Volunteers</span>
-              <span>
+              <span className="text-neutral-600">
                 Fulfill community service hours while helping those in need Open
                 to students, professionals, and anyone eager to give back to the
                 community Share your expertise and help guide others through
@@ -53,13 +57,13 @@ export default function ConnectMapSection() {
             </div>
             <div className="grid gap-5 md:grid-cols-[2fr_7fr]">
               <span className="font-medium">Mentors</span>
-              <span>
+              <span className="text-neutral-600">
                 Provide guidance and support to emerging professionals,
                 assisting with their career development and growth.
               </span>
             </div>
           </article>
-          <article className="grid gap-5 md:grid-cols-[6fr_3fr] py-5 items-center">
+          <article className="grid gap-10 md:grid-cols-[6fr_3fr] py-5 items-end">
             <div className="flex flex-col gap-5">
               <p>
                 Paid positions are available for students attending our
@@ -72,9 +76,7 @@ export default function ConnectMapSection() {
                 real change in the community.
               </p>
             </div>
-            <button className="w-full h-fit rounded-2xl p-5 bg-accent-500 hover:bg-accent-600 duration-750 transition-colors font-semibold text-neutral-50">
-              <ExpressiveAnchor to="">APPLY</ExpressiveAnchor>
-            </button>
+            <Button text="APPLY" />
           </article>
         </article>
       </article>

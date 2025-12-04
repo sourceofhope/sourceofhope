@@ -2,6 +2,7 @@ import PageSection from "../../PageSection";
 
 import Title from "../../../components/ui/text/Title";
 import Input from "../../../components/ui/Input";
+import Heading from "../../../components/ui/text/Heading";
 
 import { useState } from "react";
 import {
@@ -30,41 +31,58 @@ export default function ConnectMapSection() {
     return true;
   };
   return (
-    <PageSection className="justify-items-center grid md:grid-cols-[6fr_4fr] gap-10 relative m-0">
+    <PageSection className="justify-items-between grid md:grid-cols-[9fr_4fr] gap-10 relative m-0 text-sm md:text-md lg:text-lg">
       <article className="w-full grid gap-5 row-start-2 md:row-start-auto">
         <iframe
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3222.689727867567!2d-96.7169406!3d33.03989449999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x864c185a0bc47b6b%3A0x6ed25b35d24b54f1!2sThe%20Source%20of%20Hope!5e1!3m2!1sen!2sus!4v1763741256946!5m2!1sen!2sus"
           className="w-full aspect-video rounded-2xl border-none"
           loading="lazy"
           referrerpolicy="no-referrer-when-downgrade"></iframe>
-        <div className="grid grid-cols-[1fr] lg:grid-flow-col gap-5 text-accent-800 justify-center items-start py-5 md:text-center">
-          <div className="grid w-full grid-flow-row gap-1 items-start md:justify-items-center h-full p-5 rounded-2xl bg-neutral-200">
-            <EnvelopeIcon className="w-[1em] h-[1em]" />
-            <h3 className="font-semibold text-accent-400">Phone:</h3>
-            <p>+1 (469) 969-0244</p>
-            <h3 className="font-semibold text-accent-400">Email:</h3>
-            <p>info@thesourceofhope.org</p>
+        <div className="grid grid-cols-[1fr] lg:grid-flow-col gap-5 text-accent-800 justify-center items-start py-5 md:text-center text-sm md:text-md">
+          <div className="bg-neutral-100 shadow-sm md:h-full rounded-2xl items-center justify-center flex">
+            <div className="grid w-full grid-flow-row gap-3 justify-items-center h-fit p-5">
+              <div className="grid grid-flow-row gap-1 justify-items-center">
+                <EnvelopeIcon className="w-[20px] h-[20px]" />
+                <Heading>Contact</Heading>
+              </div>
+              <p>+1 (469) 969-0244</p>
+              <p>info@thesourceofhope.org</p>
+            </div>
           </div>
-          <div className="grid w-full grid-flow-row gap-1 items-start md:justify-items-center h-full p-5 rounded-2xl bg-neutral-200">
-            <BuildingStorefrontIcon className="w-[1em] h-[1em]" />
-            <h3 className="font-semibold text-accent-400">Hours:</h3>
-            <p>Mon - Fri: 10:00 AM - 5:00 PM</p>
-            <p>Sat - Sun: Closed</p>
+          <div className="bg-neutral-100 shadow-sm md:h-full rounded-2xl items-center justify-center flex">
+            <div className="grid w-full grid-flow-row gap-1 justify-items-center h-fit p-5 ">
+              <div className="grid grid-flow-row gap-1 justify-items-center">
+                <MapIcon className="w-[20px] h-[20px]" />
+                <Heading>Location</Heading>
+              </div>
+              <p className="text-balance text-center">
+                1108 W Parker Rd Ste 102,
+                <br />
+                Plano, TX 75075
+              </p>
+            </div>
           </div>
-          <div className="grid w-full grid-flow-row gap-1 items-start md:justify-items-center h-full p-5 rounded-2xl bg-neutral-200">
-            <MapIcon className="w-[1em] h-[1em]" />
-            <h3 className="font-semibold text-accent-400">Location:</h3>
-            <p>1108 W Parker Rd Ste 102, Plano, TX 75075</p>
-          </div>
+          <div className="bg-neutral-100 shadow-sm md:h-full rounded-2xl items-center justify-center flex">
+            <div className="grid w-full grid-flow-row gap-1 justify-items-center h-fit p-5">
+              <div className="grid grid-flow-row gap-1 justify-items-center">
+                <BuildingStorefrontIcon className="w-[20px] h-[20px]" />
+                <Heading>Hours</Heading>
+              </div>
+              <p className="text-balance text-center">
+                Mon - Fri: 10:00 - 5:00
+              </p>
+              <p>Sat - Sun: Closed</p>
+            </div>
+          </div>{" "}
         </div>
       </article>
       <article className="w-full grid gap-5 row-start-1 md:row-start-auto">
         <Title className="w-full text-left">Contact Us</Title>
-        <p>
-          We'd love to hear from you! Contact The Source of Hope by dropping us
-          a message below, and we'll get back to you soon.
+        <p className="text-sm md:text-md">
+          We'd love to hear from you! Contact us by dropping us a message below,
+          and we'll get back to you soon.
         </p>
-        <form className="flex flex-col w-full gap-3">
+        <form className="flex flex-col w-full gap-1">
           <Input
             title="First name"
             htmlFor="fname"
@@ -135,7 +153,7 @@ export default function ConnectMapSection() {
                 event.preventDefault();
                 setSubmit(true);
               }}
-              className="rounded-sm w-full h-[4ch] px-2 bg-primary-700 text-neutral-50 font-semibold cursor-pointer hover:bg-primary-800 transition-colors duration-300"
+              className="rounded-2xl w-full h-[4ch] px-2 bg-primary-700 text-neutral-50 font-semibold cursor-pointer hover:bg-primary-800 transition-colors duration-300"
             />
           </div>
         </form>

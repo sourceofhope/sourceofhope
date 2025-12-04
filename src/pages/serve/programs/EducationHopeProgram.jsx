@@ -11,6 +11,8 @@ import Heading from "../../../components/ui/text/Heading";
 import ExpressiveCard from "../../../components/ui/expressive/ExpressiveCard";
 import { CANONICAL_URL } from "../../../routes";
 
+import Button from "../../../components/ui/Button";
+
 export default function EducationHopeProgram() {
   const { setIsBlocking } = useHeaderFlag();
 
@@ -185,7 +187,7 @@ export default function EducationHopeProgram() {
         <article className="grid gap-5">
           <Title>Tutoring Services</Title>
           <div className="grid grid-flow-row md:grid-cols-[6fr_3fr] gap-5 items-center">
-            <div className="grid gap-5 grid-flow-row row-start-2 md:row-start-1 justify-start">
+            <div className="grid gap-5 grid-flow-row justify-start">
               <p>
                 The Source of Hope offers <strong>virtual tutoring</strong> for
                 middle school and high school students—empowering learners to
@@ -217,16 +219,8 @@ export default function EducationHopeProgram() {
                 encourage you to apply! We’re always expanding our educational
                 offerings.
               </p>
-              <div className="flex flex-col md:flex-row gap-3 w-full">
-                <button className="w-full rounded-2xl p-5 bg-accent-500 hover:bg-accent-600 duration-750 transition-colors font-semibold text-neutral-50">
-                  <ExpressiveAnchor to="">GET TUTORING</ExpressiveAnchor>
-                </button>
-                <button className="w-full rounded-2xl p-5 bg-accent-500 hover:bg-accent-600 duration-750 transition-colors font-semibold text-neutral-50">
-                  <ExpressiveAnchor to="">JOIN OUR TUTORS</ExpressiveAnchor>
-                </button>
-              </div>
             </div>
-            <div className="flex flex-col row-start-1 md:row-start-2 gap-5 justify-self-end">
+            <div className="flex flex-col gap-5 justify-self-end">
               <div className="relative w-full">
                 <Carousel
                   className="rounded-2xl object-cover w-full aspect-square"
@@ -238,6 +232,10 @@ export default function EducationHopeProgram() {
                   <CarouselCard src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344" />
                   <CarouselCard src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344" />
                 </Carousel>
+              </div>
+              <div className="flex flex-col gap-3 w-full">
+                <Button text="GET TUTORING" />
+                <Button text="JOIN OUR TUTORS" />
               </div>
             </div>
           </div>
@@ -253,12 +251,9 @@ export default function EducationHopeProgram() {
           <p>
             Tutors can assist students in preparing for standardized tests like
             STAAR and SAT/ACT, analyzing literature, and developing writing
-            skills.
-          </p>
-          <p>
-            Prospective tutors should have reliable internet access, experience
-            with virtual meeting platforms (e.g., Zoom, Google Meet), and be
-            comfortable with English.
+            skills. Prospective tutors should have reliable internet access,
+            experience with virtual meeting platforms (e.g., Zoom, Google Meet),
+            and be comfortable with English.
           </p>
         </article>
       </section>

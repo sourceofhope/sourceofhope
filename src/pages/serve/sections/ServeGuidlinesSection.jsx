@@ -10,8 +10,8 @@ import ExpressiveCard from "../../../components/ui/expressive/ExpressiveCard";
 
 export default function ServeGuidelinesSection() {
   return (
-    <PageSection className="gap-5">
-      <div className="grid gap-1 justify-self-start justify-start text-sm md:text-md">
+    <PageSection className="gap-5 text-sm md:text-md lg:text-lg">
+      <div className="grid gap-1 justify-self-start justify-start">
         <Title className="text-xlg md:text-xxlg text-balance font-urbanist">
           View our Serving Guidelines
         </Title>

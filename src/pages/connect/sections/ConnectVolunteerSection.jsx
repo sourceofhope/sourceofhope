@@ -1,3 +1,4 @@
+import Button from "../../../components/ui/Button";
 import ExpressiveAnchor from "../../../components/ui/expressive/ExpressiveAnchor";
 import Heading from "../../../components/ui/text/Heading";
 import Title from "../../../components/ui/text/Title";
@@ -5,7 +6,7 @@ import PageSection from "../../PageSection";
 
 export default function ConnectMapSection() {
   return (
-    <PageSection className="justify-items-center grid gap-10 relative m-0">
+    <PageSection className="justify-items-center grid gap-10 relative m-0 text-sm md:text-md lg:text-lg">
       <article className="w-full grid gap-5 row-start-2 md:row-start-auto">
         <Title>Volunteer Opportunities</Title>
         <p>
@@ -15,12 +16,10 @@ export default function ConnectMapSection() {
           difference in our community.
         </p>
         <p>
-          Join us every 4th Friday & Saturday of the month at Cornerstone
+          Join us every fourth Friday & Saturday of the month at Cornerstone
           Kitchen (2627 S. Ervay Street, Dallas, TX 75215) for Serving Hope, a
-          heartfelt community outreach event hosted by The Source of Hope.
-        </p>
-        <p>
-          We prepare and serve fresh, homemade, organic meals to over 200
+          heartfelt community outreach event hosted by The Source of Hope. We
+          prepare and serve fresh, homemade, organic meals to over 200
           individuals in need—including senior citizens, first responders,
           veterans, teachers, at-risk families, and those experiencing
           homelessness.
@@ -32,19 +31,15 @@ export default function ConnectMapSection() {
           title="Hope Run for Hunger"
           src="/images/hope-run.jpg"
           alt="Hope Run for Hunger event photo">
-          <div className="grid md:grid-cols-[7fr_3fr] gap-3 items-center">
+          <div className="grid md:grid-cols-[7fr_3fr] gap-3 items-end">
             <div className="flex flex-col gap-3">
-              <p>
+              <p className="text-sm md:text-md">
                 Join us in a powerful community run supporting families across
                 North Texas.
               </p>
-              <p className="font-semibold">November 23, 2025 · Plano, Texas</p>
+              <Heading>November 23, 2025 · Plano, Texas</Heading>
             </div>
-            <button className="w-full rounded-2xl p-5 px-10 bg-accent-500 hover:bg-accent-600 duration-750 transition-colors font-semibold text-neutral-50">
-              <ExpressiveAnchor to="">
-                REGISTER <span className="hidden lg:inline">NOW</span>
-              </ExpressiveAnchor>
-            </button>
+            <Button text="Register Now" />
           </div>
         </MajorEventCard>
       </article>
@@ -52,9 +47,9 @@ export default function ConnectMapSection() {
   );
 }
 
-function MajorEventCard({ title, src, alt, children }) {
+function MajorEventCard({ title, src, alt, href, children }) {
   return (
-    <article className="relative w-full group">
+    <a className="relative w-full group" href={href}>
       <div className="relative">
         <img
           src={src}
@@ -77,6 +72,6 @@ function MajorEventCard({ title, src, alt, children }) {
           {children}
         </div>
       </div>
-    </article>
+    </a>
   );
 }
