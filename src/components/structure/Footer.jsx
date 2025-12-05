@@ -155,7 +155,7 @@ function FooterCard() {
         <h2 className="hidden md:block">Be the first to know about events</h2>
         <h2 className="block md:hidden">Get Updates</h2>
       </div>
-      <div className="grid grid-cols-[7fr_3fr] gap-5 items-center">
+      <div className="grid grid-flow-row md:grid-cols-[7fr_3fr] gap-5 items-center">
         <p className="text-sm md:text-md text-balance">
           Join our family of supporters and receive inspiring stories, holistic
           wellness tips, and community updates right to your inbox by

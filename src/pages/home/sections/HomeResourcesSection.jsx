@@ -20,7 +20,7 @@ export default function HomeResourcesSection() {
         </NavLink>{" "}
         to <HighlightedText>our community</HighlightedText>.
       </Title>
-      <div className="w-full h-full grid grid-flow-row md:grid-cols-3 md:grid-rows-2 gap-10 justify-center items-center">
+      <div className="w-full h-full grid grid-flow-row md:grid-cols-3 md:grid-rows-2 gap-5 md:gap-10 justify-center items-center">
         <HomeResourceCard
           title="EDUCATION FOR HOPE"
           to={CANONICAL.educationHope}

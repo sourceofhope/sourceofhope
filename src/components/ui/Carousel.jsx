@@ -15,6 +15,8 @@ export default function Carousel({
 
   const childArray = Array.isArray(children) ? children : [children];
 
+  const [disableAuto, setDisableAuto] = useState(false);
+
   useLayoutEffect(() => {
     const update = () => {
       const containerWidth = containerReference.current.offsetWidth;
@@ -63,14 +65,14 @@ export default function Carousel({
   const total = groups.length;
 
   useEffect(() => {
-    if (auto) {
+    if (auto && !disableAuto) {
       const stepper = setInterval(() => {
         setActive((prev) => (prev - 1 + total) % total);
       }, 7500);
 
       return () => clearInterval(stepper);
     }
-  }, [auto, total]);
+  }, [auto, total, disableAuto]);
 
   return (
     <article className={`flex flex-col gap-5 justify-center ${className}`}>
@@ -84,7 +86,10 @@ export default function Carousel({
       {controls ? (
         <div className="grid grid-cols-[1fr_10fr_1fr] md:grid-cols-1 gap-3 justify-self-center w-full">
           <button
-            onClick={() => setActive((active - 1 + total) % total)}
+            onClick={() => {
+              setActive((active - 1 + total) % total);
+              setDisableAuto(true);
+            }}
             className={`md:hidden p-1 rounded-full w-fit h-fit text-neutral-50 ${
               groups.length === 1 ? "bg-black/20" : "bg-black/70"
             }`}>
@@ -95,12 +100,18 @@ export default function Carousel({
               <CarouselSelector
                 key={i}
                 selected={i === active}
-                onClick={() => setActive(i)}
+                onClick={() => {
+                  setActive(i);
+                  setDisableAuto(true);
+                }}
               />
             ))}
           </div>
           <button
-            onClick={() => setActive((active + 1) % total)}
+            onClick={() => {
+              setActive((active + 1) % total);
+              setDisableAuto(true);
+            }}
             className={`md:hidden p-1 rounded-full w-fit h-fit text-neutral-50 ${
               groups.length === 1 ? "bg-black/20" : "bg-black/70"
             }`}>

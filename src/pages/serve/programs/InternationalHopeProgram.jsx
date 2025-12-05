@@ -80,18 +80,18 @@ export default function EducationHopeProgram() {
             self-sufficiency, and create sustainable impact.
           </p>
           <p>Our global work focuses on:</p>
-          <ul className="grid gap-2 list-disc list-inside">
-            <li>
+          <ul className="grid gap-2 list-disc pl-5">
+            <li className="pl-3 text-balance">
               Empowering vocational students in developing regions through
               scholarships and educational tools.
             </li>
-            <li>
+            <li className="pl-3 text-balance">
               Providing beauty and wellness services to restore dignity and
-              confidence
+              confidence.
             </li>
-            <li>
+            <li className="pl-3 text-balance">
               Facilitating community outreach programs such as food
-              distribution, hygiene kits, and mentorship
+              distribution, hygiene kits, and mentorship.
             </li>
           </ul>
           <p>

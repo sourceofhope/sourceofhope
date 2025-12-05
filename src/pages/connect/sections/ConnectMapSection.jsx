@@ -50,6 +50,18 @@ export default function ConnectMapSection() {
             </div>
           </div>
           <div className="bg-neutral-100 shadow-sm md:h-full rounded-2xl items-center justify-center flex">
+            <div className="grid w-full grid-flow-row gap-1 justify-items-center h-fit p-5">
+              <div className="grid grid-flow-row gap-3 justify-items-center">
+                <BuildingStorefrontIcon className="w-[20px] h-[20px]" />
+                <Heading>Hours</Heading>
+              </div>
+              <p className="text-balance text-center">
+                Mon - Fri: 10:00 - 5:00
+              </p>
+              <p>Sat - Sun: Closed</p>
+            </div>
+          </div>{" "}
+          <div className="bg-neutral-100 shadow-sm md:h-full rounded-2xl items-center justify-center flex">
             <div className="grid w-full grid-flow-row gap-1 justify-items-center h-fit p-5 ">
               <div className="grid grid-flow-row gap-1 justify-items-center">
                 <MapIcon className="w-[20px] h-[20px]" />
@@ -62,18 +74,6 @@ export default function ConnectMapSection() {
               </p>
             </div>
           </div>
-          <div className="bg-neutral-100 shadow-sm md:h-full rounded-2xl items-center justify-center flex">
-            <div className="grid w-full grid-flow-row gap-1 justify-items-center h-fit p-5">
-              <div className="grid grid-flow-row gap-1 justify-items-center">
-                <BuildingStorefrontIcon className="w-[20px] h-[20px]" />
-                <Heading>Hours</Heading>
-              </div>
-              <p className="text-balance text-center">
-                Mon - Fri: 10:00 - 5:00
-              </p>
-              <p>Sat - Sun: Closed</p>
-            </div>
-          </div>{" "}
         </div>
       </article>
       <article className="w-full grid gap-5 row-start-1 md:row-start-auto">
