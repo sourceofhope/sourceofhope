@@ -83,7 +83,7 @@ function HeaderNavigator() {
     { label: "ABOUT", to: CANONICAL.about },
     { label: "SERVE", to: CANONICAL.serve },
     { label: "CONNECT", to: CANONICAL.connect },
-    { label: "MEDIA", to: "" },
+    { label: "MEDIA", to: CANONICAL.media },
     { label: "RESOURCES", to: "" },
   ];
 

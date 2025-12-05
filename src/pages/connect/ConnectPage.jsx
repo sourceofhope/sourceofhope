@@ -17,8 +17,8 @@ export default function ConnectPage() {
         </h2>
         <p className="font-semibold text-neutral-200 text-sm">JOIN US TODAY.</p>
       </PageHeader>
-      <ConnectMapSection />
       <ConnectVolunteerSection />
+      <ConnectMapSection />
       <ConnectCareersSection />
     </>
   );

@@ -2,6 +2,7 @@ import { CANONICAL_URL } from "../../routes";
 import PageHeader from "../PageHeader";
 
 import { Helmet } from "react-helmet";
+import MediaDescriptionSection from "./sections/MediaDescriptionSection";
 
 export default function MediaPage() {
   return (
@@ -15,6 +16,7 @@ export default function MediaPage() {
           OUR CONTRIBUTION.
         </p>
       </PageHeader>
+      <MediaDescriptionSection />
     </>
   );
 }

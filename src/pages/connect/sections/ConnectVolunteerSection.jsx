@@ -1,6 +1,5 @@
 import Button from "../../../components/ui/Button";
 import Carousel from "../../../components/ui/Carousel";
-import ExpressiveAnchor from "../../../components/ui/expressive/ExpressiveAnchor";
 import Heading from "../../../components/ui/text/Heading";
 import Title from "../../../components/ui/text/Title";
 import PageSection from "../../PageSection";
@@ -8,7 +7,7 @@ import PageSection from "../../PageSection";
 export default function ConnectMapSection() {
   return (
     <PageSection className="justify-items-center grid gap-10 relative m-0 text-sm md:text-md lg:text-lg">
-      <article className="w-full grid gap-5 row-start-2 md:row-start-auto">
+      <article className="w-full grid gap-5">
         <Title>Volunteer Opportunities</Title>
         <p>
           Make an Impact - Volunteer with The Source of Hope! Join us in Dallas

@@ -15,6 +15,7 @@ const HomePage = lazy(() => import("./pages/home/HomePage.jsx"));
 const AboutPage = lazy(() => import("./pages/about/AboutPage.jsx"));
 const ServePage = lazy(() => import("./pages/serve/ServePage.jsx"));
 const ConnectPage = lazy(() => import("./pages/connect/ConnectPage.jsx"));
+const MediaPage = lazy(() => import("./pages/media/MediaPage.jsx"));
 
 const SharingHopeProgram = lazy(() =>
   import("./pages/serve/programs/ServingHopeProgram.jsx")
@@ -45,6 +46,8 @@ const PageMap = {
   serve: <ServePage />,
 
   connect: <ConnectPage />,
+
+  media: <MediaPage />,
 
   servingHope: <SharingHopeProgram />,
   educationHope: <EducationHopeProgram />,
