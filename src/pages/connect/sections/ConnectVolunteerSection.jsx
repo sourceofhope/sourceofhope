@@ -1,5 +1,6 @@
 import Button from "../../../components/ui/Button";
 import Carousel from "../../../components/ui/Carousel";
+import Bold from "../../../components/ui/text/Bold";
 import Heading from "../../../components/ui/text/Heading";
 import Title from "../../../components/ui/text/Title";
 import PageSection from "../../PageSection";
@@ -7,22 +8,22 @@ import PageSection from "../../PageSection";
 export default function ConnectMapSection() {
   return (
     <PageSection className="justify-items-center grid gap-10 relative m-0 text-sm md:text-md lg:text-lg">
-      <article className="w-full grid gap-5">
-        <Title>Volunteer Opportunities</Title>
+      <article className="w-full grid gap-5 text-neutral-600">
+        <Title className="text-neutral-950">Volunteer Opportunities</Title>
         <p>
-          Make an Impact - Volunteer with The Source of Hope! Join us in Dallas
-          and Plano to help provide food, support, and hope to those in need.
-          Whether you can volunteer once or regularly, every effort makes a real
-          difference in our community.
+          <Bold>Make an Impact - Volunteer with The Source of Hope!</Bold> Join
+          us in Dallas and Plano to help provide food, support, and hope to
+          those in need. Whether you can volunteer once or regularly, every
+          effort makes a <Bold>real difference</Bold> in our community.
         </p>
         <p>
-          Join us every fourth Friday & Saturday of the month at Cornerstone
-          Kitchen (2627 S. Ervay Street, Dallas, TX 75215) for Serving Hope, a
-          heartfelt community outreach event hosted by The Source of Hope. We
-          prepare and serve fresh, homemade, organic meals to over 200
-          individuals in need—including senior citizens, first responders,
-          veterans, teachers, at-risk families, and those experiencing
-          homelessness.
+          Join us <Bold>every fourth Friday & Saturday</Bold> of the month at
+          Cornerstone Kitchen (2627 S. Ervay Street, Dallas, TX 75215) for
+          Serving Hope, a heartfelt community outreach event hosted by The
+          Source of Hope. We prepare and serve fresh, homemade, organic meals to
+          over <Bold>200 individuals</Bold> in need—including senior citizens,
+          first responders, veterans, teachers, at-risk families, and those
+          experiencing homelessness.
         </p>
       </article>
       <article className="w-full grid gap-5">

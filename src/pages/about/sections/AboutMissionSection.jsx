@@ -3,6 +3,7 @@ import PageSection from "../../PageSection";
 import ExpressiveAnchor from "../../../components/ui/expressive/ExpressiveAnchor";
 import Title from "../../../components/ui/text/Title";
 import Blockquote from "../../../components/ui/text/Blockquote";
+import Bold from "../../../components/ui/text/Bold";
 
 export default function AboutMissionSection() {
   return (
@@ -21,8 +22,7 @@ export default function AboutMissionSection() {
           </Blockquote>
           <p className="text-sm md:text-md lg:text-lg pl-5 w-fit text-neutral-600">
             <ExpressiveAnchor href="https://www.linkedin.com/in/qu%E1%BB%B3nh-ch%C3%A2u-qc-stone-87185b34/">
-              - Co-founder,{" "}
-              <strong className="font-semibold">Quynh Chau Stone</strong>
+              - Co-founder, <Bold>Quynh Chau Stone</Bold>
             </ExpressiveAnchor>
           </p>
         </div>

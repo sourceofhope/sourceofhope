@@ -1,6 +1,7 @@
 import PageSection from "../../PageSection";
 import { HighlightedText } from "../../../components/ui/expressive/ExpressiveText";
 import Title from "../../../components/ui/text/Title";
+import Bold from "../../../components/ui/text/Bold";
 
 export default function AboutDescriptionSection() {
   return (
@@ -18,9 +19,8 @@ export default function AboutDescriptionSection() {
       <div className="hidden md:flex flex-col gap-5 text-md lg:text-lg text-neutral-600">
         <p>
           The Source of Hope uplifts individuals and families through{" "}
-          <strong>holistic health</strong>,{" "}
-          <strong>wellness empowerment</strong>, and{" "}
-          <strong>community support</strong>—providing nutritious meals to the
+          <Bold>holistic health</Bold>, <Bold>wellness empowerment</Bold>, and{" "}
+          <Bold>community support</Bold>—providing nutritious meals to the
           hungry, housing assistance for those in transition, job placement
           opportunities, and educational scholarships that open doors to a
           better future.
@@ -28,20 +28,19 @@ export default function AboutDescriptionSection() {
 
         <p>
           Our mission goes beyond short-term relief—we equip people with{" "}
-          <strong>skills that last a lifetime</strong>. Through hands-on
-          holistic health education, outdoor survival and leadership training,
-          and entrepreneurial mentorship, we nurture self-sufficiency and
-          purpose. Entirely independent of government funding, our impact is
-          driven by compassionate <strong>volunteers</strong>,{" "}
-          <strong>partners</strong>, and <strong>donors</strong> who come
-          together to build stronger, healthier communities—one act of hope at a
-          time.
+          <Bold>skills that last a lifetime</Bold>. Through hands-on holistic
+          health education, outdoor survival and leadership training, and
+          entrepreneurial mentorship, we nurture self-sufficiency and purpose.
+          Entirely independent of government funding, our impact is driven by
+          compassionate <Bold>volunteers</Bold>, <Bold>partners</Bold>, and{" "}
+          <Bold>donors</Bold> who come together to build stronger, healthier
+          communities—one act of hope at a time.
         </p>
       </div>
       <div className="md:hidden flex flex-col gap-5 text-sm text-neutral-600">
         <p>
-          The Source of Hope uplifts people through <strong>health</strong>,{" "}
-          <strong>wellness</strong>, and <strong>community support</strong>
+          The Source of Hope uplifts people through <Bold>health</Bold>,{" "}
+          <Bold>wellness</Bold>, and <Bold>community support</Bold>
           —providing meals, housing help, job placement, and scholarships.
         </p>
         <p>
@@ -49,7 +48,7 @@ export default function AboutDescriptionSection() {
           outdoor training and entrepreneurial mentorship. Independent of
           government funding, our impact is powered by volunteers, partners, and
           donors—
-          <strong>building stronger communities, one life at a time.</strong>
+          <Bold>building stronger communities, one life at a time.</Bold>
         </p>
       </div>
     </PageSection>

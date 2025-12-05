@@ -1,3 +1,4 @@
+import Bold from "../../../components/ui/text/Bold";
 import Heading from "../../../components/ui/text/Heading";
 import Title from "../../../components/ui/text/Title";
 import PageSection from "../../PageSection";
@@ -7,12 +8,11 @@ export default function MediaDescriptionSection() {
     <PageSection className="justify-items-center grid gap-10 relative m-0 text-sm md:text-md lg:text-lg">
       <article className="grid gap-5">
         <Title>Press Coverage</Title>
-
-        <p>
+        <p className="text-neutral-600">
           The Source of Hope Press Page features our television appearances,
-          highlighting our mission and impact in the community. Watch our media
-          coverage to see how we are making a difference through our programs
-          and initiatives!
+          highlighting our mission and <Bold>impact in the community</Bold>.
+          Watch our media coverage to see how we are making a difference through
+          our <Bold>programs and initiatives!</Bold>
         </p>
         <div className="flex flex-col gap-5">
           <Heading>NBC5 Coverage</Heading>
@@ -28,16 +28,10 @@ export default function MediaDescriptionSection() {
           <MediaCard title="NBC5 - The Source of Hope" mediaID="6iUccVeIxWw">
             <p>
               A coverage to see how we are making a difference through our
-              programs and initiatives!
-            </p>
-            <p>
-              The NBC5 segment highlights Serving Hope, Juice for Hope, and our
-              wellness & education programs.
-            </p>
-            <p>
-              Watch the interview with our founder,{" "}
-              <strong>Quynh Chau Stone</strong>, as she shares her journey and
-              mission!
+              programs and initiatives! The NBC5 segment highlights Serving
+              Hope, Juice for Hope, and our wellness & education programs. Watch
+              the interview with our founder, <Bold>Quynh Chau Stone</Bold>, as
+              she shares her journey and mission!
             </p>
           </MediaCard>
         </div>
@@ -49,13 +43,12 @@ export default function MediaDescriptionSection() {
           </Heading>
 
           <p>
-            In this two-part interview, founder{" "}
-            <strong>Quynh Chau Stone</strong> reflects on the remarkable growth
-            and mission of The Source of Hope. She highlights key milestones,
-            hunger relief efforts, healthcare access, educational empowerment,
-            and the organization's deep community impact. She also discusses
-            challenges, development, and future initiatives while emphasizing
-            the dedication of her team.
+            In this two-part interview, founder <Bold>Quynh Chau Stone</Bold>{" "}
+            reflects on the remarkable growth and mission of The Source of Hope.
+            She highlights key milestones, hunger relief efforts, healthcare
+            access, educational empowerment, and the organization's deep
+            community impact. She also discusses challenges, development, and
+            future initiatives while emphasizing the dedication of her team.
           </p>
 
           <MediaCard
@@ -63,10 +56,10 @@ export default function MediaDescriptionSection() {
             mediaID="lypvdQjpe1w"
             reverse={true}>
             <p>
-              Part 1 features our founder <strong>Quynh Chau Stone</strong>{" "}
-              sharing insights into the mission, key milestones, and community
-              impact of The Source of Hope, including essential efforts in
-              hunger relief, healthcare support, and empowerment programs.
+              Part 1 features our founder <Bold>Quynh Chau Stone</Bold> sharing
+              insights into the mission, key milestones, and community impact of
+              The Source of Hope, including essential efforts in hunger relief,
+              healthcare support, and empowerment programs.
             </p>
           </MediaCard>
 
@@ -89,7 +82,7 @@ export default function MediaDescriptionSection() {
 
           <p>
             The Source of Hope's 5-Year Anniversary Celebration features our
-            founder <strong>Quynh Chau Stone</strong> reflecting on milestones,
+            founder <Bold>Quynh Chau Stone</Bold> reflecting on milestones,
             testimonials, and heartfelt moments of gratitude. This celebration
             honors volunteers, donors, and partners who have contributed to our
             journey and community impact. It is both a reflection on past
@@ -114,20 +107,19 @@ export default function MediaDescriptionSection() {
             </span>
           </Heading>
           <p>
-            In this special interview on <strong>The Fielder Report</strong>,
-            host Kathy Fielder speaks with our founder{" "}
-            <strong>Quynh Chau Stone</strong> about her life, philanthropy, and
-            the driving purpose behind The Source of Hope. The conversation
-            touches on pivotal experiences, including her escape from Vietnam,
-            her heart for service, and the creation of programs supporting
-            health, education, and community empowerment. The report features:
-            Stone International Wellness Center, Heart for Philanthropy, The
-            Source of Hope, The Escape from Vietnam, and Give to The Source of
-            Hope
+            In this special interview on <Bold>The Fielder Report</Bold>, host
+            Kathy Fielder speaks with our founder <Bold>Quynh Chau Stone</Bold>{" "}
+            about her life, philanthropy, and the driving purpose behind The
+            Source of Hope. The conversation touches on pivotal experiences,
+            including her escape from Vietnam, her heart for service, and the
+            creation of programs supporting health, education, and community
+            empowerment. The report features: Stone International Wellness
+            Center, Heart for Philanthropy, The Source of Hope, The Escape from
+            Vietnam, and Give to The Source of Hope
           </p>
           <MediaCard title="Fielder Interview" mediaID="oRHcHLkQkDM">
             <p>
-              Listen to founder <strong>Quynh Chau Stone</strong> share powerful
+              Listen to founder <Bold>Quynh Chau Stone</Bold> share powerful
               stories of resilience, purpose, and compassion. This interview
               gives a deeper look into her journey, her vision, and her impact
               through The Source of Hope.

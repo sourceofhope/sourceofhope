@@ -31,7 +31,7 @@ export default function ConnectMapSection() {
     return true;
   };
   return (
-    <PageSection className="justify-items-between grid md:grid-cols-[9fr_4fr] gap-10 relative m-0 text-sm md:text-md lg:text-lg">
+    <PageSection className="justify-items-between grid md:grid-cols-[9fr_4fr] gap-10 items-center relative m-0 text-sm md:text-md lg:text-lg py-5">
       <article className="w-full grid gap-5 row-start-2 md:row-start-auto">
         <iframe
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3222.689727867567!2d-96.7169406!3d33.03989449999999!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x864c185a0bc47b6b%3A0x6ed25b35d24b54f1!2sThe%20Source%20of%20Hope!5e1!3m2!1sen!2sus!4v1763741256946!5m2!1sen!2sus"
@@ -78,10 +78,6 @@ export default function ConnectMapSection() {
       </article>
       <article className="w-full grid gap-5 row-start-1 md:row-start-auto">
         <Title className="w-full text-left">Contact Us</Title>
-        <p className="text-sm md:text-md">
-          We'd love to hear from you! Contact us by dropping us a message below,
-          and we'll get back to you soon.
-        </p>
         <form className="flex flex-col w-full gap-1">
           <Input
             title="First name"

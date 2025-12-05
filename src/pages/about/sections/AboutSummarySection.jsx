@@ -3,6 +3,7 @@ import { HighlightedText } from "../../../components/ui/expressive/ExpressiveTex
 
 import ExpressiveLink from "../../../components/ui/expressive/ExpressiveLink";
 import Title from "../../../components/ui/text/Title";
+import Bold from "../../../components/ui/text/Bold";
 
 export default function AboutSummarySection() {
   return (
@@ -12,10 +13,10 @@ export default function AboutSummarySection() {
       </Title>
       <div className="text-sm md:text-md lg:text-lg grid gap-5 text-neutral-600">
         <p>
-          <strong className="font-semibold">
+          <Bold>
             At The Source of Hope, we see every person’s potential—even in the
             face of hardship.
-          </strong>{" "}
+          </Bold>{" "}
           Our mission is rooted in compassion and community, offering more than
           just services—we offer dignity, purpose, and a path forward. Through
           holistic wellness and a deep belief in second chances, we uplift those
