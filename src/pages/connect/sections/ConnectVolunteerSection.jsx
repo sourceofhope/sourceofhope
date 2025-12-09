@@ -1,4 +1,4 @@
-import Button from "../../../components/ui/Button";
+import { AnchorButton } from "../../../components/ui/Button";
 import Carousel from "../../../components/ui/Carousel";
 import Bold from "../../../components/ui/text/Bold";
 import Heading from "../../../components/ui/text/Heading";
@@ -42,7 +42,7 @@ export default function ConnectMapSection() {
                 November 23, 2025 · Plano, TX
               </p>
             </div>
-            <Button text="Register Now" />
+            <AnchorButton text="Register Now" />
           </div>
         </MajorEventCard>
         <Heading>Recurring Events</Heading>
@@ -95,7 +95,8 @@ export default function ConnectMapSection() {
 
 function CarouselCard({ title, date, location, summary, src, alt, href }) {
   return (
-    <div
+    <a
+      href={href}
       className="
 		relative h-full
 		shrink-0
@@ -117,10 +118,10 @@ function CarouselCard({ title, date, location, summary, src, alt, href }) {
         </div>
         <div className="flex flex-col gap-2">
           <p>{summary}</p>
-          <Button text="Register Now" />
+          <AnchorButton text="Register Now" />
         </div>
       </div>
-    </div>
+    </a>
   );
 }
 

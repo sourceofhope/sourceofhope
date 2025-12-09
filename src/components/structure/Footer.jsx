@@ -5,7 +5,7 @@ import ParallaxLayer from "../ui/parallax/ParallaxLayer";
 import Favicon from "../ui/Favicon";
 import { useLocation } from "react-router-dom";
 import { CANONICAL } from "../../routes";
-import Button from "../ui/Button";
+import { LinkButton } from "../ui/Button";
 
 export default function Footer() {
   const location = useLocation();
@@ -161,7 +161,9 @@ function FooterCard() {
           wellness tips, and community updates right to your inbox by
           subscribing to our newsletter.
         </p>
-        <Button text="SUBSCRIBE" />
+        <div className="w-fit">
+          <LinkButton className="w-fit px-10 py-5" text="SUBSCRIBE" />
+        </div>
       </div>
 
       <p className="text-sm text-neutral-600 italic">

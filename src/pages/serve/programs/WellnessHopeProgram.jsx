@@ -4,10 +4,9 @@ import {
   useHeaderFlag,
 } from "../../../components/structure/Header";
 import { useEffect } from "react";
-import ExpressiveAnchor from "../../../components/ui/expressive/ExpressiveAnchor";
 import Heading from "../../../components/ui/text/Heading";
 import Title from "../../../components/ui/text/Title";
-import Button from "../../../components/ui/Button";
+import { AnchorButton } from "../../../components/ui/Button";
 
 import { CANONICAL_URL } from "../../../routes";
 
@@ -81,7 +80,7 @@ export default function WellnessHopeProgram() {
             haircuts to senior citizens 65+, teachers, fire fighters, police
             officers, and veterans every month
           </p>
-          <Button text="APPLY" className="block md:hidden" />
+          <AnchorButton text="APPLY" className="block md:hidden" />
         </article>
         <article className="grid gap-5">
           <Title>Our Services</Title>
@@ -147,7 +146,7 @@ export default function WellnessHopeProgram() {
                   </div>
                 </div>
               </div>
-              <Button text="APPLY" />
+              <AnchorButton text="APPLY" />
             </div>
           </div>
         </article>

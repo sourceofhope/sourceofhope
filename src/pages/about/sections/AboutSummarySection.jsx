@@ -4,6 +4,7 @@ import { HighlightedText } from "../../../components/ui/expressive/ExpressiveTex
 import ExpressiveLink from "../../../components/ui/expressive/ExpressiveLink";
 import Title from "../../../components/ui/text/Title";
 import Bold from "../../../components/ui/text/Bold";
+import { LinkButton } from "../../../components/ui/Button";
 
 export default function AboutSummarySection() {
   return (
@@ -36,15 +37,18 @@ export default function AboutSummarySection() {
         </p>
       </div>
       <div className="flex flex-col lg:flex-row justify-items-center gap-5 text-center text-sm md:text-md">
-        <ExpressiveLink className="p-5 rounded-2xl bg-neutral-200 hover:bg-neutral-300 duration-500 transition-colors">
-          Apply for Emerging Professional
-        </ExpressiveLink>
-        <ExpressiveLink className="p-5 rounded-2xl bg-neutral-200 hover:bg-neutral-300 duration-500 transition-colors">
-          Volunteer for an Event
-        </ExpressiveLink>
-        <ExpressiveLink className="p-5 rounded-2xl bg-neutral-200 hover:bg-neutral-300 duration-500 transition-colors">
-          Become a Community Sponsor
-        </ExpressiveLink>
+        <LinkButton
+          className="w-fit px-10 py-5 text-neutral-950 justify-between bg-neutral-200 hover:bg-neutral-300"
+          text="Apply for Emerging Professional"
+        />
+        <LinkButton
+          className="w-fit px-10 py-5 text-neutral-950 justify-between bg-neutral-200 hover:bg-neutral-300"
+          text="Volunteer for an Event"
+        />
+        <LinkButton
+          className="w-fit px-10 py-5 text-neutral-950 justify-between bg-neutral-200 hover:bg-neutral-300"
+          text="Become a Community Sponsor"
+        />
       </div>
     </PageSection>
   );

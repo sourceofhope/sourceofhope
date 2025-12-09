@@ -11,7 +11,7 @@ import Heading from "../../../components/ui/text/Heading";
 import ExpressiveCard from "../../../components/ui/expressive/ExpressiveCard";
 import { CANONICAL_URL } from "../../../routes";
 
-import Button from "../../../components/ui/Button";
+import { AnchorButton } from "../../../components/ui/Button";
 
 export default function EducationHopeProgram() {
   const { setIsBlocking } = useHeaderFlag();
@@ -234,8 +234,8 @@ export default function EducationHopeProgram() {
                 </Carousel>
               </div>
               <div className="flex flex-col gap-3 w-full">
-                <Button text="GET TUTORING" />
-                <Button text="JOIN OUR TUTORS" />
+                <AnchorButton text="GET TUTORING" />
+                <AnchorButton text="JOIN OUR TUTORS" />
               </div>
             </div>
           </div>

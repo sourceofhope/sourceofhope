@@ -3,6 +3,7 @@ import { BanknotesIcon } from "@heroicons/react/20/solid";
 import { ServingCard } from "./HomeServingSection";
 import { HomeContent } from "../HomePage";
 import Title from "../../../components/ui/text/Title";
+import { AnchorButton } from "../../../components/ui/Button";
 
 export default function HomeDonationSection() {
   return (
@@ -15,9 +16,9 @@ export default function HomeDonationSection() {
           Your generosity helps us bless the communities surrounding The Source
           of Hope with love, support, and transformation.
         </p>
-        <button className="border-5 rounded-2xl font-bold w-fit shadow-sm hover:shadow-lg shadow-accent-500/70 bg-accent-500 border-accent-500 text-neutral-50/75 duration-500 hover:text-neutral-50/95 opacity-85 hover:opacity-100 transition-[shadow_colors]">
-          <ExpressiveLink className="px-10 py-5">DONATE</ExpressiveLink>
-        </button>
+        <div className="w-fit">
+          <AnchorButton className="w-fit px-10 py-5" text="DONATE" />
+        </div>
       </article>
     </HomeContent>
   );

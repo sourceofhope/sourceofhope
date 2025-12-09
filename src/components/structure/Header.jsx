@@ -13,6 +13,7 @@ export default function Header({ isBlocking }) {
 
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [banner, setBanner] = useState(true);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 0);
@@ -22,44 +23,72 @@ export default function Header({ isBlocking }) {
   }, []);
 
   return (
-    <header
-      className={`backdrop-filter fixed top-0 left-0 right-0 z-50 w-full overflow-hidden transition-[height_backdrop] duration-500 border-b-4 md:border-none
-        ${
-          open
-            ? `h-85 md:h-25 md:backdrop-blur-none backdrop-blur-sm ${
-                isHomePage || isBlocking
-                  ? "border-primary-800/100"
-                  : "border-neutral-50"
-              }`
-            : "h-25 backdrop-blur-none border-none"
-        }
-        ${
-          scrolled
-            ? `bg-primary-800 text-neutral-50 border-transparent`
-            : `bg-transparent ${
-                isHomePage || isBlocking
-                  ? "text-primary-800"
-                  : "text-neutral-50"
-              }`
-        }`}>
-      <section className="flex w-full h-25 items-center justify-between px-5 lg:px-35">
-        <Favicon className="w-[60px] h-[60px]" />
-        <nav className="hidden md:flex gap-5">
+    <>
+      {true ? (
+        <HeaderBanner
+          text="Donate to The Source of Hope Today! 🎉"
+          open={banner}
+          setOpen={setBanner}
+        />
+      ) : null}
+      {isBlocking && banner ? <div className="h-10"></div> : null}
+      <header
+        className={`backdrop-filter fixed ${
+          banner ? "top-10" : "top-0"
+        } left-0 right-0 z-50 w-full overflow-hidden transition-[height_backdrop] duration-500 border-b-4 md:border-none
+          ${
+            open
+              ? `h-85 md:h-25 md:backdrop-blur-none backdrop-blur-sm ${
+                  isHomePage || isBlocking
+                    ? "border-primary-800/100"
+                    : "border-neutral-50"
+                }`
+              : "h-25 backdrop-blur-none border-none"
+          }
+          ${
+            scrolled
+              ? `bg-primary-800 text-neutral-50 border-transparent`
+              : `bg-transparent ${
+                  isHomePage || isBlocking
+                    ? "text-primary-800"
+                    : "text-neutral-50"
+                }`
+          }`}>
+        <section className="flex w-full h-25 items-center justify-between px-5 lg:px-35">
+          <Favicon className="w-[60px] h-[60px]" />
+          <nav className="hidden md:flex gap-5">
+            <HeaderNavigator />
+          </nav>
+          <HeaderMenu open={open} setOpen={setOpen} />
+        </section>
+        <nav
+          className={`${
+            open
+              ? "opacity-100 pointer-events-auto"
+              : "opacity-0 pointer-events-none"
+          } will-change-[opacity] transition-opacity duration-500 ease-out md:hidden flex flex-col justify-end items-center px-5 h-fit`}
+          aria-hidden={!open}>
           <HeaderNavigator />
         </nav>
-        <HeaderMenu open={open} setOpen={setOpen} />
-      </section>
-      <nav
-        className={`${
-          open
-            ? "opacity-100 pointer-events-auto"
-            : "opacity-0 pointer-events-none"
-        } will-change-[opacity] transition-opacity duration-500 ease-out md:hidden flex flex-col justify-end items-center px-5 h-fit`}
-        aria-hidden={!open}>
-        <HeaderNavigator />
-      </nav>
-    </header>
+      </header>
+    </>
   );
+}
+
+function HeaderBanner({ href, text, open, setOpen }) {
+  return open ? (
+    <div className="flex gap-3 justify-between md:justify-center h-10 items-center px-5 lg:px-35 bg-accent-500 border-y-2 text-accent-800 border-accent-600 fixed top-0 left-0 right-0 z-50 w-full overflow-hidden">
+      <a href={href} className="hover:underline">
+        {text}
+      </a>
+      <button
+        className="justify-self-end"
+        onClick={() => setOpen((open) => false)}
+        aria-expanded={open}>
+        <XMarkIcon className="w-[20px] h-[20px]" />
+      </button>
+    </div>
+  ) : null;
 }
 
 function HeaderMenu({ open, setOpen }) {
@@ -70,9 +99,9 @@ function HeaderMenu({ open, setOpen }) {
       aria-expanded={open}
       aria-label={open ? "Close menu" : "Open menu"}>
       {open ? (
-        <XMarkIcon className="w-[16px] h-[16px]" aria-hidden="true" />
+        <XMarkIcon className="w-[20px] h-[20px]" aria-hidden="true" />
       ) : (
-        <Bars3Icon className="w-[16px] h-[16px]" aria-hidden="true" />
+        <Bars3Icon className="w-[20px] h-[20px]" aria-hidden="true" />
       )}
     </button>
   );

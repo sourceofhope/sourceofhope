@@ -11,7 +11,7 @@ export default function HomePublicationsSection() {
 
   return (
     <HomeSection>
-      <div className="grid grid-flow-row w-full md:grid-cols-[1fr_1fr] items-center gap-5">
+      <div className="grid grid-flow-row w-full md:grid-cols-[1fr_1fr] items-center gap-5 text-sm md:text-md lg:text-lg">
         <article className="grid gap-5 justify-items-start">
           <HighlightedText className="w-fit self-center md:self-auto">
             <Title>LATEST UPDATES</Title>
@@ -23,7 +23,7 @@ export default function HomePublicationsSection() {
             aliquip ex ea commodo consequat.
           </p>
           <button className="w-fit text-neutral-600">
-            <ExpressiveLink className="text-sm font-semibold" to="">
+            <ExpressiveLink className="font-semibold" to="">
               LEARN MORE
             </ExpressiveLink>
           </button>

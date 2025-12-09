@@ -3,7 +3,7 @@ import Heading from "../../../components/ui/text/Heading";
 import Title from "../../../components/ui/text/Title";
 import PageSection from "../../PageSection";
 
-export default function MediaDescriptionSection() {
+export default function MediaPressSection() {
   return (
     <PageSection className="justify-items-center grid gap-10 relative m-0 text-sm md:text-md lg:text-lg">
       <article className="grid gap-5">
@@ -74,12 +74,9 @@ export default function MediaDescriptionSection() {
         </div>
         <div className="flex flex-col gap-5">
           <Heading>
-            <span className="hidden md:inline">
-              The Source of Hope - 5-Year
-            </span>{" "}
+            <span className="hidden md:inline">The Source of Hope: 5-Year</span>{" "}
             Anniversary Celebration
           </Heading>
-
           <p>
             The Source of Hope's 5-Year Anniversary Celebration features our
             founder <Bold>Quynh Chau Stone</Bold> reflecting on milestones,

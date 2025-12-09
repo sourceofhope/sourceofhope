@@ -1,8 +1,7 @@
 import Title from "../../../components/ui/text/Title";
 import PageSection from "../../PageSection";
 import Heading from "../../../components/ui/text/Heading";
-import ExpressiveAnchor from "../../../components/ui/expressive/ExpressiveAnchor";
-import Button from "../../../components/ui/Button";
+import { AnchorButton } from "../../../components/ui/Button";
 import Bold from "../../../components/ui/text/Bold";
 
 export default function ConnectMapSection() {
@@ -77,7 +76,7 @@ export default function ConnectMapSection() {
                 real change in the community.
               </p>
             </div>
-            <Button text="APPLY" />
+            <AnchorButton text="APPLY" />
           </article>
         </article>
       </article>
