@@ -34,12 +34,12 @@ export default function ConnectMapSection() {
           alt="Hope Run for Hunger event photo">
           <div className="grid md:grid-cols-[7fr_3fr] gap-3 items-end">
             <div className="flex flex-col gap-3">
+              <p className="text-sm items-center h-fit text-neutral-600 rounded-full border-2 border-neutral-500 bg-neutral-300 w-fit px-3 py-1">
+                November 23, 2025 · Plano, TX
+              </p>
               <p className="text-sm md:text-md">
                 Join us in a powerful community run supporting families across
                 North Texas.
-              </p>
-              <p className="text-sm items-center h-fit text-neutral-600 rounded-full border-2 border-neutral-500 bg-neutral-300 w-fit px-3 py-1">
-                November 23, 2025 · Plano, TX
               </p>
             </div>
             <AnchorButton text="Register Now" />

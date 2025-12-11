@@ -38,15 +38,15 @@ export default function AboutSummarySection() {
       </div>
       <div className="flex flex-col lg:flex-row justify-items-center gap-5 text-center text-sm md:text-md">
         <LinkButton
-          className="w-fit px-10 py-5 text-neutral-950 justify-between bg-neutral-200 hover:bg-neutral-300"
+          className="w-fit text-neutral-950 justify-between bg-neutral-200 hover:bg-neutral-300"
           text="Apply for Emerging Professional"
         />
         <LinkButton
-          className="w-fit px-10 py-5 text-neutral-950 justify-between bg-neutral-200 hover:bg-neutral-300"
+          className="w-fit text-neutral-950 justify-between bg-neutral-200 hover:bg-neutral-300"
           text="Volunteer for an Event"
         />
         <LinkButton
-          className="w-fit px-10 py-5 text-neutral-950 justify-between bg-neutral-200 hover:bg-neutral-300"
+          className="w-fit text-neutral-950 justify-between bg-neutral-200 hover:bg-neutral-300"
           text="Become a Community Sponsor"
         />
       </div>

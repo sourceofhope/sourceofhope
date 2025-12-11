@@ -15,7 +15,7 @@ export default function ServeDonationSection() {
           of Hope with love, support, and transformation.
         </p>
         <div className="w-fit">
-          <AnchorButton className="w-fit px-10 py-5" text="DONATE" />
+          <AnchorButton className="w-fit" text="DONATE" />
         </div>
       </article>
     </section>

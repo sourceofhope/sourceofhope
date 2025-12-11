@@ -41,10 +41,10 @@ export default function HomeIntroductionSection() {
         </p>
         <div className="flex gap-5 flex-col md:flex-row">
           <div className="w-fit">
-            <LinkButton className="w-fit px-10 py-5" text="DONATE" />
+            <LinkButton className="w-fit" text="DONATE" />
           </div>
           <div className="w-fit">
-            <LinkButton className="w-fit px-10 py-5" text="LEARN MORE" />
+            <LinkButton className="w-fit" text="LEARN MORE" />
           </div>
         </div>
       </div>

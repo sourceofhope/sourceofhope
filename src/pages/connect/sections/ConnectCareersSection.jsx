@@ -76,7 +76,7 @@ export default function ConnectMapSection() {
                 real change in the community.
               </p>
             </div>
-            <AnchorButton text="APPLY" />
+            <AnchorButton className=" px-10 py-5" text="APPLY" />
           </article>
         </article>
       </article>

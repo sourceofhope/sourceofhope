@@ -161,9 +161,7 @@ function FooterCard() {
           wellness tips, and community updates right to your inbox by
           subscribing to our newsletter.
         </p>
-        <div className="w-fit">
-          <LinkButton className="w-fit px-10 py-5" text="SUBSCRIBE" />
-        </div>
+        <LinkButton className="w-fit" text="SUBSCRIBE" />
       </div>
 
       <p className="text-sm text-neutral-600 italic">
