@@ -4,7 +4,8 @@ import PageHeader from "../PageHeader";
 import { Helmet } from "react-helmet";
 import MediaPressSection from "./sections/MediaPressSection";
 import MediaNewsletterSection from "./sections/MediaNewsletterSection";
-import MediaShowSection from "./sections/MediaShowSection";
+import MediaPodcastSection from "./sections/MediaPodcastSection";
+import MediaBlogPage from "./sections/MediaBlogSection";
 
 export default function MediaPage() {
   return (
@@ -18,9 +19,10 @@ export default function MediaPage() {
           OUR CONTRIBUTION.
         </p>
       </PageHeader>
+      <MediaBlogPage />
       <MediaNewsletterSection />
+      <MediaPodcastSection />
       <MediaPressSection />
-      <MediaShowSection />
     </>
   );
 }

@@ -99,15 +99,19 @@ function CarouselCard({ src, href, title, caption }) {
     flex-[0_0_calc(100%)] 
     md:flex-[0_0_calc(50%-0.625rem)] 
     lg:flex-[0_0_calc(33.333%-0.833rem)]
-    group overflow-hidden rounded-2xl text-accent-background aspect-square border-4 border-neutral-400
+    group overflow-hidden rounded-2xl text-accent-background aspect-square
   ">
       <img
         src={src}
         alt={caption}
         className="inset-0 w-full h-full object-cover transition-transform brightness-[.8] contrast-[1.1]"
       />
-      <div className="absolute bottom-0 left-0 w-full p-5 rounded-b-2xl flex flex-col justify-start bg-neutral-50">
-        <h2 className="md:line-clamp-1 text-md duration-750 transition-all font-semibold text-center text-neutral-950">
+      <div
+        className="absolute bottom-0 left-0 w-full p-5 
+                bg-gradient-to-t from-black/90 to-transparent
+                rounded-xl flex flex-col justify-start"></div>
+      <div className="absolute bottom-0 left-0 w-full p-5 rounded-b-2xl flex flex-col justify-start">
+        <h2 className="md:line-clamp-1 text-md duration-750 transition-all font-semibold text-center text-neutral-50">
           {title}
         </h2>
       </div>

@@ -7,7 +7,7 @@ import Bold from "../../../components/ui/text/Bold";
 export default function ConnectMapSection() {
   return (
     <PageSection className="justify-items-center grid gap-10 relative m-0 text-sm md:text-md lg:text-lg">
-      <article className="w-full grid gap-5 row-start-2 md:row-start-auto text-neutral-600">
+      <article className="w-full grid gap-5 row-start-2 md:row-start-auto text-neutral-950">
         <Title className="text-neutral-950">Careers</Title>
         <p>
           At The Source of Hope, we are dedicated to offering meaningful careers
@@ -37,7 +37,9 @@ export default function ConnectMapSection() {
               Career Programs
             </Heading>
             <div className="grid gap-5 md:grid-cols-[2fr_7fr]">
-              <span className="font-medium">Emerging Professional</span>
+              <span className="font-medium text-neutral-950">
+                Emerging Professional
+              </span>
               <span className="text-neutral-600">
                 Gain experience in professional settings, working on projects
                 related to IT, logistics, executive assistance, and
@@ -46,7 +48,7 @@ export default function ConnectMapSection() {
               </span>
             </div>
             <div className="grid gap-5 md:grid-cols-[2fr_7fr]">
-              <span className="font-medium">Volunteers</span>
+              <span className="font-medium text-neutral-950">Volunteers</span>
               <span className="text-neutral-600">
                 Fulfill community service hours while helping those in need Open
                 to students, professionals, and anyone eager to give back to the
@@ -56,7 +58,7 @@ export default function ConnectMapSection() {
               </span>
             </div>
             <div className="grid gap-5 md:grid-cols-[2fr_7fr]">
-              <span className="font-medium">Mentors</span>
+              <span className="font-medium text-neutral-950">Mentors</span>
               <span className="text-neutral-600">
                 Provide guidance and support to emerging professionals,
                 assisting with their career development and growth.
