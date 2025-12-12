@@ -5,9 +5,10 @@ export default function Input({
   htmlFor,
   type,
   onChange = (event) => {
-    false;
+    return true;
   },
   className,
+  border = true,
 }) {
   const [isValid, setIsValid] = useState(true);
 
@@ -18,8 +19,8 @@ export default function Input({
       } ${className}`}>
       <label
         htmlFor={htmlFor}
-        className="text-sm md:text-md translate-3.5 md:translate-4 px-1 z-10 w-fit select-none after:content-[''] after:absolute after:left-0 after:top-[7px]
-		after:block after:h-[5px] after:w-full font-semibold
+        className="text-sm md:text-md translate-3.5 md:translate-4 px-1 z-10 w-fit select-none after:content-[''] after:absolute after:left-0 after:top-[11px]
+		after:block after:h-1 after:w-full font-semibold
 		after:bg-neutral-50 after:-z-10 after:pointer-events-none">
         {title}
       </label>
@@ -27,8 +28,10 @@ export default function Input({
         name={htmlFor}
         type={type}
         onChange={(event) => setIsValid(onChange(event))}
-        className={`rounded-2xl border-1 w-full h-[4ch] px-2 ${
-          isValid ? "border-neutral-950" : "border-red-600"
+        className={`bg-neutral-50 rounded-2xl border-0 shadow-sm w-full h-[4ch] px-2 select-none ${
+          isValid
+            ? `${border ? "border-2" : "border-0"} border-neutral-950`
+            : "border-red-600"
         }`}
       />
       <p className={isValid ? "invisible select-none" : "visible"}>

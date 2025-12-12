@@ -80,7 +80,7 @@ function HomeResourceCard({ title, caption, src, to }) {
       <section
         className={`
     fixed inset-0 z-50 left-0 bottom-0 flex items-center justify-center
-    bg-black/80 md:hidden p-5
+    bg-black/50 md:hidden p-5
     transition-opacity duration-700 h-screen w-screen
     ${
       active

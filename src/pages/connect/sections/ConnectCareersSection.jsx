@@ -3,6 +3,8 @@ import PageSection from "../../PageSection";
 import Heading from "../../../components/ui/text/Heading";
 import { AnchorButton } from "../../../components/ui/Button";
 import Bold from "../../../components/ui/text/Bold";
+import Blockquote from "../../../components/ui/text/Blockquote";
+import { HighlightedText } from "../../../components/ui/expressive/ExpressiveText";
 
 export default function ConnectMapSection() {
   return (
@@ -16,12 +18,12 @@ export default function ConnectMapSection() {
           looking to fulfill service hours, a mentor eager to guide the next
           generation, or a passionate individual ready to volunteer.
         </p>
-        <p>
-          We provide <Bold>real-world opportunities</Bold> that help you build{" "}
-          <Bold>your future</Bold> while serving others. Join a movement driven
-          by purpose, empowerment, and heart—and become a part of the change we
-          create together every day.
-        </p>
+        <Blockquote className="border-accent-500 text-balance">
+          Join a movement driven by{" "}
+          <HighlightedText>purpose, empowerment, and heart</HighlightedText>
+          —where emerging professionals, mentors, and volunteers grow together
+          while creating lasting impact in the communities we serve.
+        </Blockquote>
         <p>
           Interns gain real-world experience by working on meaningful projects
           that directly impact lives and help shape their future careers. They
@@ -32,14 +34,12 @@ export default function ConnectMapSection() {
           community through work that <Bold>truly makes a difference.</Bold>
         </p>
         <article className="grid gap-5">
-          <article className="bg-neutral-50 rounded-2xl shadow-sm p-5 grid gap-3 w-full">
+          <article className="bg-neutral-50 rounded-2xl shadow-sm p-5 grid gap-5 w-full">
             <Heading className="border-b-2 border-neutral-300 pb-2">
               Career Programs
             </Heading>
             <div className="grid gap-5 md:grid-cols-[2fr_7fr]">
-              <span className="font-medium text-neutral-950">
-                Emerging Professional
-              </span>
+              <span className="font-medium">Emerging Professional</span>
               <span className="text-neutral-600">
                 Gain experience in professional settings, working on projects
                 related to IT, logistics, executive assistance, and
@@ -48,7 +48,7 @@ export default function ConnectMapSection() {
               </span>
             </div>
             <div className="grid gap-5 md:grid-cols-[2fr_7fr]">
-              <span className="font-medium text-neutral-950">Volunteers</span>
+              <span className="font-medium ">Volunteers</span>
               <span className="text-neutral-600">
                 Fulfill community service hours while helping those in need Open
                 to students, professionals, and anyone eager to give back to the
@@ -58,7 +58,7 @@ export default function ConnectMapSection() {
               </span>
             </div>
             <div className="grid gap-5 md:grid-cols-[2fr_7fr]">
-              <span className="font-medium text-neutral-950">Mentors</span>
+              <span className="font-medium ">Mentors</span>
               <span className="text-neutral-600">
                 Provide guidance and support to emerging professionals,
                 assisting with their career development and growth.
@@ -72,6 +72,13 @@ export default function ConnectMapSection() {
                 partnered universities. Eligible students may be compensated
                 based on project needs and available scholarship funding.
               </p>
+              <Blockquote className="border-accent-500 text-balance">
+                <HighlightedText>
+                  Paid opportunities are available only for eligible students
+                </HighlightedText>{" "}
+                through our <Bold>partnered universities</Bold>, supporting both
+                professional growth and meaningful community impact.
+              </Blockquote>
               <p>
                 Join The Source of Hope and grow with purpose. Whether you’re
                 guiding others or learning new skills, your time with us creates

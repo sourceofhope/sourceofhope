@@ -3,14 +3,14 @@ import { ArrowRightIcon, XMarkIcon } from "@heroicons/react/20/solid";
 
 import Carousel from "../../../components/ui/Carousel";
 import PageSection from "../../PageSection";
-import Heading from "../../../components/ui/text/Heading";
+import Title from "../../../components/ui/text/Title";
 
 export default function AboutTeamSection() {
   return (
     <PageSection className="pt-5">
       <div className="grid gap-5">
         <div className="grid gap-5">
-          <Heading>Executive Board</Heading>
+          <Title>Board of Executives</Title>
           <Carousel>
             <CarouselCard
               name="Wesley A. Stone"
@@ -29,7 +29,189 @@ export default function AboutTeamSection() {
           </Carousel>
         </div>
         <div className="grid gap-5">
-          <Heading>Director Board</Heading>
+          <Title>Board of Directors</Title>
+          <Carousel>
+            <CarouselCard
+              name="Nicole Quynh Stone"
+              title="Co-founder & Public Relations Director"
+              caption="Quote Here"
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
+              href=""
+            />
+            <CarouselCard
+              name="Annelise Quynh Stone"
+              title="Director & Mentor"
+              caption="Quote Here"
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
+              href=""
+            />
+            <CarouselCard
+              name="Clara Montenegro"
+              title="Founding Class Member"
+              caption="Quote Here"
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
+              href=""
+            />
+          </Carousel>
+        </div>
+        <div className="grid gap-5">
+          <Title>Summer 2025</Title>
+          <Carousel>
+            <CarouselCard
+              name="Nicole Quynh Stone"
+              title="Co-founder & Public Relations Director"
+              caption="Quote Here"
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
+              href=""
+            />
+            <CarouselCard
+              name="Annelise Quynh Stone"
+              title="Director & Mentor"
+              caption="Quote Here"
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
+              href=""
+            />
+            <CarouselCard
+              name="Clara Montenegro"
+              title="Founding Class Member"
+              caption="Quote Here"
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
+              href=""
+            />
+          </Carousel>
+        </div>
+        <div className="grid gap-5">
+          <Title>Spring 2025</Title>
+          <Carousel>
+            <CarouselCard
+              name="Nicole Quynh Stone"
+              title="Co-founder & Public Relations Director"
+              caption="Quote Here"
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
+              href=""
+            />
+            <CarouselCard
+              name="Annelise Quynh Stone"
+              title="Director & Mentor"
+              caption="Quote Here"
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
+              href=""
+            />
+            <CarouselCard
+              name="Clara Montenegro"
+              title="Founding Class Member"
+              caption="Quote Here"
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
+              href=""
+            />
+          </Carousel>
+        </div>
+        <div className="grid gap-5">
+          <Title>Spring 2025 Advisors</Title>
+          <Carousel>
+            <CarouselCard
+              name="Nicole Quynh Stone"
+              title="Co-founder & Public Relations Director"
+              caption="Quote Here"
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
+              href=""
+            />
+            <CarouselCard
+              name="Annelise Quynh Stone"
+              title="Director & Mentor"
+              caption="Quote Here"
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
+              href=""
+            />
+            <CarouselCard
+              name="Clara Montenegro"
+              title="Founding Class Member"
+              caption="Quote Here"
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
+              href=""
+            />
+          </Carousel>
+        </div>
+        <div className="grid gap-5">
+          <Title>Fall 2024</Title>
+          <Carousel>
+            <CarouselCard
+              name="Nicole Quynh Stone"
+              title="Co-founder & Public Relations Director"
+              caption="Quote Here"
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
+              href=""
+            />
+            <CarouselCard
+              name="Annelise Quynh Stone"
+              title="Director & Mentor"
+              caption="Quote Here"
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
+              href=""
+            />
+            <CarouselCard
+              name="Clara Montenegro"
+              title="Founding Class Member"
+              caption="Quote Here"
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
+              href=""
+            />
+          </Carousel>
+        </div>
+        <div className="grid gap-5">
+          <Title>Summer 2024</Title>
+          <Carousel>
+            <CarouselCard
+              name="Nicole Quynh Stone"
+              title="Co-founder & Public Relations Director"
+              caption="Quote Here"
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
+              href=""
+            />
+            <CarouselCard
+              name="Annelise Quynh Stone"
+              title="Director & Mentor"
+              caption="Quote Here"
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
+              href=""
+            />
+            <CarouselCard
+              name="Clara Montenegro"
+              title="Founding Class Member"
+              caption="Quote Here"
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
+              href=""
+            />
+          </Carousel>
+        </div>
+        <div className="grid gap-5">
+          <Title>Spring 2024</Title>
+          <Carousel>
+            <CarouselCard
+              name="Nicole Quynh Stone"
+              title="Co-founder & Public Relations Director"
+              caption="Quote Here"
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
+              href=""
+            />
+            <CarouselCard
+              name="Annelise Quynh Stone"
+              title="Director & Mentor"
+              caption="Quote Here"
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
+              href=""
+            />
+            <CarouselCard
+              name="Clara Montenegro"
+              title="Founding Class Member"
+              caption="Quote Here"
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
+              href=""
+            />
+          </Carousel>
+        </div>
+        <div className="grid gap-5">
+          <Title>High School Intern</Title>
           <Carousel>
             <CarouselCard
               name="Nicole Quynh Stone"
@@ -100,7 +282,7 @@ function CarouselCard({ src, name, title, caption }) {
       <section
         className={`
     fixed inset-0 z-50 left-0 bottom-0 flex items-center justify-center
-    bg-black/80 md:hidden p-5
+    bg-black/50 md:hidden p-5
     transition-opacity duration-700 h-screen w-screen
     ${
       active

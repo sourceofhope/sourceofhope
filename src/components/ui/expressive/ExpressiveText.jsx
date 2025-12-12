@@ -94,8 +94,7 @@ export function HighlightedText({
     after:block after:h-1/2 after:[width:var(--hl-w)]
     after:bg-yellow-300 after:-z-10 after:pointer-events-none
     ${className}
-  `}
-    >
+  `}>
       <span className="relative z-10">{children}</span>
     </span>
   );

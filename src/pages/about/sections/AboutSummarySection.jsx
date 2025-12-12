@@ -5,6 +5,7 @@ import ExpressiveLink from "../../../components/ui/expressive/ExpressiveLink";
 import Title from "../../../components/ui/text/Title";
 import Bold from "../../../components/ui/text/Bold";
 import { LinkButton } from "../../../components/ui/Button";
+import Emphasis from "../../../components/ui/Emphasis";
 
 export default function AboutSummarySection() {
   return (
@@ -32,8 +33,8 @@ export default function AboutSummarySection() {
         <p>
           As an independent nonprofit, we receive no government funding—our
           impact is made possible entirely by generous hearts like yours. Stand
-          with us in building stronger, healthier communities—one life at a
-          time.
+          with us in building stronger, healthier communities—
+          <Emphasis>one life at a time.</Emphasis>
         </p>
       </div>
       <div className="flex flex-col lg:flex-row justify-items-center gap-5 text-center text-sm md:text-md">

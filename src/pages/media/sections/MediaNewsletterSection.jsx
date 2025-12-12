@@ -4,6 +4,8 @@ import PageSection from "../../PageSection";
 import Carousel from "../../../components/ui/Carousel";
 import { useState } from "react";
 import { ArrowRightIcon, XMarkIcon } from "@heroicons/react/20/solid";
+import Blockquote from "../../../components/ui/text/Blockquote";
+import { HighlightedText } from "../../../components/ui/expressive/ExpressiveText";
 
 export default function MediaNewsletterSection() {
   return (
@@ -12,12 +14,20 @@ export default function MediaNewsletterSection() {
       <article className="flex flex-col gap-5">
         <Heading>Stay Connected</Heading>
         <p>
-          Join our growing community by subscribing to The Source of Hope’s
+          Join our growing community by subscribing to The Source of Hop's
           newsletters! Receive inspiring stories, the latest updates, and
-          exclusive news directly in your inbox. Stay informed and be a part of
-          the change we’re creating. By subscribing, you’ll be the first to know
-          about our upcoming events, volunteer opportunities, and how you can
-          make a difference in the lives of those we serve.
+          exclusive news directly in your inbox.
+        </p>
+        <Blockquote className="border-accent-500 text-balance">
+          Our newsletter is <HighlightedText>completely free</HighlightedText>
+          —no spam, no pressure—just purpose-driven updates, stories of impact,
+          and opportunities to get involved.
+        </Blockquote>
+        <p>
+          Stay informed and be a part of the change we're creating. By
+          subscribing, you'll be the first to know about our upcoming events,
+          volunteer opportunities, and how you can make a difference in the
+          lives of those we serve.
         </p>
       </article>
       <article className="bg-neutral-50 rounded-2xl shadow-sm p-5 grid gap-2">
@@ -59,10 +69,12 @@ export default function MediaNewsletterSection() {
         <p>
           Stay connected with monthly and quarterly updates on The Source of
           Hope's projects, events, and stories of resilience from the lives
-          we've touched. You'll also receive opportunities to support our
-          mission through donations and volunteering. By signing up, you join a
-          compassionate community dedicated to creating hope and lasting change
-          together.
+          we've touched.
+        </p>
+        <p>
+          You'll also receive opportunities to support our mission through
+          donations and volunteering. By signing up, you join a compassionate
+          community dedicated to creating hope and lasting change together.
         </p>
         <Carousel>
           <CarouselCard

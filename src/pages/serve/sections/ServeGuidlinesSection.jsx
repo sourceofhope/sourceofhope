@@ -39,7 +39,7 @@ export default function ServeGuidelinesSection() {
           We value every volunteer and their contributions. To ensure a
           meaningful and productive experience:
         </p>
-        <ul className="list-disc pl-4">
+        <ul className="list-disc pl-5">
           <li>Arrive on time and be ready to help</li>
           <li>Actively participate in tasks assigned by our team</li>
           <li>
@@ -59,7 +59,7 @@ export default function ServeGuidelinesSection() {
           Closed-toe shoes are required for safety, and we suggest wearing
           clothing you don’t mind getting a little messy.
         </p>
-        <ul className="list-disc pl-4">
+        <ul className="list-disc pl-5">
           <li>Reusable water bottle to stay hydrated</li>
           <li>
             Weather-appropriate clothing (hat, sunscreen, or light jacket)
@@ -76,7 +76,7 @@ export default function ServeGuidelinesSection() {
           Signing up is simple! You can register through our online volunteer
           form or reach out to us directly by email.
         </p>
-        <ul className="list-disc pl-4">
+        <ul className="list-disc pl-5">
           <li>
             Visit{" "}
             <NavLink
@@ -126,7 +126,7 @@ export default function ServeGuidelinesSection() {
           volunteering, please let us know as soon as possible so we can offer
           your spot to someone else.
         </p>
-        <ul className="list-disc pl-4">
+        <ul className="list-disc pl-5">
           <li>Notify us at least 24-hours in advance if you can</li>
           <li>
             Email us at{" "}

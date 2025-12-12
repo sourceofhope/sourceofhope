@@ -2,6 +2,7 @@ import PageSection from "../../PageSection";
 import { HighlightedText } from "../../../components/ui/expressive/ExpressiveText";
 import Title from "../../../components/ui/text/Title";
 import Bold from "../../../components/ui/text/Bold";
+import Emphasis from "../../../components/ui/Emphasis";
 
 export default function AboutDescriptionSection() {
   return (
@@ -22,8 +23,8 @@ export default function AboutDescriptionSection() {
           <Bold>holistic health</Bold>, <Bold>wellness empowerment</Bold>, and{" "}
           <Bold>community support</Bold>—providing nutritious meals to the
           hungry, housing assistance for those in transition, job placement
-          opportunities, and educational scholarships that open doors to a
-          better future.
+          opportunities, and educational scholarships that open doors{" "}
+          <Emphasis>to a better future.</Emphasis>
         </p>
 
         <p>
@@ -34,7 +35,7 @@ export default function AboutDescriptionSection() {
           Entirely independent of government funding, our impact is driven by
           compassionate <Bold>volunteers</Bold>, <Bold>partners</Bold>, and{" "}
           <Bold>donors</Bold> who come together to build stronger, healthier
-          communities—one act of hope at a time.
+          communities—<Emphasis>one act of hope at a time.</Emphasis>
         </p>
       </div>
       <div className="md:hidden flex flex-col gap-5 text-sm text-neutral-600">
@@ -44,8 +45,9 @@ export default function AboutDescriptionSection() {
           —providing meals, housing help, job placement, and scholarships.
         </p>
         <p>
-          We focus on skills that last, from holistic health education to
-          outdoor training and entrepreneurial mentorship. Independent of
+          We focus on skills that last, from{" "}
+          <Emphasis>holistic health</Emphasis> education to outdoor training and
+          entrepreneurial <Emphasis>mentorship</Emphasis>. Independent of
           government funding, our impact is powered by volunteers, partners, and
           donors—
           <Bold>building stronger communities, one life at a time.</Bold>

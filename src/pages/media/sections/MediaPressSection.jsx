@@ -1,3 +1,4 @@
+import Blockquote from "../../../components/ui/text/Blockquote";
 import Bold from "../../../components/ui/text/Bold";
 import Heading from "../../../components/ui/text/Heading";
 import Title from "../../../components/ui/text/Title";
@@ -7,15 +8,29 @@ export default function MediaPressSection() {
   return (
     <PageSection className="justify-items-center grid gap-10 relative m-0 text-sm md:text-md lg:text-lg">
       <article className="grid gap-5">
-        <Title>Press Coverage</Title>
-        <p className="text-neutral-600">
-          The Source of Hope Press Page features our television appearances,
-          highlighting our mission and <Bold>impact in the community</Bold>.
-          Watch our media coverage to see how we are making a difference through
-          our <Bold>programs and initiatives!</Bold>
+        <Title>Our Press Coverage</Title>
+        <p className="">
+          The Source of Hope Press Page showcases our television and media
+          appearances, offering a closer look at how our mission comes to life
+          beyond words. Our media coverage tells the stories behind the
+          mission—showing how The Source of Hope transforms service into lasting
+          impact for individuals, families, and communities.
         </p>
+        <Blockquote className="border-accent-500 text-balance">
+          When our story is shared, so is the impact—bringing hope to
+          communities that need it most.
+        </Blockquote>
+        <p>
+          Through trusted news outlets and community features, we highlight the{" "}
+          <Bold>real impact we are making in the community</Bold>—from wellness
+          and holistic education to hunger relief and workforce development.
+          These stories reflect the heart of our programs, the people we serve,
+          and the partners who stand alongside us as we turn compassion into
+          action.
+        </p>
+
         <div className="flex flex-col gap-5">
-          <Heading>NBC5 Coverage</Heading>
+          <Title>NBC5 Coverage</Title>
           <p>
             The NBC5 segment spotlights The Source of Hope (TSOH), a nonprofit
             providing wellness, holistic healing education, and beauty industry
@@ -36,11 +51,11 @@ export default function MediaPressSection() {
           </MediaCard>
         </div>
         <div className="flex flex-col gap-5">
-          <Heading>
+          <Title>
             Quynh Chau Stone{" "}
             <span className="hidden md:inline">on The Source of Hope</span>{" "}
             Interview
-          </Heading>
+          </Title>
 
           <p>
             In this two-part interview, founder <Bold>Quynh Chau Stone</Bold>{" "}
@@ -73,10 +88,10 @@ export default function MediaPressSection() {
           </MediaCard>
         </div>
         <div className="flex flex-col gap-5">
-          <Heading>
+          <Title>
             <span className="hidden md:inline">The Source of Hope: 5-Year</span>{" "}
             Anniversary Celebration
-          </Heading>
+          </Title>
           <p>
             The Source of Hope's 5-Year Anniversary Celebration features our
             founder <Bold>Quynh Chau Stone</Bold> reflecting on milestones,
@@ -97,12 +112,12 @@ export default function MediaPressSection() {
           </MediaCard>
         </div>
         <div className="flex flex-col gap-5">
-          <Heading>
+          <Title>
             The Fielder Report{" "}
             <span className="hidden md:inline">
               - A Conversation with Quynh Chau Stone
             </span>
-          </Heading>
+          </Title>
           <p>
             In this special interview on <Bold>The Fielder Report</Bold>, host
             Kathy Fielder speaks with our founder <Bold>Quynh Chau Stone</Bold>{" "}
@@ -133,7 +148,7 @@ function MediaCard({ title, mediaID, reverse = false, children }) {
     <div
       className={`
         grid gap-5 items-center
-        border-4 border-neutral-300 rounded-2xl shadow-lg bg-neutral-50
+         rounded-2xl shadow-sm bg-neutral-50
         p-5
         md:grid-cols-2
         ${reverse ? "md:[&>*:first-child]:order-2" : ""}
@@ -150,8 +165,12 @@ function MediaCard({ title, mediaID, reverse = false, children }) {
         </div>
       </div>
       <div className="space-y-4 text-accent-700 leading-relaxed">
-        {title && <Title className="text-accent-800 ">{title}</Title>}
-        <div className="grid gap-3 text-sm md:text-md lg:text-lg">
+        {title && (
+          <Heading className="text-accent-800 border-b-2 border-neutral-500">
+            {title}
+          </Heading>
+        )}
+        <div className="grid gap-3 text-sm md:text-md lg:text-lg text-balance">
           {children}
         </div>
       </div>
