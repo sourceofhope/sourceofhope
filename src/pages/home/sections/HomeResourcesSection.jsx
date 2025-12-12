@@ -73,7 +73,7 @@ function HomeResourceCard({ title, caption, src, to }) {
         <HomeResourceCardInner src={src} caption={caption} title={title} />
       </button>
       <NavLink
-        to={CANONICAL.serve}
+        to={to}
         className="relative hidden md:block w-full h-full group overflow-hidden rounded-xl text-accent-background aspect-square">
         <HomeResourceCardInner src={src} caption={caption} title={title} />
       </NavLink>
@@ -128,7 +128,7 @@ function HomeResourceCardInner({ src, caption, title }) {
         <p
           className="text-sm hidden lg:block text-gray-200 mt-2 max-h-0 opacity-0 overflow-hidden
                   transition-[height_opacity] duration-750 text-left
-                  group-hover:max-h-70 group-hover:opacity-100">
+                  group-hover:max-h-70 group-hover:opacity-100 ease-in-out text-balance">
           {caption}
         </p>
       </div>

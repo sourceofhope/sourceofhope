@@ -44,7 +44,7 @@ export const CANONICAL = {
   outdoorHope: `${BASE}/serve/outdoorHope`,
   internationalHope: `${BASE}/serve/internationalHope`,
 
-  member: `${BASE}/member`,
+  member: `${BASE}/members`,
 };
 
 const BASE_URL = "https://thesourceofhope.org";
@@ -66,5 +66,5 @@ export const CANONICAL_URL = {
   outdoorHope: `${BASE_URL}/serve/outdoorHope`,
   internationalHope: `${BASE_URL}/serve/internationalHope`,
 
-  member: `${BASE}/member`,
+  member: `${BASE_URL}/members`,
 };
