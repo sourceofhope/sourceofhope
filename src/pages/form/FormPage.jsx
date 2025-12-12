@@ -8,6 +8,7 @@ import { useEffect } from "react";
 import FormDescriptionSection from "./sections/FormDescriptionSection";
 import FormInputSection from "./sections/FormInputSection";
 import FormShowcaseSection from "./sections/FormShowcaseSection";
+import Title from "../../components/ui/text/Title";
 
 export default function FormPage() {
   const { setIsBlocking } = useHeaderFlag();
@@ -58,9 +59,7 @@ export default function FormPage() {
       </Helmet>
       <section className="w-full md:justify-items-left items-center grid gap-5 pt-25 p-5 lg:px-35">
         <div className="grid gap-1 justify-self-start justify-start">
-          <h2 className="text-xlg md:text-xxlg text-balance font-urbanist">
-            Community Impact Form
-          </h2>
+          <Title>Members</Title>
 
           <h3 className="text-sm md:text-md text-accent-700 font-semibold uppercase">
             Become a Member. Be the Source of Hope.{" "}
