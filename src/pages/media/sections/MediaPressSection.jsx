@@ -3,6 +3,7 @@ import Bold from "../../../components/ui/text/Bold";
 import Heading from "../../../components/ui/text/Heading";
 import Title from "../../../components/ui/text/Title";
 import PageSection from "../../PageSection";
+import { HighlightedText } from "../../../components/ui/expressive/ExpressiveText";
 
 export default function MediaPressSection() {
   return (
@@ -16,11 +17,11 @@ export default function MediaPressSection() {
           mission—showing how The Source of Hope transforms service into lasting
           impact for individuals, families, and communities.
         </p>
-        <Blockquote className="border-accent-500 text-balance">
-          When our story is shared, so is the impact—bringing hope to
-          communities that need it most.
-        </Blockquote>
         <p>
+          When our story is shared, so is the impact—
+          <HighlightedText>
+            bringing hope to communities that need it most.
+          </HighlightedText>{" "}
           Through trusted news outlets and community features, we highlight the{" "}
           <Bold>real impact we are making in the community</Bold>—from wellness
           and holistic education to hunger relief and workforce development.

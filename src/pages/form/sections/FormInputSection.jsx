@@ -128,7 +128,7 @@ export default function FormInputSection() {
               event.preventDefault();
               setSubmit(true);
             }}
-            className="rounded-sm w-full h-[4ch] px-2 bg-primary-700 text-neutral-50 font-semibold cursor-pointer hover:bg-primary-800 transition-colors duration-300"
+            className="rounded-2xl w-full h-[4ch] px-2 bg-primary-700 text-neutral-50 font-semibold cursor-pointer hover:bg-primary-800 transition-colors duration-300"
           />
         </div>
       </form>

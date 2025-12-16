@@ -55,9 +55,8 @@ export default function MediaPodcastSection() {
 
       <article className="flex flex-col gap-5">
         <Heading>Radio Saigon Dallas</Heading>
-
         <div className="grid gap-10 md:grid-cols-2 items-center text-balance">
-          <div className="flex flex-col gap-5 items-start">
+          <div className="space-y-5 items-start">
             <p className="leading-relaxed text-neutral-700">
               In partnership with{" "}
               <span className="font-semibold">
@@ -72,11 +71,10 @@ export default function MediaPodcastSection() {
               healthier living.
             </p>
             <Blockquote className="border-accent-500 text-balance">
-              Podcast Is Entirely In Vietnamese, No-Captions.
+              Our podcast is hosted entirely in Vietnamese, without English
+              captions available.
             </Blockquote>
             <p>
-              <br />
-              <br />
               <span className="font-semibold">Thời gian phát sóng:</span> Thứ
               Bảy hàng tuần, lúc 10 giờ sáng
               <br />
