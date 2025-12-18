@@ -26,7 +26,7 @@ export const ROUTES = Object.fromEntries(
 );
 
 export const CANONICAL = {
-  home: `/`,
+  home: `/home`,
 
   about: `/about`,
 
