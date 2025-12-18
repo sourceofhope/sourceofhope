@@ -33,9 +33,12 @@ jobs:
           protocol: ftps
           port: 21
           local-dir: dist/
-          server-dir: /public_html/
+          server-dir: /public_html/app/
           timeout: 600000
+          command-timeout: 300000
+          use-pasv: true
           dangerous-clean-slate: false
+          log-level: minimal
           exclude: |
             **/.git/**
             **/.github/**
