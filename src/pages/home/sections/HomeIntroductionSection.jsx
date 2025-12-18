@@ -39,14 +39,14 @@ export default function HomeIntroductionSection() {
         </p>
         <div className="flex gap-5 flex-col md:flex-row">
           <div className="w-fit">
+            <AnchorButton className="w-fit" text="DONATE" />
+          </div>
+          <div className="w-fit">
             <LinkButton
               className="w-fit"
               to={CANONICAL_URL.about}
               text="LEARN MORE"
             />
-          </div>
-          <div className="w-fit">
-            <AnchorButton className="w-fit" text="DONATE" />
           </div>
         </div>
       </div>
