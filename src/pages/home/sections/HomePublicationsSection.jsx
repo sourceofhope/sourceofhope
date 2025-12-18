@@ -5,7 +5,7 @@ import { HomeSection } from "../HomePage";
 
 import Carousel from "../../../components/ui/Carousel";
 import Title from "../../../components/ui/text/Title";
-import { fetchContent } from "../../../api/cmsClient.js";
+import { fetchContent } from "../../../api/cms";
 
 export default function HomePublicationsSection() {
   const [posts, setPosts] = useState([]);

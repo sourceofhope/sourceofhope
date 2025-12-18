@@ -1,5 +1,6 @@
-import { LinkButton } from "../../../components/ui/Button";
+import { AnchorButton, LinkButton } from "../../../components/ui/Button";
 import ExpressiveLink from "../../../components/ui/expressive/ExpressiveLink";
+import { CANONICAL_URL } from "../../../routes";
 import { HomeContent } from "../HomePage";
 
 export default function HomeIntroductionSection() {
@@ -41,10 +42,14 @@ export default function HomeIntroductionSection() {
         </p>
         <div className="flex gap-5 flex-col md:flex-row">
           <div className="w-fit">
-            <LinkButton className="w-fit" text="DONATE" />
+            <LinkButton
+              className="w-fit"
+              to={CANONICAL_URL.about}
+              text="LEARN MORE"
+            />
           </div>
           <div className="w-fit">
-            <LinkButton className="w-fit" text="LEARN MORE" />
+            <AnchorButton className="w-fit" text="DONATE" />
           </div>
         </div>
       </div>
