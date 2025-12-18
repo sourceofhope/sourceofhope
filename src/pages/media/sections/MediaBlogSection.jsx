@@ -1,29 +1,50 @@
+import { fetchContent } from "../../../api/cms";
 import Heading from "../../../components/ui/text/Heading";
 import Title from "../../../components/ui/text/Title";
 import PageSection from "../../PageSection";
 
+import { useState, useEffect } from "react";
+
 export default function MediaBlogPage() {
-  const posts = getPosts();
+  const [blogs, setBlogs] = useState([]);
+
+  useEffect(() => {
+    fetchContent("blogs", "&per_page=10")
+      .then((data) => {
+        setBlogs(data);
+        setActiveIndex(0);
+      })
+      .catch(() => setBlogs([]))
+      .finally(() => setLoading(false));
+  }, []);
 
   return (
     <PageSection className="grid gap-5 relative m-0 text-sm md:text-base lg:text-lg">
       <Title>Our Blog</Title>
-      {posts && posts.length > 0 ? (
-        <div className="flex flex-col gap-5">
-          {posts.map((post) => (
-            <EntryCard key={post.id} post={post} />
-          ))}
-        </div>
-      ) : (
-        <p className="text-center text-gray-500 italic py-10">
-          No Posts To Display...
+
+      {blogs.length === 0 && (
+        <p className="text-center text-gray-500 py-10">
+          No blog posts to display.
         </p>
+      )}
+
+      {blogs.length > 0 && (
+        <Carousel auto={true}>
+          {blogs.map((blog) => (
+            <EntryCard
+              key={blog.id}
+              src={blog.arc?.hero_image?.url}
+              title={blog.title.rendered}
+              alt={blog.title.rendered}
+            />
+          ))}
+        </Carousel>
       )}
     </PageSection>
   );
 }
 
-function EntryCard({ post }) {
+function EntryCard({ src, excerpt, title }) {
   return (
     <div className="relative w-full group">
       <div className="relative">

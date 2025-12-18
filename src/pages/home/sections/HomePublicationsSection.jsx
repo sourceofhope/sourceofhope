@@ -1,13 +1,28 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ExpressiveLink from "../../../components/ui/expressive/ExpressiveLink";
 import { HighlightedText } from "../../../components/ui/expressive/ExpressiveText";
 import { HomeSection } from "../HomePage";
 
 import Carousel from "../../../components/ui/Carousel";
 import Title from "../../../components/ui/text/Title";
+import { fetchContent } from "../../../api/cmsClient.js";
 
 export default function HomePublicationsSection() {
-  const total = 5;
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  let activePost = posts[activeIndex];
+
+  useEffect(() => {
+    fetchContent("posts", "&per_page=5")
+      .then((data) => {
+        setPosts(data);
+        setActiveIndex(0);
+      })
+      .catch(() => setPosts([]))
+      .finally(() => setLoading(false));
+  }, []);
 
   return (
     <HomeSection>
@@ -17,10 +32,9 @@ export default function HomePublicationsSection() {
             <Title>LATEST UPDATES</Title>
           </HighlightedText>
           <p className="text-left text-balance">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat.
+            {!loading && activePost?.acf?.summary
+              ? activePost.acf.summary
+              : "Stay connected with the latest stories, programs, and community impact from The Source of Hope."}
           </p>
           <button className="w-fit text-neutral-600">
             <ExpressiveLink className="font-semibold" to="">
@@ -28,16 +42,27 @@ export default function HomePublicationsSection() {
             </ExpressiveLink>
           </button>
         </article>
-        <Carousel className="h-full border-t-2 md:border-t-0 md:border-l-2 w-full  py-5 md:pl-10 border-neutral-400">
-          {Array.from({ length: total }).map((_, i) => (
-            <CarouselImage
-              key={i}
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
-              alt=""
-              date={new Date()}
-            />
-          ))}
-        </Carousel>
+        {!loading && posts.length === 0 && (
+          <p className="text-center text-gray-500 py-10">
+            No updates to display.
+          </p>
+        )}
+
+        {!loading && posts.length > 0 && (
+          <Carousel
+            className="h-full border-t-2 md:border-t-0 md:border-l-2 w-full py-5 md:pl-10 border-neutral-400"
+            activeIndex={activeIndex}
+            onChange={setActiveIndex}>
+            {posts.map((post) => (
+              <CarouselImage
+                key={post.id}
+                src={post.acf?.hero_image?.url}
+                alt={post.title.rendered}
+                date={new Date(post.acf?.publish_date)}
+              />
+            ))}
+          </Carousel>
+        )}
       </div>
     </HomeSection>
   );

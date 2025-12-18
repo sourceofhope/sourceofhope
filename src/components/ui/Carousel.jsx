@@ -3,13 +3,20 @@ import { Fragment } from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 
 export default function Carousel({
+  activeIndex,
+  onChange,
   children = [],
   className,
   controls = true,
   auto = false,
 }) {
   const containerReference = useRef(null);
-  const [active, setActive] = useState(0);
+  const [internalActive, setInternalActive] = useState(0);
+
+  const isControlled = typeof activeIndex === "number";
+  const active = isControlled ? activeIndex : internalActive;
+  const setActive = isControlled ? onChange : setInternalActive;
+
   const [count, setCount] = useState(1);
   const resizeObserverReference = useRef(null);
 

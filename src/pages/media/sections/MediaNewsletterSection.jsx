@@ -2,12 +2,25 @@ import Heading from "../../../components/ui/text/Heading";
 import Title from "../../../components/ui/text/Title";
 import PageSection from "../../PageSection";
 import Carousel from "../../../components/ui/Carousel";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ArrowRightIcon, XMarkIcon } from "@heroicons/react/20/solid";
 import Blockquote from "../../../components/ui/text/Blockquote";
 import { HighlightedText } from "../../../components/ui/expressive/ExpressiveText";
+import { fetchContent } from "../../../api/cms";
 
 export default function MediaNewsletterSection() {
+  const [newsletters, setNewsletters] = useState([]);
+
+  useEffect(() => {
+    fetchContent("blogs", "&per_page=10")
+      .then((data) => {
+        setNewsletters(data);
+        setActiveIndex(0);
+      })
+      .catch(() => setNewsletters([]))
+      .finally(() => setLoading(false));
+  }, []);
+
   return (
     <PageSection className="grid gap-5 relative m-0 text-sm md:text-md lg:text-lg">
       <Title>Our Newsletter</Title>
@@ -76,26 +89,25 @@ export default function MediaNewsletterSection() {
           donations and volunteering. By signing up, you join a compassionate
           community dedicated to creating hope and lasting change together.
         </p>
-        <Carousel>
-          <CarouselCard
-            title="January 2025"
-            caption="Quote Here"
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
-            href=""
-          />
-          <CarouselCard
-            title="February 2025"
-            caption="Quote Here"
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
-            href=""
-          />
-          <CarouselCard
-            title="March 2025"
-            caption="Quote Here"
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
-            href=""
-          />
-        </Carousel>
+        {newsletters.length === 0 && (
+          <p className="text-center text-gray-500 py-10">
+            No newsletters to display.
+          </p>
+        )}
+
+        {newsletters.length > 0 && (
+          <Carousel auto={true}>
+            {newsletters.map((blog) => (
+              <CarouselCard
+                key={blog.id}
+                href={blog.arc?.hero_image?.url}
+                src={blog.url}
+                title={blog.title.rendered}
+                caption={blog.title.rendered}
+              />
+            ))}
+          </Carousel>
+        )}
       </article>
     </PageSection>
   );

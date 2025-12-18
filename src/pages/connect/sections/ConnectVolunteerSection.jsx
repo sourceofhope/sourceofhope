@@ -7,7 +7,27 @@ import Heading from "../../../components/ui/text/Heading";
 import Title from "../../../components/ui/text/Title";
 import PageSection from "../../PageSection";
 
+import { fetchContent } from "../../../api/cms";
+import { useEffect, useState } from "react";
+
 export default function ConnectMapSection() {
+  const [majorEvents, setMajorEvents] = useState([]);
+  const [recurringEvents, setRecurringEvents] = useState([]);
+
+  useEffect(() => {
+    fetchContent("events", "&per_page=10")
+      .then((data) => {
+        setMajorEvents(data.filter((e) => e.acf?.event_type === "major"));
+        setRecurringEvents(
+          data.filter((e) => e.acf?.event_type === "recurring")
+        );
+      })
+      .catch(() => {
+        setMajorEvents([]);
+        setRecurringEvents([]);
+      });
+  }, []);
+
   return (
     <PageSection className="justify-items-center grid gap-10 relative m-0 text-sm md:text-md lg:text-lg">
       <article className="w-full grid gap-5">
@@ -34,66 +54,55 @@ export default function ConnectMapSection() {
       </article>
       <article className="w-full grid gap-5">
         <Heading>Major Events</Heading>
-        <MajorEventCard
-          title="Hope Run for Hunger"
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
-          alt="Hope Run for Hunger event photo">
-          <div className="grid md:grid-cols-[7fr_3fr] gap-3 items-end">
-            <div className="flex flex-col gap-5">
-              <p className="text-sm items-center h-fit text-neutral-600 rounded-full border-2 border-neutral-500 bg-neutral-300 w-fit px-3 py-1">
-                November 23, 2025 · Plano, TX
-              </p>
-              <p className="text-sm md:text-md">
-                Join us in a powerful community run supporting families across
-                North Texas.
-              </p>
+
+        {majorEvents.length === 0 && (
+          <p className="text-neutral-500">No major events scheduled.</p>
+        )}
+
+        {majorEvents.map((event) => (
+          <MajorEventCard
+            key={event.id}
+            title={event.title.rendered}
+            src={event.acf?.hero_image?.url}
+            alt={event.title.rendered}
+            href={event.acf?.cta_link}>
+            <div className="grid md:grid-cols-[7fr_3fr] gap-3 items-end">
+              <div className="flex flex-col gap-5">
+                <p className="text-sm items-center h-fit text-neutral-600 rounded-full border-2 border-neutral-500 bg-neutral-300 w-fit px-3 py-1">
+                  {event.acf?.event_date} · {event.acf?.location}
+                </p>
+                <p className="text-sm md:text-md">{event.acf?.summary}</p>
+              </div>
+              <AnchorButton
+                className="text-sm md:text-md"
+                text="Register Now"
+              />
             </div>
-            <AnchorButton className="text-sm md:text-md" text="Register Now" />
-          </div>
-        </MajorEventCard>
+          </MajorEventCard>
+        ))}
+
         <Heading>Recurring Events</Heading>
-        <Carousel auto={true}>
-          <CarouselCard
-            alt="Quote Here"
-            title="The Source of Hope Gala"
-            location="Plano, TX"
-            summary="Join us at the 2025 The Source of Hope Gala on Dec 6 aims to raise $30K with 300 guests, live music, awards, and support for EPP alumni."
-            date="November 23, 2025"
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
-          />
-          <CarouselCard
-            alt="Quote Here"
-            title="November Serving Hope"
-            location="Plano, TX"
-            summary="Join us at the 2025 The Source of Hope Gala on Dec 6 aims to raise $30K with 300 guests, live music, awards, and support for EPP alumni."
-            date="November 23, 2025"
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
-          />
-          <CarouselCard
-            alt="Quote Here"
-            title="December Serving Hope"
-            location="Plano, TX"
-            summary="Join us at the 2025 The Source of Hope Gala on Dec 6 aims to raise $30K with 300 guests, live music, awards, and support for EPP alumni."
-            date="November 23, 2025"
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
-          />
-          <CarouselCard
-            alt="Quote Here"
-            title="Plano Turkey Trot"
-            location="Plano, TX"
-            summary="Join us at the 2025 The Source of Hope Gala on Dec 6 aims to raise $30K with 300 guests, live music, awards, and support for EPP alumni."
-            date="November 23, 2025"
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
-          />
-          <CarouselCard
-            alt="Quote Here"
-            title="The Source of Hope Gala"
-            location="Plano, TX"
-            summary="Join us at the 2025 The Source of Hope Gala on Dec 6 aims to raise $30K with 300 guests, live music, awards, and support for EPP alumni."
-            date="November 23, 2025"
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
-          />
-        </Carousel>
+
+        {recurringEvents.length === 0 && (
+          <p className="text-neutral-500">No recurring events available.</p>
+        )}
+
+        {recurringEvents.length > 0 && (
+          <Carousel auto={true}>
+            {recurringEvents.map((event) => (
+              <CarouselCard
+                key={event.id}
+                title={event.title.rendered}
+                location={event.acf?.location}
+                summary={event.acf?.summary}
+                date={event.acf?.event_date}
+                src={event.acf?.hero_image?.url}
+                alt={event.title.rendered}
+                href={event.acf?.cta_link}
+              />
+            ))}
+          </Carousel>
+        )}
       </article>
     </PageSection>
   );
