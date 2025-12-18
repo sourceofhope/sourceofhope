@@ -1,4 +1,4 @@
-export const BASE = "/sourceofhope";
+export const BASE = "/";
 
 export const ROUTE_ALIASES = {
   home: ["/", "/home"],
