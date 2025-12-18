@@ -12,7 +12,7 @@ export default function Footer() {
 
   return (
     <footer className="relative w-full lg:mt-15">
-      {!(location.pathname === "/sourceofhope/") ? <FooterParallax /> : null}
+      {!(location.pathname === "/home") ? <FooterParallax /> : null}
       <section className="w-full h-full bg-primary-700 text-neutral-50 p-5 md:py-10 z-10">
         <div className="relative z-10 flex flex-col md:items-center gap-5 w-full">
           <div className="flex w-fit gap-10 flex-col md:justify-between md:flex-row">
@@ -107,7 +107,7 @@ function FooterParallax() {
         <ParallaxLayer layer={0} ratio={1}>
           <img
             className="w-full overflow-hidden h-full object-cover brightness-[.8] contrast-[1.1]"
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
+            src="/Footer.png"
             alt=""
           />
         </ParallaxLayer>

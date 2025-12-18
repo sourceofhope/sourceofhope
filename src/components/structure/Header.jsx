@@ -9,7 +9,7 @@ import { CANONICAL } from "../../routes";
 
 export default function Header({ isBlocking }) {
   const location = useLocation();
-  const isHomePage = location.pathname === "/sourceofhope/";
+  const isHomePage = location.pathname === "/home";
 
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);

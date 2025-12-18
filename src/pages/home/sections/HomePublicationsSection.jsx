@@ -6,6 +6,7 @@ import { HomeSection } from "../HomePage";
 import Carousel from "../../../components/ui/Carousel";
 import Title from "../../../components/ui/text/Title";
 import { fetchContent } from "../../../api/cms";
+import { CANONICAL, CANONICAL_URL } from "../../../routes";
 
 export default function HomePublicationsSection() {
   const [posts, setPosts] = useState([]);
@@ -26,7 +27,7 @@ export default function HomePublicationsSection() {
 
   return (
     <HomeSection>
-      <div className="grid grid-flow-row w-full md:grid-cols-[1fr_1fr] items-center gap-5 text-sm md:text-md lg:text-lg">
+      <div className="grid grid-flow-row w-full md:grid-cols-[1fr_1fr] items-center gap-5 text-sm md:text-md lg:text-lg min-h-90">
         <article className="grid gap-5 justify-items-start">
           <HighlightedText className="w-fit self-center md:self-auto">
             <Title>LATEST UPDATES</Title>
@@ -37,23 +38,29 @@ export default function HomePublicationsSection() {
               : "Stay connected with the latest stories, programs, and community impact from The Source of Hope."}
           </p>
           <button className="w-fit text-neutral-600">
-            <ExpressiveLink className="font-semibold" to="">
+            <ExpressiveLink
+              className="font-semibold"
+              to={
+                !loading && posts.length > 0
+                  ? activePost?.acf?.url
+                  : CANONICAL.about
+              }>
               LEARN MORE
             </ExpressiveLink>
           </button>
         </article>
-        {!loading && posts.length === 0 && (
-          <p className="text-center text-gray-500 py-10">
-            No updates to display.
-          </p>
-        )}
+        <Carousel
+          className="h-full border-t-2 md:border-t-0 md:border-l-2 w-full py-5 md:pl-10 border-neutral-400"
+          activeIndex={activeIndex}
+          onChange={setActiveIndex}>
+          {!loading && posts.length === 0 && (
+            <p className="w-full text-center text-gray-500">
+              No updates to display
+            </p>
+          )}
 
-        {!loading && posts.length > 0 && (
-          <Carousel
-            className="h-full border-t-2 md:border-t-0 md:border-l-2 w-full py-5 md:pl-10 border-neutral-400"
-            activeIndex={activeIndex}
-            onChange={setActiveIndex}>
-            {posts.map((post) => (
+          {!loading &&
+            posts.map((post) => (
               <CarouselImage
                 key={post.id}
                 src={post.acf?.hero_image?.url}
@@ -61,8 +68,7 @@ export default function HomePublicationsSection() {
                 date={new Date(post.acf?.publish_date)}
               />
             ))}
-          </Carousel>
-        )}
+        </Carousel>
       </div>
     </HomeSection>
   );

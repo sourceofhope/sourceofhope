@@ -13,7 +13,7 @@ export function HomeServingSection() {
         <ParallaxLayer layer={0} ratio={1}>
           <img
             className="w-full overflow-hidden h-full object-cover brightness-[.8] contrast-[1.1]"
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
+            src="/Join-Us.jpg"
             alt=""
           />
         </ParallaxLayer>
