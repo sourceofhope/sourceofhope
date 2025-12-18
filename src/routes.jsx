@@ -1,5 +1,3 @@
-export const BASE = "/";
-
 export const ROUTE_ALIASES = {
   home: ["/", "/home"],
 
@@ -23,28 +21,28 @@ export const ROUTE_ALIASES = {
 export const ROUTES = Object.fromEntries(
   Object.entries(ROUTE_ALIASES).map(([key, paths]) => [
     key,
-    paths.map((p) => `${BASE}${p}`),
+    paths.map((p) => `${p}`),
   ])
 );
 
 export const CANONICAL = {
-  home: `${BASE}/`,
+  home: `/`,
 
-  about: `${BASE}/about`,
+  about: `/about`,
 
-  serve: `${BASE}/serve`,
+  serve: `/serve`,
 
-  connect: `${BASE}/connect`,
+  connect: `/connect`,
 
-  media: `${BASE}/media`,
+  media: `/media`,
 
-  servingHope: `${BASE}/serve/servingHope`,
-  educationHope: `${BASE}/serve/educationHope`,
-  wellnessHope: `${BASE}/serve/wellnessHope`,
-  outdoorHope: `${BASE}/serve/outdoorHope`,
-  internationalHope: `${BASE}/serve/internationalHope`,
+  servingHope: `/serve/servingHope`,
+  educationHope: `/serve/educationHope`,
+  wellnessHope: `/serve/wellnessHope`,
+  outdoorHope: `/serve/outdoorHope`,
+  internationalHope: `/serve/internationalHope`,
 
-  member: `${BASE}/members`,
+  member: `/members`,
 };
 
 const BASE_URL = "https://thesourceofhope.org";
