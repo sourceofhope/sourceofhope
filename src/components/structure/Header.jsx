@@ -26,7 +26,7 @@ export default function Header({ isBlocking }) {
     <>
       {true ? (
         <HeaderBanner
-          text="Donate to The Source of Hope Today! 🎉"
+          text="Welcome To The New Source of Hope 🎉"
           open={banner}
           setOpen={setBanner}
         />

@@ -45,7 +45,7 @@ export default function HomeImpactSection() {
             preload="auto"
             disablePictureInPicture
             className="w-[500px] aspect-square bg-accent-900 rounded-2xl object-center object-cover">
-            <source src="Favicon.png" />
+            <source src="/Sharing-Impact.mp4" type="video/mp4" />
           </video>
         </article>
       </div>

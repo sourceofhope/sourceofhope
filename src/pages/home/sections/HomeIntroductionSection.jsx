@@ -20,10 +20,7 @@ export default function HomeIntroductionSection() {
         }}
         preload="auto"
         disablePictureInPicture>
-        <source
-          src="https://static.vecteezy.com/system/resources/previews/041/753/968/mp4/time-lapse-sayans-foggy-mountains-of-russia-free-video.mp4"
-          type="video/mp4"
-        />
+        <source src="/Sharing-Impact.mp4" type="video/mp4" />
       </video>
       <div className="relative z-10 w-full max-w-[75ch] md:max-w-[105ch] self-end grid gap-3 p-5 md:pb-15 lg:px-35">
         <h2 className="text-neutral-50 font-urbanist text-md md:text-lg font-semibold">
