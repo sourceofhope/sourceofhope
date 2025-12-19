@@ -20,12 +20,12 @@ export default function HomeResourcesSection() {
 				</NavLink>{" "}
 				to <HighlightedText>our community</HighlightedText>.
 			</Title>
-			<div className="w-full h-full grid grid-flow-row md:grid-cols-3 md:grid-rows-2 gap-5 md:gap-10 justify-center items-center">
+			<div className="w-full grid grid-flow-row md:grid-cols-3 md:grid-rows-2 gap-5 md:gap-10">
 				<HomeResourceCard
 					title="EDUCATION FOR HOPE"
 					to={CANONICAL.educationHope}
 					caption="Education for Hope supports students of all ages through tutoring, scholarships, and workforce opportunities. We provide low-income cosmetology students with access to advanced training, partner with The University of Texas at Dallas through the Federal Work-Study program, and offer operational roles that build professional experience. By removing barriers to education, we empower individuals to learn, grow, and create brighter futures for themselves and their families."
-					src="educationHope/EH-ResourceTile.jpg"
+					src="/educationHope/EH-ResourceTile.jpg"
 				/>
 				<HomeResourceCard
 					title="WELLNESS OF HOPE CLINIC"
@@ -69,7 +69,7 @@ function HomeResourceCard({ title, caption, src, to }) {
 		<>
 			<button
 				onClick={() => setActive(!active)}
-				className="relative md:hidden w-full h-full group overflow-hidden rounded-xl text-accent-background aspect-square"
+				className="relative min-h-[200px] md:hidden w-full h-full group overflow-hidden rounded-xl text-accent-background aspect-square"
 			>
 				<HomeResourceCardInner src={src} caption={caption} title={title} />
 			</button>
@@ -120,6 +120,7 @@ function HomeResourceCardInner({ src, caption, title }) {
 			<img
 				src={src}
 				alt={caption}
+				onError={(e) => (e.currentTarget.src = "/core/TSOH-Family.jpg")}
 				className="inset-0 w-full h-full object-cover transition-transform brightness-[.8] contrast-[1.1] bg-accent-900"
 			/>
 			<div
