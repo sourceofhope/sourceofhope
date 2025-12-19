@@ -5,7 +5,7 @@ import ExpressiveLink from "../ui/expressive/ExpressiveLink";
 import Favicon from "../ui/Favicon";
 
 import { CANONICAL } from "../../routes";
-import { fetchContent } from "../../api/cms";
+import { fetchContent } from "../../cms";
 
 export default function Header({ isBlocking }) {
   const [scrolled, setScrolled] = useState(false);

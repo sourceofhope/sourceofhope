@@ -1,4 +1,3 @@
-import Blockquote from "../../../components/ui/text/Blockquote";
 import Bold from "../../../components/ui/text/Bold";
 import Heading from "../../../components/ui/text/Heading";
 import Title from "../../../components/ui/text/Title";

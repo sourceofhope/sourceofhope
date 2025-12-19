@@ -1,5 +1,4 @@
-import { fetchContent } from "../../../api/cms";
-import Heading from "../../../components/ui/text/Heading";
+import { fetchContent } from "../../../cms";
 import Title from "../../../components/ui/text/Title";
 import PageSection from "../../PageSection";
 

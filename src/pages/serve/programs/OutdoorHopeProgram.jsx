@@ -141,11 +141,11 @@ export default function EducationHopeProgram() {
                 className="rounded-2xl object-cover w-full aspect-square"
                 controls={false}
                 auto={true}>
-                <CarouselCard src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344" />
-                <CarouselCard src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344" />
-                <CarouselCard src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344" />
-                <CarouselCard src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344" />
-                <CarouselCard src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344" />
+                <CarouselCard />
+                <CarouselCard />
+                <CarouselCard />
+                <CarouselCard />
+                <CarouselCard />
               </Carousel>
             </div>
           </div>
@@ -155,7 +155,7 @@ export default function EducationHopeProgram() {
   );
 }
 
-function CarouselCard({ src, alt }) {
+function CarouselCard({ src = "/core/TSOH-Family.jpg", alt }) {
   return (
     <button
       className="

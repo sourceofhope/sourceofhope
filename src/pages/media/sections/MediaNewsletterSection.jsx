@@ -3,10 +3,10 @@ import Title from "../../../components/ui/text/Title";
 import PageSection from "../../PageSection";
 import Carousel from "../../../components/ui/Carousel";
 import { useEffect, useState } from "react";
-import { ArrowRightIcon, XMarkIcon } from "@heroicons/react/20/solid";
+import { ArrowRightIcon } from "@heroicons/react/20/solid";
 import Blockquote from "../../../components/ui/text/Blockquote";
 import { HighlightedText } from "../../../components/ui/expressive/ExpressiveText";
-import { fetchContent } from "../../../api/cms";
+import { fetchContent } from "../../../cms";
 
 export default function MediaNewsletterSection() {
   const [newsletters, setNewsletters] = useState([]);
