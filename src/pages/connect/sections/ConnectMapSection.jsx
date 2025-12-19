@@ -1,8 +1,8 @@
 import PageSection from "../../PageSection";
 
-import Title from "../../../components/ui/text/Title";
-import Input from "../../../components/ui/Input";
-import Heading from "../../../components/ui/text/Heading";
+import Title from "@/components/ui/text/Title";
+import Input from "@/components/ui/Input";
+import Heading from "@/components/ui/text/Heading";
 
 import { useState } from "react";
 import {
@@ -10,7 +10,15 @@ import {
   EnvelopeIcon,
   MapIcon,
 } from "@heroicons/react/20/solid";
-import { HighlightedText } from "../../../components/ui/expressive/ExpressiveText";
+import { HighlightedText } from "@/components/ui/expressive/ExpressiveText";
+import { post } from "../../../lib/api/client";
+
+const formStatus = {
+  IDLE: "IDLE",
+  SUBMIT: "SUBMIT",
+  ERROR: "ERROR",
+  SUCCESS: "SUCCESS",
+};
 
 export default function ConnectMapSection() {
   const [formData, setFormData] = useState({
@@ -21,22 +29,14 @@ export default function ConnectMapSection() {
     msg: "",
     company: "",
   });
-  const [status, setStatus] = useState("idle");
+  const [status, setStatus] = useState(formStatus.IDLE);
 
   const validateName = (event) => {
-    if (submit) {
-      const input = event.target.value;
-      if (typeof input !== "string") return false;
-
-      const trimmed = input.trim();
-      if (trimmed.length === 0 || trimmed.length > 50) return false;
-
-      // const allowedCharactersRegex = /^[\p{L}\p{M}'- ]+$/u;
-      // const consecutiveCharactersRegex = /--|''|\s{2,}/;
-
-      // if (!allowedCharactersRegex.test(trimmed)) return false;
-      // if (!consecutiveCharactersRegex.test(trimmed)) return false;
+    if (status === formStatus.SUBMIT) {
+      const trimmed = event.target.value.trim();
+      return trimmed.length > 0 && trimmed.length <= 50;
     }
+    return true;
     return true;
   };
   return (
@@ -176,7 +176,7 @@ export default function ConnectMapSection() {
                 name="submit"
                 type="submit"
                 value="Submit"
-                onChange={handleSubmit}
+                onSubmit={handleSubmit}
                 className="rounded-2xl w-full h-[4ch] px-2 bg-primary-700 text-neutral-50 font-semibold cursor-pointer hover:bg-primary-800 transition-colors duration-300"
               />
             </div>
@@ -186,9 +186,28 @@ export default function ConnectMapSection() {
     </PageSection>
   );
 
-  async function handleSubmit() {
+  async function handleSubmit(event) {
+    event.preventDefault();
+    setStatus(formStatus.SUBMIT);
+
     if (formData.company) {
+      setStatus(formStatus.SUCCESS);
       return;
     }
+
+    const { error } = await post("/contact", {
+      fname: formData.fname,
+      lname: formData.lname,
+      email: formData.email,
+      phone: formData.phone,
+      msg: formData.msg,
+    });
+
+    if (error) {
+      setStatus(formStatus.ERROR);
+      return;
+    }
+
+    setStatus(formStatus.SUCCESS);
   }
 }
