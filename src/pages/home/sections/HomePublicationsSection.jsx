@@ -5,7 +5,7 @@ import { HomeSection } from "../HomePage";
 
 import Carousel from "../../../components/ui/Carousel";
 import Title from "../../../components/ui/text/Title";
-import { fetchContent } from "../../../api/cms";
+import { fetchContent } from "../../../cms";
 import { CANONICAL, CANONICAL_URL } from "../../../routes";
 
 export default function HomePublicationsSection() {

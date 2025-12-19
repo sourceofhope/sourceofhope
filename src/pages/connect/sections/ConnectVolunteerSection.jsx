@@ -7,7 +7,7 @@ import Heading from "../../../components/ui/text/Heading";
 import Title from "../../../components/ui/text/Title";
 import PageSection from "../../PageSection";
 
-import { fetchContent } from "../../../api/cms";
+import { fetchContent } from "../../../cms";
 import { useEffect, useState } from "react";
 
 export default function ConnectMapSection() {
