@@ -11,133 +11,139 @@ import { CANONICAL } from "../../../routes";
 import Title from "../../../components/ui/text/Title";
 
 export default function HomeResourcesSection() {
-  return (
-    <HomeSection className="w-full md:mb-15">
-      <Title className="pb-5 text-center text-balance">
-        We provide a number of{" "}
-        <NavLink to={CANONICAL.serve}>
-          <Emphasis>resources</Emphasis>
-        </NavLink>{" "}
-        to <HighlightedText>our community</HighlightedText>.
-      </Title>
-      <div className="w-full h-full grid grid-flow-row md:grid-cols-3 md:grid-rows-2 gap-5 md:gap-10 justify-center items-center">
-        <HomeResourceCard
-          title="EDUCATION FOR HOPE"
-          to={CANONICAL.educationHope}
-          caption="Education for Hope supports students of all ages through tutoring, scholarships, and workforce opportunities. We provide low-income cosmetology students with access to advanced training, partner with The University of Texas at Dallas through the Federal Work-Study program, and offer operational roles that build professional experience. By removing barriers to education, we empower individuals to learn, grow, and create brighter futures for themselves and their families."
-          src="/Education-for-Hope.jpg"
-        />
-        <HomeResourceCard
-          title="WELLNESS OF HOPE CLINIC"
-          to={CANONICAL.wellnessHope}
-          caption="The Wellness of Hope Clinic offers holistic treatments such as fire cupping and lymphatic drainage to low-income individuals, seniors, teachers, and first responders. In partnership with Stone International Wellness Center, we also provide reduced cosmetic services and wellness classes. These therapies restore health, build confidence, and make lasting impacts for people who might otherwise be unable to access care."
-          src="/Wellness-of-Hope.jpg"
-        />
-        <HomeResourceCard
-          title="SERVING HOPE"
-          to={CANONICAL.servingHope}
-          caption="Serving Hope is a volunteer-driven initiative dedicated to providing organic, home-cooked meals to those in need across the Dallas–Fort Worth area. Through partnerships and community support, we nourish homeless individuals, veterans, nursing home residents, and at-risk families. Each event focuses on fresh food, dignity, and connection, ensuring both body and spirit are cared for while building stronger, more compassionate communities."
-          src="/Serving-Hope.jpg"
-        />
-        <HomeResourceCard
-          title="SHARING HOPE"
-          to={CANONICAL.servingHope}
-          caption="Sharing Hope transforms surplus food donations into community impact. Partnering with over 50 nonprofits, we distribute meals and essential supplies to families facing food insecurity across the region. This initiative reduces food waste, strengthens partnerships, and ensures that resources reach those who need them most, turning generosity into daily nourishment for thousands of lives."
-          src="/Sharing-Hope.png"
-        />
-        <HomeResourceCard
-          title="HOPE FOR THE GREAT OUTDOORS"
-          to={CANONICAL.outdoorHope}
-          caption="Hope for the Great Outdoors introduces individuals and families to nature through hands-on learning and immersive outdoor experiences. From camping and fishing to survival skills, participants gain confidence while developing a lifelong respect for the environment. By making the outdoors accessible and inclusive, the program creates opportunities for growth, bonding, and wellness in a safe and supportive setting."
-          src="/Hope-for-Outdoors.jpeg"
-        />
-        <HomeResourceCard
-          title="INTERNATIONAL PARTNER SERVING"
-          to={CANONICAL.internationalHope}
-          caption="Our International Partner Serving program extends hope worldwide by collaborating with organizations and volunteers to deliver resources, training, and empowerment. We provide scholarships, educational tools, wellness services, and food support to underserved communities in developing regions. By fostering relationships based on trust and respect, we amplify dignity and self-sufficiency, ensuring that compassion knows no borders and hope reaches people across the globe."
-          src="/International-Partner-Serving.png"
-        />
-      </div>
-    </HomeSection>
-  );
+	return (
+		<HomeSection className="w-full md:mb-15">
+			<Title className="pb-5 text-center text-balance">
+				We provide a number of{" "}
+				<NavLink to={CANONICAL.serve}>
+					<Emphasis>resources</Emphasis>
+				</NavLink>{" "}
+				to <HighlightedText>our community</HighlightedText>.
+			</Title>
+			<div className="w-full h-full grid grid-flow-row md:grid-cols-3 md:grid-rows-2 gap-5 md:gap-10 justify-center items-center">
+				<HomeResourceCard
+					title="EDUCATION FOR HOPE"
+					to={CANONICAL.educationHope}
+					caption="Education for Hope supports students of all ages through tutoring, scholarships, and workforce opportunities. We provide low-income cosmetology students with access to advanced training, partner with The University of Texas at Dallas through the Federal Work-Study program, and offer operational roles that build professional experience. By removing barriers to education, we empower individuals to learn, grow, and create brighter futures for themselves and their families."
+					src="educationHope/EH-ResourceTile.jpg"
+				/>
+				<HomeResourceCard
+					title="WELLNESS OF HOPE CLINIC"
+					to={CANONICAL.wellnessHope}
+					caption="The Wellness of Hope Clinic offers holistic treatments such as fire cupping and lymphatic drainage to low-income individuals, seniors, teachers, and first responders. In partnership with Stone International Wellness Center, we also provide reduced cosmetic services and wellness classes. These therapies restore health, build confidence, and make lasting impacts for people who might otherwise be unable to access care."
+					src="/wellnessHope/WH-ResourceTile.jpg"
+				/>
+				<HomeResourceCard
+					title="SERVING HOPE"
+					to={CANONICAL.servingHope}
+					caption="Serving Hope is a volunteer-driven initiative dedicated to providing organic, home-cooked meals to those in need across the Dallas–Fort Worth area. Through partnerships and community support, we nourish homeless individuals, veterans, nursing home residents, and at-risk families. Each event focuses on fresh food, dignity, and connection, ensuring both body and spirit are cared for while building stronger, more compassionate communities."
+					src="/servingHope/SH-ResourceTile.jpg"
+				/>
+				<HomeResourceCard
+					title="SHARING HOPE"
+					to={CANONICAL.servingHope}
+					caption="Sharing Hope transforms surplus food donations into community impact. Partnering with over 50 nonprofits, we distribute meals and essential supplies to families facing food insecurity across the region. This initiative reduces food waste, strengthens partnerships, and ensures that resources reach those who need them most, turning generosity into daily nourishment for thousands of lives."
+					src="/servingHope/SH-ResourceTile.jpg"
+				/>
+				<HomeResourceCard
+					title="HOPE FOR THE GREAT OUTDOORS"
+					to={CANONICAL.outdoorHope}
+					caption="Hope for the Great Outdoors introduces individuals and families to nature through hands-on learning and immersive outdoor experiences. From camping and fishing to survival skills, participants gain confidence while developing a lifelong respect for the environment. By making the outdoors accessible and inclusive, the program creates opportunities for growth, bonding, and wellness in a safe and supportive setting."
+					src="/outdoorHope/OH-ResourceTile.jpeg"
+				/>
+				<HomeResourceCard
+					title="INTERNATIONAL PARTNER SERVING"
+					to={CANONICAL.internationalHope}
+					caption="Our International Partner Serving program extends hope worldwide by collaborating with organizations and volunteers to deliver resources, training, and empowerment. We provide scholarships, educational tools, wellness services, and food support to underserved communities in developing regions. By fostering relationships based on trust and respect, we amplify dignity and self-sufficiency, ensuring that compassion knows no borders and hope reaches people across the globe."
+					src="/internationalHope/IH-ResourceTile.jpeg"
+				/>
+			</div>
+		</HomeSection>
+	);
 }
 
 function HomeResourceCard({ title, caption, src, to }) {
-  const [active, setActive] = useState(false);
+	const [active, setActive] = useState(false);
 
-  return (
-    <>
-      <button
-        onClick={() => setActive(!active)}
-        className="relative md:hidden w-full h-full group overflow-hidden rounded-xl text-accent-background aspect-square">
-        <HomeResourceCardInner src={src} caption={caption} title={title} />
-      </button>
-      <NavLink
-        to={to}
-        className="relative hidden md:block w-full h-full group overflow-hidden rounded-xl text-accent-background aspect-square">
-        <HomeResourceCardInner src={src} caption={caption} title={title} />
-      </NavLink>
-      <section
-        className={`
+	return (
+		<>
+			<button
+				onClick={() => setActive(!active)}
+				className="relative md:hidden w-full h-full group overflow-hidden rounded-xl text-accent-background aspect-square"
+			>
+				<HomeResourceCardInner src={src} caption={caption} title={title} />
+			</button>
+			<NavLink
+				to={to}
+				className="relative hidden md:block w-full h-full group overflow-hidden rounded-xl text-accent-background aspect-square"
+			>
+				<HomeResourceCardInner src={src} caption={caption} title={title} />
+			</NavLink>
+			<section
+				className={`
     fixed inset-0 z-50 left-0 bottom-0 flex items-center justify-center
     bg-black/50 md:hidden p-5
     transition-opacity duration-700 h-screen w-screen
     ${
-      active
-        ? "opacity-100 pointer-events-auto"
-        : "opacity-0 pointer-events-none"
-    }
+			active
+				? "opacity-100 pointer-events-auto"
+				: "opacity-0 pointer-events-none"
+		}
   `}
-        onClick={() => setActive(false)}>
-        <article className="relative w-full rounded-xl bg-neutral-200 p-5 grid gap-5">
-          <div className="flex justify-between items-center">
-            <h2 className="text-lg font-semibold">{title}</h2>
-            <button
-              className="justify-self-end font-bold p-1 w-fit h-fit  rounded-full"
-              onClick={() => setActive(false)}>
-              <XMarkIcon className="w-[20px] h-[20px]" aria-hidden="true" />
-            </button>
-          </div>
-          <p className="text-sm text-neutral-700">{caption}</p>
-          <p className="w-fit">
-            <ExpressiveLink to={to} className="text-sm text-neutral-500">
-              LEARN MORE
-            </ExpressiveLink>
-          </p>
-        </article>
-      </section>
-    </>
-  );
+				onClick={() => setActive(false)}
+			>
+				<article className="relative w-full rounded-xl bg-neutral-200 p-5 grid gap-5">
+					<div className="flex justify-between items-center">
+						<h2 className="text-lg font-semibold">{title}</h2>
+						<button
+							className="justify-self-end font-bold p-1 w-fit h-fit  rounded-full"
+							onClick={() => setActive(false)}
+						>
+							<XMarkIcon className="w-[20px] h-[20px]" aria-hidden="true" />
+						</button>
+					</div>
+					<p className="text-sm text-neutral-700">{caption}</p>
+					<p className="w-fit">
+						<ExpressiveLink to={to} className="text-sm text-neutral-500">
+							LEARN MORE
+						</ExpressiveLink>
+					</p>
+				</article>
+			</section>
+		</>
+	);
 }
 
 function HomeResourceCardInner({ src, caption, title }) {
-  return (
-    <>
-      <img
-        src={src}
-        alt={caption}
-        className="inset-0 w-full h-full object-cover transition-transform brightness-[.8] contrast-[1.1]"
-      />
-      <div
-        className="absolute bottom-0 left-0 w-full p-5 
+	return (
+		<>
+			<img
+				src={src}
+				alt={caption}
+				className="inset-0 w-full h-full object-cover transition-transform brightness-[.8] contrast-[1.1] bg-accent-900"
+			/>
+			<div
+				className="absolute bottom-0 left-0 w-full p-5 
                 bg-gradient-to-t from-black/90 to-transparent
-                rounded-xl flex flex-col justify-start">
-        <h2 className="md:line-clamp-1 text-md text-ellipsis lg:group-hover:text-sm duration-750 transition-all font-semibold text-center text-neutral-50">
-          {title}
-        </h2>
-        <p
-          className="text-sm hidden lg:block text-gray-200 mt-2 max-h-0 opacity-0 overflow-hidden
+                rounded-xl flex flex-col justify-start"
+			>
+				<h2 className="md:line-clamp-1 text-md text-ellipsis lg:group-hover:text-sm duration-750 transition-all ease-in-out font-semibold text-center text-neutral-50">
+					{title}
+				</h2>
+				<p
+					className="text-sm hidden lg:block text-gray-200 mt-2 max-h-0 opacity-0 overflow-hidden
                   transition-[height_opacity] duration-750 text-left
-                  group-hover:max-h-70 group-hover:opacity-100 ease-in-out text-balance">
-          {caption}
-        </p>
-      </div>
-      <div className="absolute right-5 top-5 p-1 rounded-4xl bg-black/70 h-fit w-fit text-neutral-50">
-        <ArrowRightIcon
-          className="w-[1em] h-[1em] transition-transform duration-750 group-hover:translate-x-0.5"
-          aria-hidden="true"
-        />
-      </div>
-    </>
-  );
+                  group-hover:max-h-70 group-hover:opacity-100 ease-in-out text-balance"
+				>
+					{caption}
+				</p>
+			</div>
+			<div className="absolute right-5 top-5 p-1 rounded-4xl bg-black/70 h-fit w-fit text-neutral-50">
+				<ArrowRightIcon
+					className="w-[1em] h-[1em] transition-transform ease-in-out duration-750 group-hover:translate-x-0.5"
+					aria-hidden="true"
+				/>
+			</div>
+		</>
+	);
 }
