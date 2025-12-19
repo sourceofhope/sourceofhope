@@ -73,10 +73,9 @@ export default function ConnectMapSection() {
                 based on project needs and available scholarship funding.
               </p>
               <Blockquote className="border-accent-500 text-balance">
-                <HighlightedText>
-                  Paid opportunities are available only for eligible students
-                </HighlightedText>{" "}
-                through our <Bold>partnered universities</Bold>, supporting both
+                Paid opportunities are available{" "}
+                <HighlightedText>for eligible students</HighlightedText> through
+                our <Bold>partnered universities</Bold>, supporting both
                 professional growth and meaningful community impact.
               </Blockquote>
               <p>

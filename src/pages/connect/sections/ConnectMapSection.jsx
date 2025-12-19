@@ -13,7 +13,15 @@ import {
 import { HighlightedText } from "../../../components/ui/expressive/ExpressiveText";
 
 export default function ConnectMapSection() {
-  const [submit, setSubmit] = useState(false);
+  const [formData, setFormData] = useState({
+    fname: "",
+    lname: "",
+    email: "",
+    phone: "",
+    msg: "",
+    company: "",
+  });
+  const [status, setStatus] = useState("idle");
 
   const validateName = (event) => {
     if (submit) {
@@ -90,6 +98,7 @@ export default function ConnectMapSection() {
               type="text"
               border={false}
               onChange={validateName}
+              setFormData={setFormData}
             />
             <Input
               title="Last Name"
@@ -97,12 +106,14 @@ export default function ConnectMapSection() {
               type="text"
               border={false}
               onChange={validateName}
+              setFormData={setFormData}
             />
             <Input
               title="Email Address"
               htmlFor="email"
               type="email"
               border={false}
+              setFormData={setFormData}
               onChange={(event) => {
                 if (submit) {
                   const input = event.target.value;
@@ -127,6 +138,7 @@ export default function ConnectMapSection() {
               htmlFor="phone"
               type="tel"
               border={false}
+              setFormData={setFormData}
               onChange={(event) => {
                 if (submit) {
                   const input = event.target.value;
@@ -144,16 +156,27 @@ export default function ConnectMapSection() {
                 return true;
               }}
             />
-            <Input title="Message" htmlFor="msg" type="text" border={false} />
+            <Input
+              title="Message"
+              htmlFor="msg"
+              type="text"
+              border={false}
+              setFormData={setFormData}
+            />
+            <Input
+              title="Company"
+              htmlFor="company"
+              type="text"
+              border={false}
+              setFormData={setFormData}
+              className="hidden"
+            />
             <div className="flex flex-col gap-1">
               <input
                 name="submit"
                 type="submit"
                 value="Submit"
-                onSubmit={(event) => {
-                  event.preventDefault();
-                  setSubmit(true);
-                }}
+                onChange={handleSubmit}
                 className="rounded-2xl w-full h-[4ch] px-2 bg-primary-700 text-neutral-50 font-semibold cursor-pointer hover:bg-primary-800 transition-colors duration-300"
               />
             </div>
@@ -162,4 +185,10 @@ export default function ConnectMapSection() {
       </div>
     </PageSection>
   );
+
+  async function handleSubmit() {
+    if (formData.company) {
+      return;
+    }
+  }
 }
