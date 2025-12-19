@@ -43,7 +43,7 @@ export default function HomeResourcesSection() {
 					title="SHARING HOPE"
 					to={CANONICAL.servingHope}
 					caption="Sharing Hope transforms surplus food donations into community impact. Partnering with over 50 nonprofits, we distribute meals and essential supplies to families facing food insecurity across the region. This initiative reduces food waste, strengthens partnerships, and ensures that resources reach those who need them most, turning generosity into daily nourishment for thousands of lives."
-					src="/servingHope/SH-ResourceTile.jpg"
+					src="/sharingHope/SH-ResourceTile.jpg"
 				/>
 				<HomeResourceCard
 					title="HOPE FOR THE GREAT OUTDOORS"
