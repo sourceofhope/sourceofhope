@@ -1,28 +1,42 @@
+import { useState } from "react";
 import { AnchorButton, LinkButton } from "../../../components/ui/Button";
-import ExpressiveLink from "../../../components/ui/expressive/ExpressiveLink";
 import { CANONICAL_URL } from "../../../routes";
 import { HomeContent } from "../HomePage";
 
 export default function HomeIntroductionSection() {
+	const [videoFailed, setVideoFailed] = useState(false);
+
 	return (
 		<HomeContent className="relative flex mb-10 h-[80vh] md:min-h-screen">
-			<video
-				controls={false}
-				autoPlay
-				muted
-				loop
-				playsInline
-				className="absolute inset-0 z-0 h-full md:h-full w-full object-cover brightness-75"
-				style={{
-					WebkitMaskImage:
-						"linear-gradient(to bottom, white 70%, transparent 100%)",
-					maskImage: "linear-gradient(to bottom, white 70%, transparent 100%)",
-				}}
-				preload="auto"
-				disablePictureInPicture
-			>
-				<source src="/core/TSOH-Poster.mp4" type="video/mp4" />
-			</video>
+			{!videoFailed && (
+				<video
+					autoPlay
+					muted
+					loop
+					playsInline
+					preload="auto"
+					disablePictureInPicture
+					onError={() => setVideoFailed(true)}
+					poster="/core/TSOH-Poster.jpg"
+					className="absolute inset-0 z-0 h-full w-full object-cover brightness-75"
+					style={{
+						WebkitMaskImage:
+							"linear-gradient(to bottom, white 70%, transparent 100%)",
+						maskImage:
+							"linear-gradient(to bottom, white 70%, transparent 100%)",
+					}}
+				>
+					<source src="/core/TSOH-Poster.mp4" type="video/mp4" />
+				</video>
+			)}
+
+			{videoFailed && (
+				<img
+					src="/core/TSOH-Poster.jpg"
+					alt="TSOH Poster"
+					className="absolute inset-0 z-0 h-full w-full object-cover brightness-75"
+				/>
+			)}
 			<div className="relative z-10 w-full max-w-[75ch] md:max-w-[105ch] self-end grid gap-3 p-5 md:pb-15 lg:px-35">
 				<h2 className="text-neutral-50 font-urbanist text-md md:text-lg font-semibold">
 					THE SOURCE OF HOPE

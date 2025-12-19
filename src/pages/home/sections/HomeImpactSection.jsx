@@ -4,8 +4,11 @@ import { DefaultGenerator } from "../../../components/ui/expressive/DefaultGener
 
 import { HomeContent } from "../HomePage";
 import Title from "../../../components/ui/text/Title";
+import { useState } from "react";
 
 export default function HomeImpactSection() {
+	const [videoFailed, setVideoFailed] = useState(false);
+
 	return (
 		<HomeContent className="my-5 py-5 px-5 lg:px-35 grid gap-5 bg-accent-800 text-neutral-50">
 			<div className="grid grid-flow-row w-full md:grid-cols-[1fr_1fr] items-center justify-self-center gap-5">
@@ -36,18 +39,29 @@ export default function HomeImpactSection() {
 					/>
 				</article>
 				<article className="flex md:border-l-2 w-full md:pl-10 md:border-neutral-500 justify-center">
-					<video
-						controls={false}
-						autoPlay
-						muted
-						loop
-						playsInline
-						preload="auto"
-						disablePictureInPicture
-						className="w-[500px] aspect-square bg-accent-900 rounded-2xl object-center object-cover"
-					>
-						<source src="/core/TSOH-Impact.mp4" type="video/mp4" />
-					</video>
+					{!videoFailed && (
+						<video
+							controls={false}
+							autoPlay
+							muted
+							loop
+							playsInline
+							onError={() => setVideoFailed(true)}
+							preload="auto"
+							disablePictureInPicture
+							className="w-[500px] aspect-square bg-accent-900 rounded-2xl object-center object-cover"
+						>
+							<source src="/core/TSOH-Impact.mp4" type="video/mp4" />
+						</video>
+					)}
+
+					{videoFailed && (
+						<img
+							src="/core/TSOH-Poster.jpg"
+							alt="TSOH Poster"
+							className="w-[500px] aspect-square bg-accent-900 rounded-2xl object-center object-cover"
+						/>
+					)}
 				</article>
 			</div>
 			<button className="justify-self-end md:justify-self-end w-fit text-neutral-400">
