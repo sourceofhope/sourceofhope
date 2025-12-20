@@ -130,7 +130,7 @@ export default function WellnessHopeProgram() {
             rounded-xl text-accent-background aspect-square shadow-lg
           ">
                 <img
-                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
+                  src="/wellnessHope/WH-ResourceTile.jpg"
                   alt="Holistic wellness care"
                   className="w-full h-full object-cover brightness-[.85] contrast-[1.1]"
                 />
@@ -170,15 +170,19 @@ export default function WellnessHopeProgram() {
   );
 }
 
-function WellnessShowcaseCard({ title, src, alt }) {
+function WellnessShowcaseCard({
+  title,
+  src = "/wellnessHope/WH-ResourceTile.jpg",
+  alt,
+}) {
   return (
     <article className="relative w-full">
       <img
         src={src}
         alt={alt}
-        className="w-full aspect-square bg-accent-900 rounded-2xl border-4 border-neutral-300"
+        className="w-full aspect-square bg-accent-900 rounded-2xl shadow-sm object-cover"
       />
-      <div className="absolute flex bottom-0 p-5 px-10 h-1/4 w-full rounded-b-2xl border-x-4 border-b-4 border-neutral-300 bg-neutral-100 items-center justify-center">
+      <div className="absolute flex bottom-0 p-5 px-10 h-1/4 w-full rounded-b-2xl bg-neutral-100 items-center justify-center">
         <h2 className="w-fit h-fit text-balance text-center text-md font-semibold">
           {title}
         </h2>

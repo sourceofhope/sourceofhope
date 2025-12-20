@@ -4,6 +4,7 @@ import { ArrowRightIcon, XMarkIcon } from "@heroicons/react/20/solid";
 import Carousel from "../../../components/ui/Carousel";
 import PageSection from "../../PageSection";
 import Title from "../../../components/ui/text/Title";
+import { fetchContent } from "../../../cms";
 
 export default function AboutTeamSection() {
   return (
