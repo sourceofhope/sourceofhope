@@ -34,11 +34,7 @@ export default function Header({ isBlocking }) {
   return (
     <>
       {banner.acf?.bannerMessage ? (
-        <HeaderBanner
-          text="Welcome To The New Source of Hope 🎉"
-          open={banner}
-          setOpen={setBanner}
-        />
+        <HeaderBanner text={bannerMessage} open={banner} setOpen={setBanner} />
       ) : null}
       {isBlocking && bannerActive ? <div className="h-15 md:h-10"></div> : null}
       <header
