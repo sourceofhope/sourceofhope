@@ -2,7 +2,7 @@ import Bold from "../../../components/ui/text/Bold";
 
 export default function FormDescriptionSection() {
   return (
-    <section className="flex flex-col gap-5 text-sm md:text-md lg:text-lg p-5 lg:px-35">
+    <section className="flex flex-col gap-5 p-5 lg:px-35">
       <p>
         When you become a member of The Source of Hope, you're supporting the
         <Bold>heartbeat of our community</Bold>—from hospital staff, teachers,

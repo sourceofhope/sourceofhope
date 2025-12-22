@@ -8,15 +8,14 @@ import Bold from "../../../components/ui/text/Bold";
 
 export default function ServeShowcaseSection() {
   return (
-    <PageSection className="justify-items-center grid gap-5">
-      <div className="grid gap-1 justify-self-start justify-start">
+    <PageSection className="justify-items-center grid gap-5 text-sm md:text-md lg:text-lg">
+      <div className="grid gap-1 justify-self-start justify-start ">
         <Title>Be the Source Of Hope</Title>
         <Heading>
-          EVERY MEAL SERVED. EVERY SMILE SHARED. EVERY ACT OF LOVE MAKES A
-          DIFFERENCE.
+          EVERY MEAL SERVED, SMILE SHARED, AND ACT OF LOVE MAKES A DIFFERENCE.
         </Heading>
       </div>
-      <div className="hidden text-sm md:text-md lg:text-lg md:grid gap-5 text-neutral-600">
+      <div className="hidden md:grid gap-5 text-neutral-600">
         <p>
           At The Source of Hope, we’re not just another nonprofit—we’re a
           movement dedicated to creating{" "}
@@ -33,7 +32,7 @@ export default function ServeShowcaseSection() {
           entrepreneurship and workforce development, community service, and
           academic mentorship.
         </p>
-        <Blockquote className="lg:text-lg border-accent-600 text-balance w-1/2">
+        <Blockquote className="border-accent-600 text-balance w-1/2">
           "Give a man a fish, and you feed him for a day. Teach a man to fish,
           and you feed him for a lifetime."
         </Blockquote>
@@ -56,7 +55,7 @@ export default function ServeShowcaseSection() {
           </Bold>
         </p>
       </div>
-      <div className="text-sm grid gap-3 md:hidden text-neutral-600">
+      <div className="grid gap-3 md:hidden text-neutral-600">
         <p>
           At The Source of Hope, we’re more than a nonprofit. We’re a movement
           for lasting change. Our mission is to empower through skills,
@@ -67,7 +66,7 @@ export default function ServeShowcaseSection() {
           wellness, outdoor education, entrepreneurship, community service, and
           mentorship.
         </p>
-        <p className="text-sm pl-3 py-0 border-l-4 border-accent-600 text-balance">
+        <p className="pl-3 py-0 border-l-4 border-accent-600 text-balance">
           "Teach a man to fish, and you feed him for a lifetime."
         </p>
         <p>

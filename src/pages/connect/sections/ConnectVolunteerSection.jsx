@@ -9,6 +9,8 @@ import PageSection from "../../PageSection";
 
 import { fetchContent } from "../../../cms";
 import { useEffect, useState } from "react";
+import { CANONICAL } from "../../../routes";
+import SimpleLink from "../../../components/ui/SimpleLink";
 
 export default function ConnectMapSection() {
   const [majorEvents, setMajorEvents] = useState([]);
@@ -33,25 +35,38 @@ export default function ConnectMapSection() {
       <article className="w-full grid gap-5">
         <Title>Volunteer Opportunities</Title>
         <p>
-          Make an Impact--volunteer with The Source of Hope! Join us in Dallas
-          and Plano to help provide food, support, and hope to those in need.
-          Whether you can volunteer once or regularly, every effort makes a{" "}
-          <Emphasis>real difference</Emphasis> in our community.
+          Make a meaningful impact by volunteering with The Source of Hope. Our
+          volunteer opportunities in <Bold>Dallas and Plano</Bold> invite
+          individuals, families, students, and professionals to serve side by
+          side with our community. Whether you can give a single day or commit
+          regularly, your time creates a{" "}
+          <Emphasis>real and lasting difference</Emphasis>.
+        </p>
+        <p>
+          Join us <Bold>every fourth Friday & Saturday</Bold> at Cornerstone
+          Kitchen for Serving Hope, our monthly community outreach dedicated to
+          nourishing both body and spirit. Volunteers help prepare, package, and
+          serve fresh, home-cooked meals to more than{" "}
+          <Emphasis>200 individuals</Emphasis> each month—including senior
+          citizens, veterans, first responders, teachers, families in
+          transition, and neighbors experiencing homelessness.
         </p>
         <Blockquote className="text-balance border-accent-500">
-          The Serving Hope takes place every fourth Friday & Saturday of the
-          month at Cornerstone Kitchen (2627 S. Ervay Street, Dallas, TX 75215).
+          Serving Hope takes place every <Bold>fourth Friday & Saturday</Bold>{" "}
+          of the month at Cornerstone Kitchen (2627 S. Ervay Street, Dallas, TX
+          75215).
         </Blockquote>
         <p>
-          Join us <Bold>every fourth Friday & Saturday</Bold> of the month at
-          Cornerstone Kitchen (2627 S. Ervay Street, Dallas, TX 75215) for
-          Serving Hope, a heartfelt community outreach event hosted by The
-          Source of Hope. We prepare and serve fresh, homemade, organic meals to
-          over <Emphasis>200 individuals</Emphasis> in need—including senior
-          citizens, first responders, veterans, teachers, at-risk families, and
-          those experiencing homelessness.
+          Volunteering with The Source of Hope is more than lending a hand—it’s
+          about showing up with compassion, consistency, and care. If you’re
+          ready to serve your community in a tangible way, we invite you to{" "}
+          <SimpleLink to={CANONICAL.serve}>
+            explore current volunteer opportunities
+          </SimpleLink>{" "}
+          and join us in building hope together.
         </p>
       </article>
+
       <article className="w-full grid gap-5">
         <Heading>Major Events</Heading>
 

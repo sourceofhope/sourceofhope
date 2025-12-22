@@ -5,6 +5,8 @@ import { AnchorButton } from "../../../components/ui/Button";
 import Bold from "../../../components/ui/text/Bold";
 import Blockquote from "../../../components/ui/text/Blockquote";
 import { HighlightedText } from "../../../components/ui/expressive/ExpressiveText";
+import { CANONICAL } from "../../../routes";
+import SimpleLink from "../../../components/ui/SimpleLink";
 
 export default function ConnectMapSection() {
   return (
@@ -12,26 +14,27 @@ export default function ConnectMapSection() {
       <article className="w-full grid gap-5 row-start-2 md:row-start-auto text-neutral-950">
         <Title className="text-neutral-950">Careers</Title>
         <p>
-          At The Source of Hope, we are dedicated to offering meaningful careers
-          for <Bold>emerging professionals, volunteers, and mentors</Bold> who
-          want to grow while making a lasting impact. Whether you're a student
-          looking to fulfill service hours, a mentor eager to guide the next
-          generation, or a passionate individual ready to volunteer.
+          The Source of Hope offers meaningful{" "}
+          <Bold>
+            nonprofit careers, internships, and volunteer opportunities
+          </Bold>{" "}
+          for emerging professionals, mentors, and community members who want
+          their work to serve a greater purpose. Whether you are a student
+          gaining experience, a mentor giving back, or a volunteer ready to
+          serve, there is a place for you here.
         </p>
         <Blockquote className="border-accent-500 text-balance">
-          Join a movement driven by{" "}
-          <HighlightedText>purpose, empowerment, and heart</HighlightedText>
-          —where emerging professionals, mentors, and volunteers grow together
-          while creating lasting impact in the communities we serve.
+          Join a community rooted in{" "}
+          <HighlightedText>service, growth, and compassion</HighlightedText>
+          —where careers are built through purpose-driven work and real
+          community impact.
         </Blockquote>
         <p>
-          Interns gain real-world experience by working on meaningful projects
-          that directly impact lives and help shape their future careers. They
-          collaborate with dedicated professionals who are passionate about{" "}
-          <Bold>driving change in the nonprofit world</Bold>, building strong
-          connections and learning from experienced mentors. Each role supports
-          a mission with purpose, contributing to a healthier, more hopeful
-          community through work that <Bold>truly makes a difference.</Bold>
+          Our interns and team members gain hands-on experience by working on
+          real nonprofit projects that directly support individuals and families
+          across North Texas. From logistics and technology to wellness programs
+          and community outreach, every role contributes to long-term impact
+          while building transferable professional skills.
         </p>
         <article className="grid gap-5">
           <article className="bg-neutral-50 rounded-2xl shadow-sm p-5 grid gap-5 w-full">
@@ -39,29 +42,32 @@ export default function ConnectMapSection() {
               Career Programs
             </Heading>
             <div className="grid gap-5 md:grid-cols-[2fr_7fr]">
-              <span className="font-medium">Emerging Professional</span>
+              <span className="font-medium">Emerging Professionals</span>
               <span className="text-neutral-600">
-                Gain experience in professional settings, working on projects
-                related to IT, logistics, executive assistance, and
-                digital/social media marketing Limited paid opportunities
-                available for students at partnered universities
+                Nonprofit internship opportunities designed for students and
+                early-career professionals. Gain experience in IT, logistics,
+                executive operations, marketing, and community programs while
+                building leadership and service skills. Limited paid roles
+                available through partnered universities.
               </span>
             </div>
             <div className="grid gap-5 md:grid-cols-[2fr_7fr]">
-              <span className="font-medium ">Volunteers</span>
+              <span className="font-medium">Volunteers</span>
               <span className="text-neutral-600">
-                Fulfill community service hours while helping those in need Open
-                to students, professionals, and anyone eager to give back to the
-                community Share your expertise and help guide others through
-                mentorship Learn more about how you can contribute through
-                volunteering on our Volunteer page.
+                Volunteer opportunities for individuals seeking community
+                service hours or purpose-driven service. Open to students,
+                professionals, and community members. Volunteers support food
+                programs, events, wellness initiatives, and mentorship
+                opportunities.
               </span>
             </div>
             <div className="grid gap-5 md:grid-cols-[2fr_7fr]">
-              <span className="font-medium ">Mentors</span>
+              <span className="font-medium">Mentors</span>
               <span className="text-neutral-600">
-                Provide guidance and support to emerging professionals,
-                assisting with their career development and growth.
+                Professional mentors support emerging nonprofit leaders by
+                offering career guidance, skill development, and real-world
+                insight. Mentors play a vital role in shaping confident,
+                service-oriented professionals.
               </span>
             </div>
           </article>
@@ -79,9 +85,10 @@ export default function ConnectMapSection() {
                 professional growth and meaningful community impact.
               </Blockquote>
               <p>
-                Join The Source of Hope and grow with purpose. Whether you’re
-                guiding others or learning new skills, your time with us creates
-                real change in the community.
+                Learn more about serving your community through our{" "}
+                <SimpleLink to={CANONICAL.serve}>volunteer programs</SimpleLink>{" "}
+                or explore how our education and wellness initiatives support
+                long-term change.
               </p>
             </div>
             <AnchorButton className=" px-10 py-5" text="APPLY" />
