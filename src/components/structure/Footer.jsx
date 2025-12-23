@@ -3,7 +3,7 @@ import ExpressiveAnchor from "../ui/expressive/ExpressiveAnchor";
 import ParallaxSection from "../ui/parallax/ParallaxSection";
 import ParallaxLayer from "../ui/parallax/ParallaxLayer";
 import Favicon from "../ui/Favicon";
-import { useLocation } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { CANONICAL } from "../../routes";
 import { LinkButton } from "../ui/Button";
 
@@ -32,24 +32,18 @@ export default function Footer() {
             <FooterColumn title="CONNECT">
               <ul className="grid gap-1">
                 <li>
-                  <ExpressiveAnchor href="https://www.instagram.com/sourceofhope/">
+                  <a href="https://www.instagram.com/sourceofhope/">
                     Instagram
-                  </ExpressiveAnchor>
+                  </a>
                 </li>
                 <li>
-                  <ExpressiveAnchor href="https://www.facebook.com/sourceofhope/">
-                    Facebook
-                  </ExpressiveAnchor>
+                  <a href="https://www.facebook.com/sourceofhope/">Facebook</a>
                 </li>
                 <li>
-                  <ExpressiveAnchor href="https://x.com/thesourceofhope/">
-                    Twitter
-                  </ExpressiveAnchor>
+                  <a href="https://x.com/thesourceofhope/">Twitter</a>
                 </li>
                 <li>
-                  <ExpressiveAnchor href="https://www.youtube.com/@thesourceofhope">
-                    YouTube
-                  </ExpressiveAnchor>
+                  <a href="https://www.youtube.com/@thesourceofhope">YouTube</a>
                 </li>
               </ul>
             </FooterColumn>
@@ -61,25 +55,21 @@ export default function Footer() {
             <FooterColumn title="QUICK LINKS">
               <ul className="grid gap-1">
                 <li>
-                  <ExpressiveLink to={CANONICAL.member}>
-                    Get Involved
-                  </ExpressiveLink>
+                  <NavLink to={CANONICAL.member}>Get Involved</NavLink>
                 </li>
                 <li>
-                  <ExpressiveLink to="">Donate</ExpressiveLink>
+                  <a href="https://donate.stripe.com/8wM5kHal16fC4so8ww">
+                    Donate
+                  </a>
                 </li>
                 <li>
-                  <ExpressiveLink to={CANONICAL.serve}>
-                    Volunteer
-                  </ExpressiveLink>
+                  <NavLink to={CANONICAL.serve}>Volunteer</NavLink>
                 </li>
                 <li>
-                  <ExpressiveLink to={CANONICAL.connect}>
-                    Careers
-                  </ExpressiveLink>
+                  <NavLink to={CANONICAL.connect}>Careers</NavLink>
                 </li>
                 <li>
-                  <ExpressiveLink to="">Site Map</ExpressiveLink>
+                  <a href="sitemap.xml">Site Map</a>
                 </li>
               </ul>
             </FooterColumn>

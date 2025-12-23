@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <url>
+    <loc>https://thesourceofhope.org/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <url>
+    <loc>https://thesourceofhope.org/about</loc>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <url>
+    <loc>https://thesourceofhope.org/serve</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+
+  <url>
+    <loc>https://thesourceofhope.org/connect</loc>
+    <changefreq>daily</changefreq>
+  </url>
+
+  <url>
+    <loc>https://thesourceofhope.org/media</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>https://thesourceofhope.org/members</loc>
+    <changefreq>monthly</changefreq>
+  </url>
+</urlset>
