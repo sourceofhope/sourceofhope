@@ -5,18 +5,21 @@ import { DefaultGenerator } from "../../../components/ui/expressive/DefaultGener
 import { HomeContent } from "../HomePage";
 import Title from "../../../components/ui/text/Title";
 import { useState } from "react";
+import Emphasis from "../../../components/ui/Emphasis";
 
 export default function HomeImpactSection() {
   return (
     <HomeContent className="relative my-12 py-16 px-6 lg:px-32 bg-accent-800 text-neutral-50 overflow-hidden">
       <div className="grid lg:grid-cols-2 gap-12 items-center">
         <article className="flex flex-col gap-10">
-          <div className="flex flex-col gap-3 max-w-xl">
-            <Title className="tracking-wide">COMMUNITY IMPACT</Title>
+          <div className="flex flex-col gap-3">
+            <Title className="tracking-wide text-center md:text-left">
+              COMMUNITY IMPACT
+            </Title>
             <p className="text-lg text-neutral-300 leading-relaxed">
-              Real <strong className="text-neutral-50">Results</strong> and
-              Powerful <strong className="text-neutral-50">Change</strong> in
-              Our Community
+              Real <Emphasis className="text-neutral-100">results</Emphasis> and
+              powerful <Emphasis className="text-neutral-100">change</Emphasis>{" "}
+              in our community
             </p>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-8">
@@ -34,7 +37,9 @@ export default function HomeImpactSection() {
               pre="$"
               post="K"
             />
-            <ImpactNumber end={273} caption="Volunteer Hours" post="K" />
+            <div className="col-span-2 sm:col-span-1 sm:col-start-2 flex justify-center">
+              <ImpactNumber end={273} caption="Volunteer Hours" post="K" />
+            </div>
           </div>
           <div className="w-fit">
             <ExpressiveLink
