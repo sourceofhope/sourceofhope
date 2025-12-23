@@ -11,11 +11,11 @@ export const CANONICAL = {
 
   media: "media",
 
-  servingHope: "serve/servingHope",
-  educationHope: "serve/educationHope",
-  wellnessHope: "serve/wellnessHope",
-  outdoorHope: "serve/outdoorHope",
-  internationalHope: "serve/internationalHope",
+  servingHope: "servingHope",
+  educationHope: "educationHope",
+  wellnessHope: "wellnessHope",
+  outdoorHope: "outdoorHope",
+  internationalHope: "internationalHope",
 
   member: "members",
 };

@@ -32,16 +32,28 @@ export const router = createBrowserRouter([
       { path: CANONICAL.connect, element: <ConnectPage /> },
       { path: CANONICAL.media, element: <MediaPage /> },
 
-      { path: CANONICAL.servingHope, element: <ServingHopeProgram /> },
-      { path: CANONICAL.educationHope, element: <EducationHopeProgram /> },
-      { path: CANONICAL.wellnessHope, element: <WellnessHopeProgram /> },
-      { path: CANONICAL.outdoorHope, element: <OutdoorHopeProgram /> },
       {
-        path: CANONICAL.internationalHope,
+        path: `serve/${CANONICAL.servingHope}`,
+        element: <ServingHopeProgram />,
+      },
+      {
+        path: `serve/${CANONICAL.educationHope}`,
+        element: <EducationHopeProgram />,
+      },
+      {
+        path: `serve/${CANONICAL.wellnessHope}`,
+        element: <WellnessHopeProgram />,
+      },
+      {
+        path: `serve/${CANONICAL.outdoorHope}`,
+        element: <OutdoorHopeProgram />,
+      },
+      {
+        path: `serve/${CANONICAL.internationalHope}`,
         element: <InternationalHopeProgram />,
       },
 
-      { path: CANONICAL.member, element: <FormPage /> },
+      { path: `serve/${CANONICAL.member}`, element: <FormPage /> },
     ],
   },
 ]);
