@@ -1,9 +1,10 @@
 import { NavLink } from "react-router-dom";
 import { ArrowRightIcon } from "@heroicons/react/20/solid";
 
-export default function ExpressiveLink({ children, className, to }) {
+export default function ExpressiveLink({ ariaLabel, children, className, to }) {
   return (
     <NavLink
+      aria-label={ariaLabel}
       to={to}
       className={`!no-underline text-sm md:text-md group inline-flex w-full justify-between items-center gap-1 focus:outline-none ${className}`}>
       <span>{children}</span>

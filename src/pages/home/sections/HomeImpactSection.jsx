@@ -64,8 +64,11 @@ export default function HomeImpactSection() {
         </article>
       </div>
       <button className="justify-self-end md:justify-self-end w-fit text-neutral-400">
-        <ExpressiveLink className="text-sm font-semibold" to="">
-          LEARN MORE
+        <ExpressiveLink
+          className="text-sm font-semibold"
+          ariaLabel="Learn more about The Source of Hope's impact in our community"
+          to="">
+          VIEW OUR IMPACT
         </ExpressiveLink>
       </button>
     </HomeContent>

@@ -1,8 +1,14 @@
 import { ArrowUpRightIcon } from "@heroicons/react/20/solid";
 
-export default function ExpressiveAnchor({ children, className, href }) {
+export default function ExpressiveAnchor({
+  ariaLabel,
+  children,
+  className,
+  href,
+}) {
   return (
     <a
+      aria-label={ariaLabel}
       href={href}
       target="_blank"
       rel="noopener noreferrer"

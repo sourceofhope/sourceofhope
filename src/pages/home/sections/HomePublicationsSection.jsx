@@ -40,12 +40,13 @@ export default function HomePublicationsSection() {
           <button className="w-fit text-neutral-600">
             <ExpressiveLink
               className="font-semibold"
+              ariaLabel="See more of The Source of Hope's publications"
               to={
                 !loading && posts.length > 0
                   ? activePost?.acf?.url
-                  : CANONICAL.about
+                  : CANONICAL.media
               }>
-              LEARN MORE
+              SEE MORE
             </ExpressiveLink>
           </button>
         </article>

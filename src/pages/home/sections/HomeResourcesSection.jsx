@@ -100,7 +100,10 @@ function HomeResourceCard({ title, caption, src, to }) {
           </div>
           <p className="text-sm text-neutral-700">{caption}</p>
           <p className="w-fit">
-            <ExpressiveLink to={to} className="text-sm text-neutral-500">
+            <ExpressiveLink
+              ariaLabel={`Learn more about ${title} at the source of hope`}
+              to={to}
+              className="text-sm text-neutral-500">
               LEARN MORE
             </ExpressiveLink>
           </p>
