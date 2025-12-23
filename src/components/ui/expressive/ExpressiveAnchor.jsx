@@ -6,7 +6,7 @@ export default function ExpressiveAnchor({ children, className, href }) {
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className={`text-sm md:text-md group inline-flex w-full justify-between items-center gap-1 focus:outline-none ${className}`}>
+      className={`!no-underline text-sm md:text-md group inline-flex w-full justify-between items-center gap-1 focus:outline-none ${className}`}>
       <span>{children}</span>
       <ArrowUpRightIcon
         className="w-[1em] h-[1em] transition-transform duration-500 group-hover:translate-x-1 group-hover:-translate-y-1"

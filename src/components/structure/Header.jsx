@@ -125,9 +125,7 @@ function HeaderNavigator() {
     <>
       {links.map(({ label, to }) => (
         <div key={label} className="py-2.5 h-full w-full font-bold">
-          <ExpressiveLink className="!no-underline" to={to}>
-            {label}
-          </ExpressiveLink>
+          <ExpressiveLink to={to}>{label}</ExpressiveLink>
         </div>
       ))}
     </>

@@ -58,7 +58,7 @@ export default function ServeProgramsSection() {
             <div className="flex gap-2 items-center text-neutral-600 rounded-full border-2 border-neutral-500 bg-neutral-300 w-fit px-3 py-1">
               <MapPinIcon className="w-[16px] h-[16px]" />
               <p className="text-sm md:text-md max-w-fit">
-                2627 South Ervay St Dallas, TX
+                2627 South Ervay Dallas, TX
               </p>
             </div>
             <p className="text-balance text-sm md:text-md">
@@ -101,7 +101,7 @@ export default function ServeProgramsSection() {
             caption="Healing body and spirit."
             side={left}>
             <div className="flex gap-2 items-center text-neutral-600 rounded-full border-2 border-neutral-500 bg-neutral-300 w-fit px-3 py-1">
-              <MapPinIcon className="w-[16px] h-[16px]" />
+              <MapPinIcon className="w-[1em] h-[1em]" />
               <p className="text-sm md:text-md max-w-fit">
                 1108 W Parker Rd Plano, TX
               </p>
@@ -129,7 +129,7 @@ export default function ServeProgramsSection() {
             <div className="flex gap-2 items-center text-neutral-600 rounded-full border-2 border-neutral-500 bg-neutral-300 w-fit px-3 py-1">
               <MapPinIcon className="w-[16px] h-[16px]" />
               <p className="text-sm md:text-md max-w-fit">
-                2627 South Ervay St Dallas, TX
+                2627 South Ervay Dallas, TX
               </p>
             </div>
             <p className="text-balance text-sm md:text-md">

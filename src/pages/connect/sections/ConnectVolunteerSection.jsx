@@ -33,6 +33,7 @@ export default function ConnectMapSection() {
   return (
     <PageSection className="justify-items-center grid gap-10 relative m-0 text-sm md:text-md lg:text-lg">
       <article className="w-full grid gap-5">
+        <Title>Upcoming Events</Title>
         <Heading>Major Events</Heading>
 
         {majorEvents.length === 0 && (

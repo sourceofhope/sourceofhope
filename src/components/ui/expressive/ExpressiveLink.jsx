@@ -5,7 +5,7 @@ export default function ExpressiveLink({ children, className, to }) {
   return (
     <NavLink
       to={to}
-      className={`text-sm md:text-md group inline-flex w-full justify-between items-center gap-1 focus:outline-none ${className}`}>
+      className={`!no-underline text-sm md:text-md group inline-flex w-full justify-between items-center gap-1 focus:outline-none ${className}`}>
       <span>{children}</span>
       <ArrowRightIcon
         className="w-[1em] h-[1em] transition-transform duration-500 group-hover:translate-x-1"

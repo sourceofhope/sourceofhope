@@ -30,24 +30,23 @@ export default function MediaPodcastSection() {
             className="rounded-2xl shadow-lg"
             allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
             loading="lazy"></iframe>
-          <div className="flex flex-col gap-5">
-            <p className="leading-relaxed text-neutral-700">
+          <div className="flex flex-col gap-5 leading-relaxed text-neutral-700 text-balance">
+            <Blockquote className="border-accent-500 text-balance">
               Prefer podcasts? The Source of Hope media is also available on
-              <span className="font-semibold"> Spotify</span>, offering a
-              meaningful and convenient way to stay connected, encouraged, and
-              informed—wherever life takes you. Each episode goes beyond
-              announcements, sharing the heart of our mission through thoughtful
-              conversations, behind-the-scenes moments, and real stories of
-              hope.
+              <span className="font-semibold"> Spotify</span>.
+            </Blockquote>
+            <p>
+              Hear powerful testimonies, stay updated on monthly and quarterly
+              initiatives, and discover how your support creates tangible change
+              for families, students, seniors, veterans, and first responders
+              throughout the DFW community. hope.
             </p>
-
-            <p className="leading-relaxed text-neutral-700">
-              When you tune in, you’re not just listening—you’re becoming part
-              of a growing movement rooted in compassion, resilience, and
-              purpose. Hear powerful testimonies, stay updated on monthly and
-              quarterly initiatives, and discover how your support creates
-              tangible change for families, students, seniors, veterans, and
-              first responders throughout the DFW community.
+            <p>
+              Each episode goes beyond announcements, sharing the heart of our
+              mission through thoughtful conversations, behind-the-scenes
+              moments, and real stories of hope. When you tune in, you’re not
+              just listening—you’re becoming part of a growing movement rooted
+              in compassion, resilience, and purpose.
             </p>
           </div>
         </div>
@@ -55,7 +54,7 @@ export default function MediaPodcastSection() {
 
       <article className="flex flex-col gap-5">
         <Heading>Radio Saigon Dallas</Heading>
-        <div className="grid gap-10 md:grid-cols-2 items-center text-balance">
+        <div className="grid gap-10 md:grid-cols-2 items-center">
           <div className="space-y-5 items-start">
             <p className="leading-relaxed text-neutral-700">
               In partnership with{" "}
@@ -65,15 +64,18 @@ export default function MediaPodcastSection() {
               , our founder{" "}
               <span className="font-semibold">Quỳnh Châu Stone</span> hosts a
               weekly Vietnamese radio program dedicated to wellness,
-              encouragement, and uplifting stories from the community. Each
-              broadcast creates a welcoming space for listeners to reconnect
-              with culture, find hope, and receive practical guidance for
-              healthier living.
+              encouragement, and uplifting stories from the community.
             </p>
             <Blockquote className="border-accent-500 text-balance">
               Our podcast is hosted entirely in Vietnamese, without English
               captions available.
             </Blockquote>
+            <p>
+              Each broadcast creates a welcoming space for listeners to
+              reconnect with culture, find hope, and receive practical guidance
+              for healthier living.
+            </p>
+
             <p>
               <span className="font-semibold">Thời gian phát sóng:</span> Thứ
               Bảy hàng tuần, lúc 10 giờ sáng
@@ -81,7 +83,7 @@ export default function MediaPodcastSection() {
               <span className="font-semibold">Nghe qua điện thoại:</span>{" "}
               213-493-0188
               <br />
-              <span className="text-neutral-500 italic text-sm md:text-md">
+              <span className="text-neutral-500 italic">
                 Chương trình phát sóng bằng tiếng Việt
               </span>
             </p>

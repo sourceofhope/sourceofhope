@@ -148,7 +148,7 @@ function MediaCard({ title, mediaID, reverse = false, children }) {
     <div
       className={`
         grid gap-5 items-center
-         rounded-2xl shadow-sm bg-neutral-50
+         rounded-2xl shadow-md bg-neutral-50
         p-5
         md:grid-cols-2
         ${reverse ? "md:[&>*:first-child]:order-2" : ""}

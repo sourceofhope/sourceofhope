@@ -44,6 +44,31 @@ export default function Footer() {
                 ©{new Date().getFullYear()} The Source Of Hope
               </p>
             </FooterColumn>
+            <FooterColumn title="CONNECT">
+              <ul className="grid gap-1">
+                <li>
+                  <a href="https://www.instagram.com/sourceofhope/">
+                    Instagram
+                  </a>
+                </li>
+                <li>
+                  <a href="https://www.facebook.com/TheSourceOfHope/">
+                    Facebook
+                  </a>
+                </li>
+                <li>
+                  <a href="https://x.com/thesourceofhope/">Twitter</a>
+                </li>
+                <li>
+                  <a href="https://www.youtube.com/@thesourceofhope">YouTube</a>
+                </li>
+              </ul>
+            </FooterColumn>
+            <FooterColumn title="LOCATION">
+              <p>
+                1108 W Parker Rd <br /> Ste 102 <br /> Plano, TX 75078
+              </p>
+            </FooterColumn>
             <FooterColumn title="QUICK LINKS">
               <ul className="grid gap-1">
                 <li>
@@ -62,29 +87,6 @@ export default function Footer() {
                 </li>
                 <li>
                   <a href="sitemap.xml">Site Map</a>
-                </li>
-              </ul>
-            </FooterColumn>
-            <FooterColumn title="LOCATION">
-              <p>
-                1108 W Parker Rd <br /> Ste 102 <br /> Plano, TX 75078
-              </p>
-            </FooterColumn>
-            <FooterColumn title="CONNECT">
-              <ul className="grid gap-1">
-                <li>
-                  <a href="https://www.instagram.com/sourceofhope/">
-                    Instagram
-                  </a>
-                </li>
-                <li>
-                  <a href="https://www.facebook.com/sourceofhope/">Facebook</a>
-                </li>
-                <li>
-                  <a href="https://x.com/thesourceofhope/">Twitter</a>
-                </li>
-                <li>
-                  <a href="https://www.youtube.com/@thesourceofhope">YouTube</a>
                 </li>
               </ul>
             </FooterColumn>
@@ -148,7 +150,7 @@ function FooterCard() {
           wellness tips, and community updates right to your inbox by
           subscribing to our newsletter.
         </p>
-        <LinkButton className="w-fit" text="SUBSCRIBE" />
+        <LinkButton to={CANONICAL.member} className="w-fit" text="SUBSCRIBE" />
       </div>
       <p className="text-sm text-neutral-600 italic">
         No spam, unsubscribe anytime.
