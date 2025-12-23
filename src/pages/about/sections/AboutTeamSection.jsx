@@ -11,7 +11,7 @@ export default function AboutTeamSection() {
     <PageSection className="pt-5">
       <div className="grid gap-5">
         <CarouselLayer
-          title="Boarrd of Executives"
+          title="Board of Executives"
           fetchName="executivesBoard"
         />
         <CarouselLayer title="Board of Directors" fetchName="directorsBoard" />
@@ -59,9 +59,9 @@ function CarouselLayer({ title, fetchName, options = {} }) {
             <CarouselCard
               key={post.id}
               src={post.acf?.hero_image?.url}
-              name={post.acf?.memberrName}
+              name={post.acf?.memberName}
               title={post.acf?.memberTitle}
-              caption={post.acf?.memberQoute}
+              caption={post.acf?.memberQuote}
             />
           ))}
       </Carousel>
@@ -75,20 +75,21 @@ function CarouselCard({ src, name, title, caption }) {
   return (
     <>
       <button
-        onClick={() => setActive(!active)}
+        onClick={() => setActive(true)}
         className="
-    relative h-full
-    shrink-0
-    flex-[0_0_calc(100%)] 
-    md:flex-[0_0_calc(50%-0.625rem)] 
-    lg:flex-[0_0_calc(33.333%-0.833rem)]
-    group overflow-hidden rounded-xl text-accent-background aspect-square
-  ">
+          relative h-full
+          shrink-0
+          flex-[0_0_calc(100%)] 
+          md:flex-[0_0_calc(50%-0.625rem)] 
+          lg:flex-[0_0_calc(33.333%-0.833rem)]
+          group overflow-hidden rounded-xl aspect-square
+        ">
         <img
           src={src}
           alt={caption}
           className="inset-0 w-full h-full object-cover transition-transform brightness-[.8] contrast-[1.1]"
         />
+
         <div className="absolute bottom-0 left-0 w-full p-5 bg-gradient-to-t from-black/90 to-transparent rounded-xl flex flex-col justify-start">
           <h2 className="md:line-clamp-1 text-md lg:group-hover:text-sm duration-750 transition-all font-semibold text-center text-neutral-50">
             {name}
@@ -100,6 +101,7 @@ function CarouselCard({ src, name, title, caption }) {
             {caption}
           </p>
         </div>
+
         <div className="absolute md:hidden right-5 top-5 p-1 rounded-4xl bg-black/70 h-fit w-fit text-neutral-50">
           <ArrowRightIcon
             className="w-[1em] h-[1em] transition-transform duration-750 group-hover:translate-x-0.5"
@@ -107,28 +109,40 @@ function CarouselCard({ src, name, title, caption }) {
           />
         </div>
       </button>
+
       <section
         className={`
-    fixed inset-0 z-50 left-0 bottom-0 flex items-center justify-center
-    bg-black/50 md:hidden p-5
-    transition-opacity duration-700 h-screen w-screen
-    ${
-      active
-        ? "opacity-100 pointer-events-auto"
-        : "opacity-0 pointer-events-none"
-    }
-  `}
+          fixed inset-0 z-50 flex items-end md:hidden
+          bg-black/50 backdrop-blur-sm transition-all duration-500
+          ${active ? "opacity-100" : "opacity-0 pointer-events-none"}
+        `}
         onClick={() => setActive(false)}>
-        <article className="relative w-full rounded-xl bg-neutral-200 p-5 grid gap-5">
-          <div className="flex justify-between">
-            <h2 className="text-md font-semibold uppercase">{name}</h2>
-            <button
-              className="justify-self-end font-bold p-1 w-fit h-fit  rounded-full"
-              onClick={() => setActive(false)}>
-              <XMarkIcon className="w-[20px] h-[20px]" aria-hidden="true" />
-            </button>
+        <article
+          onClick={(e) => setActive(false)}
+          className={`
+            w-full rounded-t-3xl bg-neutral-100 p-6 pb-10
+            shadow-2xl transform transition-all duration-500
+            ${active ? "translate-y-0" : "translate-y-full"}
+          `}>
+          <div className="flex justify-between items-start gap-4">
+            <div className="flex flex-col gap-3">
+              <div className="flex flex-row justify-between items-center">
+                <h2 className="text-xl font-semibold text-neutral-900">
+                  {name}
+                </h2>
+
+                <button
+                  onClick={() => setActive(false)}
+                  className="rounded-full p-2 hover:bg-neutral-200 transition">
+                  <XMarkIcon className="w-5 h-5 text-neutral-600" />
+                </button>
+              </div>
+
+              <p className="text-sm leading-relaxed text-neutral-600">
+                {caption}
+              </p>
+            </div>
           </div>
-          <p className="text-sm text-neutral-700">{caption}</p>
         </article>
       </section>
     </>

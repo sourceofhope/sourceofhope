@@ -7,70 +7,53 @@ import Title from "../../../components/ui/text/Title";
 import { useState } from "react";
 
 export default function HomeImpactSection() {
-  const [videoFailed, setVideoFailed] = useState(false);
-
   return (
-    <HomeContent className="my-5 py-5 px-5 lg:px-35 grid gap-5 bg-accent-800 text-neutral-50">
-      <div className="grid grid-flow-row w-full md:grid-cols-[1fr_1fr] items-center justify-self-center gap-5">
-        <article className="flex flex-col gap-5 w-full justify-center items-center">
-          <Title>COMMUNITY IMPACT</Title>
-          <p className="text-neutral-300 text-center">
-            Real <strong className="font-semibold">Results</strong> and Powerful{" "}
-            <strong className="font-semibold">Change</strong> in Our Community
-          </p>
-          <ImpactNumber end={16} caption="Years of Service" post="+" />
-          <ImpactNumber
-            end={900}
-            caption="Holistic Wellness Aid Given"
-            pre="$"
-            post="K"
-          />
-          <ImpactNumber end={353} caption="Free Meals Served" post="K" />
-          <ImpactNumber
-            end={500}
-            caption="Donations Received"
-            pre="$"
-            post="K"
-          />
-          <ImpactNumber
-            end={273}
-            caption="Total Volunteer Hours Served"
-            post="K"
-          />
-        </article>
-        <article className="flex md:border-l-2 w-full md:pl-10 md:border-neutral-500 justify-center">
-          {!videoFailed && (
-            <video
-              controls={false}
-              autoPlay
-              muted
-              loop
-              playsInline
-              onError={() => setVideoFailed(true)}
-              preload="auto"
-              disablePictureInPicture
-              className="w-[500px] aspect-square bg-accent-900 rounded-2xl object-center object-cover">
-              <source src="/core/TSOH-Impact.mp4" type="video/mp4" />
-            </video>
-          )}
-
-          {videoFailed && (
-            <img
-              src="/core/TSOH-Impact.jpg"
-              alt="TSOH Impact"
-              className="w-[500px] aspect-square bg-accent-900 rounded-2xl object-center object-cover"
+    <HomeContent className="relative my-12 py-16 px-6 lg:px-32 bg-accent-800 text-neutral-50 overflow-hidden">
+      <div className="grid lg:grid-cols-2 gap-12 items-center">
+        <article className="flex flex-col gap-10">
+          <div className="flex flex-col gap-3 max-w-xl">
+            <Title className="tracking-wide">COMMUNITY IMPACT</Title>
+            <p className="text-lg text-neutral-300 leading-relaxed">
+              Real <strong className="text-neutral-50">Results</strong> and
+              Powerful <strong className="text-neutral-50">Change</strong> in
+              Our Community
+            </p>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-8">
+            <ImpactNumber end={16} caption="Years of Service" post="+" />
+            <ImpactNumber
+              end={900}
+              caption="Holistic Wellness Aid"
+              pre="$"
+              post="K"
             />
-          )}
+            <ImpactNumber end={353} caption="Free Meals Served" post="K" />
+            <ImpactNumber
+              end={500}
+              caption="Donations Received"
+              pre="$"
+              post="K"
+            />
+            <ImpactNumber end={273} caption="Volunteer Hours" post="K" />
+          </div>
+          <div className="w-fit">
+            <ExpressiveLink
+              className="inline-flex items-center gap-2 text-sm font-semibold text-neutral-300 hover:text-neutral-50 transition"
+              ariaLabel="Learn more about The Source of Hope's impact in our community"
+              to="">
+              VIEW OUR IMPACT
+            </ExpressiveLink>
+          </div>
+        </article>
+        <article className="relative flex justify-center">
+          <div className="absolute -inset-4 rounded-3xl bg-accent-700/20 blur-2xl" />
+          <img
+            src="/core/TSOH-Impact.jpg"
+            alt="TSOH Impact"
+            className="relative w-[600px] max-w-full aspect-5/4 rounded-2xl object-cover shadow-2xl"
+          />
         </article>
       </div>
-      <button className="justify-self-end md:justify-self-end w-fit text-neutral-400">
-        <ExpressiveLink
-          className="text-sm font-semibold"
-          ariaLabel="Learn more about The Source of Hope's impact in our community"
-          to="">
-          VIEW OUR IMPACT
-        </ExpressiveLink>
-      </button>
     </HomeContent>
   );
 }
@@ -88,7 +71,7 @@ function ImpactNumber({ end, caption, pre = "", post = "" }) {
         />
         {post}
       </strong>
-      <p className="border-b-2 pb-2 text-neutral-300 border-neutral-500">
+      <p className="border-b-2 pb-2 w-full text-center text-sm md:text-md text-neutral-300 border-neutral-500">
         {caption}
       </p>
     </div>

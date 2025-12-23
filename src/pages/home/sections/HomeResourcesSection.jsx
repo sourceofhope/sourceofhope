@@ -68,45 +68,54 @@ function HomeResourceCard({ title, caption, src, to }) {
   return (
     <>
       <button
-        onClick={() => setActive(!active)}
-        className="relative min-h-[200px] md:hidden w-full h-full group overflow-hidden rounded-xl text-accent-background aspect-square">
+        onClick={() => setActive(true)}
+        className="relative min-h-[200px] md:hidden w-full h-full group overflow-hidden rounded-xl aspect-square">
         <HomeResourceCardInner src={src} caption={caption} title={title} />
       </button>
       <NavLink
         to={to}
-        className="relative hidden md:block w-full h-full group overflow-hidden rounded-xl text-accent-background aspect-square">
+        className="relative hidden md:block w-full h-full group overflow-hidden rounded-xl aspect-square">
         <HomeResourceCardInner src={src} caption={caption} title={title} />
       </NavLink>
       <section
         className={`
-    fixed inset-0 z-50 left-0 bottom-0 flex items-center justify-center
-    bg-black/50 md:hidden p-5
-    transition-opacity duration-700 h-screen w-screen
-    ${
-      active
-        ? "opacity-100 pointer-events-auto"
-        : "opacity-0 pointer-events-none"
-    }
-  `}
+          fixed inset-0 z-50 flex items-end md:hidden
+          bg-black/50 backdrop-blur-sm transition-all duration-500
+          ${active ? "opacity-100" : "opacity-0 pointer-events-none"}
+        `}
         onClick={() => setActive(false)}>
-        <article className="relative w-full rounded-xl bg-neutral-200 p-5 grid gap-5">
-          <div className="flex justify-between items-center">
-            <h2 className="text-lg font-semibold">{title}</h2>
-            <button
-              className="justify-self-end font-bold p-1 w-fit h-fit  rounded-full"
-              onClick={() => setActive(false)}>
-              <XMarkIcon className="w-[20px] h-[20px]" aria-hidden="true" />
-            </button>
+        <article
+          onClick={(e) => setActive(false)}
+          className={`
+            w-full rounded-t-3xl bg-neutral-100 p-6 pb-10
+            shadow-2xl transform transition-all duration-500
+            ${active ? "translate-y-0" : "translate-y-full"}
+          `}>
+          <div className="flex justify-between items-start gap-4">
+            <div className="flex flex-col gap-3">
+              <div className="flex flex-row justify-between items-center">
+                <h2 className="text-xl font-semibold text-neutral-900">
+                  {title}
+                </h2>{" "}
+                <button
+                  onClick={() => setActive(false)}
+                  className="rounded-full p-2 hover:bg-neutral-200 transition">
+                  <XMarkIcon className="w-5 h-5 text-neutral-600" />
+                </button>
+              </div>
+              <p className="text-sm leading-relaxed text-neutral-600">
+                {caption}
+              </p>
+            </div>
           </div>
-          <p className="text-sm text-neutral-700">{caption}</p>
-          <p className="w-fit">
+          <div className="mt-5 flex justify-end w-fit">
             <ExpressiveLink
               ariaLabel={`Learn more about ${title} at the source of hope`}
               to={to}
-              className="text-sm text-neutral-500">
-              LEARN MORE
+              className="inline-flex items-center gap-2 text-sm font-semibold text-accent-700 hover:text-accent-900 transition">
+              Learn More
             </ExpressiveLink>
-          </p>
+          </div>
         </article>
       </section>
     </>
