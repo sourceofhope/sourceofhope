@@ -22,6 +22,7 @@ export default function Footer() {
                 <a
                   href="https://app.candid.org/profile/9393304/the-source-of-hope-46-2491772"
                   target="_blank"
+                  alt="Candid.org Badge"
                   className="w-[60px] h-[60px]">
                   {" "}
                   <img src="https://widgets.guidestar.org/prod/v1/pdp/transparency-seal/9393304/svg" />{" "}

@@ -1,12 +1,6 @@
 import React, { lazy } from "react";
 import ReactDOM from "react-dom/client";
-import {
-  createBrowserRouter,
-  RouterProvider,
-  Navigate,
-} from "react-router-dom";
-
-import { ROUTES, CANONICAL } from "./routes.jsx";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import AppLayout from "./components/layout/AppLayout.jsx";
 import ErrorBoundary from "./pages/ErrorBoundary.jsx";
@@ -25,38 +19,28 @@ import FormPage from "./pages/form/FormPage.jsx";
 
 import "./style.css";
 
-const PageMap = {
-  home: <HomePage />,
-
-  about: <AboutPage />,
-
-  serve: <ServePage />,
-
-  connect: <ConnectPage />,
-
-  media: <MediaPage />,
-
-  servingHope: <ServingHopeProgram />,
-  educationHope: <EducationHopeProgram />,
-  wellnessHope: <WellnessHopeProgram />,
-  outdoorHope: <OutdoorHopeProgram />,
-  internationalHope: <InternationalHopeProgram />,
-
-  member: <FormPage />,
-};
-
 export const router = createBrowserRouter([
   {
+    path: "/",
     element: <AppLayout />,
     errorElement: <ErrorBoundary />,
     children: [
-      { path: "/", element: <Navigate to={CANONICAL.home} replace /> },
-      ...Object.entries(ROUTES).flatMap(([key, paths]) =>
-        paths.map((path) => ({
-          path,
-          element: PageMap[key],
-        }))
-      ),
+      { index: true, element: <HomePage /> },
+      { path: "about", element: <AboutPage /> },
+      { path: "serve", element: <ServePage /> },
+      { path: "connect", element: <ConnectPage /> },
+      { path: "media", element: <MediaPage /> },
+
+      { path: "serve/serving-hope", element: <ServingHopeProgram /> },
+      { path: "serve/education-hope", element: <EducationHopeProgram /> },
+      { path: "serve/wellness-hope", element: <WellnessHopeProgram /> },
+      { path: "serve/outdoor-hope", element: <OutdoorHopeProgram /> },
+      {
+        path: "serve/international-hope",
+        element: <InternationalHopeProgram />,
+      },
+
+      { path: "members", element: <FormPage /> },
     ],
   },
 ]);

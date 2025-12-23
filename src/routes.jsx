@@ -1,29 +1,3 @@
-export const ROUTE_ALIASES = {
-  home: ["", "home"],
-
-  about: ["about", "aboutus"],
-
-  serve: ["serve", "serving"],
-
-  connect: ["connect", "connection"],
-
-  media: ["media", "photos"],
-
-  servingHope: ["serve/servingHope", "serve/sharingHope"],
-  educationHope: ["serve/educationHope", "serve/education"],
-  wellnessHope: ["serve/wellnessHope", "serve/wellness"],
-  outdoorHope: ["serve/outdoorHope", "serve/outdoor"],
-  internationalHope: ["serve/internationalHope", "serve/internationalHope"],
-
-  member: ["members", "membership", "signup"],
-};
-
-export const ROUTES = Object.fromEntries(
-  Object.entries(ROUTE_ALIASES).map(([key, paths]) => [
-    key,
-    paths.map((p) => `/${p}`),
-  ])
-);
 const BASE_URL = "https://thesourceofhope.org";
 
 export const CANONICAL = {
