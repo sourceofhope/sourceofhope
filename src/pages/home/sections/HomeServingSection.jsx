@@ -40,20 +40,6 @@ export function ServingCard({ className }) {
       </Title>
       <ul className="grid text-sm">
         <li>
-          <ExpressiveAnchor
-            href="https://app.joinhandshake.com/e/806999/jobs"
-            className="p-5 rounded-2xl hover:bg-neutral-200 duration-500 transition-colors">
-            Apply for Emerging Professional
-          </ExpressiveAnchor>
-        </li>
-        <li>
-          <ExpressiveAnchor
-            href="https://www.eventbrite.com/o/quynh-chau-stone-92264017613"
-            className="p-5 rounded-2xl hover:bg-neutral-200 duration-500 transition-colors">
-            Volunteer for an Event
-          </ExpressiveAnchor>
-        </li>
-        <li>
           <ExpressiveLink
             to={CANONICAL.member}
             className="p-5 rounded-2xl hover:bg-neutral-200 duration-500 transition-colors">
@@ -66,9 +52,23 @@ export function ServingCard({ className }) {
           </ExpressiveLink>
         </li>
         <li>
+          <ExpressiveAnchor
+            href="https://www.eventbrite.com/o/quynh-chau-stone-92264017613"
+            className="p-5 rounded-2xl hover:bg-neutral-200 duration-500 transition-colors">
+            Volunteer for an Event
+          </ExpressiveAnchor>
+        </li>
+        <li>
           <ExpressiveLink className="p-5 rounded-2xl hover:bg-neutral-200 duration-500 transition-colors">
             Stay Connected
           </ExpressiveLink>
+        </li>
+        <li>
+          <ExpressiveAnchor
+            href="https://app.joinhandshake.com/e/806999/jobs"
+            className="p-5 rounded-2xl hover:bg-neutral-200 duration-500 transition-colors">
+            Apply for Emerging Professional
+          </ExpressiveAnchor>
         </li>
       </ul>
     </article>

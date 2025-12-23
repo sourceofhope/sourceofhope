@@ -4,8 +4,9 @@ import { HighlightedText } from "../../../components/ui/expressive/ExpressiveTex
 import ExpressiveLink from "../../../components/ui/expressive/ExpressiveLink";
 import Title from "../../../components/ui/text/Title";
 import Bold from "../../../components/ui/text/Bold";
-import { LinkButton } from "../../../components/ui/Button";
+import { AnchorButton, LinkButton } from "../../../components/ui/Button";
 import Emphasis from "../../../components/ui/Emphasis";
+import { CANONICAL } from "../../../routes";
 
 export default function AboutSummarySection() {
   return (
@@ -41,15 +42,18 @@ export default function AboutSummarySection() {
       </div>
 
       <div className="flex flex-col lg:flex-row justify-items-center gap-5 text-center text-sm md:text-md">
-        <LinkButton
+        <AnchorButton
+          href="https://app.joinhandshake.com/e/806999/jobs"
           className="w-fit text-neutral-950 justify-between bg-neutral-200 hover:bg-neutral-300"
           text="Apply for Emerging Professional"
         />
-        <LinkButton
+        <AnchorButton
+          href="https://www.eventbrite.com/o/quynh-chau-stone-92264017613"
           className="w-fit text-neutral-950 justify-between bg-neutral-200 hover:bg-neutral-300"
           text="Volunteer for an Event"
         />
         <LinkButton
+          to={CANONICAL.member}
           className="w-fit text-neutral-950 justify-between bg-neutral-200 hover:bg-neutral-300"
           text="Become a Community Sponsor"
         />
