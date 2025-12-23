@@ -17,7 +17,7 @@ export default function Footer() {
         <div className="relative z-10 flex flex-col md:items-center gap-5 w-full">
           <div className="flex w-fit gap-10 flex-col md:justify-between md:flex-row">
             <FooterColumn>
-              <ul className="grid gap-5 grid-flow-col md:grid-flow-row">
+              <ul className="grid gap-3 grid-flow-col md:grid-flow-row">
                 <Favicon className="w-[60px] h-[60px] bg-primary-800 rounded-sm" />
                 <a
                   href="https://app.candid.org/profile/9393304/the-source-of-hope-46-2491772"
@@ -29,27 +29,19 @@ export default function Footer() {
                 </a>
               </ul>
             </FooterColumn>
-            <FooterColumn title="CONNECT">
+            <FooterColumn title="CONTACT">
               <ul className="grid gap-1">
                 <li>
-                  <a href="https://www.instagram.com/sourceofhope/">
-                    Instagram
+                  <a href="mailto:info@thesourceofhope.org">
+                    info@thesourceofhope.org
                   </a>
                 </li>
                 <li>
-                  <a href="https://www.facebook.com/sourceofhope/">Facebook</a>
-                </li>
-                <li>
-                  <a href="https://x.com/thesourceofhope/">Twitter</a>
-                </li>
-                <li>
-                  <a href="https://www.youtube.com/@thesourceofhope">YouTube</a>
+                  <a href="tel:4699690244">(469)-969-0244</a>
                 </li>
               </ul>
-            </FooterColumn>
-            <FooterColumn title="LOCATION">
-              <p>
-                1108 W Parker Rd <br /> Ste 102 <br /> Plano, TX 75078
+              <p className="mt-5">
+                ©{new Date().getFullYear()} The Source Of Hope
               </p>
             </FooterColumn>
             <FooterColumn title="QUICK LINKS">
@@ -73,20 +65,28 @@ export default function Footer() {
                 </li>
               </ul>
             </FooterColumn>
-            <FooterColumn title="CONTACT">
+            <FooterColumn title="LOCATION">
+              <p>
+                1108 W Parker Rd <br /> Ste 102 <br /> Plano, TX 75078
+              </p>
+            </FooterColumn>
+            <FooterColumn title="CONNECT">
               <ul className="grid gap-1">
                 <li>
-                  <a href="mailto:info@thesourceofhope.org">
-                    info@thesourceofhope.org
+                  <a href="https://www.instagram.com/sourceofhope/">
+                    Instagram
                   </a>
                 </li>
                 <li>
-                  <a href="tel:4699690244">(469)-969-0244</a>
+                  <a href="https://www.facebook.com/sourceofhope/">Facebook</a>
+                </li>
+                <li>
+                  <a href="https://x.com/thesourceofhope/">Twitter</a>
+                </li>
+                <li>
+                  <a href="https://www.youtube.com/@thesourceofhope">YouTube</a>
                 </li>
               </ul>
-              <p className="pt-5">
-                ©{new Date().getFullYear()} The Source Of Hope
-              </p>
             </FooterColumn>
           </div>
         </div>
