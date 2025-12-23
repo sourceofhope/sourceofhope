@@ -29,7 +29,7 @@ export default function Carousel({
       const containerWidth = containerReference.current.offsetWidth;
       const firstChild = containerReference.current.children[0];
       const childWidth = firstChild ? firstChild.offsetWidth : containerWidth;
-      const fit = Math.max(1, Math.round(containerWidth / childWidth));
+      const fit = Math.max(1, Math.floor(containerWidth / childWidth));
       setCount(fit);
       setActive(0);
     };
@@ -85,7 +85,7 @@ export default function Carousel({
     <article className={`flex flex-col gap-5 justify-center ${className}`}>
       <div
         ref={containerReference}
-        className="flex flex-row justify-start items-center w-full gap-5 overflow-hidden pb-3">
+        className="flex flex-row justify-start items-stretch w-full gap-5 overflow-hidden pb-3">
         {groups[active]?.map((child, i) => (
           <Fragment key={i}>{child}</Fragment>
         ))}

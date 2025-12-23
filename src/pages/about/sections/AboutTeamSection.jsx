@@ -12,38 +12,37 @@ export default function AboutTeamSection() {
       <div className="grid gap-5">
         <CarouselLayer
           title="Board of Executives"
-          fetchName="executivesBoard"
+          groupName="executivesBoard"
         />
-        <CarouselLayer title="Board of Directors" fetchName="directorsBoard" />
-        <CarouselLayer title="Spring 2024" fetchName="internSpring24" />
-        <CarouselLayer title="Fall 2025" fetchName="internFall25" />
-        <CarouselLayer title="Summer 2025" fetchName="internSummer25" />
-        <CarouselLayer title="Spring 2025" fetchName="internSpring25" />
-        <CarouselLayer title="Fall 2024" fetchName="internFall24" />
-        <CarouselLayer title="Summer 2024" fetchName="internSummer24" />
-        <CarouselLayer title="Spring 2024" fetchName="internSpring24" />
+        <CarouselLayer title="Board of Directors" groupName="directorsBoard" />
+        <CarouselLayer title="Spring 2024" groupName="internSpring24" />
+        <CarouselLayer title="Fall 2025" groupName="internFall25" />
+        <CarouselLayer title="Summer 2025" groupName="internSummer25" />
+        <CarouselLayer title="Spring 2025" groupName="internSpring25" />
+        <CarouselLayer title="Fall 2024" groupName="internFall24" />
+        <CarouselLayer title="Summer 2024" groupName="internSummer24" />
+        <CarouselLayer title="Spring 2024" groupName="internSpring24" />
         <CarouselLayer
           title="High School Interns"
-          fetchName="internHighschool"
+          groupName="internHighschool"
         />
       </div>
     </PageSection>
   );
 }
 
-function CarouselLayer({ title, fetchName, options = {} }) {
+function CarouselLayer({ title, groupName, options = {} }) {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchContent(fetchName, options)
+    fetchContent("/team-member?per_page=100&_embed", options)
       .then((data) => {
         setPosts(data);
       })
       .catch(() => setPosts([]))
       .finally(() => setLoading(false));
   }, []);
-
   return (
     <div className="grid gap-5">
       <Title>{title}</Title>
@@ -53,15 +52,14 @@ function CarouselLayer({ title, fetchName, options = {} }) {
             No team members to display
           </p>
         )}
-
         {!loading &&
           posts.map((post) => (
             <CarouselCard
               key={post.id}
-              src={post.acf?.hero_image?.url}
-              name={post.acf?.memberName}
-              title={post.acf?.memberTitle}
-              caption={post.acf?.memberQuote}
+              src={post.acf?.photo?.url}
+              name={post.acf?.name}
+              title={post.acf?.title}
+              caption={post.acf?.bio}
             />
           ))}
       </Carousel>
@@ -77,7 +75,7 @@ function CarouselCard({ src, name, title, caption }) {
       <button
         onClick={() => setActive(true)}
         className="
-          relative h-full
+          relative min-h-[260px]
           shrink-0
           flex-[0_0_calc(100%)] 
           md:flex-[0_0_calc(50%-0.625rem)] 
