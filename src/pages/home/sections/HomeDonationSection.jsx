@@ -17,7 +17,11 @@ export default function HomeDonationSection() {
           of Hope with love, support, and transformation.
         </p>
         <div className="w-fit">
-          <AnchorButton className="w-fit" text="DONATE" />
+          <AnchorButton
+            href="https://donate.stripe.com/8wM5kHal16fC4so8ww"
+            className="w-fit"
+            text="DONATE"
+          />
         </div>
       </article>
     </HomeContent>

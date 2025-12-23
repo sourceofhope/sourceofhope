@@ -18,29 +18,30 @@ import InternationalHopeProgram from "./pages/serve/programs/InternationalHopePr
 import FormPage from "./pages/form/FormPage.jsx";
 
 import "./style.css";
+import { CANONICAL } from "./routes.jsx";
 
 export const router = createBrowserRouter([
   {
-    path: "/",
+    path: CANONICAL.home,
     element: <AppLayout />,
     errorElement: <ErrorBoundary />,
     children: [
       { index: true, element: <HomePage /> },
-      { path: "about", element: <AboutPage /> },
-      { path: "serve", element: <ServePage /> },
-      { path: "connect", element: <ConnectPage /> },
-      { path: "media", element: <MediaPage /> },
+      { path: CANONICAL.about, element: <AboutPage /> },
+      { path: CANONICAL.serve, element: <ServePage /> },
+      { path: CANONICAL.connect, element: <ConnectPage /> },
+      { path: CANONICAL.media, element: <MediaPage /> },
 
-      { path: "serve/serving-hope", element: <ServingHopeProgram /> },
-      { path: "serve/education-hope", element: <EducationHopeProgram /> },
-      { path: "serve/wellness-hope", element: <WellnessHopeProgram /> },
-      { path: "serve/outdoor-hope", element: <OutdoorHopeProgram /> },
+      { path: CANONICAL.servingHope, element: <ServingHopeProgram /> },
+      { path: CANONICAL.educationHope, element: <EducationHopeProgram /> },
+      { path: CANONICAL.wellnessHope, element: <WellnessHopeProgram /> },
+      { path: CANONICAL.outdoorHope, element: <OutdoorHopeProgram /> },
       {
-        path: "serve/international-hope",
+        path: CANONICAL.internationalHope,
         element: <InternationalHopeProgram />,
       },
 
-      { path: "members", element: <FormPage /> },
+      { path: CANONICAL.member, element: <FormPage /> },
     ],
   },
 ]);

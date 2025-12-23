@@ -12,13 +12,13 @@ export default function Footer() {
 
   return (
     <footer className="relative w-full lg:mt-15">
-      {!(location.pathname === "/home") ? <FooterParallax /> : null}
+      {!(location.pathname == `/${CANONICAL.home}`) ? <FooterParallax /> : null}
       <section className="w-full h-full bg-primary-700 text-neutral-50 p-5 md:py-10 z-10">
         <div className="relative z-10 flex flex-col md:items-center gap-5 w-full">
           <div className="flex w-fit gap-10 flex-col md:justify-between md:flex-row">
             <FooterColumn>
               <ul className="grid gap-5 grid-flow-col md:grid-flow-row">
-                <Favicon className="w-[60px] h-[60px] bg-primary-900 rounded-sm" />
+                <Favicon className="w-[60px] h-[60px] bg-primary-800 rounded-sm" />
                 <a
                   href="https://app.candid.org/profile/9393304/the-source-of-hope-46-2491772"
                   target="_blank"
@@ -94,11 +94,13 @@ export default function Footer() {
                   <a href="tel:4699690244">(469)-969-0244</a>
                 </li>
               </ul>
+              <p className="pt-5">
+                ©{new Date().getFullYear()} The Source Of Hope
+              </p>
             </FooterColumn>
           </div>
         </div>
       </section>
-      <FooterBottom />
     </footer>
   );
 }
@@ -136,14 +138,6 @@ function FooterColumn({ title = "", children }) {
       </h2>
       <div className="text-neutral-300 text-sm">{children}</div>
     </div>
-  );
-}
-
-function FooterBottom() {
-  return (
-    <section className="text-center p-5 w-full text-md bg-accent-900 text-neutral-50">
-      <p>Copyright © {new Date().getFullYear()} The Source Of Hope</p>
-    </section>
   );
 }
 

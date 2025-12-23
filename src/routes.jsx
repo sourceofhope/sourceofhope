@@ -1,7 +1,7 @@
 const BASE_URL = "https://thesourceofhope.org";
 
 export const CANONICAL = {
-  home: "home",
+  home: "",
 
   about: "about",
 

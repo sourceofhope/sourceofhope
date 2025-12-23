@@ -53,7 +53,11 @@ export default function HomeIntroductionSection() {
         </p>
         <div className="flex gap-5 flex-col md:flex-row">
           <div className="w-fit">
-            <AnchorButton className="w-fit" text="DONATE" />
+            <AnchorButton
+              className="w-fit"
+              href="https://donate.stripe.com/8wM5kHal16fC4so8ww"
+              text="DONATE"
+            />
           </div>
           <div className="w-fit">
             <LinkButton
