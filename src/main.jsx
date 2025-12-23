@@ -10,31 +10,18 @@ import { ROUTES, CANONICAL } from "./routes.jsx";
 
 import AppLayout from "./components/layout/AppLayout.jsx";
 import ErrorBoundary from "./pages/ErrorBoundary.jsx";
+import HomePage from "./pages/home/HomePage.jsx";
+import AboutPage from "./pages/about/AboutPage.jsx";
+import ServePage from "./pages/serve/ServePage.jsx";
+import ConnectPage from "./pages/connect/ConnectPage.jsx";
+import MediaPage from "./pages/media/MediaPage.jsx";
 
-const HomePage = lazy(() => import("./pages/home/HomePage.jsx"));
-const AboutPage = lazy(() => import("./pages/about/AboutPage.jsx"));
-const ServePage = lazy(() => import("./pages/serve/ServePage.jsx"));
-const ConnectPage = lazy(() => import("./pages/connect/ConnectPage.jsx"));
-const MediaPage = lazy(() => import("./pages/media/MediaPage.jsx"));
-
-const SharingHopeProgram = lazy(() =>
-  import("./pages/serve/programs/ServingHopeProgram.jsx")
-);
-const EducationHopeProgram = lazy(() =>
-  import("./pages/serve/programs/EducationHopeProgram.jsx")
-);
-const WellnessHopeProgram = lazy(() =>
-  import("./pages/serve/programs/WellnessHopeProgram.jsx")
-);
-const OutdoorHopeProgram = lazy(() =>
-  import("./pages/serve/programs/OutdoorHopeProgram.jsx")
-);
-
-const InternationalHopeProgram = lazy(() =>
-  import("./pages/serve/programs/InternationalHopeProgram.jsx")
-);
-
-const FormPage = lazy(() => import("./pages/form/FormPage.jsx"));
+import ServingHopeProgram from "./pages/serve/programs/ServingHopeProgram.jsx";
+import EducationHopeProgram from "./pages/serve/programs/EducationHopeProgram.jsx";
+import WellnessHopeProgram from "./pages/serve/programs/WellnessHopeProgram.jsx";
+import OutdoorHopeProgram from "./pages/serve/programs/OutdoorHopeProgram.jsx";
+import InternationalHopeProgram from "./pages/serve/programs/InternationalHopeProgram.jsx";
+import FormPage from "./pages/form/FormPage.jsx";
 
 import "./style.css";
 
@@ -49,7 +36,7 @@ const PageMap = {
 
   media: <MediaPage />,
 
-  servingHope: <SharingHopeProgram />,
+  servingHope: <ServingHopeProgram />,
   educationHope: <EducationHopeProgram />,
   wellnessHope: <WellnessHopeProgram />,
   outdoorHope: <OutdoorHopeProgram />,

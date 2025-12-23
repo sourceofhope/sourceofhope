@@ -4,7 +4,6 @@ import { MapPinIcon } from "@heroicons/react/20/solid";
 import { CANONICAL } from "../../../routes";
 
 import ExpressiveLink from "../../../components/ui/expressive/ExpressiveLink";
-import ExpressiveAnchor from "../../../components/ui/expressive/ExpressiveAnchor";
 import Title from "../../../components/ui/text/Title";
 import Heading from "../../../components/ui/text/Heading";
 

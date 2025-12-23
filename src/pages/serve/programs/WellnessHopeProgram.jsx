@@ -7,7 +7,6 @@ import { useEffect } from "react";
 import Heading from "../../../components/ui/text/Heading";
 import Title from "../../../components/ui/text/Title";
 import { AnchorButton } from "../../../components/ui/Button";
-
 import { CANONICAL_URL } from "../../../routes";
 
 export default function WellnessHopeProgram() {

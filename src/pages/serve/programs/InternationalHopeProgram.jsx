@@ -8,11 +8,9 @@ import ExpressiveAnchor from "../../../components/ui/expressive/ExpressiveAnchor
 import Carousel from "../../../components/ui/Carousel";
 import Title from "../../../components/ui/text/Title";
 import Heading from "../../../components/ui/text/Heading";
-import ExpressiveCard from "../../../components/ui/expressive/ExpressiveCard";
 import { CANONICAL_URL } from "../../../routes";
-import Blockquote from "../../../components/ui/text/Blockquote";
 
-export default function EducationHopeProgram() {
+export default function InternationalHopeProgram() {
   const { setIsBlocking } = useHeaderFlag();
 
   useEffect(() => {

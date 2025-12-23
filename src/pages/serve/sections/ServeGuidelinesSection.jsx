@@ -1,10 +1,6 @@
-import { useState } from "react";
 import PageSection from "../../PageSection";
 import { NavLink } from "react-router-dom";
-
-import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import Title from "../../../components/ui/text/Title";
-import Heading from "../../../components/ui/text/Heading";
 
 import ExpressiveCard from "../../../components/ui/expressive/ExpressiveCard";
 

@@ -10,7 +10,7 @@ import Heading from "../../../components/ui/text/Heading";
 import ExpressiveCard from "../../../components/ui/expressive/ExpressiveCard";
 import Blockquote from "../../../components/ui/text/Blockquote";
 
-export default function EducationHopeProgram() {
+export default function OutdoorHopeProgram() {
   const { setIsBlocking } = useHeaderFlag();
 
   useEffect(() => {
