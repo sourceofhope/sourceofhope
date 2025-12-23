@@ -1,27 +1,27 @@
 export const ROUTE_ALIASES = {
-  home: ["/", "/home"],
+  home: ["", "home"],
 
-  about: ["/about", "/aboutus"],
+  about: ["about", "aboutus"],
 
-  serve: ["/serve", "/serving"],
+  serve: ["serve", "serving"],
 
-  connect: ["/connect", "/connection"],
+  connect: ["connect", "connection"],
 
-  media: ["/media", "/photos"],
+  media: ["media", "photos"],
 
-  servingHope: ["/serve/servingHope", "/serve/sharingHope"],
-  educationHope: ["/serve/educationHope", "/serve/education"],
-  wellnessHope: ["/serve/wellnessHope", "/serve/wellness"],
-  outdoorHope: ["/serve/outdoorHope", "/serve/outdoor"],
-  internationalHope: ["/serve/internationalHope", "/serve/internationalHope"],
+  servingHope: ["serve/servingHope", "serve/sharingHope"],
+  educationHope: ["serve/educationHope", "serve/education"],
+  wellnessHope: ["serve/wellnessHope", "serve/wellness"],
+  outdoorHope: ["serve/outdoorHope", "serve/outdoor"],
+  internationalHope: ["serve/internationalHope", "serve/internationalHope"],
 
-  member: ["/members", "/membership", "signup"],
+  member: ["members", "membership", "signup"],
 };
 
 export const ROUTES = Object.fromEntries(
   Object.entries(ROUTE_ALIASES).map(([key, paths]) => [
     key,
-    paths.map((p) => `${p}`),
+    paths.map((p) => `/${p}`),
   ])
 );
 const BASE_URL = "https://thesourceofhope.org";

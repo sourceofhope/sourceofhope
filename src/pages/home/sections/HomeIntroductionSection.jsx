@@ -36,7 +36,7 @@ export default function HomeIntroductionSection() {
           className="absolute inset-0 z-0 h-full w-full object-cover brightness-75"
         />
       )}
-      <div className="relative z-10 w-full max-w-[75ch] md:max-w-[105ch] self-end grid gap-3 p-5 md:pb-15 lg:px-35">
+      <div className="relative z-10 w-full max-w-[75ch] md:max-w-[85ch] self-end grid gap-3 p-5 md:pb-15 lg:px-35">
         <h2 className="text-neutral-50 font-urbanist text-md md:text-lg font-semibold">
           THE SOURCE OF HOPE
         </h2>

@@ -10,7 +10,7 @@ export default function AppLayout() {
   return (
     <HeaderFlagContext.Provider value={{ isBlocking, setIsBlocking }}>
       <HeaderImpl />
-      <main className="w-full min-h-screen">
+      <main className="w-full min-h-screen text-sm md:text-md lg:text-lg">
         <Suspense fallback={<Loader />}>
           <Outlet />
         </Suspense>

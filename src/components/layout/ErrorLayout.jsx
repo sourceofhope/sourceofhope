@@ -15,7 +15,7 @@ export default function ErrorLayout({ code = 500, message }) {
   return (
     <>
       <Header isBlocking={true} />
-      <main className="w-full min-h-screen flex flex-col justify-center items-start gap-5 px-5 lg:px-35">
+      <main className="w-full min-h-screen flex flex-col justify-center items-start gap-5 px-5 lg:px-35 text-sm md:text-md lg:text-lg">
         <h2 className="text-lg font-semibold">
           Error {code}: <span className="font-mono font-normal">{message}</span>
         </h2>

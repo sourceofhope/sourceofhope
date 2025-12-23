@@ -9,6 +9,7 @@ import FormDescriptionSection from "./sections/FormDescriptionSection";
 import FormInputSection from "./sections/FormInputSection";
 import FormShowcaseSection from "./sections/FormShowcaseSection";
 import Title from "../../components/ui/text/Title";
+import Heading from "../../components/ui/text/Heading";
 
 export default function FormPage() {
   const { setIsBlocking } = useHeaderFlag();
@@ -57,16 +58,15 @@ export default function FormPage() {
           content="https://sourceofhope.org/assets/social-share-programs.jpg"
         />
       </Helmet>
-      <section className="w-full md:justify-items-left items-center grid gap-5 pt-25 p-5 lg:px-35">
+      <section className="md:justify-items-left items-center grid gap-5 pt-25 p-5 lg:px-35">
         <div className="grid gap-1 justify-self-start justify-start">
           <Title>Members</Title>
-
-          <h3 className="text-sm md:text-md text-accent-700 font-semibold uppercase">
+          <Heading>
             Become a Member. Be the Source of Hope.{" "}
             <span className="hidden md:inline">
               Stand With the People Who Keep Our Communities Strong
             </span>
-          </h3>
+          </Heading>
         </div>
       </section>
       <FormDescriptionSection />
