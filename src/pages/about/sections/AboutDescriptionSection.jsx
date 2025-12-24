@@ -3,6 +3,7 @@ import { HighlightedText } from "../../../components/ui/expressive/ExpressiveTex
 import Title from "../../../components/ui/text/Title";
 import Bold from "../../../components/ui/text/Bold";
 import Emphasis from "../../../components/ui/Emphasis";
+import Heading from "../../../components/ui/text/Heading";
 
 export default function AboutDescriptionSection() {
   return (
@@ -13,9 +14,7 @@ export default function AboutDescriptionSection() {
           <span className="hidden md:inline-block">Non-profit</span>{" "}
           Organization
         </Title>
-        <h3 className="text-accent-700 font-semibold">
-          HERE TO SERVE AND EMPOWER.
-        </h3>
+        <Heading>HERE TO SERVE AND EMPOWER.</Heading>
       </div>
       <div className="hidden md:flex flex-col gap-5 text-neutral-600">
         <p>

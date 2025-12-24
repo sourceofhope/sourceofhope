@@ -6,6 +6,7 @@ import Favicon from "../ui/Favicon";
 import { NavLink, useLocation } from "react-router-dom";
 import { CANONICAL } from "../../routes";
 import { LinkButton } from "../ui/Button";
+import Heading from "../ui/text/Heading";
 
 export default function Footer() {
   const location = useLocation();
@@ -139,9 +140,7 @@ function FooterCard() {
   return (
     <article
       className={`flex flex-col gap-3 rounded-2xl shadow-2x overflow-hidden w-175 max-w-fit h-fit py-5 px-10 bg-neutral-50 text-neutral-950`}>
-      <p className="h-fit w-full text-sm font-bold text-primary-700">
-        SUBSCRIBE TO OUR NEWSLETTER
-      </p>
+      <Heading>SUBSCRIBE TO OUR NEWSLETTER</Heading>
       <div className="h-fit w-full text-lg md:text-xlg font-urbanist font-semibold">
         <h2 className="hidden md:block">Be the first to know about events</h2>
         <h2 className="block md:hidden">Get Updates</h2>

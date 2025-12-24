@@ -15,7 +15,7 @@ export default function HomeResourcesSection() {
     <HomeContent className="w-full md:mb-15 p-5 md:py-10 lg:px-15">
       <Title className="pb-5 text-center text-balance">
         We provide a number of{" "}
-        <NavLink to={CANONICAL.serve}>
+        <NavLink className="!no-underline" to={CANONICAL.serve}>
           <Emphasis>resources</Emphasis>
         </NavLink>{" "}
         to <HighlightedText>our community</HighlightedText>.
@@ -111,7 +111,7 @@ function HomeResourceCard({ title, caption, src, to }) {
           <div className="mt-5 flex justify-end w-fit">
             <ExpressiveLink
               ariaLabel={`Learn more about ${title} at the source of hope`}
-              to={to}
+              to={`serve/${to}`}
               className="inline-flex items-center gap-2 text-sm font-semibold text-accent-700 hover:text-accent-900 transition">
               Learn More
             </ExpressiveLink>
@@ -145,7 +145,7 @@ function HomeResourceCardInner({ src, caption, title }) {
           {caption}
         </p>
       </div>
-      <div className="absolute right-5 top-5 p-1 rounded-4xl bg-black/70 h-fit w-fit text-neutral-50">
+      <div className="absolute right-5 top-5 p-1 rounded-full bg-black/70 h-fit w-fit text-neutral-50">
         <ArrowRightIcon
           className="w-[1em] h-[1em] transition-transform ease-in-out duration-750 group-hover:translate-x-0.5"
           aria-hidden="true"

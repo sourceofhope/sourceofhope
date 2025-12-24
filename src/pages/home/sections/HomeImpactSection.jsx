@@ -6,12 +6,13 @@ import { HomeContent } from "../HomePage";
 import Title from "../../../components/ui/text/Title";
 import { useState } from "react";
 import Emphasis from "../../../components/ui/Emphasis";
+import { CANONICAL } from "../../../routes";
 
 export default function HomeImpactSection() {
   return (
-    <HomeContent className="relative my-12 py-16 px-6 lg:px-32 bg-accent-800 text-neutral-50 overflow-hidden">
+    <HomeContent className="relative my-12 py-16 px-6 lg:px-32 md:bg-accent-800 text-neutral-50 overflow-hidden">
       <div className="grid lg:grid-cols-2 gap-12 items-center">
-        <article className="flex flex-col gap-10">
+        <article className="flex flex-col gap-10 z-10 ">
           <div className="flex flex-col gap-3">
             <Title className="tracking-wide text-center md:text-left">
               COMMUNITY IMPACT
@@ -45,17 +46,24 @@ export default function HomeImpactSection() {
             <ExpressiveLink
               className="inline-flex items-center gap-2 text-sm font-semibold text-neutral-300 hover:text-neutral-50 transition"
               ariaLabel="Learn more about The Source of Hope's impact in our community"
-              to="">
+              to={CANONICAL.about}>
               VIEW OUR IMPACT
             </ExpressiveLink>
           </div>
         </article>
-        <article className="relative flex justify-center">
+        <article className="relative hidden md:flex justify-end">
           <div className="absolute -inset-4 rounded-3xl bg-accent-700/20 blur-2xl" />
           <img
             src="/core/TSOH-Impact.jpg"
             alt="TSOH Impact"
-            className="relative w-[600px] max-w-full aspect-5/4 rounded-2xl object-cover shadow-2xl"
+            className="relative w-[600px] max-w-full rounded-2xl object-cover shadow-2xl"
+          />
+        </article>
+        <article className="absolute inset-0 w-full h-full z-0 flex md:hidden">
+          <img
+            src="/core/TSOH-Impact.jpg"
+            alt="TSOH Impact"
+            className="w-full h-full object-cover contrast-140 brightness-75 rounded-3xl"
           />
         </article>
       </div>
