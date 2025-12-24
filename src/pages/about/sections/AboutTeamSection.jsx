@@ -5,16 +5,14 @@ import Carousel from "../../../components/ui/Carousel";
 import PageSection from "../../PageSection";
 import Title from "../../../components/ui/text/Title";
 import { fetchContent } from "../../../cms";
+import { createPortal } from "react-dom";
 
 export default function AboutTeamSection() {
   return (
     <PageSection className="pt-5">
       <div className="grid gap-5">
-        <CarouselLayer
-          title="Board of Executives"
-          groupName="executivesBoard"
-        />
-        <CarouselLayer title="Board of Directors" groupName="directorsBoard" />
+        <CarouselLayer title="Board of Executives" groupName="executiveBoard" />
+        <CarouselLayer title="Board of Directors" groupName="directorBoard" />
         <CarouselLayer title="Spring 2024" groupName="internSpring24" />
         <CarouselLayer title="Fall 2025" groupName="internFall25" />
         <CarouselLayer title="Summer 2025" groupName="internSummer25" />
@@ -38,7 +36,10 @@ function CarouselLayer({ title, groupName, options = {} }) {
   useEffect(() => {
     fetchContent("/team-member?per_page=100&_embed", options)
       .then((data) => {
-        setPosts(data);
+        const filtered = data.filter(
+          (member) => member.acf?.team_group === groupName
+        );
+        setPosts(filtered);
       })
       .catch(() => setPosts([]))
       .finally(() => setLoading(false));
@@ -46,7 +47,7 @@ function CarouselLayer({ title, groupName, options = {} }) {
   return (
     <div className="grid gap-5">
       <Title>{title}</Title>
-      <Carousel>
+      <Carousel itemsPerView={{ base: 1, md: 2, lg: 3 }} showProgress>
         {!loading && posts.length === 0 && (
           <p className="w-full text-center text-gray-500">
             No team members to display
@@ -67,64 +68,59 @@ function CarouselLayer({ title, groupName, options = {} }) {
   );
 }
 
-function CarouselCard({ src, name, title, caption }) {
+export function CarouselCard({ src, name, title, caption }) {
   const [active, setActive] = useState(false);
+  const overlayRoot = document.getElementById("root");
+
+  useEffect(() => {
+    document.body.style.overflow = active ? "hidden" : "";
+  }, [active]);
 
   return (
     <>
       <button
         onClick={() => setActive(true)}
-        className="
-          relative min-h-[260px]
-          shrink-0
-          flex-[0_0_calc(100%)] 
-          md:flex-[0_0_calc(50%-0.625rem)] 
-          lg:flex-[0_0_calc(33.333%-0.833rem)]
-          group overflow-hidden rounded-xl aspect-square
-        ">
+        className="relative h-full w-full group overflow-hidden rounded-2xl aspect-square">
         <img
           src={src}
           alt={caption}
-          className="inset-0 w-full h-full object-cover transition-transform brightness-[.8] contrast-[1.1]"
+          className="absolute inset-0 w-full h-full object-cover brightness-[.8] contrast-[1.1] transition-transform"
         />
 
-        <div className="absolute bottom-0 left-0 w-full p-5 bg-gradient-to-t from-black/90 to-transparent rounded-xl flex flex-col justify-start">
-          <h2 className="md:line-clamp-1 text-md lg:group-hover:text-sm duration-750 transition-all font-semibold text-center text-neutral-50">
+        <div className="absolute bottom-0 left-0 w-full p-5 bg-gradient-to-t from-black/90 to-transparent rounded-2xl flex flex-col">
+          <h2 className="md:line-clamp-1 text-md lg:group-hover:text-sm transition-all duration-700 font-semibold text-center text-neutral-50">
             {name}
           </h2>
-          <h3 className="md:line-clamp-1 text-sm lg:group-hover:text-xs duration-750 transition-all font-semibold text-center text-neutral-300">
+
+          <h3 className="md:line-clamp-1 text-sm lg:group-hover:text-xs transition-all duration-700 font-semibold text-center text-neutral-300">
             {title}
           </h3>
-          <p className="text-sm hidden lg:block text-gray-200 mt-2 max-h-0 opacity-0 overflow-hidden transition-[height_opacity] duration-750 text-left group-hover:max-h-70 group-hover:opacity-100">
+
+          <p className="text-sm hidden lg:block text-gray-200 mt-2 max-h-0 opacity-0 overflow-hidden transition-[height,opacity] duration-700 group-hover:max-h-70 group-hover:opacity-100">
             {caption}
           </p>
         </div>
 
-        <div className="absolute md:hidden right-5 top-5 p-1 rounded-4xl bg-black/70 h-fit w-fit text-neutral-50">
-          <ArrowRightIcon
-            className="w-[1em] h-[1em] transition-transform duration-750 group-hover:translate-x-0.5"
-            aria-hidden="true"
-          />
+        <div className="absolute md:hidden right-5 top-5 p-1 rounded-full bg-black/70 text-neutral-50">
+          <ArrowRightIcon className="w-4 h-4 transition-transform duration-700 group-hover:translate-x-0.5" />
         </div>
       </button>
 
-      <section
-        className={`
-          fixed inset-0 z-50 flex items-end md:hidden
-          bg-black/50 backdrop-blur-sm transition-all duration-500
-          ${active ? "opacity-100" : "opacity-0 pointer-events-none"}
-        `}
-        onClick={() => setActive(false)}>
-        <article
-          onClick={(e) => setActive(false)}
-          className={`
-            w-full rounded-t-3xl bg-neutral-100 p-6 pb-10
-            shadow-2xl transform transition-all duration-500
-            ${active ? "translate-y-0" : "translate-y-full"}
-          `}>
-          <div className="flex justify-between items-start gap-4">
+      {createPortal(
+        <section
+          className={`fixed inset-0 z-50 flex items-end md:hidden bg-black/50 backdrop-blur-sm transition-all duration-500 ${
+            active
+              ? "opacity-100 pointer-events-auto"
+              : "opacity-0 pointer-events-none"
+          }`}
+          onClick={() => setActive(false)}>
+          <article
+            onClick={(e) => e.stopPropagation()}
+            className={`w-full rounded-t-3xl bg-neutral-100 p-6 pb-10 shadow-2xl transform transition-all duration-500 ${
+              active ? "translate-y-0" : "translate-y-full"
+            }`}>
             <div className="flex flex-col gap-3">
-              <div className="flex flex-row justify-between items-center">
+              <div className="flex justify-between items-center">
                 <h2 className="text-xl font-semibold text-neutral-900">
                   {name}
                 </h2>
@@ -140,9 +136,10 @@ function CarouselCard({ src, name, title, caption }) {
                 {caption}
               </p>
             </div>
-          </div>
-        </article>
-      </section>
+          </article>
+        </section>,
+        overlayRoot
+      )}
     </>
   );
 }

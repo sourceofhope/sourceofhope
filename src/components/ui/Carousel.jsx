@@ -1,141 +1,107 @@
-import { useState, useRef, useLayoutEffect, useMemo, useEffect } from "react";
-import { Fragment } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 
 export default function Carousel({
-  activeIndex,
-  onChange,
-  children = [],
-  className,
-  controls = true,
+  children,
   auto = false,
+  showProgress = false,
+  hideControls = false,
+  itemsPerView = { base: 1, md: 1, lg: 1 },
 }) {
-  const containerReference = useRef(null);
-  const [internalActive, setInternalActive] = useState(0);
+  const slides = useMemo(
+    () =>
+      React.Children.toArray(children).filter(
+        (child) => typeof child !== "string"
+      ),
+    [children]
+  );
 
-  const isControlled = typeof activeIndex === "number";
-  const active = isControlled ? activeIndex : internalActive;
-  const setActive = isControlled ? onChange : setInternalActive;
+  const [perView, setPerView] = useState(itemsPerView.base);
+  const [index, setIndex] = useState(0);
 
-  const [count, setCount] = useState(1);
-  const resizeObserverReference = useRef(null);
-
-  const childArray = Array.isArray(children) ? children : [children];
-
-  const [disableAuto, setDisableAuto] = useState(false);
-
-  useLayoutEffect(() => {
+  useEffect(() => {
     const update = () => {
-      const containerWidth = containerReference.current.offsetWidth;
-      const firstChild = containerReference.current.children[0];
-      const childWidth = firstChild ? firstChild.offsetWidth : containerWidth;
-      const fit = Math.max(1, Math.floor(containerWidth / childWidth));
-      setCount(fit);
-      setActive(0);
+      const w = window.innerWidth;
+      if (w >= 1024 && itemsPerView.lg) setPerView(itemsPerView.lg);
+      else if (w >= 768 && itemsPerView.md) setPerView(itemsPerView.md);
+      else setPerView(itemsPerView.base);
     };
 
     update();
-
-    if (window.ResizeObserver) {
-      resizeObserverReference.current = new ResizeObserver(update);
-      resizeObserverReference.current.observe(containerReference.current);
-    }
-
     window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, [itemsPerView]);
 
-    return () => {
-      window.removeEventListener("resize", update);
-      if (resizeObserverReference.current) {
-        resizeObserverReference.current.disconnect();
-      }
-    };
-  }, [children]);
-
-  const groups = useMemo(() => {
-    const groupings = [];
-    for (let i = 0; i < childArray.length; i += count) {
-      const group = childArray.slice(i, i + count);
-      while (group.length < count) {
-        group.push(
-          <div
-            key={`ghost-${i}-${group.length}`}
-            className="invisible pointer-events-none aspect-square"
-            style={{ width: `${100 / count}%` }}
-          />
-        );
-      }
-      groupings.push(group);
-    }
-    return groupings;
-  }, [childArray, count]);
-
-  const total = groups.length;
+  const totalPages = Math.max(1, Math.ceil(slides.length / perView));
 
   useEffect(() => {
-    if (auto && !disableAuto) {
-      const stepper = setInterval(() => {
-        setActive((prev) => (prev - 1 + total) % total);
-      }, 7500);
+    setIndex((i) => Math.min(i, totalPages - 1));
+  }, [totalPages]);
 
-      return () => clearInterval(stepper);
-    }
-  }, [auto, total, disableAuto]);
+  const next = () => setIndex((i) => (i + 1) % totalPages);
+  const prev = () => setIndex((i) => (i - 1 + totalPages) % totalPages);
+
+  useEffect(() => {
+    if (!auto) return;
+    const id = setInterval(next, 7500);
+    return () => clearInterval(id);
+  }, [auto, totalPages]);
 
   return (
-    <article className={`flex flex-col gap-5 justify-center ${className}`}>
+    <div className="relative w-full overflow-hidden">
       <div
-        ref={containerReference}
-        className="flex flex-row justify-start items-stretch w-full gap-5 overflow-hidden pb-3">
-        {groups[active]?.map((child, i) => (
-          <Fragment key={i}>{child}</Fragment>
+        className="flex transition-transform duration-700 ease-out"
+        style={{
+          width: `${(totalPages * 100) / totalPages}%`,
+          transform: `translateX(-${index * 100}%)`,
+        }}>
+        {Array.from({ length: totalPages }).map((_, pageIndex) => (
+          <div
+            key={pageIndex}
+            className="grid gap-5 px-2 shrink-0"
+            style={{
+              width: "100%",
+              gridTemplateColumns: `repeat(${perView}, minmax(0, 1fr))`,
+            }}>
+            {slides
+              .slice(pageIndex * perView, pageIndex * perView + perView)
+              .map((child, i) => (
+                <div key={i} className="w-full h-full">
+                  {child}
+                </div>
+              ))}
+          </div>
         ))}
       </div>
-      {controls ? (
-        <div className="grid grid-cols-[1fr_10fr_1fr] md:grid-cols-1 gap-3 justify-self-center w-full">
+      <div className="grid grid-flow-col gap-3 w-full items-center justify-between my-5">
+        {!hideControls && (
           <button
-            onClick={() => {
-              setActive((active - 1 + total) % total);
-              setDisableAuto(true);
-            }}
-            className={`md:hidden p-1 rounded-full w-fit h-fit text-neutral-50 ${
-              groups.length === 1 ? "bg-black/20" : "bg-black/70"
-            }`}>
-            <ChevronLeftIcon className="w-[20px] h-[20px] hover:-translate-x-0.5 transition-transform" />
+            onClick={prev}
+            className="bg-black/60 text-white p-2 rounded-full">
+            <ChevronLeftIcon className="w-6 h-6" />
           </button>
-          <div className="flex flex-row items-center justify-center gap-1">
-            {Array.from({ length: total }).map((_, i) => (
-              <CarouselSelector
+        )}
+        {showProgress && (
+          <div className="flex gap-1 justify-center">
+            {Array.from({ length: totalPages }).map((_, i) => (
+              <button
                 key={i}
-                selected={i === active}
-                onClick={() => {
-                  setActive(i);
-                  setDisableAuto(true);
-                }}
+                onClick={() => setIndex(i)}
+                className={`h-5 rounded-full transition-all duration-300 ${
+                  i === index ? "w-10 bg-accent-500" : "w-5 bg-accent-600"
+                }`}
               />
             ))}
           </div>
+        )}
+        {!hideControls && (
           <button
-            onClick={() => {
-              setActive((active + 1) % total);
-              setDisableAuto(true);
-            }}
-            className={`md:hidden p-1 rounded-full w-fit h-fit text-neutral-50 ${
-              groups.length === 1 ? "bg-black/20" : "bg-black/70"
-            }`}>
-            <ChevronRightIcon className="w-[20px] h-[20px] hover:translate-x-0.5 transition-transform" />
+            onClick={next}
+            className="bg-black/60 text-white p-2 rounded-full">
+            <ChevronRightIcon className="w-6 h-6" />
           </button>
-        </div>
-      ) : null}
-    </article>
-  );
-}
-
-function CarouselSelector({ selected, onClick }) {
-  return (
-    <button
-      className={`${
-        selected ? "w-20 bg-accent-500" : "w-3 md:w-5 bg-accent-600"
-      } h-3 md:h-5 rounded-full transition-[width_color] duration-500`}
-      onClick={onClick}></button>
+        )}
+      </div>
+    </div>
   );
 }
