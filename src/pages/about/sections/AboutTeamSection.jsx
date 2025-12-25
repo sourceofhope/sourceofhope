@@ -47,46 +47,60 @@ function CarouselLayer({ title, groupName, options = {} }) {
   return (
     <div className="grid gap-5">
       <Title>{title}</Title>
-      <Carousel itemsPerView={{ base: 1, md: 2, lg: 3 }} showProgress>
-        {!loading && posts.length === 0 && (
-          <p className="w-full text-center text-gray-500">
-            No team members to display
-          </p>
-        )}
-        {!loading &&
-          posts.map((post) => (
-            <CarouselCard
-              key={post.id}
-              src={post.acf?.photo?.url}
-              name={post.acf?.name}
-              title={post.acf?.title}
-              caption={post.acf?.bio}
-            />
-          ))}
-      </Carousel>
+      <div className={loading ? "opacity-0" : "opacity-100 transition-opacity"}>
+        <Carousel itemsPerView={{ base: 1, md: 2, lg: 3 }} showProgress>
+          {!loading && posts.length === 0 && (
+            <p className="w-full text-center text-gray-500">
+              No team members to display
+            </p>
+          )}
+          {!loading &&
+            posts.map((post) => (
+              <CarouselCard
+                key={post.id}
+                src={post.id}
+                name={post.acf?.name}
+                title={post.acf?.title}
+                caption={post.acf?.bio}
+              />
+            ))}
+        </Carousel>
+      </div>
     </div>
   );
 }
 
 export function CarouselCard({ src, name, title, caption }) {
   const [active, setActive] = useState(false);
+  const [image, setImage] = useState(null);
+  const [loaded, setLoaded] = useState(false);
   const overlayRoot = document.getElementById("root");
 
   useEffect(() => {
     document.body.style.overflow = active ? "hidden" : "";
   }, [active]);
 
+  useEffect(() => {
+    fetchContent(`/media?parent=${src}`)
+      .then((data) => {
+        setImage(data[0].guid.rendered);
+      })
+      .catch(() => setImage(""));
+  }, []);
+
   return (
     <>
       <button
         onClick={() => setActive(true)}
-        className="relative h-full w-full group overflow-hidden rounded-2xl aspect-square">
+        className="relative h-full min-h-[320px] w-full group overflow-hidden rounded-2xl aspect-square">
         <img
-          src={src}
+          src={image || "/core/placeholder.jpg"}
           alt={caption}
-          className="absolute inset-0 w-full h-full object-cover brightness-[.8] contrast-[1.1] transition-transform"
+          onLoad={() => setLoaded(true)}
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
+            loaded ? "opacity-100" : "opacity-0"
+          }`}
         />
-
         <div className="absolute bottom-0 left-0 w-full p-5 bg-gradient-to-t from-black/90 to-transparent rounded-2xl flex flex-col">
           <h2 className="md:line-clamp-1 text-md lg:group-hover:text-sm transition-all duration-700 font-semibold text-center text-neutral-50">
             {name}
@@ -96,7 +110,7 @@ export function CarouselCard({ src, name, title, caption }) {
             {title}
           </h3>
 
-          <p className="text-sm hidden lg:block text-gray-200 mt-2 max-h-0 opacity-0 overflow-hidden transition-[height,opacity] duration-700 group-hover:max-h-70 group-hover:opacity-100">
+          <p className="text-sm hidden lg:block text-gray-200 mt-2 max-h-0 opacity-0 overflow-hidden transition-[height_opacity] duration-700 group-hover:max-h-70 group-hover:opacity-100">
             {caption}
           </p>
         </div>
