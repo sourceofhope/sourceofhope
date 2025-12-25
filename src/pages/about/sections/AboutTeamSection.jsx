@@ -116,13 +116,13 @@ export function CarouselCard({ src, name, title, caption }) {
         </div>
 
         <div className="absolute md:hidden right-5 top-5 p-1 rounded-full bg-black/70 text-neutral-50">
-          <ArrowRightIcon className="w-4 h-4 transition-transform duration-700 group-hover:translate-x-0.5" />
+          <ArrowRightIcon className="w-4 h-4 transition-transform duration-750 group-hover:translate-x-0.5" />
         </div>
       </button>
 
       {createPortal(
         <section
-          className={`fixed inset-0 z-50 flex items-end md:hidden bg-black/50 backdrop-blur-sm transition-all duration-500 ${
+          className={`fixed inset-0 z-50 flex items-end md:hidden bg-black/50 backdrop-blur-sm transition-all duration-750 ${
             active
               ? "opacity-100 pointer-events-auto"
               : "opacity-0 pointer-events-none"
@@ -130,7 +130,7 @@ export function CarouselCard({ src, name, title, caption }) {
           onClick={() => setActive(false)}>
           <article
             onClick={(e) => e.stopPropagation()}
-            className={`w-full rounded-t-3xl bg-neutral-100 p-6 pb-10 shadow-2xl transform transition-all duration-500 ${
+            className={`w-full rounded-t-3xl bg-neutral-100 p-6 pb-10 shadow-2xl transform transition-all duration-750 ${
               active ? "translate-y-0" : "translate-y-full"
             }`}>
             <div className="flex flex-col gap-3">

@@ -10,7 +10,7 @@ import { CANONICAL } from "../../../routes";
 
 export default function HomeImpactSection() {
   return (
-    <HomeContent className="relative my-12 py-16 px-6 lg:px-32 md:bg-accent-800 text-neutral-50 overflow-hidden">
+    <HomeContent className="relative my-12 py-16 px-6 lg:px-32 bg-accent-800 text-neutral-50 overflow-hidden">
       <div className="grid lg:grid-cols-2 gap-12 items-center">
         <article className="flex flex-col gap-10 z-10 ">
           <div className="flex flex-col gap-3">
@@ -52,18 +52,10 @@ export default function HomeImpactSection() {
           </div>
         </article>
         <article className="relative hidden md:flex justify-end">
-          <div className="absolute -inset-4 rounded-3xl bg-accent-700/20 blur-2xl" />
           <img
             src="/core/TSOH-Impact.jpg"
             alt="TSOH Impact"
             className="relative w-[600px] max-w-full rounded-2xl object-cover shadow-2xl"
-          />
-        </article>
-        <article className="absolute inset-0 w-full h-full z-0 flex md:hidden">
-          <img
-            src="/core/TSOH-Impact.jpg"
-            alt="TSOH Impact"
-            className="w-full h-full object-cover contrast-140 brightness-75 rounded-3xl"
           />
         </article>
       </div>
