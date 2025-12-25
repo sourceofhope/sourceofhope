@@ -80,7 +80,7 @@ function HomeResourceCard({ title, caption, src, to }) {
       <section
         className={`
           fixed inset-0 z-50 flex items-end md:hidden
-          bg-black/50 backdrop-blur-sm transition-all duration-500
+          bg-black/50 backdrop-blur-sm transition-all duration-750
           ${active ? "opacity-100" : "opacity-0 pointer-events-none"}
         `}
         onClick={() => setActive(false)}>
@@ -88,7 +88,7 @@ function HomeResourceCard({ title, caption, src, to }) {
           onClick={(e) => setActive(false)}
           className={`
             w-full rounded-t-3xl bg-neutral-100 p-6 pb-10
-            shadow-2xl transform transition-all duration-500
+            shadow-2xl transform transition-all duration-750
             ${active ? "translate-y-0" : "translate-y-full"}
           `}>
           <div className="flex justify-between items-start gap-4">
