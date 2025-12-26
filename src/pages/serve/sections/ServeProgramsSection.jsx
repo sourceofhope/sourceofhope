@@ -55,11 +55,9 @@ export default function ServeProgramsSection() {
             caption="Every meal served. Every smile shared. Together."
             side={left}
             tagline="Volunteer at Our Next Event">
-            <div className="flex gap-2 items-center text-neutral-600 rounded-full border-2 border-neutral-500 bg-neutral-300 w-fit px-3 py-1">
+            <div className="flex items-center gap-3 w-fit px-3 py-1 rounded-full text-neutral-600 border">
               <MapPinIcon className="w-[16px] h-[16px]" />
-              <p className="text-sm md:text-md max-w-fit">
-                2627 South Ervay Dallas, TX
-              </p>
+              <p className="text-sm">2627 South Ervay Dallas, TX</p>
             </div>
             <p className="text-balance text-sm md:text-md">
               Every fourth Friday and Saturday, our volunteers gather to cook,
@@ -100,11 +98,9 @@ export default function ServeProgramsSection() {
             title="WELLNESS OF HOPE"
             caption="Healing body and spirit."
             side={left}>
-            <div className="flex gap-2 items-center text-neutral-600 rounded-full border-2 border-neutral-500 bg-neutral-300 w-fit px-3 py-1">
+            <div className="flex items-center gap-3 w-fit px-3 py-1 rounded-full text-neutral-600 border">
               <MapPinIcon className="w-[1em] h-[1em]" />
-              <p className="text-sm md:text-md max-w-fit">
-                1108 W Parker Rd Plano, TX
-              </p>
+              <p className="text-sm">1108 W Parker Rd Plano, TX</p>
             </div>
             <p className="text-balance text-sm md:text-md">
               In partnership with Stone International Wellness Center, the
@@ -126,11 +122,9 @@ export default function ServeProgramsSection() {
             title="SHARING HOPE"
             caption="Extending love beyond borders."
             side={right}>
-            <div className="flex gap-2 items-center text-neutral-600 rounded-full border-2 border-neutral-500 bg-neutral-300 w-fit px-3 py-1">
+            <div className="flex items-center gap-3 w-fit px-3 py-1 rounded-full text-neutral-600 border">
               <MapPinIcon className="w-[16px] h-[16px]" />
-              <p className="text-sm md:text-md max-w-fit">
-                2627 South Ervay Dallas, TX
-              </p>
+              <p className="text-sm">2627 South Ervay Dallas, TX</p>
             </div>
             <p className="text-balance text-sm md:text-md">
               Sharing Hope focuses on distributing meals, hygiene kits, and

@@ -5,6 +5,8 @@ import Title from "../../../components/ui/text/Title";
 import Heading from "../../../components/ui/text/Heading";
 import Blockquote from "../../../components/ui/text/Blockquote";
 import Bold from "../../../components/ui/text/Bold";
+import Carousel from "../../../components/ui/Carousel";
+import { AnchorButton } from "../../../components/ui/Button";
 import { useEffect, useState } from "react";
 import { fetchContent } from "../../../cms";
 
@@ -13,16 +15,24 @@ export default function ServeShowcaseSection() {
   const [recurringEvents, setRecurringEvents] = useState([]);
 
   useEffect(() => {
-    fetchContent("events", "&per_page=10")
+    fetchContent("/recurring-event", "&per_page=10")
       .then((data) => {
-        setMajorEvents(data.filter((e) => e.acf?.event_type === "major"));
-        setRecurringEvents(
-          data.filter((e) => e.acf?.event_type === "recurring")
-        );
+        console.log("Recurring response:", data);
+        setRecurringEvents(Array.isArray(data) ? data : data?.data || []);
+      })
+      .catch((err) => {
+        console.error("Recurring error:", err);
+        setRecurringEvents([]);
+      });
+  }, []);
+
+  useEffect(() => {
+    fetchContent("/featured-event", "&per_page=10")
+      .then((data) => {
+        setMajorEvents(data);
       })
       .catch(() => {
         setMajorEvents([]);
-        setRecurringEvents([]);
       });
   }, []);
 
@@ -43,16 +53,7 @@ export default function ServeShowcaseSection() {
           )}
           <div className="grid lg:grid-cols-2 gap-6">
             {majorEvents.map((event) => (
-              <MajorEventCard
-                key={event.id}
-                title={event.title.rendered}
-                src={event.acf?.hero_image?.url}
-                alt={event.title.rendered}
-                href={event.acf?.cta_link}
-                date={event.acf?.event_date}
-                location={event.acf?.location}
-                summary={event.acf?.summary}
-              />
+              <MajorEventCard key={event.id} post={event} />
             ))}
           </div>
         </section>
@@ -62,18 +63,9 @@ export default function ServeShowcaseSection() {
             <p className="text-neutral-500">No recurring events available.</p>
           )}
           {recurringEvents.length > 0 && (
-            <Carousel auto>
+            <Carousel auto itemsPerView={{ base: 1, md: 2, lg: 3 }}>
               {recurringEvents.map((event) => (
-                <CarouselCard
-                  key={event.id}
-                  title={event.title.rendered}
-                  location={event.acf?.location}
-                  summary={event.acf?.summary}
-                  date={event.acf?.event_date}
-                  src={event.acf?.hero_image?.url}
-                  alt={event.title.rendered}
-                  href={event.acf?.cta_link}
-                />
+                <CarouselCard key={event.id} post={event} />
               ))}
             </Carousel>
           )}
@@ -154,82 +146,127 @@ export default function ServeShowcaseSection() {
   );
 }
 
-function MajorEventCard({ title, src, alt, href, date, location, summary }) {
+function MajorEventCard({ post }) {
+  const [image, setImage] = useState(null);
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    fetchContent(`/media?parent=${post.id}`)
+      .then((data) => {
+        setImage(data[0].guid.rendered);
+      })
+      .catch(() => setImage(""));
+  }, []);
+
   return (
-    <a
-      href={href}
+    <div
       className="
-        group relative overflow-hidden rounded-3xl
-        bg-white shadow-lg hover:shadow-2xl
+        relative overflow-hidden rounded-2xl
+        bg-white shadow-md
         transition-all duration-500
       ">
       <div className="relative aspect-[16/9]">
         <img
-          src={src}
-          alt={alt}
-          className="absolute inset-0 h-full w-full object-cover group-hover:scale-105 transition-transform duration-700"
+          src={image || "/core/placeholder.jpg"}
+          alt={post.acf?.title}
+          onLoad={() => setLoaded(true)}
+          className={`absolute inset-0 h-full w-full object-cover ${
+            loaded ? "opacity-100" : "opacity-0"
+          }`}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
         <div className="absolute bottom-0 p-6 text-white space-y-2">
-          <h3 className="text-2xl font-semibold leading-tight">{title}</h3>
+          <h3 className="text-2xl font-semibold leading-tight">
+            {post.acf?.title}
+          </h3>
           <div className="flex flex-wrap gap-2 text-xs">
             <span className="px-3 py-1 rounded-full bg-white/20 backdrop-blur">
-              {date}
+              {post.acf?.date
+                ? new Date(post.acf.date).toLocaleString("en-US", {
+                    weekday: "short",
+                    month: "short",
+                    day: "numeric",
+                    year: "numeric",
+                    hour: "numeric",
+                    minute: "2-digit",
+                  })
+                : "Date TBA"}
             </span>
             <span className="px-3 py-1 rounded-full bg-white/20 backdrop-blur">
-              {location}
+              {post.acf?.location}
             </span>
           </div>
         </div>
       </div>
       <div className="p-6 grid gap-4">
-        <p className="text-neutral-700 line-clamp-3">{summary}</p>
+        <p className="text-neutral-700 line-clamp-3">{post.acf?.summary}</p>
         <div className="pt-2">
-          <AnchorButton text="Register Now" />
+          <AnchorButton href={post.acf?.event_page.url} text="Register Now" />
         </div>
       </div>
-    </a>
+    </div>
   );
 }
 
-function CarouselCard({ title, date, location, summary, src, alt, href }) {
+function CarouselCard({ post }) {
+  const [image, setImage] = useState(null);
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    fetchContent(`/media?parent=${post.id}`)
+      .then((data) => {
+        setImage(data[0].guid.rendered);
+      })
+      .catch(() => setImage(""));
+  }, []);
+
   return (
-    <a
-      href={href}
+    <div
       className="
         group relative shrink-0
         flex-[0_0_100%]
         md:flex-[0_0_48%]
         lg:flex-[0_0_32%]
         bg-white rounded-2xl overflow-hidden
-        shadow-md hover:shadow-xl
-        transition-all duration-500
+        shadow-md
       ">
       <div className="relative aspect-video">
         <img
-          src={src}
-          alt={alt}
-          className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+          src={image || "/core/placeholder.jpg"}
+          alt={post.acf?.title}
+          onLoad={() => setLoaded(true)}
+          className={`absolute inset-0 w-full h-full object-cover ${
+            loaded ? "opacity-100" : "opacity-0"
+          }`}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-black/10 to-transparent"></div>
       </div>
       <div className="p-5 grid gap-3">
-        <h4 className="font-semibold text-lg leading-tight text-accent-800">
-          {title}
-        </h4>
+        <Heading>{post.acf?.title}</Heading>
         <div className="flex flex-wrap gap-2 text-xs text-neutral-600">
           <span className="px-3 py-1 rounded-full bg-neutral-100 border">
-            {date}
+            {post.acf?.date
+              ? new Date(post.acf.date).toLocaleString("en-US", {
+                  weekday: "short",
+                  month: "short",
+                  day: "numeric",
+                  year: "numeric",
+                  hour: "numeric",
+                  minute: "2-digit",
+                })
+              : "Date TBA"}
           </span>
           <span className="px-3 py-1 rounded-full bg-neutral-100 border">
-            {location}
+            {post.acf?.location}
           </span>
         </div>
-        <p className="text-sm text-neutral-600 line-clamp-3">{summary}</p>
+        <p className="text-sm text-neutral-600 line-clamp-3">
+          {post.acf?.summary}
+        </p>
         <div className="pt-2">
-          <AnchorButton text="Register Now" />
+          <AnchorButton href={post.acf?.event_page.url} text="Register Now" />
         </div>
       </div>
-    </a>
+    </div>
   );
 }

@@ -4,6 +4,8 @@ import { ArrowRightIcon, ArrowUpRightIcon } from "@heroicons/react/20/solid";
 export function AnchorButton({ text, href, className }) {
   return (
     <a
+      target="_blank"
+      rel="noopener noreferrer"
       aria-label={text}
       href={href}
       className={`${className} flex justify-center w-full h-fit rounded-2xl px-10 py-5 bg-accent-500 hover:bg-accent-600 duration-750 transition-all font-semibold text-neutral-50`}>
