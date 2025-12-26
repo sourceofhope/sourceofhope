@@ -17,6 +17,26 @@ It is written for **authorized staff, interns, and volunteers only**. Advanced t
 
 ---
 
+## Workflows
+
+There are two workflows that run on pushes to `development` and `production` respectively.
+
+**Pushes to development**
+
+When you need to test experimental code live, you can:
+
+```bash
+npm run dev
+```
+
+Or alternatively, visit `sourceofhope.github.io/sourceofhope`, this domain mirrors the latest push on `development`.
+
+Pushes to development may fail,
+
+\*\*P
+
+---
+
 ## Technical Architecture
 
 ### Frontend
