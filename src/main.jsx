@@ -53,7 +53,7 @@ export const router = createBrowserRouter([
         element: <InternationalHopeProgram />,
       },
 
-      { path: `serve/${CANONICAL.member}`, element: <FormPage /> },
+      { path: `${CANONICAL.member}`, element: <FormPage /> },
     ],
   },
 ]);

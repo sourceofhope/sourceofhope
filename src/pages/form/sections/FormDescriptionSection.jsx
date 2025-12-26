@@ -4,7 +4,7 @@ export default function FormDescriptionSection() {
   return (
     <section className="flex flex-col gap-5 p-5 lg:px-35">
       <p>
-        When you become a member of The Source of Hope, you're supporting the
+        When you become a member of The Source of Hope, you're supporting the{" "}
         <Bold>heartbeat of our community</Bold>—from hospital staff, teachers,
         veterans, and first responders to city workers, police officers,
         firefighters, students, at-risk families, and our unhoused neighbors.

@@ -13,6 +13,10 @@ export default function MediaPodcastSection() {
         of Hope media page is your gateway to learning more about our mission,
         our founder, and the lives we touch.
       </p>
+      <Blockquote className="border-accent-500 text-balance">
+        Prefer podcasts? The Source of Hope media is also available on
+        <span className="font-semibold"> Spotify</span>.
+      </Blockquote>
       <p>
         We use engaging video content, podcast episodes, and community
         storytelling. This page serves as a resource for consumers to learn
@@ -30,11 +34,7 @@ export default function MediaPodcastSection() {
             className="rounded-2xl shadow-lg"
             allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
             loading="lazy"></iframe>
-          <div className="flex flex-col gap-5 leading-relaxed text-neutral-700 text-balance">
-            <Blockquote className="border-accent-500 text-balance">
-              Prefer podcasts? The Source of Hope media is also available on
-              <span className="font-semibold"> Spotify</span>.
-            </Blockquote>
+          <div className="flex flex-col gap-5 leading-relaxed text-balance">
             <p>
               Hear powerful testimonies, stay updated on monthly and quarterly
               initiatives, and discover how your support creates tangible change
@@ -51,12 +51,11 @@ export default function MediaPodcastSection() {
           </div>
         </div>
       </article>
-
       <article className="flex flex-col gap-5">
         <Heading>Radio Saigon Dallas</Heading>
         <div className="grid gap-10 md:grid-cols-2 items-center">
           <div className="space-y-5 items-start">
-            <p className="leading-relaxed text-neutral-700">
+            <p className="leading-relaxed">
               In partnership with{" "}
               <span className="font-semibold">
                 Stone International Wellness Center
@@ -66,7 +65,7 @@ export default function MediaPodcastSection() {
               weekly Vietnamese radio program dedicated to wellness,
               encouragement, and uplifting stories from the community.
             </p>
-            <Blockquote className="border-accent-500 text-balance">
+            <Blockquote className="border-accent-500 text-balance text-sm md:text-md">
               Our podcast is hosted entirely in Vietnamese, without English
               captions available.
             </Blockquote>
@@ -76,17 +75,19 @@ export default function MediaPodcastSection() {
               for healthier living.
             </p>
 
-            <p>
-              <span className="font-semibold">Thời gian phát sóng:</span> Thứ
-              Bảy hàng tuần, lúc 10 giờ sáng
-              <br />
-              <span className="font-semibold">Nghe qua điện thoại:</span>{" "}
-              213-493-0188
-              <br />
-              <span className="text-neutral-500 italic">
+            <div className="rounded-2xl border border-neutral-200 bg-neutral-50 p-5 text-sm md:text-md space-y-1">
+              <p>
+                <span className="font-semibold">Thời gian phát sóng:</span> Thứ
+                Bảy hàng tuần, lúc 10 giờ sáng
+              </p>
+              <p>
+                <span className="font-semibold">Nghe qua điện thoại:</span>{" "}
+                213-493-0188
+              </p>
+              <p className="italic text-neutral-500">
                 Chương trình phát sóng bằng tiếng Việt
-              </span>
-            </p>
+              </p>
+            </div>
           </div>
 
           <div className="flex flex-col sm:flex-row gap-5 items-center">

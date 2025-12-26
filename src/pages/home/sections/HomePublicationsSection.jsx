@@ -51,6 +51,8 @@ export default function HomePublicationsSection() {
           </button>
         </article>
         <Carousel
+          auto
+          showProgress
           className="h-full border-t-2 md:border-t-0 md:border-l-2 w-full py-5 md:pl-10 border-neutral-400"
           activeIndex={activeIndex}
           onChange={setActiveIndex}>
