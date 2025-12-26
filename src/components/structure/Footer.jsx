@@ -18,7 +18,7 @@ export default function Footer() {
         <div className="relative z-10 flex flex-col md:items-center gap-5 w-full">
           <div className="flex w-fit gap-10 flex-col md:justify-between md:flex-row">
             <FooterColumn>
-              <ul className="grid gap-3 grid-flow-col md:grid-flow-row">
+              <div className="grid gap-3 grid-flow-col md:grid-flow-row">
                 <Favicon className="w-[60px] h-[60px] bg-primary-800 rounded-sm" />
                 <a
                   href="https://app.candid.org/profile/9393304/the-source-of-hope-46-2491772"
@@ -30,7 +30,7 @@ export default function Footer() {
                     alt="Candid.org Badge"
                   />{" "}
                 </a>
-              </ul>
+              </div>
             </FooterColumn>
             <FooterColumn title="CONTACT">
               <ul className="grid gap-1">
