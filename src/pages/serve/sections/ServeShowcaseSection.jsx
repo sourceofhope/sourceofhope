@@ -167,7 +167,7 @@ function MajorEventCard({ post }) {
       ">
       <div className="relative aspect-[16/9]">
         <img
-          src={image || "/core/placeholder.jpg"}
+          src={image || "/core/placeholder.png"}
           alt={post.acf?.title}
           onLoad={() => setLoaded(true)}
           className={`absolute inset-0 h-full w-full object-cover ${
@@ -232,7 +232,7 @@ function CarouselCard({ post }) {
       ">
       <div className="relative aspect-video">
         <img
-          src={image || "/core/placeholder.jpg"}
+          src={image || "/core/placeholder.png"}
           alt={post.acf?.title}
           onLoad={() => setLoaded(true)}
           className={`absolute inset-0 w-full h-full object-cover ${

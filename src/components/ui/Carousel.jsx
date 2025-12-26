@@ -73,7 +73,7 @@ export default function Carousel({
           </div>
         ))}
       </div>
-      <div className="grid grid-flow-col gap-3 w-full items-center justify-between my-5">
+      <div className="grid grid-flow-col gap-3 w-full items-center justify-between my-5 max-w-full">
         {!hideControls && (
           <button
             onClick={prev}
@@ -82,16 +82,20 @@ export default function Carousel({
           </button>
         )}
         {showProgress && (
-          <div className="flex gap-1 justify-center">
-            {Array.from({ length: totalPages }).map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setIndex(i)}
-                className={`h-5 rounded-full transition-all duration-300 ${
-                  i === index ? "w-10 bg-accent-500" : "w-5 bg-accent-600"
-                }`}
-              />
-            ))}
+          <div className="relative w-full overflow-hidden">
+            <div className="pointer-events-none absolute left-0 top-0 h-full w-8 bg-gradient-to-r from-white to-transparent z-10" />
+            <div className="pointer-events-none absolute right-0 top-0 h-full w-8 bg-gradient-to-l from-white to-transparent z-10" />
+            <div className="flex gap-1 justify-center overflow-x-auto scroll-auto pointer-events-none !no-scrollbar px-8">
+              {Array.from({ length: totalPages }).map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setIndex(i)}
+                  className={`h-5 shrink-0 rounded-full transition-all duration-300 ${
+                    i === index ? "w-10 bg-accent-500" : "w-5 bg-accent-600"
+                  }`}
+                />
+              ))}
+            </div>
           </div>
         )}
         {!hideControls && (
