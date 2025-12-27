@@ -13,7 +13,6 @@ export default function AboutTeamSection() {
       <div className="grid gap-5">
         <CarouselLayer title="Board of Executives" groupName="executiveBoard" />
         <CarouselLayer title="Board of Directors" groupName="directorBoard" />
-        <CarouselLayer title="Spring 2024" groupName="internSpring24" />
         <CarouselLayer title="Fall 2025" groupName="internFall25" />
         <CarouselLayer title="Summer 2025" groupName="internSummer25" />
         <CarouselLayer title="Spring 2025" groupName="internSpring25" />
@@ -49,6 +48,11 @@ function CarouselLayer({ title, groupName, options = {} }) {
       <Title>{title}</Title>
       <div className={loading ? "opacity-0" : "opacity-100 transition-opacity"}>
         <Carousel itemsPerView={{ base: 1, md: 2, lg: 3 }} showProgress>
+          {loading && (
+            <p className="w-full text-center text-gray-500">
+              Loading Team Members
+            </p>
+          )}
           {!loading && posts.length === 0 && (
             <p className="w-full text-center text-gray-500">
               No team members to display
@@ -101,7 +105,7 @@ export function CarouselCard({ src, name, title, caption }) {
             loaded ? "opacity-100" : "opacity-0"
           }`}
         />
-        <div className="absolute bottom-0 left-0 w-full p-5 bg-gradient-to-t from-black/90 to-transparent rounded-2xl flex flex-col">
+        <div className="absolute bottom-0 left-0 w-full p-5 bg-gradient-to-t from-black/90 to-transparent rounded-b-2xl flex flex-col">
           <h2 className="md:line-clamp-1 text-md lg:group-hover:text-sm transition-all duration-700 font-semibold text-center text-neutral-50">
             {name}
           </h2>
