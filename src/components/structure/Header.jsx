@@ -10,18 +10,22 @@ import { fetchContent } from "../../cms";
 export default function Header({ isBlocking }) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const [banner, setBanner] = useState(true);
 
-  const [bannerMessage, setBannerMessage] = useState();
+  const [banner, setBanner] = useState(null);
+  const [bannerOpen, setBannerOpen] = useState(true);
 
-  const bannerActive = banner && banner.acf?.bannerMessage;
+  const bannerActive =
+    bannerOpen &&
+    banner?.acf?.enabled &&
+    new Date(banner?.acf?.expires) >= Date.now();
 
   useEffect(() => {
-    fetchContent("bannerMessage")
+    fetchContent("/banner-configuration?per_page=1&_embed")
       .then((data) => {
-        setBannerMessage(data);
+        if (!data?.length) return setBanner(null);
+        setBanner(data[0]);
       })
-      .catch(() => setBannerMessage(""));
+      .catch(() => setBanner(null));
   }, []);
 
   useEffect(() => {
@@ -33,9 +37,14 @@ export default function Header({ isBlocking }) {
 
   return (
     <>
-      {banner.acf?.bannerMessage ? (
-        <HeaderBanner text={bannerMessage} open={banner} setOpen={setBanner} />
-      ) : null}
+      {bannerActive && (
+        <HeaderBanner
+          href={banner?.acf?.link?.url}
+          text={banner?.acf?.text}
+          open={bannerOpen}
+          setOpen={setBannerOpen}
+        />
+      )}
       {isBlocking && bannerActive ? <div className="h-15 md:h-10"></div> : null}
       <header
         className={`backdrop-filter fixed ${
@@ -80,7 +89,7 @@ export default function Header({ isBlocking }) {
   );
 }
 
-function HeaderBanner({ href, text, open, setOpen }) {
+function HeaderBanner({ href = "", text = "Donate Today!", open, setOpen }) {
   return open ? (
     <div className="flex gap-3 justify-between md:justify-center h-15 md:h-10 items-center px-5 lg:px-35 bg-accent-500 border-y-2 text-accent-800 border-accent-600 fixed top-0 left-0 right-0 z-50 w-full overflow-hidden">
       <a href={href} className="hover:underline">
