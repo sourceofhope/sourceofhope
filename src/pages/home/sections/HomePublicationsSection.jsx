@@ -50,20 +50,19 @@ export default function HomePublicationsSection() {
             </ExpressiveLink>
           </button>
         </article>
-        <Carousel
-          auto
-          showProgress
-          className="h-full border-t-2 md:border-t-0 md:border-l-2 w-full py-5 md:pl-10 border-neutral-400"
-          activeIndex={activeIndex}
-          onChange={setActiveIndex}>
-          {!loading && posts.length === 0 && (
-            <p className="w-full text-center text-gray-500">
-              No updates to display
-            </p>
-          )}
-
-          {!loading &&
-            posts.map((post) => (
+        {!loading && posts.length === 0 && (
+          <p className="w-full text-center text-gray-500">
+            No updates to display
+          </p>
+        )}
+        {!loading && posts.length > 0 && (
+          <Carousel
+            auto
+            showProgress
+            className="h-full border-t-2 md:border-t-0 md:border-l-2 w-full py-5 md:pl-10 border-neutral-400"
+            activeIndex={activeIndex}
+            onChange={setActiveIndex}>
+            {posts.map((post) => (
               <CarouselImage
                 key={post.id}
                 src={post.acf?.hero_image?.url}
@@ -71,7 +70,8 @@ export default function HomePublicationsSection() {
                 date={new Date(post.acf?.publish_date)}
               />
             ))}
-        </Carousel>
+          </Carousel>
+        )}
       </div>
     </HomeSection>
   );

@@ -48,22 +48,17 @@ function CarouselLayer({ title, groupName, options = {} }) {
     <div className="grid gap-5">
       <Title>{title}</Title>
       <div
-        className={
+        className={`min-h-40 flex items-center ${
           loading ? "opacity-0" : "opacity-100 transition-opacity duration-750"
-        }>
-        <Carousel itemsPerView={{ base: 1, md: 2, lg: 3 }} showProgress>
-          {loading && (
-            <p className="w-full text-center text-gray-500">
-              Loading Team Members
-            </p>
-          )}
-          {!loading && posts.length === 0 && (
-            <p className="w-full text-center text-gray-500">
-              No team members to display
-            </p>
-          )}
-          {!loading &&
-            posts.map((post) => (
+        }`}>
+        {!loading && posts.length === 0 && (
+          <p className="w-full text-center text-gray-500">
+            No team members to display
+          </p>
+        )}
+        {!loading && posts.length > 0 && (
+          <Carousel itemsPerView={{ base: 1, md: 2, lg: 3 }} showProgress>
+            {posts.map((post) => (
               <CarouselCard
                 key={post.id}
                 src={post.id}
@@ -72,7 +67,8 @@ function CarouselLayer({ title, groupName, options = {} }) {
                 caption={post.acf?.bio}
               />
             ))}
-        </Carousel>
+          </Carousel>
+        )}
       </div>
     </div>
   );

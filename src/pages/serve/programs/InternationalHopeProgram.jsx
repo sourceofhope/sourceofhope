@@ -109,66 +109,26 @@ export default function InternationalHopeProgram() {
             learning so much from each place we visited.
           </p>
           <Heading>WINTER 2020 - SOUTHEAST ASIA</Heading>
-          <Carousel>
-            <CarouselCard
-              alt="Quote Here"
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
-            />
-            <CarouselCard
-              alt="Quote Here"
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
-            />
-            <CarouselCard
-              alt="Quote Here"
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
-            />
-            <CarouselCard
-              alt="Quote Here"
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
-            />
-            <CarouselCard
-              alt="Quote Here"
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
-            />
-          </Carousel>
+          <Carousel
+            auto
+            showProgress
+            itemsPerView={{ base: 1, md: 2, lg: 3 }}></Carousel>
           <Heading>SUMMER 2018 - NICARAGUA</Heading>
-          <Carousel>
-            <CarouselCard
-              alt="Quote Here"
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
-            />
-            <CarouselCard
-              alt="Quote Here"
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
-            />
-            <CarouselCard
-              alt="Quote Here"
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
-            />
-            <CarouselCard
-              alt="Quote Here"
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
-            />
-            <CarouselCard
-              alt="Quote Here"
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/PNG_Test.png/960px-PNG_Test.png?20250623065344"
-            />
-          </Carousel>
+          <Carousel
+            auto
+            showProgress
+            itemsPerView={{ base: 1, md: 2, lg: 3 }}></Carousel>
         </article>
       </section>
     </HeaderFlagContext.Provider>
   );
 }
 
-function CarouselCard({ src, alt }) {
+function CarouselCard({ src = "/core/placeholder.png", alt }) {
   return (
     <div
       className="
 		relative h-full
-		shrink-0
-		flex-[0_0_calc(100%)] 
-		md:flex-[0_0_calc(50%-0.625rem)] 
-		lg:flex-[0_0_calc(33.333%-0.833rem)]
 		group overflow-hidden rounded-xl text-accent-background aspect-square
 	">
       <img

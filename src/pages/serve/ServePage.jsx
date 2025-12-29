@@ -34,6 +34,14 @@ export default function ServePage() {
           content="Volunteer with The Source of Hope to prepare, cook, and serve meals to homeless and low-income families across Dallas–Fort Worth every month."
         />
       </Helmet>
+      <script
+        async
+        src="https://www.googletagmanager.com/gtag/js?id=AW-10925214570"></script>
+      <script>
+        window.dataLayer = window.dataLayer || []; function gtag()
+        {dataLayer.push(arguments)}
+        gtag('js', new Date()); gtag('config', 'AW-10925214570');
+      </script>
       <PageHeader>
         <h2 className="font-urbanist font-bold text-neutral-50 text-xxxlg">
           SERVE

@@ -72,9 +72,11 @@ export default function ServingHopeProgram() {
             to partner organizations, these programs aim to spread compassion,
             dignity, and hope.
           </p>
-          <button className="my-5 md:hidden rounded-2xl p-5 bg-accent-500 md:w-1/3 hover:bg-accent-600 duration-750 transition-colors font-semibold text-neutral-50">
-            <ExpressiveAnchor to="">APPLY</ExpressiveAnchor>
-          </button>
+          <AnchorButton
+            text="SIGN UP"
+            href="https://www.eventbrite.com/o/quynh-chau-stone-92264017613"
+            className="md:hidden"
+          />
         </article>
         <article className="grid gap-5">
           <Title>What Is The Program?</Title>
@@ -163,7 +165,11 @@ export default function ServingHopeProgram() {
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 referrerpolicy="strict-origin-when-cross-origin"
                 allowfullscreen></iframe>
-              <AnchorButton text="SIGN UP" className="hidden md:flex" />
+              <AnchorButton
+                text="SIGN UP"
+                href="https://www.eventbrite.com/o/quynh-chau-stone-92264017613"
+                className="hidden md:flex"
+              />
             </div>
           </div>
         </article>

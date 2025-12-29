@@ -15,7 +15,7 @@ export default function ServeShowcaseSection() {
   const [recurringEvents, setRecurringEvents] = useState([]);
 
   useEffect(() => {
-    fetchContent("/recurring-event", "&per_page=10")
+    fetchContent("/recurring-event", "&per_page=3")
       .then((data) => {
         console.log("Recurring response:", data);
         setRecurringEvents(Array.isArray(data) ? data : data?.data || []);
@@ -27,7 +27,7 @@ export default function ServeShowcaseSection() {
   }, []);
 
   useEffect(() => {
-    fetchContent("/featured-event", "&per_page=10")
+    fetchContent("/featured-event", "&per_page=12")
       .then((data) => {
         setMajorEvents(data);
       })
@@ -49,21 +49,30 @@ export default function ServeShowcaseSection() {
         <section className="grid gap-5">
           <Heading className="text-xl">Featured Events</Heading>
           {majorEvents.length === 0 && (
-            <p className="text-neutral-500">No major events scheduled.</p>
+            <p className="text-neutral-500 w-full text-center">
+              No major events available.
+            </p>
           )}
-          <div className="grid lg:grid-cols-2 gap-6">
-            {majorEvents.map((event) => (
-              <MajorEventCard key={event.id} post={event} />
-            ))}
-          </div>
+          {majorEvents.length > 0 && (
+            <Carousel auto showProgress>
+              {majorEvents.map((event) => (
+                <MajorEventCard key={event.id} post={event} />
+              ))}
+            </Carousel>
+          )}
         </section>
         <section className="grid gap-5">
           <Heading className="text-xl">Recurring Programs</Heading>
           {recurringEvents.length === 0 && (
-            <p className="text-neutral-500">No recurring events available.</p>
+            <p className="text-neutral-500 w-full text-center">
+              No major events available.
+            </p>
           )}
           {recurringEvents.length > 0 && (
-            <Carousel auto itemsPerView={{ base: 1, md: 2, lg: 3 }}>
+            <Carousel
+              auto
+              showProgress
+              itemsPerView={{ base: 1, md: 2, lg: 3 }}>
               {recurringEvents.map((event) => (
                 <CarouselCard key={event.id} post={event} />
               ))}
