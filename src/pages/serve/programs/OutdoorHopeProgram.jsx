@@ -122,8 +122,9 @@ export default function OutdoorHopeProgram() {
               </p>
               <Blockquote className="border-accent-600">
                 Interested in safe gun handling or who would like to improve
-                their skills? Check out <strong>Texas Gun Safety</strong> to
-                learn more about how to operate a firearm carefully!
+                their skills? Check out{" "}
+                <a href="https://texasgunsafety.com/about/">Texas Gun Safety</a>{" "}
+                to learn more about how to operate a firearm carefully!
               </Blockquote>
               <p>
                 We’ll bring The Source of Hope family together for an annual
@@ -142,10 +143,6 @@ export default function OutdoorHopeProgram() {
                 controls={false}
                 auto={true}>
                 <CarouselCard />
-                <CarouselCard />
-                <CarouselCard />
-                <CarouselCard />
-                <CarouselCard />
               </Carousel>
             </div>
           </div>
@@ -160,8 +157,6 @@ function CarouselCard({ src = "/core/TSOH-Family.jpg", alt }) {
     <button
       className="
     relative h-full
-    shrink-0
-    flex-[0_0_calc(100%)] 
     group overflow-hidden rounded-xl text-accent-background aspect-square shadow-lg
   ">
       <img
