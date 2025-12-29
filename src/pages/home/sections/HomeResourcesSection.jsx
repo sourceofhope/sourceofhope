@@ -99,7 +99,7 @@ function HomeResourceCard({ title, caption, src, to }) {
                 </h2>{" "}
                 <button
                   onClick={() => setActive(false)}
-                  className="rounded-full p-2 hover:bg-neutral-200 transition">
+                  className="rounded-full p-2 hover:bg-neutral-200 transition-colors duration-750">
                   <XMarkIcon className="w-5 h-5 text-neutral-600" />
                 </button>
               </div>
@@ -112,7 +112,7 @@ function HomeResourceCard({ title, caption, src, to }) {
             <ExpressiveLink
               ariaLabel={`Learn more about ${title} at the source of hope`}
               to={`serve/${to}`}
-              className="inline-flex items-center gap-2 text-sm font-semibold text-accent-700 hover:text-accent-900 transition">
+              className="inline-flex items-center gap-2 text-sm font-semibold text-accent-700 hover:text-accent-900 transition-colors duration-750">
               Learn More
             </ExpressiveLink>
           </div>

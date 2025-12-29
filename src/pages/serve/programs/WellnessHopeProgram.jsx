@@ -79,7 +79,11 @@ export default function WellnessHopeProgram() {
             haircuts to senior citizens 65+, teachers, fire fighters, police
             officers, and veterans every month
           </p>
-          <AnchorButton text="APPLY" className="block md:hidden" />
+          <AnchorButton
+            text="APPLY"
+            href="https://docs.google.com/forms/d/e/1FAIpQLSfhp1mGMEWzJSX17i34Zz2Cv05hLyfuzIdLtIbakamIr5pIZw/viewform"
+            className="block md:hidden"
+          />
         </article>
         <article className="grid gap-5">
           <Title>Our Services</Title>
@@ -145,7 +149,10 @@ export default function WellnessHopeProgram() {
                   </div>
                 </div>
               </div>
-              <AnchorButton text="APPLY" />
+              <AnchorButton
+                text="APPLY"
+                href="https://docs.google.com/forms/d/e/1FAIpQLSfhp1mGMEWzJSX17i34Zz2Cv05hLyfuzIdLtIbakamIr5pIZw/viewform"
+              />
             </div>
           </div>
         </article>
