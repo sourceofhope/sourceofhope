@@ -13,7 +13,7 @@ import Title from "../../../components/ui/text/Title";
 export default function HomeResourcesSection() {
   return (
     <HomeContent className="w-full md:mb-15 p-5 md:py-10 lg:px-15">
-      <Title className="pb-5 text-center text-balance">
+      <Title className="mb-10 text-center text-balance">
         We provide a number of{" "}
         <NavLink className="!no-underline" to={CANONICAL.serve}>
           <Emphasis>resources</Emphasis>

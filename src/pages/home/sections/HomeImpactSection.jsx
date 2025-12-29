@@ -10,7 +10,7 @@ import { CANONICAL } from "../../../routes";
 
 export default function HomeImpactSection() {
   return (
-    <HomeContent className="relative my-12 py-16 px-6 lg:px-32 bg-accent-800 text-neutral-50 overflow-hidden">
+    <HomeContent className="relative py-15 px-5 lg:px-35 bg-accent-800 text-neutral-50 overflow-hidden">
       <div className="grid lg:grid-cols-2 gap-12 items-center">
         <article className="flex flex-col gap-10 z-10 ">
           <div className="flex flex-col gap-3">
