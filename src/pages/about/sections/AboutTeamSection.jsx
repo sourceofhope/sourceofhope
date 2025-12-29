@@ -47,7 +47,10 @@ function CarouselLayer({ title, groupName, options = {} }) {
   return (
     <div className="grid gap-5">
       <Title>{title}</Title>
-      <div className={loading ? "opacity-0" : "opacity-100 transition-opacity"}>
+      <div
+        className={
+          loading ? "opacity-0" : "opacity-100 transition-opacity duration-750"
+        }>
         <Carousel itemsPerView={{ base: 1, md: 2, lg: 3 }} showProgress>
           {loading && (
             <p className="w-full text-center text-gray-500">
@@ -102,20 +105,20 @@ export function CarouselCard({ src, name, title, caption }) {
           src={image || "/core/Member-Placeholder.png"}
           alt={caption}
           onLoad={() => setLoaded(true)}
-          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ${
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-750 ${
             loaded ? "opacity-100" : "opacity-0"
           }`}
         />
         <div className="absolute bottom-0 left-0 w-full p-5 bg-gradient-to-t from-black/90 to-transparent rounded-b-2xl flex flex-col">
-          <h2 className="md:line-clamp-1 text-md lg:group-hover:text-sm transition-all duration-700 font-semibold text-center text-neutral-50">
+          <h2 className="md:line-clamp-1 text-md lg:group-hover:text-sm transition-all duration-750 font-semibold text-center text-neutral-50">
             {name}
           </h2>
 
-          <h3 className="md:line-clamp-1 text-sm lg:group-hover:text-xs transition-all duration-700 font-semibold text-center text-neutral-300">
+          <h3 className="md:line-clamp-1 text-sm lg:group-hover:text-xs transition-all duration-750 font-semibold text-center text-neutral-300">
             {title}
           </h3>
 
-          <p className="text-sm hidden lg:block text-gray-200 mt-2 max-h-0 opacity-0 overflow-hidden transition-[height_opacity] duration-700 group-hover:max-h-70 group-hover:opacity-100">
+          <p className="text-sm hidden lg:block text-gray-200 mt-2 max-h-0 opacity-0 overflow-hidden transition-[height_opacity] duration-750 group-hover:max-h-70 group-hover:opacity-100">
             {caption}
           </p>
         </div>
@@ -146,7 +149,7 @@ export function CarouselCard({ src, name, title, caption }) {
 
                 <button
                   onClick={() => setActive(false)}
-                  className="rounded-full p-2 hover:bg-neutral-200 transition">
+                  className="rounded-full p-2 hover:bg-neutral-200 transition-colors duration-750">
                   <XMarkIcon className="w-5 h-5 text-neutral-600" />
                 </button>
               </div>
