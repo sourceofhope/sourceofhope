@@ -220,28 +220,24 @@ export default function EducationHopeProgram() {
                 offerings.
               </p>
             </div>
-            <div className="flex flex-col gap-5 justify-self-end w-full">
-              <div className="relative w-full">
-                <Carousel
-                  hideControls
-                  auto
-                  className="rounded-2xl object-cover w-full aspect-square">
-                  <CarouselCard src="/core/TSOH-Impact.jpg" />
-                  <CarouselCard src="/core/TSOH-Impact.jpg" />
-                  <CarouselCard src="/core/TSOH-Impact.jpg" />
-                  <CarouselCard src="/core/TSOH-Impact.jpg" />
-                </Carousel>
-              </div>
-              <div className="flex flex-col gap-3 w-full">
-                <AnchorButton
-                  text="GET TUTORING"
-                  href="https://docs.google.com/forms/d/e/1FAIpQLSezTUqqIB7QuWcX5eL5AeXG-rXRRN6X6ayj7eDIVnQSooEmgQ/viewform"
-                />
-                <AnchorButton
-                  text="JOIN OUR TUTORS"
-                  href="https://docs.google.com/forms/d/e/1FAIpQLSeCTTQRJJuEKLDlp5JopwrhCXiDVrOc5rYohqnZpW1YvppDiw/viewform"
-                />
-              </div>
+            <div className="space-y-3 justify-self-end w-full">
+              <Carousel
+                hideControls
+                auto
+                className="rounded-2xl object-cover w-full aspect-square">
+                <CarouselCard src="/core/TSOH-Impact.jpg" />
+                <CarouselCard src="/core/TSOH-Impact.jpg" />
+                <CarouselCard src="/core/TSOH-Impact.jpg" />
+                <CarouselCard src="/core/TSOH-Impact.jpg" />
+              </Carousel>
+              <AnchorButton
+                text="GET TUTORING"
+                href="https://docs.google.com/forms/d/e/1FAIpQLSezTUqqIB7QuWcX5eL5AeXG-rXRRN6X6ayj7eDIVnQSooEmgQ/viewform"
+              />
+              <AnchorButton
+                text="JOIN OUR TUTORS"
+                href="https://docs.google.com/forms/d/e/1FAIpQLSeCTTQRJJuEKLDlp5JopwrhCXiDVrOc5rYohqnZpW1YvppDiw/viewform"
+              />
             </div>
           </div>
         </article>
