@@ -1,15 +1,23 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnchorButton, LinkButton } from "../../../components/ui/Button";
 import { CANONICAL_URL } from "../../../routes";
 import { HomeContent } from "../HomePage";
 
 export default function HomeIntroductionSection() {
   const [videoFailed, setVideoFailed] = useState(false);
+  const videoRef = useRef();
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.playbackRate = 0.9;
+    }
+  }, []);
 
   return (
     <HomeContent className="relative flex mb-10 h-[80vh] md:min-h-screen">
       {!videoFailed && (
         <video
+          ref={videoRef}
           autoPlay
           muted
           loop
