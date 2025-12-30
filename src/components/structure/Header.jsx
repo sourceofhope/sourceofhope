@@ -126,6 +126,8 @@ function HeaderMenu({ open, setOpen }) {
 }
 
 function HeaderNavigator() {
+  const [hovering, setHovering] = useState(null);
+
   const links = [
     {
       label: "ABOUT",
@@ -164,7 +166,18 @@ function HeaderNavigator() {
       {links.map(({ label, to }) => {
         return (
           <div key={label} className="py-2.5 h-full w-full font-bold">
-            <HeaderButton to={to.main}>{label}</HeaderButton>
+            <HeaderButton
+              className={
+                hovering
+                  ? hovering == label
+                    ? ""
+                    : "text-neutral-300/50 scale-90"
+                  : ""
+              }
+              setHovering={setHovering}
+              to={to.main}
+              label={label}
+            />
           </div>
         );
       })}
@@ -172,13 +185,15 @@ function HeaderNavigator() {
   );
 }
 
-function HeaderButton({ ariaLabel, children, className, to }) {
+function HeaderButton({ ariaLabel, label, className, to, setHovering }) {
   return (
     <NavLink
       aria-label={ariaLabel}
+      onMouseEnter={() => setHovering(label)}
+      onMouseLeave={() => setHovering(null)}
       to={to}
-      className={`!no-underline text-sm md:text-md group inline-flex w-full justify-between items-center gap-1 focus:outline-none ${className}`}>
-      <span>{children}</span>
+      className={`!no-underline text-sm md:text-md group transition-[color_transform] ease-in-out duration-300 inline-flex w-full justify-between items-center gap-1 focus:outline-none ${className}`}>
+      <span>{label}</span>
       <ChevronRightIcon
         className="w-[1.5rem] h-[1.5rem] transition-transform duration-500 group-hover:translate-x-1"
         aria-hidden="true"
