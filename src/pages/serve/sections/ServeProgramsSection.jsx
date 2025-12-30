@@ -52,7 +52,6 @@ export default function ServeProgramsSection() {
           }}>
           <ServingArticle
             title="SERVING HOPE"
-            src=""
             caption="Every meal served. Every smile shared. Together."
             side={left}
             tagline="Volunteer at Our Next Event">
