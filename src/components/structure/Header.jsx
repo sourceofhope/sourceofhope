@@ -1,11 +1,15 @@
 import { useState, useEffect, useContext, createContext } from "react";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/20/solid";
+import {
+  Bars3Icon,
+  ChevronRightIcon,
+  XMarkIcon,
+} from "@heroicons/react/20/solid";
 
-import ExpressiveLink from "../ui/expressive/ExpressiveLink";
 import Favicon from "../ui/Favicon";
 
 import { CANONICAL } from "../../routes";
 import { fetchContent } from "../../cms";
+import { NavLink } from "react-router-dom";
 
 export default function Header({ isBlocking }) {
   const [scrolled, setScrolled] = useState(false);
@@ -91,7 +95,7 @@ export default function Header({ isBlocking }) {
 
 function HeaderBanner({ href = "", text = "Donate Today!", open, setOpen }) {
   return open ? (
-    <div className="flex gap-3 justify-between md:justify-center h-15 md:h-10 items-center px-5 lg:px-35 bg-accent-500 border-b text-accent-800 border-accent-600 fixed top-0 left-0 right-0 z-50 w-full overflow-hidden">
+    <div className="flex gap-3 justify-between md:justify-center h-15 md:h-10 items-center px-5 lg:px-35 bg-accent-500 border-b-2 text-accent-800 border-accent-600 fixed top-0 left-0 right-0 z-50 w-full overflow-hidden">
       <a href={href} className="hover:underline">
         {text}
       </a>
@@ -113,9 +117,9 @@ function HeaderMenu({ open, setOpen }) {
       aria-expanded={open}
       aria-label={open ? "Close menu" : "Open menu"}>
       {open ? (
-        <XMarkIcon className="w-[20px] h-[20px]" aria-hidden="true" />
+        <XMarkIcon className="w-[1.5rem] h-[1.5rem]" aria-hidden="true" />
       ) : (
-        <Bars3Icon className="w-[20px] h-[20px]" aria-hidden="true" />
+        <Bars3Icon className="w-[1.5rem] h-[1.5rem]" aria-hidden="true" />
       )}
     </button>
   );
@@ -123,21 +127,63 @@ function HeaderMenu({ open, setOpen }) {
 
 function HeaderNavigator() {
   const links = [
-    { label: "ABOUT", to: CANONICAL.about },
-    { label: "SERVE", to: CANONICAL.serve },
-    { label: "CONNECT", to: CANONICAL.connect },
-    { label: "MEDIA", to: CANONICAL.media },
-    { label: "MEMBERS", to: CANONICAL.member },
+    {
+      label: "ABOUT",
+      to: {
+        main: CANONICAL.about,
+      },
+    },
+    {
+      label: "SERVE",
+      to: {
+        main: CANONICAL.serve,
+      },
+    },
+    {
+      label: "CONNECT",
+      to: {
+        main: CANONICAL.connect,
+      },
+    },
+    {
+      label: "MEDIA",
+      to: {
+        main: CANONICAL.media,
+      },
+    },
+    {
+      label: "MEMBERS",
+      to: {
+        main: CANONICAL.member,
+      },
+    },
   ];
 
   return (
     <>
-      {links.map(({ label, to }) => (
-        <div key={label} className="py-2.5 h-full w-full font-bold">
-          <ExpressiveLink to={to}>{label}</ExpressiveLink>
-        </div>
-      ))}
+      {links.map(({ label, to }) => {
+        return (
+          <div key={label} className="py-2.5 h-full w-full font-bold">
+            <HeaderButton to={to.main}>{label}</HeaderButton>
+          </div>
+        );
+      })}
     </>
+  );
+}
+
+function HeaderButton({ ariaLabel, children, className, to }) {
+  return (
+    <NavLink
+      aria-label={ariaLabel}
+      to={to}
+      className={`!no-underline text-sm md:text-md group inline-flex w-full justify-between items-center gap-1 focus:outline-none ${className}`}>
+      <span>{children}</span>
+      <ChevronRightIcon
+        className="w-[1.5rem] h-[1.5rem] transition-transform duration-500 group-hover:translate-x-1"
+        aria-hidden="true"
+      />
+    </NavLink>
   );
 }
 

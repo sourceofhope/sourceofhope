@@ -30,9 +30,9 @@ export default function HomeIntroductionSection() {
           className="absolute inset-0 z-0 h-full w-full object-cover brightness-75"
           style={{
             WebkitMaskImage:
-              "linear-gradient(to bottom, white 70%, transparent 100%)",
+              "linear-gradient(to bottom, white 80%, transparent 100%)",
             maskImage:
-              "linear-gradient(to bottom, white 70%, transparent 100%)",
+              "linear-gradient(to bottom, white 80%, transparent 100%)",
           }}>
           <source src="/core/TSOH-Poster.mp4" type="video/mp4" />
         </video>
