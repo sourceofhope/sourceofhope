@@ -13,7 +13,7 @@ export default function AboutTeamSection() {
       <div className="grid gap-5">
         <CarouselLayer title="Board of Executives" groupName="executiveBoard" />
         <CarouselLayer title="Board of Directors" groupName="directorBoard" />
-        <CarouselLayer title="Interns Spring 2026" groupName="internFall26" />
+        <CarouselLayer title="Interns Spring 2026" groupName="internSpring26" />
         <CarouselLayer title="Interns Fall 2025" groupName="internFall25" />
         <CarouselLayer title="Interns Summer 2025" groupName="internSummer25" />
         <CarouselLayer
