@@ -6,6 +6,7 @@ import ServeShowcaseSection from "./sections/ServeShowcaseSection";
 import ServeProgramsSection from "./sections/ServeProgramsSection";
 import ServeDonationSection from "./sections/ServeDonationSection";
 import ServeGuidelinesSection from "./sections/ServeGuidelinesSection";
+import ServeEventsSection from "./sections/ServeEventsSection";
 
 export default function ServePage() {
   return (
@@ -53,6 +54,7 @@ export default function ServePage() {
       <ServeShowcaseSection />
       <ServeProgramsSection />
       <ServeDonationSection />
+      <ServeEventsSection />
       <ServeGuidelinesSection />
     </>
   );
