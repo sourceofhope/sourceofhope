@@ -14,6 +14,7 @@ export default function HomeIntroductionSection() {
           muted
           loop
           playsInline
+          webkit-playsinline
           preload="auto"
           disablePictureInPicture
           onError={() => setVideoFailed(true)}
