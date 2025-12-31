@@ -74,20 +74,21 @@ export default function Header({ isBlocking }) {
             <h1 className="hidden lg:block font-bold">THE SOURCE OF HOPE</h1>
           </div>
 
-          <nav className="hidden md:flex gap-5">
+          <nav className="hidden md:flex gap-5" aria-label="Primary">
             <HeaderNavigator />
           </nav>
           <HeaderMenu open={open} setOpen={setOpen} />
         </section>
-        <nav
-          className={`${
-            open
-              ? "opacity-100 pointer-events-auto"
-              : "opacity-0 pointer-events-none"
-          } will-change-[opacity] transition-opacity duration-500 ease-out md:hidden flex flex-col justify-end items-center px-5 h-fit`}
-          aria-hidden={!open}>
-          <HeaderNavigator />
-        </nav>
+        <div
+          className={`md:hidden transition-opacity duration-500 ease-out ${
+            open ? "opacity-100" : "opacity-0 pointer-events-none"
+          }`}>
+          {open && (
+            <nav className="flex flex-col justify-end items-center px-5 h-fit">
+              <HeaderNavigator />
+            </nav>
+          )}
+        </div>
       </header>
     </>
   );
