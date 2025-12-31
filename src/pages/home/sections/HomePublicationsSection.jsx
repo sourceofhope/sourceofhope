@@ -46,7 +46,7 @@ export default function HomePublicationsSection() {
                   ? activePost?.acf?.url
                   : CANONICAL.media
               }>
-              SEE MORE
+              More Publications
             </ExpressiveLink>
           </button>
         </article>
