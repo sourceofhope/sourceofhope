@@ -51,6 +51,7 @@ export default function ServeProgramsSection() {
             willChange: "padding",
           }}>
           <ServingArticle
+            src="serve/SH-Banner2.JPG"
             title="SERVING HOPE"
             caption="Every meal served. Every smile shared. Together."
             side={left}
@@ -76,6 +77,7 @@ export default function ServeProgramsSection() {
             </button>
           </ServingArticle>
           <ServingArticle
+            src="serve/EH-Banner.JPG"
             title="EDUCATION FOR HOPE"
             caption="Empowering through mentorship."
             side={right}>
@@ -95,6 +97,7 @@ export default function ServeProgramsSection() {
             </button>
           </ServingArticle>
           <ServingArticle
+            src="serve/WH-Banner.jpg"
             title="WELLNESS OF HOPE"
             caption="Healing body and spirit."
             side={left}>
@@ -119,6 +122,7 @@ export default function ServeProgramsSection() {
             </button>
           </ServingArticle>
           <ServingArticle
+            src="serve/SH-Banner2.JPG"
             title="SHARING HOPE"
             caption="Extending love beyond borders."
             side={right}>
@@ -142,6 +146,7 @@ export default function ServeProgramsSection() {
             </button>
           </ServingArticle>
           <ServingArticle
+            src="serve/OH-Banner.webp"
             title="HOPE FOR THE GREAT OUTDOORS"
             caption="Connecting people to nature and purpose."
             side={left}>
@@ -162,6 +167,7 @@ export default function ServeProgramsSection() {
             </button>
           </ServingArticle>
           <ServingArticle
+            src="serve/IH-Banner.jpg"
             title="INTERNATIONAL PARTNER SERVING"
             caption="Global compassion in action."
             side={right}>

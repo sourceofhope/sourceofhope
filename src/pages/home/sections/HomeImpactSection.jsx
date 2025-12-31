@@ -51,7 +51,7 @@ export default function HomeImpactSection() {
             </ExpressiveLink>
           </div>
         </article>
-        <article className="relative hidden md:flex justify-end">
+        <article className="relative hidden lg:flex justify-end">
           <img
             src="/core/TSOH-Impact.jpg"
             alt="TSOH Impact"

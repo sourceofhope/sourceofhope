@@ -165,29 +165,31 @@ function HeaderNavigator() {
     <>
       {links.map(({ label, to }) => {
         return (
-          <div key={label} className="py-2.5 h-full w-full font-bold">
-            <HeaderButton
-              className={
-                hovering
-                  ? hovering == label
-                    ? ""
-                    : "text-neutral-300/50 scale-90"
-                  : ""
-              }
-              setHovering={setHovering}
-              to={to.main}
-              label={label}
-            />
-          </div>
+          <HeaderButton
+            key={label}
+            className={`
+                py-2.5 h-full w-full font-bold
+                ${
+                  hovering
+                    ? hovering == label
+                      ? ""
+                      : "text-neutral-300/50 scale-90"
+                    : ""
+                }`}
+            setHovering={setHovering}
+            to={to.main}
+            label={label}
+          />
         );
       })}
     </>
   );
 }
 
-function HeaderButton({ ariaLabel, label, className, to, setHovering }) {
+function HeaderButton({ key, ariaLabel, label, className, to, setHovering }) {
   return (
     <NavLink
+      key={key}
       aria-label={ariaLabel}
       onMouseEnter={() => setHovering(label)}
       onMouseLeave={() => setHovering(null)}

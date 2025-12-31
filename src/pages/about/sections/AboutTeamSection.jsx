@@ -134,7 +134,7 @@ export function CarouselCard({ src, name, title, caption }) {
           onClick={() => setActive(false)}>
           <article
             onClick={(e) => e.stopPropagation()}
-            className={`w-full rounded-t-3xl bg-neutral-100 p-6 pb-10 shadow-2xl transform transition-all duration-750 ${
+            className={`w-full rounded-t-2xl bg-neutral-100 p-5 shadow-2xl transform transition-all duration-750 ${
               active ? "translate-y-0" : "translate-y-full"
             }`}>
             <div className="flex flex-col gap-3">
@@ -142,14 +142,12 @@ export function CarouselCard({ src, name, title, caption }) {
                 <h2 className="text-xl font-semibold text-neutral-900">
                   {name}
                 </h2>
-
                 <button
                   onClick={() => setActive(false)}
                   className="rounded-full p-2 hover:bg-neutral-200 transition-colors duration-750">
                   <XMarkIcon className="w-5 h-5 text-neutral-600" />
                 </button>
               </div>
-
               <p className="text-sm leading-relaxed text-neutral-600">
                 {caption}
               </p>
