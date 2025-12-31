@@ -186,10 +186,9 @@ function HeaderNavigator() {
   );
 }
 
-function HeaderButton({ key, ariaLabel, label, className, to, setHovering }) {
+function HeaderButton({ ariaLabel, label, className, to, setHovering }) {
   return (
     <NavLink
-      key={key}
       aria-label={ariaLabel}
       onMouseEnter={() => setHovering(label)}
       onMouseLeave={() => setHovering(null)}
@@ -198,7 +197,9 @@ function HeaderButton({ key, ariaLabel, label, className, to, setHovering }) {
       <span>{label}</span>
       <ChevronRightIcon
         className="w-[1.5rem] h-[1.5rem] transition-transform duration-500 group-hover:translate-x-1"
+        focusable="false"
         aria-hidden="true"
+        role="presentation"
       />
     </NavLink>
   );

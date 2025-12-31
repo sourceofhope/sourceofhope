@@ -4,24 +4,19 @@ import { ArrowRightIcon, ArrowUpRightIcon } from "@heroicons/react/20/solid";
 export function AnchorButton({ text, href, className }) {
   return (
     <a
+      href={href}
       target="_blank"
       rel="noopener noreferrer"
       aria-label={text}
-      href={href}
-      className={`${className} flex group justify-center w-full h-fit rounded-2xl px-10 py-5 bg-accent-500 hover:bg-accent-600 duration-750 transition-all font-semibold text-neutral-50`}>
-      <div className="w-full">
-        <div
-          href={href}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={`!no-underline text-sm md:text-md inline-flex w-full justify-between items-center gap-1 focus:outline-none`}>
-          <span>{text}</span>
-          <ArrowUpRightIcon
-            className="w-[1em] h-[1em] transition-transform duration-500 group-hover:translate-x-1 group-hover:-translate-y-1"
-            aria-hidden="true"
-          />
-        </div>
-      </div>
+      className={`${className} group flex justify-center w-full rounded-2xl px-10 py-5 bg-accent-500 hover:bg-accent-600 transition-all duration-700 font-semibold text-neutral-50`}>
+      <span className="inline-flex w-full justify-between items-center gap-1 text-sm md:text-md">
+        {text}
+        <ArrowUpRightIcon
+          className="w-[1em] h-[1em] transition-transform duration-500 group-hover:translate-x-1 group-hover:-translate-y-1"
+          aria-hidden="true"
+          focusable="false"
+        />
+      </span>
     </a>
   );
 }
@@ -29,19 +24,17 @@ export function AnchorButton({ text, href, className }) {
 export function LinkButton({ text, to, className }) {
   return (
     <NavLink
-      aria-label={text}
       to={to}
-      className={`${className} flex group justify-center w-full h-fit rounded-2xl px-10 py-5 bg-accent-500 hover:bg-accent-600 duration-750 transition-all font-semibold text-neutral-50`}>
-      <div className="w-full">
-        <div
-          className={`!no-underline text-sm md:text-md inline-flex w-full justify-between items-center gap-1 focus:outline-none`}>
-          <span>{text}</span>
-          <ArrowRightIcon
-            className="w-[1em] h-[1em] transition-transform duration-500 group-hover:translate-x-1"
-            aria-hidden="true"
-          />
-        </div>
-      </div>
+      aria-label={text}
+      className={`${className} group flex justify-center w-full rounded-2xl px-10 py-5 bg-accent-500 hover:bg-accent-600 transition-all duration-700 font-semibold text-neutral-50`}>
+      <span className="inline-flex w-full justify-between items-center gap-1 text-sm md:text-md">
+        {text}
+        <ArrowRightIcon
+          className="w-[1em] h-[1em] transition-transform duration-500 group-hover:translate-x-1"
+          aria-hidden="true"
+          focusable="false"
+        />
+      </span>
     </NavLink>
   );
 }
