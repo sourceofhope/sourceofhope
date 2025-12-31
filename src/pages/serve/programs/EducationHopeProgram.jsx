@@ -225,10 +225,10 @@ export default function EducationHopeProgram() {
                 hideControls
                 auto
                 className="rounded-2xl object-cover w-full aspect-square">
-                <CarouselCard src="/core/TSOH-Impact.jpg" />
-                <CarouselCard src="/core/TSOH-Impact.jpg" />
-                <CarouselCard src="/core/TSOH-Impact.jpg" />
-                <CarouselCard src="/core/TSOH-Impact.jpg" />
+                <CarouselCard src="/core/TSOH-Impact.webp" />
+                <CarouselCard src="/core/TSOH-Impact.webp" />
+                <CarouselCard src="/core/TSOH-Impact.webp" />
+                <CarouselCard src="/core/TSOH-Impact.webp" />
               </Carousel>
               <AnchorButton
                 text="GET TUTORING"

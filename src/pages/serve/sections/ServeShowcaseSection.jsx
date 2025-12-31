@@ -5,9 +5,6 @@ import Title from "../../../components/ui/text/Title";
 import Heading from "../../../components/ui/text/Heading";
 import Blockquote from "../../../components/ui/text/Blockquote";
 import Bold from "../../../components/ui/text/Bold";
-import { AnchorButton } from "../../../components/ui/Button";
-import { useEffect, useState } from "react";
-import { fetchContent } from "../../../cms";
 
 export default function ServeShowcaseSection() {
   return (

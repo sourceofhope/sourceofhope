@@ -1,4 +1,6 @@
-import React, { lazy } from "react";
+import "./style.css";
+
+import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
@@ -17,7 +19,6 @@ import OutdoorHopeProgram from "./pages/serve/programs/OutdoorHopeProgram.jsx";
 import InternationalHopeProgram from "./pages/serve/programs/InternationalHopeProgram.jsx";
 import FormPage from "./pages/form/FormPage.jsx";
 
-import "./style.css";
 import { CANONICAL } from "./routes.jsx";
 
 export const router = createBrowserRouter([

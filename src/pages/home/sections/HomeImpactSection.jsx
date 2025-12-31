@@ -53,7 +53,7 @@ export default function HomeImpactSection() {
         </article>
         <article className="relative hidden lg:flex justify-end">
           <img
-            src="/core/TSOH-Impact.jpg"
+            src="/core/TSOH-Impact.webp"
             alt="TSOH Impact"
             className="relative w-[600px] max-w-full rounded-2xl object-cover shadow-2xl"
           />

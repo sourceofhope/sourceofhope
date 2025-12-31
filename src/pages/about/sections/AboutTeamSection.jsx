@@ -98,7 +98,7 @@ export function CarouselCard({ src, name, title, caption }) {
         onClick={() => setActive(true)}
         className="relative h-full min-h-[320px] w-full group overflow-hidden rounded-2xl aspect-square">
         <img
-          src={image || "/core/Member-Placeholder.png"}
+          src={image || "/core/Member-Placeholder.webp"}
           alt={caption}
           onLoad={() => setLoaded(true)}
           className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-750 ${

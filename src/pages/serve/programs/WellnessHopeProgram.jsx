@@ -133,7 +133,7 @@ export default function WellnessHopeProgram() {
             rounded-xl text-accent-background aspect-square shadow-lg
           ">
                 <img
-                  src="/wellnessHope/WH-ResourceTile.jpg"
+                  src="/wellnessHope/WH-ResourceTile.webp"
                   alt="Holistic wellness care"
                   className="w-full h-full object-cover brightness-[.85] contrast-[1.1]"
                 />
@@ -178,7 +178,7 @@ export default function WellnessHopeProgram() {
 
 function WellnessShowcaseCard({
   title,
-  src = "/wellnessHope/WH-ResourceTile.jpg",
+  src = "/wellnessHope/WH-ResourceTile.webp",
   alt,
 }) {
   return (

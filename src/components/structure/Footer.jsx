@@ -107,7 +107,7 @@ function FooterParallax() {
         <ParallaxLayer layer={0} ratio={1}>
           <img
             className="w-full overflow-hidden h-full object-cover brightness-[.8] contrast-[1.1]"
-            src="/core/TSOH-Family.jpg"
+            src="/core/TSOH-Family.webp"
             alt=""
           />
         </ParallaxLayer>

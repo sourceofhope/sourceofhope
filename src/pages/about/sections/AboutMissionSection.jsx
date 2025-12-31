@@ -43,7 +43,7 @@ export default function AboutMissionSection() {
       </article>
       <article className="grid self-center justify-items-end">
         <img
-          src="/servingHope/SH-ResourceTile.jpg"
+          src="/servingHope/SH-ResourceTile.webp"
           className="block w-full aspect-square bg-accent-900 max-w-[450px] rounded-2xl object-cover object-center"
         />
       </article>

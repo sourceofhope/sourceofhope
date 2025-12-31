@@ -1,5 +1,5 @@
 export default function PageHeader({
-  src = "/core/TSOH-Family.jpg",
+  src = "/core/TSOH-Family.webp",
   children,
   className,
 }) {

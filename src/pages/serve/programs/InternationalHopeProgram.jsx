@@ -124,7 +124,7 @@ export default function InternationalHopeProgram() {
   );
 }
 
-function CarouselCard({ src = "/core/placeholder.png", alt }) {
+function CarouselCard({ src = "/core/placeholder.webp", alt }) {
   return (
     <div
       className="

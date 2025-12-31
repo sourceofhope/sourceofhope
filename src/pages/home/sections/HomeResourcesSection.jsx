@@ -25,37 +25,37 @@ export default function HomeResourcesSection() {
           title="Education For Hope"
           to={`serve/${CANONICAL.educationHope}`}
           caption="Education for Hope supports students of all ages through tutoring, scholarships, and workforce opportunities. We provide low-income cosmetology students with access to advanced training, partner with The University of Texas at Dallas through the Federal Work-Study program, and offer operational roles that build professional experience. By removing barriers to education, we empower individuals to learn, grow, and create brighter futures for themselves and their families."
-          src="/educationHope/EH-ResourceTile.jpg"
+          src="/educationHope/EH-ResourceTile.webp"
         />
         <HomeResourceCard
           title="Wellness of Hope Clinic"
           to={`serve/${CANONICAL.wellnessHope}`}
           caption="The Wellness of Hope Clinic offers holistic treatments such as fire cupping and lymphatic drainage to low-income individuals, seniors, teachers, and first responders. In partnership with Stone International Wellness Center, we also provide reduced cosmetic services and wellness classes. These therapies restore health, build confidence, and make lasting impacts for people who might otherwise be unable to access care."
-          src="/wellnessHope/WH-ResourceTile.jpg"
+          src="/wellnessHope/WH-ResourceTile.webp"
         />
         <HomeResourceCard
           title="Serving Hope"
           to={`serve/${CANONICAL.servingHope}`}
           caption="Serving Hope is a volunteer-driven initiative dedicated to providing organic, home-cooked meals to those in need across the Dallas–Fort Worth area. Through partnerships and community support, we nourish homeless individuals, veterans, nursing home residents, and at-risk families. Each event focuses on fresh food, dignity, and connection, ensuring both body and spirit are cared for while building stronger, more compassionate communities."
-          src="/servingHope/SH-ResourceTile.jpg"
+          src="/servingHope/SH-ResourceTile.webp"
         />
         <HomeResourceCard
           title="Sharing Hope"
           to={`serve/${CANONICAL.servingHope}`}
           caption="Sharing Hope transforms surplus food donations into community impact. Partnering with over 50 nonprofits, we distribute meals and essential supplies to families facing food insecurity across the region. This initiative reduces food waste, strengthens partnerships, and ensures that resources reach those who need them most, turning generosity into daily nourishment for thousands of lives."
-          src="/sharingHope/SH-ResourceTile.jpg"
+          src="/sharingHope/SH-ResourceTile.webp"
         />
         <HomeResourceCard
           title="Hope For The Great Outdoors"
           to={`serve/${CANONICAL.outdoorHope}`}
           caption="Hope for the Great Outdoors introduces individuals and families to nature through hands-on learning and immersive outdoor experiences. From camping and fishing to survival skills, participants gain confidence while developing a lifelong respect for the environment. By making the outdoors accessible and inclusive, the program creates opportunities for growth, bonding, and wellness in a safe and supportive setting."
-          src="/outdoorHope/OH-ResourceTile.jpeg"
+          src="/outdoorHope/OH-ResourceTile.webp"
         />
         <HomeResourceCard
           title="International Partner Serving"
           to={`serve/${CANONICAL.internationalHope}`}
           caption="Our International Partner Serving program extends hope worldwide by collaborating with organizations and volunteers to deliver resources, training, and empowerment. We provide scholarships, educational tools, wellness services, and food support to underserved communities in developing regions. By fostering relationships based on trust and respect, we amplify dignity and self-sufficiency, ensuring that compassion knows no borders and hope reaches people across the globe."
-          src="/internationalHope/IH-ResourceTile.jpeg"
+          src="/internationalHope/IH-ResourceTile.webp"
         />
       </div>
     </HomeContent>

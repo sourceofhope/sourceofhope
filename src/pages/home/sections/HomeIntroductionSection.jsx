@@ -8,43 +8,50 @@ export default function HomeIntroductionSection() {
   const videoRef = useRef();
 
   useEffect(() => {
-    if (videoRef.current) {
-      videoRef.current.playbackRate = 0.9;
-    }
+    if (!videoRef.current) return;
+    const video = videoRef.current;
+
+    const showVideo = () => {
+      video.classList.remove("opacity-0");
+      video.classList.add("opacity-100");
+    };
+
+    video.addEventListener("canplay", showVideo);
+    return () => video.removeEventListener("canplay", showVideo);
   }, []);
 
   return (
     <HomeContent className="relative flex mb-10 h-[80vh] md:min-h-screen">
-      {!videoFailed && (
-        <video
-          ref={videoRef}
-          autoPlay
-          muted
-          loop
-          playsInline
-          webkit-playsinline
-          preload="auto"
-          disablePictureInPicture
-          onError={() => setVideoFailed(true)}
-          poster="/core/TSOH-Poster.jpg"
-          className="absolute inset-0 z-0 h-full w-full object-cover brightness-75"
-          style={{
-            WebkitMaskImage:
-              "linear-gradient(to bottom, white 80%, transparent 100%)",
-            maskImage:
-              "linear-gradient(to bottom, white 80%, transparent 100%)",
-          }}>
-          <source src="/core/TSOH-Poster.mp4" type="video/mp4" />
-        </video>
-      )}
-
-      {videoFailed && (
+      <div
+        className="absolute inset-0 z-0 "
+        style={{
+          WebkitMaskImage:
+            "linear-gradient(to bottom, white 80%, transparent 100%)",
+          maskImage: "linear-gradient(to bottom, white 80%, transparent 100%)",
+        }}>
         <img
-          src="/core/TSOH-Poster.jpg"
-          alt="TSOH Poster"
-          className="absolute inset-0 z-0 h-full w-full object-cover brightness-75"
+          src="/core/TSOH-Poster.webp"
+          alt="The Source of Hope community impact"
+          className="h-full w-full object-cover brightness-75"
+          fetchPriority="high"
         />
-      )}
+        {!videoFailed && (
+          <video
+            ref={videoRef}
+            id="hero-video"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="none"
+            disablePictureInPicture
+            onError={() => setVideoFailed(true)}
+            className="absolute inset-0 h-full w-full object-cover brightness-75 opacity-0 transition-opacity duration-700">
+            <source src="/core/TSOH-Poster.webm" type="video/mp4" />
+          </video>
+        )}
+      </div>
+
       <div className="relative z-10 w-full max-w-[75ch] md:max-w-[85ch] self-end grid gap-3 p-5 md:pb-15 lg:px-35">
         <h2 className="text-neutral-50 font-urbanist text-md md:text-lg font-semibold">
           THE SOURCE OF HOPE

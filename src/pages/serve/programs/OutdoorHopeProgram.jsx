@@ -22,7 +22,7 @@ export default function OutdoorHopeProgram() {
       <Helmet></Helmet>
       <section className="w-full md:justify-items-left items-center grid gap-5 pt-25 p-5 lg:px-35 text-sm md:text-md lg:text-lg">
         <article className="grid gap-3 justify-self-start justify-start">
-          <Title>Education for Hope Program</Title>
+          <Title>Hope For The Outdoors</Title>
           <Heading>Teaching our Community</Heading>
         </article>
         <article className="grid gap-5 text-neutral-600">
@@ -152,7 +152,7 @@ export default function OutdoorHopeProgram() {
   );
 }
 
-function CarouselCard({ src = "/core/TSOH-Family.jpg", alt }) {
+function CarouselCard({ src = "/core/TSOH-Family.webp", alt }) {
   return (
     <button
       className="
