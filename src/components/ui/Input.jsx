@@ -21,7 +21,6 @@ export default function Input({
         className="text-sm md:text-md px-1 font-semibold select-none">
         {title}
       </label>
-
       <input
         name={htmlFor}
         type={type}

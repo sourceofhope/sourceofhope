@@ -94,9 +94,7 @@ export default function FormInputSection() {
         <div className="flex flex-col gap-1 w-full md:w-[49%]">
           <label
             htmlFor="membership"
-            className="text-sm md:text-md translate-3.5 md:translate-4 px-1 z-10 w-fit select-none after:content-[''] after:absolute after:left-0 after:top-[11px]
-		after:block after:h-1 after:w-full font-semibold
-		after:bg-neutral-50 after:-z-10 after:pointer-events-none">
+            className="text-sm md:text-md font-semibold">
             Membership Type
           </label>
           <select
