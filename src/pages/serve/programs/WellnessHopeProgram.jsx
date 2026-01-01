@@ -7,7 +7,7 @@ import { useEffect } from "react";
 import Heading from "../../../components/ui/text/Heading";
 import Title from "../../../components/ui/text/Title";
 import { AnchorButton } from "../../../components/ui/Button";
-import { CANONICAL_URL } from "../../../routes";
+import { ASSET_VERSION, CANONICAL_URL } from "../../../routes";
 
 export default function WellnessHopeProgram() {
   const { setIsBlocking } = useHeaderFlag();
@@ -133,7 +133,7 @@ export default function WellnessHopeProgram() {
             rounded-xl text-accent-background aspect-square shadow-lg
           ">
                 <img
-                  src="/wellnessHope/WH-ResourceTile.webp"
+                  src={`/${ASSET_VERSION}/wellnessHope/WH-ResourceTile.webp`}
                   alt="Holistic wellness care"
                   className="w-full h-full object-cover brightness-[.85] contrast-[1.1]"
                 />
@@ -178,7 +178,7 @@ export default function WellnessHopeProgram() {
 
 function WellnessShowcaseCard({
   title,
-  src = "/wellnessHope/WH-ResourceTile.webp",
+  src = `/${ASSET_VERSION}/wellnessHope/WH-ResourceTile.webp`,
   alt,
 }) {
   return (

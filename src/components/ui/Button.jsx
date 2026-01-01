@@ -8,7 +8,7 @@ export function AnchorButton({ text, href, className }) {
       target="_blank"
       rel="noopener noreferrer"
       aria-label={text}
-      className={`${className} group flex justify-center w-full rounded-2xl px-10 py-5 bg-accent-500 hover:bg-accent-600 transition-all duration-700 font-semibold text-neutral-50`}>
+      className={`${className} !no-underline group flex justify-center w-full rounded-2xl px-10 py-5 bg-accent-500 hover:bg-accent-600 transition-all duration-700 font-semibold text-neutral-50`}>
       <span className="inline-flex w-full justify-between items-center gap-1 text-sm md:text-md">
         {text}
         <ArrowUpRightIcon
@@ -26,7 +26,7 @@ export function LinkButton({ text, to, className }) {
     <NavLink
       to={to}
       aria-label={text}
-      className={`${className} group flex justify-center w-full rounded-2xl px-10 py-5 bg-accent-500 hover:bg-accent-600 transition-all duration-700 font-semibold text-neutral-50`}>
+      className={`${className} !no-underline group flex justify-center w-full rounded-2xl px-10 py-5 bg-accent-500 hover:bg-accent-600 transition-all duration-700 font-semibold text-neutral-50`}>
       <span className="inline-flex w-full justify-between items-center gap-1 text-sm md:text-md">
         {text}
         <ArrowRightIcon

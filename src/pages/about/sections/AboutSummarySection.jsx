@@ -1,7 +1,6 @@
 import PageSection from "../../PageSection";
 import { HighlightedText } from "../../../components/ui/expressive/ExpressiveText";
 
-import ExpressiveLink from "../../../components/ui/expressive/ExpressiveLink";
 import Title from "../../../components/ui/text/Title";
 import Bold from "../../../components/ui/text/Bold";
 import { AnchorButton, LinkButton } from "../../../components/ui/Button";

@@ -4,7 +4,7 @@ import ParallaxSection from "../ui/parallax/ParallaxSection";
 import ParallaxLayer from "../ui/parallax/ParallaxLayer";
 import Favicon from "../ui/Favicon";
 import { NavLink, useLocation } from "react-router-dom";
-import { CANONICAL } from "../../routes";
+import { ASSET_VERSION, CANONICAL } from "../../routes";
 import { LinkButton } from "../ui/Button";
 import Heading from "../ui/text/Heading";
 
@@ -107,7 +107,7 @@ function FooterParallax() {
         <ParallaxLayer layer={0} ratio={1}>
           <img
             className="w-full overflow-hidden h-full object-cover brightness-[.8] contrast-[1.1]"
-            src="/core/TSOH-Family.webp"
+            src={`/${ASSET_VERSION}/core/TSOH-Family.webp`}
             alt=""
           />
         </ParallaxLayer>

@@ -6,6 +6,7 @@ import PageSection from "../../PageSection";
 import Title from "../../../components/ui/text/Title";
 import { fetchContent } from "../../../cms";
 import { createPortal } from "react-dom";
+import { ASSET_VERSION } from "../../../routes";
 
 export default function AboutTeamSection() {
   return (
@@ -98,7 +99,7 @@ export function CarouselCard({ src, name, title, caption }) {
         onClick={() => setActive(true)}
         className="relative h-full min-h-[320px] w-full group overflow-hidden rounded-2xl aspect-square">
         <img
-          src={image || "/core/Member-Placeholder.webp"}
+          src={image || `/${ASSET_VERSION}/core/Member-Placeholder.webp`}
           alt={caption}
           onLoad={() => setLoaded(true)}
           className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-750 ${

@@ -76,7 +76,3 @@ function EntryCard({ src, excerpt, title }) {
     </div>
   );
 }
-
-function getPosts() {
-  return [];
-}

@@ -1,4 +1,5 @@
-const BASE_URL = "https://thesourceofhope.org";
+export const BASE_URL = "https://thesourceofhope.org";
+export const ASSET_VERSION = "v2";
 
 export const CANONICAL = {
   home: "",

@@ -1,14 +1,9 @@
-import { AnchorButton } from "../../../components/ui/Button";
-import Carousel from "../../../components/ui/Carousel";
 import Emphasis from "../../../components/ui/Emphasis";
 import Blockquote from "../../../components/ui/text/Blockquote";
 import Bold from "../../../components/ui/text/Bold";
-import Heading from "../../../components/ui/text/Heading";
 import Title from "../../../components/ui/text/Title";
 import PageSection from "../../PageSection";
 
-import { fetchContent } from "../../../cms";
-import { useEffect, useState } from "react";
 import { CANONICAL } from "../../../routes";
 import SimpleLink from "../../../components/ui/SimpleLink";
 

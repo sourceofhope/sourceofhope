@@ -1,5 +1,7 @@
+import { ASSET_VERSION } from "../routes";
+
 export default function PageHeader({
-  src = "/core/TSOH-Family.webp",
+  src = `/${ASSET_VERSION}/core/TSOH-Family.webp`,
   children,
   className,
 }) {

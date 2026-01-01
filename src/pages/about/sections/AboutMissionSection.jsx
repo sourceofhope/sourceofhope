@@ -4,6 +4,7 @@ import ExpressiveAnchor from "../../../components/ui/expressive/ExpressiveAnchor
 import Title from "../../../components/ui/text/Title";
 import Blockquote from "../../../components/ui/text/Blockquote";
 import Bold from "../../../components/ui/text/Bold";
+import { ASSET_VERSION } from "../../../routes";
 
 export default function AboutMissionSection() {
   return (
@@ -43,7 +44,7 @@ export default function AboutMissionSection() {
       </article>
       <article className="grid self-center justify-items-end">
         <img
-          src="/servingHope/SH-ResourceTile.webp"
+          src={`/${ASSET_VERSION}/servingHope/SH-ResourceTile.webp`}
           className="block w-full aspect-square bg-accent-900 max-w-[450px] rounded-2xl object-cover object-center"
         />
       </article>

@@ -6,7 +6,7 @@ import { HomeContent } from "../HomePage";
 import Heading from "../../../components/ui/text/Heading";
 import Title from "../../../components/ui/text/Title";
 import ExpressiveAnchor from "../../../components/ui/expressive/ExpressiveAnchor";
-import { CANONICAL } from "../../../routes";
+import { ASSET_VERSION, CANONICAL } from "../../../routes";
 
 export function HomeServingSection() {
   return (
@@ -15,7 +15,7 @@ export function HomeServingSection() {
         <ParallaxLayer layer={0} ratio={1}>
           <img
             className="w-full overflow-hidden h-full object-cover brightness-[.8] contrast-[1.1]"
-            src="core/TSOH-Service.webp"
+            src={`/${ASSET_VERSION}/core/TSOH-Service.webp`}
           />
         </ParallaxLayer>
         <ParallaxLayer

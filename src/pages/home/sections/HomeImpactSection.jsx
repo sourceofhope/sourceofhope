@@ -4,9 +4,8 @@ import { DefaultGenerator } from "../../../components/ui/expressive/DefaultGener
 
 import { HomeContent } from "../HomePage";
 import Title from "../../../components/ui/text/Title";
-import { useState } from "react";
 import Emphasis from "../../../components/ui/Emphasis";
-import { CANONICAL } from "../../../routes";
+import { ASSET_VERSION, CANONICAL } from "../../../routes";
 
 export default function HomeImpactSection() {
   return (
@@ -53,7 +52,7 @@ export default function HomeImpactSection() {
         </article>
         <article className="relative hidden lg:flex justify-end">
           <img
-            src="/core/TSOH-Poster.webp"
+            src={`${ASSET_VERSION}/core/TSOH-Poster.webp`}
             alt="TSOH Impact"
             className="relative w-[600px] max-w-full rounded-2xl object-cover shadow-2xl"
           />

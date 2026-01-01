@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { AnchorButton, LinkButton } from "../../../components/ui/Button";
-import { CANONICAL_URL } from "../../../routes";
+import { ASSET_VERSION, CANONICAL_URL } from "../../../routes";
 import { HomeContent } from "../HomePage";
 
 export default function HomeIntroductionSection() {
@@ -41,7 +41,7 @@ export default function HomeIntroductionSection() {
           maskImage: "linear-gradient(to bottom, white 80%, transparent 100%)",
         }}>
         <img
-          src="/core/TSOH-Poster.webp"
+          src={`/${ASSET_VERSION}/core/TSOH-Poster.webp`}
           alt="The Source of Hope community impact"
           className="h-full w-full object-cover brightness-75"
           fetchPriority="high"
@@ -59,7 +59,10 @@ export default function HomeIntroductionSection() {
             disablePictureInPicture
             onError={() => setVideoFailed(true)}
             className="absolute inset-0 h-full w-full object-cover brightness-75 opacity-0 transition-opacity duration-700">
-            <source src="/core/TSOH-Poster.webm" type="video/webm" />
+            <source
+              src={`/${ASSET_VERSION}/core/TSOH-Poster.webm`}
+              type="video/webm"
+            />
           </video>
         )}
       </div>

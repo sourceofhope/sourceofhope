@@ -1,4 +1,3 @@
-import ExpressiveLink from "../../../components/ui/expressive/ExpressiveLink";
 import { BanknotesIcon } from "@heroicons/react/20/solid";
 import { ServingCard } from "./HomeServingSection";
 import { HomeContent } from "../HomePage";

@@ -9,7 +9,7 @@ import Carousel from "../../../components/ui/Carousel";
 import Title from "../../../components/ui/text/Title";
 import Heading from "../../../components/ui/text/Heading";
 import ExpressiveCard from "../../../components/ui/expressive/ExpressiveCard";
-import { CANONICAL_URL } from "../../../routes";
+import { ASSET_VERSION, CANONICAL_URL } from "../../../routes";
 
 import { AnchorButton } from "../../../components/ui/Button";
 
@@ -225,10 +225,10 @@ export default function EducationHopeProgram() {
                 hideControls
                 auto
                 className="rounded-2xl object-cover w-full aspect-square">
-                <CarouselCard src="/core/TSOH-Impact.webp" />
-                <CarouselCard src="/core/TSOH-Impact.webp" />
-                <CarouselCard src="/core/TSOH-Impact.webp" />
-                <CarouselCard src="/core/TSOH-Impact.webp" />
+                <CarouselCard src={`/${ASSET_VERSION}/core/TSOH-Poster.webp`} />
+                <CarouselCard src={`/${ASSET_VERSION}/core/TSOH-Poster.webp`} />
+                <CarouselCard src={`/${ASSET_VERSION}/core/TSOH-Poster.webp`} />
+                <CarouselCard src={`/${ASSET_VERSION}/core/TSOH-Poster.webp`} />
               </Carousel>
               <AnchorButton
                 text="GET TUTORING"

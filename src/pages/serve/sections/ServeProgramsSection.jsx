@@ -1,7 +1,7 @@
 import { useRef, useEffect, useState } from "react";
 import { MapPinIcon } from "@heroicons/react/20/solid";
 
-import { CANONICAL } from "../../../routes";
+import { ASSET_VERSION, CANONICAL } from "../../../routes";
 
 import ExpressiveLink from "../../../components/ui/expressive/ExpressiveLink";
 import Title from "../../../components/ui/text/Title";
@@ -51,7 +51,7 @@ export default function ServeProgramsSection() {
             willChange: "padding",
           }}>
           <ServingArticle
-            src="serve/SH-Banner2.webp"
+            src={`/${ASSET_VERSION}/serve/SH-Banner2.webp`}
             title="SERVING HOPE"
             caption="Every meal served. Every smile shared. Together."
             side={left}
@@ -77,7 +77,7 @@ export default function ServeProgramsSection() {
             </button>
           </ServingArticle>
           <ServingArticle
-            src="serve/EH-Banner.webp"
+            src={`/${ASSET_VERSION}/serve/EH-Banner.webp`}
             title="EDUCATION FOR HOPE"
             caption="Empowering through mentorship."
             side={right}>
@@ -97,7 +97,7 @@ export default function ServeProgramsSection() {
             </button>
           </ServingArticle>
           <ServingArticle
-            src="serve/WH-Banner.webp"
+            src={`/${ASSET_VERSION}/serve/WH-Banner.webp`}
             title="WELLNESS OF HOPE"
             caption="Healing body and spirit."
             side={left}>
@@ -122,7 +122,7 @@ export default function ServeProgramsSection() {
             </button>
           </ServingArticle>
           <ServingArticle
-            src="serve/SH-Banner2.webp"
+            src={`/${ASSET_VERSION}/serve/SH-Banner2.webp`}
             title="SHARING HOPE"
             caption="Extending love beyond borders."
             side={right}>
@@ -146,7 +146,7 @@ export default function ServeProgramsSection() {
             </button>
           </ServingArticle>
           <ServingArticle
-            src="serve/OH-Banner.webp"
+            src={`/${ASSET_VERSION}/serve/OH-Banner.webp`}
             title="HOPE FOR THE GREAT OUTDOORS"
             caption="Connecting people to nature and purpose."
             side={left}>
@@ -167,7 +167,7 @@ export default function ServeProgramsSection() {
             </button>
           </ServingArticle>
           <ServingArticle
-            src="serve/IH-Banner.webp"
+            src={`/${ASSET_VERSION}/serve/IH-Banner.webp`}
             title="INTERNATIONAL PARTNER SERVING"
             caption="Global compassion in action."
             side={right}>
@@ -194,7 +194,7 @@ export default function ServeProgramsSection() {
 }
 
 function ServingArticle({
-  src = "/core/TSOH-Service.webp",
+  src = `/${ASSET_VERSION}/core/TSOH-Service.webp`,
   title,
   caption,
   children,

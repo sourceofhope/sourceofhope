@@ -3,6 +3,7 @@ import Emphasis from "../../../components/ui/Emphasis";
 import ExpressiveAnchor from "../../../components/ui/expressive/ExpressiveAnchor";
 import Title from "../../../components/ui/text/Title";
 import Blockquote from "../../../components/ui/text/Blockquote";
+import { ASSET_VERSION } from "../../../routes";
 
 export default function HomeMissionSection() {
   return (
@@ -13,7 +14,7 @@ export default function HomeMissionSection() {
         </Title>
         <img
           className="inset-0 w-full object-cover max-w-[400px] aspect-square rounded-2xl text-center"
-          src="/core/TSOH-Founder.webp"
+          src={`/${ASSET_VERSION}/core/TSOH-Founder.webp`}
           alt="The Source of Hope Founder, Quynh Chau Stone"
         />
       </div>

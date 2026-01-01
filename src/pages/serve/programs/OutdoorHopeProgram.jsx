@@ -9,6 +9,7 @@ import Title from "../../../components/ui/text/Title";
 import Heading from "../../../components/ui/text/Heading";
 import ExpressiveCard from "../../../components/ui/expressive/ExpressiveCard";
 import Blockquote from "../../../components/ui/text/Blockquote";
+import { ASSET_VERSION } from "../../../routes";
 
 export default function OutdoorHopeProgram() {
   const { setIsBlocking } = useHeaderFlag();
@@ -152,7 +153,10 @@ export default function OutdoorHopeProgram() {
   );
 }
 
-function CarouselCard({ src = "/core/TSOH-Family.webp", alt }) {
+function CarouselCard({
+  src = `/${ASSET_VERSION}/core/TSOH-Family.webp`,
+  alt,
+}) {
   return (
     <button
       className="

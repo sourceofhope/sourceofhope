@@ -8,7 +8,7 @@ import ExpressiveAnchor from "../../../components/ui/expressive/ExpressiveAnchor
 import Carousel from "../../../components/ui/Carousel";
 import Title from "../../../components/ui/text/Title";
 import Heading from "../../../components/ui/text/Heading";
-import { CANONICAL_URL } from "../../../routes";
+import { ASSET_VERSION, CANONICAL_URL } from "../../../routes";
 
 export default function InternationalHopeProgram() {
   const { setIsBlocking } = useHeaderFlag();
@@ -124,7 +124,10 @@ export default function InternationalHopeProgram() {
   );
 }
 
-function CarouselCard({ src = "/core/placeholder.webp", alt }) {
+function CarouselCard({
+  src = `/${ASSET_VERSION}/core/placeholder.webp`,
+  alt,
+}) {
   return (
     <div
       className="
