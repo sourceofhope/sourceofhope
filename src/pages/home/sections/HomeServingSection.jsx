@@ -15,6 +15,7 @@ export function HomeServingSection() {
         <ParallaxLayer layer={0} ratio={1}>
           <img
             className="w-full overflow-hidden h-full object-cover brightness-[.8] contrast-[1.1]"
+            alt="People cooking food at Serving Hope Event"
             src={`/${ASSET_VERSION}/core/TSOH-Service.webp`}
           />
         </ParallaxLayer>
