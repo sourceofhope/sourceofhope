@@ -88,9 +88,18 @@ export default function WellnessHopeProgram() {
         <article className="grid gap-5">
           <Title>Our Services</Title>
           <div className="grid grid-cols md:grid-cols-2 lg:grid-cols-3 gap-5 place-items-center">
-            <WellnessShowcaseCard title="FACIAL AND BODY TREATMENTS" />
-            <WellnessShowcaseCard title="HAIR SERVICES" />
-            <WellnessShowcaseCard title="PERMANENT COSMETICS" />
+            <WellnessShowcaseCard
+              src={`/${ASSET_VERSION}/wellnessHope/Wellness-1.webp`}
+              title="FACIAL AND BODY TREATMENTS"
+            />
+            <WellnessShowcaseCard
+              src={`/${ASSET_VERSION}/wellnessHope/Wellness-2.webp`}
+              title="HAIR SERVICES"
+            />
+            <WellnessShowcaseCard
+              src={`/${ASSET_VERSION}/wellnessHope/Wellness-3.webp`}
+              title="PERMANENT COSMETICS"
+            />
           </div>
         </article>
         <article className="grid gap-5">

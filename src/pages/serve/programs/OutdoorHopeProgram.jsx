@@ -133,19 +133,23 @@ export default function OutdoorHopeProgram() {
                 learn!
               </p>
             </div>
-            <div
-              className="
-          relative h-full w-full group overflow-hidden 
-          rounded-xl text-accent-background aspect-square shadow-lg
-          col-start-auto md:col-start-2
-        ">
-              <Carousel
-                className="rounded-2xl object-cover w-full aspect-square"
-                controls={false}
-                auto={true}>
-                <CarouselCard />
-              </Carousel>
-            </div>
+            <Carousel hideControls auto>
+              <CarouselCard
+                src={`/${ASSET_VERSION}/outdoorHope/OH-Carousel-1.webp`}
+              />
+              <CarouselCard
+                src={`/${ASSET_VERSION}/outdoorHope/OH-Carousel-2.webp`}
+              />
+              <CarouselCard
+                src={`/${ASSET_VERSION}/outdoorHope/OH-Carousel-3.webp`}
+              />
+              <CarouselCard
+                src={`/${ASSET_VERSION}/outdoorHope/OH-Carousel-4.webp`}
+              />
+              <CarouselCard
+                src={`/${ASSET_VERSION}/outdoorHope/OH-Carousel-5.webp`}
+              />
+            </Carousel>
           </div>
         </article>
       </section>
@@ -161,7 +165,7 @@ function CarouselCard({
     <button
       className="
     relative h-full
-    group overflow-hidden rounded-xl text-accent-background aspect-square shadow-lg
+    group overflow-hidden rounded-2xl text-accent-background aspect-square
   ">
       <img
         src={src}

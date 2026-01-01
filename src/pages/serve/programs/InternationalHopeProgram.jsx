@@ -109,15 +109,50 @@ export default function InternationalHopeProgram() {
             learning so much from each place we visited.
           </p>
           <Heading>WINTER 2020 - SOUTHEAST ASIA</Heading>
-          <Carousel
-            auto
-            showProgress
-            itemsPerView={{ base: 1, md: 2, lg: 3 }}></Carousel>
+          <Carousel auto showProgress itemsPerView={{ base: 1, md: 2, lg: 3 }}>
+            <CarouselCard
+              src={`/${ASSET_VERSION}/internationalHope/southeastasia/Carousel-1.webp`}
+            />
+            <CarouselCard
+              src={`/${ASSET_VERSION}/internationalHope/southeastasia/Carousel-2.webp`}
+            />
+            <CarouselCard
+              src={`/${ASSET_VERSION}/internationalHope/southeastasia/Carousel-3.webp`}
+            />
+            <CarouselCard
+              src={`/${ASSET_VERSION}/internationalHope/southeastasia/Carousel-4.webp`}
+            />
+            <CarouselCard
+              src={`/${ASSET_VERSION}/internationalHope/southeastasia/Carousel-5.webp`}
+            />
+            <CarouselCard
+              src={`/${ASSET_VERSION}/internationalHope/southeastasia/Carousel-6.webp`}
+            />
+            <CarouselCard
+              src={`/${ASSET_VERSION}/internationalHope/southeastasia/Carousel-7.webp`}
+            />
+            <CarouselCard
+              src={`/${ASSET_VERSION}/internationalHope/southeastasia/Carousel-8.webp`}
+            />
+          </Carousel>
           <Heading>SUMMER 2018 - NICARAGUA</Heading>
-          <Carousel
-            auto
-            showProgress
-            itemsPerView={{ base: 1, md: 2, lg: 3 }}></Carousel>
+          <Carousel auto showProgress itemsPerView={{ base: 1, md: 2, lg: 3 }}>
+            <CarouselCard
+              src={`/${ASSET_VERSION}/internationalHope/nicaragua/Carousel-1.webp`}
+            />
+            <CarouselCard
+              src={`/${ASSET_VERSION}/internationalHope/nicaragua/Carousel-2.webp`}
+            />
+            <CarouselCard
+              src={`/${ASSET_VERSION}/internationalHope/nicaragua/Carousel-3.webp`}
+            />
+            <CarouselCard
+              src={`/${ASSET_VERSION}/internationalHope/nicaragua/Carousel-4.webp`}
+            />
+            <CarouselCard
+              src={`/${ASSET_VERSION}/internationalHope/nicaragua/Carousel-5.webp`}
+            />
+          </Carousel>
         </article>
       </section>
     </HeaderFlagContext.Provider>

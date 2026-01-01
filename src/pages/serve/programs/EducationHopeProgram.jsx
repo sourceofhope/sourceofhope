@@ -225,10 +225,36 @@ export default function EducationHopeProgram() {
                 hideControls
                 auto
                 className="rounded-2xl object-cover w-full aspect-square">
-                <CarouselCard src={`/${ASSET_VERSION}/core/TSOH-Poster.webp`} />
-                <CarouselCard src={`/${ASSET_VERSION}/core/TSOH-Poster.webp`} />
-                <CarouselCard src={`/${ASSET_VERSION}/core/TSOH-Poster.webp`} />
-                <CarouselCard src={`/${ASSET_VERSION}/core/TSOH-Poster.webp`} />
+                <CarouselCard
+                  src={`/${ASSET_VERSION}/educationHope/Carousel-1.webp`}
+                />
+                <CarouselCard
+                  src={`/${ASSET_VERSION}/educationHope/Carousel-2.webp`}
+                />
+                <CarouselCard
+                  src={`/${ASSET_VERSION}/educationHope/Carousel-3.webp`}
+                />
+                <CarouselCard
+                  src={`/${ASSET_VERSION}/educationHope/Carousel-4.webp`}
+                />
+                <CarouselCard
+                  src={`/${ASSET_VERSION}/educationHope/Carousel-5.webp`}
+                />
+                <CarouselCard
+                  src={`/${ASSET_VERSION}/educationHope/Carousel-6.webp`}
+                />
+                <CarouselCard
+                  src={`/${ASSET_VERSION}/educationHope/Carousel-7.webp`}
+                />
+                <CarouselCard
+                  src={`/${ASSET_VERSION}/educationHope/Carousel-8.webp`}
+                />
+                <CarouselCard
+                  src={`/${ASSET_VERSION}/educationHope/Carousel-9.webp`}
+                />
+                <CarouselCard
+                  src={`/${ASSET_VERSION}/educationHope/Carousel-10.webp`}
+                />
               </Carousel>
               <AnchorButton
                 text="GET TUTORING"
