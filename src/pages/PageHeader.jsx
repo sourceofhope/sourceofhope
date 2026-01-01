@@ -13,6 +13,9 @@ export default function PageHeader({
         [mask-image:linear-gradient(to_bottom,white_80%,transparent_100%)] [webkit-mask-image:linear-gradient(to_bottom,white_80%,transparent_100%)]
         md:[mask-image:linear-gradient(to_bottom,white_70%,transparent_100%)] md:[webkit-mask-image:linear-gradient(to_bottom,white_70%,transparent_100%)]
         "
+        loading="eager"
+        decoding="async"
+        fetchpriority="high"
         src={src}
       />
       <div
