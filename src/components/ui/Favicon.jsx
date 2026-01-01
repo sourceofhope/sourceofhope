@@ -11,6 +11,8 @@ export default function Favicon({ className }) {
         alt="Go Home"
         className="w-fit aspect-square"
         draggable={false}
+        width={1}
+        height={1}
       />
     </NavLink>
   );

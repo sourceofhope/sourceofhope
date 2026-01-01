@@ -46,7 +46,6 @@ export default function HomeIntroductionSection() {
           className="h-full w-full object-cover brightness-75"
           fetchPriority="high"
         />
-
         {!videoFailed && (
           <video
             ref={videoRef}
@@ -55,7 +54,7 @@ export default function HomeIntroductionSection() {
             muted
             loop
             playsInline
-            preload="none"
+            preload="metadata"
             disablePictureInPicture
             onError={() => setVideoFailed(true)}
             className="absolute inset-0 h-full w-full object-cover brightness-75 opacity-0 transition-opacity duration-700">
