@@ -35,7 +35,12 @@ function CarouselLayer({ title, groupName, options = {} }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchContent("/team-member?per_page=100&_embed", options)
+    fetchContent(
+      `/team-member?per_page=100&_embed&meta_key=team_group&meta_value=${encodeURIComponent(
+        groupName
+      )}`,
+      options
+    )
       .then((data) => {
         const filtered = data.filter(
           (member) => member.acf?.team_group === groupName
@@ -90,8 +95,8 @@ export function CarouselCard({ src, name, title, caption }) {
       .then((data) => {
         setImage(data[0].guid.rendered);
       })
-      .catch(() => setImage(""));
-  }, []);
+      .catch(() => setImage(null));
+  }, [src]);
 
   return (
     <>

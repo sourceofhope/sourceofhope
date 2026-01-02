@@ -6,7 +6,8 @@ import { HomeSection } from "../HomePage";
 import Carousel from "../../../components/ui/Carousel";
 import Title from "../../../components/ui/text/Title";
 import { fetchContent } from "../../../cms";
-import { CANONICAL } from "../../../routes";
+import { ASSET_VERSION, CANONICAL_URL } from "../../../routes";
+import ExpressiveAnchor from "../../../components/ui/expressive/ExpressiveAnchor";
 
 export default function HomePublicationsSection() {
   const [posts, setPosts] = useState([]);
@@ -16,7 +17,7 @@ export default function HomePublicationsSection() {
   let activePost = posts[activeIndex];
 
   useEffect(() => {
-    fetchContent("posts", "&per_page=5")
+    fetchContent("/publication?per_page=5&_embed")
       .then((data) => {
         setPosts(data);
         setActiveIndex(0);
@@ -38,16 +39,18 @@ export default function HomePublicationsSection() {
               : "Stay connected with the latest stories, programs, and community impact from The Source of Hope."}
           </p>
           <button className="w-fit text-neutral-600">
-            <ExpressiveLink
+            <ExpressiveAnchor
               className="font-semibold"
               ariaLabel="See more of The Source of Hope's publications"
               to={
                 !loading && posts.length > 0
                   ? activePost?.acf?.url
-                  : CANONICAL.media
+                  : CANONICAL_URL.media
               }>
-              More Publications
-            </ExpressiveLink>
+              {!loading && posts.length > 0
+                ? `Read more ${activePost.acf?.title}`
+                : "Read publications"}
+            </ExpressiveAnchor>
           </button>
         </article>
         {!loading && posts.length === 0 && (
@@ -65,9 +68,8 @@ export default function HomePublicationsSection() {
             {posts.map((post) => (
               <CarouselImage
                 key={post.id}
-                src={post.acf?.hero_image?.url}
-                alt={post.title.rendered}
-                date={new Date(post.acf?.publish_date)}
+                id={post.acf?.image}
+                date={new Date(post.acf?.date)}
               />
             ))}
           </Carousel>
@@ -77,13 +79,27 @@ export default function HomePublicationsSection() {
   );
 }
 
-function CarouselImage({ src, alt, date }) {
+function CarouselImage({ id, date }) {
+  const [image, setImage] = useState(null);
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    fetchContent(`/media?id=${id}`)
+      .then((data) => {
+        setImage(data[0]);
+      })
+      .catch(() => setImage(null));
+  }, [id]);
+
   return (
     <div className="relative h-full w-full">
       <img
-        className="w-full h-full z-10 aspect-[16/9] bg-accent-900 rounded-2xl object-center object-cover"
-        src={src}
-        alt={alt}
+        className={`${
+          loaded ? "opacity-100" : "opacity-0"
+        } w-full h-full z-10 aspect-[16/9] bg-accent-900 rounded-2xl object-center object-cover`}
+        src={image?.guid.rendered || `/${ASSET_VERSION}/core/placeholder.webp`}
+        alt={image?.alt_text || ""}
+        onLoad={() => setLoaded(true)}
       />
       <p className="absolute top-2 left-2 z-20 bg-accent-600 rounded-full px-3 py-1 text-sm text-neutral-50 w-fit">
         {date.toLocaleString("default", { month: "short" })} {date.getDay()},{" "}

@@ -61,12 +61,7 @@ export default function FormPage() {
       <section className="md:justify-items-left items-center grid gap-5 pt-25 p-5 lg:px-35">
         <div className="grid gap-1 justify-self-start justify-start">
           <Title>Members</Title>
-          <Heading>
-            Become a Member. Be the Source of Hope.{" "}
-            <span className="hidden md:inline">
-              Stand With the People Who Keep Our Communities Strong
-            </span>
-          </Heading>
+          <Heading>Become a Member Today</Heading>
         </div>
       </section>
       <FormDescriptionSection />

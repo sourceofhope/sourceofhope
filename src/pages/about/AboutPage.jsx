@@ -40,7 +40,7 @@ export default function AboutPage() {
           ABOUT
         </h2>
         <p className="font-semibold text-neutral-200 text-sm">
-          EMPOWERING COMMUNITIES THROUGH DIGNITY, WELLNESS, AND COMPASSION
+          EMPOWERING COMMUNITIES
         </p>
       </PageHeader>
       <AboutDescriptionSection />

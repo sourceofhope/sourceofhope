@@ -14,7 +14,7 @@ export default function AboutDescriptionSection() {
           <span className="hidden md:inline-block">Non-profit</span>{" "}
           Organization
         </Title>
-        <Heading>HERE TO SERVE AND EMPOWER.</Heading>
+        <Heading>HERE TO SERVE AND EMPOWER</Heading>
       </div>
       <div className="hidden md:flex flex-col gap-5 text-neutral-600">
         <p>

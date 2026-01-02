@@ -34,13 +34,12 @@ export default function MediaPage() {
           content="Podcasts, radio shows, videos, and press stories sharing hope, healing, and community impact across DFW."
         />
       </Helmet>
-
       <PageHeader>
         <h2 className="font-urbanist font-bold text-neutral-50 text-xxxlg">
           MEDIA
         </h2>
         <p className="font-semibold text-neutral-200 text-sm">
-          OUR CONTRIBUTION.
+          OUR COMMUNITY CONTRIBUTION
         </p>
       </PageHeader>
       <MediaBlogPage />

@@ -7,15 +7,17 @@ import { ArrowRightIcon } from "@heroicons/react/20/solid";
 import Blockquote from "../../../components/ui/text/Blockquote";
 import { HighlightedText } from "../../../components/ui/expressive/ExpressiveText";
 import { fetchContent } from "../../../cms";
+import { ASSET_VERSION } from "../../../routes";
+import ExpressiveAnchor from "../../../components/ui/expressive/ExpressiveAnchor";
 
 export default function MediaNewsletterSection() {
   const [newsletters, setNewsletters] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchContent("blogs", "&per_page=10")
+    fetchContent("/newsletters?per_page=5&_embed")
       .then((data) => {
         setNewsletters(data);
-        setActiveIndex(0);
       })
       .catch(() => setNewsletters([]))
       .finally(() => setLoading(false));
@@ -78,7 +80,6 @@ export default function MediaNewsletterSection() {
         </div>
       </article>
       <article className="flex flex-col gap-5">
-        <Heading>2025 Newsletters</Heading>
         <p>
           Stay connected with monthly and quarterly updates on The Source of
           Hope's projects, events, and stories of resilience from the lives
@@ -89,61 +90,69 @@ export default function MediaNewsletterSection() {
           donations and volunteering. By signing up, you join a compassionate
           community dedicated to creating hope and lasting change together.
         </p>
-        {newsletters.length === 0 && (
-          <p className="text-center text-gray-500 py-10">
-            No newsletters to display.
-          </p>
-        )}
-
-        {newsletters.length > 0 && (
-          <Carousel auto={true}>
-            {newsletters.map((blog) => (
-              <CarouselCard
-                key={blog.id}
-                href={blog.arc?.hero_image?.url}
-                src={blog.url}
-                title={blog.title.rendered}
-                caption={blog.title.rendered}
-              />
-            ))}
-          </Carousel>
-        )}
+        <Heading>Latest Newsletters</Heading>
+        <div
+          className={`min-h-40 flex items-center ${
+            loading
+              ? "opacity-0"
+              : "opacity-100 transition-opacity duration-750"
+          }`}>
+          {!loading && newsletters.length === 0 && (
+            <p className="text-center w-full text-gray-500 py-10">
+              No blog posts to display.
+            </p>
+          )}
+          {!loading && newsletters.length > 0 && (
+            <Carousel auto={true} itemsPerView={{ base: 1, md: 2, lg: 3 }}>
+              {newsletters.map((post) => (
+                <CarouselCard key={post.id} post={post} />
+              ))}
+            </Carousel>
+          )}
+        </div>
       </article>
     </PageSection>
   );
 }
 
-function CarouselCard({ src, href, title, caption }) {
+function CarouselCard({ post }) {
+  const [image, setImage] = useState(null);
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    fetchContent(`/media?id=${post.id}`)
+      .then((data) => {
+        setImage(data[0]);
+      })
+      .catch(() => setImage(null));
+  }, [post.id]);
+
   return (
     <a
-      href={href}
-      className="
-    relative h-full
-    shrink-0
-    flex-[0_0_calc(100%)] 
-    md:flex-[0_0_calc(50%-0.625rem)] 
-    lg:flex-[0_0_calc(33.333%-0.833rem)]
-    group overflow-hidden rounded-2xl text-accent-background aspect-square
-  ">
-      <img
-        src={src}
-        alt={caption}
-        className="inset-0 w-full h-full object-cover transition-transform brightness-[.8] contrast-[1.1]"
-      />
-      <div
-        className="absolute bottom-0 left-0 w-full p-5 
-                bg-gradient-to-t from-black/90 to-transparent
-                rounded-xl flex flex-col justify-start"></div>
-      <div className="absolute bottom-0 left-0 w-full p-5 rounded-b-2xl flex flex-col justify-start">
-        <h2 className="md:line-clamp-1 text-md duration-750 transition-all font-semibold text-center text-neutral-50">
-          {title}
-        </h2>
-      </div>
-      <div className="absolute right-5 top-5 p-1 rounded-4xl bg-black/70 h-fit w-fit text-neutral-50">
-        <ArrowRightIcon
-          className="w-[1em] h-[1em] transition-transform duration-750 group-hover:translate-x-0.5"
-          aria-hidden="true"
+      href={post.acf?.url}
+      className="group relative flex flex-col overflow-hidden rounded-2xl bg-neutral-900 shadow-md transition-all duration-500 hover:shadow-xl">
+      <div className="relative aspect-[4/5] overflow-hidden">
+        <img
+          src={
+            image?.guid.rendered || `/${ASSET_VERSION}/core/placeholder.webp`
+          }
+          alt={image?.alt_text || ""}
+          onLoad={() => setLoaded(true)}
+          className={`h-full w-full object-cover transition-opacity duration-700 ${
+            loaded ? "opacity-100" : "opacity-0"
+          }`}
         />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+      </div>
+      <div className="relative flex flex-col gap-2 p-5 text-neutral-50">
+        <h2 className="line-clamp-2 text-base font-semibold leading-tight transition-colors duration-300">
+          {post.acf?.title}
+        </h2>
+        <div className="w-fit">
+          <ExpressiveAnchor href={post.acf?.url}>
+            Read newsletter
+          </ExpressiveAnchor>
+        </div>
       </div>
     </a>
   );

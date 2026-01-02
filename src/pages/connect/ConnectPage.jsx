@@ -38,7 +38,7 @@ export default function ConnectPage() {
         <h2 className="font-urbanist font-bold text-neutral-50 text-xxxlg">
           CONNECT
         </h2>
-        <p className="font-semibold text-neutral-200 text-sm">JOIN US TODAY.</p>
+        <p className="font-semibold text-neutral-200 text-sm">JOIN US TODAY</p>
       </PageHeader>
       <ConnectVolunteerSection />
       <ConnectMapSection />
