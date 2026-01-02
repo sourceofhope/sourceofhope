@@ -80,16 +80,8 @@ export default function HomePublicationsSection() {
 }
 
 function CarouselImage({ id, date }) {
-  const [image, setImage] = useState(null);
   const [loaded, setLoaded] = useState(false);
-
-  useEffect(() => {
-    fetchContent(`/media?id=${id}`)
-      .then((data) => {
-        setImage(data[0]);
-      })
-      .catch(() => setImage(null));
-  }, [id]);
+  const image = getFeaturedImage(post);
 
   return (
     <div className="relative h-full w-full">
@@ -97,7 +89,7 @@ function CarouselImage({ id, date }) {
         className={`${
           loaded ? "opacity-100" : "opacity-0"
         } w-full h-full z-10 aspect-[16/9] bg-accent-900 rounded-2xl object-center object-cover`}
-        src={image?.guid.rendered || `/${ASSET_VERSION}/core/placeholder.webp`}
+        src={image?.source_url || `/${ASSET_VERSION}/core/placeholder.webp`}
         alt={image?.alt_text || ""}
         onLoad={() => setLoaded(true)}
       />

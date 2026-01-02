@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import PageSection from "../../PageSection";
-import { fetchContent } from "../../../cms";
+import { fetchContent, getFeaturedImage } from "../../../cms";
 import Title from "../../../components/ui/text/Title";
 import Heading from "../../../components/ui/text/Heading";
 import Carousel from "../../../components/ui/Carousel";
@@ -12,19 +12,17 @@ export default function ServeEventsSection() {
   const [recurringEvents, setRecurringEvents] = useState(null);
 
   useEffect(() => {
-    fetchContent("/recurring-event", "&per_page=3")
+    fetchContent("/recurring-event?per_page=3&_embed")
       .then((data) => {
-        console.log("Recurring response:", data);
         setRecurringEvents(Array.isArray(data) ? data : data?.data || []);
       })
-      .catch((err) => {
-        console.error("Recurring error:", err);
+      .catch(() => {
         setRecurringEvents([]);
       });
   }, []);
 
   useEffect(() => {
-    fetchContent("/featured-event", "&per_page=12")
+    fetchContent("/featured-event?per_page=12&_embed")
       .then((data) => {
         setMajorEvents(data);
       })
@@ -48,7 +46,7 @@ export default function ServeEventsSection() {
           {!majorEvents && <div className="min-h-40 w-full"></div>}
           {majorEvents && majorEvents.length === 0 && (
             <p className="text-neutral-500 w-full text-center">
-              No major events available.
+              No featured events available
             </p>
           )}
           {majorEvents && majorEvents.length > 0 && (
@@ -64,7 +62,7 @@ export default function ServeEventsSection() {
           {!recurringEvents && <div className="min-h-40 w-full"></div>}
           {recurringEvents && recurringEvents.length === 0 && (
             <p className="text-neutral-500 w-full text-center">
-              No major events available.
+              No recurring events available
             </p>
           )}
           {recurringEvents && recurringEvents.length > 0 && (
@@ -84,16 +82,8 @@ export default function ServeEventsSection() {
 }
 
 function MajorEventCard({ post }) {
-  const [image, setImage] = useState(null);
   const [loaded, setLoaded] = useState(false);
-
-  useEffect(() => {
-    fetchContent(`/media?parent=${post.id}`)
-      .then((data) => {
-        setImage(data[0].guid.rendered);
-      })
-      .catch(() => setImage(""));
-  }, []);
+  const image = getFeaturedImage(post);
 
   return (
     <div
@@ -104,8 +94,8 @@ function MajorEventCard({ post }) {
       ">
       <div className="relative aspect-[16/9]">
         <img
-          src={image || `/${ASSET_VERSION}//core/Placeholder.png`}
-          alt={post.acf?.title}
+          src={image?.source_url || `/${ASSET_VERSION}/core/placeholder.webp`}
+          alt={image?.alt_text || ""}
           onLoad={() => setLoaded(true)}
           className={`absolute inset-0 h-full w-full object-cover ${
             loaded ? "opacity-100" : "opacity-0"
@@ -146,31 +136,20 @@ function MajorEventCard({ post }) {
 }
 
 function CarouselCard({ post }) {
-  const [image, setImage] = useState(null);
   const [loaded, setLoaded] = useState(false);
-
-  useEffect(() => {
-    fetchContent(`/media?parent=${post.id}`)
-      .then((data) => {
-        setImage(data[0].guid.rendered);
-      })
-      .catch(() => setImage(""));
-  }, []);
+  const image = getFeaturedImage(post);
 
   return (
     <div
       className="
         group relative shrink-0
-        flex-[0_0_100%]
-        md:flex-[0_0_48%]
-        lg:flex-[0_0_32%]
         bg-white rounded-2xl overflow-hidden
         shadow-md
       ">
       <div className="relative aspect-video">
         <img
-          src={image || `/${ASSET_VERSION}/core/placeholder.png`}
-          alt={post.acf?.title}
+          src={image?.source_url || `/${ASSET_VERSION}/core/placeholder.webp`}
+          alt={image?.alt_text || ""}
           onLoad={() => setLoaded(true)}
           className={`absolute inset-0 w-full h-full object-cover ${
             loaded ? "opacity-100" : "opacity-0"

@@ -4,7 +4,7 @@ import { ArrowRightIcon, XMarkIcon } from "@heroicons/react/20/solid";
 import Carousel from "../../../components/ui/Carousel";
 import PageSection from "../../PageSection";
 import Title from "../../../components/ui/text/Title";
-import { fetchContent } from "../../../cms";
+import { fetchContent, getFeaturedImage } from "../../../cms";
 import { createPortal } from "react-dom";
 import { ASSET_VERSION } from "../../../routes";
 
@@ -65,13 +65,7 @@ function CarouselLayer({ title, groupName, options = {} }) {
         {!loading && posts.length > 0 && (
           <Carousel itemsPerView={{ base: 1, md: 2, lg: 3 }} showProgress>
             {posts.map((post) => (
-              <CarouselCard
-                key={post.id}
-                src={post.id}
-                name={post.acf?.name}
-                title={post.acf?.title}
-                caption={post.acf?.bio}
-              />
+              <CarouselCard key={post.id} post={post} />
             ))}
           </Carousel>
         )}
@@ -80,23 +74,16 @@ function CarouselLayer({ title, groupName, options = {} }) {
   );
 }
 
-export function CarouselCard({ src, name, title, caption }) {
+export function CarouselCard({ post }) {
   const [active, setActive] = useState(false);
-  const [image, setImage] = useState(null);
   const [loaded, setLoaded] = useState(false);
+
+  const image = getFeaturedImage(post);
   const overlayRoot = document.getElementById("root");
 
   useEffect(() => {
     document.body.style.overflow = active ? "hidden" : "";
   }, [active]);
-
-  useEffect(() => {
-    fetchContent(`/media?parent=${src}`)
-      .then((data) => {
-        setImage(data[0].guid.rendered);
-      })
-      .catch(() => setImage(null));
-  }, [src]);
 
   return (
     <>
@@ -104,8 +91,11 @@ export function CarouselCard({ src, name, title, caption }) {
         onClick={() => setActive(true)}
         className="relative h-full min-h-[320px] w-full group overflow-hidden rounded-2xl aspect-square">
         <img
-          src={image || `/${ASSET_VERSION}/core/Member-Placeholder.webp`}
-          alt={caption}
+          src={
+            image?.source_url ||
+            `/${ASSET_VERSION}/core/Member-Placeholder.webp`
+          }
+          alt={image?.alt_text || ""}
           onLoad={() => setLoaded(true)}
           className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-750 ${
             loaded ? "opacity-100" : "opacity-0"
@@ -113,15 +103,15 @@ export function CarouselCard({ src, name, title, caption }) {
         />
         <div className="absolute bottom-0 left-0 w-full p-5 bg-gradient-to-t from-black/90 to-transparent rounded-b-2xl flex flex-col">
           <h2 className="md:line-clamp-1 text-md lg:group-hover:text-sm transition-all duration-750 font-semibold text-center text-neutral-50">
-            {name}
+            {post.acf?.name}
           </h2>
 
           <h3 className="md:line-clamp-1 text-sm lg:group-hover:text-xs transition-all duration-750 font-semibold text-center text-neutral-300">
-            {title}
+            {post.acf?.title}
           </h3>
 
           <p className="text-sm hidden lg:block text-gray-200 mt-2 max-h-0 opacity-0 overflow-hidden transition-[height_opacity] duration-750 group-hover:max-h-70 group-hover:opacity-100">
-            {caption}
+            {post.acf?.bio}
           </p>
         </div>
 
@@ -146,7 +136,7 @@ export function CarouselCard({ src, name, title, caption }) {
             <div className="flex flex-col gap-3">
               <div className="flex justify-between items-center">
                 <h2 className="text-xl font-semibold text-neutral-900">
-                  {name}
+                  {post.acf?.name}
                 </h2>
                 <button
                   onClick={() => setActive(false)}
@@ -155,7 +145,7 @@ export function CarouselCard({ src, name, title, caption }) {
                 </button>
               </div>
               <p className="text-sm leading-relaxed text-neutral-600">
-                {caption}
+                {post.acf?.bio}
               </p>
             </div>
           </article>

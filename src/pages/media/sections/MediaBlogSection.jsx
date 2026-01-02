@@ -46,16 +46,8 @@ export default function MediaBlogPage() {
 }
 
 function CarouselCard({ post }) {
-  const [image, setImage] = useState(null);
   const [loaded, setLoaded] = useState(false);
-
-  useEffect(() => {
-    fetchContent(`/media?id=${post.id}`)
-      .then((data) => {
-        setImage(data[0]);
-      })
-      .catch(() => setImage(null));
-  }, [post.id]);
+  const image = getFeaturedImage(post);
 
   return (
     <div
@@ -66,9 +58,7 @@ function CarouselCard({ post }) {
       ">
       <div className="relative aspect-video">
         <img
-          src={
-            image?.guid.rendered || `/${ASSET_VERSION}/core/placeholder.webp`
-          }
+          src={image?.source_url || `/${ASSET_VERSION}/core/placeholder.webp`}
           alt={image?.alt_text || ""}
           onLoad={() => setLoaded(true)}
           className={`absolute inset-0 w-full h-full object-cover ${

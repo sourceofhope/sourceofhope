@@ -14,3 +14,7 @@ export async function fetchContent(endpoint, options = {}) {
   }
   return res.json();
 }
+
+export function getFeaturedImage(post) {
+  return post?._embedded?.["wp:featuredmedia"]?.[0] ?? null;
+}

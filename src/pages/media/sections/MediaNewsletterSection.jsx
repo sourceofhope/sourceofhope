@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { ArrowRightIcon } from "@heroicons/react/20/solid";
 import Blockquote from "../../../components/ui/text/Blockquote";
 import { HighlightedText } from "../../../components/ui/expressive/ExpressiveText";
-import { fetchContent } from "../../../cms";
+import { fetchContent, getFeaturedImage } from "../../../cms";
 import { ASSET_VERSION } from "../../../routes";
 import ExpressiveAnchor from "../../../components/ui/expressive/ExpressiveAnchor";
 
@@ -116,16 +116,8 @@ export default function MediaNewsletterSection() {
 }
 
 function CarouselCard({ post }) {
-  const [image, setImage] = useState(null);
   const [loaded, setLoaded] = useState(false);
-
-  useEffect(() => {
-    fetchContent(`/media?id=${post.id}`)
-      .then((data) => {
-        setImage(data[0]);
-      })
-      .catch(() => setImage(null));
-  }, [post.id]);
+  const image = getFeaturedImage(post);
 
   return (
     <a
@@ -133,9 +125,7 @@ function CarouselCard({ post }) {
       className="group relative flex flex-col overflow-hidden rounded-2xl bg-neutral-900 shadow-md transition-all duration-500 hover:shadow-xl">
       <div className="relative aspect-[4/5] overflow-hidden">
         <img
-          src={
-            image?.guid.rendered || `/${ASSET_VERSION}/core/placeholder.webp`
-          }
+          src={image?.source_url || `/${ASSET_VERSION}/core/placeholder.webp`}
           alt={image?.alt_text || ""}
           onLoad={() => setLoaded(true)}
           className={`h-full w-full object-cover transition-opacity duration-700 ${
