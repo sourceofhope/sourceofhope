@@ -33,6 +33,13 @@ export default function ConnectPage() {
           name="twitter:description"
           content="Volunteer, partner, donate, and stay connected with The Source of Hope’s mission to serve and uplift our community."
         />
+
+        <link
+          rel="preload"
+          as="image"
+          href={`/${ASSET_VERSION}/core/TSOH-Family.webp`}
+          fetchPriority="high"
+        />
       </Helmet>
       <PageHeader>
         <h2 className="font-urbanist font-bold text-neutral-50 text-xxxlg">

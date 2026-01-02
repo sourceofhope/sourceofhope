@@ -9,7 +9,7 @@ import HomePublicationsSection from "./sections/HomePublicationsSection";
 import HomeDonationSection from "./sections/HomeDonationSection";
 import { HomeServingSection } from "./sections/HomeServingSection";
 import { Helmet } from "react-helmet";
-import { CANONICAL_URL } from "../../routes";
+import { ASSET_VERSION, CANONICAL_URL } from "../../routes";
 import PageSection from "../PageSection";
 import Title from "../../components/ui/text/Title";
 
@@ -27,7 +27,7 @@ export default function HomePage() {
         <link
           rel="preload"
           as="image"
-          href="/v2/core/TSOH-Poster.webp"
+          href={`/${ASSET_VERSION}/core/TSOH-Poster.webp`}
           fetchPriority="high"
         />
 

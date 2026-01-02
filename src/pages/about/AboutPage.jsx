@@ -34,6 +34,13 @@ export default function AboutPage() {
           name="twitter:description"
           content="Learn about The Source of Hope’s mission to restore dignity and opportunity through food, education, and holistic wellness programs in Dallas–Fort Worth."
         />
+
+        <link
+          rel="preload"
+          as="image"
+          href={`/${ASSET_VERSION}/core/TSOH-Family.webp`}
+          fetchPriority="high"
+        />
       </Helmet>
       <PageHeader>
         <h2 className="font-urbanist font-bold text-neutral-50 text-xxxlg">
