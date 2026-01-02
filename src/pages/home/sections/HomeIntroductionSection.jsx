@@ -44,25 +44,27 @@ export default function HomeIntroductionSection() {
           src={`/${ASSET_VERSION}/core/TSOH-Poster.webp`}
           alt="The Source of Hope community impact"
           className="h-full w-full object-cover brightness-75"
-          fetchPriority="high"
+          decoding="async"
+          loading="eager"
         />
         {!videoFailed && (
-          <video
-            ref={videoRef}
-            id="hero-video"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
-            disablePictureInPicture
-            onError={() => setVideoFailed(true)}
-            className="absolute inset-0 h-full w-full object-cover brightness-75 opacity-0 transition-opacity duration-700">
-            <source
-              src={`/${ASSET_VERSION}/core/TSOH-Poster.webm`}
-              type="video/webm"
-            />
-          </video>
+          <div className="absolute inset-0">
+            <video
+              ref={videoRef}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="none"
+              className="absolute inset-0 h-full w-full object-cover brightness-75 opacity-0 transition-opacity duration-700"
+              onCanPlay={() => videoRef.current.classList.add("opacity-100")}
+              onError={() => setVideoFailed(true)}>
+              <source
+                src={`/${ASSET_VERSION}/core/TSOH-Poster.webm`}
+                type="video/webm"
+              />
+            </video>
+          </div>
         )}
       </div>
       <div className="relative z-10 w-full max-w-[75ch] md:max-w-[85ch] self-end grid gap-3 p-5 md:pb-15 lg:px-35">

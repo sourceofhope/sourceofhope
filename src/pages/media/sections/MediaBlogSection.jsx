@@ -1,4 +1,4 @@
-import { fetchContent } from "../../../cms";
+import { fetchContent, getResponsiveImage } from "../../../cms";
 import { AnchorButton } from "../../../components/ui/Button";
 import Carousel from "../../../components/ui/Carousel";
 import Heading from "../../../components/ui/text/Heading";
@@ -48,6 +48,7 @@ export default function MediaBlogPage() {
 function CarouselCard({ post }) {
   const [loaded, setLoaded] = useState(false);
   const image = getFeaturedImage(post);
+  const src = getResponsiveImage(image, { width: 420 });
 
   return (
     <div
@@ -58,8 +59,10 @@ function CarouselCard({ post }) {
       ">
       <div className="relative aspect-video">
         <img
-          src={image?.source_url || `/${ASSET_VERSION}/core/placeholder.webp`}
+          src={src || `/${ASSET_VERSION}/core/placeholder.webp`}
           alt={image?.alt_text || ""}
+          loading="lazy"
+          decoding="async"
           onLoad={() => setLoaded(true)}
           className={`absolute inset-0 w-full h-full object-cover ${
             loaded ? "opacity-100" : "opacity-0"

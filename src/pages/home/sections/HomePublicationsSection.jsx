@@ -5,7 +5,7 @@ import { HomeSection } from "../HomePage";
 
 import Carousel from "../../../components/ui/Carousel";
 import Title from "../../../components/ui/text/Title";
-import { fetchContent } from "../../../cms";
+import { fetchContent, getResponsiveImage } from "../../../cms";
 import { ASSET_VERSION, CANONICAL_URL } from "../../../routes";
 import ExpressiveAnchor from "../../../components/ui/expressive/ExpressiveAnchor";
 
@@ -53,27 +53,34 @@ export default function HomePublicationsSection() {
             </ExpressiveAnchor>
           </button>
         </article>
-        {!loading && posts.length === 0 && (
-          <p className="w-full text-center text-gray-500">
-            No updates to display
-          </p>
-        )}
-        {!loading && posts.length > 0 && (
-          <Carousel
-            auto
-            showProgress
-            className="h-full border-t-2 md:border-t-0 md:border-l-2 w-full py-5 md:pl-10 border-neutral-400"
-            activeIndex={activeIndex}
-            onChange={setActiveIndex}>
-            {posts.map((post) => (
-              <CarouselImage
-                key={post.id}
-                id={post.acf?.image}
-                date={new Date(post.acf?.date)}
-              />
-            ))}
-          </Carousel>
-        )}
+        <div
+          className={`min-h-40 flex items-center ${
+            loading
+              ? "opacity-0"
+              : "opacity-100 transition-opacity duration-750"
+          }`}>
+          {!loading && posts.length === 0 && (
+            <p className="w-full text-center text-gray-500">
+              No updates to display
+            </p>
+          )}
+          {!loading && posts.length > 0 && (
+            <Carousel
+              auto
+              showProgress
+              className="h-full border-t-2 md:border-t-0 md:border-l-2 w-full py-5 md:pl-10 border-neutral-400"
+              activeIndex={activeIndex}
+              onChange={setActiveIndex}>
+              {posts.map((post) => (
+                <CarouselImage
+                  key={post.id}
+                  id={post.acf?.image}
+                  date={new Date(post.acf?.date)}
+                />
+              ))}
+            </Carousel>
+          )}
+        </div>
       </div>
     </HomeSection>
   );
@@ -82,6 +89,7 @@ export default function HomePublicationsSection() {
 function CarouselImage({ id, date }) {
   const [loaded, setLoaded] = useState(false);
   const image = getFeaturedImage(post);
+  const src = getResponsiveImage(image, { width: 720 });
 
   return (
     <div className="relative h-full w-full">
@@ -92,6 +100,8 @@ function CarouselImage({ id, date }) {
         src={image?.source_url || `/${ASSET_VERSION}/core/placeholder.webp`}
         alt={image?.alt_text || ""}
         onLoad={() => setLoaded(true)}
+        loading="lazy"
+        decoding="async"
       />
       <p className="absolute top-2 left-2 z-20 bg-accent-600 rounded-full px-3 py-1 text-sm text-neutral-50 w-fit">
         {date.toLocaleString("default", { month: "short" })} {date.getDay()},{" "}

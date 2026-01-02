@@ -24,6 +24,13 @@ export default function HomePage() {
         />
         <link rel="canonical" href={CANONICAL_URL.home} />
 
+        <link
+          rel="preload"
+          as="image"
+          href="/v2/core/TSOH-Poster.webp"
+          fetchPriority="high"
+        />
+
         <meta property="og:type" content="website" />
         <meta property="og:url" content={CANONICAL_URL.home} />
         <meta property="og:title" content="Home | The Source of Hope" />

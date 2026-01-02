@@ -18,3 +18,22 @@ export async function fetchContent(endpoint, options = {}) {
 export function getFeaturedImage(post) {
   return post?._embedded?.["wp:featuredmedia"]?.[0] ?? null;
 }
+
+export function getResponsiveImage(image, { width }) {
+  if (!image) return null;
+
+  const sizes = image.media_details?.sizes;
+  if (!sizes) return image.source_url;
+
+  const candidates = [
+    sizes.thumbnail,
+    sizes.medium,
+    sizes.medium_large,
+    sizes.large,
+    { source_url: image.source_url, width: image.media_details.width },
+  ].filter(Boolean);
+
+  return (
+    candidates.find((img) => img.width >= width)?.source_url || image.source_url
+  );
+}

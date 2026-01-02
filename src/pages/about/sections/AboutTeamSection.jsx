@@ -97,6 +97,8 @@ export function CarouselCard({ post }) {
           }
           alt={image?.alt_text || ""}
           onLoad={() => setLoaded(true)}
+          loading="lazy"
+          decoding="async"
           className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-750 ${
             loaded ? "opacity-100" : "opacity-0"
           }`}

@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import PageSection from "../../PageSection";
-import { fetchContent, getFeaturedImage } from "../../../cms";
+import {
+  fetchContent,
+  getFeaturedImage,
+  getResponsiveImage,
+} from "../../../cms";
 import Title from "../../../components/ui/text/Title";
 import Heading from "../../../components/ui/text/Heading";
 import Carousel from "../../../components/ui/Carousel";
@@ -84,6 +88,7 @@ export default function ServeEventsSection() {
 function MajorEventCard({ post }) {
   const [loaded, setLoaded] = useState(false);
   const image = getFeaturedImage(post);
+  const src = getResponsiveImage(image, { width: 720 });
 
   return (
     <div
@@ -94,8 +99,10 @@ function MajorEventCard({ post }) {
       ">
       <div className="relative aspect-[16/9]">
         <img
-          src={image?.source_url || `/${ASSET_VERSION}/core/placeholder.webp`}
+          src={src || `/${ASSET_VERSION}/core/placeholder.webp`}
           alt={image?.alt_text || ""}
+          loading="lazy"
+          decoding="async"
           onLoad={() => setLoaded(true)}
           className={`absolute inset-0 h-full w-full object-cover ${
             loaded ? "opacity-100" : "opacity-0"
@@ -138,6 +145,7 @@ function MajorEventCard({ post }) {
 function CarouselCard({ post }) {
   const [loaded, setLoaded] = useState(false);
   const image = getFeaturedImage(post);
+  const src = getResponsiveImage(image, { width: 420 });
 
   return (
     <div
@@ -148,7 +156,7 @@ function CarouselCard({ post }) {
       ">
       <div className="relative aspect-video">
         <img
-          src={image?.source_url || `/${ASSET_VERSION}/core/placeholder.webp`}
+          src={src || `/${ASSET_VERSION}/core/placeholder.webp`}
           alt={image?.alt_text || ""}
           onLoad={() => setLoaded(true)}
           className={`absolute inset-0 w-full h-full object-cover ${

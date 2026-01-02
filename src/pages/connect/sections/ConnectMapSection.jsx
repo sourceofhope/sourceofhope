@@ -37,7 +37,6 @@ export default function ConnectMapSection() {
       return trimmed.length > 0 && trimmed.length <= 50;
     }
     return true;
-    return true;
   };
   return (
     <PageSection className="m-0 text-sm md:text-md lg:text-lg py-5 bg-neutral-200">
