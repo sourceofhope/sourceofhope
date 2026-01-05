@@ -1,12 +1,5 @@
-import { 
-  useCallback, 
-  useEffect, 
-  useMemo, 
-  useRef, 
-  useState 
-} from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { ParallaxContext } from "./ParallaxLayer";
-
 
 export default function ParallaxSection({ children, className }) {
   const sectionReference = useRef(null);
@@ -69,14 +62,9 @@ export default function ParallaxSection({ children, className }) {
   );
 
   return (
-    <section
-      ref={sectionReference}
-      className={`relative top-0 ${className}`}
-    >
+    <section ref={sectionReference} className={`relative top-0 ${className}`}>
       <ParallaxContext.Provider value={context}>
-        <div className="relative h-full w-full">
-          {children}
-        </div>
+        <div className="relative h-full w-full">{children}</div>
       </ParallaxContext.Provider>
     </section>
   );

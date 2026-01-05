@@ -6,7 +6,7 @@ It is written for **authorized staff, interns, and volunteers only**. Advanced t
 
 ---
 
-## Golden Rules
+## Core Principles
 
 1. Never make changes to `production` code without prior approval
 2. Backup before changes
@@ -31,9 +31,7 @@ npm run dev
 
 Or alternatively, visit `sourceofhope.github.io/sourceofhope`, this domain mirrors the latest push on `development`.
 
-Pushes to development may fail,
-
-\*\*P
+Pushes to development may fail, but a push to production should never contain failing
 
 ---
 

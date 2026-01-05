@@ -24,16 +24,14 @@ export default function ParallaxLayer({
   return (
     <div
       className="absolute inset-0 will-change-transform transition-transform"
-      style={{ zIndex: layer * 10 }}
-    >
+      style={{ zIndex: layer * 10 }}>
       <div
         className={`absolute left-0 right-0 ${className}`}
         style={{
           height: `calc(100% + ${overflowAmount}px)`,
           top: `-${overflowAmount / 2}px`,
           transform: `translate3d(0, ${sectionTranslate}px, 0)`,
-        }}
-      >
+        }}>
         {children}
       </div>
     </div>

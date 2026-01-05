@@ -11,6 +11,8 @@ import { CANONICAL } from "../../routes";
 import { fetchContent } from "../../cms";
 import { NavLink } from "react-router-dom";
 
+function fetchBanner() {}
+
 export default function Header({ isBlocking }) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
@@ -23,13 +25,21 @@ export default function Header({ isBlocking }) {
     banner?.acf?.enabled &&
     new Date(banner?.acf?.expires) >= Date.now();
 
-  useEffect(() => {
+  const fetchBanner = () => {
     fetchContent("/banner-configuration?per_page=1&_embed")
       .then((data) => {
         if (!data?.length) return setBanner(null);
         setBanner(data[0]);
       })
       .catch(() => setBanner(null));
+  };
+
+  useEffect(() => {
+    if ("requestIdleCallback" in window) {
+      requestIdleCallback(fetchBanner);
+    } else {
+      setTimeout(run, 1);
+    }
   }, []);
 
   useEffect(() => {
@@ -105,7 +115,7 @@ function HeaderBanner({ href = "", text = "Donate Today!", open, setOpen }) {
         aria-label="Close banner"
         onClick={() => setOpen((open) => false)}
         aria-expanded={open}>
-        <XMarkIcon className="w-[20px] h-[20px]" />
+        <XMarkIcon className="w-[1.5rem] h-[1.5rem]" />
       </button>
     </div>
   ) : null;

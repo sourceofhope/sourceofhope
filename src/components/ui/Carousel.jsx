@@ -33,6 +33,7 @@ export default function Carousel({
   }, [itemsPerView]);
 
   const totalPages = Math.max(1, Math.ceil(slides.length / perView));
+  const progress = totalPages <= 1 ? 0 : index / (totalPages - 1);
 
   useEffect(() => {
     setIndex((i) => Math.min(i, totalPages - 1));
@@ -83,22 +84,11 @@ export default function Carousel({
             </button>
           )}
           {showProgress && (
-            <div className="relative w-full overflow-hidden">
-              <div className="pointer-events-none absolute left-0 top-0 h-full w-1 bg-gradient-to-r from-white to-transparent z-10" />
-              <div className="pointer-events-none absolute right-0 top-0 h-full w-1 bg-gradient-to-l from-white to-transparent z-10" />
-              <div className="flex gap-1 justify-center overflow-x-auto scroll-auto pointer-events-none !no-scrollbar px-8">
-                {Array.from({ length: totalPages }).map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setIndex(i)}
-                    className={`h-5 shrink-0 rounded-full transition-all duration-300 ${
-                      i === index ? "w-10 bg-accent-500" : "w-5 bg-accent-600"
-                    }`}
-                  />
-                ))}
-              </div>
+            <div className="justify-center">
+              {index + 1}/{totalPages}
             </div>
           )}
+
           {!hideControls && (
             <button
               onClick={next}

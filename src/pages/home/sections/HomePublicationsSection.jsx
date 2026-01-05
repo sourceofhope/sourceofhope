@@ -16,7 +16,7 @@ export default function HomePublicationsSection() {
 
   let activePost = posts[activeIndex];
 
-  useEffect(() => {
+  const fetchPosts = () => {
     fetchContent("/publication?per_page=5&_embed")
       .then((data) => {
         setPosts(data);
@@ -24,6 +24,14 @@ export default function HomePublicationsSection() {
       })
       .catch(() => setPosts([]))
       .finally(() => setLoading(false));
+  };
+
+  useEffect(() => {
+    if ("requestIdleCallback" in window) {
+      requestIdleCallback(fetchPosts);
+    } else {
+      setTimeout(run, 1);
+    }
   }, []);
 
   return (

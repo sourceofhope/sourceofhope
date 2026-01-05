@@ -33,9 +33,9 @@ cd sourceofhope
 ### 2. Building the site
 
 ```bash
-npm run build
+npm run dev
 ```
 
 ### 3. Visit the site
 
-Navigate to `localhost:5317` on your machine.
+Navigate to `localhost:<port>` on your machine.

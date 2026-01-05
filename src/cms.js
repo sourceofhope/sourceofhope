@@ -10,7 +10,7 @@ export async function fetchContent(endpoint, options = {}) {
   });
   if (!res.ok) {
     const text = await res.text();
-    throw new Error(`CMS API Error: ${res.status} – ${text}`);
+    throw new Error(`CMS API Error: ${res.status} - ${text}`);
   }
   return res.json();
 }
