@@ -96,8 +96,8 @@ export default function Header({ isBlocking }) {
 
 function HeaderBanner({ href = "", text = "Donate Today!", open, setOpen }) {
   return open ? (
-    <div className="flex gap-3 justify-between md:justify-center h-15 md:h-10 items-center px-5 lg:px-35 bg-accent-400 border-b-2 text-accent-900 border-accent-700 fixed top-0 left-0 right-0 z-50 w-full overflow-hidden">
-      <a href={href} className="hover:underline">
+    <div className="flex gap-3 justify-between md:justify-center h-15 md:h-10 items-center px-5 lg:px-35 bg-accent-500 border-b-2 text-neutral-50 border-accent-700 fixed top-0 left-0 right-0 z-50 w-full overflow-hidden">
+      <a href={href} className="hover:underline font-semibold">
         {text}
       </a>
       <button

@@ -38,11 +38,11 @@ export default function HomePublicationsSection() {
               ? activePost.acf.summary
               : "Stay connected with the latest stories, programs, and community impact from The Source of Hope."}
           </p>
-          <button className="w-fit text-neutral-600">
+          <div className="w-fit text-neutral-600">
             <ExpressiveAnchor
               className="font-semibold"
               ariaLabel="See more of The Source of Hope's publications"
-              to={
+              href={
                 !loading && posts.length > 0
                   ? activePost?.acf?.url
                   : CANONICAL_URL.media
@@ -51,7 +51,7 @@ export default function HomePublicationsSection() {
                 ? `Read more ${activePost.acf?.title}`
                 : "Read publications"}
             </ExpressiveAnchor>
-          </button>
+          </div>
         </article>
         <div
           className={`min-h-40 flex items-center ${

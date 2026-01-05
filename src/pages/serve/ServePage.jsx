@@ -34,13 +34,6 @@ export default function ServePage() {
           name="twitter:description"
           content="Volunteer with The Source of Hope to prepare, cook, and serve meals to homeless and low-income families across Dallas–Fort Worth every month."
         />
-
-        <link
-          rel="preload"
-          as="image"
-          href={`/${ASSET_VERSION}/core/TSOH-Family.webp`}
-          fetchPriority="high"
-        />
       </Helmet>
       <script
         async

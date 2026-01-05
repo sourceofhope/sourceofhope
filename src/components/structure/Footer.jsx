@@ -28,6 +28,7 @@ export default function Footer() {
                   <img
                     src="https://widgets.guidestar.org/prod/v1/pdp/transparency-seal/9393304/svg"
                     alt="Candid.org Badge"
+                    className="w-[60px] h-[60px]"
                   />{" "}
                 </a>
               </div>

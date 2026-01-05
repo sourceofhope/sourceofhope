@@ -33,13 +33,6 @@ export default function MediaPage() {
           name="twitter:description"
           content="Podcasts, radio shows, videos, and press stories sharing hope, healing, and community impact across DFW."
         />
-
-        <link
-          rel="preload"
-          as="image"
-          href={`/${ASSET_VERSION}/core/TSOH-Family.webp`}
-          fetchPriority="high"
-        />
       </Helmet>
       <PageHeader>
         <h2 className="font-urbanist font-bold text-neutral-50 text-xxxlg">

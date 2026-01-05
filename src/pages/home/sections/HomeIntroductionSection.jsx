@@ -43,9 +43,10 @@ export default function HomeIntroductionSection() {
         <img
           src={`/${ASSET_VERSION}/core/TSOH-Poster.webp`}
           alt="The Source of Hope community impact"
-          className="h-full w-full object-cover brightness-75"
-          decoding="async"
+          class="h-full w-full object-cover brightness-75"
           loading="eager"
+          decoding="sync"
+          fetchpriority="high"
         />
         {!videoFailed && (
           <div className="absolute inset-0">

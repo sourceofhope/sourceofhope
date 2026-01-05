@@ -23,14 +23,6 @@ export default function HomePage() {
           content="The Source of Hope is a nonprofit organization providing food, education, and holistic wellness to individuals and families across the DFW area."
         />
         <link rel="canonical" href={CANONICAL_URL.home} />
-
-        <link
-          rel="preload"
-          as="image"
-          href={`/${ASSET_VERSION}/core/TSOH-Poster.webp`}
-          fetchPriority="high"
-        />
-
         <meta property="og:type" content="website" />
         <meta property="og:url" content={CANONICAL_URL.home} />
         <meta property="og:title" content="Home | The Source of Hope" />
