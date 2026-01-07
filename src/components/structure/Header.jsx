@@ -189,7 +189,7 @@ function HeaderNavigator() {
                   hovering
                     ? hovering == label
                       ? ""
-                      : "text-neutral-900/70 scale-95"
+                      : "opacity-80 scale-95"
                     : ""
                 }`}
             setHovering={setHovering}
