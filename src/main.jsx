@@ -11,6 +11,7 @@ import AboutPage from "./pages/about/AboutPage.jsx";
 import ServePage from "./pages/serve/ServePage.jsx";
 import ConnectPage from "./pages/connect/ConnectPage.jsx";
 import MediaPage from "./pages/media/MediaPage.jsx";
+import CartPage from "./pages/cart/CartPage.jsx";
 
 import ServingHopeProgram from "./pages/serve/programs/ServingHopeProgram.jsx";
 import EducationHopeProgram from "./pages/serve/programs/EducationHopeProgram.jsx";
@@ -55,6 +56,8 @@ export const router = createBrowserRouter([
       },
 
       { path: `${CANONICAL.member}`, element: <FormPage /> },
+
+      { path: `${CANONICAL.cart}`, element: <CartPage /> },
     ],
   },
 ]);
