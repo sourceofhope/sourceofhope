@@ -10,8 +10,7 @@ import Favicon from "../ui/Favicon";
 import { CANONICAL } from "../../routes";
 import { fetchContent } from "../../cms";
 import { NavLink } from "react-router-dom";
-
-function fetchBanner() {}
+import Icon from "../ui/Icon";
 
 export default function Header({ isBlocking }) {
   const [scrolled, setScrolled] = useState(false);
@@ -63,7 +62,7 @@ export default function Header({ isBlocking }) {
       <header
         className={`backdrop-filter fixed ${
           bannerActive ? "top-15 md:top-10" : "top-0"
-        } left-0 right-0 z-50 w-full overflow-hidden transition-[height_backdrop] duration-500 border-b-4 md:border-none
+        } left-0 right-0 z-50 text-sm md:text-md w-full overflow-hidden transition-[height_backdrop] duration-500 border-b-4 md:border-none
           ${
             open
               ? `h-85 md:h-25 md:backdrop-blur-none backdrop-blur-sm ${
@@ -79,11 +78,12 @@ export default function Header({ isBlocking }) {
                 }`
           }`}>
         <section className="flex w-full h-25 items-center justify-between px-5 lg:px-35">
-          <div className="flex flex-row gap-5 items-center">
-            <Favicon className="w-[60px] h-[60px]" />
-            <h1 className="hidden lg:block font-bold">THE SOURCE OF HOPE</h1>
+          <div className="flex gap-5 flex-row items-center w-full">
+            <Favicon />
+            <h1 className="font-bold w-full hidden lg:block">
+              THE SOURCE OF HOPE
+            </h1>
           </div>
-
           <nav className="hidden md:flex gap-5" aria-label="Primary">
             <HeaderNavigator />
           </nav>
@@ -115,7 +115,9 @@ function HeaderBanner({ href = "", text = "Donate Today!", open, setOpen }) {
         aria-label="Close banner"
         onClick={() => setOpen((open) => false)}
         aria-expanded={open}>
-        <XMarkIcon className="w-[1.5rem] h-[1.5rem]" />
+        <Icon>
+          <XMarkIcon className="w-6 h-6" />
+        </Icon>
       </button>
     </div>
   ) : null;
@@ -124,15 +126,17 @@ function HeaderBanner({ href = "", text = "Donate Today!", open, setOpen }) {
 function HeaderMenu({ open, setOpen }) {
   return (
     <button
-      onClick={() => setOpen((open) => !open)}
       className="block md:hidden"
+      onClick={() => setOpen((open) => !open)}
       aria-expanded={open}
       aria-label={open ? "Close menu" : "Open menu"}>
-      {open ? (
-        <XMarkIcon className="w-[1.5rem] h-[1.5rem]" aria-hidden="true" />
-      ) : (
-        <Bars3Icon className="w-[1.5rem] h-[1.5rem]" aria-hidden="true" />
-      )}
+      <Icon>
+        {open ? (
+          <XMarkIcon className="w-6 h-6" />
+        ) : (
+          <Bars3Icon className="w-6 h-6" />
+        )}
+      </Icon>
     </button>
   );
 }
@@ -185,7 +189,7 @@ function HeaderNavigator() {
                   hovering
                     ? hovering == label
                       ? ""
-                      : "text-neutral-300/50 scale-90"
+                      : "text-neutral-900/70 scale-95"
                     : ""
                 }`}
             setHovering={setHovering}
@@ -205,14 +209,16 @@ function HeaderButton({ ariaLabel, label, className, to, setHovering }) {
       onMouseEnter={() => setHovering(label)}
       onMouseLeave={() => setHovering(null)}
       to={to}
-      className={`!no-underline text-sm md:text-md group transition-[color_transform] ease-in-out duration-300 inline-flex w-full justify-between items-center gap-1 focus:outline-none ${className}`}>
+      className={`!no-underline group transition-[color_transform] ease-in-out duration-300 inline-flex w-full justify-between items-center gap-1 focus:outline-none ${className}`}>
       <span>{label}</span>
-      <ChevronRightIcon
-        className="w-[1.5rem] h-[1.5rem] transition-transform duration-500 group-hover:translate-x-1"
-        focusable="false"
-        aria-hidden="true"
-        role="presentation"
-      />
+      <Icon>
+        <ChevronRightIcon
+          className="w-6 h-6 transition-transform duration-500 group-hover:translate-x-1"
+          focusable="false"
+          aria-hidden="true"
+          role="presentation"
+        />
+      </Icon>
     </NavLink>
   );
 }
