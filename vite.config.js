@@ -11,4 +11,13 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
     },
   },
+  build: {
+    target: "es2019",
+    cssTarget: "safari12",
+    rollupOptions: {
+      output: {
+        hoistTransitiveImports: false,
+      },
+    },
+  },
 });

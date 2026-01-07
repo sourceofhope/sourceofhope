@@ -21,43 +21,50 @@ import FormPage from "./pages/form/FormPage.jsx";
 
 import { CANONICAL } from "./routes.jsx";
 
-export const router = createBrowserRouter([
+export const router = createBrowserRouter(
+  [
+    {
+      path: CANONICAL.home,
+      element: <AppLayout />,
+      errorElement: <ErrorBoundary />,
+      children: [
+        { index: true, element: <HomePage /> },
+        { path: CANONICAL.about, element: <AboutPage /> },
+        { path: CANONICAL.serve, element: <ServePage /> },
+        { path: CANONICAL.connect, element: <ConnectPage /> },
+        { path: CANONICAL.media, element: <MediaPage /> },
+
+        {
+          path: `serve/${CANONICAL.servingHope}`,
+          element: <ServingHopeProgram />,
+        },
+        {
+          path: `serve/${CANONICAL.educationHope}`,
+          element: <EducationHopeProgram />,
+        },
+        {
+          path: `serve/${CANONICAL.wellnessHope}`,
+          element: <WellnessHopeProgram />,
+        },
+        {
+          path: `serve/${CANONICAL.outdoorHope}`,
+          element: <OutdoorHopeProgram />,
+        },
+        {
+          path: `serve/${CANONICAL.internationalHope}`,
+          element: <InternationalHopeProgram />,
+        },
+
+        { path: `${CANONICAL.member}`, element: <FormPage /> },
+      ],
+    },
+  ],
   {
-    path: CANONICAL.home,
-    element: <AppLayout />,
-    errorElement: <ErrorBoundary />,
-    children: [
-      { index: true, element: <HomePage /> },
-      { path: CANONICAL.about, element: <AboutPage /> },
-      { path: CANONICAL.serve, element: <ServePage /> },
-      { path: CANONICAL.connect, element: <ConnectPage /> },
-      { path: CANONICAL.media, element: <MediaPage /> },
-
-      {
-        path: `serve/${CANONICAL.servingHope}`,
-        element: <ServingHopeProgram />,
-      },
-      {
-        path: `serve/${CANONICAL.educationHope}`,
-        element: <EducationHopeProgram />,
-      },
-      {
-        path: `serve/${CANONICAL.wellnessHope}`,
-        element: <WellnessHopeProgram />,
-      },
-      {
-        path: `serve/${CANONICAL.outdoorHope}`,
-        element: <OutdoorHopeProgram />,
-      },
-      {
-        path: `serve/${CANONICAL.internationalHope}`,
-        element: <InternationalHopeProgram />,
-      },
-
-      { path: `${CANONICAL.member}`, element: <FormPage /> },
-    ],
-  },
-]);
+    future: {
+      v7_preloadRouter: false,
+    },
+  }
+);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
