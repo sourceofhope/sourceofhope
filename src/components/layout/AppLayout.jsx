@@ -9,7 +9,7 @@ export default function AppLayout() {
 
   return (
     <HeaderFlagContext.Provider value={{ isBlocking, setIsBlocking }}>
-      <HeaderImpl />
+      <Header />
       <main className="w-full min-h-screen text-sm md:text-md lg:text-lg">
         <Suspense fallback={<Loader />}>
           <Outlet />
@@ -19,9 +19,4 @@ export default function AppLayout() {
       <Footer />
     </HeaderFlagContext.Provider>
   );
-}
-
-function HeaderImpl() {
-  const { isBlocking } = useHeaderFlag();
-  return <Header isBlocking={isBlocking} />;
 }

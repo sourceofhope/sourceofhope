@@ -1,8 +1,5 @@
 import { Helmet } from "react-helmet";
-import {
-  HeaderFlagContext,
-  useHeaderFlag,
-} from "../../../components/structure/Header";
+import { useSetHeaderBlocking } from "../../../components/structure/Header";
 import { useEffect } from "react";
 import ExpressiveAnchor from "../../../components/ui/expressive/ExpressiveAnchor";
 import Carousel from "../../../components/ui/Carousel";
@@ -11,14 +8,14 @@ import Heading from "../../../components/ui/text/Heading";
 import { ASSET_VERSION, CANONICAL_URL } from "../../../routes";
 
 export default function InternationalHopeProgram() {
-  const { setIsBlocking } = useHeaderFlag();
+  const setBlocking = useSetHeaderBlocking();
 
   useEffect(() => {
-    setIsBlocking(true);
-    return () => setIsBlocking(false);
-  }, [setIsBlocking]);
+    setBlocking(true);
+    return () => setBlocking(false);
+  }, [setBlocking]);
   return (
-    <HeaderFlagContext.Provider value={true}>
+    <>
       <Helmet>
         <title>Education for Hope Program | The Source of Hope</title>
         <meta
@@ -155,7 +152,7 @@ export default function InternationalHopeProgram() {
           </Carousel>
         </article>
       </section>
-    </HeaderFlagContext.Provider>
+    </>
   );
 }
 

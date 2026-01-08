@@ -1,16 +1,16 @@
 import { Helmet } from "react-helmet";
-import { useHeaderFlag } from "../../components/structure/Header";
-import { useEffect } from "react";
+import { useSetHeaderBlocking } from "../../components/structure/Header";
 import StorefrontProductSection from "./sections/StorefrontProductSection";
 import StorefrontFooterSection from "./sections/StorefrontFooterSection";
+import { useEffect } from "react";
 
 export default function StorefrontPage() {
-  const { setIsBlocking } = useHeaderFlag();
+  const setBlocking = useSetHeaderBlocking();
 
   useEffect(() => {
-    setIsBlocking(true);
-    return () => setIsBlocking(false);
-  }, [setIsBlocking]);
+    setBlocking(true);
+    return () => setBlocking(false);
+  }, [setBlocking]);
 
   return (
     <>

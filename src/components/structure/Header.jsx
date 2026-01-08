@@ -12,12 +12,14 @@ import { fetchContent } from "../../cms";
 import { NavLink } from "react-router-dom";
 import Icon from "../ui/Icon";
 
-export default function Header({ isBlocking }) {
+export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
   const [banner, setBanner] = useState(null);
   const [bannerOpen, setBannerOpen] = useState(true);
+
+  const { isBlocking } = useHeaderFlag();
 
   const bannerActive =
     bannerOpen &&
@@ -223,8 +225,19 @@ function HeaderButton({ ariaLabel, label, className, to, setHovering }) {
   );
 }
 
+export function useHeaderBlocking() {
+  const { isBlocking } = useHeaderFlag();
+  return isBlocking;
+}
+
+export function useSetHeaderBlocking() {
+  const { setIsBlocking } = useHeaderFlag();
+  return setIsBlocking;
+}
+
 export const HeaderFlagContext = createContext({
   isBlocking: false,
   setIsBlocking: () => {},
 });
+
 export const useHeaderFlag = () => useContext(HeaderFlagContext);

@@ -1,8 +1,5 @@
 import { Helmet } from "react-helmet";
-import {
-  HeaderFlagContext,
-  useHeaderFlag,
-} from "../../../components/structure/Header";
+import { useSetHeaderBlocking } from "../../../components/structure/Header";
 import { useEffect } from "react";
 import ExpressiveAnchor from "../../../components/ui/expressive/ExpressiveAnchor";
 import Heading from "../../../components/ui/text/Heading";
@@ -11,14 +8,14 @@ import { CANONICAL_URL } from "../../../routes";
 import { AnchorButton } from "../../../components/ui/Button";
 
 export default function ServingHopeProgram() {
-  const { setIsBlocking } = useHeaderFlag();
+  const setBlocking = useSetHeaderBlocking();
 
   useEffect(() => {
-    setIsBlocking(true);
-    return () => setIsBlocking(false);
-  }, [setIsBlocking]);
+    setBlocking(true);
+    return () => setBlocking(false);
+  }, [setBlocking]);
   return (
-    <HeaderFlagContext.Provider value={true}>
+    <>
       <Helmet>
         <title>Serving Hope & Sharing Hope | The Source of Hope</title>
         <meta
@@ -174,6 +171,6 @@ export default function ServingHopeProgram() {
           </div>
         </article>
       </section>
-    </HeaderFlagContext.Provider>
+    </>
   );
 }
