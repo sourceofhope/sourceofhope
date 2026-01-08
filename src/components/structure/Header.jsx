@@ -152,30 +152,35 @@ function HeaderNavigator() {
       to: {
         main: CANONICAL.about,
       },
+      children: {},
     },
     {
       label: "SERVE",
       to: {
         main: CANONICAL.serve,
       },
+      children: {},
     },
     {
       label: "CONNECT",
       to: {
         main: CANONICAL.connect,
       },
+      children: {},
     },
     {
       label: "MEDIA",
       to: {
         main: CANONICAL.media,
       },
+      children: {},
     },
     {
       label: "MEMBERS",
       to: {
         main: CANONICAL.member,
       },
+      children: {},
     },
   ];
 
@@ -194,6 +199,7 @@ function HeaderNavigator() {
                       : "opacity-80 scale-95"
                     : ""
                 }`}
+            hovering={hovering}
             setHovering={setHovering}
             to={to.main}
             label={label}
@@ -204,24 +210,36 @@ function HeaderNavigator() {
   );
 }
 
-function HeaderButton({ ariaLabel, label, className, to, setHovering }) {
+function HeaderButton({
+  ariaLabel,
+  label,
+  className,
+  to,
+  hovering,
+  setHovering,
+}) {
   return (
-    <NavLink
-      aria-label={ariaLabel}
-      onMouseEnter={() => setHovering(label)}
-      onMouseLeave={() => setHovering(null)}
-      to={to}
-      className={`!no-underline group transition-[color_transform] ease-in-out duration-300 inline-flex w-full justify-between items-center gap-1 focus:outline-none ${className}`}>
-      <span>{label}</span>
-      <Icon>
-        <ChevronRightIcon
-          className="w-6 h-6 transition-transform duration-500 group-hover:translate-x-1"
-          focusable="false"
-          aria-hidden="true"
-          role="presentation"
-        />
-      </Icon>
-    </NavLink>
+    <>
+      <NavLink
+        aria-label={ariaLabel}
+        onMouseEnter={() => setHovering(label)}
+        onMouseLeave={() => setHovering(null)}
+        to={to}
+        className={`!no-underline group transition-[color_transform] ease-in-out duration-300 inline-flex w-full justify-between items-center gap-1 focus:outline-none ${className}`}>
+        <span>{label}</span>
+        <Icon>
+          <ChevronRightIcon
+            className="w-6 h-6 transition-transform duration-500 group-hover:translate-x-1"
+            focusable="false"
+            aria-hidden="true"
+            role="presentation"
+          />
+        </Icon>
+      </NavLink>
+      {hovering && (
+        <nav className="absolute z-50 top-1/2 w-sm p-20 bg-neutral-50"></nav>
+      )}
+    </>
   );
 }
 

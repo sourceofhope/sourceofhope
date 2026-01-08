@@ -12,14 +12,12 @@ export default function HomeMissionSection() {
         <Title className="text-xlg md:hidden lg:text-xxlg font-urbanist text-center">
           Our Mission
         </Title>
-        <div className="w-full max-w-[400px] aspect-square rounded-2xl overflow-hidden">
-          <img
-            src={`/${ASSET_VERSION}/core/TSOH-Founder.webp`}
-            alt="The Source of Hope Founder, Quynh Chau Stone"
-            className="w-full h-full object-cover"
-            loading="lazy"
-          />
-        </div>
+        <img
+          src={`/${ASSET_VERSION}/core/TSOH-Founder.webp`}
+          alt="The Source of Hope Founder, Quynh Chau Stone"
+          className="w-full h-full object-cover"
+          loading="lazy"
+        />
       </div>
       <div className="grid gap-3 max-w-[400px] md:max-w-[500px] lg:max-w-[600px]">
         <Title className="hidden text-xlg md:block lg:text-xxlg pl-5 w-fit font-urbanist">
