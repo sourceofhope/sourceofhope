@@ -84,9 +84,9 @@ export default function Carousel({
             </button>
           )}
           {showProgress && (
-            <div className="justify-center">
+            <p className="justify-center pointer-events-none">
               {index + 1}/{totalPages}
-            </div>
+            </p>
           )}
 
           {!hideControls && (
