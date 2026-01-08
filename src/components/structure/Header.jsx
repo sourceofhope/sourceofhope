@@ -19,7 +19,7 @@ export default function Header() {
   const [banner, setBanner] = useState(null);
   const [bannerOpen, setBannerOpen] = useState(true);
 
-  const { isBlocking } = useHeaderFlag();
+  const { isBlocking } = useHeaderContext();
 
   const bannerActive =
     bannerOpen &&
@@ -226,12 +226,12 @@ function HeaderButton({ ariaLabel, label, className, to, setHovering }) {
 }
 
 export function useHeaderBlocking() {
-  const { isBlocking } = useHeaderFlag();
+  const { isBlocking } = useHeaderContext();
   return isBlocking;
 }
 
 export function useSetHeaderBlocking() {
-  const { setIsBlocking } = useHeaderFlag();
+  const { setIsBlocking } = useHeaderContext();
   return setIsBlocking;
 }
 
@@ -240,4 +240,4 @@ export const HeaderFlagContext = createContext({
   setIsBlocking: () => {},
 });
 
-export const useHeaderFlag = () => useContext(HeaderFlagContext);
+export const useHeaderContext = () => useContext(HeaderFlagContext);
