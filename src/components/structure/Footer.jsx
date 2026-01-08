@@ -18,12 +18,14 @@ export default function Footer() {
             <FooterColumn>
               <div className="grid gap-3 grid-flow-col md:grid-flow-row">
                 <Icon className="w-20 h-20 p-1 bg-neutral-100 rounded-sm">
-                  <img
-                    src={`/${ASSET_VERSION}/core/TSOH-Logo.webp`}
-                    alt=""
-                    className="w-full h-full object-contain rounded-lg"
-                    draggable={false}
-                  />
+                  <NavLink to={CANONICAL.home} aria-label="The Source of Hope">
+                    <img
+                      src={`/${ASSET_VERSION}/core/TSOH-Logo.webp`}
+                      alt=""
+                      className="w-full h-full object-contain rounded-lg"
+                      draggable={false}
+                    />
+                  </NavLink>
                 </Icon>
                 <a
                   href="https://app.candid.org/profile/9393304/the-source-of-hope-46-2491772"
