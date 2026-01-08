@@ -39,7 +39,7 @@ export default function Header() {
     if ("requestIdleCallback" in window) {
       requestIdleCallback(fetchBanner);
     } else {
-      setTimeout(run, 1);
+      setTimeout(fetchBanner, 1);
     }
   }, []);
 
