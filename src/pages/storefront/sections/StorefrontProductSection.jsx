@@ -27,10 +27,12 @@ export default function StorefrontProductSection() {
   }, []);
 
   return (
-    <section className="w-full md:justify-items-left items-center grid px-5 lg:px-35 pt-30 h-full">
+    <section className="w-full md:justify-items-left items-center grid px-5 lg:px-35 pt-25 h-full">
       <div className="mb-10 flex flex-col max-w-2xl gap-5">
-        <Title>Storefront</Title>
-        <Heading>Shop With Purpose</Heading>
+        <div className="grid gap-1 justify-self-start justify-start">
+          <Title>Storefront</Title>
+          <Heading>Shop With Purpose</Heading>
+        </div>
         <p className="text-neutral-600">
           Every purchase directly supports The Source of Hope’s mission: feeding
           families, empowering students, and strengthening communities.
