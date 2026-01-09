@@ -1,18 +1,10 @@
 import { Helmet } from "react-helmet";
 import { useSetHeaderBlocking } from "../../components/structure/Header";
-import StorefrontProductSection from "./sections/StorefrontProductSection";
-import StorefrontFooterSection from "./sections/StorefrontFooterSection";
-import { createContext, useContext, useEffect } from "react";
-import { CANONICAL_URL } from "../../routes";
+import { useParams } from "react-router-dom";
 
-export const StoreCartContext = createContext({
-  cart: [],
-  setCart: () => {},
-});
+export default function ProductPage() {
+  const { slug } = useParams();
 
-export const useStoreContext = () => useContext(StoreCartContext);
-
-export default function StorefrontPage() {
   const setBlocking = useSetHeaderBlocking();
 
   useEffect(() => {
@@ -23,7 +15,7 @@ export default function StorefrontPage() {
   return (
     <>
       <Helmet>
-        <title>Shop With Purpose | The Source of Hope</title>
+        <title> {product.title} | The Source of Hope</title>
 
         <meta
           name="description"
@@ -54,18 +46,9 @@ export default function StorefrontPage() {
           content="Support community impact through meaningful purchases — shop with purpose at The Source of Hope."
         />
       </Helmet>
-      <StorefrontProductSection />
-      <StorefrontFooterSection />
+      <section className="w-full md:justify-items-left items-center grid px-5 lg:px-35 pt-25 h-full">
+        /* TODO: Product information */
+      </section>
     </>
   );
-}
-
-export function useCartActions() {
-  const { setCart } = useStoreContext();
-
-  function addToCart(item) {
-    setCart((prev) => [...prev, item]);
-  }
-
-  return { addToCart };
 }

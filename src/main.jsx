@@ -59,6 +59,10 @@ export const router = createBrowserRouter([
 
       { path: CANONICAL.member.relative, element: <FormPage /> },
       { path: CANONICAL.storefront.relative, element: <StorefrontPage /> },
+      {
+        path: `${CANONICAL.storefront.relative}/products/:slug`,
+        element: <></>,
+      },
     ],
   },
 ]);

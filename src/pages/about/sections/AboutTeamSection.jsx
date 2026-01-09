@@ -8,6 +8,8 @@ import { fetchContent, getFeaturedImage } from "../../../cms";
 import { createPortal } from "react-dom";
 import { ASSET_VERSION } from "../../../routes";
 
+const overlayRoot = document.getElementById("root");
+
 export default function AboutTeamSection() {
   return (
     <PageSection className="pt-5">
@@ -79,7 +81,6 @@ export function CarouselCard({ post }) {
   const [loaded, setLoaded] = useState(false);
 
   const image = getFeaturedImage(post);
-  const overlayRoot = document.getElementById("root");
 
   useEffect(() => {
     document.body.style.overflow = active ? "hidden" : "";

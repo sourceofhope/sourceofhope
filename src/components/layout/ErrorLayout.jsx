@@ -8,7 +8,7 @@ export default function ErrorLayout({ code = 500, message }) {
   const defaults = {
     403: "Sorry, you don't have permission to access this page.",
     404: "Sorry, we couldn’t find the page you were looking for.",
-    418: "I'm a teapot. (But seriously, something went wrong.)",
+    418: "I'm a teapot. (But seriously, something went wrong).",
     500: "Oops! Something went wrong on our end.",
   };
   const display = defaults[code] || "An unexpected error occurred.";

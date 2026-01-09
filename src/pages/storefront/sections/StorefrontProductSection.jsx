@@ -7,6 +7,8 @@ import {
 import Title from "../../../components/ui/text/Title";
 import Heading from "../../../components/ui/text/Heading";
 
+const overlayRoot = document.getElementById("root");
+
 export default function StorefrontProductSection() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -63,9 +65,13 @@ function ProductCard({ post }) {
   const image = getFeaturedImage(post);
   const src = getResponsiveImage(image, { width: 420 });
 
+  /*
+  TODO: Going to use createPortal here soon
+  */
+
   return (
     <a
-      href={post.acf?.url}
+      href={`https://cms.thesourceofhope.org/wp-json/wp/v2/products/${post.slug}`}
       className="group relative flex flex-col overflow-hidden rounded-2xl bg-neutral-900 shadow-md transition-all duration-500 hover:shadow-xl">
       <div className="relative aspect-[4/5] overflow-hidden">
         <img

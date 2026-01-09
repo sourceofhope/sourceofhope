@@ -11,6 +11,8 @@ import { ASSET_VERSION, CANONICAL } from "../../../routes";
 import Title from "../../../components/ui/text/Title";
 import { createPortal } from "react-dom";
 
+const overlayRoot = document.getElementById("root");
+
 export default function HomeResourcesSection() {
   return (
     <HomeContent className="w-full md:mb-15 p-5 md:py-10 lg:px-15">
@@ -65,7 +67,6 @@ export default function HomeResourcesSection() {
 
 function HomeResourceCard({ title, caption, src, to }) {
   const [active, setActive] = useState(false);
-  const overlayRoot = document.getElementById("root");
 
   return (
     <>
