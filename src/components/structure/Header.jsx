@@ -64,13 +64,13 @@ export default function Header() {
       <header
         className={`backdrop-filter fixed ${
           bannerActive ? "top-15 md:top-10" : "top-0"
-        } left-0 right-0 z-50 text-sm md:text-md w-full overflow-hidden transition-[height_backdrop] duration-500 border-b-4 md:border-none
+        } left-0 right-0 z-50 text-sm md:text-md w-full transition-[height_backdrop] duration-500 border-b-4 md:border-none
           ${
             open
-              ? `h-95 md:h-25 md:backdrop-blur-none backdrop-blur-sm ${
+              ? `md:backdrop-blur-none backdrop-blur-sm ${
                   isBlocking ? "border-primary-800/100" : "border-neutral-50"
                 }`
-              : "h-25 backdrop-blur-none border-none"
+              : "backdrop-blur-none border-none"
           }
           ${
             scrolled
@@ -79,13 +79,12 @@ export default function Header() {
                   isBlocking ? "text-primary-800" : "text-neutral-50"
                 }`
           }`}>
-        <section className="flex w-full h-25 items-center justify-between px-5 lg:px-35">
-          <div className="flex gap-5 flex-row items-center w-fit z-0 overflow-clip">
+        <section className="flex w-full items-center justify-between px-5 lg:px-35">
+          <div className="h-25 flex gap-5 flex-row items-center w-fit z-0 overflow-clip">
             <Favicon />
             <h1 className="font-bold hidden lg:block whitespace-nowrap text-ellipsis overflow-hidden">
               THE SOURCE OF HOPE
             </h1>
-            <div className="w-0.5 h-1/2 bg-neutral-50 rounded-full"></div>
           </div>
           <nav className="hidden md:flex gap-3 z-10" aria-label="Primary">
             <HeaderNavigator />
@@ -97,7 +96,9 @@ export default function Header() {
             open ? "opacity-100" : "opacity-0 pointer-events-none"
           }`}>
           {open && (
-            <nav className="flex flex-col justify-end items-center px-5 h-fit">
+            <nav
+              className="flex flex-col justify-end items-center px-5 pb-5 h-fit"
+              aria-label="Mobile">
               <HeaderNavigator />
             </nav>
           )}
@@ -159,7 +160,13 @@ function HeaderNavigator() {
       label: "SERVE",
       to: {
         main: CANONICAL.serve,
-        children: {},
+        children: [
+          { label: "SERVING", to: CANONICAL.servingHope },
+          { label: "EDUCATION", to: CANONICAL.educationHope },
+          { label: "WELLNESS", to: CANONICAL.wellnessHope },
+          { label: "OUTDOOR", to: CANONICAL.outdoorHope },
+          { label: "INTERNATIONAL", to: CANONICAL.internationalHope },
+        ],
       },
     },
     {
@@ -204,11 +211,12 @@ function HeaderNavigator() {
                   hovering
                     ? hovering == label
                       ? ""
-                      : "opacity-80 scale-95"
+                      : "md:opacity-80 md:scale-95"
                     : ""
                 }`}
+            hovering={hovering}
             setHovering={setHovering}
-            to={to.main}
+            to={to}
             label={label}
           />
         );
@@ -217,24 +225,41 @@ function HeaderNavigator() {
   );
 }
 
-function HeaderButton({ ariaLabel, label, className, to, setHovering }) {
+function HeaderButton({
+  ariaLabel,
+  label,
+  className,
+  to,
+  hovering,
+  setHovering,
+}) {
   return (
-    <NavLink
-      aria-label={ariaLabel}
+    <div
+      className="w-full"
       onMouseEnter={() => setHovering(label)}
-      onMouseLeave={() => setHovering(null)}
-      to={to}
-      className={`!no-underline group transition-[color_transform] ease-in-out duration-300 inline-flex w-full justify-between items-center gap-1 focus:outline-none ${className}`}>
-      <span>{label}</span>
-      <Icon>
-        <ChevronRightIcon
-          className="w-6 h-6 transition-transform duration-500 group-hover:translate-x-1"
-          focusable="false"
-          aria-hidden="true"
-          role="presentation"
-        />
-      </Icon>
-    </NavLink>
+      onMouseLeave={() => setHovering(null)}>
+      <NavLink
+        aria-label={ariaLabel}
+        to={to.main}
+        className={`!no-underline group transition-[color_transform] ease-in-out duration-300 inline-flex w-full justify-between items-center gap-1 focus:outline-none ${className}`}>
+        <span>{label}</span>
+        <Icon>
+          <ChevronRightIcon
+            className="w-6 h-6 transition-transform duration-500 group-hover:translate-x-1"
+            focusable="false"
+            aria-hidden="true"
+            role="presentation"
+          />
+        </Icon>
+      </NavLink>
+      {hovering == label && to.children.length > 0 && (
+        <div className="absolute z-50 bg-neutral-50 p-3 min-w-60 rounded-2xl text-accent-800 text-sm flex flex-col gap-2 font-semibold py-5">
+          {to.children.map(({ label, to }) => {
+            return <NavLink to={to}>{label}</NavLink>;
+          })}
+        </div>
+      )}
+    </div>
   );
 }
 
