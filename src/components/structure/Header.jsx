@@ -67,7 +67,7 @@ export default function Header() {
         } left-0 right-0 z-50 text-sm md:text-md w-full overflow-hidden transition-[height_backdrop] duration-500 border-b-4 md:border-none
           ${
             open
-              ? `h-85 md:h-25 md:backdrop-blur-none backdrop-blur-sm ${
+              ? `h-95 md:h-25 md:backdrop-blur-none backdrop-blur-sm ${
                   isBlocking ? "border-primary-800/100" : "border-neutral-50"
                 }`
               : "h-25 backdrop-blur-none border-none"
@@ -80,13 +80,14 @@ export default function Header() {
                 }`
           }`}>
         <section className="flex w-full h-25 items-center justify-between px-5 lg:px-35">
-          <div className="flex gap-5 flex-row items-center w-full">
+          <div className="flex gap-5 flex-row items-center w-fit z-0 overflow-clip">
             <Favicon />
-            <h1 className="font-bold w-full hidden lg:block">
+            <h1 className="font-bold hidden lg:block whitespace-nowrap text-ellipsis overflow-hidden">
               THE SOURCE OF HOPE
             </h1>
+            <div className="w-0.5 h-1/2 bg-neutral-50 rounded-full"></div>
           </div>
-          <nav className="hidden md:flex gap-5" aria-label="Primary">
+          <nav className="hidden md:flex gap-3 z-10" aria-label="Primary">
             <HeaderNavigator />
           </nav>
           <HeaderMenu open={open} setOpen={setOpen} />
@@ -151,36 +152,43 @@ function HeaderNavigator() {
       label: "ABOUT",
       to: {
         main: CANONICAL.about,
+        children: {},
       },
-      children: {},
     },
     {
       label: "SERVE",
       to: {
         main: CANONICAL.serve,
+        children: {},
       },
-      children: {},
     },
     {
       label: "CONNECT",
       to: {
         main: CANONICAL.connect,
+        children: {},
       },
-      children: {},
     },
     {
       label: "MEDIA",
       to: {
         main: CANONICAL.media,
+        children: {},
       },
-      children: {},
     },
     {
       label: "MEMBERS",
       to: {
         main: CANONICAL.member,
+        children: {},
       },
-      children: {},
+    },
+    {
+      label: "STORE",
+      to: {
+        main: CANONICAL.storefront,
+        children: {},
+      },
     },
   ];
 
