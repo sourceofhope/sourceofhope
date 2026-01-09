@@ -241,9 +241,13 @@ function HeaderButton({
         </Icon>
       </NavLink>
       {hovering == label && children.length > 0 && (
-        <div className="absolute hidden md:flex z-50 bg-neutral-50 p-3 min-w-40 rounded-lg shadow-md text-accent-800 flex-col gap-5 font-semibold py-5">
+        <div className="absolute hidden md:flex z-50 bg-neutral-50 p-3 min-w-40 rounded-lg shadow-md text-accent-800 flex-col font-semibold text-sm">
           {children.map(({ label, route }) => {
-            return <NavLink to={route.absolute}>{label}</NavLink>;
+            return (
+              <NavLink className="py-2.5" to={route.absolute}>
+                {label}
+              </NavLink>
+            );
           })}
         </div>
       )}
