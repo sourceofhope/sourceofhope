@@ -5,9 +5,9 @@ import Heading from "../../../components/ui/text/Heading";
 export default function CartItemsSection({ items, updateQuantity, removeItem, updateSize }) {
   const sizes = ["XS", "S", "M", "L", "XL", "XXL"];
 
-  if (items.length === 0) {
+  if (!items || items.length === 0) {
     return (
-      <div className="bg-white rounded-2xl shadow-md p-8 text-center">
+      <div className="bg-white p-8 text-center">
         <p className="text-neutral-500 text-lg">Your cart is empty</p>
       </div>
     );

@@ -1,7 +1,13 @@
 import { useState } from "react";
 import { CreditCardIcon, BanknotesIcon, DevicePhoneMobileIcon } from "@heroicons/react/24/outline";
 
-export default function CartPaymentSection({ paymentMethod, setPaymentMethod, total }) {
+export default function CartPaymentSection({ items, paymentMethod, setPaymentMethod, total }) {
+
+  // No payment section if cart is empty
+  if (!items || items.length === 0) {
+    return null;
+  }
+
   const [isProcessing, setIsProcessing] = useState(false);
 
   const paymentMethods = [
