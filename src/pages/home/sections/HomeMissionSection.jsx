@@ -13,9 +13,10 @@ export default function HomeMissionSection() {
           Our Mission
         </Title>
         <img
-          className="inset-0 w-full object-cover max-w-[400px] aspect-square rounded-2xl text-center"
           src={`/${ASSET_VERSION}/core/TSOH-Founder.webp`}
           alt="The Source of Hope Founder, Quynh Chau Stone"
+          className="w-full h-full object-cover"
+          loading="lazy"
         />
       </div>
       <div className="grid gap-3 max-w-[400px] md:max-w-[500px] lg:max-w-[600px]">
