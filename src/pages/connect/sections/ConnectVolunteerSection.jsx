@@ -38,7 +38,7 @@ export default function ConnectMapSection() {
           Volunteering with The Source of Hope is more than lending a hand—it’s
           about showing up with compassion, consistency, and care. If you’re
           ready to serve your community in a tangible way, we invite you to{" "}
-          <SimpleLink to={CANONICAL.serve}>
+          <SimpleLink to={CANONICAL.serve.absolute}>
             explore current volunteer opportunities
           </SimpleLink>{" "}
           and join us in building hope together.

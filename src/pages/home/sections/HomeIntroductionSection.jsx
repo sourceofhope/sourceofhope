@@ -94,7 +94,7 @@ export default function HomeIntroductionSection() {
           <div className="w-fit">
             <LinkButton
               className="w-fit"
-              to={CANONICAL.about}
+              to={CANONICAL.about.absolute}
               text="OUR MISSION"
               ariaLabel="Learn more about The Source of Hope nonprofit organization and its mission"
             />

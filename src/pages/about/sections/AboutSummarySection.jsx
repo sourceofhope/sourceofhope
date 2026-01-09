@@ -52,7 +52,7 @@ export default function AboutSummarySection() {
           text="Volunteer for an Event"
         />
         <LinkButton
-          to={CANONICAL.member}
+          to={CANONICAL.member.absolute}
           className="w-fit text-neutral-950 justify-between bg-neutral-200 hover:bg-neutral-300"
           text="Become a Community Sponsor"
         />

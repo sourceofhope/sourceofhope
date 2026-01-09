@@ -17,7 +17,7 @@ export default function OutdoorHopeProgram() {
   }, [setBlocking]);
   return (
     <>
-      <Helmet></Helmet>
+      <Helmet>/* *TODO: Needs Helmet */</Helmet>
       <section className="w-full md:justify-items-left items-center grid gap-5 pt-25 p-5 lg:px-35 text-sm md:text-md lg:text-lg">
         <article className="grid gap-3 justify-self-start justify-start">
           <Title>Hope For The Outdoors</Title>

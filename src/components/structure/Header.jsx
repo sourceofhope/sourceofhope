@@ -151,57 +151,43 @@ function HeaderNavigator() {
   const links = [
     {
       label: "ABOUT",
-      to: {
-        main: CANONICAL.about,
-        children: {},
-      },
+      route: CANONICAL.about,
     },
     {
       label: "SERVE",
-      to: {
-        main: CANONICAL.serve,
-        children: [
-          { label: "SERVING", to: CANONICAL.servingHope },
-          { label: "EDUCATION", to: CANONICAL.educationHope },
-          { label: "WELLNESS", to: CANONICAL.wellnessHope },
-          { label: "OUTDOOR", to: CANONICAL.outdoorHope },
-          { label: "INTERNATIONAL", to: CANONICAL.internationalHope },
-        ],
-      },
+      route: CANONICAL.serve,
+      children: [
+        { label: "SERVING HOPE", route: CANONICAL.serve.servingHope },
+        { label: "EDUCATION FOR HOPE", route: CANONICAL.serve.educationHope },
+        { label: "WELLNESS OF HOPE", route: CANONICAL.serve.wellnessHope },
+        { label: "HOPE FOR THE OUTDOORS", route: CANONICAL.serve.outdoorHope },
+        {
+          label: "INTERNATIONAL HOPE",
+          route: CANONICAL.serve.internationalHope,
+        },
+      ],
     },
     {
       label: "CONNECT",
-      to: {
-        main: CANONICAL.connect,
-        children: {},
-      },
+      route: CANONICAL.connect,
     },
     {
       label: "MEDIA",
-      to: {
-        main: CANONICAL.media,
-        children: {},
-      },
+      route: CANONICAL.media,
     },
     {
       label: "MEMBERS",
-      to: {
-        main: CANONICAL.member,
-        children: {},
-      },
+      route: CANONICAL.member,
     },
     {
       label: "STORE",
-      to: {
-        main: CANONICAL.storefront,
-        children: {},
-      },
+      route: CANONICAL.storefront,
     },
   ];
 
   return (
     <>
-      {links.map(({ label, to }) => {
+      {links.map(({ label, route, children }) => {
         return (
           <HeaderButton
             key={label}
@@ -216,7 +202,8 @@ function HeaderNavigator() {
                 }`}
             hovering={hovering}
             setHovering={setHovering}
-            to={to}
+            route={route}
+            children={children || []}
             label={label}
           />
         );
@@ -229,7 +216,8 @@ function HeaderButton({
   ariaLabel,
   label,
   className,
-  to,
+  route,
+  children,
   hovering,
   setHovering,
 }) {
@@ -240,7 +228,7 @@ function HeaderButton({
       onMouseLeave={() => setHovering(null)}>
       <NavLink
         aria-label={ariaLabel}
-        to={to.main}
+        to={route.absolute}
         className={`!no-underline group transition-[color_transform] ease-in-out duration-300 inline-flex w-full justify-between items-center gap-1 focus:outline-none ${className}`}>
         <span>{label}</span>
         <Icon>
@@ -252,10 +240,10 @@ function HeaderButton({
           />
         </Icon>
       </NavLink>
-      {hovering == label && to.children.length > 0 && (
-        <div className="absolute z-50 bg-neutral-50 p-3 min-w-60 rounded-2xl text-accent-800 text-sm flex flex-col gap-2 font-semibold py-5">
-          {to.children.map(({ label, to }) => {
-            return <NavLink to={to}>{label}</NavLink>;
+      {hovering == label && children.length > 0 && (
+        <div className="absolute hidden md:flex z-50 bg-neutral-50 p-3 min-w-40 rounded-lg shadow-md text-accent-800 text-sm flex-col gap-2 font-semibold py-5">
+          {children.map(({ label, route }) => {
+            return <NavLink to={route.absolute}>{label}</NavLink>;
           })}
         </div>
       )}
