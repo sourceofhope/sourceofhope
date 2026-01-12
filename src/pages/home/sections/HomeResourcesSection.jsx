@@ -9,10 +9,7 @@ import Emphasis from "../../../components/ui/Emphasis";
 import ExpressiveLink from "../../../components/ui/expressive/ExpressiveLink";
 import { ASSET_VERSION, CANONICAL } from "../../../routes";
 import Title from "../../../components/ui/text/Title";
-import { createPortal } from "react-dom";
 import Overlay from "../../../components/ui/Overlay";
-
-const overlayRoot = document.getElementById("root");
 
 export default function HomeResourcesSection() {
   return (

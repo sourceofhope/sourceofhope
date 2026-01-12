@@ -1,4 +1,3 @@
-// ExpressiveText.jsx
 import { useEffect, useMemo, useRef, useState } from "react";
 import { DefaultGenerator } from "./DefaultGenerator";
 

@@ -1,5 +1,4 @@
 import { ArrowUpRightIcon } from "@heroicons/react/20/solid";
-import ExpressiveAnchor from "../../../components/ui/expressive/ExpressiveAnchor";
 import Heading from "../../../components/ui/text/Heading";
 import { HighlightedText } from "../../../components/ui/expressive/ExpressiveText";
 

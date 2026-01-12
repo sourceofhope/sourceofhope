@@ -8,12 +8,9 @@ import Title from "../../../components/ui/text/Title";
 import Heading from "../../../components/ui/text/Heading";
 import { ASSET_VERSION } from "../../../routes";
 import { XMarkIcon } from "@heroicons/react/20/solid";
-import postcssPluginWarning from "tailwindcss";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Overlay from "../../../components/ui/Overlay";
 import ExpressiveLink from "../../../components/ui/expressive/ExpressiveLink";
-
-const overlayRoot = document.getElementById("root");
 
 export default function StorefrontProductSection() {
   const [posts, setPosts] = useState([]);

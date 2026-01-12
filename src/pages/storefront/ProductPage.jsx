@@ -1,17 +1,12 @@
 import { Helmet } from "react-helmet";
 import { useSetHeaderBlocking } from "../../components/structure/Header";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { fetchContent, getFeaturedImage, getResponsiveImage } from "../../cms";
 import { CANONICAL, CANONICAL_URL } from "../../routes";
 import Title from "../../components/ui/text/Title";
-import {
-  ArrowRightIcon,
-  ArrowUpRightIcon,
-  HeartIcon,
-} from "@heroicons/react/20/solid";
+import { HeartIcon } from "@heroicons/react/20/solid";
 import { AnchorButton, LinkButton } from "../../components/ui/Button";
-import ExpressiveAnchor from "../../components/ui/expressive/ExpressiveAnchor";
 import Heading from "../../components/ui/text/Heading";
 
 export default function ProductPage() {

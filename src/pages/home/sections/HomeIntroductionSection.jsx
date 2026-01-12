@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { AnchorButton, LinkButton } from "../../../components/ui/Button";
-import { ASSET_VERSION, CANONICAL, CANONICAL_URL } from "../../../routes";
+import { ASSET_VERSION, CANONICAL } from "../../../routes";
 import { HomeContent } from "../HomePage";
 
 export default function HomeIntroductionSection() {

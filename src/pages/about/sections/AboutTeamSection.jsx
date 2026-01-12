@@ -5,11 +5,8 @@ import Carousel from "../../../components/ui/Carousel";
 import PageSection from "../../PageSection";
 import Title from "../../../components/ui/text/Title";
 import { fetchContent, getFeaturedImage } from "../../../cms";
-import { createPortal } from "react-dom";
 import { ASSET_VERSION } from "../../../routes";
 import Overlay from "../../../components/ui/Overlay";
-
-const overlayRoot = document.getElementById("root");
 
 export default function AboutTeamSection() {
   return (
