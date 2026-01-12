@@ -3,6 +3,7 @@ import {
   Bars3Icon,
   ChevronRightIcon,
   XMarkIcon,
+  ShoppingCartIcon
 } from "@heroicons/react/20/solid";
 
 import Favicon from "../ui/Favicon";
@@ -11,6 +12,7 @@ import { CANONICAL } from "../../routes";
 import { fetchContent } from "../../cms";
 import { NavLink } from "react-router-dom";
 import Icon from "../ui/Icon";
+import { useStoreContext } from "../../context/StoreCartContext";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -145,6 +147,8 @@ function HeaderMenu({ open, setOpen }) {
 
 function HeaderNavigator() {
   const [hovering, setHovering] = useState(null);
+  const { cart } = useStoreContext();
+  const cartItemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   const links = [
     {
@@ -196,7 +200,7 @@ function HeaderNavigator() {
                   hovering
                     ? hovering == label
                       ? ""
-                      : "opacity-80 scale-95"
+                      : "text-neutral-300/50 scale-90"
                     : ""
                 }`}
             setHovering={setHovering}
@@ -205,6 +209,18 @@ function HeaderNavigator() {
           />
         );
       })}
+      <NavLink
+        to={CANONICAL.cart}
+        className="relative py-2.5 h-full flex items-center font-bold"
+        aria-label={`Shopping cart with ${cartItemCount} items`}
+      >
+        <ShoppingCartIcon className="w-6 h-6" />
+        {cartItemCount > 0 && (
+          <span className="absolute -top-1 -right-1 bg-accent-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
+            {cartItemCount > 99 ? "99+" : cartItemCount}
+          </span>
+        )}
+      </NavLink>
     </>
   );
 }

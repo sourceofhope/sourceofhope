@@ -55,10 +55,6 @@ export const router = createBrowserRouter([
         path: `serve/${CANONICAL.internationalHope}`,
         element: <InternationalHopeProgram />,
       },
-
-
-
-      { path: `${CANONICAL.cart}`, element: <CartPage /> },
       {
         path: `${CANONICAL.member}`,
         element: <FormPage />,
@@ -67,6 +63,7 @@ export const router = createBrowserRouter([
         path: `${CANONICAL.storefront}`,
         element: <StorefrontPage />,
       },
+      { path: `${CANONICAL.cart}`, element: <CartPage /> },
     ],
   },
 ]);

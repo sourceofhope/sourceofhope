@@ -46,11 +46,11 @@ export default function CartPaymentSection({ items, shippingMethod, paymentMetho
 
   return (
     <div className="bg-white rounded-2xl shadow-md p-6 mt-6">
-      <h3 className="font-urbanist font-bold text-neutral-900 text-xl mb-4">
+      {/* <h3 className="font-urbanist font-bold text-neutral-900 text-xl mb-4">
         Payment Method
-      </h3>
+      </h3> */}
 
-      <div className="space-y-3 mb-6">
+      {/* <div className="space-y-3 mb-6">
         {paymentMethods.map((method) => {
           const Icon = method.icon;
           return (
@@ -77,10 +77,10 @@ export default function CartPaymentSection({ items, shippingMethod, paymentMetho
             </label>
           );
         })}
-      </div>
+      </div> */}
 
       {/* Payment Form based on selected method */}
-      {paymentMethod === 'credit-card' && (
+      {/* {paymentMethod === 'credit-card' && (
         <div className="space-y-4 mb-6 p-4 bg-neutral-50 rounded-lg">
           <div>
             <label className="text-sm font-semibold text-neutral-700 block mb-1">
@@ -130,7 +130,7 @@ export default function CartPaymentSection({ items, shippingMethod, paymentMetho
             />
           </div>
         </div>
-      )}
+      )} */}
 
       {/* Checkout Button */}
       <button
