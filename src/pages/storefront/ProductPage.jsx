@@ -86,7 +86,7 @@ export default function ProductPage() {
       </Helmet>
       {loading && (
         <section className="w-full min-h-screen flex flex-col items-center justify-center text-center px-5">
-          <p className="text-neutral-600">Loading products</p>
+          <p className="text-neutral-600">Loading product</p>
         </section>
       )}
       {!loading && !product && (
