@@ -16,7 +16,6 @@ import {
 const CartPage = () => {
   const { cart: cartItems } = useContext(StoreCartContext); 
   const { updateCartItem, removeFromCart } = useCartActions();
-  const demoItemsAdded = useRef(false);
 
   const setBlocking = useSetHeaderBlocking();
 
@@ -105,6 +104,7 @@ const CartPage = () => {
 
               <CartPaymentSection
                 items={cartItems}
+                shippingMethod={shippingMethod}
                 paymentMethod={paymentMethod}
                 setPaymentMethod={setPaymentMethod}
                 total={total}

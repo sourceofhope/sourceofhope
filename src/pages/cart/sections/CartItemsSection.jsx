@@ -43,30 +43,32 @@ export default function CartItemsSection({ items, updateQuantity, removeItem, up
             {/* Product Details */}
             <div className="flex-1 space-y-2">
               <h4 className="font-bold text-neutral-900 text-lg">
-                {item.name}
+                {item.title || item.name}
               </h4>
               <p className="text-accent-600 font-semibold text-xl">
                 ${item.price.toFixed(2)}
               </p>
 
               <div className="flex flex-wrap gap-4 items-center">
-                {/* Size Selector */}
-                <div className="flex items-center gap-2">
-                  <label className="text-sm font-semibold text-neutral-700">
-                    Size:
-                  </label>
-                  <select
-                    value={item.size}
-                    onChange={(e) => updateSize(item.id, e.target.value)}
-                    className="border-2 border-neutral-300 rounded-lg px-3 py-1 focus:border-accent-500 focus:outline-none"
-                  >
-                    {sizes.map((size) => (
-                      <option key={size} value={size}>
-                        {size}
-                      </option>
-                    ))}
-                  </select>
-                </div>
+                {/* Size Selector - only show if item has size */}
+                {item.size && (
+                  <div className="flex items-center gap-2">
+                    <label className="text-sm font-semibold text-neutral-700">
+                      Size:
+                    </label>
+                    <select
+                      value={item.size}
+                      onChange={(e) => updateSize(item.id, e.target.value)}
+                      className="border-2 border-neutral-300 rounded-lg px-3 py-1 focus:border-accent-500 focus:outline-none"
+                    >
+                      {sizes.map((size) => (
+                        <option key={size} value={size}>
+                          {size}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                )}
 
                 {/* Quantity Selector */}
                 <div className="flex items-center gap-2">

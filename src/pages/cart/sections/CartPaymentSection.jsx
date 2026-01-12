@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { CreditCardIcon, BanknotesIcon, DevicePhoneMobileIcon } from "@heroicons/react/24/outline";
 
-export default function CartPaymentSection({ items, paymentMethod, setPaymentMethod, total }) {
+export default function CartPaymentSection({ items, shippingMethod, paymentMethod, setPaymentMethod, total }) {
 
   // No payment section if cart is empty
   if (!items || items.length === 0) {
@@ -36,6 +36,10 @@ export default function CartPaymentSection({ items, paymentMethod, setPaymentMet
     // Simulate payment processing
     setTimeout(() => {
       alert('Processing payment... This is a demo.');
+      console.log(`Items in checkout:`, items);
+      console.log(`Shipping method: ${shippingMethod}`);
+      console.log(`Payment method: ${paymentMethod}`);
+      console.log(`Total amount: $${total.toFixed(2)}`);
       setIsProcessing(false);
     }, 1500);
   };

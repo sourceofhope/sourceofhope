@@ -18,38 +18,38 @@ export default function StorefrontPage() {
     return () => setBlocking(false);
   }, [setBlocking]);
 
-  // Add demo items for testing (runs once on mount)
-  useEffect(() => {
-    if(demoItemsAdded.current) return;
+  // // Add demo items for testing (runs once on mount)
+  // useEffect(() => {
+  //   if(demoItemsAdded.current) return;
 
 
-    const demoItems = [
-      {
-        id: 1,
-        name: "Hope T-Shirt",
-        price: 25.0,
-        quantity: 5,
-        size: "M",
-        image: "/images/tshirt.jpg",
-      },
-      {
-        id: 2,
-        name: "Education Hope Hoodie",
-        price: 45.0,
-        quantity: 1,
-        size: "L",
-        image: "/images/hoodie.jpg",
-      },
-    ];
+  //   const demoItems = [
+  //     {
+  //       id: 1,
+  //       name: "Hope T-Shirt",
+  //       price: 25.0,
+  //       quantity: 5,
+  //       size: "M",
+  //       image: "/images/tshirt.jpg",
+  //     },
+  //     {
+  //       id: 2,
+  //       name: "Education Hope Hoodie",
+  //       price: 45.0,
+  //       quantity: 1,
+  //       size: "L",
+  //       image: "/images/hoodie.jpg",
+  //     },
+  //   ];
 
-    // Only add items if cart is empty
-    if (cartItems.length === 0) {
-      demoItems.forEach((item) => {
-        addToCart(item);
-      });
-      demoItemsAdded.current = true;
-    }
-  }, []); // Empty dependency array to run only once on mount
+  //   // Only add items if cart is empty
+  //   if (cartItems.length === 0) {
+  //     demoItems.forEach((item) => {
+  //       addToCart(item);
+  //     });
+  //     demoItemsAdded.current = true;
+  //   }
+  // }, []); // Empty dependency array to run only once on mount
 
   return (
     <>
