@@ -42,18 +42,21 @@ export default function AboutSummarySection() {
 
       <div className="flex flex-col lg:flex-row justify-items-center gap-5 text-center text-sm md:text-md">
         <AnchorButton
+          full
           href="https://app.joinhandshake.com/e/806999/jobs"
-          className="w-fit text-neutral-950 justify-between bg-neutral-200 hover:bg-neutral-300"
+          className="text-neutral-950 justify-between bg-neutral-200 hover:bg-neutral-300"
           text="Apply for Emerging Professional"
         />
         <AnchorButton
+          full
           href="https://www.eventbrite.com/o/quynh-chau-stone-92264017613"
-          className="w-fit text-neutral-950 justify-between bg-neutral-200 hover:bg-neutral-300"
+          className="text-neutral-950 justify-between bg-neutral-200 hover:bg-neutral-300"
           text="Volunteer for an Event"
         />
         <LinkButton
           to={CANONICAL.member.absolute}
-          className="w-fit text-neutral-950 justify-between bg-neutral-200 hover:bg-neutral-300"
+          full
+          className="text-neutral-950 justify-between bg-neutral-200 hover:bg-neutral-300"
           text="Become a Community Sponsor"
         />
       </div>

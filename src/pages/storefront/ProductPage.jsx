@@ -11,6 +11,8 @@ import {
   HeartIcon,
 } from "@heroicons/react/20/solid";
 import { AnchorButton, LinkButton } from "../../components/ui/Button";
+import ExpressiveAnchor from "../../components/ui/expressive/ExpressiveAnchor";
+import Heading from "../../components/ui/text/Heading";
 
 export default function ProductPage() {
   const [product, setProduct] = useState(null);
@@ -27,7 +29,7 @@ export default function ProductPage() {
   useEffect(() => {
     async function loadProduct() {
       try {
-        const data = await fetchContent(`/products?slug=${slug}&_embed`);
+        const data = await fetchContent(`/product?slug=${slug}&_embed`);
 
         if (!data.length) throw new Error("Product not found");
         const post = data[0];
@@ -90,7 +92,7 @@ export default function ProductPage() {
         </section>
       )}
       {!loading && !product && (
-        <section className="w-full min-h-screen flex flex-col items-center justify-center text-center px-5">
+        <section className="w-full min-h-screen flex flex-col py-5 items-center justify-center text-center px-5">
           <div className="max-w-xl">
             <div className="mx-auto mb-5 w-20 h-20 rounded-full bg-primary-50 flex items-center justify-center shadow-sm">
               <HeartIcon className="w-10 h-10 text-accent-500" />
@@ -118,38 +120,47 @@ export default function ProductPage() {
         </section>
       )}
       {!loading && product && (
-        <section className="w-full grid grid-cols-1 lg:grid-cols-2 gap-10 px-5 lg:px-35 pt-25 pb-25">
-          <div className="w-full flex justify-center">
-            <img
-              src={product?.image}
-              alt={product?.title}
-              className="w-full max-w-2xl rounded-2xl shadow-lg object-cover"
-            />
+        <section className="w-full grid grid-cols-1 lg:grid-cols-2 gap-10 p-5 lg:px-35 pt-25">
+          <div className="w-full flex justify-center lg:justify-start">
+            <div className="w-full max-w-2xl">
+              <div className="relative w-full aspect-square rounded-2xl overflow-hidden shadow-lg">
+                <img
+                  src={product?.image}
+                  alt={product?.title}
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+              </div>
+            </div>
           </div>
-          <div className="flex flex-col gap-3">
+          <div className="flex flex-col gap-3 self-start">
             <Title>{product?.title}</Title>
-            <p className="text-xl text-gray-700">{product?.shortDescription}</p>
-            <div className="text-3xl font-semibold text-primary-800"></div>
+            <Heading>${product?.price}</Heading>
+            <p className="text-gray-700 text-sm md:text-md">
+              {product?.shortDescription}
+            </p>
             <div className="flex flex-wrap gap-5 mt-5">
               <button className="flex justify-center w-fit rounded-2xl px-10 py-5 bg-accent-500 hover:bg-accent-600 transition-all duration-700 font-semibold text-neutral-50">
                 <span className="inline-flex w-full justify-between items-center gap-1 text-sm md:text-md">
                   Add To Cart
                 </span>
               </button>
-              <a
+              <AnchorButton
                 href="https://donate.stripe.com/8wM5kHal16fC4so8ww"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex !no-underline  items-center justify-center px-8 py-4 rounded-2xl border-4 border-accent-500 text-accent-500 font-semibold hover:bg-accent-500 hover:text-white transition-all duration-500">
-                Donate Instead
-              </a>
+                text="Make a Donation"
+              />
             </div>
-            <div className="mt-5 text-gray-800 leading-relaxed">
+            <div className="mt-5 text-gray-800 leading-relaxed text-sm md:text-md">
               {product?.longDescription}
             </div>
-            <div className="mt-5 p-5 bg-primary-50 rounded-2xl border border-primary-100 shadow-sm">
-              <h3 className="text-lg font-semibold mb-2">Your Impact</h3>
-              <p>{product?.impact}</p>
+          </div>
+          <div className="lg:col-span-2">
+            <div className="p-5 bg-primary-50 rounded-2xl border border-primary-100 shadow-sm space-y-3">
+              <h3 className="text-lg font-semibold text-primary-900">
+                Your Impact
+              </h3>
+              <p className="text-sm md:text-md text-gray-800 leading-relaxed">
+                {product?.impact}
+              </p>
             </div>
           </div>
         </section>
