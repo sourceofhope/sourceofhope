@@ -246,6 +246,7 @@ function HeaderButton({
             return (
               <NavLink
                 className="py-2.5 hover:bg-neutral-200 duration-300 transition-colors !no-underline px-3 rounded-md"
+                key={route.absolute}
                 to={route.absolute}>
                 {label}
               </NavLink>

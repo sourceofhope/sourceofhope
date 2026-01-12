@@ -82,7 +82,7 @@ export default function Footer() {
             <FooterColumn title="QUICK LINKS">
               <ul className="grid gap-1">
                 <li>
-                  <NavLink to={CANONICAL.member}>Get Involved</NavLink>
+                  <NavLink to={CANONICAL.member.absolute}>Get Involved</NavLink>
                 </li>
                 <li>
                   <a href="https://donate.stripe.com/8wM5kHal16fC4so8ww">
@@ -90,10 +90,10 @@ export default function Footer() {
                   </a>
                 </li>
                 <li>
-                  <NavLink to={CANONICAL.serve}>Volunteer</NavLink>
+                  <NavLink to={CANONICAL.serve.absolute}>Volunteer</NavLink>
                 </li>
                 <li>
-                  <NavLink to={CANONICAL.connect}>Careers</NavLink>
+                  <NavLink to={CANONICAL.connect.absolute}>Careers</NavLink>
                 </li>
                 <li>
                   <a href="sitemap.xml">Site Map</a>
