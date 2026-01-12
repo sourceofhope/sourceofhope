@@ -123,7 +123,6 @@ export function CarouselCard({ post }) {
           <ArrowRightIcon className="w-4 h-4 transition-transform duration-750 group-hover:translate-x-0.5" />
         </div>
       </button>
-
       <Overlay active={active} setActive={setActive}>
         <div className="flex flex-col gap-3">
           <div className="flex justify-between items-center">

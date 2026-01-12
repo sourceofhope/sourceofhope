@@ -7,9 +7,11 @@ import {
 import Title from "../../../components/ui/text/Title";
 import Heading from "../../../components/ui/text/Heading";
 import { ASSET_VERSION } from "../../../routes";
-import { ArrowUpRightIcon } from "@heroicons/react/20/solid";
+import { XMarkIcon } from "@heroicons/react/20/solid";
 import postcssPluginWarning from "tailwindcss";
 import { Link, useLocation } from "react-router-dom";
+import Overlay from "../../../components/ui/Overlay";
+import ExpressiveLink from "../../../components/ui/expressive/ExpressiveLink";
 
 const overlayRoot = document.getElementById("root");
 
@@ -70,44 +72,98 @@ export default function StorefrontProductSection() {
 }
 
 function ProductCard({ post }) {
+  const [active, setActive] = useState(false);
   const [loaded, setLoaded] = useState(false);
+
   const image = getFeaturedImage(post);
   const src = getResponsiveImage(image, { width: 420 });
 
-  /*
-  TODO: Going to use createPortal here soon
-  */
-
-  const location = useLocation();
-
   return (
-    <Link
-      to={`product/${post.slug}`}
-      className="group relative flex flex-col !no-underline overflow-hidden rounded-2xl bg-neutral-900 shadow-md transition-all duration-500 hover:shadow-xl">
-      <div className="relative aspect-square overflow-hidden">
-        <img
-          src={src || `/${ASSET_VERSION}/core/placeholder.webp`}
-          alt={image?.alt_text || ""}
-          loading="lazy"
-          decoding="async"
-          onLoad={() => setLoaded(true)}
-          className={`h-full w-full object-cover transition-opacity duration-700 ${
-            loaded ? "opacity-100" : "opacity-0"
-          }`}
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+    <>
+      <Link
+        to={`product/${post.slug}`}
+        className="group relative hidden md:flex flex-col !no-underline overflow-hidden rounded-2xl bg-neutral-900 shadow-md transition-all duration-500 hover:shadow-xl">
+        <div className="relative aspect-square overflow-hidden">
+          <img
+            src={src || `/${ASSET_VERSION}/core/placeholder.webp`}
+            alt={image?.alt_text || ""}
+            loading="lazy"
+            decoding="async"
+            onLoad={() => setLoaded(true)}
+            className={`h-full w-full object-cover transition-opacity duration-700 ${
+              loaded ? "opacity-100" : "opacity-0"
+            }`}
+          />
+
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+        </div>
+
+        <div className="relative flex flex-col gap-2 p-5 text-neutral-50">
+          <Heading className="text-neutral-50">{post.acf?.title}</Heading>
+
+          <p className="text-sm md:text-md">${post.acf?.price}</p>
+
+          <span className="text-sm md:text-md inline-flex w-full justify-between items-center gap-1">
+            <span>Add To Cart</span>
+          </span>
+        </div>
+      </Link>
+      <div
+        onClick={() => setActive(true)}
+        className="group relative md:hidden flex flex-col !no-underline overflow-hidden rounded-2xl bg-neutral-900 shadow-md transition-all duration-500 hover:shadow-xl">
+        <div className="relative aspect-square overflow-hidden">
+          <img
+            src={src || `/${ASSET_VERSION}/core/placeholder.webp`}
+            alt={image?.alt_text || ""}
+            loading="lazy"
+            decoding="async"
+            onLoad={() => setLoaded(true)}
+            className={`h-full w-full object-cover transition-opacity duration-700 ${
+              loaded ? "opacity-100" : "opacity-0"
+            }`}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+        </div>
+        <div className="relative flex flex-col gap-2 p-5 text-neutral-50">
+          <Heading className="text-neutral-50">{post.acf?.title}</Heading>
+          <p className="text-sm md:text-md">${post.acf?.price}</p>
+          <span className="text-sm md:text-md inline-flex w-full justify-between items-center gap-1">
+            <span>View Product</span>
+          </span>
+        </div>
       </div>
-      <div className="relative flex flex-col gap-2 p-5 text-neutral-50">
-        <Heading className="text-neutral-50">{post.acf?.title}</Heading>
-        <p className="text-sm md:text-md">${post.acf?.price}</p>
-        <a
-          href={post.acf?.location}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={`!no-underline text-sm md:text-md group inline-flex w-full justify-between items-center gap-1 focus:outline-none`}>
-          <span>Add To Cart</span>
-        </a>
-      </div>
-    </Link>
+      <Overlay active={active} setActive={setActive}>
+        <div className="flex flex-col gap-4">
+          {/* Header */}
+          <div className="flex justify-between items-center">
+            <h2 className="text-lg font-semibold text-neutral-900">
+              {post.acf?.title}
+            </h2>
+
+            <button
+              onClick={() => setActive(false)}
+              className="rounded-full p-2 hover:bg-neutral-200 transition">
+              <XMarkIcon className="w-5 h-5 text-neutral-600" />
+            </button>
+          </div>
+          <p className="text-base font-semibold text-primary-800">
+            ${post.acf?.price}
+          </p>
+          <p className="text-sm text-neutral-600 leading-relaxed">
+            {post.acf?.shortdescription}
+          </p>
+          <div className="flex justify-end w-fit">
+            {" "}
+            <ExpressiveLink
+              ariaLabel={`Learn more about ${post.acf?.title} at the source of hope`}
+              to={`product/${post.slug}`}
+              className="font-semibold text-accent-700 hover:text-accent-800 transition-colors duration-750">
+              {" "}
+              Shop '{post.acf?.title}'{" "}
+            </ExpressiveLink>{" "}
+          </div>
+        </div>
+      </Overlay>
+    </>
   );
 }
