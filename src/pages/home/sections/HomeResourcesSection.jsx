@@ -10,6 +10,7 @@ import ExpressiveLink from "../../../components/ui/expressive/ExpressiveLink";
 import { ASSET_VERSION, CANONICAL } from "../../../routes";
 import Title from "../../../components/ui/text/Title";
 import { createPortal } from "react-dom";
+import Overlay from "../../../components/ui/Overlay";
 
 const overlayRoot = document.getElementById("root");
 
@@ -80,50 +81,33 @@ function HomeResourceCard({ title, caption, src, to }) {
         className="relative hidden md:block w-full h-full group overflow-hidden rounded-xl aspect-square">
         <HomeResourceCardInner src={src} caption={caption} title={title} />
       </NavLink>
-      {createPortal(
-        <section
-          className={`
-          fixed inset-0 z-50 flex items-end md:hidden
-          bg-black/50 backdrop-blur-sm transition-all duration-750
-          ${active ? "opacity-100" : "opacity-0 pointer-events-none"}
-        `}
-          onClick={() => setActive(false)}>
-          <article
-            onClick={(e) => setActive(false)}
-            className={`
-            w-full rounded-t-2xl bg-neutral-100 p-5 pb-10
-            shadow-2xl transform transition-all duration-750
-            ${active ? "translate-y-0" : "translate-y-full"}
-          `}>
-            <div className="flex justify-between items-start gap-5">
-              <div className="flex flex-col gap-3">
-                <div className="flex flex-row justify-between items-center">
-                  <h2 className="text-xl font-semibold text-neutral-900">
-                    {title}
-                  </h2>{" "}
-                  <button
-                    onClick={() => setActive(false)}
-                    className="rounded-full p-2 hover:bg-neutral-200 transition-colors duration-750">
-                    <XMarkIcon className="w-5 h-5 text-neutral-600" />
-                  </button>
-                </div>
-                <p className="text-sm leading-relaxed text-neutral-600">
-                  {caption}
-                </p>
-              </div>
+      <Overlay active={active} setActive={setActive}>
+        <div className="flex justify-between items-start gap-5">
+          <div className="flex flex-col gap-3">
+            <div className="flex flex-row justify-between items-center">
+              <h2 className="text-xl font-semibold text-neutral-900">
+                {title}
+              </h2>{" "}
+              <button
+                onClick={() => setActive(false)}
+                className="rounded-full p-2 hover:bg-neutral-200 transition-colors duration-750">
+                <XMarkIcon className="w-5 h-5 text-neutral-600" />
+              </button>
             </div>
-            <div className="mt-5 flex justify-end w-fit">
-              <ExpressiveLink
-                ariaLabel={`Learn more about ${title} at the source of hope`}
-                to={to}
-                className="font-semibold text-accent-700 hover:text-accent-800 transition-colors duration-750">
-                Learn about {title}
-              </ExpressiveLink>
-            </div>
-          </article>
-        </section>,
-        overlayRoot
-      )}
+            <p className="text-sm leading-relaxed text-neutral-600">
+              {caption}
+            </p>
+          </div>
+        </div>
+        <div className="mt-5 flex justify-end w-fit">
+          <ExpressiveLink
+            ariaLabel={`Learn more about ${title} at the source of hope`}
+            to={to}
+            className="font-semibold text-accent-700 hover:text-accent-800 transition-colors duration-750">
+            Learn about {title}
+          </ExpressiveLink>
+        </div>
+      </Overlay>
     </>
   );
 }
