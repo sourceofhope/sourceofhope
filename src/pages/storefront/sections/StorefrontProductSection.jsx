@@ -14,7 +14,7 @@ export default function StorefrontProductSection() {
   const [loading, setLoading] = useState(true);
 
   const fetchPosts = () => {
-    fetchContent("/products&_embed")
+    fetchContent("/product&_embed")
       .then((data) => setPosts(data || []))
       .catch(() => setPosts([]))
       .finally(() => setLoading(false));
@@ -47,7 +47,7 @@ export default function StorefrontProductSection() {
 
         {!loading && posts.length === 0 && (
           <div className="text-center text-neutral-400">
-            No products available at the moment
+            No products available
           </div>
         )}
         <article className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
