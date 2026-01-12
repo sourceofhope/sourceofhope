@@ -22,6 +22,7 @@ import InternationalHopeProgram from "./pages/serve/programs/InternationalHopePr
 import FormPage from "./pages/form/FormPage.jsx";
 import StorefrontPage from "./pages/storefront/StorefrontPage.jsx";
 import { CANONICAL } from "./routes.jsx";
+import ProductPage from "./pages/storefront/ProductPage.jsx";
 
 export const router = createBrowserRouter([
   {
@@ -60,8 +61,8 @@ export const router = createBrowserRouter([
       { path: CANONICAL.member.relative, element: <FormPage /> },
       { path: CANONICAL.storefront.relative, element: <StorefrontPage /> },
       {
-        path: `${CANONICAL.storefront.relative}/products/:slug`,
-        element: <></>,
+        path: `${CANONICAL.storefront.products.relative}/:slug`,
+        element: <ProductPage />,
       },
     ],
   },

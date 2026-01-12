@@ -20,7 +20,12 @@ export const ROUTES = {
   connect: { path: "connect" },
   media: { path: "media" },
   member: { path: "members" },
-  storefront: { path: "store" },
+  storefront: {
+    path: "store",
+    children: {
+      products: "product",
+    },
+  },
 };
 
 function normalize(path) {
