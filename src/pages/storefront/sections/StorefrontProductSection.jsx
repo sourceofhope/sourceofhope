@@ -42,12 +42,12 @@ export default function StorefrontProductSection() {
       </div>
       <div className="min-h-80 flex items-center justify-center">
         {loading && (
-          <div className="text-center text-neutral-400">Loading products…</div>
+          <div className="text-center text-neutral-400">Loading products</div>
         )}
 
         {!loading && posts.length === 0 && (
           <div className="text-center text-neutral-400">
-            No products available at the moment.
+            No products available at the moment
           </div>
         )}
         <article className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">

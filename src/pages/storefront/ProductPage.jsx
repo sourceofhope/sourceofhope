@@ -1,17 +1,21 @@
 import { Helmet } from "react-helmet";
 import { useSetHeaderBlocking } from "../../components/structure/Header";
-import { useParams } from "react-router-dom";
-import { useEffect } from "react";
-import { fetchContent } from "../../cms";
-import { CANONICAL_URL } from "../../routes";
+import { Link, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { fetchContent, getFeaturedImage, getResponsiveImage } from "../../cms";
+import { CANONICAL, CANONICAL_URL } from "../../routes";
 import Title from "../../components/ui/text/Title";
+import {
+  ArrowRightIcon,
+  ArrowUpRightIcon,
+  HeartIcon,
+} from "@heroicons/react/20/solid";
 import { AnchorButton, LinkButton } from "../../components/ui/Button";
-import { ArrowUpRightIcon, PlusIcon } from "@heroicons/react/20/solid";
 
 export default function ProductPage() {
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
   const { slug } = useParams();
-
-  fetchContent();
 
   const setBlocking = useSetHeaderBlocking();
 
@@ -20,23 +24,36 @@ export default function ProductPage() {
     return () => setBlocking(false);
   }, [setBlocking]);
 
-  // Mock product for now (replace with CMS / API later)
-  const product = {
-    title: "Wellness Detox Program",
-    price: "$299",
-    shortDescription:
-      "A 7-day guided detox experience designed to reset your body and mind.",
-    longDescription:
-      "This program includes personalized wellness planning, nutritional guidance, holistic treatments, and daily check-ins. Every purchase helps provide wellness services to families in need through The Source of Hope.",
-    impact:
-      "Your purchase helps provide meals, education, and holistic care to underserved families across North Texas.",
-    image: "/v2/core/placeholder.webp",
-  };
+  useEffect(() => {
+    async function loadProduct() {
+      try {
+        const data = await fetchContent(`/products?slug=${slug}&_embed`);
+
+        if (!data.length) throw new Error("Product not found");
+        const post = data[0];
+        setProduct({
+          title: post.acf?.title,
+          shortDescription: post.acf?.shortdescription,
+          longDescription: post.acf?.longdescription,
+          price: post.acf?.price,
+          impact: post.acf?.impact,
+          image:
+            getResponsiveImage(getFeaturedImage(post), { width: 900 }) ??
+            "/v2/core/placeholder.webp",
+        });
+        setLoading(false);
+      } catch (err) {
+        console.error(err);
+        setLoading(false);
+      }
+    }
+    loadProduct();
+  }, [slug]);
 
   return (
     <>
       <Helmet>
-        <title> {product.title} | The Source of Hope</title>
+        <title> {product?.title || "Missing Product"} | Products </title>
 
         <meta
           name="description"
@@ -67,50 +84,76 @@ export default function ProductPage() {
           content="Support community impact through meaningful purchases — shop with purpose at The Source of Hope."
         />
       </Helmet>
-      <section className="w-full grid grid-cols-1 lg:grid-cols-2 gap-10 px-5 lg:px-35 pt-25 pb-25">
-        <div className="w-full flex justify-center">
-          <img
-            src={product.image}
-            alt={product.title}
-            className="w-full max-w-xl rounded-2xl shadow-lg object-cover"
-          />
-        </div>
+      {loading && (
+        <section className="w-full min-h-screen flex flex-col items-center justify-center text-center px-5">
+          <p className="text-neutral-600">Loading products</p>
+        </section>
+      )}
+      {!loading && !product && (
+        <section className="w-full min-h-screen flex flex-col items-center justify-center text-center px-5">
+          <div className="max-w-xl">
+            <div className="mx-auto mb-5 w-20 h-20 rounded-full bg-primary-50 flex items-center justify-center shadow-sm">
+              <HeartIcon className="w-10 h-10 text-accent-500" />
+            </div>
 
-        <div className="flex flex-col gap-3">
-          <Title>{product.title}</Title>
-          <p className="text-xl text-gray-700">{product.shortDescription}</p>
-          <div className="text-3xl font-semibold text-primary-800"></div>
-          <div className="flex flex-wrap gap-5 mt-5">
-            <button className="flex justify-center w-fit rounded-2xl px-10 py-5 bg-accent-500 hover:bg-accent-600 transition-all duration-700 font-semibold text-neutral-50">
-              <span className="inline-flex w-full justify-between items-center gap-1 text-sm md:text-md">
-                Add To Cart
-              </span>
-            </button>
-            <a
-              href="https://donate.stripe.com/8wM5kHal16fC4so8ww"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Donate Today"
-              className="!no-underline group flex justify-center w-fit rounded-2xl px-10 py-5 border-4 border-accent-500 hover:border-accent-600 transition-colors duration-700 font-semibold text-neutral-50">
-              <span className="inline-flex w-full justify-between items-center gap-1 text-sm md:text-md text-accent-500 hover:text-accent-600 transition-colors duration-700">
+            <Title>This Product Has Moved, But Hope Hasn't</Title>
+            <p className="text-gray-700 leading-relaxed mb-10">
+              We couldn't find the product you were looking for, but every visit
+              here still supports our mission of feeding families, empowering
+              students, and strengthening communities.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-5 justify-center">
+              <LinkButton
+                to={CANONICAL.storefront.absolute}
+                text="Browse our Store"
+              />
+
+              <AnchorButton
+                href="https://donate.stripe.com/8wM5kHal16fC4so8ww"
+                text="Make a Donation"
+              />
+            </div>
+          </div>
+        </section>
+      )}
+      {!loading && product && (
+        <section className="w-full grid grid-cols-1 lg:grid-cols-2 gap-10 px-5 lg:px-35 pt-25 pb-25">
+          <div className="w-full flex justify-center">
+            <img
+              src={product?.image}
+              alt={product?.title}
+              className="w-full max-w-2xl rounded-2xl shadow-lg object-cover"
+            />
+          </div>
+          <div className="flex flex-col gap-3">
+            <Title>{product?.title}</Title>
+            <p className="text-xl text-gray-700">{product?.shortDescription}</p>
+            <div className="text-3xl font-semibold text-primary-800"></div>
+            <div className="flex flex-wrap gap-5 mt-5">
+              <button className="flex justify-center w-fit rounded-2xl px-10 py-5 bg-accent-500 hover:bg-accent-600 transition-all duration-700 font-semibold text-neutral-50">
+                <span className="inline-flex w-full justify-between items-center gap-1 text-sm md:text-md">
+                  Add To Cart
+                </span>
+              </button>
+              <a
+                href="https://donate.stripe.com/8wM5kHal16fC4so8ww"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex !no-underline  items-center justify-center px-8 py-4 rounded-2xl border-4 border-accent-500 text-accent-500 font-semibold hover:bg-accent-500 hover:text-white transition-all duration-500">
                 Donate Instead
-                <ArrowUpRightIcon
-                  className="w-[1em] h-[1em] transition-transform duration-500 group-hover:translate-x-1 group-hover:-translate-y-1"
-                  aria-hidden="true"
-                  focusable="false"
-                />
-              </span>
-            </a>
+              </a>
+            </div>
+            <div className="mt-5 text-gray-800 leading-relaxed">
+              {product?.longDescription}
+            </div>
+            <div className="mt-5 p-5 bg-primary-50 rounded-2xl border border-primary-100 shadow-sm">
+              <h3 className="text-lg font-semibold mb-2">Your Impact</h3>
+              <p>{product?.impact}</p>
+            </div>
           </div>
-          <div className="mt-5 text-gray-800 leading-relaxed">
-            {product.longDescription}
-          </div>
-          <div className="mt-5 p-5 bg-primary-50 rounded-2xl border border-primary-100 shadow-sm">
-            <h3 className="text-lg font-semibold mb-2">Your Impact</h3>
-            <p>{product.impact}</p>
-          </div>
-        </div>
-      </section>
+        </section>
+      )}
     </>
   );
 }
