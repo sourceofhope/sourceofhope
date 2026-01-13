@@ -150,7 +150,6 @@ function HeaderMenu({ open, setOpen }) {
 function HeaderNavigator() {
   const [hovering, setHovering] = useState(null);
   const { cart } = useStoreContext();
-  const cartItemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
 
   const links = [
     {
@@ -186,7 +185,6 @@ function HeaderNavigator() {
     {
       label: "STORE",
       route: CANONICAL.storefront,
-      children: [{ label: "CART", route: CANONICAL.storefront.cart }],
     },
   ];
 
