@@ -4,9 +4,11 @@ import {
   getFeaturedImage,
   getResponsiveImage,
 } from "../../../cms";
+import { ASSET_VERSION } from "../../../routes";
+import { ArrowUpRightIcon } from "@heroicons/react/20/solid";
 import Title from "../../../components/ui/text/Title";
 import Heading from "../../../components/ui/text/Heading";
-import { ASSET_VERSION } from "../../../routes";
+import { useCartActions } from "../../../context/StoreCartContext";
 import { XMarkIcon } from "@heroicons/react/20/solid";
 import { Link } from "react-router-dom";
 import Overlay from "../../../components/ui/Overlay";
@@ -71,9 +73,38 @@ export default function StorefrontProductSection() {
 function ProductCard({ post }) {
   const [active, setActive] = useState(false);
   const [loaded, setLoaded] = useState(false);
-
+  const [added, setAdded] = useState(false);
+  const { addToCart } = useCartActions();
   const image = getFeaturedImage(post);
   const src = getResponsiveImage(image, { width: 420 });
+
+  const handleAddToCart = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    // Parse price string to number (e.g., "$25.00" -> 25.00)
+    const priceValue = parseFloat(post.acf?.price?.replace(/[$,]/g, '') || 0);
+    
+    const cartItem = {
+      id: post.id,
+      title: post.acf?.title || 'Untitled Product',
+      price: priceValue,
+      quantity: 1,
+      image: src || `/${ASSET_VERSION}/core/placeholder.webp`,
+      url: post.acf?.url || '#',
+    };
+    
+    // Add size if product has it
+    if (post.acf?.size) {
+      cartItem.size = post.acf.size;
+    }
+    
+    addToCart(cartItem);
+    setAdded(true);
+    
+    // Reset the "added" state after 2 seconds
+    setTimeout(() => setAdded(false), 2000);
+  };
 
   return (
     <>

@@ -24,6 +24,7 @@ export const ROUTES = {
     path: "store",
     children: {
       products: "product",
+      cart: "cart",
     },
   },
 };
