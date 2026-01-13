@@ -179,7 +179,7 @@ function ProductCard({ post }) {
           </div>
           <div className="flex flex-row justify-between">
             <p className="text-base font-semibold text-primary-800">
-              ${post.acf?.price}
+              ${parseFloat(post.acf?.price).toFixed(2)}
             </p>
           </div>
           <p className="text-sm text-neutral-600 leading-relaxed">

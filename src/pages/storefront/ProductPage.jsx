@@ -11,6 +11,7 @@ import Heading from "../../components/ui/text/Heading";
 import Cart from "./Cart";
 import { useCartActions } from "../../context/StoreCartContext";
 import Takeover from "../../components/ui/Takeover";
+import Loader from "../../components/structure/Loader";
 
 export default function ProductPage() {
   const [product, setProduct] = useState(null);
@@ -115,11 +116,7 @@ export default function ProductPage() {
         <p>Added To Cart</p>
         <CheckIcon className="size-5 shrink-0" />
       </Takeover>
-      {loading && (
-        <section className="w-full min-h-screen flex flex-col items-center justify-center text-center px-5">
-          <p className="text-neutral-600">Loading product</p>
-        </section>
-      )}
+      {loading && <Loader />}
       {!loading && !product && (
         <section className="w-full min-h-screen flex flex-col py-5 items-center justify-center text-center px-5">
           <div className="max-w-xl">
