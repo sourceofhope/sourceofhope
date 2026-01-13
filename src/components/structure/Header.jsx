@@ -66,13 +66,13 @@ export default function Header() {
       <header
         className={`backdrop-filter fixed ${
           bannerActive ? "top-15 md:top-10" : "top-0"
-        } left-0 right-0 z-50 text-sm md:text-md w-full overflow-hidden transition-[height_backdrop] duration-500 border-b-4 md:border-none
+        } left-0 right-0 z-50 text-sm md:text-md w-full transition-[height_backdrop] duration-500 border-b-4 md:border-none
           ${
             open
-              ? `h-85 md:h-25 md:backdrop-blur-none backdrop-blur-sm ${
+              ? `md:backdrop-blur-none backdrop-blur-sm ${
                   isBlocking ? "border-primary-800/100" : "border-neutral-50"
                 }`
-              : "h-25 backdrop-blur-none border-none"
+              : "backdrop-blur-none border-none"
           }
           ${
             scrolled
@@ -81,14 +81,14 @@ export default function Header() {
                   isBlocking ? "text-primary-800" : "text-neutral-50"
                 }`
           }`}>
-        <section className="flex w-full h-25 items-center justify-between px-5 lg:px-35">
-          <div className="flex gap-5 flex-row items-center w-full">
+        <section className="flex w-full items-center justify-between px-5 lg:px-35">
+          <div className="h-25 flex gap-5 flex-row items-center w-fit z-0 overflow-clip">
             <Favicon />
-            <h1 className="font-bold w-full hidden lg:block">
+            <h1 className="font-bold hidden lg:block whitespace-nowrap text-ellipsis overflow-hidden">
               THE SOURCE OF HOPE
             </h1>
           </div>
-          <nav className="hidden md:flex gap-5" aria-label="Primary">
+          <nav className="hidden md:flex gap-3 z-10" aria-label="Primary">
             <HeaderNavigator />
           </nav>
           <HeaderMenu open={open} setOpen={setOpen} />
@@ -98,7 +98,9 @@ export default function Header() {
             open ? "opacity-100" : "opacity-0 pointer-events-none"
           }`}>
           {open && (
-            <nav className="flex flex-col justify-end items-center px-5 h-fit">
+            <nav
+              className="flex flex-col justify-end items-center px-5 pb-5 h-fit"
+              aria-label="Mobile">
               <HeaderNavigator />
             </nav>
           )}
@@ -153,44 +155,43 @@ function HeaderNavigator() {
   const links = [
     {
       label: "ABOUT",
-      to: {
-        main: CANONICAL.about,
-      },
-      children: {},
+      route: CANONICAL.about,
     },
     {
       label: "SERVE",
-      to: {
-        main: CANONICAL.serve,
-      },
-      children: {},
+      route: CANONICAL.serve,
+      children: [
+        { label: "SERVING HOPE", route: CANONICAL.serve.servingHope },
+        { label: "EDUCATION FOR HOPE", route: CANONICAL.serve.educationHope },
+        { label: "WELLNESS OF HOPE", route: CANONICAL.serve.wellnessHope },
+        { label: "HOPE FOR THE OUTDOORS", route: CANONICAL.serve.outdoorHope },
+        {
+          label: "INTERNATIONAL HOPE",
+          route: CANONICAL.serve.internationalHope,
+        },
+      ],
     },
     {
       label: "CONNECT",
-      to: {
-        main: CANONICAL.connect,
-      },
-      children: {},
+      route: CANONICAL.connect,
     },
     {
       label: "MEDIA",
-      to: {
-        main: CANONICAL.media,
-      },
-      children: {},
+      route: CANONICAL.media,
     },
     {
       label: "MEMBERS",
-      to: {
-        main: CANONICAL.member,
-      },
-      children: {},
+      route: CANONICAL.member,
+    },
+    {
+      label: "STORE",
+      route: CANONICAL.storefront,
     },
   ];
 
   return (
     <>
-      {links.map(({ label, to }) => {
+      {links.map(({ label, route, children }) => {
         return (
           <HeaderButton
             key={label}
@@ -200,11 +201,13 @@ function HeaderNavigator() {
                   hovering
                     ? hovering == label
                       ? ""
-                      : "text-neutral-300/50 scale-90"
+                      : "md:opacity-80 md:scale-95"
                     : ""
                 }`}
+            hovering={hovering}
             setHovering={setHovering}
-            to={to.main}
+            route={route}
+            children={children || []}
             label={label}
           />
         );
@@ -225,24 +228,49 @@ function HeaderNavigator() {
   );
 }
 
-function HeaderButton({ ariaLabel, label, className, to, setHovering }) {
+function HeaderButton({
+  ariaLabel,
+  label,
+  className,
+  route,
+  children,
+  hovering,
+  setHovering,
+}) {
   return (
-    <NavLink
-      aria-label={ariaLabel}
+    <div
+      className="w-full"
       onMouseEnter={() => setHovering(label)}
-      onMouseLeave={() => setHovering(null)}
-      to={to}
-      className={`!no-underline group transition-[color_transform] ease-in-out duration-300 inline-flex w-full justify-between items-center gap-1 focus:outline-none ${className}`}>
-      <span>{label}</span>
-      <Icon>
-        <ChevronRightIcon
-          className="w-6 h-6 transition-transform duration-500 group-hover:translate-x-1"
-          focusable="false"
-          aria-hidden="true"
-          role="presentation"
-        />
-      </Icon>
-    </NavLink>
+      onMouseLeave={() => setHovering(null)}>
+      <NavLink
+        aria-label={ariaLabel}
+        to={route.absolute}
+        className={`!no-underline group transition-[color_transform] ease-in-out duration-300 inline-flex w-full justify-between items-center gap-1 focus:outline-none ${className}`}>
+        <span>{label}</span>
+        <Icon>
+          <ChevronRightIcon
+            className="w-6 h-6 transition-transform duration-500 group-hover:translate-x-1"
+            focusable="false"
+            aria-hidden="true"
+            role="presentation"
+          />
+        </Icon>
+      </NavLink>
+      {hovering == label && children.length > 0 && (
+        <div className="absolute hidden md:flex z-50 bg-neutral-50 min-w-40 rounded-lg p-3 py-5 shadow-md text-accent-800 flex-col font-semibold text-sm">
+          {children.map(({ label, route }) => {
+            return (
+              <NavLink
+                className="py-2.5 hover:bg-neutral-200 duration-300 transition-colors !no-underline px-3 rounded-md"
+                key={route.absolute}
+                to={route.absolute}>
+                {label}
+              </NavLink>
+            );
+          })}
+        </div>
+      )}
+    </div>
   );
 }
 

@@ -85,7 +85,6 @@ export default function StorefrontPage() {
           content="Support community impact through meaningful purchases — shop with purpose at The Source of Hope."
         />
       </Helmet>
-
       <StorefrontProductSection />
       <StorefrontFooterSection />
     </>

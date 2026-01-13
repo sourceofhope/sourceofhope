@@ -6,6 +6,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
 import AppLayout from "./components/layout/AppLayout.jsx";
 import ErrorBoundary from "./pages/ErrorBoundary.jsx";
+
 import HomePage from "./pages/home/HomePage.jsx";
 import AboutPage from "./pages/about/AboutPage.jsx";
 import ServePage from "./pages/serve/ServePage.jsx";
@@ -18,50 +19,51 @@ import EducationHopeProgram from "./pages/serve/programs/EducationHopeProgram.js
 import WellnessHopeProgram from "./pages/serve/programs/WellnessHopeProgram.jsx";
 import OutdoorHopeProgram from "./pages/serve/programs/OutdoorHopeProgram.jsx";
 import InternationalHopeProgram from "./pages/serve/programs/InternationalHopeProgram.jsx";
-import FormPage from "./pages/form/FormPage.jsx";
 
-import { CANONICAL } from "./routes.jsx";
+import FormPage from "./pages/form/FormPage.jsx";
 import StorefrontPage from "./pages/storefront/StorefrontPage.jsx";
+import { CANONICAL } from "./routes.jsx";
+import ProductPage from "./pages/storefront/ProductPage.jsx";
 
 export const router = createBrowserRouter([
   {
-    path: CANONICAL.home,
+    path: CANONICAL.home.absolute,
     element: <AppLayout />,
     errorElement: <ErrorBoundary />,
     children: [
       { index: true, element: <HomePage /> },
-      { path: CANONICAL.about, element: <AboutPage /> },
-      { path: CANONICAL.serve, element: <ServePage /> },
-      { path: CANONICAL.connect, element: <ConnectPage /> },
-      { path: CANONICAL.media, element: <MediaPage /> },
+
+      { path: CANONICAL.about.relative, element: <AboutPage /> },
+      { path: CANONICAL.serve.relative, element: <ServePage /> },
+      { path: CANONICAL.connect.relative, element: <ConnectPage /> },
+      { path: CANONICAL.media.relative, element: <MediaPage /> },
 
       {
-        path: `serve/${CANONICAL.servingHope}`,
+        path: CANONICAL.serve.servingHope.relative,
         element: <ServingHopeProgram />,
       },
       {
-        path: `serve/${CANONICAL.educationHope}`,
+        path: CANONICAL.serve.educationHope.relative,
         element: <EducationHopeProgram />,
       },
       {
-        path: `serve/${CANONICAL.wellnessHope}`,
+        path: CANONICAL.serve.wellnessHope.relative,
         element: <WellnessHopeProgram />,
       },
       {
-        path: `serve/${CANONICAL.outdoorHope}`,
+        path: CANONICAL.serve.outdoorHope.relative,
         element: <OutdoorHopeProgram />,
       },
       {
-        path: `serve/${CANONICAL.internationalHope}`,
+        path: CANONICAL.serve.internationalHope.relative,
         element: <InternationalHopeProgram />,
       },
+
+      { path: CANONICAL.member.relative, element: <FormPage /> },
+      { path: CANONICAL.storefront.relative, element: <StorefrontPage /> },
       {
-        path: `${CANONICAL.member}`,
-        element: <FormPage />,
-      },
-      {
-        path: `${CANONICAL.storefront}`,
-        element: <StorefrontPage />,
+        path: `${CANONICAL.storefront.products.relative}/:slug`,
+        element: <ProductPage />,
       },
       { path: `${CANONICAL.cart}`, element: <CartPage /> },
     ],

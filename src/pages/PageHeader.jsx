@@ -15,7 +15,7 @@ export default function PageHeader({
         "
         loading="eager"
         decoding="async"
-        fetchpriority="high"
+        fetchPriority="high"
         src={src}
       />
       <div

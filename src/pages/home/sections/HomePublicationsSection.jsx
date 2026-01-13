@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import ExpressiveLink from "../../../components/ui/expressive/ExpressiveLink";
 import { HighlightedText } from "../../../components/ui/expressive/ExpressiveText";
 import { HomeSection } from "../HomePage";
 

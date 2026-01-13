@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { AnchorButton, LinkButton } from "../../../components/ui/Button";
-import { ASSET_VERSION, CANONICAL_URL } from "../../../routes";
+import { ASSET_VERSION, CANONICAL } from "../../../routes";
 import { HomeContent } from "../HomePage";
 
 export default function HomeIntroductionSection() {
@@ -94,7 +94,7 @@ export default function HomeIntroductionSection() {
           <div className="w-fit">
             <LinkButton
               className="w-fit"
-              to={CANONICAL_URL.about}
+              to={CANONICAL.about.absolute}
               text="OUR MISSION"
               ariaLabel="Learn more about The Source of Hope nonprofit organization and its mission"
             />

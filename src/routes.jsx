@@ -1,50 +1,74 @@
 export const BASE_URL = "https://thesourceofhope.org";
 export const ASSET_VERSION = "v2";
 
+export const ROUTES = {
+  home: { path: "" },
+
+  about: { path: "about" },
+
+  serve: {
+    path: "serve",
+    children: {
+      servingHope: "servingHope",
+      educationHope: "educationHope",
+      wellnessHope: "wellnessHope",
+      outdoorHope: "outdoorHope",
+      internationalHope: "internationalHope",
+    },
+  },
+
+  connect: { path: "connect" },
+  media: { path: "media" },
+  member: { path: "members" },
+  storefront: {
+    path: "store",
+    children: {
+      products: "product",
+      cart: "cart",
+    },
+  },
+};
+
+function normalize(path) {
+  return path.replace(/\/+/g, "/");
+}
+
+function build(node, base = "") {
+  const segment = node.path ? `${base}/${node.path}` : base;
+  const full = normalize(segment);
+
+  let map = {
+    absolute: full || "/",
+    relative: full.replace(/^\//, ""),
+  };
+
+  if (node.children) {
+    for (const [key, child] of Object.entries(node.children)) {
+      const childPath = normalize(`${full}/${child}`);
+      map[key] = {
+        absolute: childPath,
+        relative: childPath.replace(/^\//, ""),
+      };
+    }
+  }
+
+  return map;
+}
+
 export const CANONICAL = {
-  home: "",
+  home: { absolute: "/", relative: "" },
 
-  about: "about",
-
-  serve: "serve",
-
-  connect: "connect",
-
-  media: "media",
-
-  servingHope: "servingHope",
-  educationHope: "educationHope",
-  wellnessHope: "wellnessHope",
-  outdoorHope: "outdoorHope",
-  internationalHope: "internationalHope",
-
-  member: "members",
-
-  storefront: "store",
-
-  cart: "cart",
+  about: build(ROUTES.about),
+  serve: build(ROUTES.serve),
+  connect: build(ROUTES.connect),
+  media: build(ROUTES.media),
+  member: build(ROUTES.member),
+  storefront: build(ROUTES.storefront),
 };
 
-export const CANONICAL_URL = {
-  home: `${BASE_URL}/${CANONICAL.home}`,
-
-  about: `${BASE_URL}/${CANONICAL.about}`,
-
-  serve: `${BASE_URL}/${CANONICAL.serve}`,
-
-  connect: `${BASE_URL}/${CANONICAL.connect}`,
-
-  media: `${BASE_URL}/${CANONICAL.media}`,
-
-  servingHope: `${BASE_URL}/${CANONICAL.servingHope}`,
-  educationHope: `${BASE_URL}/${CANONICAL.educationHope}`,
-  wellnessHope: `${BASE_URL}/${CANONICAL.wellnessHope}`,
-  outdoorHope: `${BASE_URL}/${CANONICAL.outdoorHope}`,
-  internationalHope: `${BASE_URL}/${CANONICAL.internationalHope}`,
-
-  member: `${BASE_URL}/${CANONICAL.member}`,
-
-  storefront: `${BASE_URL}/${CANONICAL.storefront}`,
-  
-  cart: `${BASE_URL}/${CANONICAL.cart}`,
-};
+export const CANONICAL_URL = Object.fromEntries(
+  Object.entries(CANONICAL).map(([key, value]) => [
+    key,
+    `${BASE_URL}${value.absolute}`,
+  ])
+);

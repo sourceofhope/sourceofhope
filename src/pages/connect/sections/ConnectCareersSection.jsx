@@ -86,7 +86,9 @@ export default function ConnectMapSection() {
               </Blockquote>
               <p>
                 Learn more about serving your community through our{" "}
-                <SimpleLink to={CANONICAL.serve}>volunteer programs</SimpleLink>{" "}
+                <SimpleLink to={CANONICAL.serve.absolute}>
+                  volunteer programs
+                </SimpleLink>{" "}
                 or explore how our education and wellness initiatives support
                 long-term change.
               </p>

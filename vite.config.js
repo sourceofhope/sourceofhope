@@ -5,7 +5,7 @@ import path from "node:path";
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  base: "/",
+  base: process.env.DEPLOY_ENV === "gh-pages" ? "/sourceofhope/" : "/",
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

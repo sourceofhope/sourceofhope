@@ -2,12 +2,13 @@ import Footer from "../structure/Footer";
 import ExpressiveLink from "../ui/expressive/ExpressiveLink";
 import Header, { HeaderFlagContext } from "../structure/Header";
 import { useState } from "react";
+import { CANONICAL } from "../../routes";
 
 export default function ErrorLayout({ code = 500, message }) {
   const defaults = {
     403: "Sorry, you don't have permission to access this page.",
     404: "Sorry, we couldn’t find the page you were looking for.",
-    418: "I'm a teapot. (But seriously, something went wrong.)",
+    418: "I'm a teapot. (But seriously, something went wrong).",
     500: "Oops! Something went wrong on our end.",
   };
   const display = defaults[code] || "An unexpected error occurred.";
@@ -32,7 +33,7 @@ export default function ErrorLayout({ code = 500, message }) {
           for further assistance.
         </p>
         <button className="border-5 rounded-2xl font-bold w-fit px-10 py-5 bg-accent-500 border-accent-500 text-neutral-50/75 hover:text-neutral-50/95 transition-colors">
-          <ExpressiveLink to="/">GO HOME</ExpressiveLink>
+          <ExpressiveLink to={CANONICAL.home.absolute}>GO HOME</ExpressiveLink>
         </button>
       </main>
       <Footer />

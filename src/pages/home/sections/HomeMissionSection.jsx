@@ -31,7 +31,7 @@ export default function HomeMissionSection() {
         </Blockquote>
         <p className="text-md md:text-lg pl-5 w-fit">
           <ExpressiveAnchor href="https://www.linkedin.com/in/qu%E1%BB%B3nh-ch%C3%A2u-qc-stone-87185b34/">
-            – Co-founder,{" "}
+            - Co-founder,{" "}
             <strong className="font-semibold">Quynh Chau Stone</strong>
           </ExpressiveAnchor>
         </p>
