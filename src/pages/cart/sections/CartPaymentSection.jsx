@@ -137,7 +137,7 @@ export default function CartPaymentSection({
       <button
         onClick={handleCheckout}
         disabled={isProcessing}
-        className={`w-full py-4 rounded-xl font-bold text-white text-lg transition-all duration-300 ${
+        className={`w-full px-5 py-4 rounded-xl font-bold text-white text-lg transition-all duration-300 ${
           isProcessing
             ? "bg-neutral-400 cursor-not-allowed"
             : "bg-accent-500 hover:bg-accent-600 hover:shadow-lg"
@@ -163,7 +163,7 @@ export default function CartPaymentSection({
             Processing...
           </span>
         ) : (
-          `Proceed to Checkout - $${total.toFixed(2)}`
+          "Proceed to Checkout"
         )}
       </button>
 

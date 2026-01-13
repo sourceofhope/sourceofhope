@@ -1,3 +1,5 @@
+import Title from "../../../components/ui/text/Title";
+
 export default function CartSummarySection({
   items,
   subtotal,
@@ -11,14 +13,11 @@ export default function CartSummarySection({
   return (
     <section className="">
       <div className="bg-white rounded-2xl shadow-md p-5 sticky top-5">
-        <h3 className="font-urbanist font-bold text-neutral-900 text-xl mb-5">
-          Order Summary
-        </h3>
+        <Title className="flex flex-col gap-1 mb-5">Order Summary</Title>
         <div className="space-y-5 mb-5">
           <label className="text-sm font-semibold text-neutral-700 block mb-3">
             Shipping Method:
           </label>
-
           {[
             {
               id: "standard",

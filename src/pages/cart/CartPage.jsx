@@ -108,7 +108,7 @@ const CartPage = () => {
       {cartItems && cartItems.length > 0 && (
         <div className="min-h-screen bg-neutral-50 pt-25 px-5 md:px-10 lg:px-15">
           <div className="max-w-7xl mx-auto">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-8">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 mt-5 pb-5">
               <div className="lg:col-span-2">
                 <CartItemsSection
                   items={cartItems}

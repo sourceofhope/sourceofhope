@@ -5,11 +5,7 @@ import {
   getResponsiveImage,
 } from "../../../cms";
 import { ASSET_VERSION } from "../../../routes";
-import {
-  ArrowUpRightIcon,
-  CheckBadgeIcon,
-  CheckIcon,
-} from "@heroicons/react/20/solid";
+import { CheckIcon, PlusIcon } from "@heroicons/react/20/solid";
 import Title from "../../../components/ui/text/Title";
 import Heading from "../../../components/ui/text/Heading";
 import { useCartActions } from "../../../context/StoreCartContext";
@@ -123,7 +119,7 @@ function ProductCard({ post }) {
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
         </div>
         <div
-          className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 aspect-square grid place-items-center rounded-lg bg-emerald-600/75 text-white shadow-lg transition-all duration-300 ${
+          className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 aspect-square grid place-items-center rounded-lg bg-emerald-600/85 text-white shadow-lg transition-all duration-300 ${
             added ? "opacity-100 scale-100" : "opacity-0 scale-75"
           }`}>
           <CheckIcon className="size-10 shrink-0" />
@@ -159,10 +155,19 @@ function ProductCard({ post }) {
         <div className="relative flex flex-col gap-2 p-5 text-neutral-50">
           <Heading className="text-neutral-50">{post.acf?.title}</Heading>
           <p className="text-sm md:text-md">${post.acf?.price}</p>
-          <span className="text-sm md:text-md inline-flex w-full justify-between items-center gap-1">
+          <span className="text-sm md:text-md inline-flex w-full justify-between items-center gap-1 font-semibold">
             <span>View Product</span>
           </span>
         </div>
+        <div
+          className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 aspect-square grid place-items-center rounded-lg bg-emerald-600/85 text-white shadow-lg transition-all duration-300 ${
+            added ? "opacity-100 scale-100" : "opacity-0 scale-75"
+          }`}>
+          <CheckIcon className="size-10 shrink-0" />
+        </div>
+        <button onClick={handleAddToCart} className="size-fit text-neutral-50">
+          <PlusIcon className="size-10 absolute top-1 right-1 bg-neutral-950/50 rounded-xl" />
+        </button>
       </div>
       <Overlay active={active} setActive={setActive}>
         <div className="flex flex-col gap-4">
@@ -174,12 +179,14 @@ function ProductCard({ post }) {
             <button
               onClick={() => setActive(false)}
               className="rounded-full p-2 hover:bg-neutral-200 transition">
-              <XMarkIcon className="w-5 h-5 text-neutral-600" />
+              <XMarkIcon className="size-5 text-neutral-600" />
             </button>
           </div>
-          <p className="text-base font-semibold text-primary-800">
-            ${post.acf?.price}
-          </p>
+          <div className="flex flex-row justify-between">
+            <p className="text-base font-semibold text-primary-800">
+              ${post.acf?.price}
+            </p>
+          </div>
           <p className="text-sm text-neutral-600 leading-relaxed">
             {post.acf?.shortdescription}
           </p>
