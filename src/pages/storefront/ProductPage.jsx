@@ -5,11 +5,12 @@ import { useEffect, useState } from "react";
 import { fetchContent, getFeaturedImage, getResponsiveImage } from "../../cms";
 import { CANONICAL, CANONICAL_URL } from "../../routes";
 import Title from "../../components/ui/text/Title";
-import { HeartIcon } from "@heroicons/react/20/solid";
+import { CheckIcon, HeartIcon } from "@heroicons/react/20/solid";
 import { AnchorButton, LinkButton } from "../../components/ui/Button";
 import Heading from "../../components/ui/text/Heading";
 import Cart from "./Cart";
 import { useCartActions } from "../../context/StoreCartContext";
+import Takeover from "../../components/ui/Takeover";
 
 export default function ProductPage() {
   const [product, setProduct] = useState(null);
@@ -106,6 +107,13 @@ export default function ProductPage() {
         />
       </Helmet>
       <Cart />
+      <Takeover
+        className="bg-neutral-400 rounded-2xl px-5 py-3 w-fit h-fit text-neutral-600 flex justify-between gap-3 items-center"
+        active={added}
+        setActive={setAdded}>
+        <p>Added To Cart</p>
+        <CheckIcon className="size-5 shrink-0" />
+      </Takeover>
       {loading && (
         <section className="w-full min-h-screen flex flex-col items-center justify-center text-center px-5">
           <p className="text-neutral-600">Loading product</p>

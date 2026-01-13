@@ -16,7 +16,7 @@ export function AnchorButton({ text, href, className = "", full = false }) {
         ${full ? "w-full" : "w-auto"}
         ${className}
       `}>
-      <span className="flex w-full items-center justify-between text-sm md:text-md">
+      <span className="flex w-full gap-3 items-center justify-between text-sm md:text-md">
         <span>{text}</span>
         <ArrowUpRightIcon className="w-[1em] h-[1em] transition-transform duration-500 group-hover:translate-x-1 group-hover:-translate-y-1" />
       </span>
@@ -37,7 +37,7 @@ export function LinkButton({ text, to, className = "", full = false }) {
         ${full ? "w-full" : "w-auto"}
         ${className}
       `}>
-      <span className="flex w-full items-center justify-between text-sm md:text-md">
+      <span className="flex w-full gap-3 items-center justify-between text-sm md:text-md">
         <span>{text}</span>
         <ArrowRightIcon className="w-[1em] h-[1em] transition-transform duration-500 group-hover:translate-x-1" />
       </span>

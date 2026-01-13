@@ -5,8 +5,9 @@ import { HomeSection } from "../HomePage";
 import Carousel from "../../../components/ui/Carousel";
 import Title from "../../../components/ui/text/Title";
 import { fetchContent, getResponsiveImage } from "../../../cms";
-import { ASSET_VERSION, CANONICAL_URL } from "../../../routes";
+import { ASSET_VERSION, CANONICAL, CANONICAL_URL } from "../../../routes";
 import ExpressiveAnchor from "../../../components/ui/expressive/ExpressiveAnchor";
+import ExpressiveLink from "../../../components/ui/expressive/ExpressiveLink";
 
 export default function HomePublicationsSection() {
   const [posts, setPosts] = useState([]);
@@ -46,18 +47,22 @@ export default function HomePublicationsSection() {
               : "Stay connected with the latest stories, programs, and community impact from The Source of Hope."}
           </p>
           <div className="w-fit text-neutral-600">
-            <ExpressiveAnchor
-              className="font-semibold"
-              ariaLabel="See more of The Source of Hope's publications"
-              href={
-                !loading && posts.length > 0
-                  ? activePost?.acf?.url
-                  : CANONICAL_URL.media
-              }>
-              {!loading && posts.length > 0
-                ? `Read more ${activePost.acf?.title}`
-                : "Read publications"}
-            </ExpressiveAnchor>
+            {!loading && posts.length > 0 && (
+              <ExpressiveAnchor
+                className="font-semibold"
+                ariaLabel="See more of The Source of Hope's publications"
+                href={activePost?.acf?.url}>
+                {`Read more ${activePost.acf?.title}`}
+              </ExpressiveAnchor>
+            )}
+            {(loading || posts.length === 0) && (
+              <ExpressiveLink
+                className="font-semibold"
+                ariaLabel="See more of The Source of Hope's publications"
+                to={CANONICAL.media.absolute}>
+                Read Publications
+              </ExpressiveLink>
+            )}
           </div>
         </article>
         <div

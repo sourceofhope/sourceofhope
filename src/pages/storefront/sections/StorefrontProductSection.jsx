@@ -13,6 +13,7 @@ import { XMarkIcon } from "@heroicons/react/20/solid";
 import { Link } from "react-router-dom";
 import Overlay from "../../../components/ui/Overlay";
 import ExpressiveLink from "../../../components/ui/expressive/ExpressiveLink";
+import Takeover from "../../../components/ui/Takeover";
 
 export default function StorefrontProductSection() {
   const [posts, setPosts] = useState([]);
@@ -118,12 +119,6 @@ function ProductCard({ post }) {
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
         </div>
         <div
-          className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 aspect-square grid place-items-center rounded-lg bg-emerald-600/85 text-white shadow-lg transition-all duration-300 ${
-            added ? "opacity-100 scale-100" : "opacity-0 scale-75"
-          }`}>
-          <CheckIcon className="size-10 shrink-0" />
-        </div>
-        <div
           className="relative flex flex-col group gap-2 p-5 text-neutral-50"
           onClick={handleAddToCart}>
           <Heading className="text-neutral-50">{post.acf?.title}</Heading>
@@ -159,16 +154,17 @@ function ProductCard({ post }) {
             <span>View Product</span>
           </span>
         </div>
-        <div
-          className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 aspect-square grid place-items-center rounded-lg bg-emerald-600/85 text-white shadow-lg transition-all duration-300 ${
-            added ? "opacity-100 scale-100" : "opacity-0 scale-75"
-          }`}>
-          <CheckIcon className="size-10 shrink-0" />
-        </div>
         <button onClick={handleAddToCart} className="size-fit text-neutral-50">
           <PlusIcon className="size-15 absolute top-3 right-3 bg-neutral-950/50 rounded-xl" />
         </button>
       </div>
+      <Takeover
+        className="bg-neutral-400 rounded-2xl px-5 py-3 w-fit h-fit text-neutral-600 flex justify-between gap-3 items-center"
+        active={added}
+        setActive={setAdded}>
+        <p>Added To Cart</p>
+        <CheckIcon className="size-5 shrink-0" />
+      </Takeover>
       <Overlay active={active} setActive={setActive}>
         <div className="flex flex-col gap-4">
           <div className="flex justify-between items-center">
