@@ -228,7 +228,7 @@ function HeaderButton({
 }) {
   return (
     <div
-      className="w-full"
+      className="w-full select-none"
       onMouseEnter={() => setHovering(label)}
       onMouseLeave={() => setHovering(null)}>
       <NavLink

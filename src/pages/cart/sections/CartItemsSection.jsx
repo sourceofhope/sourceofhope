@@ -12,7 +12,7 @@ export default function CartItemsSection({
 
   return (
     <section className="">
-      <div className="bg-white rounded-2xl shadow-md p-6 space-y-4">
+      <div className="bg-white rounded-2xl shadow-md p-5 pt-0 md:pt-5 space-y-3">
         <div className="flex flex-col gap-1">
           <Title>Shopping Cart</Title>
         </div>
@@ -21,8 +21,8 @@ export default function CartItemsSection({
         {items.map((item) => (
           <div
             key={item.id}
-            className="flex flex-col md:flex-row gap-4 p-4 border-2 border-neutral-200 rounded-xl hover:border-accent-500 transition-colors">
-            <div className="w-full md:w-32 h-32 bg-neutral-200 rounded-lg flex items-center justify-center overflow-hidden">
+            className="flex flex-col md:flex-row gap-5 p-5 border-2 border-neutral-200 rounded-xl hover:border-accent-500 transition-colors">
+            <div className="w-full hidden md:flex md:w-32 h-32 bg-neutral-200 rounded-lg items-center justify-center overflow-hidden">
               <img
                 src={item.image}
                 alt={item.name}
@@ -36,9 +36,9 @@ export default function CartItemsSection({
             </div>
             <div className="flex-1 space-y-2">
               <h4 className="font-bold text-neutral-900 text-lg">
-                {item.title || item.name}
+                {item.title}
               </h4>
-              <p className="text-accent-600 font-semibold text-xl">
+              <p className="text-accent-600 font-semibold">
                 ${item.price.toFixed(2)}
               </p>
 
@@ -61,7 +61,7 @@ export default function CartItemsSection({
                   </div>
                 )}
 
-                <div className="flex items-center gap-2">
+                <div className="flex items-center gap-3">
                   <label className="text-sm font-semibold text-neutral-700">
                     Quantity:
                   </label>
@@ -88,6 +88,12 @@ export default function CartItemsSection({
                       +
                     </button>
                   </div>
+                  <button
+                    onClick={() => removeItem(item.id)}
+                    className="self-start md:self-center p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                    aria-label="Remove item">
+                    <TrashIcon className="w-6 h-6" />
+                  </button>
                 </div>
               </div>
               <p className="text-neutral-700 font-semibold">
@@ -97,7 +103,7 @@ export default function CartItemsSection({
 
             <button
               onClick={() => removeItem(item.id)}
-              className="self-start md:self-center p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+              className="self-start hidden md:block md:self-center p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
               aria-label="Remove item">
               <TrashIcon className="w-6 h-6" />
             </button>

@@ -126,7 +126,9 @@ function ProductCard({ post }) {
         <div className="relative flex flex-col gap-2 p-5 text-neutral-50">
           <Heading className="text-neutral-50">{post.acf?.title}</Heading>
 
-          <p className="text-sm md:text-md">${post.acf?.price}</p>
+          <p className="text-sm md:text-md">
+            ${parseFloat(post.acf?.price).toFixed(2)}
+          </p>
 
           <button
             onClick={handleAddToCart}

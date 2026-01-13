@@ -11,7 +11,7 @@ import {
 } from "../../context/StoreCartContext";
 
 import { useSetHeaderBlocking } from "../../components/structure/Header";
-import { HeartIcon, ShoppingBagIcon } from "@heroicons/react/20/solid";
+import { ShoppingBagIcon } from "@heroicons/react/20/solid";
 import Title from "../../components/ui/text/Title";
 import { AnchorButton, LinkButton } from "../../components/ui/Button";
 
