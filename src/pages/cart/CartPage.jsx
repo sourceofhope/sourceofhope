@@ -80,7 +80,7 @@ const CartPage = () => {
         />
       </Helmet>
 
-      <div className="min-h-screen bg-neutral-50 py-8 px-4 md:px-8 lg:px-16">
+      <div className="min-h-screen bg-neutral-50 pt-25 px-5 md:px-10 lg:px-15">
         <div className="max-w-7xl mx-auto">
           {(!cartItems || cartItems.length === 0) && (
             <section className="w-full min-h-screen flex flex-col py-5 items-center justify-center text-center px-5">

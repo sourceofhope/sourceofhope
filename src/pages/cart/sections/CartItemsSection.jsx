@@ -11,7 +11,7 @@ export default function CartItemsSection({
   const sizes = ["XS", "S", "M", "L", "XL", "XXL"];
 
   return (
-    <section className="pt-25 mt-4">
+    <section className="">
       <div className="bg-white rounded-2xl shadow-md p-6 space-y-4">
         <div className="flex flex-col gap-1">
           <Title>Shopping Cart</Title>

@@ -9,13 +9,13 @@ export default function CartSummarySection({
   shippingCosts,
 }) {
   return (
-    <section className="pt-25 mt-4">
-      <div className="bg-white rounded-2xl shadow-md p-6 sticky top-4">
-        <h3 className="font-urbanist font-bold text-neutral-900 text-xl mb-4">
+    <section className="">
+      <div className="bg-white rounded-2xl shadow-md p-5 sticky top-5">
+        <h3 className="font-urbanist font-bold text-neutral-900 text-xl mb-5">
           Order Summary
         </h3>
-        <div className="space-y-3 mb-6">
-          <label className="text-sm font-semibold text-neutral-700 block mb-2">
+        <div className="space-y-5 mb-5">
+          <label className="text-sm font-semibold text-neutral-700 block mb-3">
             Shipping Method:
           </label>
 

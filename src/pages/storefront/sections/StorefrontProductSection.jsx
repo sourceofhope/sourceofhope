@@ -34,16 +34,12 @@ export default function StorefrontProductSection() {
   }, []);
 
   return (
-    <section className="w-full px-5 lg:px-35 pt-25">
+    <section className="w-full px-5 lg:px-35 pt-25 mb-10">
       <div className="mb-10 flex flex-col gap-5 max-w-2xl">
         <div className="grid gap-1">
           <Title>Storefront</Title>
           <Heading>Shop With Purpose</Heading>
         </div>
-        <p className="text-neutral-600">
-          Every purchase directly supports The Source of Hope’s mission: feeding
-          families, empowering students, and strengthening communities.
-        </p>
       </div>
       <div className="w-full min-h-80 flex items-center">
         {loading && (
@@ -73,7 +69,6 @@ export default function StorefrontProductSection() {
 function ProductCard({ post }) {
   const [active, setActive] = useState(false);
   const [loaded, setLoaded] = useState(false);
-  const [added, setAdded] = useState(false);
   const { addToCart } = useCartActions();
   const image = getFeaturedImage(post);
   const src = getResponsiveImage(image, { width: 420 });
@@ -81,29 +76,23 @@ function ProductCard({ post }) {
   const handleAddToCart = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    
-    // Parse price string to number (e.g., "$25.00" -> 25.00)
-    const priceValue = parseFloat(post.acf?.price?.replace(/[$,]/g, '') || 0);
-    
+
+    const priceValue = parseFloat(post.acf?.price || 0);
+
     const cartItem = {
       id: post.id,
-      title: post.acf?.title || 'Untitled Product',
+      title: post.acf?.title || "Untitled Product",
       price: priceValue,
       quantity: 1,
       image: src || `/${ASSET_VERSION}/core/placeholder.webp`,
-      url: post.acf?.url || '#',
+      url: post.acf?.url || "#",
     };
-    
-    // Add size if product has it
+
     if (post.acf?.size) {
       cartItem.size = post.acf.size;
     }
-    
+
     addToCart(cartItem);
-    setAdded(true);
-    
-    // Reset the "added" state after 2 seconds
-    setTimeout(() => setAdded(false), 2000);
   };
 
   return (
@@ -131,9 +120,11 @@ function ProductCard({ post }) {
 
           <p className="text-sm md:text-md">${post.acf?.price}</p>
 
-          <span className="text-sm md:text-md inline-flex w-full justify-between items-center gap-1">
-            <span>Add To Cart</span>
-          </span>
+          <button
+            onClick={handleAddToCart}
+            className="text-sm md:text-md inline-flex w-full justify-between items-center gap-1 hover:underline">
+            Add To Cart
+          </button>
         </div>
       </Link>
       <div
@@ -162,7 +153,6 @@ function ProductCard({ post }) {
       </div>
       <Overlay active={active} setActive={setActive}>
         <div className="flex flex-col gap-4">
-          {/* Header */}
           <div className="flex justify-between items-center">
             <h2 className="text-lg font-semibold text-neutral-900">
               {post.acf?.title}

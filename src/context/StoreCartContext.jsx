@@ -42,13 +42,11 @@ export function useCartActions() {
 
   function addToCart(item) {
     setCart((prev) => {
-      // Check if item with same id and size already exists
       const existingItemIndex = prev.findIndex(
         (i) => i.id === item.id && i.size === item.size
       );
 
       if (existingItemIndex !== -1) {
-        // Update quantity if item exists
         const updated = [...prev];
         updated[existingItemIndex] = {
           ...updated[existingItemIndex],
@@ -56,8 +54,6 @@ export function useCartActions() {
         };
         return updated;
       }
-
-      // Add new item
       return [...prev, item];
     });
   }

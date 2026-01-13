@@ -186,6 +186,7 @@ function HeaderNavigator() {
     {
       label: "STORE",
       route: CANONICAL.storefront,
+      children: [{ label: "CART", route: CANONICAL.storefront.cart }],
     },
   ];
 
