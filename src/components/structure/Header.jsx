@@ -3,7 +3,7 @@ import {
   Bars3Icon,
   ChevronRightIcon,
   XMarkIcon,
-  ShoppingCartIcon
+  ShoppingCartIcon,
 } from "@heroicons/react/20/solid";
 
 import Favicon from "../ui/Favicon";
@@ -212,18 +212,6 @@ function HeaderNavigator() {
           />
         );
       })}
-      <NavLink
-        to={CANONICAL.cart}
-        className="relative py-2.5 h-full flex items-center font-bold"
-        aria-label={`Shopping cart with ${cartItemCount} items`}
-      >
-        <ShoppingCartIcon className="w-6 h-6" />
-        {cartItemCount > 0 && (
-          <span className="absolute -top-1 -right-1 bg-accent-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-            {cartItemCount > 99 ? "99+" : cartItemCount}
-          </span>
-        )}
-      </NavLink>
     </>
   );
 }

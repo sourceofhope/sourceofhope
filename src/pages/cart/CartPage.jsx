@@ -1,20 +1,22 @@
-import { useState, useEffect, useContext, useRef} from "react";
-import { CANONICAL_URL } from "../../routes";
+import { useState, useEffect, useContext, useRef } from "react";
+import { CANONICAL, CANONICAL_URL } from "../../routes";
 import { Helmet } from "react-helmet";
 import CartItemsSection from "./sections/CartItemsSection";
 import CartSummarySection from "./sections/CartSummarySection";
 import CartPaymentSection from "./sections/CartPaymentSection";
 
-import { StoreCartContext,
-  useCartActions } from "../../context/StoreCartContext";
-
 import {
-  useSetHeaderBlocking
-} from "../../components/structure/Header";
+  StoreCartContext,
+  useCartActions,
+} from "../../context/StoreCartContext";
 
+import { useSetHeaderBlocking } from "../../components/structure/Header";
+import { HeartIcon, ShoppingBagIcon } from "@heroicons/react/20/solid";
+import Title from "../../components/ui/text/Title";
+import { AnchorButton, LinkButton } from "../../components/ui/Button";
 
 const CartPage = () => {
-  const { cart: cartItems } = useContext(StoreCartContext); 
+  const { cart: cartItems } = useContext(StoreCartContext);
   const { updateCartItem, removeFromCart } = useCartActions();
 
   const setBlocking = useSetHeaderBlocking();
@@ -24,14 +26,13 @@ const CartPage = () => {
     return () => setBlocking(false);
   }, [setBlocking]);
 
-
   const [shippingMethod, setShippingMethod] = useState("standard");
   const [paymentMethod, setPaymentMethod] = useState("credit-card");
 
   const shippingCosts = {
     standard: 5.99,
     express: 12.99,
-    overnight: 24.99
+    overnight: 24.99,
   };
 
   const updateQuantity = (id, newQuantity) => {
@@ -47,7 +48,8 @@ const CartPage = () => {
     updateCartItem(id, { size: newSize });
   };
 
-  const subtotal = cartItems?.reduce((sum, item) => sum + (item.price * item.quantity), 0) || 0;
+  const subtotal =
+    cartItems?.reduce((sum, item) => sum + item.price * item.quantity, 0) || 0;
   const shipping = shippingCosts[shippingMethod];
   const tax = subtotal * 0.0825; // 8.25% tax
   const total = subtotal + shipping + tax;
@@ -80,41 +82,67 @@ const CartPage = () => {
 
       <div className="min-h-screen bg-neutral-50 py-8 px-4 md:px-8 lg:px-16">
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-8">
-            <div className="lg:col-span-2">
-              <CartItemsSection
-                items={cartItems}
-                updateQuantity={updateQuantity}
-                removeItem={removeItem}
-                updateSize={updateSize}
-              />
-            </div>
+          {(!cartItems || cartItems.length === 0) && (
+            <section className="w-full min-h-screen flex flex-col py-5 items-center justify-center text-center px-5">
+              <div className="max-w-xl">
+                <div className="mx-auto mb-5 w-20 h-20 rounded-full bg-primary-50 flex items-center justify-center shadow-sm">
+                  <ShoppingBagIcon className="w-10 h-10 text-accent-500" />
+                </div>
 
-            <div className="lg:col-span-1">
-              <CartSummarySection
-                items={cartItems}
-                subtotal={subtotal}
-                shipping={shipping}
-                tax={tax}
-                total={total}
-                shippingMethod={shippingMethod}
-                setShippingMethod={setShippingMethod}
-                shippingCosts={shippingCosts}
-              />
+                <Title>Your Cart is Empty</Title>
+                <p className="text-gray-700 leading-relaxed mb-10">
+                  You don't have any items in your shopping cart yet.
+                </p>
 
-              <CartPaymentSection
-                items={cartItems}
-                shippingMethod={shippingMethod}
-                paymentMethod={paymentMethod}
-                setPaymentMethod={setPaymentMethod}
-                total={total}
-              />
+                <div className="flex flex-col sm:flex-row gap-5 justify-center">
+                  <LinkButton
+                    to={CANONICAL.storefront.absolute}
+                    text="Browse our Store"
+                  />
+
+                  <AnchorButton
+                    href="https://donate.stripe.com/8wM5kHal16fC4so8ww"
+                    text="Make a Donation"
+                  />
+                </div>
+              </div>
+            </section>
+          )}
+          {cartItems && cartItems.length > 0 && (
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-8">
+              <div className="lg:col-span-2">
+                <CartItemsSection
+                  items={cartItems}
+                  updateQuantity={updateQuantity}
+                  removeItem={removeItem}
+                  updateSize={updateSize}
+                />
+              </div>
+              <div className="lg:col-span-1">
+                <CartSummarySection
+                  items={cartItems}
+                  subtotal={subtotal}
+                  shipping={shipping}
+                  tax={tax}
+                  total={total}
+                  shippingMethod={shippingMethod}
+                  setShippingMethod={setShippingMethod}
+                  shippingCosts={shippingCosts}
+                />
+                <CartPaymentSection
+                  items={cartItems}
+                  shippingMethod={shippingMethod}
+                  paymentMethod={paymentMethod}
+                  setPaymentMethod={setPaymentMethod}
+                  total={total}
+                />
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </>
   );
-}
+};
 
-export default CartPage
+export default CartPage;

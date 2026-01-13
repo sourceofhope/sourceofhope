@@ -2,16 +2,13 @@ import { TrashIcon } from "@heroicons/react/24/outline";
 import Title from "../../../components/ui/text/Title";
 import Heading from "../../../components/ui/text/Heading";
 
-export default function CartItemsSection({ items, updateQuantity, removeItem, updateSize }) {
+export default function CartItemsSection({
+  items,
+  updateQuantity,
+  removeItem,
+  updateSize,
+}) {
   const sizes = ["XS", "S", "M", "L", "XL", "XXL"];
-
-  if (!items || items.length === 0) {
-    return (
-      <div className="bg-white p-8 text-center">
-        <p className="text-neutral-500 text-lg">Your cart is empty</p>
-      </div>
-    );
-  }
 
   return (
     <section className="pt-25 mt-4">
@@ -24,9 +21,7 @@ export default function CartItemsSection({ items, updateQuantity, removeItem, up
         {items.map((item) => (
           <div
             key={item.id}
-            className="flex flex-col md:flex-row gap-4 p-4 border-2 border-neutral-200 rounded-xl hover:border-accent-500 transition-colors"
-          >
-            {/* Product Image */}
+            className="flex flex-col md:flex-row gap-4 p-4 border-2 border-neutral-200 rounded-xl hover:border-accent-500 transition-colors">
             <div className="w-full md:w-32 h-32 bg-neutral-200 rounded-lg flex items-center justify-center overflow-hidden">
               <img
                 src={item.image}
@@ -39,8 +34,6 @@ export default function CartItemsSection({ items, updateQuantity, removeItem, up
                 }}
               />
             </div>
-
-            {/* Product Details */}
             <div className="flex-1 space-y-2">
               <h4 className="font-bold text-neutral-900 text-lg">
                 {item.title || item.name}
@@ -50,7 +43,6 @@ export default function CartItemsSection({ items, updateQuantity, removeItem, up
               </p>
 
               <div className="flex flex-wrap gap-4 items-center">
-                {/* Size Selector - only show if item has size */}
                 {item.size && (
                   <div className="flex items-center gap-2">
                     <label className="text-sm font-semibold text-neutral-700">
@@ -59,8 +51,7 @@ export default function CartItemsSection({ items, updateQuantity, removeItem, up
                     <select
                       value={item.size}
                       onChange={(e) => updateSize(item.id, e.target.value)}
-                      className="border-2 border-neutral-300 rounded-lg px-3 py-1 focus:border-accent-500 focus:outline-none"
-                    >
+                      className="border-2 border-neutral-300 rounded-lg px-3 py-1 focus:border-accent-500 focus:outline-none">
                       {sizes.map((size) => (
                         <option key={size} value={size}>
                           {size}
@@ -70,7 +61,6 @@ export default function CartItemsSection({ items, updateQuantity, removeItem, up
                   </div>
                 )}
 
-                {/* Quantity Selector */}
                 <div className="flex items-center gap-2">
                   <label className="text-sm font-semibold text-neutral-700">
                     Quantity:
@@ -79,8 +69,7 @@ export default function CartItemsSection({ items, updateQuantity, removeItem, up
                     <button
                       onClick={() => updateQuantity(item.id, item.quantity - 1)}
                       className="px-3 py-1 bg-neutral-100 hover:bg-neutral-200 font-bold transition-colors"
-                      aria-label="Decrease quantity"
-                    >
+                      aria-label="Decrease quantity">
                       −
                     </button>
                     <input
@@ -95,26 +84,21 @@ export default function CartItemsSection({ items, updateQuantity, removeItem, up
                     <button
                       onClick={() => updateQuantity(item.id, item.quantity + 1)}
                       className="px-3 py-1 bg-neutral-100 hover:bg-neutral-200 font-bold transition-colors"
-                      aria-label="Increase quantity"
-                    >
+                      aria-label="Increase quantity">
                       +
                     </button>
                   </div>
                 </div>
               </div>
-
-              {/* Item Total */}
               <p className="text-neutral-700 font-semibold">
                 Item Total: ${(item.price * item.quantity).toFixed(2)}
               </p>
             </div>
 
-            {/* Remove Button */}
             <button
               onClick={() => removeItem(item.id)}
               className="self-start md:self-center p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-              aria-label="Remove item"
-            >
+              aria-label="Remove item">
               <TrashIcon className="w-6 h-6" />
             </button>
           </div>

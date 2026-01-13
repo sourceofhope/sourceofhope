@@ -2,54 +2,17 @@ import { Helmet } from "react-helmet";
 import { useSetHeaderBlocking } from "../../components/structure/Header";
 import StorefrontProductSection from "./sections/StorefrontProductSection";
 import StorefrontFooterSection from "./sections/StorefrontFooterSection";
-import { useEffect, useContext, useRef } from "react";
+import { useEffect } from "react";
 import { CANONICAL_URL } from "../../routes";
-import { StoreCartContext, useCartActions } from "../../context/StoreCartContext";
+import CartHolder from "./CartHolder";
 
 export default function StorefrontPage() {
-  const { cart: cartItems } = useContext(StoreCartContext); 
-  const { addToCart } = useCartActions();
-  const demoItemsAdded = useRef(false);
-
   const setBlocking = useSetHeaderBlocking();
 
   useEffect(() => {
     setBlocking(true);
     return () => setBlocking(false);
   }, [setBlocking]);
-
-  // // Add demo items for testing (runs once on mount)
-  // useEffect(() => {
-  //   if(demoItemsAdded.current) return;
-
-
-  //   const demoItems = [
-  //     {
-  //       id: 1,
-  //       name: "Hope T-Shirt",
-  //       price: 25.0,
-  //       quantity: 5,
-  //       size: "M",
-  //       image: "/images/tshirt.jpg",
-  //     },
-  //     {
-  //       id: 2,
-  //       name: "Education Hope Hoodie",
-  //       price: 45.0,
-  //       quantity: 1,
-  //       size: "L",
-  //       image: "/images/hoodie.jpg",
-  //     },
-  //   ];
-
-  //   // Only add items if cart is empty
-  //   if (cartItems.length === 0) {
-  //     demoItems.forEach((item) => {
-  //       addToCart(item);
-  //     });
-  //     demoItemsAdded.current = true;
-  //   }
-  // }, []); // Empty dependency array to run only once on mount
 
   return (
     <>
@@ -87,6 +50,7 @@ export default function StorefrontPage() {
       </Helmet>
       <StorefrontProductSection />
       <StorefrontFooterSection />
+      <CartHolder />
     </>
   );
 }

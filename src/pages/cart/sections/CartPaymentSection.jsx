@@ -1,41 +1,44 @@
 import { useState } from "react";
-import { CreditCardIcon, BanknotesIcon, DevicePhoneMobileIcon } from "@heroicons/react/24/outline";
+import {
+  CreditCardIcon,
+  BanknotesIcon,
+  DevicePhoneMobileIcon,
+} from "@heroicons/react/24/outline";
 
-export default function CartPaymentSection({ items, shippingMethod, paymentMethod, setPaymentMethod, total }) {
-
-  // No payment section if cart is empty
-  if (!items || items.length === 0) {
-    return null;
-  }
-
+export default function CartPaymentSection({
+  items,
+  shippingMethod,
+  paymentMethod,
+  setPaymentMethod,
+  total,
+}) {
   const [isProcessing, setIsProcessing] = useState(false);
 
   const paymentMethods = [
     {
-      id: 'credit-card',
-      name: 'Credit/Debit Card',
+      id: "credit-card",
+      name: "Credit/Debit Card",
       icon: CreditCardIcon,
-      description: 'Visa, Mastercard, Amex'
+      description: "Visa, Mastercard, Amex",
     },
     {
-      id: 'paypal',
-      name: 'PayPal',
+      id: "paypal",
+      name: "PayPal",
       icon: BanknotesIcon,
-      description: 'Pay with your PayPal account'
+      description: "Pay with your PayPal account",
     },
     {
-      id: 'apple-pay',
-      name: 'Apple Pay',
+      id: "apple-pay",
+      name: "Apple Pay",
       icon: DevicePhoneMobileIcon,
-      description: 'Fast and secure checkout'
-    }
+      description: "Fast and secure checkout",
+    },
   ];
 
   const handleCheckout = () => {
     setIsProcessing(true);
-    // Simulate payment processing
     setTimeout(() => {
-      alert('Processing payment... This is a demo.');
+      alert("Processing payment... This is a demo.");
       console.log(`Items in checkout:`, items);
       console.log(`Shipping method: ${shippingMethod}`);
       console.log(`Payment method: ${paymentMethod}`);
@@ -131,15 +134,13 @@ export default function CartPaymentSection({ items, shippingMethod, paymentMetho
           </div>
         </div>
       )} */}
-
-      {/* Checkout Button */}
       <button
         onClick={handleCheckout}
         disabled={isProcessing}
         className={`w-full py-4 rounded-xl font-bold text-white text-lg transition-all duration-300 ${
           isProcessing
-            ? 'bg-neutral-400 cursor-not-allowed'
-            : 'bg-accent-500 hover:bg-accent-600 hover:shadow-lg'
+            ? "bg-neutral-400 cursor-not-allowed"
+            : "bg-accent-500 hover:bg-accent-600 hover:shadow-lg"
         }`}>
         {isProcessing ? (
           <span className="flex items-center justify-center gap-2">
@@ -167,7 +168,7 @@ export default function CartPaymentSection({ items, shippingMethod, paymentMetho
       </button>
 
       <p className="text-xs text-neutral-500 text-center mt-4">
-        🔒 Your payment information is secure and encrypted
+        Your payment information is secure and encrypted
       </p>
     </div>
   );

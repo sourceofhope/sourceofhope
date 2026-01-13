@@ -8,6 +8,7 @@ import Title from "../../components/ui/text/Title";
 import { HeartIcon } from "@heroicons/react/20/solid";
 import { AnchorButton, LinkButton } from "../../components/ui/Button";
 import Heading from "../../components/ui/text/Heading";
+import CartHolder from "./CartHolder";
 
 export default function ProductPage() {
   const [product, setProduct] = useState(null);
@@ -81,6 +82,7 @@ export default function ProductPage() {
           content="Support community impact through meaningful purchases — shop with purpose at The Source of Hope."
         />
       </Helmet>
+      <CartHolder />
       {loading && (
         <section className="w-full min-h-screen flex flex-col items-center justify-center text-center px-5">
           <p className="text-neutral-600">Loading product</p>

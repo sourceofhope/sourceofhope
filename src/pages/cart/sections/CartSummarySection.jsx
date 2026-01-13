@@ -6,21 +6,14 @@ export default function CartSummarySection({
   total,
   shippingMethod,
   setShippingMethod,
-  shippingCosts
+  shippingCosts,
 }) {
-  // No summary section if cart is empty
-    if (!items || items.length === 0) {
-      return null;
-    }
-
   return (
     <section className="pt-25 mt-4">
       <div className="bg-white rounded-2xl shadow-md p-6 sticky top-4">
         <h3 className="font-urbanist font-bold text-neutral-900 text-xl mb-4">
           Order Summary
         </h3>
-
-        {/* Shipping Options */}
         <div className="space-y-3 mb-6">
           <label className="text-sm font-semibold text-neutral-700 block mb-2">
             Shipping Method:
@@ -49,8 +42,7 @@ export default function CartSummarySection({
                 shippingMethod === method.id
                   ? "border-accent-500 bg-accent-50"
                   : "border-neutral-200 hover:border-neutral-300"
-              }`}
-            >
+              }`}>
               <div className="flex items-center gap-3">
                 <input
                   type="radio"
@@ -73,8 +65,6 @@ export default function CartSummarySection({
             </label>
           ))}
         </div>
-
-        {/* Price Breakdown */}
         <div className="space-y-3 border-t-2 border-neutral-200 pt-4">
           <div className="flex justify-between text-neutral-700">
             <span>Subtotal:</span>
