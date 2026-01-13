@@ -21,12 +21,16 @@ export default function Header() {
   const [banner, setBanner] = useState(null);
   const [bannerOpen, setBannerOpen] = useState(true);
 
-  const { isBlocking } = useHeaderContext();
+  const { isBlocking, bannerActive, setBannerActive } = useHeaderContext();
 
-  const bannerActive =
-    bannerOpen &&
-    banner?.acf?.enabled &&
-    new Date(banner?.acf?.expires) >= Date.now();
+  useEffect(() => {
+    const active =
+      bannerOpen &&
+      banner?.acf?.enabled &&
+      new Date(banner?.acf?.expires) >= Date.now();
+
+    setBannerActive(active);
+  }, [bannerOpen, banner, setBannerActive]);
 
   const fetchBanner = () => {
     fetchContent("/banner-configuration?per_page=1&_embed")
@@ -272,6 +276,8 @@ export function useSetHeaderBlocking() {
 }
 
 export const HeaderFlagContext = createContext({
+  bannerActive: false,
+  setBannerActive: () => {},
   isBlocking: false,
   setIsBlocking: () => {},
 });

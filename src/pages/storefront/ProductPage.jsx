@@ -27,6 +27,7 @@ export default function ProductPage() {
 
     const cartItem = {
       id: product.id,
+      slug: product.slug,
       title: product.title,
       price: product.price,
       quantity: 1,
@@ -35,7 +36,7 @@ export default function ProductPage() {
     };
 
     setAdded(true);
-    setTimeout(() => setAdded(false), 500);
+    setTimeout(() => setAdded(false), 1000);
 
     addToCart(cartItem);
   };
@@ -151,7 +152,7 @@ export default function ProductPage() {
         <section className="w-full grid grid-cols-1 lg:grid-cols-2 gap-10 p-5 lg:px-35 pt-25">
           <div className="w-full flex justify-center lg:justify-start">
             <div className="w-full max-w-2xl">
-              <div className="relative w-full aspect-square rounded-2xl overflow-hidden shadow-lg">
+              <div className="relative w-full aspect-square rounded-2xl overflow-hidden">
                 <img
                   src={product?.image}
                   alt={product?.title}

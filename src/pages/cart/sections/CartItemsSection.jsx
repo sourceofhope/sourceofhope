@@ -1,6 +1,7 @@
 import { TrashIcon } from "@heroicons/react/24/outline";
 import Title from "../../../components/ui/text/Title";
 import Heading from "../../../components/ui/text/Heading";
+import { CANONICAL } from "../../../routes";
 
 export default function CartItemsSection({
   items,
@@ -35,9 +36,11 @@ export default function CartItemsSection({
               />
             </div>
             <div className="flex-1 space-y-2">
-              <h4 className="font-bold text-neutral-900 text-lg">
+              <a
+                href={`${CANONICAL.storefront.products.relative}/${item.slug}`}
+                className="!no-underline font-bold text-neutral-900 text-lg">
                 {item.title}
-              </h4>
+              </a>
               <p className="text-accent-600 font-semibold">
                 ${item.price.toFixed(2)}
               </p>
@@ -100,7 +103,6 @@ export default function CartItemsSection({
                 Item Total: ${(item.price * item.quantity).toFixed(2)}
               </p>
             </div>
-
             <button
               onClick={() => removeItem(item.id)}
               className="self-start hidden md:block md:self-center p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"

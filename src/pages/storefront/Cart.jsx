@@ -2,12 +2,19 @@ import { Link } from "react-router-dom";
 import { CANONICAL } from "../../routes";
 import { ShoppingBagIcon } from "@heroicons/react/20/solid";
 import { useCartActions } from "../../context/StoreCartContext";
+import { useHeaderContext } from "../../components/structure/Header";
 
 export default function Cart() {
   const { getCartItemCount } = useCartActions();
+  const { bannerActive } = useHeaderContext();
 
   return (
-    <div className="fixed bottom-5 md:top-5 right-5 md:right-10 z-9990">
+    <div
+      className={`
+          fixed right-5 md:right-10 z-[9990]
+          transition-[top,bottom] duration-500 bottom-5
+          ${bannerActive ? "md:top-15" : "md:top-5"}
+        `}>
       <Link
         to={CANONICAL.storefront.cart.absolute}
         className="

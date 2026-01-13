@@ -83,6 +83,7 @@ function ProductCard({ post }) {
 
     const cartItem = {
       id: post.id,
+      slug: post.slug,
       title: post.acf?.title || "Untitled Product",
       price: priceValue,
       quantity: 1,
@@ -94,7 +95,7 @@ function ProductCard({ post }) {
     }
 
     setAdded(true);
-    setTimeout(() => setAdded(false), 500);
+    setTimeout(() => setAdded(false), 1000);
 
     addToCart(cartItem);
   };
@@ -115,8 +116,7 @@ function ProductCard({ post }) {
               loaded ? "opacity-100" : "opacity-0"
             }`}
           />
-
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-black/10 to-transparent" />
         </div>
         <div
           className="relative flex flex-col group gap-2 p-5 text-neutral-50"
@@ -147,7 +147,7 @@ function ProductCard({ post }) {
               loaded ? "opacity-100" : "opacity-0"
             }`}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-black/10 to-transparent" />
         </div>
         <div className="relative flex flex-col gap-2 p-5 text-neutral-50">
           <Heading className="text-neutral-50">{post.acf?.title}</Heading>
