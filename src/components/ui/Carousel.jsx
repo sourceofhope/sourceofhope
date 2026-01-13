@@ -75,7 +75,7 @@ export default function Carousel({
         ))}
       </div>
       {(!hideControls || showProgress) && (
-        <div className="grid grid-flow-col gap-3 w-full items-center justify-between my-5 max-w-full">
+        <div className="grid grid-flow-col gap-3 w-full items-center justify-between my-5 max-w-full select-none">
           {!hideControls && (
             <button
               onClick={prev}
