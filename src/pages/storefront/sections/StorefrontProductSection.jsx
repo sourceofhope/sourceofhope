@@ -86,7 +86,6 @@ function ProductCard({ post }) {
       price: priceValue,
       quantity: 1,
       image: src || `/${ASSET_VERSION}/core/placeholder.webp`,
-      url: post.acf?.url || "#",
     };
 
     if (post.acf?.size) {

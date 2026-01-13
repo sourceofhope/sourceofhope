@@ -3,7 +3,7 @@ import { CANONICAL } from "../../routes";
 import { ShoppingBagIcon } from "@heroicons/react/20/solid";
 import { useCartActions } from "../../context/StoreCartContext";
 
-export default function CartHolder() {
+export default function Cart() {
   const { getCartItemCount } = useCartActions();
 
   return (

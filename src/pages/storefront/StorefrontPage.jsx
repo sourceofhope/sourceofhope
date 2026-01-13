@@ -4,7 +4,7 @@ import StorefrontProductSection from "./sections/StorefrontProductSection";
 import StorefrontFooterSection from "./sections/StorefrontFooterSection";
 import { useEffect } from "react";
 import { CANONICAL_URL } from "../../routes";
-import CartHolder from "./CartHolder";
+import Cart from "./Cart";
 
 export default function StorefrontPage() {
   const setBlocking = useSetHeaderBlocking();
@@ -48,9 +48,9 @@ export default function StorefrontPage() {
           content="Support community impact through meaningful purchases — shop with purpose at The Source of Hope."
         />
       </Helmet>
+      <Cart />
       <StorefrontProductSection />
       <StorefrontFooterSection />
-      <CartHolder />
     </>
   );
 }

@@ -8,14 +8,36 @@ import Title from "../../components/ui/text/Title";
 import { HeartIcon } from "@heroicons/react/20/solid";
 import { AnchorButton, LinkButton } from "../../components/ui/Button";
 import Heading from "../../components/ui/text/Heading";
-import CartHolder from "./CartHolder";
+import Cart from "./Cart";
+import { useCartActions } from "../../context/StoreCartContext";
 
 export default function ProductPage() {
   const [product, setProduct] = useState(null);
+  const [added, setAdded] = useState(false);
   const [loading, setLoading] = useState(true);
   const { slug } = useParams();
+  const { addToCart } = useCartActions();
 
   const setBlocking = useSetHeaderBlocking();
+
+  const handleAddToCart = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const cartItem = {
+      id: product.id,
+      title: product.title,
+      price: product.price,
+      quantity: 1,
+      image: product.image,
+      url: "#",
+    };
+
+    setAdded(true);
+    setTimeout(() => setAdded(false), 500);
+
+    addToCart(cartItem);
+  };
 
   useEffect(() => {
     setBlocking(true);
@@ -30,10 +52,11 @@ export default function ProductPage() {
         if (!data.length) throw new Error("Product not found");
         const post = data[0];
         setProduct({
-          title: post.acf?.title,
+          id: post.id,
+          title: post.acf?.title || "Untitled Product",
           shortDescription: post.acf?.shortdescription,
           longDescription: post.acf?.longdescription,
-          price: post.acf?.price,
+          price: parseFloat(post.acf?.price),
           impact: post.acf?.impact,
           image:
             getResponsiveImage(getFeaturedImage(post), { width: 900 }) ??
@@ -82,7 +105,7 @@ export default function ProductPage() {
           content="Support community impact through meaningful purchases — shop with purpose at The Source of Hope."
         />
       </Helmet>
-      <CartHolder />
+      <Cart />
       {loading && (
         <section className="w-full min-h-screen flex flex-col items-center justify-center text-center px-5">
           <p className="text-neutral-600">Loading product</p>
@@ -136,7 +159,9 @@ export default function ProductPage() {
               {product?.shortDescription}
             </p>
             <div className="flex flex-wrap gap-5 mt-5">
-              <button className="flex justify-center w-fit rounded-2xl px-10 py-5 bg-accent-500 hover:bg-accent-600 transition-all duration-700 font-semibold text-neutral-50">
+              <button
+                onClick={handleAddToCart}
+                className="flex justify-center w-fit rounded-2xl px-10 py-5 bg-accent-500 hover:bg-accent-600 transition-all duration-700 font-semibold text-neutral-50">
                 <span className="inline-flex w-full justify-between items-center gap-1 text-sm md:text-md">
                   Add To Cart
                 </span>
