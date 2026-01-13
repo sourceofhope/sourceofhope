@@ -70,18 +70,18 @@ export default function Header() {
       <header
         className={`backdrop-filter fixed ${
           bannerActive ? "top-15 md:top-10" : "top-0"
-        } left-0 right-0 z-50 text-sm md:text-md w-full transition-[height_backdrop] duration-500 border-b-4 md:border-none
+        } left-0 right-0 z-50 text-sm md:text-md w-full transition-[height_backdrop] duration-500 md:border-none
           ${
             open
               ? `md:backdrop-blur-none backdrop-blur-sm ${
-                  isBlocking ? "border-primary-800/100" : "border-neutral-50"
+                  isBlocking ? "border-primary-800/100 " : "border-neutral-50"
                 }`
               : "backdrop-blur-none border-none"
           }
           ${
             scrolled
               ? `bg-primary-800 text-neutral-50 border-transparent`
-              : `bg-transparent ${
+              : `bg-transparent ${open ? "border-b-4" : null} ${
                   isBlocking ? "text-primary-800" : "text-neutral-50"
                 }`
           }`}>
