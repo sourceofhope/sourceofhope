@@ -90,7 +90,7 @@ export default function CartItemsSection({
                   </div>
                   <button
                     onClick={() => removeItem(item.id)}
-                    className="self-start md:self-center p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                    className="self-start md:hidden md:self-center p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                     aria-label="Remove item">
                     <TrashIcon className="w-6 h-6" />
                   </button>

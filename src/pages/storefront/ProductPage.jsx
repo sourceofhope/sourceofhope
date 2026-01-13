@@ -154,7 +154,7 @@ export default function ProductPage() {
           </div>
           <div className="flex flex-col gap-3 self-start">
             <Title>{product?.title}</Title>
-            <Heading>${product?.price}</Heading>
+            <Heading>${parseFloat(product?.price).toFixed(2)}</Heading>
             <p className="text-gray-700 text-sm md:text-md">
               {product?.shortDescription}
             </p>

@@ -7,7 +7,7 @@ export default function Cart() {
   const { getCartItemCount } = useCartActions();
 
   return (
-    <div className="fixed bottom-5 md:top-5 right-5 z-9990">
+    <div className="fixed bottom-5 md:top-5 right-5 md:right-10 z-9990">
       <Link
         to={CANONICAL.storefront.cart.absolute}
         className="

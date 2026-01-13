@@ -123,17 +123,16 @@ function ProductCard({ post }) {
           }`}>
           <CheckIcon className="size-10 shrink-0" />
         </div>
-        <div className="relative flex flex-col gap-2 p-5 text-neutral-50">
+        <div
+          className="relative flex flex-col group gap-2 p-5 text-neutral-50"
+          onClick={handleAddToCart}>
           <Heading className="text-neutral-50">{post.acf?.title}</Heading>
-
           <p className="text-sm md:text-md">
             ${parseFloat(post.acf?.price).toFixed(2)}
           </p>
-
-          <button
-            onClick={handleAddToCart}
-            className="text-sm md:text-md inline-flex h-fit w-full justify-between items-center gap-1 hover:underline font-bold">
+          <button className="text-sm md:text-md inline-flex h-fit w-full items-center gap-3 font-bold">
             Add To Cart
+            <PlusIcon className="opacity-0 group-hover:opacity-100 duration-300 transition-opacity aspect-square w-[1em]" />
           </button>
         </div>
       </Link>
@@ -167,7 +166,7 @@ function ProductCard({ post }) {
           <CheckIcon className="size-10 shrink-0" />
         </div>
         <button onClick={handleAddToCart} className="size-fit text-neutral-50">
-          <PlusIcon className="size-10 absolute top-1 right-1 bg-neutral-950/50 rounded-xl" />
+          <PlusIcon className="size-15 absolute top-3 right-3 bg-neutral-950/50 rounded-xl" />
         </button>
       </div>
       <Overlay active={active} setActive={setActive}>
