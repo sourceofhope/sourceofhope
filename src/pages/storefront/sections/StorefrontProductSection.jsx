@@ -134,7 +134,9 @@ function ProductCard({ post }) {
       <div
         onClick={() => setActive(true)}
         className="group relative md:hidden flex flex-col !no-underline overflow-hidden rounded-2xl bg-neutral-900 shadow-md transition-all duration-500 hover:shadow-xl">
-        <div className="relative aspect-square overflow-hidden">
+        <div
+          onClick={handleAddToCart}
+          className="relative aspect-square overflow-hidden">
           <img
             src={src || `/${ASSET_VERSION}/core/placeholder.webp`}
             alt={image?.alt_text || ""}
@@ -154,9 +156,6 @@ function ProductCard({ post }) {
             <span>View Product</span>
           </span>
         </div>
-        <button onClick={handleAddToCart} className="size-fit text-neutral-50">
-          <PlusIcon className="size-15 absolute top-3 right-3 bg-neutral-950/50 rounded-xl" />
-        </button>
       </div>
       <Takeover
         className="bg-neutral-400 rounded-2xl px-5 py-3 w-fit h-fit text-neutral-600 flex justify-between gap-3 items-center"
