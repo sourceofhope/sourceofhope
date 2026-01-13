@@ -19,6 +19,8 @@ export const CANONICAL = {
   internationalHope: "internationalHope",
 
   member: "members",
+
+  storefront: "store",
 };
 
 export const CANONICAL_URL = {
@@ -39,4 +41,6 @@ export const CANONICAL_URL = {
   internationalHope: `${BASE_URL}/${CANONICAL.internationalHope}`,
 
   member: `${BASE_URL}/${CANONICAL.member}`,
+
+  storefront: `${BASE_URL}/${CANONICAL.storefront}`,
 };

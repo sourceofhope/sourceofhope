@@ -20,6 +20,7 @@ import InternationalHopeProgram from "./pages/serve/programs/InternationalHopePr
 import FormPage from "./pages/form/FormPage.jsx";
 
 import { CANONICAL } from "./routes.jsx";
+import StorefrontPage from "./pages/storefront/StorefrontPage.jsx";
 
 export const router = createBrowserRouter(
   [

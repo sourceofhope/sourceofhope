@@ -1,12 +1,10 @@
-import ExpressiveLink from "../ui/expressive/ExpressiveLink";
-import ExpressiveAnchor from "../ui/expressive/ExpressiveAnchor";
 import ParallaxSection from "../ui/parallax/ParallaxSection";
 import ParallaxLayer from "../ui/parallax/ParallaxLayer";
-import Favicon from "../ui/Favicon";
 import { NavLink, useLocation } from "react-router-dom";
 import { ASSET_VERSION, CANONICAL } from "../../routes";
 import { LinkButton } from "../ui/Button";
 import Heading from "../ui/text/Heading";
+import Icon from "../ui/Icon";
 
 export default function Footer() {
   const location = useLocation();
@@ -19,16 +17,24 @@ export default function Footer() {
           <div className="flex w-fit gap-10 flex-col md:justify-between md:flex-row">
             <FooterColumn>
               <div className="grid gap-3 grid-flow-col md:grid-flow-row">
-                <Favicon className="w-[60px] h-[60px] bg-primary-800 rounded-sm" />
+                <Icon className="w-20 h-20 p-1 bg-neutral-100 rounded-sm">
+                  <NavLink to={CANONICAL.home} aria-label="The Source of Hope">
+                    <img
+                      src={`/${ASSET_VERSION}/core/TSOH-Logo.webp`}
+                      alt=""
+                      className="w-full h-full object-contain rounded-lg"
+                      draggable={false}
+                    />
+                  </NavLink>
+                </Icon>
                 <a
                   href="https://app.candid.org/profile/9393304/the-source-of-hope-46-2491772"
-                  target="_blank"
-                  className="w-[60px] h-[60px]">
+                  target="_blank">
                   {" "}
                   <img
                     src="https://widgets.guidestar.org/prod/v1/pdp/transparency-seal/9393304/svg"
                     alt="Candid.org Badge"
-                    className="w-[60px] h-[60px]"
+                    className="w-20 h-20 rounded-sm"
                   />{" "}
                 </a>
               </div>

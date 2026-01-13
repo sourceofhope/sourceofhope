@@ -1,8 +1,5 @@
 import { Helmet } from "react-helmet";
-import {
-  HeaderFlagContext,
-  useHeaderFlag,
-} from "../../../components/structure/Header";
+import { useSetHeaderBlocking } from "../../../components/structure/Header";
 import { useEffect } from "react";
 import Heading from "../../../components/ui/text/Heading";
 import Title from "../../../components/ui/text/Title";
@@ -10,14 +7,14 @@ import { AnchorButton } from "../../../components/ui/Button";
 import { ASSET_VERSION, CANONICAL_URL } from "../../../routes";
 
 export default function WellnessHopeProgram() {
-  const { setIsBlocking } = useHeaderFlag();
+  const setBlocking = useSetHeaderBlocking();
 
   useEffect(() => {
-    setIsBlocking(true);
-    return () => setIsBlocking(false);
-  }, [setIsBlocking]);
+    setBlocking(true);
+    return () => setBlocking(false);
+  }, [setBlocking]);
   return (
-    <HeaderFlagContext.Provider value={true}>
+    <>
       <Helmet>
         <title>Wellness of Hope Program | The Source of Hope</title>
         <meta
@@ -181,7 +178,7 @@ export default function WellnessHopeProgram() {
           </div>
         </article>
       </section>
-    </HeaderFlagContext.Provider>
+    </>
   );
 }
 

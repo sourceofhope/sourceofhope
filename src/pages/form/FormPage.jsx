@@ -1,9 +1,6 @@
 import { Helmet } from "react-helmet";
 import { CANONICAL_URL } from "../../routes";
-import {
-  HeaderFlagContext,
-  useHeaderFlag,
-} from "../../components/structure/Header";
+import { useSetHeaderBlocking } from "../../components/structure/Header";
 import { useEffect } from "react";
 import FormDescriptionSection from "./sections/FormDescriptionSection";
 import FormInputSection from "./sections/FormInputSection";
@@ -12,14 +9,14 @@ import Title from "../../components/ui/text/Title";
 import Heading from "../../components/ui/text/Heading";
 
 export default function FormPage() {
-  const { setIsBlocking } = useHeaderFlag();
+  const setBlocking = useSetHeaderBlocking();
 
   useEffect(() => {
-    setIsBlocking(true);
-    return () => setIsBlocking(false);
-  }, [setIsBlocking]);
+    setBlocking(true);
+    return () => setBlocking(false);
+  }, [setBlocking]);
   return (
-    <HeaderFlagContext.Provider value={true}>
+    <>
       <Helmet>
         <title>Program Sign-Up | The Source of Hope</title>
         <meta
@@ -67,6 +64,6 @@ export default function FormPage() {
       <FormDescriptionSection />
       <FormShowcaseSection />
       <FormInputSection />
-    </HeaderFlagContext.Provider>
+    </>
   );
 }
