@@ -7,7 +7,7 @@ export default function CartHolder() {
   const { getCartItemCount } = useCartActions();
 
   return (
-    <div className="fixed bottom-5 right-5 z-9990">
+    <div className="fixed bottom-5 md:top-5 right-5 z-9990">
       <Link
         to={CANONICAL.storefront.cart.absolute}
         className="
@@ -15,13 +15,15 @@ export default function CartHolder() {
           flex items-center justify-center
           rounded-full
           bg-primary-800 text-white
-          shadow-xl
           hover:scale-105 transition-transform
         ">
         <ShoppingBagIcon className="w-7 h-7" />
       </Link>
-      <div className="absolute inset-0 rounded-full bg-primary-400 w-5 aspect-square text-center text-neutral-50 text-sm">
-        {getCartItemCount()}
+      <div
+        className={`${
+          getCartItemCount() > 0 ? "" : "hidden"
+        } absolute inset-0 -left-2 -top-2 rounded-full bg-primary-400 w-7 aspect-square text-center text-neutral-50 text-sm p-1`}>
+        <p className="size-full text-sm">{getCartItemCount()}</p>
       </div>
     </div>
   );

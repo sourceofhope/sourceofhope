@@ -5,7 +5,11 @@ import {
   getResponsiveImage,
 } from "../../../cms";
 import { ASSET_VERSION } from "../../../routes";
-import { ArrowUpRightIcon } from "@heroicons/react/20/solid";
+import {
+  ArrowUpRightIcon,
+  CheckBadgeIcon,
+  CheckIcon,
+} from "@heroicons/react/20/solid";
 import Title from "../../../components/ui/text/Title";
 import Heading from "../../../components/ui/text/Heading";
 import { useCartActions } from "../../../context/StoreCartContext";
@@ -69,6 +73,7 @@ export default function StorefrontProductSection() {
 function ProductCard({ post }) {
   const [active, setActive] = useState(false);
   const [loaded, setLoaded] = useState(false);
+  const [added, setAdded] = useState(false);
   const { addToCart } = useCartActions();
   const image = getFeaturedImage(post);
   const src = getResponsiveImage(image, { width: 420 });
@@ -92,6 +97,9 @@ function ProductCard({ post }) {
       cartItem.size = post.acf.size;
     }
 
+    setAdded(true);
+    setTimeout(() => setAdded(false), 500);
+
     addToCart(cartItem);
   };
 
@@ -114,7 +122,12 @@ function ProductCard({ post }) {
 
           <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
         </div>
-
+        <div
+          className={`absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-20 aspect-square grid place-items-center rounded-lg bg-emerald-600/75 text-white shadow-lg transition-all duration-300 ${
+            added ? "opacity-100 scale-100" : "opacity-0 scale-75"
+          }`}>
+          <CheckIcon className="size-10 shrink-0" />
+        </div>
         <div className="relative flex flex-col gap-2 p-5 text-neutral-50">
           <Heading className="text-neutral-50">{post.acf?.title}</Heading>
 
@@ -122,7 +135,7 @@ function ProductCard({ post }) {
 
           <button
             onClick={handleAddToCart}
-            className="text-sm md:text-md inline-flex w-full justify-between items-center gap-1 hover:underline">
+            className="text-sm md:text-md inline-flex h-fit w-full justify-between items-center gap-1 hover:underline font-bold">
             Add To Cart
           </button>
         </div>

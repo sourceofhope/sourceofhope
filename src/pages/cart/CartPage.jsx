@@ -79,36 +79,35 @@ const CartPage = () => {
           content="Join The Source of Hope to make a lasting impact through food, education, and wellness programs in the Dallas-Fort Worth community."
         />
       </Helmet>
+      {(!cartItems || cartItems.length === 0) && (
+        <section className="w-full min-h-screen flex flex-col py-5 items-center justify-center text-center px-5">
+          <div className="max-w-xl">
+            <div className="mx-auto mb-5 w-20 h-20 rounded-full bg-primary-50 flex items-center justify-center shadow-sm">
+              <ShoppingBagIcon className="w-10 h-10 text-accent-500" />
+            </div>
 
-      <div className="min-h-screen bg-neutral-50 pt-25 px-5 md:px-10 lg:px-15">
-        <div className="max-w-7xl mx-auto">
-          {(!cartItems || cartItems.length === 0) && (
-            <section className="w-full min-h-screen flex flex-col py-5 items-center justify-center text-center px-5">
-              <div className="max-w-xl">
-                <div className="mx-auto mb-5 w-20 h-20 rounded-full bg-primary-50 flex items-center justify-center shadow-sm">
-                  <ShoppingBagIcon className="w-10 h-10 text-accent-500" />
-                </div>
+            <Title>Your Cart is Empty</Title>
+            <p className="text-gray-700 leading-relaxed mb-10">
+              You don't have any items in your shopping cart yet.
+            </p>
 
-                <Title>Your Cart is Empty</Title>
-                <p className="text-gray-700 leading-relaxed mb-10">
-                  You don't have any items in your shopping cart yet.
-                </p>
+            <div className="flex flex-col sm:flex-row gap-5 justify-center">
+              <LinkButton
+                to={CANONICAL.storefront.absolute}
+                text="Browse our Store"
+              />
 
-                <div className="flex flex-col sm:flex-row gap-5 justify-center">
-                  <LinkButton
-                    to={CANONICAL.storefront.absolute}
-                    text="Browse our Store"
-                  />
-
-                  <AnchorButton
-                    href="https://donate.stripe.com/8wM5kHal16fC4so8ww"
-                    text="Make a Donation"
-                  />
-                </div>
-              </div>
-            </section>
-          )}
-          {cartItems && cartItems.length > 0 && (
+              <AnchorButton
+                href="https://donate.stripe.com/8wM5kHal16fC4so8ww"
+                text="Make a Donation"
+              />
+            </div>
+          </div>
+        </section>
+      )}
+      {cartItems && cartItems.length > 0 && (
+        <div className="min-h-screen bg-neutral-50 pt-25 px-5 md:px-10 lg:px-15">
+          <div className="max-w-7xl mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mt-8">
               <div className="lg:col-span-2">
                 <CartItemsSection
@@ -138,9 +137,9 @@ const CartPage = () => {
                 />
               </div>
             </div>
-          )}
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 };
