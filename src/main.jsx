@@ -67,7 +67,8 @@ export const router = createBrowserRouter([
         element: <ProductPage />,
       },
       { path: `${CANONICAL.storefront.cart.relative}`, element: <CartPage /> },
-      { path: `${CANONICAL.storefront.cart.success.relative}`, element: <CartSuccessPage /> },
+
+      { path: `${CANONICAL.storefront.cart.relative}/success`, element: <CartSuccessPage /> },
     ],
   },
 ]);

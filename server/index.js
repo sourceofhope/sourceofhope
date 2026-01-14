@@ -16,25 +16,27 @@ app.use(cors({
 
 const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
 
-// Only verify the event if you have an endpoint secret defined.
-// Otherwise use the basic event deserialized with JSON.parse
-if (endpointSecret) {
-  // Get the signature sent by Stripe
-  const signature = request.headers['stripe-signature'];
-  try {
-    event = stripe.webhooks.constructEvent(
-      request.body,
-      signature,
-      endpointSecret
-    );
-  } catch (err) {
-    console.log(`⚠️  Webhook signature verification failed.`, err.message);
-    return response.sendStatus(400);
-  }
-}
+
 
 // Stripe webhook route needs raw body, so it comes before express.json()
 app.post('/webhook', express.raw({type: 'application/json'}), (request, response) => {
+    // Only verify the event if you have an endpoint secret defined.
+    // Otherwise use the basic event deserialized with JSON.parse
+    if (endpointSecret) {
+    // Get the signature sent by Stripe
+    const signature = request.headers['stripe-signature'];
+    try {
+        event = stripe.webhooks.constructEvent(
+        request.body,
+        signature,
+        endpointSecret
+        );
+    } catch (err) {
+        console.log(`⚠️  Webhook signature verification failed.`, err.message);
+        return response.sendStatus(400);
+    }
+    }
+
   let event = request.body;
 
   // Handle the event
