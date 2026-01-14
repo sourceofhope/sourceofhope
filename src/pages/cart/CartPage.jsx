@@ -62,9 +62,9 @@ const CartPage = () => {
           name="description"
           content="The Source of Hope is a nonprofit organization providing food, education, and holistic wellness to individuals and families across the DFW area."
         />
-        <link rel="canonical" href={CANONICAL_URL.cart} />
+        <link rel="canonical" href={CANONICAL_URL.storefront.cart} />
         <meta property="og:type" content="website" />
-        <meta property="og:url" content={CANONICAL_URL.cart} />
+        <meta property="og:url" content={CANONICAL_URL.storefront.cart} />
         <meta property="og:title" content="Cart | The Source of Hope" />
         <meta
           property="og:description"
@@ -72,7 +72,7 @@ const CartPage = () => {
         />
 
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:url" content={CANONICAL_URL.cart} />
+        <meta name="twitter:url" content={CANONICAL_URL.storefront.cart} />
         <meta name="twitter:title" content="Cart | The Source of Hope" />
         <meta
           name="twitter:description"
@@ -134,6 +134,9 @@ const CartPage = () => {
                   paymentMethod={paymentMethod}
                   setPaymentMethod={setPaymentMethod}
                   total={total}
+                  subtotal={subtotal}
+                  shipping={shipping}
+                  tax={tax}
                 />
               </div>
             </div>

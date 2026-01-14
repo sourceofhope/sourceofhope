@@ -13,6 +13,7 @@ import ServePage from "./pages/serve/ServePage.jsx";
 import ConnectPage from "./pages/connect/ConnectPage.jsx";
 import MediaPage from "./pages/media/MediaPage.jsx";
 import CartPage from "./pages/cart/CartPage.jsx";
+import CartSuccessPage from "./pages/cart/CartSuccessPage.jsx";
 
 import ServingHopeProgram from "./pages/serve/programs/ServingHopeProgram.jsx";
 import EducationHopeProgram from "./pages/serve/programs/EducationHopeProgram.jsx";
@@ -66,6 +67,7 @@ export const router = createBrowserRouter([
         element: <ProductPage />,
       },
       { path: `${CANONICAL.storefront.cart.relative}`, element: <CartPage /> },
+      { path: `${CANONICAL.storefront.cart.success.relative}`, element: <CartSuccessPage /> },
     ],
   },
 ]);
