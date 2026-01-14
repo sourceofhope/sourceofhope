@@ -147,11 +147,6 @@ export default function ServingHopeProgram() {
                 building a community filled with kindness, connection, and
                 purpose.
               </p>
-              <div className="flex-col gap-3 flex md:hidden">
-                <button className="w-full rounded-2xl p-5 bg-accent-500 hover:bg-accent-600 duration-750 transition-colors font-semibold text-neutral-50">
-                  <ExpressiveAnchor to="">SIGN UP</ExpressiveAnchor>
-                </button>
-              </div>
             </div>
             <div className="w-full flex flex-col gap-5 row-start-1 md:row-start-auto">
               <iframe

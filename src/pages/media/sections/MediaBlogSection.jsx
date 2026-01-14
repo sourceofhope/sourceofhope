@@ -30,7 +30,7 @@ export default function MediaBlogPage() {
         }`}>
         {!loading && posts.length === 0 && (
           <p className="text-center w-full text-gray-500 py-10">
-            No blog posts to display.
+            No blog posts to display
           </p>
         )}
         {!loading && posts.length > 0 && (
