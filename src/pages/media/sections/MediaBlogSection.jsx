@@ -23,7 +23,7 @@ export default function MediaBlogPage() {
 
   return (
     <PageSection className="grid gap-5 relative m-0 text-sm md:text-base lg:text-lg">
-      <Title>UPDATES</Title>
+      <Title>Updates</Title>
       <Heading>See the latest</Heading>
 
       <div

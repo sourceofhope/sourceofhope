@@ -11,7 +11,6 @@ import { CANONICAL } from "../../routes";
 import { fetchContent } from "../../cms";
 import { NavLink } from "react-router-dom";
 import Icon from "../ui/Icon";
-import { useStoreContext } from "../../context/StoreCartContext";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -72,7 +71,7 @@ export default function Header() {
         } left-0 right-0 z-50 text-sm md:text-md w-full transition-[height_backdrop] duration-500 md:border-none
           ${
             open
-              ? `md:backdrop-blur-none backdrop-blur-sm ${
+              ? `md:backdrop-blur-none backdrop-blur-sm shadow-lg ${
                   isBlocking ? "border-primary-800/100 " : "border-neutral-50"
                 }`
               : "backdrop-blur-none border-none"
@@ -152,13 +151,8 @@ function HeaderMenu({ open, setOpen }) {
 
 function HeaderNavigator() {
   const [hovering, setHovering] = useState(null);
-  const { cart } = useStoreContext();
 
   const links = [
-    {
-      label: "ABOUT",
-      route: CANONICAL.about,
-    },
     {
       label: "SERVE",
       route: CANONICAL.serve,
@@ -173,6 +167,12 @@ function HeaderNavigator() {
         },
       ],
     },
+    {
+      label: "ABOUT",
+      route: CANONICAL.about,
+      children: [{ label: "TEAM", route: CANONICAL.about.team }],
+    },
+
     {
       label: "CONNECT",
       route: CANONICAL.connect,
@@ -249,6 +249,14 @@ function HeaderButton({
                 ? "rotate-90"
                 : "rotate-0 group-hover:translate-x-1"
             }`}
+            onClick={(e) => {
+              if (children.length > 0) {
+                e.preventDefault();
+                e.stopPropagation();
+              }
+
+              setHovering(label);
+            }}
             focusable="false"
             aria-hidden="true"
             role="presentation"

@@ -26,6 +26,7 @@ import { CANONICAL } from "./routes.jsx";
 import ProductPage from "./pages/storefront/ProductPage.jsx";
 import PodcastPage from "./pages/media/PodcastPage.jsx";
 import PressPage from "./pages/media/PressPage.jsx";
+import TeamPage from "./pages/about/TeamPage.jsx";
 
 export const router = createBrowserRouter([
   {
@@ -35,20 +36,19 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <HomePage /> },
 
-      { path: CANONICAL.about.relative, element: <AboutPage /> },
-      { path: CANONICAL.serve.relative, element: <ServePage /> },
-      { path: CANONICAL.connect.relative, element: <ConnectPage /> },
-
-      { path: CANONICAL.media.relative, element: <MediaPage /> },
       {
-        path: CANONICAL.media.podcast.relative,
-        element: <PodcastPage />,
+        path: CANONICAL.about.relative,
+        element: <AboutPage />,
       },
       {
-        path: CANONICAL.media.press.relative,
-        element: <PressPage />,
+        path: CANONICAL.about.team.relative,
+        element: <TeamPage />,
       },
 
+      {
+        path: CANONICAL.serve.relative,
+        element: <ServePage />,
+      },
       {
         path: CANONICAL.serve.servingHope.relative,
         element: <ServingHopeProgram />,
@@ -70,13 +70,41 @@ export const router = createBrowserRouter([
         element: <InternationalHopeProgram />,
       },
 
-      { path: CANONICAL.member.relative, element: <FormPage /> },
-      { path: CANONICAL.storefront.relative, element: <StorefrontPage /> },
+      {
+        path: CANONICAL.connect.relative,
+        element: <ConnectPage />,
+      },
+
+      {
+        path: CANONICAL.media.relative,
+        element: <MediaPage />,
+      },
+      {
+        path: CANONICAL.media.podcast.relative,
+        element: <PodcastPage />,
+      },
+      {
+        path: CANONICAL.media.press.relative,
+        element: <PressPage />,
+      },
+
+      {
+        path: CANONICAL.member.relative,
+        element: <FormPage />,
+      },
+
+      {
+        path: CANONICAL.storefront.relative,
+        element: <StorefrontPage />,
+      },
       {
         path: `${CANONICAL.storefront.products.relative}/:slug`,
         element: <ProductPage />,
       },
-      { path: `${CANONICAL.storefront.cart.relative}`, element: <CartPage /> },
+      {
+        path: `${CANONICAL.storefront.cart.relative}`,
+        element: <CartPage />,
+      },
     ],
   },
 ]);

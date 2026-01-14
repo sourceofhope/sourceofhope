@@ -4,7 +4,12 @@ export const ASSET_VERSION = "v2";
 export const ROUTES = {
   home: { path: "" },
 
-  about: { path: "about" },
+  about: {
+    path: "about",
+    children: {
+      team: "team",
+    },
+  },
 
   serve: {
     path: "serve",
