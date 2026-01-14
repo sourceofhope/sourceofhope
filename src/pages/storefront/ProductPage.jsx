@@ -133,14 +133,10 @@ export default function ProductPage() {
               <HeartIcon className="w-10 h-10 text-accent-500" />
             </div>
 
-            <Title>
-              This Product Isn't Here,
-              <br /> But Hope Always Is
-            </Title>
+            <Title>We Can't Find That Product</Title>
             <p className="text-gray-700 leading-relaxed mb-10">
               We couldn't find the product you were looking for, but every visit
-              here still supports our mission of feeding families, empowering
-              students, and strengthening communities.
+              here still supports our mission.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-5 justify-center">
