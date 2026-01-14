@@ -4,8 +4,9 @@ import { useEffect } from "react";
 import ExpressiveAnchor from "../../../components/ui/expressive/ExpressiveAnchor";
 import Heading from "../../../components/ui/text/Heading";
 import Title from "../../../components/ui/text/Title";
-import { CANONICAL_URL } from "../../../routes";
+import { ASSET_VERSION, CANONICAL_URL } from "../../../routes";
 import { AnchorButton } from "../../../components/ui/Button";
+import Carousel from "../../../components/ui/Carousel";
 
 export default function ServingHopeProgram() {
   const setBlocking = useSetHeaderBlocking();
@@ -59,7 +60,7 @@ export default function ServingHopeProgram() {
           <Title>Serving & Sharing Hope</Title>
           <Heading>Monthly Feeding with Dignity</Heading>
         </div>
-        <article className="grid gap-5 text-neutral-600">
+        <article className="grid gap-5">
           <p>
             <strong className="font-semibold">Serving Hope</strong> and{" "}
             <strong className="font-semibold">Sharing Hope</strong> are two
@@ -104,7 +105,7 @@ export default function ServingHopeProgram() {
           <Heading className="bold tracking-wide border-b-2 border-neutral-300 pb-2">
             Why Volunteer With Us?
           </Heading>
-          <ul className="grid gap-2 list-inside text-neutral-800 list-disc font-medium">
+          <ul className="grid gap-1">
             <li>Make a real difference in your community</li>
             <li>Support hunger relief through Serving Hope and Sharing Hope</li>
             <li>Gain valuable experience while giving back</li>
@@ -131,7 +132,7 @@ export default function ServingHopeProgram() {
 
         <article className="grid gap-5">
           <Title>See our Community Impact</Title>
-          <div className="grid gap-5 md:gap-5 items-center grid-flow-row md:grid-cols-[6fr_5fr]">
+          <div className="grid grid-flow-row md:grid-cols-[6fr_3fr] gap-5 items-center">
             <div className="grid gap-5 row-start-2 md:row-start-auto">
               <p>
                 This recap from our January 2025 Serving Hope for Hunger event
@@ -147,25 +148,76 @@ export default function ServingHopeProgram() {
                 building a community filled with kindness, connection, and
                 purpose.
               </p>
-            </div>
-            <div className="w-full flex flex-col gap-5 row-start-1 md:row-start-auto">
-              <iframe
-                className="rounded-2xl justify-self-center aspect-video w-full"
-                src="https://www.youtube.com/embed/Joax8zGMSkM?si=hkYZqUtVdMLZir0l"
-                title="YouTube video player"
-                frameborder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                referrerpolicy="strict-origin-when-cross-origin"
-                allowfullscreen></iframe>
               <AnchorButton
-                text="SIGN UP"
+                full
+                text="REGISTER NOW"
                 href="https://www.eventbrite.com/o/quynh-chau-stone-92264017613"
-                className="hidden md:flex"
               />
+            </div>
+            <div className="space-y-3 justify-self-end w-full">
+              <Carousel
+                hideControls
+                auto
+                className="rounded-2xl object-cover w-full aspect-square">
+                <CarouselCard
+                  src={`/${ASSET_VERSION}/educationHope/Carousel-1.webp`}
+                />
+                <CarouselCard
+                  src={`/${ASSET_VERSION}/educationHope/Carousel-2.webp`}
+                />
+                <CarouselCard
+                  src={`/${ASSET_VERSION}/educationHope/Carousel-3.webp`}
+                />
+                <CarouselCard
+                  src={`/${ASSET_VERSION}/educationHope/Carousel-4.webp`}
+                />
+                <CarouselCard
+                  src={`/${ASSET_VERSION}/educationHope/Carousel-5.webp`}
+                />
+                <CarouselCard
+                  src={`/${ASSET_VERSION}/educationHope/Carousel-6.webp`}
+                />
+                <CarouselCard
+                  src={`/${ASSET_VERSION}/educationHope/Carousel-7.webp`}
+                />
+                <CarouselCard
+                  src={`/${ASSET_VERSION}/educationHope/Carousel-8.webp`}
+                />
+                <CarouselCard
+                  src={`/${ASSET_VERSION}/educationHope/Carousel-9.webp`}
+                />
+                <CarouselCard
+                  src={`/${ASSET_VERSION}/educationHope/Carousel-10.webp`}
+                />
+              </Carousel>
             </div>
           </div>
         </article>
       </section>
     </>
+  );
+}
+
+function CarouselCard({ src, alt }) {
+  return (
+    <button
+      className="
+    relative w-full
+    group overflow-hidden rounded-2xl text-accent-background aspect-square
+  ">
+      <img
+        src={src}
+        alt={alt}
+        className="w-full h-full object-cover transition-transform brightness-[.8] contrast-[1.1]"
+      />
+      <div className="absolute bottom-0 bg-gradient-to-t from-black/60 to-transparent rounded-2xl h-[60%] w-full text-left">
+        <div className="absolute bottom-0 w-full p-5 text-neutral-50">
+          <p className="text-sm uppercase font-semibold">
+            Serving & Sharing Hope
+          </p>
+          <p className="text-lg font-bold">Giving In Our Community</p>
+        </div>
+      </div>
+    </button>
   );
 }

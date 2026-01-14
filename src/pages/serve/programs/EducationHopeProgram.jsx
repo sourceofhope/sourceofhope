@@ -254,10 +254,12 @@ export default function EducationHopeProgram() {
                 />
               </Carousel>
               <AnchorButton
+                full
                 text="GET TUTORING"
                 href="https://docs.google.com/forms/d/e/1FAIpQLSezTUqqIB7QuWcX5eL5AeXG-rXRRN6X6ayj7eDIVnQSooEmgQ/viewform"
               />
               <AnchorButton
+                full
                 text="JOIN OUR TUTORS"
                 href="https://docs.google.com/forms/d/e/1FAIpQLSeCTTQRJJuEKLDlp5JopwrhCXiDVrOc5rYohqnZpW1YvppDiw/viewform"
               />
