@@ -9,6 +9,12 @@ import ExpressiveCard from "../../../components/ui/expressive/ExpressiveCard";
 import { ASSET_VERSION, CANONICAL_URL } from "../../../routes";
 
 import { AnchorButton } from "../../../components/ui/Button";
+import {
+  AcademicCapIcon,
+  CalculatorIcon,
+  LanguageIcon,
+} from "@heroicons/react/20/solid";
+import Icon from "../../../components/ui/Icon";
 
 export default function EducationHopeProgram() {
   const setBlocking = useSetHeaderBlocking();
@@ -194,22 +200,40 @@ export default function EducationHopeProgram() {
                 <Heading className="border-b-2 border-neutral-300 pb-2">
                   Tutoring Services
                 </Heading>
-                <ul className="grid gap-2 pl-3 text-neutral-800 list-disc font-medium">
-                  <li>Test prep for STAAR, SAT, and AP exams</li>
-                  <li>Math subjects such as Algebra and Geometry</li>
-                  <li>English topics including vocabulary and grammar</li>
+                <ul className="grid gap-1">
+                  <li className="flex flex-row items-center gap-3">
+                    <Icon className="text-accent-500 aspect-square h-[1em]">
+                      <AcademicCapIcon />
+                    </Icon>
+                    <p>Test prep for STAAR, SAT, and AP exams</p>
+                  </li>
+                  <li className="flex flex-row items-center gap-3">
+                    <Icon className="text-accent-500 aspect-square h-[1em]">
+                      <CalculatorIcon />
+                    </Icon>
+                    <p>Math subjects such as Algebra and Geometry</p>
+                  </li>
+                  <li className="flex flex-row items-center gap-3">
+                    <Icon className="text-accent-500 aspect-square h-[1em]">
+                      <LanguageIcon />
+                    </Icon>
+                    <p>English topics including vocabulary and grammar</p>
+                  </li>
                 </ul>
               </article>
               <p>
-                All tutoring sessions are held <strong>virtually</strong>,
-                allowing students to participate from any location with flexible
+                All tutoring sessions are held{" "}
+                <strong className="font-semibold">virtually</strong>, allowing
+                students to participate from any location with flexible
                 scheduling options.
               </p>
               <p className="pl-5 py-0 border-l-4 border-accent-600">
-                <strong>The Source of Hope</strong> is currently hiring ILA
-                (Integrated Language Arts) tutors. Both students and adults can
-                apply. Tutors receive <strong>50%</strong> of session earnings,
-                while the remaining proceeds support our community programs.
+                <strong className="font-semibold">The Source of Hope</strong> is
+                currently hiring ILA (Integrated Language Arts) tutors. Both
+                students and adults can apply. Tutors receive{" "}
+                <strong className="font-semibold">50%</strong> of session
+                earnings, while the remaining proceeds support our community
+                programs.
               </p>
               <p>
                 If you specialize in a subject not listed above, we still

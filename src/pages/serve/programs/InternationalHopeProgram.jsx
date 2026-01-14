@@ -86,7 +86,7 @@ export default function InternationalHopeProgram() {
             <Heading className=" border-b-2 border-neutral-300 pb-2">
               OUR GLOBAL PRIORITIES
             </Heading>
-            <div className="grid gap-1">
+            <ul className="grid gap-1">
               <li className="flex flex-row items-center gap-3">
                 <Icon className="text-accent-500 aspect-square h-[1em]">
                   <LanguageIcon />
@@ -114,7 +114,7 @@ export default function InternationalHopeProgram() {
                   distribution, hygiene kits, and mentorship.
                 </p>
               </li>
-            </div>
+            </ul>
           </article>
           <p>
             By fostering international relationships grounded in trust and

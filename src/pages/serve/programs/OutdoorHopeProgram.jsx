@@ -125,7 +125,7 @@ export default function OutdoorHopeProgram() {
                 to learn more about how to operate a firearm carefully!
               </Blockquote>
               <p>
-                We’ll bring The Source of Hope family together for an annual
+                We'll bring The Source of Hope family together for an annual
                 camping trip each year, offering a unique chance to bond and
                 learn!
               </p>
