@@ -2,9 +2,7 @@ import { CANONICAL_URL } from "../../routes";
 import PageHeader from "../PageHeader";
 
 import { Helmet } from "react-helmet";
-import MediaPressSection from "./sections/MediaPressSection";
 import MediaNewsletterSection from "./sections/MediaNewsletterSection";
-import MediaPodcastSection from "./sections/MediaPodcastSection";
 import MediaBlogPage from "./sections/MediaBlogSection";
 
 export default function MediaPage() {
@@ -44,8 +42,6 @@ export default function MediaPage() {
       </PageHeader>
       <MediaBlogPage />
       <MediaNewsletterSection />
-      <MediaPodcastSection />
-      <MediaPressSection />
     </>
   );
 }

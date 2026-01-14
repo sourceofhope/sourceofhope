@@ -18,7 +18,13 @@ export const ROUTES = {
   },
 
   connect: { path: "connect" },
-  media: { path: "media" },
+  media: {
+    path: "media",
+    children: {
+      podcast: "podcast",
+      press: "press",
+    },
+  },
   member: { path: "members" },
   storefront: {
     path: "store",

@@ -24,6 +24,8 @@ import FormPage from "./pages/form/FormPage.jsx";
 import StorefrontPage from "./pages/storefront/StorefrontPage.jsx";
 import { CANONICAL } from "./routes.jsx";
 import ProductPage from "./pages/storefront/ProductPage.jsx";
+import PodcastPage from "./pages/media/PodcastPage.jsx";
+import PressPage from "./pages/media/PressPage.jsx";
 
 export const router = createBrowserRouter([
   {
@@ -36,7 +38,16 @@ export const router = createBrowserRouter([
       { path: CANONICAL.about.relative, element: <AboutPage /> },
       { path: CANONICAL.serve.relative, element: <ServePage /> },
       { path: CANONICAL.connect.relative, element: <ConnectPage /> },
+
       { path: CANONICAL.media.relative, element: <MediaPage /> },
+      {
+        path: CANONICAL.media.podcast.relative,
+        element: <PodcastPage />,
+      },
+      {
+        path: CANONICAL.media.press.relative,
+        element: <PressPage />,
+      },
 
       {
         path: CANONICAL.serve.servingHope.relative,

@@ -1,9 +1,9 @@
 import { fetchContent, getResponsiveImage } from "../../../cms";
-import { AnchorButton } from "../../../components/ui/Button";
+import { AnchorButton, LinkButton } from "../../../components/ui/Button";
 import Carousel from "../../../components/ui/Carousel";
 import Heading from "../../../components/ui/text/Heading";
 import Title from "../../../components/ui/text/Title";
-import { ASSET_VERSION } from "../../../routes";
+import { ASSET_VERSION, CANONICAL } from "../../../routes";
 import PageSection from "../../PageSection";
 
 import { useState, useEffect } from "react";
@@ -23,9 +23,11 @@ export default function MediaBlogPage() {
 
   return (
     <PageSection className="grid gap-5 relative m-0 text-sm md:text-base lg:text-lg">
-      <Title>Our Blog</Title>
+      <Title>UPDATES</Title>
+      <Heading>See the latest</Heading>
+
       <div
-        className={`min-h-40 flex items-center ${
+        className={`min-h-60 flex items-center ${
           loading ? "opacity-0" : "opacity-100 transition-opacity duration-750"
         }`}>
         {!loading && posts.length === 0 && (
@@ -40,6 +42,21 @@ export default function MediaBlogPage() {
             ))}
           </Carousel>
         )}
+      </div>
+      <div className="flex flex-col lg:flex-row justify-items-center gap-5 text-center text-sm md:text-md">
+        <LinkButton
+          to={CANONICAL.media.press.absolute}
+          full
+          className="text-neutral-950 justify-between bg-neutral-200 hover:bg-neutral-300"
+          text="See our Press Coverage"
+        />
+        <LinkButton
+          to={CANONICAL.media.podcast.absolute}
+          full
+          className="text-neutral-950 justify-between bg-neutral-200 hover:bg-neutral-300"
+          text="Watch our Podcasts"
+        />
+        <div className="w-full"></div>
       </div>
     </PageSection>
   );

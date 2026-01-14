@@ -181,6 +181,10 @@ function HeaderNavigator() {
     {
       label: "MEDIA",
       route: CANONICAL.media,
+      children: [
+        { label: "PRESS", route: CANONICAL.media.press },
+        { label: "PODCAST", route: CANONICAL.media.podcast },
+      ],
     },
     {
       label: "MEMBERS",
@@ -232,6 +236,7 @@ function HeaderButton({
     <div
       className="w-full select-none"
       onMouseEnter={() => setHovering(label)}
+      onClick={() => setHovering(label === hovering ? null : label)}
       onMouseLeave={() => setHovering(null)}>
       <NavLink
         aria-label={ariaLabel}
@@ -248,18 +253,33 @@ function HeaderButton({
         </Icon>
       </NavLink>
       {hovering == label && children.length > 0 && (
-        <div className="absolute hidden md:flex z-50 bg-neutral-50 min-w-40 rounded-lg p-3 py-5 shadow-md text-accent-800 flex-col font-semibold text-sm">
+        <>
+          <div className="absolute hidden md:flex z-50 bg-neutral-50 min-w-40 rounded-lg p-3 py-5 shadow-md text-accent-800 flex-col font-semibold text-sm">
+            {children.map(({ label, route }) => {
+              return (
+                <NavLink
+                  className="py-2.5 hover:bg-neutral-200 duration-300 transition-colors !no-underline px-3 rounded-md"
+                  key={route.absolute}
+                  to={route.absolute}>
+                  {label}
+                </NavLink>
+              );
+            })}
+          </div>
           {children.map(({ label, route }) => {
             return (
               <NavLink
-                className="py-2.5 hover:bg-neutral-200 duration-300 transition-colors !no-underline px-3 rounded-md"
-                key={route.absolute}
-                to={route.absolute}>
+                onClick={(e) => {
+                  e.stopPropagation();
+                }}
+                aria-label={ariaLabel}
+                to={route.absolute}
+                className={`pl-5 md:hidden !no-underline group transition-[color_transform] ease-in-out duration-300 inline-flex w-full justify-between items-center gap-1 focus:outline-none ${className}`}>
                 {label}
               </NavLink>
             );
           })}
-        </div>
+        </>
       )}
     </div>
   );
