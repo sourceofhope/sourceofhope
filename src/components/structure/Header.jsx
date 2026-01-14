@@ -3,7 +3,6 @@ import {
   Bars3Icon,
   ChevronRightIcon,
   XMarkIcon,
-  ShoppingCartIcon,
 } from "@heroicons/react/20/solid";
 
 import Favicon from "../ui/Favicon";
@@ -245,7 +244,11 @@ function HeaderButton({
         <span>{label}</span>
         <Icon>
           <ChevronRightIcon
-            className="w-6 h-6 transition-transform duration-500 group-hover:translate-x-1"
+            className={`w-6 h-6 transition-transform duration-500 ${
+              hovering === label && children.length > 0
+                ? "rotate-90"
+                : "rotate-0 group-hover:translate-x-1"
+            }`}
             focusable="false"
             aria-hidden="true"
             role="presentation"

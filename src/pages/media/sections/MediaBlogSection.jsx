@@ -43,21 +43,6 @@ export default function MediaBlogPage() {
           </Carousel>
         )}
       </div>
-      <div className="flex flex-col lg:flex-row justify-items-center gap-5 text-center text-sm md:text-md">
-        <LinkButton
-          to={CANONICAL.media.press.absolute}
-          full
-          className="text-neutral-950 justify-between bg-neutral-200 hover:bg-neutral-300"
-          text="See our Press Coverage"
-        />
-        <LinkButton
-          to={CANONICAL.media.podcast.absolute}
-          full
-          className="text-neutral-950 justify-between bg-neutral-200 hover:bg-neutral-300"
-          text="Watch our Podcasts"
-        />
-        <div className="w-full"></div>
-      </div>
     </PageSection>
   );
 }
