@@ -289,9 +289,9 @@ export default function EducationHopeProgram() {
 
 function CarouselCard({ src, alt }) {
   return (
-    <button
+    <div
       className="
-    relative w-full
+    relative h-full
     group overflow-hidden rounded-2xl text-accent-background aspect-square
   ">
       <img
@@ -305,6 +305,6 @@ function CarouselCard({ src, alt }) {
           <p className="text-lg font-bold">Empowering minds everywhere</p>
         </div>
       </div>
-    </button>
+    </div>
   );
 }

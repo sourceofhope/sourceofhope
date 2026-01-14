@@ -160,34 +160,34 @@ export default function ServingHopeProgram() {
                 auto
                 className="rounded-2xl object-cover w-full aspect-square">
                 <CarouselCard
-                  src={`/${ASSET_VERSION}/educationHope/Carousel-1.webp`}
+                  src={`/${ASSET_VERSION}/servingHope/Carousel-1.webp`}
                 />
                 <CarouselCard
-                  src={`/${ASSET_VERSION}/educationHope/Carousel-2.webp`}
+                  src={`/${ASSET_VERSION}/servingHope/Carousel-2.webp`}
                 />
                 <CarouselCard
-                  src={`/${ASSET_VERSION}/educationHope/Carousel-3.webp`}
+                  src={`/${ASSET_VERSION}/servingHope/Carousel-3.webp`}
                 />
                 <CarouselCard
-                  src={`/${ASSET_VERSION}/educationHope/Carousel-4.webp`}
+                  src={`/${ASSET_VERSION}/servingHope/Carousel-4.webp`}
                 />
                 <CarouselCard
-                  src={`/${ASSET_VERSION}/educationHope/Carousel-5.webp`}
+                  src={`/${ASSET_VERSION}/servingHope/Carousel-5.webp`}
                 />
                 <CarouselCard
-                  src={`/${ASSET_VERSION}/educationHope/Carousel-6.webp`}
+                  src={`/${ASSET_VERSION}/servingHope/Carousel-6.webp`}
                 />
                 <CarouselCard
-                  src={`/${ASSET_VERSION}/educationHope/Carousel-7.webp`}
+                  src={`/${ASSET_VERSION}/servingHope/Carousel-7.webp`}
                 />
                 <CarouselCard
-                  src={`/${ASSET_VERSION}/educationHope/Carousel-8.webp`}
+                  src={`/${ASSET_VERSION}/servingHope/Carousel-8.webp`}
                 />
                 <CarouselCard
-                  src={`/${ASSET_VERSION}/educationHope/Carousel-9.webp`}
+                  src={`/${ASSET_VERSION}/servingHope/Carousel-9.webp`}
                 />
                 <CarouselCard
-                  src={`/${ASSET_VERSION}/educationHope/Carousel-10.webp`}
+                  src={`/${ASSET_VERSION}/servingHope/Carousel-10.webp`}
                 />
               </Carousel>
             </div>
@@ -200,9 +200,9 @@ export default function ServingHopeProgram() {
 
 function CarouselCard({ src, alt }) {
   return (
-    <button
+    <div
       className="
-    relative w-full
+    relative h-full
     group overflow-hidden rounded-2xl text-accent-background aspect-square
   ">
       <img
@@ -218,6 +218,6 @@ function CarouselCard({ src, alt }) {
           <p className="text-lg font-bold">Giving In Our Community</p>
         </div>
       </div>
-    </button>
+    </div>
   );
 }
