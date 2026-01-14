@@ -11,29 +11,36 @@ export default function PressPage() {
   return (
     <>
       <Helmet>
-        <title>Press | The Source of Hope</title>
+        <title>Press & Media | The Source of Hope</title>
         <meta
           name="description"
-          content="Explore The Source of Hope media hub featuring podcasts, radio shows, videos, press coverage, and stories highlighting our mission and community impact across Dallas–Fort Worth."
+          content="Explore The Source of Hope Press & Media hub featuring television coverage, podcasts, radio interviews, videos, and stories highlighting our nonprofit’s mission and community impact across Dallas–Fort Worth and beyond."
         />
         <link rel="canonical" href={CANONICAL_URL.media} />
 
         <meta property="og:type" content="website" />
         <meta property="og:url" content={CANONICAL_URL.media} />
-        <meta property="og:title" content="Media | The Source of Hope" />
+        <meta
+          property="og:title"
+          content="Press & Media | The Source of Hope"
+        />
         <meta
           property="og:description"
-          content="Watch, listen, and explore podcasts, radio segments, videos, and press coverage sharing the heart and impact of The Source of Hope."
+          content="Watch and listen to television features, interviews, podcasts, and press coverage showcasing the heart, mission, and community impact of The Source of Hope."
         />
 
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content={CANONICAL_URL.media} />
-        <meta name="twitter:title" content="Media | The Source of Hope" />
+        <meta
+          name="twitter:title"
+          content="Press & Media | The Source of Hope"
+        />
         <meta
           name="twitter:description"
-          content="Podcasts, radio shows, videos, and press stories sharing hope, healing, and community impact across DFW."
+          content="Discover television segments, interviews, podcasts, and press stories sharing hope, healing, and community transformation through The Source of Hope."
         />
       </Helmet>
+
       <PageHeader>
         <h2 className="font-urbanist font-bold text-neutral-50 text-xxxlg">
           PRESS

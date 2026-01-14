@@ -36,30 +36,22 @@ export default function ServingHopeProgram() {
         <meta property="og:url" content={CANONICAL_URL.servingHope} />
         <meta
           property="og:title"
-          content="Serving Hope & Sharing Hope | The Source of Hope"
+          content="Serving & Sharing Hope | The Source of Hope"
         />
         <meta
           property="og:description"
           content="Be part of Serving Hope and Sharing Hope—monthly community outreach programs providing hot meals, support, and compassion to the homeless and families in need throughout DFW. Volunteer and make an impact."
-        />
-        <meta
-          property="og:image"
-          content="https://sourceofhope.org/assets/social-share-serving-hope.jpg"
         />
 
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content={CANONICAL_URL.servingHope} />
         <meta
           name="twitter:title"
-          content="Serving Hope & Sharing Hope | The Source of Hope"
+          content="Serving & Sharing Hope | The Source of Hope"
         />
         <meta
           name="twitter:description"
           content="Join our mission to serve the homeless and families in need through The Source of Hope’s Serving Hope & Sharing Hope programs. Volunteer for meal prep, cooking, and community service each month."
-        />
-        <meta
-          name="twitter:image"
-          content="https://sourceofhope.org/assets/social-share-serving-hope.jpg"
         />
       </Helmet>
       <section className="w-full md:justify-items-left items-center grid gap-5 pt-25 p-5 lg:px-35 text-sm md:text-md lg:text-lg">

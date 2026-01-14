@@ -65,31 +65,18 @@ export default function HomeResourcesSection() {
 
 function HomeResourceCard({ title, caption, src, to }) {
   const [active, setActive] = useState(false);
-  const [loaded, setLoaded] = useState(false);
 
   return (
     <>
       <button
         onClick={() => setActive(true)}
-        className={`${
-          loaded ? "opacity-100" : "opacity-0"
-        } relative min-h-[200px] md:hidden w-full h-full group overflow-hidden rounded-xl aspect-square transition-opacity`}>
-        <HomeResourceCardInner
-          setLoaded={setLoaded}
-          src={src}
-          caption={caption}
-          title={title}
-        />
+        className="relative min-h-[200px] md:hidden w-full h-full group overflow-hidden rounded-xl aspect-square">
+        <HomeResourceCardInner src={src} caption={caption} title={title} />
       </button>
       <NavLink
         to={to}
         className="relative hidden md:block w-full h-full group overflow-hidden rounded-xl aspect-square">
-        <HomeResourceCardInner
-          setLoaded={setLoaded}
-          src={src}
-          caption={caption}
-          title={title}
-        />
+        <HomeResourceCardInner src={src} caption={caption} title={title} />
       </NavLink>
       <Overlay active={active} setActive={setActive}>
         <div className="flex justify-between items-start gap-5">
@@ -122,15 +109,19 @@ function HomeResourceCard({ title, caption, src, to }) {
   );
 }
 
-function HomeResourceCardInner({ src, caption, title, setLoaded }) {
+function HomeResourceCardInner({ src, caption, title }) {
+  const [loaded, setLoaded] = useState(false);
+
   return (
     <>
       <img
-        onLoad={setLoaded(true)}
         src={src}
         alt={caption}
-        onError={(e) => (e.currentTarget.src = "/core/TSOH-Family.jpg")}
-        className="inset-0 w-full h-full object-cover transition-transform brightness-[.8] contrast-[1.1] bg-accent-900"
+        onLoad={(e) => setLoaded(true)}
+        onError={(e) => (e.currentTarget.src = "/core/placeholder.webp")}
+        className={`${
+          loaded ? "opacity-100" : "opacity-0"
+        } inset-0 w-full h-full object-cover transition-transform brightness-[.8] contrast-[1.1] bg-accent-900`}
       />
       <div
         className="absolute bottom-0 left-0 w-full p-5 

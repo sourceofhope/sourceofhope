@@ -10,29 +10,36 @@ export default function PodcastPage() {
   return (
     <>
       <Helmet>
-        <title>Podcasts | The Source of Hope</title>
+        <title>Podcasts & Radio | The Source of Hope</title>
         <meta
           name="description"
-          content="Explore The Source of Hope media hub featuring podcasts, radio shows, videos, press coverage, and stories highlighting our mission and community impact across Dallas–Fort Worth."
+          content="Listen to The Source of Hope podcasts and radio programs featuring community stories, wellness conversations, nonprofit impact, and uplifting messages of hope across Dallas–Fort Worth and beyond."
         />
-        <link rel="canonical" href={CANONICAL_URL.media} />
+        <link rel="canonical" href={CANONICAL_URL.podcast} />
 
         <meta property="og:type" content="website" />
-        <meta property="og:url" content={CANONICAL_URL.media} />
-        <meta property="og:title" content="Media | The Source of Hope" />
+        <meta property="og:url" content={CANONICAL_URL.podcast} />
+        <meta
+          property="og:title"
+          content="Podcasts & Radio | The Source of Hope"
+        />
         <meta
           property="og:description"
-          content="Watch, listen, and explore podcasts, radio segments, videos, and press coverage sharing the heart and impact of The Source of Hope."
+          content="Explore The QC Show, Radio Saigon Dallas, and other Source of Hope podcasts sharing community stories, wellness insights, nonprofit impact, and messages of hope."
         />
 
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:url" content={CANONICAL_URL.media} />
-        <meta name="twitter:title" content="Media | The Source of Hope" />
+        <meta name="twitter:url" content={CANONICAL_URL.podcast} />
+        <meta
+          name="twitter:title"
+          content="Podcasts & Radio | The Source of Hope"
+        />
         <meta
           name="twitter:description"
-          content="Podcasts, radio shows, videos, and press stories sharing hope, healing, and community impact across DFW."
+          content="Listen to inspiring podcasts and radio programs from The Source of Hope—sharing stories of healing, resilience, wellness, and community transformation."
         />
       </Helmet>
+
       <PageHeader>
         <h2 className="font-urbanist font-bold text-neutral-50 text-xxxlg">
           PODCAST

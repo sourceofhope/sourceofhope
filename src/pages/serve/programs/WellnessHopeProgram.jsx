@@ -33,10 +33,6 @@ export default function WellnessHopeProgram() {
           property="og:description"
           content="Experience compassionate holistic care through the Wellness of Hope Program. We provide reduced-cost wellness treatments—including fire cupping, lymphatic drainage, ear candling, and detox therapies—to seniors, teachers, first responders, and families in need."
         />
-        <meta
-          property="og:image"
-          content="https://sourceofhope.org/assets/social-share-wellness-of-hope.jpg"
-        />
 
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content={CANONICAL_URL.wellnessHope} />
@@ -47,10 +43,6 @@ export default function WellnessHopeProgram() {
         <meta
           name="twitter:description"
           content="Join the Wellness of Hope Program, offering holistic wellness treatments and assessments at reduced cost for low-income individuals, seniors, educators, first responders, and families throughout Dallas–Fort Worth."
-        />
-        <meta
-          name="twitter:image"
-          content="https://sourceofhope.org/assets/social-share-wellness-of-hope.jpg"
         />
       </Helmet>
       <section className="w-full md:justify-items-left items-center grid gap-5 pt-25 p-5 lg:px-35 text-sm md:text-md lg:text-lg">
@@ -145,7 +137,7 @@ export default function WellnessHopeProgram() {
                 understand your unique wellness needs. These assessments guide
                 you toward the most suitable treatments offered through our
                 partnership with StoneIWC, reinforcing our shared commitment to
-                supporting the community’s complete well-being.
+                supporting the community's complete well-being.
               </p>
             </div>
             <div className="flex flex-col gap-5">

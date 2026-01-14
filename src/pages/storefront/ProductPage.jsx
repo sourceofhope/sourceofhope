@@ -77,17 +77,23 @@ export default function ProductPage() {
   return (
     <>
       <Helmet>
-        <title> {product?.title || "Missing Product"} | Products </title>
+        <title> {slug} | Products </title>
 
         <meta
           name="description"
           content="Shop The Source of Hope Storefront and support our mission — every purchase helps provide meals, education, and holistic wellness services to families and communities across North Texas."
         />
 
-        <link rel="canonical" href={CANONICAL_URL.storefront} />
+        <link
+          rel="canonical"
+          href={`${CANONICAL_URL.storefront.product}/${slug}`}
+        />
 
         <meta property="og:type" content="website" />
-        <meta property="og:url" content={CANONICAL_URL.storefront} />
+        <meta
+          property="og:url"
+          content={`${CANONICAL_URL.storefront.product}/${slug}`}
+        />
         <meta
           property="og:title"
           content="Shop With Purpose | The Source of Hope"
@@ -98,7 +104,10 @@ export default function ProductPage() {
         />
 
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:url" content={CANONICAL_URL.storefront} />
+        <meta
+          name="twitter:url"
+          content={`${CANONICAL_URL.storefront.product}/${slug}`}
+        />
         <meta
           name="twitter:title"
           content="Shop With Purpose | The Source of Hope"
@@ -124,7 +133,10 @@ export default function ProductPage() {
               <HeartIcon className="w-10 h-10 text-accent-500" />
             </div>
 
-            <Title>This Product Has Moved, But Hope Hasn't</Title>
+            <Title>
+              This Product Isn't Here,
+              <br /> But Hope Always Is
+            </Title>
             <p className="text-gray-700 leading-relaxed mb-10">
               We couldn't find the product you were looking for, but every visit
               here still supports our mission of feeding families, empowering

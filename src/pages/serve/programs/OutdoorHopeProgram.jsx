@@ -6,7 +6,8 @@ import Title from "../../../components/ui/text/Title";
 import Heading from "../../../components/ui/text/Heading";
 import ExpressiveCard from "../../../components/ui/expressive/ExpressiveCard";
 import Blockquote from "../../../components/ui/text/Blockquote";
-import { ASSET_VERSION } from "../../../routes";
+import { ASSET_VERSION, CANONICAL_URL } from "../../../routes";
+import ExpressiveAnchor from "../../../components/ui/expressive/ExpressiveAnchor";
 
 export default function OutdoorHopeProgram() {
   const setBlocking = useSetHeaderBlocking();
@@ -17,13 +18,43 @@ export default function OutdoorHopeProgram() {
   }, [setBlocking]);
   return (
     <>
-      <Helmet>/* *TODO: Needs Helmet */</Helmet>
+      <Helmet>
+        <title>Hope for the Great Outdoors Program | The Source of Hope</title>
+        <meta
+          name="description"
+          content="Discover The Source of Hope’s Hope for the Great Outdoors Program—connecting youth and families with nature through camping, fishing, hunting, survival skills, and outdoor education. Building confidence, leadership, and respect for the environment."
+        />
+        <link rel="canonical" href={CANONICAL_URL.outdoorHope} />
+
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={CANONICAL_URL.outdoorHope} />
+        <meta
+          property="og:title"
+          content="Hope for the Great Outdoors Program | The Source of Hope"
+        />
+        <meta
+          property="og:description"
+          content="Join Hope for the Great Outdoors—an outdoor education and leadership program offering camping, fishing, hunting, survival skills, and environmental stewardship experiences for youth and families."
+        />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content={CANONICAL_URL.outdoorHope} />
+        <meta
+          name="twitter:title"
+          content="Hope for the Great Outdoors Program | The Source of Hope"
+        />
+        <meta
+          name="twitter:description"
+          content="Experience nature with purpose through The Source of Hope’s Hope for the Great Outdoors Program—teaching life skills, confidence, leadership, and environmental stewardship through outdoor adventures."
+        />
+      </Helmet>
+
       <section className="w-full md:justify-items-left items-center grid gap-5 pt-25 p-5 lg:px-35 text-sm md:text-md lg:text-lg">
         <article className="grid gap-3 justify-self-start justify-start">
           <Title>Hope For The Outdoors</Title>
           <Heading>Teaching our Community</Heading>
         </article>
-        <article className="grid gap-5 text-neutral-600">
+        <article className="grid gap-5">
           <p>
             At The Source of Hope, we are excited to introduce Hope for the
             Great Outdoors, a program dedicated to bringing outdoor experiences
@@ -36,7 +67,7 @@ export default function OutdoorHopeProgram() {
           <p>
             Led by our founder, Wesley Stone, a retired wildlife biologist, this
             program provides valuable education on camping, fishing, hunting,
-            and outdoor survival skills. Whether you’re a beginner or an outdoor
+            and outdoor survival skills. Whether you're a beginner or an outdoor
             enthusiast, this initiative is designed to inspire confidence in
             nature while fostering a deep respect for wildlife and the
             environment.
@@ -58,16 +89,12 @@ export default function OutdoorHopeProgram() {
           <div className="grid gap-1">
             <div className="grid grid-cols-[2fr_4fr] justify-between">
               <span className="font-medium">Volunteer</span>
-              <span>
-                Help us organize and lead outdoor activities. No experience
-                required, just a passion for nature and community
-              </span>
+              <span>Help us organize and lead outdoor activities</span>
             </div>
             <div className="grid grid-cols-[2fr_4fr] justify-between">
               <span className="font-medium">Sponsor</span>
               <span>
-                Support our mission by providing funding or outdoor gear to make
-                these experiences accessible to more people
+                Support our mission by providing funding or outdoor gear
               </span>
             </div>
           </div>
@@ -121,7 +148,12 @@ export default function OutdoorHopeProgram() {
               <Blockquote className="border-accent-600">
                 Interested in safe gun handling or who would like to improve
                 their skills? Check out{" "}
-                <a href="https://texasgunsafety.com/about/">Texas Gun Safety</a>{" "}
+                <ExpressiveAnchor
+                  inText
+                  className="text-accent-500"
+                  href="https://texasgunsafety.com/about/">
+                  Texas Gun Safety
+                </ExpressiveAnchor>
                 to learn more about how to operate a firearm carefully!
               </Blockquote>
               <p>

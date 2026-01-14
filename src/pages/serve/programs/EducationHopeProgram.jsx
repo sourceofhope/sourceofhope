@@ -43,10 +43,6 @@ export default function EducationHopeProgram() {
           property="og:description"
           content="Join the Education for Hope Program to receive free virtual tutoring and academic mentorship. Students gain support in reading, writing, standardized test prep, and literacy development through the TSOH ILA Tutoring Program."
         />
-        <meta
-          property="og:image"
-          content="https://sourceofhope.org/assets/social-share-education-for-hope.jpg"
-        />
 
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content={CANONICAL_URL.educationHope} />
@@ -57,10 +53,6 @@ export default function EducationHopeProgram() {
         <meta
           name="twitter:description"
           content="Access free academic support through The Source of Hope’s Education for Hope Program—offering virtual tutoring, reading and writing mentorship, and test preparation to help students thrive."
-        />
-        <meta
-          name="twitter:image"
-          content="https://sourceofhope.org/assets/social-share-education-for-hope.jpg"
         />
       </Helmet>
       <section className="w-full md:justify-items-left items-center grid gap-5 pt-25 p-5 lg:px-35 text-sm md:text-md lg:text-lg">
@@ -91,7 +83,7 @@ export default function EducationHopeProgram() {
                 Are you looking to gain hands-on experience and develop your
                 career? The Source of Hope offers over 15 job opportunities for
                 students and professionals eager to make an impact. Whether
-                you’re seeking a paid federal work-study position, an unpaid
+                you're seeking a paid federal work-study position, an unpaid
                 internship for school credit, or volunteer hours, we have
                 opportunities designed to help you grow.
               </p>
@@ -237,7 +229,7 @@ export default function EducationHopeProgram() {
               </p>
               <p>
                 If you specialize in a subject not listed above, we still
-                encourage you to apply! We’re always expanding our educational
+                encourage you to apply! We're always expanding our educational
                 offerings.
               </p>
             </div>
