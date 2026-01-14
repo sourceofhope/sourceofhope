@@ -215,9 +215,6 @@ export default function ServingHopeProgram() {
                 <CarouselCard
                   src={`/${ASSET_VERSION}/servingHope/Carousel-9.webp`}
                 />
-                <CarouselCard
-                  src={`/${ASSET_VERSION}/servingHope/Carousel-10.webp`}
-                />
               </Carousel>
             </div>
           </div>
