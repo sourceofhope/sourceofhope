@@ -56,7 +56,7 @@ export default function ServingHopeProgram() {
       </Helmet>
       <section className="w-full md:justify-items-left items-center grid gap-5 pt-25 p-5 lg:px-35 text-sm md:text-md lg:text-lg">
         <div className="grid gap-3 justify-self-start justify-start">
-          <Title>Serving/Sharing Hope Program</Title>
+          <Title>Serving & Sharing Hope</Title>
           <Heading>Monthly Feeding with Dignity</Heading>
         </div>
         <article className="grid gap-5 text-neutral-600">

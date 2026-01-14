@@ -55,7 +55,7 @@ export default function WellnessHopeProgram() {
       </Helmet>
       <section className="w-full md:justify-items-left items-center grid gap-5 pt-25 p-5 lg:px-35 text-sm md:text-md lg:text-lg">
         <div className="grid gap-3 justify-self-start justify-start">
-          <Title>Wellness of Hope </Title>
+          <Title>Wellness of Hope</Title>
           <Heading>Free Holistic Clinic Services</Heading>
         </div>
         <article className="grid gap-5">

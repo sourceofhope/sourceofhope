@@ -56,7 +56,7 @@ export default function InternationalHopeProgram() {
       </Helmet>
       <section className="w-full md:justify-items-left items-center grid gap-5 pt-25 p-5 lg:px-35 text-sm md:text-md lg:text-lg">
         <article className="grid gap-3 justify-self-start justify-start">
-          <Title>International Partner Serving Program</Title>
+          <Title>International Partner Serving</Title>
           <Heading>Extends our mission beyond borders</Heading>
         </article>
         <article className="grid gap-3 text-neutral-600">

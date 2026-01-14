@@ -68,13 +68,13 @@ export default function Header() {
       <header
         className={`backdrop-filter fixed ${
           bannerActive ? "top-15 md:top-10" : "top-0"
-        } left-0 right-0 z-50 text-sm md:text-md w-full transition-[height_backdrop] duration-500 md:border-none
+        } left-0 right-0 z-50 text-sm md:text-md w-full transition-[height_backdrop] ease-in duration-500 md:border-none
           ${
             open
               ? `md:backdrop-blur-none backdrop-blur-sm shadow-lg ${
                   isBlocking ? "border-primary-800/100 " : "border-neutral-50"
                 }`
-              : "backdrop-blur-none border-none"
+              : "shadow-none backdrop-blur-none border-none"
           }
           ${
             scrolled
@@ -157,7 +157,7 @@ function HeaderNavigator() {
       label: "SERVE",
       route: CANONICAL.serve,
       children: [
-        { label: "SERVING HOPE", route: CANONICAL.serve.servingHope },
+        { label: "SERVING & SHARING HOPE", route: CANONICAL.serve.servingHope },
         { label: "EDUCATION FOR HOPE", route: CANONICAL.serve.educationHope },
         { label: "WELLNESS OF HOPE", route: CANONICAL.serve.wellnessHope },
         { label: "HOPE FOR THE OUTDOORS", route: CANONICAL.serve.outdoorHope },
@@ -255,7 +255,7 @@ function HeaderButton({
                 e.stopPropagation();
               }
 
-              setHovering(label);
+              setHovering(label === hovering ? null : label);
             }}
             focusable="false"
             aria-hidden="true"

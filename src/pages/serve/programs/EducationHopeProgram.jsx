@@ -59,7 +59,7 @@ export default function EducationHopeProgram() {
       </Helmet>
       <section className="w-full md:justify-items-left items-center grid gap-5 pt-25 p-5 lg:px-35 text-sm md:text-md lg:text-lg">
         <article className="grid gap-3 justify-self-start justify-start">
-          <Title>Education for Hope Program</Title>
+          <Title>Education for Hope</Title>
           <Heading>Teaching our Community</Heading>
         </article>
         <article className="grid gap-3 text-neutral-600">
