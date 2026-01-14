@@ -62,7 +62,7 @@ export default function EducationHopeProgram() {
           <Title>Education for Hope</Title>
           <Heading>Teaching our Community</Heading>
         </article>
-        <article className="grid gap-3 text-neutral-600">
+        <article className="grid gap-3">
           <p>
             The Education For Hope program offers tutoring services, supports
             cosmetology students, and provides opportunities through the Federal
@@ -266,8 +266,8 @@ export default function EducationHopeProgram() {
             </div>
           </div>
         </article>
-        <article className="grid gap-5 text-neutral-600">
-          <Title className="text-neutral-950">Mentors</Title>
+        <article className="grid gap-5">
+          <Title>Mentors</Title>
           <p>
             The Source of Hope, offers mentorship opportunities through its TSOH
             ILA Tutoring Program. This initiative aims to empower students

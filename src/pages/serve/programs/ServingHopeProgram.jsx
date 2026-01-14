@@ -7,6 +7,13 @@ import Title from "../../../components/ui/text/Title";
 import { ASSET_VERSION, CANONICAL_URL } from "../../../routes";
 import { AnchorButton } from "../../../components/ui/Button";
 import Carousel from "../../../components/ui/Carousel";
+import Icon from "../../../components/ui/Icon";
+import {
+  AcademicCapIcon,
+  GlobeAmericasIcon,
+  HeartIcon,
+  UserIcon,
+} from "@heroicons/react/20/solid";
 
 export default function ServingHopeProgram() {
   const setBlocking = useSetHeaderBlocking();
@@ -70,6 +77,41 @@ export default function ServingHopeProgram() {
             to partner organizations, these programs aim to spread compassion,
             dignity, and hope.
           </p>
+          <article className="bg-neutral-50 rounded-2xl shadow-sm p-5 grid gap-2">
+            <Heading className="bold tracking-wide border-b-2 border-neutral-300 pb-2">
+              Why Volunteer With Us?
+            </Heading>
+            <ul className="grid gap-1">
+              <li className="flex flex-row items-center gap-3">
+                <Icon className="text-accent-500 aspect-square h-[1em]">
+                  <HeartIcon />
+                </Icon>
+                <p>Make a real difference in your community</p>
+              </li>
+              <li className="flex flex-row items-center gap-3">
+                <Icon className="text-accent-500 aspect-square h-[1em]">
+                  <UserIcon />
+                </Icon>
+                <p>
+                  Support hunger relief through Serving Hope and Sharing Hope
+                </p>
+              </li>
+              <li className="flex flex-row items-center gap-3">
+                <Icon className="text-accent-500 aspect-square h-[1em]">
+                  <AcademicCapIcon />
+                </Icon>
+                <p>Gain valuable experience while giving back</p>
+              </li>
+              <li className="flex flex-row items-center gap-3">
+                <Icon className="text-accent-500 aspect-square h-[1em]">
+                  <GlobeAmericasIcon />
+                </Icon>
+                <p>
+                  Be part of a growing network of compassion-driven individuals
+                </p>
+              </li>
+            </ul>
+          </article>
           <AnchorButton
             text="SIGN UP"
             href="https://www.eventbrite.com/o/quynh-chau-stone-92264017613"
@@ -92,29 +134,16 @@ export default function ServingHopeProgram() {
           </Heading>
           <div className="grid gap-1">
             <div className="flex justify-between">
-              <span className="font-medium">Friday</span>
+              <span>Friday</span>
               <span>10:00 AM - 2:00 PM</span>
             </div>
             <div className="flex justify-between">
-              <span className="font-medium">Saturday</span>
+              <span>Saturday</span>
               <span>6:00 AM - 1:00 PM</span>
             </div>
           </div>
         </article>
-        <article className="bg-neutral-50 rounded-2xl shadow-sm p-5 grid gap-2">
-          <Heading className="bold tracking-wide border-b-2 border-neutral-300 pb-2">
-            Why Volunteer With Us?
-          </Heading>
-          <ul className="grid gap-1">
-            <li>Make a real difference in your community</li>
-            <li>Support hunger relief through Serving Hope and Sharing Hope</li>
-            <li>Gain valuable experience while giving back</li>
-            <li>
-              Be part of a growing network of compassion-driven individuals
-            </li>
-          </ul>
-        </article>
-        <article className="grid gap-5 text-neutral-600">
+        <article className="grid gap-5">
           <p>
             Every fourth weekend of the month, we gather in locations across
             South Dallas and Collin County to offer food, clothing, haircuts,
@@ -122,8 +151,8 @@ export default function ServingHopeProgram() {
           </p>
           <p>
             Sharing Hope began when generous food donations exceeded our
-            immediate needs. Now, The Source of Hope collaborates with 50+
-            nonprofits to share surplus food across the region. This helps
+            immediate needs. Now, The Source of Hope collaborates with more than
+            fifty nonprofits to share surplus food across the region. This helps
             reduce food waste and support families struggling with food
             insecurity. Students can also earn volunteer hours by donating
             select items. Ask your school counselor for details!

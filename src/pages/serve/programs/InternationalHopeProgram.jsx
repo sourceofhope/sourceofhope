@@ -6,6 +6,12 @@ import Carousel from "../../../components/ui/Carousel";
 import Title from "../../../components/ui/text/Title";
 import Heading from "../../../components/ui/text/Heading";
 import { ASSET_VERSION, CANONICAL_URL } from "../../../routes";
+import Icon from "../../../components/ui/Icon";
+import {
+  GlobeEuropeAfricaIcon,
+  HeartIcon,
+  LanguageIcon,
+} from "@heroicons/react/20/solid";
 
 export default function InternationalHopeProgram() {
   const setBlocking = useSetHeaderBlocking();
@@ -59,7 +65,7 @@ export default function InternationalHopeProgram() {
           <Title>International Partner Serving</Title>
           <Heading>Extends our mission beyond borders</Heading>
         </article>
-        <article className="grid gap-3 text-neutral-600">
+        <article className="grid gap-3">
           <p>
             At The Source of Hope, our mission extends{" "}
             <strong>beyond borders</strong>. We believe that hope has no
@@ -75,20 +81,41 @@ export default function InternationalHopeProgram() {
             self-sufficiency, and create sustainable impact.
           </p>
           <p>Our global work focuses on:</p>
-          <ul className="grid gap-2 list-disc pl-5">
-            <li className="pl-3 text-balance">
-              Empowering vocational students in developing regions through
-              scholarships and educational tools.
-            </li>
-            <li className="pl-3 text-balance">
-              Providing beauty and wellness services to restore dignity and
-              confidence.
-            </li>
-            <li className="pl-3 text-balance">
-              Facilitating community outreach programs such as food
-              distribution, hygiene kits, and mentorship.
-            </li>
-          </ul>
+          <ul className="grid gap-2 list-disc pl-5"></ul>
+          <article className="bg-neutral-50 rounded-2xl shadow-sm p-5 grid gap-2">
+            <Heading className=" border-b-2 border-neutral-300 pb-2">
+              OUR GLOBAL PRIORITIES
+            </Heading>
+            <div className="grid gap-1">
+              <li className="flex flex-row items-center gap-3">
+                <Icon className="text-accent-500 aspect-square h-[1em]">
+                  <LanguageIcon />
+                </Icon>
+                <p>
+                  Empowering vocational students in developing regions through
+                  scholarships and educational tools.
+                </p>
+              </li>
+              <li className="flex flex-row items-center gap-3">
+                <Icon className="text-accent-500 aspect-square h-[1em]">
+                  <HeartIcon />
+                </Icon>
+                <p>
+                  Providing beauty and wellness services to restore dignity and
+                  confidence.
+                </p>
+              </li>
+              <li className="flex flex-row items-center gap-3">
+                <Icon className="text-accent-500 aspect-square h-[1em]">
+                  <GlobeEuropeAfricaIcon />
+                </Icon>
+                <p>
+                  Facilitating community outreach programs such as food
+                  distribution, hygiene kits, and mentorship.
+                </p>
+              </li>
+            </div>
+          </article>
           <p>
             By fostering international relationships grounded in trust and
             mutual respect, we aim to amplify hope and healing on a global

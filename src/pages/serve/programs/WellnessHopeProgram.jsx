@@ -70,12 +70,28 @@ export default function WellnessHopeProgram() {
             provides reduced cosmetic services and classes to the general
             public.
           </p>
+          <article className="bg-neutral-50 rounded-2xl shadow-sm p-5 grid gap-2">
+            <Heading className=" border-b-2 border-neutral-300 pb-2">
+              Current Available Time Slots
+            </Heading>
+            <div className="grid gap-1">
+              <div className="flex justify-between">
+                <span className="font-medium">Monday</span>
+                <span>6:00 AM - 2:00 PM</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="font-medium">Tuesday</span>
+                <span>6:00 AM - 2:00 PM</span>
+              </div>
+            </div>
+          </article>
           <p>
             We offer free makeovers to individuals living with HIV/AIDs and low
             income individuals to help improve their self-esteem. Provide FREE
             haircuts to senior citizens 65+, teachers, fire fighters, police
             officers, and veterans every month
           </p>
+
           <AnchorButton
             text="APPLY"
             href="https://docs.google.com/forms/d/e/1FAIpQLSfhp1mGMEWzJSX17i34Zz2Cv05hLyfuzIdLtIbakamIr5pIZw/viewform"
@@ -159,21 +175,6 @@ export default function WellnessHopeProgram() {
                 text="APPLY"
                 href="https://docs.google.com/forms/d/e/1FAIpQLSfhp1mGMEWzJSX17i34Zz2Cv05hLyfuzIdLtIbakamIr5pIZw/viewform"
               />
-            </div>
-          </div>
-        </article>
-        <article className="bg-neutral-50 rounded-2xl shadow-sm p-5 grid gap-2">
-          <Heading className=" border-b-2 border-neutral-300 pb-2">
-            Current Available Time Slots
-          </Heading>
-          <div className="grid gap-1">
-            <div className="flex justify-between">
-              <span className="font-medium">Monday</span>
-              <span>6:00 AM - 2:00 PM</span>
-            </div>
-            <div className="flex justify-between">
-              <span className="font-medium">Tuesday</span>
-              <span>6:00 AM - 2:00 PM</span>
             </div>
           </div>
         </article>
