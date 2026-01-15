@@ -1,5 +1,4 @@
-import { Helmet } from "react-helmet";
-
+import { Helmet } from "react-helmet-async";
 import { CANONICAL_URL } from "../../routes";
 import PageHeader from "../PageHeader";
 import ServeShowcaseSection from "./sections/ServeShowcaseSection";

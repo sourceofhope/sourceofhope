@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import { useSetHeaderBlocking } from "../../components/structure/Header";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
@@ -74,10 +74,20 @@ export default function ProductPage() {
     loadProduct();
   }, [slug]);
 
+  useEffect(() => {
+    if (!loading && product?.title) {
+      document.title = `${product.title} | Products`;
+    }
+  }, [loading, product]);
+
   return (
     <>
-      <Helmet>
-        <title> {slug} | Products </title>
+      <Helmet key={product?.id || "loading"}>
+        <title>
+          {loading
+            ? "Loading"
+            : `${product?.title || "Missing Product"} | Products`}
+        </title>
 
         <meta
           name="description"

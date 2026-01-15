@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import { CANONICAL_URL } from "../../routes";
 import { useSetHeaderBlocking } from "../../components/structure/Header";
 import { useEffect } from "react";

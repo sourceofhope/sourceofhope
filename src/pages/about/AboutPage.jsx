@@ -5,7 +5,7 @@ import AboutDescriptionSection from "./sections/AboutDescriptionSection";
 import AboutMissionSection from "./sections/AboutMissionSection";
 import AboutSummarySection from "./sections/AboutSummarySection";
 
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 export default function AboutPage() {
   return (

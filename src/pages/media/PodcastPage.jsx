@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import Blockquote from "../../components/ui/text/Blockquote";
 import Heading from "../../components/ui/text/Heading";
 import Title from "../../components/ui/text/Title";

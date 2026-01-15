@@ -4,7 +4,7 @@ import Title from "../../components/ui/text/Title";
 import PageSection from "../PageSection";
 import { HighlightedText } from "../../components/ui/expressive/ExpressiveText";
 import { CANONICAL_URL } from "../../routes";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import PageHeader from "../PageHeader";
 
 export default function PressPage() {

@@ -7,7 +7,7 @@ import Title from "../../components/ui/text/Title";
 import { fetchContent, getFeaturedImage } from "../../cms";
 import { ASSET_VERSION, CANONICAL_URL } from "../../routes";
 import Overlay from "../../components/ui/Overlay";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import PageHeader from "../PageHeader";
 
 export default function TeamPage() {
