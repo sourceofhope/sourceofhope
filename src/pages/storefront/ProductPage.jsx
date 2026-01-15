@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { fetchContent, getFeaturedImage, getResponsiveImage } from "../../cms";
 import { CANONICAL, CANONICAL_URL } from "../../routes";
 import Title from "../../components/ui/text/Title";
-import { CheckIcon, HeartIcon } from "@heroicons/react/20/solid";
+import { CheckIcon, HeartIcon, PlusIcon } from "@heroicons/react/20/solid";
 import { AnchorButton, LinkButton } from "../../components/ui/Button";
 import Heading from "../../components/ui/text/Heading";
 import Cart from "./Cart";
@@ -172,15 +172,21 @@ export default function ProductPage() {
             <p className="text-gray-700 text-sm md:text-md">
               {product?.shortDescription}
             </p>
-            <div className="flex flex-wrap gap-5 mt-5">
+            <div className="flex flex-col md:flex-row gap-5 mt-5">
               <button
                 onClick={handleAddToCart}
-                className="flex justify-center w-fit rounded-2xl px-10 py-5 bg-accent-500 hover:bg-accent-600 transition-all duration-700 font-semibold text-neutral-50">
-                <span className="inline-flex w-full justify-between items-center gap-1 text-sm md:text-md">
-                  Add To Cart
+                aria-label="Add To Cart"
+                className="group inline-flex items-center
+        rounded-2xl px-10 py-5
+        bg-emerald-500 hover:bg-emerald-600
+        transition-all duration-700 w-full font-semibold text-neutral-50">
+                <span className="flex w-full gap-3 items-center justify-between text-sm md:text-md">
+                  <span>Add To Cart</span>
+                  <PlusIcon className="w-[1em] h-[1em] transition-transform duration-500" />
                 </span>
               </button>
               <AnchorButton
+                full
                 href="https://donate.stripe.com/8wM5kHal16fC4so8ww"
                 text="Make a Donation"
               />

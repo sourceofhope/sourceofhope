@@ -206,8 +206,8 @@ function HeaderNavigator() {
                 ${
                   hovering
                     ? hovering == label
-                      ? ""
-                      : "md:opacity-80 md:scale-95"
+                      ? "opacity-100"
+                      : "opacity-80"
                     : ""
                 }`}
             hovering={hovering}
