@@ -27,6 +27,7 @@ import ProductPage from "./pages/storefront/ProductPage.jsx";
 import PodcastPage from "./pages/media/PodcastPage.jsx";
 import PressPage from "./pages/media/PressPage.jsx";
 import TeamPage from "./pages/about/TeamPage.jsx";
+import { HelmetProvider } from "react-helmet-async";
 
 export const router = createBrowserRouter([
   {
@@ -111,6 +112,8 @@ export const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <HelmetProvider>
+      <RouterProvider router={router} />
+    </HelmetProvider>
   </React.StrictMode>
 );

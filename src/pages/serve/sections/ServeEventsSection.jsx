@@ -135,7 +135,11 @@ function MajorEventCard({ post }) {
       <div className="p-6 grid gap-4">
         <p className="text-neutral-700 line-clamp-3">{post.acf?.summary}</p>
         <div className="pt-2">
-          <AnchorButton href={post.acf?.event_page.url} text="Register Now" />
+          <AnchorButton
+            full
+            href={post.acf?.event_page.url}
+            text="Register Now"
+          />
         </div>
       </div>
     </div>
@@ -188,7 +192,11 @@ function CarouselCard({ post }) {
           {post.acf?.summary}
         </p>
         <div className="pt-2">
-          <AnchorButton href={post.acf?.event_page.url} text="Register Now" />
+          <AnchorButton
+            full
+            href={post.acf?.event_page.url}
+            text="Register Now"
+          />
         </div>
       </div>
     </div>

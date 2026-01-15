@@ -1,7 +1,6 @@
 import { CANONICAL_URL } from "../../routes";
 import PageHeader from "../PageHeader";
-
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import MediaNewsletterSection from "./sections/MediaNewsletterSection";
 import MediaBlogPage from "./sections/MediaBlogSection";
 

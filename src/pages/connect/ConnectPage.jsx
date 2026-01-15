@@ -5,7 +5,7 @@ import ConnectMapSection from "./sections/ConnectMapSection";
 import ConnectVolunteerSection from "./sections/ConnectVolunteerSection";
 import ConnectCareersSection from "./sections/ConnectCareersSection";
 
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 export default function ConnectPage() {
   return (

@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext, useRef } from "react";
 import { CANONICAL, CANONICAL_URL } from "../../routes";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import CartItemsSection from "./sections/CartItemsSection";
 import CartSummarySection from "./sections/CartSummarySection";
 import CartPaymentSection from "./sections/CartPaymentSection";
