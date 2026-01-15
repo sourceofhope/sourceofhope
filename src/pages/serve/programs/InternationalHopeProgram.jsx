@@ -12,6 +12,9 @@ import {
   HeartIcon,
   LanguageIcon,
 } from "@heroicons/react/20/solid";
+import Bold from "../../../components/ui/text/Bold";
+import { HighlightedText } from "../../../components/ui/expressive/ExpressiveText";
+import Emphasis from "../../../components/ui/Emphasis";
 
 export default function InternationalHopeProgram() {
   const setBlocking = useSetHeaderBlocking();
@@ -62,27 +65,30 @@ export default function InternationalHopeProgram() {
         </article>
         <article className="grid gap-3">
           <p>
-            At The Source of Hope, our mission extends{" "}
-            <strong>beyond borders</strong>. We believe that hope has no
-            limits—and neither should compassion. Through our International
-            Partner Serving initiative, we collaborate with organizations,
-            volunteers, and communities across the globe to bring essential
-            resources, training, and empowerment to those in need.
+            At <Bold>The Source of Hope</Bold>,{" "}
+            <HighlightedText>
+              our mission extends beyond borders
+            </HighlightedText>
+            . We believe that hope has no limits, and neither should compassion.
+            Through our <Bold>International Partner Serving</Bold> initiative,
+            we collaborate with organizations, volunteers, and communities
+            across the globe to bring essential <Emphasis>resources</Emphasis>,{" "}
+            <Emphasis>training</Emphasis>, and <Emphasis>empowerment</Emphasis>{" "}
+            to those in need.
           </p>
           <p>
             Whether it's through vocational education, wellness support, or
-            humanitarian aid, our international partnerships are built on a
-            shared commitment to uplift underserved populations, promote
-            self-sufficiency, and create sustainable impact.
+            humanitarian aid, our international partnerships are built on a{" "}
+            <Bold>shared commitment</Bold> to uplift underserved populations,
+            promote self-sufficiency, and create sustainable impact.
           </p>
-          <p>Our global work focuses on:</p>
           <ul className="grid gap-2 list-disc pl-5"></ul>
           <article className="bg-neutral-50 rounded-2xl shadow-sm p-5 grid gap-2">
             <Heading className=" border-b-2 border-neutral-300 pb-2">
               OUR GLOBAL PRIORITIES
             </Heading>
             <ul className="grid gap-1">
-              <li className="flex flex-row items-center gap-3">
+              <li className="flex flex-row md:items-center gap-3">
                 <Icon className="text-accent-500 aspect-square h-[1em]">
                   <LanguageIcon />
                 </Icon>
@@ -91,7 +97,7 @@ export default function InternationalHopeProgram() {
                   scholarships and educational tools.
                 </p>
               </li>
-              <li className="flex flex-row items-center gap-3">
+              <li className="flex flex-row md:items-center gap-3">
                 <Icon className="text-accent-500 aspect-square h-[1em]">
                   <HeartIcon />
                 </Icon>
@@ -100,7 +106,7 @@ export default function InternationalHopeProgram() {
                   confidence.
                 </p>
               </li>
-              <li className="flex flex-row items-center gap-3">
+              <li className="flex flex-row md:items-center gap-3">
                 <Icon className="text-accent-500 aspect-square h-[1em]">
                   <GlobeEuropeAfricaIcon />
                 </Icon>
@@ -114,7 +120,7 @@ export default function InternationalHopeProgram() {
           <p>
             By fostering international relationships grounded in trust and
             mutual respect, we aim to amplify hope and healing on a global
-            scale—one life, one community at a time.
+            scale, one life, one community at a time.
           </p>
           <button className="my-5 md:hidden rounded-2xl p-5 bg-accent-500 md:w-1/3 hover:bg-accent-600 duration-750 transition-colors font-semibold text-neutral-50">
             <ExpressiveAnchor to="">APPLY</ExpressiveAnchor>
@@ -124,8 +130,8 @@ export default function InternationalHopeProgram() {
           <Title>Previous Partner Serving Trips</Title>
           <p>
             We've taken several trips across Southeast Asia and South America,
-            exploring different countries, meeting incredible people, and
-            learning so much from each place we visited.
+            exploring different countries, meeting incredible people, and{" "}
+            <Bold>learning so much from each place we visited.</Bold>
           </p>
           <Heading>WINTER 2020 - SOUTHEAST ASIA</Heading>
           <Carousel auto showProgress itemsPerView={{ base: 1, md: 2, lg: 3 }}>

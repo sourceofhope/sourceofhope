@@ -5,6 +5,8 @@ import Heading from "../../../components/ui/text/Heading";
 import Title from "../../../components/ui/text/Title";
 import { AnchorButton } from "../../../components/ui/Button";
 import { ASSET_VERSION, CANONICAL_URL } from "../../../routes";
+import Bold from "../../../components/ui/text/Bold";
+import { HighlightedText } from "../../../components/ui/expressive/ExpressiveText";
 
 export default function WellnessHopeProgram() {
   const setBlocking = useSetHeaderBlocking();
@@ -68,18 +70,18 @@ export default function WellnessHopeProgram() {
             </Heading>
             <div className="grid gap-1">
               <div className="flex justify-between">
-                <span className="font-medium">Monday</span>
+                <span>Monday</span>
                 <span>6:00 AM - 2:00 PM</span>
               </div>
               <div className="flex justify-between">
-                <span className="font-medium">Tuesday</span>
+                <span>Tuesday</span>
                 <span>6:00 AM - 2:00 PM</span>
               </div>
             </div>
           </article>
           <p>
             We offer free makeovers to individuals living with HIV/AIDs and low
-            income individuals to help improve their self-esteem. Provide FREE
+            income individuals to help improve their self-esteem. Provide free
             haircuts to senior citizens 65+, teachers, fire fighters, police
             officers, and veterans every month
           </p>
@@ -113,19 +115,21 @@ export default function WellnessHopeProgram() {
           <div className="grid grid-cols-1 md:grid-cols-[6fr_3fr] gap-5 items-center">
             <div className="flex flex-col gap-5">
               <p>
-                The TSOH Community Wellness Program, in partnership with Stone
-                International Wellness Center, is proud to offer free or
-                reduced-cost holistic treatments for eligible individuals.
-                Through this initiative, community members can schedule a
-                variety of rotating holistic treatments, updated every fourth
-                quarter to better meet evolving needs.
+                <Bold>The Source of Hope</Bold> Community Wellness Program, in
+                partnership with{" "}
+                <Bold>Stone International Wellness Center</Bold>, is proud to
+                offer free or reduced-cost holistic treatments for eligible
+                individuals. Through this initiative, community members can
+                schedule a variety of{" "}
+                <HighlightedText>rotating holistic treatments</HighlightedText>,
+                updated every fourth quarter to better meet evolving needs.
               </p>
               <article className="bg-neutral-50 rounded-2xl shadow-sm p-5 grid gap-2">
                 <Heading className=" border-b-2 border-neutral-300 pb-2">
                   Eligible Individuals
                 </Heading>
                 <div className="grid gap-1">
-                  <div className="flex justify-between">Teachers/Mentors</div>
+                  <div className="flex justify-between">Teachers & Mentors</div>
                   <div className="flex justify-between">Veterans</div>
                   <div className="flex justify-between">First Responders</div>
                   <div className="flex justify-between">Senior Citizens</div>
@@ -133,11 +137,13 @@ export default function WellnessHopeProgram() {
               </article>
               <p>
                 We are also excited to provide complimentary holistic
-                assessments— previously valued at $250—to help you better
+                assessments, previously valued at $250, to help you better
                 understand your unique wellness needs. These assessments guide
                 you toward the most suitable treatments offered through our
-                partnership with StoneIWC, reinforcing our shared commitment to
-                supporting the community's complete well-being.
+                partnership with{" "}
+                <Bold>Stone International Wellness Center</Bold>, reinforcing
+                our shared commitment to supporting the community's complete
+                well-being.
               </p>
             </div>
             <div className="flex flex-col gap-5">

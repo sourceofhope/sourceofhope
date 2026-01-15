@@ -14,6 +14,9 @@ import {
   HeartIcon,
   UserIcon,
 } from "@heroicons/react/20/solid";
+import Bold from "../../../components/ui/text/Bold";
+import { HighlightedText } from "../../../components/ui/expressive/ExpressiveText";
+import Emphasis from "../../../components/ui/Emphasis";
 
 export default function ServingHopeProgram() {
   const setBlocking = useSetHeaderBlocking();
@@ -61,26 +64,29 @@ export default function ServingHopeProgram() {
         </div>
         <article className="grid gap-5">
           <p>
-            <strong className="font-semibold">Serving Hope</strong> and{" "}
-            <strong className="font-semibold">Sharing Hope</strong> are two
-            cornerstone programs at The Source of Hope, working together to
-            fight hunger and support vulnerable communities across the DFW area.
-            Whether it's through nourishing meals or distributing donated food
-            to partner organizations, these programs aim to spread compassion,
-            dignity, and hope.
+            <Bold>Serving Hope</Bold> and <Bold>Sharing Hope</Bold> are two
+            cornerstone programs at <Bold>The Source of Hope</Bold>, working
+            together to fight hunger and support{" "}
+            <HighlightedText>
+              vulnerable communities across the DFW area
+            </HighlightedText>
+            . Whether it's through nourishing meals or distributing donated food
+            to partner organizations, these programs aim to spread{" "}
+            <Emphasis>compassion</Emphasis>, <Emphasis>dignity</Emphasis>, and{" "}
+            <Emphasis>hope</Emphasis>.
           </p>
           <article className="bg-neutral-50 rounded-2xl shadow-sm p-5 grid gap-2">
             <Heading className="bold tracking-wide border-b-2 border-neutral-300 pb-2">
               Why Volunteer With Us?
             </Heading>
             <ul className="grid gap-1">
-              <li className="flex flex-row items-center gap-3">
+              <li className="flex flex-row md:items-center gap-3">
                 <Icon className="text-accent-500 aspect-square h-[1em]">
                   <HeartIcon />
                 </Icon>
                 <p>Make a real difference in your community</p>
               </li>
-              <li className="flex flex-row items-center gap-3">
+              <li className="flex flex-row md:items-center gap-3">
                 <Icon className="text-accent-500 aspect-square h-[1em]">
                   <UserIcon />
                 </Icon>
@@ -88,13 +94,13 @@ export default function ServingHopeProgram() {
                   Support hunger relief through Serving Hope and Sharing Hope
                 </p>
               </li>
-              <li className="flex flex-row items-center gap-3">
+              <li className="flex flex-row md:items-center gap-3">
                 <Icon className="text-accent-500 aspect-square h-[1em]">
                   <AcademicCapIcon />
                 </Icon>
                 <p>Gain valuable experience while giving back</p>
               </li>
-              <li className="flex flex-row items-center gap-3">
+              <li className="flex flex-row md:items-center gap-3">
                 <Icon className="text-accent-500 aspect-square h-[1em]">
                   <GlobeAmericasIcon />
                 </Icon>
@@ -113,11 +119,12 @@ export default function ServingHopeProgram() {
         <article className="grid gap-5">
           <Title>What Is The Program?</Title>
           <p>
-            Serving Hope is a volunteer-driven initiative dedicated to serving
-            organic, home-cooked meals to those in need—homeless individuals,
-            veterans, nursing home residents, and at-risk families throughout
-            the Dallas-Fort Worth community. Each event provides fresh, holistic
-            meals that nourish both the body and spirit.
+            <Bold>Serving Hope</Bold> is a volunteer-driven initiative dedicated
+            to serving organic, home-cooked meals to those in need, homeless
+            individuals, veterans, nursing home residents, and at-risk families
+            throughout the Dallas-Fort Worth community. Each event provides
+            fresh, holistic meals that{" "}
+            <HighlightedText>nourish both the body and spirit</HighlightedText>.
           </p>
         </article>
         <article className="bg-neutral-50 rounded-2xl shadow-sm p-5 grid gap-2">
@@ -137,17 +144,23 @@ export default function ServingHopeProgram() {
         </article>
         <article className="grid gap-5">
           <p>
-            Every fourth weekend of the month, we gather in locations across
-            South Dallas and Collin County to offer food, clothing, haircuts,
-            and hygiene services. Visit our Volunteer Page to get involved.
+            <Bold>Every fourth weekend of the month</Bold>, we gather in
+            locations across South Dallas and Collin County to offer food,
+            clothing, haircuts, and hygiene services.{" "}
+            <ExpressiveAnchor
+              inText
+              className="text-accent-500 text-sm md:text-md lg:text-lg">
+              Register today to get involved
+            </ExpressiveAnchor>
           </p>
           <p>
-            Sharing Hope began when generous food donations exceeded our
-            immediate needs. Now, The Source of Hope collaborates with more than
-            fifty nonprofits to share surplus food across the region. This helps
-            reduce food waste and support families struggling with food
-            insecurity. Students can also earn volunteer hours by donating
-            select items. Ask your school counselor for details!
+            <Bold>Sharing Hope</Bold> began when generous food donations
+            exceeded our immediate needs. Now, The Source of Hope collaborates
+            with <HighlightedText>more than fifty nonprofits</HighlightedText>{" "}
+            to share surplus food across the region. This helps reduce food
+            waste and support families struggling with food insecurity. Students
+            can also earn volunteer hours by donating select items. Ask your
+            school counselor for details!
           </p>
         </article>
 
@@ -156,17 +169,17 @@ export default function ServingHopeProgram() {
           <div className="grid grid-flow-row md:grid-cols-[6fr_3fr] gap-5 items-center">
             <div className="grid gap-5 row-start-2 md:row-start-auto">
               <p>
-                This recap from our January 2025 Serving Hope for Hunger event
-                captures the heart of what we do—bringing people together
-                through compassion, service, and community care. From preparing
-                home-cooked meals to serving each guest with dignity and a
-                smile, our volunteers showed what it truly means to nourish both
-                body and soul.
+                This recap from our <Bold>January 2025 Serving Hope</Bold> for
+                Hunger event captures the heart of what we do: bringing people
+                together through compassion, service, and community care. From
+                preparing home-cooked meals to serving each guest with dignity
+                and a smile, our volunteers showed what it truly means to
+                nourish both body and soul.
               </p>
               <p>
-                Every shared meal represents more than food—it's a reminder that
-                hope grows stronger when we serve side by side. Together, we're
-                building a community filled with kindness, connection, and
+                Every shared meal represents more than food, it's a reminder
+                that hope grows stronger when we serve side by side. Together,
+                we're building a community filled with kindness, connection, and
                 purpose.
               </p>
               <AnchorButton

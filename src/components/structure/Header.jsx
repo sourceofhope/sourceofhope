@@ -83,7 +83,7 @@ export default function Header() {
                   isBlocking ? "text-primary-800" : "text-neutral-50"
                 }`
           }`}>
-        <section className="flex w-full items-center justify-between px-5 lg:px-35">
+        <section className="flex gap-5 w-full items-center justify-between px-5 lg:px-35">
           <div className="h-25 flex gap-5 flex-row items-center w-fit z-0 overflow-clip">
             <Favicon />
             <h1 className="font-bold hidden lg:block whitespace-nowrap text-ellipsis overflow-hidden">

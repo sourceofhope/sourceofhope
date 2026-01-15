@@ -7,7 +7,9 @@ import Heading from "../../../components/ui/text/Heading";
 import ExpressiveCard from "../../../components/ui/expressive/ExpressiveCard";
 import Blockquote from "../../../components/ui/text/Blockquote";
 import { ASSET_VERSION, CANONICAL_URL } from "../../../routes";
+import Bold from "../../../components/ui/text/Bold";
 import ExpressiveAnchor from "../../../components/ui/expressive/ExpressiveAnchor";
+import { HighlightedText } from "../../../components/ui/expressive/ExpressiveText";
 
 export default function OutdoorHopeProgram() {
   const setBlocking = useSetHeaderBlocking();
@@ -56,21 +58,27 @@ export default function OutdoorHopeProgram() {
         </article>
         <article className="grid gap-5">
           <p>
-            At The Source of Hope, we are excited to introduce Hope for the
-            Great Outdoors, a program dedicated to bringing outdoor experiences
-            and education to our community. Many individuals, especially those
-            from urban backgrounds, may never have had the opportunity to
-            explore nature. Our initiative aims to bridge that gap by offering
-            hands-on learning and immersive outdoor experiences in a safe,
-            inclusive, and supportive environment.
+            At <Bold>The Source of Hope</Bold>, we are excited to introduce{" "}
+            <Bold>Hope for the Great Outdoors</Bold>, a program dedicated to
+            bringing{" "}
+            <HighlightedText>
+              outdoor experiences and education to our community
+            </HighlightedText>
+            . Many individuals, especially those from urban backgrounds, may
+            never have had the opportunity to explore nature. Our initiative
+            aims to bridge that gap by offering{" "}
+            <Bold>
+              hands-on learning and immersive outdoor experiences in a safe
+            </Bold>
+            , inclusive, and supportive environment.
           </p>
           <p>
             Led by our founder, Wesley Stone, a retired wildlife biologist, this
             program provides valuable education on camping, fishing, hunting,
             and outdoor survival skills. Whether you're a beginner or an outdoor
             enthusiast, this initiative is designed to inspire confidence in
-            nature while fostering a deep respect for wildlife and the
-            environment.
+            nature while fostering a{" "}
+            <Bold>deep respect for wildlife and the environment.</Bold>
           </p>
           <p>
             Email us at{" "}
@@ -82,28 +90,30 @@ export default function OutdoorHopeProgram() {
             to get involved.
           </p>
         </article>
-        <article className="bg-neutral-50 rounded-2xl shadow-sm p-5 grid gap-2">
-          <Heading className=" border-b-2 border-neutral-300 pb-2">
+        <article className="bg-neutral-50 rounded-2xl shadow-sm p-5 grid gap-5 w-full">
+          <Heading className="border-b-2 border-neutral-300 pb-2">
             Get Involved
           </Heading>
-          <div className="grid gap-1">
-            <div className="grid grid-cols-[2fr_4fr] justify-between">
-              <span className="font-medium">Volunteer</span>
-              <span>Help us organize and lead outdoor activities</span>
-            </div>
-            <div className="grid grid-cols-[2fr_4fr] justify-between">
-              <span className="font-medium">Sponsor</span>
-              <span>
-                Support our mission by providing funding or outdoor gear
-              </span>
-            </div>
+          <div className="grid gap-5 md:grid-cols-[2fr_7fr]">
+            <span className="font-medium">Volunteer</span>
+            <span className="text-neutral-600">
+              Help us organize and lead outdoor activities, no experience
+              required, just a passion for nature and community
+            </span>
+          </div>
+          <div className="grid gap-5 md:grid-cols-[2fr_7fr]">
+            <span className="font-medium">Sponsor</span>
+            <span className="text-neutral-600">
+              Support our mission by providing funding or outdoor gear to make
+              these experiences accessible to more people
+            </span>
           </div>
         </article>
         <article className="grid gap-5">
           <Title>What We Offer</Title>
           <p>
             Our approach to responsible hunting ensures that participants
-            understand the ethics of conservation—hunting only for sustenance,
+            understand the ethics of conservation, hunting only for sustenance,
             following proper harvesting techniques, and respecting wildlife
             habitats.
           </p>
@@ -141,25 +151,27 @@ export default function OutdoorHopeProgram() {
                 practices, including bow and arrow education, hunting calendars,
                 and gun safety classes. We place a strong emphasis on
                 responsible hunting, as it is crucial for us to respect and
-                preserve our natural environment. Participants will learn the
-                importance of harvesting animals correctly and only hunting what
-                they eat.
+                <HighlightedText>
+                  preserve our natural environment
+                </HighlightedText>
+                . Participants will learn the importance of harvesting animals
+                correctly and only hunting what they eat.
               </p>
               <Blockquote className="border-accent-600">
                 Interested in safe gun handling or who would like to improve
                 their skills? Check out{" "}
                 <ExpressiveAnchor
                   inText
-                  className="text-accent-500"
+                  className="text-accent-500 text-sm md:text-md lg:text-lg"
                   href="https://texasgunsafety.com/about/">
                   Texas Gun Safety
                 </ExpressiveAnchor>
                 to learn more about how to operate a firearm carefully!
               </Blockquote>
               <p>
-                We'll bring The Source of Hope family together for an annual
-                camping trip each year, offering a unique chance to bond and
-                learn!
+                We'll bring <Bold>The Source of Hope</Bold> family together for
+                an annual camping trip each year, offering a unique chance to
+                <HighlightedText>bond and learn!</HighlightedText>
               </p>
             </div>
             <Carousel hideControls auto>

@@ -7,7 +7,7 @@ import Title from "../../../components/ui/text/Title";
 import Heading from "../../../components/ui/text/Heading";
 import ExpressiveCard from "../../../components/ui/expressive/ExpressiveCard";
 import { ASSET_VERSION, CANONICAL_URL } from "../../../routes";
-
+import Bold from "../../../components/ui/text/Bold.jsx";
 import { AnchorButton } from "../../../components/ui/Button";
 import {
   AcademicCapIcon,
@@ -15,6 +15,7 @@ import {
   LanguageIcon,
 } from "@heroicons/react/20/solid";
 import Icon from "../../../components/ui/Icon";
+import { HighlightedText } from "../../../components/ui/expressive/ExpressiveText";
 
 export default function EducationHopeProgram() {
   const setBlocking = useSetHeaderBlocking();
@@ -62,12 +63,14 @@ export default function EducationHopeProgram() {
         </article>
         <article className="grid gap-3">
           <p>
-            The Education For Hope program offers tutoring services, supports
-            cosmetology students, and provides opportunities through the Federal
-            Work-Study program in partnership with The University of Texas at
-            Dallas. We assist students of all ages by offering scholarships to
-            low-income cosmetology students, facilitating advanced beauty
-            education, and hiring for operations roles through Work-Study.
+            <Bold>The Education For Hope</Bold> program offers tutoring
+            services, supports cosmetology students, and provides opportunities
+            through the{" "}
+            <HighlightedText>Federal Work-Study program</HighlightedText> in
+            partnership with <Bold>The University of Texas at Dallas</Bold>. We
+            assist students of all ages by offering scholarships to low-income
+            cosmetology students, facilitating advanced beauty education, and
+            hiring for operations roles through Work-Study.
           </p>
           <button className="my-5 md:hidden rounded-2xl p-5 bg-accent-500 md:w-1/3 hover:bg-accent-600 duration-750 transition-colors font-semibold text-neutral-50">
             <ExpressiveAnchor to="">APPLY</ExpressiveAnchor>
@@ -184,7 +187,7 @@ export default function EducationHopeProgram() {
           <div className="grid grid-flow-row md:grid-cols-[6fr_3fr] gap-5 items-center">
             <div className="grid gap-5 grid-flow-row justify-start">
               <p>
-                The Source of Hope offers <strong>virtual tutoring</strong> for
+                The Source of Hope offers <Bold>virtual tutoring</Bold> for
                 middle school and high school students—empowering learners to
                 grow from anywhere.
               </p>
@@ -193,19 +196,19 @@ export default function EducationHopeProgram() {
                   Tutoring Services
                 </Heading>
                 <ul className="grid gap-1">
-                  <li className="flex flex-row items-center gap-3">
+                  <li className="flex flex-row md:items-center gap-3">
                     <Icon className="text-accent-500 aspect-square h-[1em]">
                       <AcademicCapIcon />
                     </Icon>
                     <p>Test prep for STAAR, SAT, and AP exams</p>
                   </li>
-                  <li className="flex flex-row items-center gap-3">
+                  <li className="flex flex-row md:items-center gap-3">
                     <Icon className="text-accent-500 aspect-square h-[1em]">
                       <CalculatorIcon />
                     </Icon>
                     <p>Math subjects such as Algebra and Geometry</p>
                   </li>
-                  <li className="flex flex-row items-center gap-3">
+                  <li className="flex flex-row md:items-center gap-3">
                     <Icon className="text-accent-500 aspect-square h-[1em]">
                       <LanguageIcon />
                     </Icon>
@@ -214,23 +217,22 @@ export default function EducationHopeProgram() {
                 </ul>
               </article>
               <p>
-                All tutoring sessions are held{" "}
-                <strong className="font-semibold">virtually</strong>, allowing
+                All tutoring sessions are held <Bold>virtually</Bold>, allowing
                 students to participate from any location with flexible
                 scheduling options.
               </p>
               <p className="pl-5 py-0 border-l-4 border-accent-600">
-                <strong className="font-semibold">The Source of Hope</strong> is
-                currently hiring ILA (Integrated Language Arts) tutors. Both
-                students and adults can apply. Tutors receive{" "}
-                <strong className="font-semibold">50%</strong> of session
-                earnings, while the remaining proceeds support our community
-                programs.
+                <Bold>The Source of Hope</Bold> is currently hiring ILA
+                (Integrated Language Arts) tutors. Both students and adults can
+                apply. Tutors receive <Bold>50%</Bold> of session earnings,
+                while the remaining proceeds support our community programs.
               </p>
               <p>
-                If you specialize in a subject not listed above, we still
-                encourage you to apply! We're always expanding our educational
-                offerings.
+                If you specialize in a subject not listed above,{" "}
+                <HighlightedText>
+                  we still encourage you to apply!
+                </HighlightedText>{" "}
+                We're always expanding our educational offerings.
               </p>
             </div>
             <div className="space-y-3 justify-self-end w-full">
@@ -285,17 +287,19 @@ export default function EducationHopeProgram() {
         <article className="grid gap-5">
           <Title>Mentors</Title>
           <p>
-            The Source of Hope, offers mentorship opportunities through its TSOH
-            ILA Tutoring Program. This initiative aims to empower students
-            academically by providing individualized virtual mentorship in
-            reading and writing.
+            <Bold>The Source of Hope</Bold> offers mentorship opportunities
+            through its <Bold>TSOH ILA Tutoring Program</Bold>. This initiative
+            aims to{" "}
+            <HighlightedText>empower students academically</HighlightedText> by
+            providing individualized virtual mentorship in reading and writing.
           </p>
           <p>
-            Tutors can assist students in preparing for standardized tests like
-            STAAR and SAT/ACT, analyzing literature, and developing writing
-            skills. Prospective tutors should have reliable internet access,
-            experience with virtual meeting platforms (e.g., Zoom, Google Meet),
-            and be comfortable with English.
+            Tutors can assist students in preparing for standardized tests like{" "}
+            the <Bold>STAAR</Bold>, <Bold>SAT</Bold>, and <Bold>ACT</Bold>,
+            analyzing literature, and developing writing skills. Prospective
+            tutors should have reliable internet access, experience with virtual
+            meeting platforms (e.g., Zoom, Google Meet), and be comfortable with
+            English.
           </p>
         </article>
       </section>

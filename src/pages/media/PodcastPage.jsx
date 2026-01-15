@@ -49,7 +49,7 @@ export default function PodcastPage() {
         </p>
       </PageHeader>
       <PageSection className="grid gap-5 relative m-0 text-sm md:text-md lg:text-lg">
-        <Title>The Quyhn Chau Stone Show</Title>
+        <Title>The Quynh Chau Stone Show</Title>
         <p>
           At The Source of Hope, we are dedicated to empowering communities and
           fighting hunger through a variety of impactful initiatives. The Source
