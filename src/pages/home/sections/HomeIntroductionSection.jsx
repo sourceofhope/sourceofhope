@@ -68,12 +68,12 @@ export default function HomeIntroductionSection() {
           </div>
         )}
       </div>
-      <div className="relative z-10 w-full max-w-[75ch] md:max-w-[85ch] self-end grid gap-3 p-5 md:pb-15 lg:px-35">
+      <div className="relative z-10 w-full max-w-[80ch] md:max-w-[90ch] self-end grid gap-3 p-5 md:pb-15 lg:px-35">
         <h2 className="text-neutral-50 font-urbanist text-md md:text-lg font-semibold">
           THE SOURCE OF HOPE
         </h2>
-        <h2 className="text-neutral-50 font-urbanist text-lg md:text-xlg font-bold">
-          EMPOWERING AND PROVIDING THROUGH HEALTH AND WELLNESS
+        <h2 className="text-neutral-50 font-urbanist text-md md:text-xlg font-bold line-clamp-2">
+          EMPOWERING AND PROVIDING HOPE THROUGH HEALTH AND WELLNESS
         </h2>
         <p className="hidden md:block text-neutral-300 text-justify text-sm">
           We are a non-profit organization dedicated to providing holistic

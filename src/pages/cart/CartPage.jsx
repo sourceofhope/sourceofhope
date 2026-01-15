@@ -90,7 +90,7 @@ const CartPage = () => {
 
             <Title>Your Cart is Empty</Title>
             <p className="text-gray-700 leading-relaxed mb-10">
-              You don't have any items in your shopping cart yet. Visit our{" "}
+              You don't have any items in your shopping cart yet. Visit our
               Storefront to view our full selection.
             </p>
 
