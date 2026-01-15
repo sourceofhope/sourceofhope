@@ -61,20 +61,36 @@ export default function Footer() {
             <FooterColumn title="CONNECT">
               <ul className="grid gap-1">
                 <li>
-                  <a href="https://www.instagram.com/sourceofhope/">
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://www.instagram.com/sourceofhope/">
                     Instagram
                   </a>
                 </li>
                 <li>
-                  <a href="https://www.facebook.com/TheSourceOfHope/">
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://www.facebook.com/TheSourceOfHope/">
                     Facebook
                   </a>
                 </li>
                 <li>
-                  <a href="https://x.com/thesourceofhope/">Twitter</a>
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://x.com/thesourceofhope/">
+                    Twitter
+                  </a>
                 </li>
                 <li>
-                  <a href="https://www.youtube.com/@thesourceofhope">YouTube</a>
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://www.youtube.com/@thesourceofhope">
+                    YouTube
+                  </a>
                 </li>
               </ul>
             </FooterColumn>
@@ -89,7 +105,10 @@ export default function Footer() {
                   <NavLink to={CANONICAL.member.absolute}>Get Involved</NavLink>
                 </li>
                 <li>
-                  <a href="https://donate.stripe.com/8wM5kHal16fC4so8ww">
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://donate.stripe.com/8wM5kHal16fC4so8ww">
                     Donate
                   </a>
                 </li>
@@ -100,7 +119,12 @@ export default function Footer() {
                   <NavLink to={CANONICAL.connect.absolute}>Careers</NavLink>
                 </li>
                 <li>
-                  <a href="sitemap.xml">Site Map</a>
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="sitemap.xml">
+                    Site Map
+                  </a>
                 </li>
               </ul>
             </FooterColumn>
