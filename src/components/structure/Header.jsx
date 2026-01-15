@@ -284,6 +284,7 @@ function HeaderButton({
                   e.stopPropagation();
                 }}
                 aria-label={ariaLabel}
+                key={route.absolute}
                 to={route.absolute}
                 className={`pl-5 md:hidden !no-underline group transition-[color_transform] ease-in-out duration-300 inline-flex w-full justify-between items-center gap-1 focus:outline-none ${className}`}>
                 {label}

@@ -11,14 +11,18 @@ export default function Footer() {
 
   return (
     <footer className="relative w-full lg:mt-15">
-      {!(location.pathname == `/${CANONICAL.home}`) ? <FooterParallax /> : null}
+      {!(location.pathname == `/${CANONICAL.home.absolute}`) ? (
+        <FooterParallax />
+      ) : null}
       <section className="w-full h-full bg-primary-700 text-neutral-50 p-5 md:py-10 z-10">
         <div className="relative z-10 flex flex-col md:items-center gap-5 w-full">
           <div className="flex w-fit gap-10 flex-col md:justify-between md:flex-row">
             <FooterColumn>
               <div className="grid gap-3 grid-flow-col md:grid-flow-row">
                 <Icon className="w-20 h-20 p-1 bg-neutral-100 rounded-sm">
-                  <NavLink to={CANONICAL.home} aria-label="The Source of Hope">
+                  <NavLink
+                    to={CANONICAL.home.absolute}
+                    aria-label="The Source of Hope">
                     <img
                       src={`/${ASSET_VERSION}/core/TSOH-Logo.webp`}
                       alt=""
@@ -158,7 +162,11 @@ function FooterCard() {
           wellness tips, and community updates right to your inbox by
           subscribing to our newsletter.
         </p>
-        <LinkButton to={CANONICAL.member} className="w-fit" text="SUBSCRIBE" />
+        <LinkButton
+          to={CANONICAL.member.absolute}
+          className="w-fit"
+          text="SUBSCRIBE"
+        />
       </div>
       <p className="text-sm text-neutral-600 italic">
         No spam, unsubscribe anytime.
