@@ -235,11 +235,11 @@ function HeaderButton({
     <div
       className="w-full select-none"
       onMouseEnter={() => setHovering(label)}
-      onClick={() => setHovering(label === hovering ? null : label)}
       onMouseLeave={() => setHovering(null)}>
       <NavLink
         aria-label={ariaLabel}
         to={route.absolute}
+        onClick={() => setHovering(label === hovering ? null : label)}
         className={`!no-underline group transition-[color_transform] ease-in-out duration-300 inline-flex w-full justify-between items-center gap-1 focus:outline-none ${className}`}>
         <span>{label}</span>
         <Icon>
@@ -263,9 +263,12 @@ function HeaderButton({
           />
         </Icon>
       </NavLink>
-      {hovering == label && children.length > 0 && (
+      {children.length > 0 && (
         <>
-          <div className="absolute hidden md:flex z-50 bg-neutral-50 min-w-40 rounded-lg p-3 py-5 shadow-md text-accent-800 flex-col font-semibold text-sm">
+          <div
+            className={`${
+              hovering == label ? "opacity-100" : "opacity-0 -translate-y-1"
+            } absolute hidden md:flex z-50 transition-[opacity_transform] delay-150 duration-300 bg-neutral-50 min-w-40 rounded-lg p-3 py-5 shadow-md text-accent-800 flex-col font-semibold text-sm`}>
             {children.map(({ label, route }) => {
               return (
                 <NavLink
@@ -277,20 +280,21 @@ function HeaderButton({
               );
             })}
           </div>
-          {children.map(({ label, route }) => {
-            return (
-              <NavLink
-                onClick={(e) => {
-                  e.stopPropagation();
-                }}
-                aria-label={ariaLabel}
-                key={route.absolute}
-                to={route.absolute}
-                className={`pl-5 md:hidden !no-underline group transition-[color_transform] ease-in-out duration-300 inline-flex w-full justify-between items-center gap-1 focus:outline-none ${className}`}>
-                {label}
-              </NavLink>
-            );
-          })}
+          {hovering == label &&
+            children.map(({ label, route }) => {
+              return (
+                <NavLink
+                  onClick={(e) => {
+                    e.stopPropagation();
+                  }}
+                  aria-label={ariaLabel}
+                  key={route.absolute}
+                  to={route.absolute}
+                  className={`pl-5 md:hidden !no-underline group transition-[color_transform] ease-in-out duration-300 inline-flex w-full justify-between items-center gap-1 focus:outline-none ${className}`}>
+                  {label}
+                </NavLink>
+              );
+            })}
         </>
       )}
     </div>
