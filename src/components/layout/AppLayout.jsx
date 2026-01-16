@@ -3,15 +3,16 @@ import Header, { HeaderFlagContext } from "../structure/Header";
 import Footer from "../structure/Footer";
 import { Suspense, useState } from "react";
 import Loader from "../structure/Loader";
-import { StoreCartContext } from "../../pages/storefront/StorefrontPage";
+import { StoreCartProvider } from "../../context/StoreCartContext";
 
 export default function AppLayout() {
   const [isBlocking, setIsBlocking] = useState(false);
-  const [cart, setCart] = useState([]);
+  const [bannerActive, setBannerActive] = useState(false);
 
   return (
-    <HeaderFlagContext.Provider value={{ isBlocking, setIsBlocking }}>
-      <StoreCartContext.Provider value={{ cart, setCart }}>
+    <HeaderFlagContext.Provider
+      value={{ bannerActive, setBannerActive, isBlocking, setIsBlocking }}>
+      <StoreCartProvider>
         <Header />
         <main className="w-full min-h-screen text-sm md:text-md lg:text-lg">
           <Suspense fallback={<Loader />}>
@@ -20,7 +21,7 @@ export default function AppLayout() {
           <ScrollRestoration getKey={(location) => location.pathname} />
         </main>
         <Footer />
-      </StoreCartContext.Provider>
+      </StoreCartProvider>
     </HeaderFlagContext.Provider>
   );
 }

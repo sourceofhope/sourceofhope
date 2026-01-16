@@ -1,16 +1,10 @@
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import { useSetHeaderBlocking } from "../../components/structure/Header";
 import StorefrontProductSection from "./sections/StorefrontProductSection";
 import StorefrontFooterSection from "./sections/StorefrontFooterSection";
-import { createContext, useContext, useEffect, useState } from "react";
+import { useEffect } from "react";
 import { CANONICAL_URL } from "../../routes";
-
-export const StoreCartContext = createContext({
-  cart: [],
-  setCart: () => {},
-});
-
-export const useStoreContext = () => useContext(StoreCartContext);
+import Cart from "./Cart";
 
 export default function StorefrontPage() {
   const setBlocking = useSetHeaderBlocking();
@@ -54,19 +48,9 @@ export default function StorefrontPage() {
           content="Support community impact through meaningful purchases — shop with purpose at The Source of Hope."
         />
       </Helmet>
-
+      <Cart />
       <StorefrontProductSection />
       <StorefrontFooterSection />
     </>
   );
-}
-
-export function useCartActions() {
-  const { setCart } = useStoreContext();
-
-  function addToCart(item) {
-    setCart((prev) => [...prev, item]);
-  }
-
-  return { addToCart };
 }

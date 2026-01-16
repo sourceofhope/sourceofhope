@@ -95,14 +95,14 @@ export default function MediaNewsletterSection() {
         </p>
         <Heading>Latest Newsletters</Heading>
         <div
-          className={`min-h-40 flex items-center ${
+          className={`min-h-60 flex items-center ${
             loading
               ? "opacity-0"
               : "opacity-100 transition-opacity duration-750"
           }`}>
           {!loading && newsletters.length === 0 && (
             <p className="text-center w-full text-gray-500 py-10">
-              No blog posts to display.
+              No newsletters to display
             </p>
           )}
           {!loading && newsletters.length > 0 && (

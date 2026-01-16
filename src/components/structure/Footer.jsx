@@ -11,14 +11,18 @@ export default function Footer() {
 
   return (
     <footer className="relative w-full lg:mt-15">
-      {!(location.pathname == `/${CANONICAL.home}`) ? <FooterParallax /> : null}
+      {!(location.pathname == `/${CANONICAL.home.absolute}`) ? (
+        <FooterParallax />
+      ) : null}
       <section className="w-full h-full bg-primary-700 text-neutral-50 p-5 md:py-10 z-10">
         <div className="relative z-10 flex flex-col md:items-center gap-5 w-full">
           <div className="flex w-fit gap-10 flex-col md:justify-between md:flex-row">
             <FooterColumn>
               <div className="grid gap-3 grid-flow-col md:grid-flow-row">
                 <Icon className="w-20 h-20 p-1 bg-neutral-100 rounded-sm">
-                  <NavLink to={CANONICAL.home} aria-label="The Source of Hope">
+                  <NavLink
+                    to={CANONICAL.home.absolute}
+                    aria-label="The Source of Hope">
                     <img
                       src={`/${ASSET_VERSION}/core/TSOH-Logo.webp`}
                       alt=""
@@ -57,20 +61,36 @@ export default function Footer() {
             <FooterColumn title="CONNECT">
               <ul className="grid gap-1">
                 <li>
-                  <a href="https://www.instagram.com/sourceofhope/">
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://www.instagram.com/sourceofhope/">
                     Instagram
                   </a>
                 </li>
                 <li>
-                  <a href="https://www.facebook.com/TheSourceOfHope/">
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://www.facebook.com/TheSourceOfHope/">
                     Facebook
                   </a>
                 </li>
                 <li>
-                  <a href="https://x.com/thesourceofhope/">Twitter</a>
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://x.com/thesourceofhope/">
+                    Twitter
+                  </a>
                 </li>
                 <li>
-                  <a href="https://www.youtube.com/@thesourceofhope">YouTube</a>
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://www.youtube.com/@thesourceofhope">
+                    YouTube
+                  </a>
                 </li>
               </ul>
             </FooterColumn>
@@ -82,21 +102,29 @@ export default function Footer() {
             <FooterColumn title="QUICK LINKS">
               <ul className="grid gap-1">
                 <li>
-                  <NavLink to={CANONICAL.member}>Get Involved</NavLink>
+                  <NavLink to={CANONICAL.member.absolute}>Get Involved</NavLink>
                 </li>
                 <li>
-                  <a href="https://donate.stripe.com/8wM5kHal16fC4so8ww">
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="https://donate.stripe.com/8wM5kHal16fC4so8ww">
                     Donate
                   </a>
                 </li>
                 <li>
-                  <NavLink to={CANONICAL.serve}>Volunteer</NavLink>
+                  <NavLink to={CANONICAL.serve.absolute}>Volunteer</NavLink>
                 </li>
                 <li>
-                  <NavLink to={CANONICAL.connect}>Careers</NavLink>
+                  <NavLink to={CANONICAL.connect.absolute}>Careers</NavLink>
                 </li>
                 <li>
-                  <a href="sitemap.xml">Site Map</a>
+                  <a
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    href="sitemap.xml">
+                    Site Map
+                  </a>
                 </li>
               </ul>
             </FooterColumn>
@@ -153,12 +181,16 @@ function FooterCard() {
         <h2 className="block md:hidden">Get Updates</h2>
       </div>
       <div className="grid grid-flow-row md:grid-cols-[7fr_3fr] gap-5 items-center">
-        <p className="text-sm md:text-md text-balance">
+        <p className="text-sm md:text-md">
           Join our family of supporters and receive inspiring stories, holistic
           wellness tips, and community updates right to your inbox by
           subscribing to our newsletter.
         </p>
-        <LinkButton to={CANONICAL.member} className="w-fit" text="SUBSCRIBE" />
+        <LinkButton
+          to={CANONICAL.member.absolute}
+          className="w-fit"
+          text="SUBSCRIBE"
+        />
       </div>
       <p className="text-sm text-neutral-600 italic">
         No spam, unsubscribe anytime.

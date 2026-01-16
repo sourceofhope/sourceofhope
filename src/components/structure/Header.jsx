@@ -19,12 +19,16 @@ export default function Header() {
   const [banner, setBanner] = useState(null);
   const [bannerOpen, setBannerOpen] = useState(true);
 
-  const { isBlocking } = useHeaderContext();
+  const { isBlocking, bannerActive, setBannerActive } = useHeaderContext();
 
-  const bannerActive =
-    bannerOpen &&
-    banner?.acf?.enabled &&
-    new Date(banner?.acf?.expires) >= Date.now();
+  useEffect(() => {
+    const active =
+      bannerOpen &&
+      banner?.acf?.enabled &&
+      new Date(banner?.acf?.expires) >= Date.now();
+
+    setBannerActive(active);
+  }, [bannerOpen, banner, setBannerActive]);
 
   const fetchBanner = () => {
     fetchContent("/banner-configuration?per_page=1&_embed")
@@ -64,29 +68,29 @@ export default function Header() {
       <header
         className={`backdrop-filter fixed ${
           bannerActive ? "top-15 md:top-10" : "top-0"
-        } left-0 right-0 z-50 text-sm md:text-md w-full overflow-hidden transition-[height_backdrop] duration-500 border-b-4 md:border-none
+        } left-0 right-0 z-[9998] text-sm md:text-md w-full transition-[height_backdrop] ease-in duration-200 md:border-none
           ${
             open
-              ? `h-85 md:h-25 md:backdrop-blur-none backdrop-blur-sm ${
-                  isBlocking ? "border-primary-800/100" : "border-neutral-50"
+              ? `md:backdrop-blur-none backdrop-blur-sm shadow-lg ${
+                  isBlocking ? "border-primary-800/100 " : "border-neutral-50"
                 }`
-              : "h-25 backdrop-blur-none border-none"
+              : "shadow-none backdrop-blur-none border-none"
           }
           ${
             scrolled
               ? `bg-primary-800 text-neutral-50 border-transparent`
-              : `bg-transparent ${
+              : `bg-transparent ${open ? "border-b-4" : null} ${
                   isBlocking ? "text-primary-800" : "text-neutral-50"
                 }`
           }`}>
-        <section className="flex w-full h-25 items-center justify-between px-5 lg:px-35">
-          <div className="flex gap-5 flex-row items-center w-full">
+        <section className="flex gap-5 w-full items-center justify-between px-5 lg:px-35">
+          <div className="h-25 flex gap-5 flex-row items-center w-fit z-0 overflow-clip">
             <Favicon />
-            <h1 className="font-bold w-full hidden lg:block">
+            <h1 className="font-bold hidden lg:block whitespace-nowrap text-ellipsis overflow-hidden">
               THE SOURCE OF HOPE
             </h1>
           </div>
-          <nav className="hidden md:flex gap-5" aria-label="Primary">
+          <nav className="hidden md:flex gap-3 z-10" aria-label="Primary">
             <HeaderNavigator />
           </nav>
           <HeaderMenu open={open} setOpen={setOpen} />
@@ -96,7 +100,9 @@ export default function Header() {
             open ? "opacity-100" : "opacity-0 pointer-events-none"
           }`}>
           {open && (
-            <nav className="flex flex-col justify-end items-center px-5 h-fit">
+            <nav
+              className="flex flex-col justify-end items-center px-5 pb-5 h-fit"
+              aria-label="Mobile">
               <HeaderNavigator />
             </nav>
           )}
@@ -148,45 +154,50 @@ function HeaderNavigator() {
 
   const links = [
     {
-      label: "ABOUT",
-      to: {
-        main: CANONICAL.about,
-      },
-      children: {},
+      label: "SERVE",
+      route: CANONICAL.serve,
+      children: [
+        { label: "SERVING & SHARING HOPE", route: CANONICAL.serve.servingHope },
+        { label: "EDUCATION FOR HOPE", route: CANONICAL.serve.educationHope },
+        { label: "WELLNESS OF HOPE", route: CANONICAL.serve.wellnessHope },
+        { label: "HOPE FOR THE OUTDOORS", route: CANONICAL.serve.outdoorHope },
+        {
+          label: "INTERNATIONAL HOPE",
+          route: CANONICAL.serve.internationalHope,
+        },
+      ],
     },
     {
-      label: "SERVE",
-      to: {
-        main: CANONICAL.serve,
-      },
-      children: {},
+      label: "ABOUT",
+      route: CANONICAL.about,
+      children: [{ label: "TEAM", route: CANONICAL.about.team }],
     },
+
     {
       label: "CONNECT",
-      to: {
-        main: CANONICAL.connect,
-      },
-      children: {},
+      route: CANONICAL.connect,
     },
     {
       label: "MEDIA",
-      to: {
-        main: CANONICAL.media,
-      },
-      children: {},
+      route: CANONICAL.media,
+      children: [
+        { label: "PRESS", route: CANONICAL.media.press },
+        { label: "PODCAST", route: CANONICAL.media.podcast },
+      ],
     },
     {
       label: "MEMBERS",
-      to: {
-        main: CANONICAL.member,
-      },
-      children: {},
+      route: CANONICAL.member,
+    },
+    {
+      label: "STORE",
+      route: CANONICAL.storefront,
     },
   ];
 
   return (
     <>
-      {links.map(({ label, to }) => {
+      {links.map(({ label, route, children }) => {
         return (
           <HeaderButton
             key={label}
@@ -195,12 +206,14 @@ function HeaderNavigator() {
                 ${
                   hovering
                     ? hovering == label
-                      ? ""
-                      : "opacity-80 scale-95"
+                      ? "opacity-100"
+                      : "opacity-80"
                     : ""
                 }`}
+            hovering={hovering}
             setHovering={setHovering}
-            to={to.main}
+            route={route}
+            children={children || []}
             label={label}
           />
         );
@@ -209,24 +222,92 @@ function HeaderNavigator() {
   );
 }
 
-function HeaderButton({ ariaLabel, label, className, to, setHovering }) {
+function HeaderButton({
+  ariaLabel,
+  label,
+  className,
+  route,
+  children,
+  hovering,
+  setHovering,
+}) {
   return (
-    <NavLink
-      aria-label={ariaLabel}
-      onMouseEnter={() => setHovering(label)}
-      onMouseLeave={() => setHovering(null)}
-      to={to}
-      className={`!no-underline group transition-[color_transform] ease-in-out duration-300 inline-flex w-full justify-between items-center gap-1 focus:outline-none ${className}`}>
-      <span>{label}</span>
-      <Icon>
-        <ChevronRightIcon
-          className="w-6 h-6 transition-transform duration-500 group-hover:translate-x-1"
-          focusable="false"
-          aria-hidden="true"
-          role="presentation"
-        />
-      </Icon>
-    </NavLink>
+    <div className="w-full select-none">
+      <NavLink
+        onMouseEnter={() => setHovering(label)}
+        onMouseLeave={() => setHovering(null)}
+        aria-label={ariaLabel}
+        to={route.absolute}
+        className={`!no-underline group transition-[color_transform] ease-in-out duration-300 inline-flex w-full justify-between items-center gap-1 focus:outline-none ${className}`}>
+        <span>{label}</span>
+        <Icon>
+          <ChevronRightIcon
+            className={`w-6 h-6 transition-transform duration-500 ${
+              hovering === label && children.length > 0
+                ? "rotate-90"
+                : "rotate-0 group-hover:translate-x-1"
+            }`}
+            onClick={(e) => {
+              if (children.length > 0) {
+                e.preventDefault();
+                e.stopPropagation();
+              }
+
+              setHovering(label === hovering ? null : label);
+            }}
+            focusable="false"
+            aria-hidden="true"
+            role="presentation"
+          />
+        </Icon>
+      </NavLink>
+      {children.length > 0 && (
+        <>
+          <div
+            onMouseEnter={() => {
+              if (hovering) {
+                setHovering(label);
+              }
+            }}
+            onMouseLeave={() => {
+              if (hovering) {
+                setHovering(null);
+              }
+            }}
+            className={`${
+              hovering == label
+                ? "opacity-100 pointer-events-auto"
+                : "opacity-0 -translate-y-1 pointer-events-none"
+            } absolute hidden md:flex z-50 transition-[opacity_transform] delay-150 duration-300 bg-neutral-50 min-w-40 rounded-lg p-3 py-5 shadow-md text-accent-800 flex-col font-semibold text-sm`}>
+            {children.map(({ label, route }) => {
+              return (
+                <NavLink
+                  className="py-2.5 hover:bg-neutral-200 duration-300 transition-colors !no-underline px-3 rounded-md"
+                  key={route.absolute}
+                  to={route.absolute}>
+                  {label}
+                </NavLink>
+              );
+            })}
+          </div>
+          {hovering == label &&
+            children.map(({ label, route }) => {
+              return (
+                <NavLink
+                  onClick={(e) => {
+                    e.stopPropagation();
+                  }}
+                  aria-label={ariaLabel}
+                  key={route.absolute}
+                  to={route.absolute}
+                  className={`pl-5 md:hidden !no-underline group transition-[color_transform] ease-in-out duration-300 inline-flex w-full justify-between items-center gap-1 focus:outline-none ${className}`}>
+                  {label}
+                </NavLink>
+              );
+            })}
+        </>
+      )}
+    </div>
   );
 }
 
@@ -241,6 +322,8 @@ export function useSetHeaderBlocking() {
 }
 
 export const HeaderFlagContext = createContext({
+  bannerActive: false,
+  setBannerActive: () => {},
   isBlocking: false,
   setIsBlocking: () => {},
 });

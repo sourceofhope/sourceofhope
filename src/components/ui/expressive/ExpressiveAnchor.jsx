@@ -4,6 +4,7 @@ export default function ExpressiveAnchor({
   ariaLabel,
   children,
   className,
+  inText = false,
   href,
 }) {
   return (
@@ -12,7 +13,9 @@ export default function ExpressiveAnchor({
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className={`!no-underline text-sm md:text-md group inline-flex w-full justify-between items-center gap-1 focus:outline-none ${className}`}>
+      className={`${
+        inText ? "w-fit mr-1" : "w-full"
+      } !no-underline text-sm md:text-md group inline-flex justify-between items-center gap-1 focus:outline-none ${className}`}>
       <span>{children}</span>
       <ArrowUpRightIcon
         className="w-[1em] h-[1em] transition-transform duration-500 group-hover:translate-x-1 group-hover:-translate-y-1"

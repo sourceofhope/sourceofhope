@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import { useSetHeaderBlocking } from "../../../components/structure/Header";
 import { useEffect } from "react";
 import ExpressiveAnchor from "../../../components/ui/expressive/ExpressiveAnchor";
@@ -7,8 +7,15 @@ import Title from "../../../components/ui/text/Title";
 import Heading from "../../../components/ui/text/Heading";
 import ExpressiveCard from "../../../components/ui/expressive/ExpressiveCard";
 import { ASSET_VERSION, CANONICAL_URL } from "../../../routes";
-
+import Bold from "../../../components/ui/text/Bold.jsx";
 import { AnchorButton } from "../../../components/ui/Button";
+import {
+  AcademicCapIcon,
+  CalculatorIcon,
+  LanguageIcon,
+} from "@heroicons/react/20/solid";
+import Icon from "../../../components/ui/Icon";
+import { HighlightedText } from "../../../components/ui/expressive/ExpressiveText";
 
 export default function EducationHopeProgram() {
   const setBlocking = useSetHeaderBlocking();
@@ -37,10 +44,6 @@ export default function EducationHopeProgram() {
           property="og:description"
           content="Join the Education for Hope Program to receive free virtual tutoring and academic mentorship. Students gain support in reading, writing, standardized test prep, and literacy development through the TSOH ILA Tutoring Program."
         />
-        <meta
-          property="og:image"
-          content="https://sourceofhope.org/assets/social-share-education-for-hope.jpg"
-        />
 
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content={CANONICAL_URL.educationHope} />
@@ -52,24 +55,22 @@ export default function EducationHopeProgram() {
           name="twitter:description"
           content="Access free academic support through The Source of Hope’s Education for Hope Program—offering virtual tutoring, reading and writing mentorship, and test preparation to help students thrive."
         />
-        <meta
-          name="twitter:image"
-          content="https://sourceofhope.org/assets/social-share-education-for-hope.jpg"
-        />
       </Helmet>
       <section className="w-full md:justify-items-left items-center grid gap-5 pt-25 p-5 lg:px-35 text-sm md:text-md lg:text-lg">
         <article className="grid gap-3 justify-self-start justify-start">
-          <Title>Education for Hope Program</Title>
+          <Title>Education for Hope</Title>
           <Heading>Teaching our Community</Heading>
         </article>
-        <article className="grid gap-3 text-neutral-600">
+        <article className="grid gap-3">
           <p>
-            The Education For Hope program offers tutoring services, supports
-            cosmetology students, and provides opportunities through the Federal
-            Work-Study program in partnership with The University of Texas at
-            Dallas. We assist students of all ages by offering scholarships to
-            low-income cosmetology students, facilitating advanced beauty
-            education, and hiring for operations roles through Work-Study.
+            <Bold>The Education For Hope</Bold> program offers tutoring
+            services, supports cosmetology students, and provides opportunities
+            through the{" "}
+            <HighlightedText>Federal Work-Study program</HighlightedText> in
+            partnership with <Bold>The University of Texas at Dallas</Bold>. We
+            assist students of all ages by offering scholarships to low-income
+            cosmetology students, facilitating advanced beauty education, and
+            hiring for operations roles through Work-Study.
           </p>
           <button className="my-5 md:hidden rounded-2xl p-5 bg-accent-500 md:w-1/3 hover:bg-accent-600 duration-750 transition-colors font-semibold text-neutral-50">
             <ExpressiveAnchor to="">APPLY</ExpressiveAnchor>
@@ -85,7 +86,7 @@ export default function EducationHopeProgram() {
                 Are you looking to gain hands-on experience and develop your
                 career? The Source of Hope offers over 15 job opportunities for
                 students and professionals eager to make an impact. Whether
-                you’re seeking a paid federal work-study position, an unpaid
+                you're seeking a paid federal work-study position, an unpaid
                 internship for school credit, or volunteer hours, we have
                 opportunities designed to help you grow.
               </p>
@@ -186,7 +187,7 @@ export default function EducationHopeProgram() {
           <div className="grid grid-flow-row md:grid-cols-[6fr_3fr] gap-5 items-center">
             <div className="grid gap-5 grid-flow-row justify-start">
               <p>
-                The Source of Hope offers <strong>virtual tutoring</strong> for
+                The Source of Hope offers <Bold>virtual tutoring</Bold> for
                 middle school and high school students—empowering learners to
                 grow from anywhere.
               </p>
@@ -194,27 +195,44 @@ export default function EducationHopeProgram() {
                 <Heading className="border-b-2 border-neutral-300 pb-2">
                   Tutoring Services
                 </Heading>
-                <ul className="grid gap-2 pl-3 text-neutral-800 list-disc font-medium">
-                  <li>Test prep for STAAR, SAT, and AP exams</li>
-                  <li>Math subjects such as Algebra and Geometry</li>
-                  <li>English topics including vocabulary and grammar</li>
+                <ul className="grid gap-1">
+                  <li className="flex flex-row md:items-center gap-3">
+                    <Icon className="text-accent-500 aspect-square h-[1em]">
+                      <AcademicCapIcon />
+                    </Icon>
+                    <p>Test prep for STAAR, SAT, and AP exams</p>
+                  </li>
+                  <li className="flex flex-row md:items-center gap-3">
+                    <Icon className="text-accent-500 aspect-square h-[1em]">
+                      <CalculatorIcon />
+                    </Icon>
+                    <p>Math subjects such as Algebra and Geometry</p>
+                  </li>
+                  <li className="flex flex-row md:items-center gap-3">
+                    <Icon className="text-accent-500 aspect-square h-[1em]">
+                      <LanguageIcon />
+                    </Icon>
+                    <p>English topics including vocabulary and grammar</p>
+                  </li>
                 </ul>
               </article>
               <p>
-                All tutoring sessions are held <strong>virtually</strong>,
-                allowing students to participate from any location with flexible
+                All tutoring sessions are held <Bold>virtually</Bold>, allowing
+                students to participate from any location with flexible
                 scheduling options.
               </p>
               <p className="pl-5 py-0 border-l-4 border-accent-600">
-                <strong>The Source of Hope</strong> is currently hiring ILA
+                <Bold>The Source of Hope</Bold> is currently hiring ILA
                 (Integrated Language Arts) tutors. Both students and adults can
-                apply. Tutors receive <strong>50%</strong> of session earnings,
+                apply. Tutors receive <Bold>50%</Bold> of session earnings,
                 while the remaining proceeds support our community programs.
               </p>
               <p>
-                If you specialize in a subject not listed above, we still
-                encourage you to apply! We’re always expanding our educational
-                offerings.
+                If you specialize in a subject not listed above,{" "}
+                <HighlightedText>
+                  we still encourage you to apply!
+                </HighlightedText>{" "}
+                We're always expanding our educational offerings.
               </p>
             </div>
             <div className="space-y-3 justify-self-end w-full">
@@ -254,30 +272,34 @@ export default function EducationHopeProgram() {
                 />
               </Carousel>
               <AnchorButton
+                full
                 text="GET TUTORING"
                 href="https://docs.google.com/forms/d/e/1FAIpQLSezTUqqIB7QuWcX5eL5AeXG-rXRRN6X6ayj7eDIVnQSooEmgQ/viewform"
               />
               <AnchorButton
+                full
                 text="JOIN OUR TUTORS"
                 href="https://docs.google.com/forms/d/e/1FAIpQLSeCTTQRJJuEKLDlp5JopwrhCXiDVrOc5rYohqnZpW1YvppDiw/viewform"
               />
             </div>
           </div>
         </article>
-        <article className="grid gap-5 text-neutral-600">
-          <Title className="text-neutral-950">Mentors</Title>
+        <article className="grid gap-5">
+          <Title>Mentors</Title>
           <p>
-            The Source of Hope, offers mentorship opportunities through its TSOH
-            ILA Tutoring Program. This initiative aims to empower students
-            academically by providing individualized virtual mentorship in
-            reading and writing.
+            <Bold>The Source of Hope</Bold> offers mentorship opportunities
+            through its <Bold>TSOH ILA Tutoring Program</Bold>. This initiative
+            aims to{" "}
+            <HighlightedText>empower students academically</HighlightedText> by
+            providing individualized virtual mentorship in reading and writing.
           </p>
           <p>
-            Tutors can assist students in preparing for standardized tests like
-            STAAR and SAT/ACT, analyzing literature, and developing writing
-            skills. Prospective tutors should have reliable internet access,
-            experience with virtual meeting platforms (e.g., Zoom, Google Meet),
-            and be comfortable with English.
+            Tutors can assist students in preparing for standardized tests like{" "}
+            the <Bold>STAAR</Bold>, <Bold>SAT</Bold>, and <Bold>ACT</Bold>,
+            analyzing literature, and developing writing skills. Prospective
+            tutors should have reliable internet access, experience with virtual
+            meeting platforms (e.g., Zoom, Google Meet), and be comfortable with
+            English.
           </p>
         </article>
       </section>
@@ -287,9 +309,9 @@ export default function EducationHopeProgram() {
 
 function CarouselCard({ src, alt }) {
   return (
-    <button
+    <div
       className="
-    relative w-full
+    relative h-full
     group overflow-hidden rounded-2xl text-accent-background aspect-square
   ">
       <img
@@ -303,6 +325,6 @@ function CarouselCard({ src, alt }) {
           <p className="text-lg font-bold">Empowering minds everywhere</p>
         </div>
       </div>
-    </button>
+    </div>
   );
 }
