@@ -54,15 +54,17 @@ export default function WellnessHopeProgram() {
         </div>
         <article className="grid gap-5">
           <p>
-            The Wellness of Hope Clinic provides holistic treatments like fire
-            cupping and lymphatic drainage to low-income individuals, including
-            senior citizens, teachers, first responders, and others in need. In
-            partnership with Stone International Wellness Center, the clinic
-            offers both therapeutic and cosmetic services to improve well-being
-            and boost confidence. These services make a life-changing impact for
-            those who may not otherwise afford such care. The clinic also
-            provides reduced cosmetic services and classes to the general
-            public.
+            <Bold>The Wellness of Hope</Bold> Clinic provides holistic
+            treatments like fire cupping and lymphatic drainage to low-income
+            individuals, including senior citizens, teachers, first responders,
+            and others in need. In partnership with{" "}
+            <Bold>Stone International Wellness Center</Bold>, the clinic offers
+            both therapeutic and cosmetic services to improve well-being and
+            boost confidence. These services make a life-changing impact for
+            those who may not{" "}
+            <HighlightedText>otherwise afford such care</HighlightedText>. The
+            clinic also provides reduced cosmetic services and classes to the
+            general public.
           </p>
           <article className="bg-neutral-50 rounded-2xl shadow-sm p-5 grid gap-2">
             <Heading className=" border-b-2 border-neutral-300 pb-2">
@@ -83,7 +85,8 @@ export default function WellnessHopeProgram() {
             We offer free makeovers to individuals living with HIV/AIDs and low
             income individuals to help improve their self-esteem. Provide free
             haircuts to senior citizens 65+, teachers, fire fighters, police
-            officers, and veterans every month
+            officers, and veterans{" "}
+            <HighlightedText>every month</HighlightedText>.
           </p>
 
           <AnchorButton
