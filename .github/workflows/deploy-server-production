@@ -1,0 +1,32 @@
+name: Deploy Server to Production
+
+on:
+  push:
+    branches:
+      - production
+
+jobs:
+  deploy-server:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - run: npm i
+
+      - name: Deploy server via FTPS
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          local-dir: server/
+          server-dir: /public_html/app/api/
+          exclude: |
+            **/node_modules/**
+            **/.env
+            **/.env.*

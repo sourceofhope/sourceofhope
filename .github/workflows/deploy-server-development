@@ -1,0 +1,31 @@
+name: Deploy Server to DEV
+
+on:
+  push:
+    branches:
+      - development
+
+jobs:
+  deploy-server:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - run: npm i
+
+      - name: Deploy server via FTPS
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.DEV_FTP_SERVER }}
+          username: ${{ secrets.DEV_FTP_USERNAME }}
+          password: ${{ secrets.DEV_FTP_PASSWORD }}
+          protocol: ftps
+          local-dir: server/
+          server-dir: /public_html/dev/api/
+          exclude: |
+            **/.env
+            **/.env.*
