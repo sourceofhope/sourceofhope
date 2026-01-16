@@ -4,11 +4,6 @@ on:
   push:
     branches: ["development"]
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
 jobs:
   deploy-frontend:
     runs-on: ubuntu-latest
@@ -21,7 +16,9 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 18
-      - run: npm ci --legacy-peer-deps
+
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
 
       - name: Build frontend (development)
         run: npm run build:client
