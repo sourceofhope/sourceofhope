@@ -4,6 +4,8 @@ import {
   BanknotesIcon,
   DevicePhoneMobileIcon,
 } from "@heroicons/react/24/outline";
+import { CANONICAL, CANONICAL_URL } from "../../../routes";
+import { createCheckoutSession } from "../../../lib/api/checkout";
 
 export default function CartPaymentSection({
   items,
@@ -11,8 +13,12 @@ export default function CartPaymentSection({
   paymentMethod,
   setPaymentMethod,
   total,
+  subtotal,
+  shipping,
+  tax,
 }) {
   const [isProcessing, setIsProcessing] = useState(false);
+  const [error, setError] = useState(null);
 
   const paymentMethods = [
     {
@@ -35,16 +41,41 @@ export default function CartPaymentSection({
     },
   ];
 
-  const handleCheckout = () => {
+  const handleCheckout = async () => {
     setIsProcessing(true);
-    setTimeout(() => {
-      alert("Processing payment... This is a demo.");
-      console.log(`Items in checkout:`, items);
-      console.log(`Shipping method: ${shippingMethod}`);
-      console.log(`Payment method: ${paymentMethod}`);
-      console.log(`Total amount: $${total.toFixed(2)}`);
+    setError(null);
+
+    try {
+      const successUrl = `${window.location.origin}/store/cart/success`;
+      const cancelUrl = `${window.location.origin}/store/cart`;
+
+      const response = await createCheckoutSession({
+        items,
+        shippingMethod,
+        shippingCost: shipping,
+        taxAmount: tax,
+        successUrl,
+        cancelUrl,
+      });
+
+      if (response.error) {
+        setError(response.error);
+        setIsProcessing(false);
+        return;
+      }
+
+      // Redirect to Stripe Checkout
+      if (response.data?.url) {
+        window.location.href = response.data.url;
+      } else {
+        setError("Failed to create checkout session");
+        setIsProcessing(false);
+      }
+    } catch (err) {
+      console.error("Checkout error:", err);
+      setError("An unexpected error occurred. Please try again.");
       setIsProcessing(false);
-    }, 1500);
+    }
   };
 
   return (
@@ -134,6 +165,13 @@ export default function CartPaymentSection({
           </div>
         </div>
       )} */}
+      
+      {error && (
+        <div className="mb-4 p-4 bg-red-50 border-2 border-red-200 rounded-lg">
+          <p className="text-sm text-red-800 font-semibold">{error}</p>
+        </div>
+      )}
+
       <button
         onClick={handleCheckout}
         disabled={isProcessing}
