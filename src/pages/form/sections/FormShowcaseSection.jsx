@@ -17,23 +17,23 @@ export default function FormShowcaseSection() {
         <FormShowcaseCard
           text="Support programs that deliver meals, wellness care, education, and essential services, creating real and lasting change in the lives of those we serve."
           title="Community Impact">
-          <HeartIcon className="w-[4em] aspect-square border-neutral-600 bg-red-400 border-3 rounded-full p-3" />
+          <HeartIcon className="w-[4em] aspect-square bg-neutral-200 text-red-400 rounded-full shadow-sm p-3" />
         </FormShowcaseCard>
         <FormShowcaseCard
           text="Connect with professionals, leaders, volunteers, and advocates who share a commitment to collaboration, service, and positive impact."
           title="Networking">
-          <GlobeAltIcon className="w-[4em] aspect-square border-neutral-600 bg-yellow-200 border-3 rounded-full p-3" />
+          <GlobeAltIcon className="w-[4em] aspect-square bg-neutral-200 text-yellow-200 rounded-full shadow-sm p-3" />
         </FormShowcaseCard>
 
         <FormShowcaseCard
           text="Enjoy member-only savings on wellness services, events, and partner offerings while supporting businesses that reinvest in the community."
           title="Exclusive Discounts">
-          <BuildingStorefrontIcon className="w-[4em] aspect-square border-neutral-600 bg-blue-400 border-3 rounded-full p-3" />
+          <BuildingStorefrontIcon className="w-[4em] aspect-square bg-neutral-200 text-blue-400 rounded-full shadow-sm p-3" />
         </FormShowcaseCard>
         <FormShowcaseCard
           text="Members gain access to mentorship, internships, leadership development, and real-world training that empowers students and emerging professionals."
           title="Education Programs">
-          <AcademicCapIcon className="w-[4em] aspect-square border-neutral-600 bg-green-400 border-3 rounded-full p-3" />
+          <AcademicCapIcon className="w-[4em] aspect-square bg-neutral-200 text-green-400 rounded-full shadow-sm p-3" />
         </FormShowcaseCard>
       </div>
     </section>

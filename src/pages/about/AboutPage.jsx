@@ -4,9 +4,8 @@ import PageHeader from "../PageHeader";
 import AboutDescriptionSection from "./sections/AboutDescriptionSection";
 import AboutMissionSection from "./sections/AboutMissionSection";
 import AboutSummarySection from "./sections/AboutSummarySection";
-import AboutTeamSection from "./sections/AboutTeamSection";
 
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 export default function AboutPage() {
   return (
@@ -46,7 +45,6 @@ export default function AboutPage() {
       <AboutDescriptionSection />
       <AboutMissionSection />
       <AboutSummarySection />
-      <AboutTeamSection />
     </>
   );
 }

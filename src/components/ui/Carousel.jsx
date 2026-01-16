@@ -75,7 +75,7 @@ export default function Carousel({
         ))}
       </div>
       {(!hideControls || showProgress) && (
-        <div className="grid grid-flow-col gap-3 w-full items-center justify-between my-5 max-w-full">
+        <div className="grid grid-flow-col gap-3 w-full items-center justify-between my-5 max-w-full select-none">
           {!hideControls && (
             <button
               onClick={prev}
@@ -84,9 +84,9 @@ export default function Carousel({
             </button>
           )}
           {showProgress && (
-            <div className="justify-center">
+            <p className="justify-center pointer-events-none">
               {index + 1}/{totalPages}
-            </div>
+            </p>
           )}
 
           {!hideControls && (

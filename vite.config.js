@@ -5,19 +5,17 @@ import path from "node:path";
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-  base: "/",
+  base: process.env.DEPLOY_ENV === "gh-pages" ? "/sourceofhope/" : "/",
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
   },
   build: {
-    target: "es2019",
-    cssTarget: "safari12",
-    rollupOptions: {
-      output: {
-        hoistTransitiveImports: false,
-      },
-    },
+    outDir: "dist",
+    emptyOutDir: true,
+  },
+  ssr: {
+    noExternal: ["express", "cors", "dotenv", "stripe"],
   },
 });

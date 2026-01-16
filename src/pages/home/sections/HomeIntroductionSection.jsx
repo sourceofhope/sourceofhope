@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { AnchorButton, LinkButton } from "../../../components/ui/Button";
-import { ASSET_VERSION, CANONICAL_URL } from "../../../routes";
+import { ASSET_VERSION, CANONICAL } from "../../../routes";
 import { HomeContent } from "../HomePage";
 
 export default function HomeIntroductionSection() {
@@ -43,10 +43,10 @@ export default function HomeIntroductionSection() {
         <img
           src={`/${ASSET_VERSION}/core/TSOH-Poster.webp`}
           alt="The Source of Hope community impact"
-          class="h-full w-full object-cover brightness-75"
+          className="h-full w-full object-cover brightness-75"
           loading="eager"
           decoding="sync"
-          fetchpriority="high"
+          fetchPriority="high"
         />
         {!videoFailed && (
           <div className="absolute inset-0">
@@ -68,12 +68,12 @@ export default function HomeIntroductionSection() {
           </div>
         )}
       </div>
-      <div className="relative z-10 w-full max-w-[75ch] md:max-w-[85ch] self-end grid gap-3 p-5 md:pb-15 lg:px-35">
+      <div className="relative z-10 w-full max-w-[80ch] md:max-w-[90ch] self-end grid gap-3 p-5 md:pb-15 lg:px-35">
         <h2 className="text-neutral-50 font-urbanist text-md md:text-lg font-semibold">
           THE SOURCE OF HOPE
         </h2>
-        <h2 className="text-neutral-50 font-urbanist text-lg md:text-xlg font-bold">
-          EMPOWERING AND PROVIDING THROUGH HEALTH AND WELLNESS
+        <h2 className="text-neutral-50 font-urbanist text-md md:text-xlg font-bold line-clamp-2">
+          EMPOWERING AND PROVIDING HOPE THROUGH HEALTH AND WELLNESS
         </h2>
         <p className="hidden md:block text-neutral-300 text-justify text-sm">
           We are a non-profit organization dedicated to providing holistic
@@ -94,7 +94,7 @@ export default function HomeIntroductionSection() {
           <div className="w-fit">
             <LinkButton
               className="w-fit"
-              to={CANONICAL_URL.about}
+              to={CANONICAL.about.absolute}
               text="OUR MISSION"
               ariaLabel="Learn more about The Source of Hope nonprofit organization and its mission"
             />

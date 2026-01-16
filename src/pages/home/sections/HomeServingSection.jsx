@@ -41,7 +41,7 @@ export function ServingCard({ className }) {
       <ul className="grid text-sm">
         <li>
           <ExpressiveLink
-            to={CANONICAL.member}
+            to={CANONICAL.member.absolute}
             className="p-5 rounded-2xl hover:bg-neutral-200 duration-500 transition-colors">
             Become a Community Sponsor
           </ExpressiveLink>

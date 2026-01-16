@@ -71,7 +71,7 @@ export default function ServeProgramsSection() {
             <button className="w-fit font-semibold">
               <ExpressiveLink
                 className="text-sm md:text-md text-accent-500"
-                to={CANONICAL.servingHope}>
+                to={CANONICAL.serve.servingHope.absolute}>
                 Volunteer at Our Next Event
               </ExpressiveLink>
             </button>
@@ -91,7 +91,7 @@ export default function ServeProgramsSection() {
             <button className="w-fit font-semibold">
               <ExpressiveLink
                 className="text-sm md:text-md text-accent-500"
-                to={CANONICAL.educationHope}>
+                to={CANONICAL.serve.educationHope.absolute}>
                 Become a Tutor
               </ExpressiveLink>
             </button>
@@ -116,7 +116,7 @@ export default function ServeProgramsSection() {
             <button className="w-fit font-semibold">
               <ExpressiveLink
                 className="text-sm md:text-md text-accent-500"
-                to={CANONICAL.wellnessHope}>
+                to={CANONICAL.serve.wellnessHope.absolute}>
                 Support Community Wellness
               </ExpressiveLink>
             </button>
@@ -140,7 +140,7 @@ export default function ServeProgramsSection() {
             <button className="w-fit font-semibold">
               <ExpressiveLink
                 className="text-sm md:text-md text-accent-500"
-                to={CANONICAL.servingHope}>
+                to={CANONICAL.serve.servingHope.absolute}>
                 Partner with Us
               </ExpressiveLink>
             </button>
@@ -161,7 +161,7 @@ export default function ServeProgramsSection() {
             <button className="w-fit font-semibold">
               <ExpressiveLink
                 className="text-sm md:text-md text-accent-500"
-                to={CANONICAL.outdoorHope}>
+                to={CANONICAL.serve.outdoorHope.absolute}>
                 Join the Next Outdoor Experience
               </ExpressiveLink>
             </button>
@@ -182,7 +182,7 @@ export default function ServeProgramsSection() {
             <button className="w-fit font-semibold">
               <ExpressiveLink
                 className="text-sm md:text-md text-accent-500"
-                to={CANONICAL.internationalHope}>
+                to={CANONICAL.serve.internationalHope.absolute}>
                 Learn About Global Outreach
               </ExpressiveLink>
             </button>

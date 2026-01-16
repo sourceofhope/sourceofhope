@@ -13,9 +13,10 @@ export default function HomeMissionSection() {
           Our Mission
         </Title>
         <img
-          className="inset-0 w-full object-cover max-w-[400px] aspect-square rounded-2xl text-center"
           src={`/${ASSET_VERSION}/core/TSOH-Founder.webp`}
           alt="The Source of Hope Founder, Quynh Chau Stone"
+          className="w-full h-full object-cover"
+          loading="lazy"
         />
       </div>
       <div className="grid gap-3 max-w-[400px] md:max-w-[500px] lg:max-w-[600px]">
@@ -30,7 +31,7 @@ export default function HomeMissionSection() {
         </Blockquote>
         <p className="text-md md:text-lg pl-5 w-fit">
           <ExpressiveAnchor href="https://www.linkedin.com/in/qu%E1%BB%B3nh-ch%C3%A2u-qc-stone-87185b34/">
-            – Co-founder,{" "}
+            - Co-founder,{" "}
             <strong className="font-semibold">Quynh Chau Stone</strong>
           </ExpressiveAnchor>
         </p>
