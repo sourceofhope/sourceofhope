@@ -7,7 +7,7 @@
     "dev:client": "vite",
     "dev:server": "npm run dev --prefix server",
     "dev": "start npm run dev:server && npm run dev:client",
-    "build:client": "vite build && node -e \"import fs from 'fs'; fs.copyFileSync('dist/index.html', 'dist/404.html')\"",
+    "build:client": "vite build && node --input-type=module --eval \"import fs from 'fs'; fs.copyFileSync('dist/index.html', 'dist/404.html')\"",
     "build:server": "npm install --prefix server",
     "build": "npm run build:client && npm run build:server",
     "preview": "vite preview"
