@@ -2,31 +2,42 @@ name: Deploy Server to Production
 
 on:
   push:
-    branches:
-      - production
+    branches: ["production"]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
-  deploy-server:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: 18
 
+      - name: Install dependencies
       - run: npm i
 
-      - name: Deploy server via FTPS
+      - name: Deploy via FTPS
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftps
-          local-dir: server/
-          server-dir: /public_html/app/api/
+          port: 21
+          local-dir: dist/
+          server-dir: /public_html/dev/server/
+          timeout: 600000
+          dangerous-clean-slate: false
+          log-level: minimal
           exclude: |
-            **/node_modules/**
             **/.env
             **/.env.*

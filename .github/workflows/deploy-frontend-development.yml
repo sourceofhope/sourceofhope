@@ -2,30 +2,47 @@ name: Deploy Frontend to Development
 
 on:
   push:
-    branches:
-      - development
+    branches: ["development"]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
 
 jobs:
   deploy-frontend:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
           node-version: 18
-
       - run: npm ci --legacy-peer-deps
 
-      - name: Build frontend (dev)
+      - name: Build frontend (development)
         run: npm run build:client
 
-      - name: Deploy frontend via FTPS
+      - name: Deploy via FTPS
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          server: ${{ secrets.DEV_FTP_SERVER }}
-          username: ${{ secrets.DEV_FTP_USERNAME }}
-          password: ${{ secrets.DEV_FTP_PASSWORD }}
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftps
+          port: 21
           local-dir: dist/
           server-dir: /public_html/dev/
+          timeout: 600000
+          dangerous-clean-slate: false
+          log-level: minimal
+          exclude: |
+            **/.git/**
+            **/.github/**
+            **/node_modules/**
+            **/*.map
+            **/.env*
+            **/wp/**
