@@ -4,8 +4,12 @@
   "version": "1.2.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build && cp dist/index.html dist/404.html",
+    "dev:client": "vite",
+    "dev:server": "npm run dev --prefix server",
+    "dev": "start npm run dev:server && npm run dev:client",
+    "build:client": "vite build && cp dist/index.html dist/404.html",
+    "build:server": "npm install --prefix server",
+    "build": "npm run build:client && npm run build:server",
     "preview": "vite preview"
   },
   "devDependencies": {
