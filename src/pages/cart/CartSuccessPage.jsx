@@ -52,22 +52,24 @@ export default function CartSuccessPage() {
         />
       </Helmet>
 
-      <div className="min-h-screen bg-neutral-50 flex items-center justify-center px-5 py-20">
-        <div className="max-w-2xl w-full bg-white rounded-2xl shadow-lg p-8 md:p-12 text-center">
-          <div className="mx-auto mb-6 w-20 h-20 rounded-full bg-green-100 flex items-center justify-center">
+      <div className="min-h-screen bg-neutral-50 flex items-center justify-center px-5 pt-25 py-10">
+        <div className="max-w-2xl w-full bg-neutral-100 rounded-2xl shadow-lg p-5 text-center">
+          <div className="mx-auto w-20 h-20 rounded-full bg-green-100 flex items-center justify-center">
             <CheckCircleIcon className="w-12 h-12 text-green-600" />
           </div>
 
           <Title className="mb-4">Order Successful!</Title>
 
-          <p className="text-lg text-neutral-700 mb-6">
+          <p className="text-neutral-700 mb-6 text-sm md:text-md text-left">
             Thank you for your purchase! We've received your order and will send
             you a confirmation email shortly.
           </p>
 
-          <div className="bg-accent-50 border-2 border-accent-200 rounded-lg p-6 mb-8">
-            <h3 className="font-bold text-neutral-900 mb-2">What's Next?</h3>
-            <ul className="text-left text-neutral-700 space-y-2">
+          <div className="bg-neutral-200 border-2 border-accent-200 rounded-lg p-6 mb-8">
+            <h3 className="font-bold text-neutral-900 mb-2 text-sm md:text-md">
+              What's Next?
+            </h3>
+            <ul className="text-left text-neutral-700 space-y-1 text-sm md:text-md">
               <li className="flex items-start gap-2">
                 <span className="text-accent-600 font-bold">•</span>
                 <span>
@@ -90,7 +92,7 @@ export default function CartSuccessPage() {
             </ul>
           </div>
 
-          <p className="text-sm text-neutral-600 mb-8">
+          <p className="text-sm text-neutral-600 mb-8 text-left">
             Your support helps us provide food, education, and wellness programs
             to families in need. Thank you for making a difference!
           </p>
