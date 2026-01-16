@@ -15,6 +15,13 @@ export default function HomeMissionSection() {
         <img
           className="inset-0 w-full object-cover max-w-[400px] aspect-square rounded-2xl text-center"
           src={`/${ASSET_VERSION}/core/TSOH-Founder.webp`}
+          srcSet={`
+          /${ASSET_VERSION}/core/TSOH-Founder-320.webp 320w,
+          /${ASSET_VERSION}/core/TSOH-Founder-480.webp 480w,
+    /${ASSET_VERSION}/core/TSOH-Founder-640.webp 640w,
+    /${ASSET_VERSION}/core/TSOH-Founder-800.webp 800w
+  `}
+          sizes="(max-width: 768px) 90vw, 651px"
           alt="The Source of Hope Founder, Quynh Chau Stone"
         />
       </div>

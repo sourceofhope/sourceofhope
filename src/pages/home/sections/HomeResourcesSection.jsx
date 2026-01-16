@@ -38,24 +38,48 @@ export default function HomeResourcesSection() {
           to={`serve/${CANONICAL.servingHope}`}
           caption="Serving Hope is a volunteer-driven initiative dedicated to providing organic, home-cooked meals to those in need across the Dallas–Fort Worth area. Through partnerships and community support, we nourish homeless individuals, veterans, nursing home residents, and at-risk families. Each event focuses on fresh food, dignity, and connection, ensuring both body and spirit are cared for while building stronger, more compassionate communities."
           src={`/${ASSET_VERSION}/servingHope/SH-ResourceTile.webp`}
+           srcSet={`
+          /${ASSET_VERSION}/Hope/WH-ResourceTile-320.webp 320w,
+          /${ASSET_VERSION}/servingHope/WH-ResourceTile-480.webp 480w,
+          /${ASSET_VERSION}/servingHope/WH-ResourceTile-640.webp 640w,
+          /${ASSET_VERSION}/servingHope/WH-ResourceTile-800.webp 800w `}
+         sizes="(max-width: 768px) 90vw, 651px"
         />
         <HomeResourceCard
           title="Sharing Hope"
           to={`serve/${CANONICAL.servingHope}`}
           caption="Sharing Hope transforms surplus food donations into community impact. Partnering with over 50 nonprofits, we distribute meals and essential supplies to families facing food insecurity across the region. This initiative reduces food waste, strengthens partnerships, and ensures that resources reach those who need them most, turning generosity into daily nourishment for thousands of lives."
           src={`/${ASSET_VERSION}/sharingHope/SH-ResourceTile.webp`}
+          srcSet={`
+          /${ASSET_VERSION}/Hope/WH-ResourceTile-320.webp 320w,
+          /${ASSET_VERSION}/sharingHope/WH-ResourceTile-480.webp 480w,
+          /${ASSET_VERSION}/sharingHope/WH-ResourceTile-640.webp 640w,
+          /${ASSET_VERSION}/sharingHope/WH-ResourceTile-800.webp 800w `}
+         sizes="(max-width: 768px) 90vw, 651px"
         />
         <HomeResourceCard
           title="Hope For The Great Outdoors"
           to={`serve/${CANONICAL.outdoorHope}`}
           caption="Hope for the Great Outdoors introduces individuals and families to nature through hands-on learning and immersive outdoor experiences. From camping and fishing to survival skills, participants gain confidence while developing a lifelong respect for the environment. By making the outdoors accessible and inclusive, the program creates opportunities for growth, bonding, and wellness in a safe and supportive setting."
           src={`/${ASSET_VERSION}/outdoorHope/OH-ResourceTile.webp`}
+          srcSet={`
+          /${ASSET_VERSION}/Hope/WH-ResourceTile-320.webp 320w,
+          /${ASSET_VERSION}/outdoorHope/WH-ResourceTile-480.webp 480w,
+          /${ASSET_VERSION}/outdoorHope/WH-ResourceTile-640.webp 640w,
+          /${ASSET_VERSION}/outdoorHope/WH-ResourceTile-800.webp 800w `}
+         sizes="(max-width: 768px) 90vw, 651px"
         />
         <HomeResourceCard
           title="International Partner Serving"
           to={`serve/${CANONICAL.internationalHope}`}
           caption="Our International Partner Serving program extends hope worldwide by collaborating with organizations and volunteers to deliver resources, training, and empowerment. We provide scholarships, educational tools, wellness services, and food support to underserved communities in developing regions. By fostering relationships based on trust and respect, we amplify dignity and self-sufficiency, ensuring that compassion knows no borders and hope reaches people across the globe."
           src={`/${ASSET_VERSION}/internationalHope/IH-ResourceTile.webp`}
+          srcSet={`
+          /${ASSET_VERSION}/Hope/WH-ResourceTile-320.webp 320w,
+          /${ASSET_VERSION}/internationalHope/WH-ResourceTile-480.webp 480w,
+          /${ASSET_VERSION}/internationalHope/WH-ResourceTile-640.webp 640w,
+          /${ASSET_VERSION}/internationalHope/WH-ResourceTile-800.webp 800w `}
+         sizes="(max-width: 768px) 90vw, 651px"
         />
       </div>
     </HomeContent>

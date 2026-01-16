@@ -142,7 +142,7 @@ export function CarouselCard({ post }) {
                 </h2>
                 <button
                   onClick={() => setActive(false)}
-                  className="rounded-full p-2 hover:bg-neutral-200 transition-colors duration-750">
+                  className="rounded-full p-2 hover:bg-neutral-200 transition-colors duration-750" aria-labelledby="Close">
                   <XMarkIcon className="w-5 h-5 text-neutral-600" />
                 </button>
               </div>
