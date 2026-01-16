@@ -1,5 +1,5 @@
-import { useEffect} from "react";
-import { Helmet } from "react-helmet";
+import { useEffect } from "react";
+import { Helmet } from "react-helmet-async";
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
 import { CANONICAL, CANONICAL_URL } from "../../routes";
 import Title from "../../components/ui/text/Title";
@@ -11,11 +11,11 @@ export default function CartSuccessPage() {
   const { clearCart } = useCartActions();
 
   const setBlocking = useSetHeaderBlocking();
-  
-    useEffect(() => {
-      setBlocking(true);
-      return () => setBlocking(false);
-    }, [setBlocking]);
+
+  useEffect(() => {
+    setBlocking(true);
+    return () => setBlocking(false);
+  }, [setBlocking]);
 
   useEffect(() => {
     // Clear the cart after successful purchase
@@ -31,7 +31,10 @@ export default function CartSuccessPage() {
         <link rel="canonical" href={`${CANONICAL_URL.storefront.cart}`} />
         <meta property="og:type" content="website" />
         <meta property="og:url" content={`${CANONICAL_URL.storefront.cart}`} />
-        <meta property="og:title" content="Order Successful | The Source of Hope" />
+        <meta
+          property="og:title"
+          content="Order Successful | The Source of Hope"
+        />
         <meta
           property="og:description"
           content="Thank you for your purchase! Your support helps us provide food, education, and wellness programs to families in need."
@@ -39,7 +42,10 @@ export default function CartSuccessPage() {
 
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:url" content={`${CANONICAL_URL.storefront.cart}`} />
-        <meta name="twitter:title" content="Order Successful | The Source of Hope" />
+        <meta
+          name="twitter:title"
+          content="Order Successful | The Source of Hope"
+        />
         <meta
           name="twitter:description"
           content="Thank you for your purchase! Your support helps us provide food, education, and wellness programs to families in need."
@@ -55,8 +61,8 @@ export default function CartSuccessPage() {
           <Title className="mb-4">Order Successful!</Title>
 
           <p className="text-lg text-neutral-700 mb-6">
-            Thank you for your purchase! We've received your order and will
-            send you a confirmation email shortly.
+            Thank you for your purchase! We've received your order and will send
+            you a confirmation email shortly.
           </p>
 
           <div className="bg-accent-50 border-2 border-accent-200 rounded-lg p-6 mb-8">
@@ -77,19 +83,19 @@ export default function CartSuccessPage() {
               <li className="flex items-start gap-2">
                 <span className="text-accent-600 font-bold">•</span>
                 <span>
-                  Your order will be shipped according to the method you selected
+                  Your order will be shipped according to the method you
+                  selected
                 </span>
               </li>
             </ul>
           </div>
 
           <p className="text-sm text-neutral-600 mb-8">
-            Your support helps us provide food, education, and wellness
-            programs to families in need. Thank you for making a difference!
+            Your support helps us provide food, education, and wellness programs
+            to families in need. Thank you for making a difference!
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            
             <LinkButton to={CANONICAL.home.absolute} text="Back to Home" />
             <LinkButton
               to={CANONICAL.storefront.absolute}
