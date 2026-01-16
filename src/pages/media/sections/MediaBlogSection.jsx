@@ -1,9 +1,9 @@
 import { fetchContent, getResponsiveImage } from "../../../cms";
-import { AnchorButton } from "../../../components/ui/Button";
+import { AnchorButton, LinkButton } from "../../../components/ui/Button";
 import Carousel from "../../../components/ui/Carousel";
 import Heading from "../../../components/ui/text/Heading";
 import Title from "../../../components/ui/text/Title";
-import { ASSET_VERSION } from "../../../routes";
+import { ASSET_VERSION, CANONICAL } from "../../../routes";
 import PageSection from "../../PageSection";
 
 import { useState, useEffect } from "react";
@@ -23,14 +23,16 @@ export default function MediaBlogPage() {
 
   return (
     <PageSection className="grid gap-5 relative m-0 text-sm md:text-base lg:text-lg">
-      <Title>Our Blog</Title>
+      <Title>Updates</Title>
+      <Heading>See the latest</Heading>
+
       <div
-        className={`min-h-40 flex items-center ${
+        className={`min-h-60 flex items-center ${
           loading ? "opacity-0" : "opacity-100 transition-opacity duration-750"
         }`}>
         {!loading && posts.length === 0 && (
           <p className="text-center w-full text-gray-500 py-10">
-            No blog posts to display.
+            No blog posts to display
           </p>
         )}
         {!loading && posts.length > 0 && (

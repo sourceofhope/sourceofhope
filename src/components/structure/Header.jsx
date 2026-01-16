@@ -3,7 +3,6 @@ import {
   Bars3Icon,
   ChevronRightIcon,
   XMarkIcon,
-  ShoppingCartIcon,
 } from "@heroicons/react/20/solid";
 
 import Favicon from "../ui/Favicon";
@@ -12,7 +11,6 @@ import { CANONICAL } from "../../routes";
 import { fetchContent } from "../../cms";
 import { NavLink } from "react-router-dom";
 import Icon from "../ui/Icon";
-import { useStoreContext } from "../../context/StoreCartContext";
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -70,13 +68,13 @@ export default function Header() {
       <header
         className={`backdrop-filter fixed ${
           bannerActive ? "top-15 md:top-10" : "top-0"
-        } left-0 right-0 z-50 text-sm md:text-md w-full transition-[height_backdrop] duration-500 md:border-none
+        } left-0 right-0 z-[9998] text-sm md:text-md w-full transition-[height_backdrop] ease-in duration-200 md:border-none
           ${
             open
-              ? `md:backdrop-blur-none backdrop-blur-sm ${
+              ? `md:backdrop-blur-none backdrop-blur-sm shadow-lg ${
                   isBlocking ? "border-primary-800/100 " : "border-neutral-50"
                 }`
-              : "backdrop-blur-none border-none"
+              : "shadow-none backdrop-blur-none border-none"
           }
           ${
             scrolled
@@ -85,7 +83,7 @@ export default function Header() {
                   isBlocking ? "text-primary-800" : "text-neutral-50"
                 }`
           }`}>
-        <section className="flex w-full items-center justify-between px-5 lg:px-35">
+        <section className="flex gap-5 w-full items-center justify-between px-5 lg:px-35">
           <div className="h-25 flex gap-5 flex-row items-center w-fit z-0 overflow-clip">
             <Favicon />
             <h1 className="font-bold hidden lg:block whitespace-nowrap text-ellipsis overflow-hidden">
@@ -153,18 +151,13 @@ function HeaderMenu({ open, setOpen }) {
 
 function HeaderNavigator() {
   const [hovering, setHovering] = useState(null);
-  const { cart } = useStoreContext();
 
   const links = [
-    {
-      label: "ABOUT",
-      route: CANONICAL.about,
-    },
     {
       label: "SERVE",
       route: CANONICAL.serve,
       children: [
-        { label: "SERVING HOPE", route: CANONICAL.serve.servingHope },
+        { label: "SERVING & SHARING HOPE", route: CANONICAL.serve.servingHope },
         { label: "EDUCATION FOR HOPE", route: CANONICAL.serve.educationHope },
         { label: "WELLNESS OF HOPE", route: CANONICAL.serve.wellnessHope },
         { label: "HOPE FOR THE OUTDOORS", route: CANONICAL.serve.outdoorHope },
@@ -175,12 +168,22 @@ function HeaderNavigator() {
       ],
     },
     {
+      label: "ABOUT",
+      route: CANONICAL.about,
+      children: [{ label: "TEAM", route: CANONICAL.about.team }],
+    },
+
+    {
       label: "CONNECT",
       route: CANONICAL.connect,
     },
     {
       label: "MEDIA",
       route: CANONICAL.media,
+      children: [
+        { label: "PRESS", route: CANONICAL.media.press },
+        { label: "PODCAST", route: CANONICAL.media.podcast },
+      ],
     },
     {
       label: "MEMBERS",
@@ -203,8 +206,8 @@ function HeaderNavigator() {
                 ${
                   hovering
                     ? hovering == label
-                      ? ""
-                      : "md:opacity-80 md:scale-95"
+                      ? "opacity-100"
+                      : "opacity-80"
                     : ""
                 }`}
             hovering={hovering}
@@ -229,37 +232,80 @@ function HeaderButton({
   setHovering,
 }) {
   return (
-    <div
-      className="w-full select-none"
-      onMouseEnter={() => setHovering(label)}
-      onMouseLeave={() => setHovering(null)}>
+    <div className="w-full select-none">
       <NavLink
+        onMouseEnter={() => setHovering(label)}
+        onMouseLeave={() => setHovering(null)}
         aria-label={ariaLabel}
         to={route.absolute}
         className={`!no-underline group transition-[color_transform] ease-in-out duration-300 inline-flex w-full justify-between items-center gap-1 focus:outline-none ${className}`}>
         <span>{label}</span>
         <Icon>
           <ChevronRightIcon
-            className="w-6 h-6 transition-transform duration-500 group-hover:translate-x-1"
+            className={`w-6 h-6 transition-transform duration-500 ${
+              hovering === label && children.length > 0
+                ? "rotate-90"
+                : "rotate-0 group-hover:translate-x-1"
+            }`}
+            onClick={(e) => {
+              if (children.length > 0) {
+                e.preventDefault();
+                e.stopPropagation();
+              }
+
+              setHovering(label === hovering ? null : label);
+            }}
             focusable="false"
             aria-hidden="true"
             role="presentation"
           />
         </Icon>
       </NavLink>
-      {hovering == label && children.length > 0 && (
-        <div className="absolute hidden md:flex z-50 bg-neutral-50 min-w-40 rounded-lg p-3 py-5 shadow-md text-accent-800 flex-col font-semibold text-sm">
-          {children.map(({ label, route }) => {
-            return (
-              <NavLink
-                className="py-2.5 hover:bg-neutral-200 duration-300 transition-colors !no-underline px-3 rounded-md"
-                key={route.absolute}
-                to={route.absolute}>
-                {label}
-              </NavLink>
-            );
-          })}
-        </div>
+      {children.length > 0 && (
+        <>
+          <div
+            onMouseEnter={() => {
+              if (hovering) {
+                setHovering(label);
+              }
+            }}
+            onMouseLeave={() => {
+              if (hovering) {
+                setHovering(null);
+              }
+            }}
+            className={`${
+              hovering == label
+                ? "opacity-100 pointer-events-auto"
+                : "opacity-0 -translate-y-1 pointer-events-none"
+            } absolute hidden md:flex z-50 transition-[opacity_transform] delay-150 duration-300 bg-neutral-50 min-w-40 rounded-lg p-3 py-5 shadow-md text-accent-800 flex-col font-semibold text-sm`}>
+            {children.map(({ label, route }) => {
+              return (
+                <NavLink
+                  className="py-2.5 hover:bg-neutral-200 duration-300 transition-colors !no-underline px-3 rounded-md"
+                  key={route.absolute}
+                  to={route.absolute}>
+                  {label}
+                </NavLink>
+              );
+            })}
+          </div>
+          {hovering == label &&
+            children.map(({ label, route }) => {
+              return (
+                <NavLink
+                  onClick={(e) => {
+                    e.stopPropagation();
+                  }}
+                  aria-label={ariaLabel}
+                  key={route.absolute}
+                  to={route.absolute}
+                  className={`pl-5 md:hidden !no-underline group transition-[color_transform] ease-in-out duration-300 inline-flex w-full justify-between items-center gap-1 focus:outline-none ${className}`}>
+                  {label}
+                </NavLink>
+              );
+            })}
+        </>
       )}
     </div>
   );

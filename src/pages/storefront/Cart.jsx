@@ -11,7 +11,7 @@ export default function Cart() {
   return (
     <div
       className={`
-          fixed right-5 md:right-10 z-[9990]
+          fixed right-5 md:right-10 z-[9999]
           transition-[top,bottom] duration-500 bottom-5
           ${bannerActive ? "md:top-15" : "md:top-5"}
         `}>

@@ -11,7 +11,7 @@ export default function Takeover({
   return createPortal(
     <section
       className={`
-        fixed inset-0 z-[990]
+        fixed inset-0 z-50
         flex items-center justify-center
         transition-opacity duration-700
         ${active ? "opacity-100" : "opacity-0 pointer-events-none"}

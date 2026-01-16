@@ -8,7 +8,7 @@ import HomePublicationsSection from "./sections/HomePublicationsSection";
 
 import HomeDonationSection from "./sections/HomeDonationSection";
 import { HomeServingSection } from "./sections/HomeServingSection";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import { CANONICAL_URL } from "../../routes";
 import PageSection from "../PageSection";
 import Title from "../../components/ui/text/Title";

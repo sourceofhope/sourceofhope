@@ -110,13 +110,18 @@ function HomeResourceCard({ title, caption, src, to }) {
 }
 
 function HomeResourceCardInner({ src, caption, title }) {
+  const [loaded, setLoaded] = useState(false);
+
   return (
     <>
       <img
         src={src}
         alt={caption}
-        onError={(e) => (e.currentTarget.src = "/core/TSOH-Family.jpg")}
-        className="inset-0 w-full h-full object-cover transition-transform brightness-[.8] contrast-[1.1] bg-accent-900"
+        onLoad={(e) => setLoaded(true)}
+        onError={(e) => (e.currentTarget.src = "/core/placeholder.webp")}
+        className={`${
+          loaded ? "opacity-100" : "opacity-0"
+        } inset-0 w-full h-full object-cover transition-transform brightness-[.8] contrast-[1.1] bg-accent-900`}
       />
       <div
         className="absolute bottom-0 left-0 w-full p-5 

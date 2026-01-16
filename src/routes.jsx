@@ -4,7 +4,12 @@ export const ASSET_VERSION = "v2";
 export const ROUTES = {
   home: { path: "" },
 
-  about: { path: "about" },
+  about: {
+    path: "about",
+    children: {
+      team: "team",
+    },
+  },
 
   serve: {
     path: "serve",
@@ -18,7 +23,13 @@ export const ROUTES = {
   },
 
   connect: { path: "connect" },
-  media: { path: "media" },
+  media: {
+    path: "media",
+    children: {
+      podcast: "podcast",
+      press: "press",
+    },
+  },
   member: { path: "members" },
   storefront: {
     path: "store",

@@ -25,6 +25,10 @@ import FormPage from "./pages/form/FormPage.jsx";
 import StorefrontPage from "./pages/storefront/StorefrontPage.jsx";
 import { CANONICAL } from "./routes.jsx";
 import ProductPage from "./pages/storefront/ProductPage.jsx";
+import PodcastPage from "./pages/media/PodcastPage.jsx";
+import PressPage from "./pages/media/PressPage.jsx";
+import TeamPage from "./pages/about/TeamPage.jsx";
+import { HelmetProvider } from "react-helmet-async";
 
 export const router = createBrowserRouter([
   {
@@ -34,11 +38,19 @@ export const router = createBrowserRouter([
     children: [
       { index: true, element: <HomePage /> },
 
-      { path: CANONICAL.about.relative, element: <AboutPage /> },
-      { path: CANONICAL.serve.relative, element: <ServePage /> },
-      { path: CANONICAL.connect.relative, element: <ConnectPage /> },
-      { path: CANONICAL.media.relative, element: <MediaPage /> },
+      {
+        path: CANONICAL.about.relative,
+        element: <AboutPage />,
+      },
+      {
+        path: CANONICAL.about.team.relative,
+        element: <TeamPage />,
+      },
 
+      {
+        path: CANONICAL.serve.relative,
+        element: <ServePage />,
+      },
       {
         path: CANONICAL.serve.servingHope.relative,
         element: <ServingHopeProgram />,
@@ -60,13 +72,38 @@ export const router = createBrowserRouter([
         element: <InternationalHopeProgram />,
       },
 
-      { path: CANONICAL.member.relative, element: <FormPage /> },
-      { path: CANONICAL.storefront.relative, element: <StorefrontPage /> },
+      {
+        path: CANONICAL.connect.relative,
+        element: <ConnectPage />,
+      },
+
+      {
+        path: CANONICAL.media.relative,
+        element: <MediaPage />,
+      },
+      {
+        path: CANONICAL.media.podcast.relative,
+        element: <PodcastPage />,
+      },
+      {
+        path: CANONICAL.media.press.relative,
+        element: <PressPage />,
+      },
+
+      {
+        path: CANONICAL.member.relative,
+        element: <FormPage />,
+      },
+
+      {
+        path: CANONICAL.storefront.relative,
+        element: <StorefrontPage />,
+      },
       {
         path: `${CANONICAL.storefront.products.relative}/:slug`,
         element: <ProductPage />,
       },
-      { path: `${CANONICAL.storefront.cart.relative}`, element: <CartPage /> },
+      { path: CANONICAL.storefront.cart.relative, element: <CartPage /> },
 
       { path: `${CANONICAL.storefront.cart.relative}/success`, element: <CartSuccessPage /> },
     ],
@@ -75,6 +112,8 @@ export const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <HelmetProvider>
+      <RouterProvider router={router} />
+    </HelmetProvider>
   </React.StrictMode>
 );

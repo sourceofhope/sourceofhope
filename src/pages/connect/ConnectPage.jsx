@@ -5,7 +5,7 @@ import ConnectMapSection from "./sections/ConnectMapSection";
 import ConnectVolunteerSection from "./sections/ConnectVolunteerSection";
 import ConnectCareersSection from "./sections/ConnectCareersSection";
 
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 
 export default function ConnectPage() {
   return (
@@ -31,7 +31,7 @@ export default function ConnectPage() {
         <meta name="twitter:title" content="Connect | The Source of Hope" />
         <meta
           name="twitter:description"
-          content="Volunteer, partner, donate, and stay connected with The Source of Hope’s mission to serve and uplift our community."
+          content="Volunteer, partner, donate, and stay connected with The Source of Hope's mission to serve and uplift our community."
         />
       </Helmet>
       <PageHeader>

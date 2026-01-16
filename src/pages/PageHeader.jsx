@@ -7,7 +7,7 @@ export default function PageHeader({
 }) {
   return (
     <section
-      className={`w-full md:justify-items-left items-center relative flex my-0 mb-10 h-85 ${className}`}>
+      className={`w-full md:justify-items-left items-center relative flex my-0 mb-10 h-100 md:h-85 ${className}`}>
       <img
         className="absolute inset-0 z-0 h-full w-full object-cover brightness-[.65] contrast-[1.1]
         [mask-image:linear-gradient(to_bottom,white_80%,transparent_100%)] [webkit-mask-image:linear-gradient(to_bottom,white_80%,transparent_100%)]

@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext, useRef } from "react";
 import { CANONICAL, CANONICAL_URL } from "../../routes";
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import CartItemsSection from "./sections/CartItemsSection";
 import CartSummarySection from "./sections/CartSummarySection";
 import CartPaymentSection from "./sections/CartPaymentSection";
@@ -14,6 +14,8 @@ import { useSetHeaderBlocking } from "../../components/structure/Header";
 import { ShoppingBagIcon } from "@heroicons/react/20/solid";
 import Title from "../../components/ui/text/Title";
 import { AnchorButton, LinkButton } from "../../components/ui/Button";
+import ExpressiveLink from "../../components/ui/expressive/ExpressiveLink";
+import ExpressiveAnchor from "../../components/ui/expressive/ExpressiveAnchor";
 
 const CartPage = () => {
   const { cart: cartItems } = useContext(StoreCartContext);
@@ -88,7 +90,8 @@ const CartPage = () => {
 
             <Title>Your Cart is Empty</Title>
             <p className="text-gray-700 leading-relaxed mb-10">
-              You don't have any items in your shopping cart yet.
+              You don't have any items in your shopping cart yet. Visit our
+              Storefront to view our full selection.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-5 justify-center">

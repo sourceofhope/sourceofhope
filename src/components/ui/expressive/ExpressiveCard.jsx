@@ -21,7 +21,7 @@ export default function ExpressiveCard({ title, children, className = "" }) {
       </div>
       <div
         className={`${
-          open ? "max-h-screen mt-3 opacity-100" : "max-h-0 mt-0 opacity-0"
+          open ? "max-h-[200vh] mt-3 opacity-100" : "max-h-0 mt-0 opacity-0"
         } overflow-hidden transition-all duration-750 ${className}`}>
         {children}
       </div>

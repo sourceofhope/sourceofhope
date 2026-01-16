@@ -1,4 +1,4 @@
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import { useSetHeaderBlocking } from "../../components/structure/Header";
 import StorefrontProductSection from "./sections/StorefrontProductSection";
 import StorefrontFooterSection from "./sections/StorefrontFooterSection";

@@ -1,6 +1,6 @@
 export default function Loader() {
   return (
-    <section className="w-screen h-screen flex items-center justify-center bg-white">
+    <section className="w-full h-screen flex items-center justify-center bg-white">
       <style>
         {`
           @keyframes changeHeight {
@@ -14,8 +14,8 @@ export default function Loader() {
         <Expander delay="0s" />
         <Expander delay="0.2s" />
         <Expander delay="0.4s" />
-				<Expander delay="0.6s" />
-				<Expander delay="0.8s" />
+        <Expander delay="0.6s" />
+        <Expander delay="0.8s" />
       </div>
     </section>
   );

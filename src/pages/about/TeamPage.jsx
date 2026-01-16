@@ -1,32 +1,84 @@
 import { useEffect, useState } from "react";
 import { ArrowRightIcon, XMarkIcon } from "@heroicons/react/20/solid";
 
-import Carousel from "../../../components/ui/Carousel";
-import PageSection from "../../PageSection";
-import Title from "../../../components/ui/text/Title";
-import { fetchContent, getFeaturedImage } from "../../../cms";
-import { ASSET_VERSION } from "../../../routes";
-import Overlay from "../../../components/ui/Overlay";
+import Carousel from "../../components/ui/Carousel";
+import PageSection from "../PageSection";
+import Title from "../../components/ui/text/Title";
+import { fetchContent, getFeaturedImage } from "../../cms";
+import { ASSET_VERSION, CANONICAL_URL } from "../../routes";
+import Overlay from "../../components/ui/Overlay";
+import { Helmet } from "react-helmet-async";
+import PageHeader from "../PageHeader";
 
-export default function AboutTeamSection() {
+export default function TeamPage() {
   return (
-    <PageSection className="pt-5">
-      <div className="grid gap-5">
-        <CarouselLayer title="Board of Executives" groupName="executiveBoard" />
-        <CarouselLayer title="Board of Directors" groupName="directorBoard" />
-        <CarouselLayer title="Interns Spring 2026" groupName="internSpring26" />
-        <CarouselLayer title="Interns Fall 2025" groupName="internFall25" />
-        <CarouselLayer title="Interns Summer 2025" groupName="internSummer25" />
-        <CarouselLayer
-          title="Advisory Spring 2025"
-          groupName="advisorySpring25"
+    <>
+      <Helmet>
+        <title>Team | The Source of Hope</title>
+        <meta
+          name="description"
+          content="Learn about The Source of Hope’s mission to restore dignity and opportunity through food, education, and holistic wellness programs in Dallas–Fort Worth."
         />
-        <CarouselLayer title="Interns Spring 2025" groupName="internSpring25" />
-        <CarouselLayer title="Interns Fall 2024" groupName="internFall24" />
-        <CarouselLayer title="Interns Summer 2024" groupName="internSummer24" />
-        <CarouselLayer title="Interns Spring 2024" groupName="internSpring24" />
-      </div>
-    </PageSection>
+        <link rel="canonical" href={CANONICAL_URL.about} />
+
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={CANONICAL_URL.about} />
+        <meta property="og:title" content="About | The Source of Hope" />
+        <meta
+          property="og:description"
+          content="Learn about The Source of Hope’s mission to restore dignity and opportunity through food, education, and holistic wellness programs in Dallas–Fort Worth."
+        />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content={CANONICAL_URL.about} />
+        <meta name="twitter:title" content="About | The Source of Hope" />
+        <meta
+          name="twitter:description"
+          content="Learn about The Source of Hope’s mission to restore dignity and opportunity through food, education, and holistic wellness programs in Dallas–Fort Worth."
+        />
+      </Helmet>
+      <PageHeader>
+        <h2 className="font-urbanist font-bold text-neutral-50 text-xxxlg">
+          TEAM
+        </h2>
+        <p className="font-semibold text-neutral-200 text-sm">WHO WE ARE</p>
+      </PageHeader>
+      <PageSection className="pt-5">
+        <div className="grid gap-5">
+          <CarouselLayer
+            title="Board of Executives"
+            groupName="executiveBoard"
+          />
+          <CarouselLayer title="Board of Directors" groupName="directorBoard" />
+          <CarouselLayer
+            title="Interns Spring 2026"
+            groupName="internSpring26"
+          />
+          <CarouselLayer title="Interns Fall 2025" groupName="internFall25" />
+          <CarouselLayer
+            title="Interns Summer 2025"
+            groupName="internSummer25"
+          />
+          <CarouselLayer
+            title="Advisory Spring 2025"
+            groupName="advisorySpring25"
+          />
+          <CarouselLayer
+            title="Interns Spring 2025"
+            groupName="internSpring25"
+          />
+          <CarouselLayer title="Interns Fall 2024" groupName="internFall24" />
+          <CarouselLayer
+            title="Interns Summer 2024"
+            groupName="internSummer24"
+          />
+          <CarouselLayer
+            title="Interns Spring 2024"
+            groupName="internSpring24"
+          />
+        </div>
+      </PageSection>
+    </>
   );
 }
 

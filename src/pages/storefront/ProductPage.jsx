@@ -1,11 +1,11 @@
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import { useSetHeaderBlocking } from "../../components/structure/Header";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { fetchContent, getFeaturedImage, getResponsiveImage } from "../../cms";
 import { CANONICAL, CANONICAL_URL } from "../../routes";
 import Title from "../../components/ui/text/Title";
-import { CheckIcon, HeartIcon } from "@heroicons/react/20/solid";
+import { CheckIcon, HeartIcon, PlusIcon } from "@heroicons/react/20/solid";
 import { AnchorButton, LinkButton } from "../../components/ui/Button";
 import Heading from "../../components/ui/text/Heading";
 import Cart from "./Cart";
@@ -74,20 +74,36 @@ export default function ProductPage() {
     loadProduct();
   }, [slug]);
 
+  useEffect(() => {
+    if (!loading && product?.title) {
+      document.title = `${product.title} | Products`;
+    }
+  }, [loading, product]);
+
   return (
     <>
-      <Helmet>
-        <title> {product?.title || "Missing Product"} | Products </title>
+      <Helmet key={product?.id || "loading"}>
+        <title>
+          {loading
+            ? "Loading"
+            : `${product?.title || "Missing Product"} | Products`}
+        </title>
 
         <meta
           name="description"
           content="Shop The Source of Hope Storefront and support our mission — every purchase helps provide meals, education, and holistic wellness services to families and communities across North Texas."
         />
 
-        <link rel="canonical" href={CANONICAL_URL.storefront} />
+        <link
+          rel="canonical"
+          href={`${CANONICAL_URL.storefront.product}/${slug}`}
+        />
 
         <meta property="og:type" content="website" />
-        <meta property="og:url" content={CANONICAL_URL.storefront} />
+        <meta
+          property="og:url"
+          content={`${CANONICAL_URL.storefront.product}/${slug}`}
+        />
         <meta
           property="og:title"
           content="Shop With Purpose | The Source of Hope"
@@ -98,7 +114,10 @@ export default function ProductPage() {
         />
 
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:url" content={CANONICAL_URL.storefront} />
+        <meta
+          name="twitter:url"
+          content={`${CANONICAL_URL.storefront.product}/${slug}`}
+        />
         <meta
           name="twitter:title"
           content="Shop With Purpose | The Source of Hope"
@@ -124,11 +143,10 @@ export default function ProductPage() {
               <HeartIcon className="w-10 h-10 text-accent-500" />
             </div>
 
-            <Title>This Product Has Moved, But Hope Hasn't</Title>
+            <Title>We Can't Find That Product</Title>
             <p className="text-gray-700 leading-relaxed mb-10">
               We couldn't find the product you were looking for, but every visit
-              here still supports our mission of feeding families, empowering
-              students, and strengthening communities.
+              here still supports our mission.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-5 justify-center">
@@ -164,15 +182,21 @@ export default function ProductPage() {
             <p className="text-gray-700 text-sm md:text-md">
               {product?.shortDescription}
             </p>
-            <div className="flex flex-wrap gap-5 mt-5">
+            <div className="flex flex-col md:flex-row gap-5 mt-5">
               <button
                 onClick={handleAddToCart}
-                className="flex justify-center w-fit rounded-2xl px-10 py-5 bg-accent-500 hover:bg-accent-600 transition-all duration-700 font-semibold text-neutral-50">
-                <span className="inline-flex w-full justify-between items-center gap-1 text-sm md:text-md">
-                  Add To Cart
+                aria-label="Add To Cart"
+                className="group inline-flex items-center
+        rounded-2xl px-10 py-5
+        bg-emerald-500 hover:bg-emerald-600
+        transition-all duration-700 w-full font-semibold text-neutral-50">
+                <span className="flex w-full gap-3 items-center justify-between text-sm md:text-md">
+                  <span>Add To Cart</span>
+                  <PlusIcon className="w-[1em] h-[1em] transition-transform duration-500" />
                 </span>
               </button>
               <AnchorButton
+                full
                 href="https://donate.stripe.com/8wM5kHal16fC4so8ww"
                 text="Make a Donation"
               />

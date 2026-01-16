@@ -89,8 +89,8 @@ export default function ConnectMapSection() {
             </div>
           </div>
         </article>
-        <article className="w-full grid gap-5 row-start-1 md:row-start-auto">
-          <form className="flex flex-col w-full gap-1">
+        <article className="w-full grid gap-5 row-start-1 md:row-start-auto h-full">
+          <form className="grid w-full h-full">
             <Input
               title="First name"
               htmlFor="fname"
