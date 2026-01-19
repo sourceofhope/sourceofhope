@@ -12,20 +12,13 @@ export default defineConfig({
     },
   },
   build: {
-    outDir: "dist",
-    emptyOutDir: true,
-
     target: "es2017",
-
-    minify: "terser",
+    minify: false,
     sourcemap: true,
-
-    terserOptions: {
-      safari10: true,
-      mangle: { safari10: true },
-      compress: {
-        safari10: true,
-        passes: 2,
+    cssTarget: "safari12",
+    rollupOptions: {
+      output: {
+        hoistTransitiveImports: false,
       },
     },
   },
