@@ -17,10 +17,7 @@ jobs:
         with:
           node-version: 18
 
-      - name: Install dependencies
-        run: npm ci
-
-      - name: Deploy source via FTPS
+      - name: Deploy API source via FTPS
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
@@ -29,10 +26,11 @@ jobs:
           protocol: ftps
           port: 21
           local-dir: server/
-          server-dir: /public_html/app/server/
+          server-dir: /public_html/app/api/
           timeout: 600000
           dangerous-clean-slate: false
           log-level: minimal
           exclude: |
             **/.env
             **/.env.*
+            **/node_modules/**
