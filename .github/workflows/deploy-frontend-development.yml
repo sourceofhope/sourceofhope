@@ -34,7 +34,7 @@ jobs:
           local-dir: dist/
           server-dir: /public_html/dev/
           timeout: 600000
-          dangerous-clean-slate: true
+          dangerous-clean-slate: false
           log-level: minimal
           exclude: |
             **/.git/**
