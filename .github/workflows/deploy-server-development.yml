@@ -1,9 +1,8 @@
-name: Deploy to Production
+name: Deploy Server to Development
 
 on:
   push:
-    branches:
-      - production
+    branches: ["development"]
 
 jobs:
   deploy:
@@ -18,13 +17,7 @@ jobs:
         with:
           node-version: 18
 
-      - name: Install dependencies
-        run: npm ci --legacy-peer-deps
-
-      - name: Build frontend
-        run: npm run build
-
-      - name: Deploy via FTPS
+      - name: Deploy API source via FTPS
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
@@ -32,17 +25,12 @@ jobs:
           password: ${{ secrets.FTP_PASSWORD }}
           protocol: ftps
           port: 21
-          local-dir: dist/
-          server-dir: /public_html/app/
+          local-dir: server/
+          server-dir: /public_html/dev/api/
           timeout: 600000
-          command-timeout: 300000
-          use-pasv: true
           dangerous-clean-slate: false
           log-level: minimal
           exclude: |
-            **/.git/**
-            **/.github/**
+            **/.env
+            **/.env.*
             **/node_modules/**
-            **/*.map
-            **/.env*
-            **/wp/**

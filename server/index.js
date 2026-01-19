@@ -8,86 +8,78 @@ dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// Middleware
+// Allow your frontends
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL || "http://localhost:5173",
+    origin: [
+      "http://localhost:5173",
+      "https://dev.thesourceofhope.org",
+      "https://thesourceofhope.org",
+    ],
     credentials: true,
   })
 );
 
-const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
+// ---- STRIPE WEBHOOK (raw body) ----
+// Local:    /api/checkout/webhook
+// Vercel:   /dev/api/checkout/webhook OR /app/api/checkout/webhook
 
-// Stripe webhook route needs raw body, so it comes before express.json()
 app.post(
-  "/webhook",
+  [
+    "/api/checkout/webhook",
+    "/dev/api/checkout/webhook",
+    "/app/api/checkout/webhook",
+  ],
   express.raw({ type: "application/json" }),
-  (request, response) => {
-    // Only verify the event if you have an endpoint secret defined.
-    // Otherwise use the basic event deserialized with JSON.parse
-    if (endpointSecret) {
-      // Get the signature sent by Stripe
-      const signature = request.headers["stripe-signature"];
-      try {
-        event = stripe.webhooks.constructEvent(
-          request.body,
-          signature,
-          endpointSecret
-        );
-      } catch (err) {
-        console.log(`Webhook signature verification failed.`, err.message);
-        return response.sendStatus(400);
-      }
-    }
-
-    let event = request.body;
-
-    // Handle the event
-    switch (event.type) {
-      case "payment_intent.succeeded":
-        const paymentIntent = event.data.object;
-        console.log(
-          `PaymentIntent for ${paymentIntent.amount} was successful!`
-        );
-        // Then define and call a method to handle the successful payment intent.
-        // handlePaymentIntentSucceeded(paymentIntent);
-        break;
-      case "payment_method.attached":
-        const paymentMethod = event.data.object;
-        // Then define and call a method to handle the successful attachment of a PaymentMethod.
-        // handlePaymentMethodAttached(paymentMethod);
-        break;
-      default:
-        // Unexpected event type
-        console.log(`Unhandled event type ${event.type}.`);
-    }
-
-    // Return a 200 response to acknowledge receipt of the event
-    response.send();
-  }
+  checkoutRoutes
 );
 
-// JSON parsing for all other routes
+// ---- JSON for everything else ----
 app.use(express.json());
 
-// Health check endpoint
-app.get("/health", (req, res) => {
+// ---- Health check (local + Vercel) ----
+app.get(["/api/health", "/dev/api/health", "/app/api/health"], (req, res) => {
   res.json({ status: "ok", message: "Source of Hope API is running" });
 });
 
-// Routes
+// ---- Mount checkout routes (local + Vercel) ----
 app.use("/api/checkout", checkoutRoutes);
+app.use("/dev/api/checkout", checkoutRoutes);
+app.use("/app/api/checkout", checkoutRoutes);
 
-// Error handling middleware
-app.use((err, req, res, next) => {
-  console.error("Error:", err);
-  res.status(err.status || 500).json({
-    error: err.message || "Internal server error",
+// Helpful 404 for debugging
+app.all("*", (req, res) => {
+  res.status(404).json({
+    message: "Route not found",
+    path: req.path,
+    method: req.method,
   });
 });
 
-// Start server
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-  console.log(`Environment: ${process.env.NODE_ENV || "development"}`);
-});
+// Only start server when NOT on Vercel
+if (!process.env.VERCEL) {
+  app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+    console.log(`Environment: ${process.env.NODE_ENV || "development"}`);
+  });
+}
+
+export function getRuntimeEnv(req) {
+  const url = req.originalUrl || "";
+  const isProd = url.startsWith("/app/api");
+
+  return {
+    isProd,
+    stripeSecretKey: isProd
+      ? process.env.STRIPE_SECRET_KEY_PROD
+      : process.env.STRIPE_SECRET_KEY_DEV,
+    stripeWebhookSecret: isProd
+      ? process.env.STRIPE_WEBHOOK_SECRET_PROD
+      : process.env.STRIPE_WEBHOOK_SECRET_DEV,
+    frontendUrl: isProd
+      ? process.env.FRONTEND_URL_PROD
+      : process.env.FRONTEND_URL_DEV,
+  };
+}
+
+export default app;

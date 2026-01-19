@@ -1,18 +1,19 @@
 import express from "express";
 import Stripe from "stripe";
-import dotenv from "dotenv";
-
-dotenv.config();
+import { getRuntimeEnv } from "../index.js";
 
 const router = express.Router();
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 /**
  * Create a Stripe Checkout Session
- * POST /api/checkout/create-session
+ * POST /dev/api/checkout/create-session
+ * POST /app/api/checkout/create-session
  */
 router.post("/create-session", async (req, res) => {
   try {
+    const { stripeSecretKey } = getRuntimeEnv(req);
+    const stripe = new Stripe(stripeSecretKey);
+
     const {
       items,
       shippingMethod,
@@ -22,7 +23,6 @@ router.post("/create-session", async (req, res) => {
       cancelUrl,
     } = req.body;
 
-    // Validate required fields
     if (!items || !Array.isArray(items) || items.length === 0) {
       return res.status(400).json({ error: "Cart items are required" });
     }
@@ -31,11 +31,6 @@ router.post("/create-session", async (req, res) => {
       return res.status(400).json({ error: "Redirect URLs are required" });
     }
 
-    console.log("items:", items);
-    console.log("shippingMethod:", shippingMethod);
-    console.log("shippingCost:", shippingCost);
-    console.log("taxAmount:", taxAmount);
-    // Convert cart items to Stripe line items
     const lineItems = items.map((item) => ({
       price_data: {
         currency: "usd",
@@ -48,12 +43,11 @@ router.post("/create-session", async (req, res) => {
             size: item.size || "",
           },
         },
-        unit_amount: Math.round(item.price * 100), // Convert to cents
+        unit_amount: Math.round(item.price * 100),
       },
       quantity: item.quantity,
     }));
 
-    // Add shipping as a line item
     if (shippingCost && shippingCost > 0) {
       lineItems.push({
         price_data: {
@@ -68,7 +62,6 @@ router.post("/create-session", async (req, res) => {
       });
     }
 
-    // Add tax as a line item
     if (taxAmount && taxAmount > 0) {
       lineItems.push({
         price_data: {
@@ -83,8 +76,6 @@ router.post("/create-session", async (req, res) => {
       });
     }
 
-    console.log("Creating Stripe checkout session with line items:", lineItems);
-    // Create Stripe Checkout Session
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       line_items: lineItems,
@@ -116,34 +107,30 @@ router.post("/create-session", async (req, res) => {
 
 /**
  * Stripe Webhook Handler
- * POST /api/checkout/webhook
+ * POST /dev/api/checkout/webhook
+ * POST /app/api/checkout/webhook
  */
 router.post("/webhook", async (req, res) => {
-  const sig = req.headers["stripe-signature"];
-  const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+  const { stripeSecretKey, stripeWebhookSecret } = getRuntimeEnv(req);
+  const stripe = new Stripe(stripeSecretKey);
 
+  const sig = req.headers["stripe-signature"];
   let event;
 
   try {
-    event = stripe.webhooks.constructEvent(req.body, sig, webhookSecret);
+    event = stripe.webhooks.constructEvent(req.body, sig, stripeWebhookSecret);
   } catch (err) {
     console.error("Webhook signature verification failed:", err.message);
     return res.status(400).send(`Webhook Error: ${err.message}`);
   }
 
-  // Handle the event
   switch (event.type) {
     case "checkout.session.completed":
-      const session = event.data.object;
-      console.log("Payment successful:", session.id);
-      // TODO: Fulfill the order, send confirmation email, etc.
-      // You can access session.metadata for order details
+      console.log("Payment successful:", event.data.object.id);
       break;
 
     case "payment_intent.payment_failed":
-      const paymentIntent = event.data.object;
-      console.error("Payment failed:", paymentIntent.id);
-      // TODO: Handle failed payment, notify customer
+      console.error("Payment failed:", event.data.object.id);
       break;
 
     default:

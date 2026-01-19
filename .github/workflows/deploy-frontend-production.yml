@@ -1,0 +1,45 @@
+name: Deploy Frontend to Production
+
+on:
+  push:
+    branches: ["production"]
+
+jobs:
+  deploy-frontend:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+
+      - name: Build frontend (production)
+        run: npm run build:client
+
+      - name: Deploy via FTPS
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          port: 21
+          local-dir: dist/
+          server-dir: /public_html/app/
+          timeout: 600000
+          dangerous-clean-slate: true
+          log-level: minimal
+          exclude: |
+            **/.git/**
+            **/.github/**
+            **/node_modules/**
+            **/*.map
+            **/.env*
+            **/wp/**
