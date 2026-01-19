@@ -1,5 +1,5 @@
 @import "tailwindcss";
-
+@custom-variant dark (&:where(.dark, .dark *));
 :root {
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -9,7 +9,7 @@
 
 @theme {
   --color-primary-50: #f5f7fb;
-  --color-primary-100: #e6ebf5;
+  --color-primary-100: #e6ebf5;s
   --color-primary-200: #c2c9e0;
   --color-primary-300: #909ac3;
   --color-primary-400: #5b6ca8;

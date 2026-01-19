@@ -1,4 +1,5 @@
-import { useState, useEffect, useContext, createContext } from "react";
+import { MoonIcon, SunIcon } from "@heroicons/react/16/solid";
+import { useState, useEffect, useContext, createContext, use } from "react";
 import {
   Bars3Icon,
   ChevronRightIcon,
@@ -14,6 +15,21 @@ import { NavLink } from "react-router-dom";
 function fetchBanner() {}
 
 export default function Header({ isBlocking }) {
+  const [theme, setTheme] = useState("light");
+
+  const toggleTheme = () => {
+    const newTheme = theme === "dark" ? "light" : "dark";
+    setTheme(newTheme);
+    document.documentElement.classList.toggle("dark", newTheme === "dark");
+    localStorage.setItem("theme", newTheme);
+  };
+
+  useEffect(() => {
+    const storedTheme = localStorage.getItem("theme") || "light";
+      setTheme(storedTheme);  
+      document.documentElement.classList.toggle("dark", storedTheme === "dark");
+  }, []);
+
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
 
@@ -86,6 +102,9 @@ export default function Header({ isBlocking }) {
 
           <nav className="hidden md:flex gap-5" aria-label="Primary">
             <HeaderNavigator />
+                 <div className="h-full flex items-center justify-center flex-col gap-4 transition-all ease-in-out">
+                  <button className="rounded-full p-2 shadow-md shadow-blue-700 cursor-pointer bg-blue-900 text-white font-bold hover:text-gray-300 transition-all ease-in-out dark:bg-white dark:shadow-amber-400 dark:text-amber-400 dark:hover:text-amber-600" onClick={toggleTheme}>{theme === "dark" ? <SunIcon className="w-5 h-5" /> : <MoonIcon className="w-5 h-5" />}</button>
+                  </div>
           </nav>
           <HeaderMenu open={open} setOpen={setOpen} />
         </section>
