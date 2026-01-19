@@ -70,27 +70,12 @@ Creates a Stripe checkout session and returns the checkout URL.
 }
 ```
 
-### Stripe Webhook
-```
-POST /api/checkout/webhook
-```
-Handles Stripe webhook events for payment confirmations.
-
 ## Testing with Stripe
 
 Use Stripe's test card numbers:
 - **Success:** `4242 4242 4242 4242`
 - **Decline:** `4000 0000 0000 0002`
 - Any future expiry date and any 3-digit CVC
-
-## Webhook Setup (for production)
-
-1. Go to [Stripe Webhooks](https://dashboard.stripe.com/webhooks)
-2. Click "Add endpoint"
-3. Enter your endpoint URL: `https://api.thesourceofhope.org/api/checkout/webhook`
-4. Select events to listen for: `checkout.session.completed`, `payment_intent.payment_failed`
-5. Copy the webhook signing secret
-6. Add it to `.env` as `STRIPE_WEBHOOK_SECRET`
 
 ## Deployment
 
@@ -104,4 +89,3 @@ Make sure to:
 - Set all environment variables in your hosting platform
 - Use production Stripe keys (starts with `sk_live_`)
 - Configure CORS to only allow your production domain
-- Set up the webhook endpoint with Stripe

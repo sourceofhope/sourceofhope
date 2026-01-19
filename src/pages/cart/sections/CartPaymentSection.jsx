@@ -1,11 +1,10 @@
-import { useState } from "react";
-import {
-  CreditCardIcon,
-  BanknotesIcon,
-  DevicePhoneMobileIcon,
-} from "@heroicons/react/24/outline";
-import { CANONICAL, CANONICAL_URL } from "../../../routes";
-import { createCheckoutSession } from "../../../lib/api/checkout";
+import { use, useState } from "react";
+// import {
+//   CreditCardIcon,
+//   BanknotesIcon,
+// } from "@heroicons/react/24/outline";
+import {FaPaypal, FaStripeS} from "react-icons/fa";
+import { createStripeCheckoutSession, createPaypalCheckoutSession } from "../../../lib/api/checkout";
 
 export default function CartPaymentSection({
   items,
@@ -19,25 +18,25 @@ export default function CartPaymentSection({
 }) {
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState(null);
+  // Read selected payment provider from URL params
+  const [selectedProvider, setSelectedProvider] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    return params.get("selected") || "stripe";
+  });
 
-  const paymentMethods = [
+
+  const checkoutProviders = [
     {
-      id: "credit-card",
-      name: "Credit/Debit Card",
-      icon: CreditCardIcon,
-      description: "Visa, Mastercard, Amex",
+      id: "stripe",
+      name: "Stripe Checkout",
+      icon: FaStripeS,
+      description: "Credit/Debit Cards",
     },
     {
       id: "paypal",
-      name: "PayPal",
-      icon: BanknotesIcon,
-      description: "Pay with your PayPal account",
-    },
-    {
-      id: "apple-pay",
-      name: "Apple Pay",
-      icon: DevicePhoneMobileIcon,
-      description: "Fast and secure checkout",
+      name: "PayPal Checkout",
+      icon: FaPaypal,
+      description: "PayPal Account",
     },
   ];
 
@@ -47,29 +46,55 @@ export default function CartPaymentSection({
 
     try {
       const successUrl = `${window.location.origin}/store/cart/success`;
-      const cancelUrl = `${window.location.origin}/store/cart`;
+      const cancelUrl = `${window.location.origin}/store/cart?selected=${selectedProvider}`;
+      if (selectedProvider === "stripe") {
 
-      const response = await createCheckoutSession({
-        items,
-        shippingMethod,
-        shippingCost: shipping,
-        taxAmount: tax,
-        successUrl,
-        cancelUrl,
-      });
+        const response = await createStripeCheckoutSession({
+          items,
+          shippingMethod,
+          shippingCost: shipping,
+          taxAmount: tax,
+          successUrl,
+          cancelUrl,
+        });
 
-      if (response.error) {
-        setError(response.error);
-        setIsProcessing(false);
-        return;
-      }
+        if (response.error) {
+          setError(response.error);
+          setIsProcessing(false);
+          return;
+        }
 
-      // Redirect to Stripe Checkout
-      if (response.data?.url) {
-        window.location.href = response.data.url;
-      } else {
-        setError("Failed to create checkout session");
-        setIsProcessing(false);
+        // Redirect to Stripe Checkout
+        if (response.data?.url) {
+          window.location.href = response.data.url;
+        } else {
+          setError("Failed to create checkout session");
+          setIsProcessing(false);
+        }
+      } else if (selectedProvider === "paypal") {
+        // For PayPal, we'll redirect directly to PayPal's hosted checkout
+        const response = await createPaypalCheckoutSession({
+          items,
+          shippingMethod,
+          shippingCost: shipping,
+          taxAmount: tax,
+          successUrl,
+          cancelUrl,
+        });
+
+        if (response.error) {
+          setError(response.error);
+          setIsProcessing(false);
+          return;
+        }
+
+        // Redirect to PayPal Checkout
+        if (response.data?.approvalUrl) {
+          window.location.href = response.data.approvalUrl;
+        } else {
+          setError("Failed to create PayPal checkout");
+          setIsProcessing(false);
+        }
       }
     } catch (err) {
       console.error("Checkout error:", err);
@@ -80,91 +105,60 @@ export default function CartPaymentSection({
 
   return (
     <div className="bg-white rounded-2xl shadow-md p-6 mt-6">
-      {/* <h3 className="font-urbanist font-bold text-neutral-900 text-xl mb-4">
-        Payment Method
-      </h3> */}
-
-      {/* <div className="space-y-3 mb-6">
-        {paymentMethods.map((method) => {
-          const Icon = method.icon;
-          return (
-            <label
-              key={method.id}
-              className={`flex items-center gap-3 p-4 border-2 rounded-lg cursor-pointer transition-all ${
-                paymentMethod === method.id
-                  ? 'border-accent-500 bg-accent-50'
-                  : 'border-neutral-200 hover:border-neutral-300'
+      {/* Payment Provider Selection */}
+      <div className="mb-6">
+        <h3 className="text-lg font-semibold mb-4 text-neutral-800">
+          Select Payment Method
+        </h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {checkoutProviders.map((provider) => (
+            <button
+              key={provider.id}
+              onClick={() => setSelectedProvider(provider.id)}
+              className={`p-4 border-2 rounded-xl transition-all duration-300 text-left ${
+                selectedProvider === provider.id
+                  ? "border-accent-500 bg-accent-50 shadow-md"
+                  : "border-neutral-200 hover:border-neutral-300 hover:shadow-sm"
               }`}>
-              <input
-                type="radio"
-                name="payment"
-                value={method.id}
-                checked={paymentMethod === method.id}
-                onChange={(e) => setPaymentMethod(e.target.value)}
-                className="w-4 h-4 accent-accent-500"
-              />
-              <Icon className="w-6 h-6 text-neutral-700" />
-              <div className="flex-1">
-                <p className="font-semibold text-neutral-900">{method.name}</p>
-                <p className="text-xs text-neutral-600">{method.description}</p>
+              <div className="flex items-start gap-3">
+                <provider.icon
+                  className={`w-6 h-6 flex-shrink-0 ${
+                    selectedProvider === provider.id
+                      ? "text-accent-600"
+                      : "text-neutral-400"
+                  }`}
+                />
+                <div className="flex-1">
+                  <div className="font-semibold text-neutral-900">
+                    {provider.name}
+                  </div>
+                  <div className="text-sm text-neutral-600 mt-1">
+                    {provider.description}
+                  </div>
+                </div>
+                {selectedProvider === provider.id && (
+                  <div className="flex-shrink-0">
+                    <div className="w-5 h-5 rounded-full bg-accent-500 flex items-center justify-center">
+                      <svg
+                        className="w-3 h-3 text-white"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={3}
+                          d="M5 13l4 4L19 7"
+                        />
+                      </svg>
+                    </div>
+                  </div>
+                )}
               </div>
-            </label>
-          );
-        })}
-      </div> */}
-
-      {/* Payment Form based on selected method */}
-      {/* {paymentMethod === 'credit-card' && (
-        <div className="space-y-4 mb-6 p-4 bg-neutral-50 rounded-lg">
-          <div>
-            <label className="text-sm font-semibold text-neutral-700 block mb-1">
-              Card Number
-            </label>
-            <input
-              type="text"
-              placeholder="1234 5678 9012 3456"
-              className="w-full px-4 py-2 border-2 border-neutral-300 rounded-lg focus:border-accent-500 focus:outline-none"
-              maxLength="19"
-            />
-          </div>
-
-          <div className="grid grid-cols-2 gap-4">
-            <div>
-              <label className="text-sm font-semibold text-neutral-700 block mb-1">
-                Expiry Date
-              </label>
-              <input
-                type="text"
-                placeholder="MM/YY"
-                className="w-full px-4 py-2 border-2 border-neutral-300 rounded-lg focus:border-accent-500 focus:outline-none"
-                maxLength="5"
-              />
-            </div>
-            <div>
-              <label className="text-sm font-semibold text-neutral-700 block mb-1">
-                CVV
-              </label>
-              <input
-                type="text"
-                placeholder="123"
-                className="w-full px-4 py-2 border-2 border-neutral-300 rounded-lg focus:border-accent-500 focus:outline-none"
-                maxLength="4"
-              />
-            </div>
-          </div>
-
-          <div>
-            <label className="text-sm font-semibold text-neutral-700 block mb-1">
-              Cardholder Name
-            </label>
-            <input
-              type="text"
-              placeholder="John Doe"
-              className="w-full px-4 py-2 border-2 border-neutral-300 rounded-lg focus:border-accent-500 focus:outline-none"
-            />
-          </div>
+            </button>
+          ))}
         </div>
-      )} */}
+      </div>
       
       {error && (
         <div className="mb-4 p-4 bg-red-50 border-2 border-red-200 rounded-lg">
