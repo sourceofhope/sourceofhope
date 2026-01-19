@@ -1,4 +1,10 @@
-import { useState, useEffect, useContext, createContext } from "react";
+import {
+  useState,
+  useEffect,
+  useContext,
+  createContext,
+  useCallback,
+} from "react";
 import {
   Bars3Icon,
   ChevronRightIcon,
@@ -25,26 +31,22 @@ export default function Header() {
     const active =
       bannerOpen &&
       banner?.acf?.enabled &&
-      new Date(banner?.acf?.expires) >= Date.now();
+      new Date(banner?.acf?.expires).getTime() >= Date.now();
 
     setBannerActive(active);
   }, [bannerOpen, banner, setBannerActive]);
 
-  const fetchBanner = () => {
+  const fetchBanner = useCallback(() => {
     fetchContent("/banner-configuration?per_page=1&_embed")
       .then((data) => {
         if (!data?.length) return setBanner(null);
         setBanner(data[0]);
       })
       .catch(() => setBanner(null));
-  };
+  }, []);
 
   useEffect(() => {
-    if ("requestIdleCallback" in window) {
-      requestIdleCallback(fetchBanner);
-    } else {
-      setTimeout(fetchBanner, 1);
-    }
+    setTimeout(fetchBanner, 0);
   }, []);
 
   useEffect(() => {
