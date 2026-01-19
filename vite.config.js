@@ -13,6 +13,7 @@ export default defineConfig({
   },
   build: {
     outDir: "dist",
+    target: "es2019",
     emptyOutDir: true,
   },
   ssr: {
