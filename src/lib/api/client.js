@@ -1,7 +1,5 @@
 const API_BASE_URL =
   import.meta.env.MODE === "development"
-    ? "http://localhost:3001/api"
-    : window.location.hostname.startsWith("dev.")
     ? "https://api.thesourceofhope.org/dev/api"
     : "https://api.thesourceofhope.org/app/api";
 
