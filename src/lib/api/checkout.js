@@ -19,7 +19,7 @@ export async function createCheckoutSession({
   successUrl,
   cancelUrl,
 }) {
-  return post("/api/checkout/create-session", {
+  return post("/checkout/create-session", {
     items: items.map((item) => ({
       id: item.id,
       name: item.name,
