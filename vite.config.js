@@ -13,8 +13,21 @@ export default defineConfig({
   },
   build: {
     outDir: "dist",
-    target: "es2019",
     emptyOutDir: true,
+
+    target: "es2017",
+
+    minify: "terser",
+    sourcemap: true,
+
+    terserOptions: {
+      safari10: true,
+      mangle: { safari10: true },
+      compress: {
+        safari10: true,
+        passes: 2,
+      },
+    },
   },
   ssr: {
     noExternal: ["express", "cors", "dotenv", "stripe"],
