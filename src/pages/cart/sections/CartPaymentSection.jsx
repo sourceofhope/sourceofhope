@@ -1,90 +1,90 @@
 import { useState } from "react";
 import {
-  CreditCardIcon,
-  BanknotesIcon,
-  DevicePhoneMobileIcon,
+	CreditCardIcon,
+	BanknotesIcon,
+	DevicePhoneMobileIcon,
 } from "@heroicons/react/24/outline";
 import { CANONICAL, CANONICAL_URL } from "../../../routes";
 import { createCheckoutSession } from "../../../lib/api/checkout";
 
 export default function CartPaymentSection({
-  items,
-  shippingMethod,
-  paymentMethod,
-  setPaymentMethod,
-  total,
-  subtotal,
-  shipping,
-  tax,
+	items,
+	shippingMethod,
+	paymentMethod,
+	setPaymentMethod,
+	total,
+	subtotal,
+	shipping,
+	tax,
 }) {
-  const [isProcessing, setIsProcessing] = useState(false);
-  const [error, setError] = useState(null);
+	const [isProcessing, setIsProcessing] = useState(false);
+	const [error, setError] = useState(null);
 
-  const paymentMethods = [
-    {
-      id: "credit-card",
-      name: "Credit/Debit Card",
-      icon: CreditCardIcon,
-      description: "Visa, Mastercard, Amex",
-    },
-    {
-      id: "paypal",
-      name: "PayPal",
-      icon: BanknotesIcon,
-      description: "Pay with your PayPal account",
-    },
-    {
-      id: "apple-pay",
-      name: "Apple Pay",
-      icon: DevicePhoneMobileIcon,
-      description: "Fast and secure checkout",
-    },
-  ];
+	const paymentMethods = [
+		{
+			id: "credit-card",
+			name: "Credit/Debit Card",
+			icon: CreditCardIcon,
+			description: "Visa, Mastercard, Amex",
+		},
+		{
+			id: "paypal",
+			name: "PayPal",
+			icon: BanknotesIcon,
+			description: "Pay with your PayPal account",
+		},
+		{
+			id: "apple-pay",
+			name: "Apple Pay",
+			icon: DevicePhoneMobileIcon,
+			description: "Fast and secure checkout",
+		},
+	];
 
-  const handleCheckout = async () => {
-    setIsProcessing(true);
-    setError(null);
+	const handleCheckout = async () => {
+		setIsProcessing(true);
+		setError(null);
 
-    try {
-      const successUrl = `${window.location.origin}/store/cart/success`;
-      const cancelUrl = `${window.location.origin}/store/cart`;
+		try {
+			const successUrl = `${window.location.origin}/store/success`;
+			const cancelUrl = `${window.location.origin}/store/cart`;
 
-      const response = await createCheckoutSession({
-        items,
-        shippingMethod,
-        shippingCost: shipping,
-        taxAmount: tax,
-        successUrl,
-        cancelUrl,
-      });
+			const response = await createCheckoutSession({
+				items,
+				shippingMethod,
+				shippingCost: shipping,
+				taxAmount: tax,
+				successUrl,
+				cancelUrl,
+			});
 
-      if (response.error) {
-        setError(response.error);
-        setIsProcessing(false);
-        return;
-      }
+			if (response.error) {
+				setError(response.error);
+				setIsProcessing(false);
+				return;
+			}
 
-      // Redirect to Stripe Checkout
-      if (response.data?.url) {
-        window.location.href = response.data.url;
-      } else {
-        setError("Failed to create checkout session");
-        setIsProcessing(false);
-      }
-    } catch (err) {
-      console.error("Checkout error:", err);
-      setError("An unexpected error occurred. Please try again.");
-      setIsProcessing(false);
-    }
-  };
+			// Redirect to Stripe Checkout
+			if (response.data?.url) {
+				window.location.href = response.data.url;
+			} else {
+				setError("Failed to create checkout session");
+				setIsProcessing(false);
+			}
+		} catch (err) {
+			console.error("Checkout error:", err);
+			setError("An unexpected error occurred. Please try again.");
+			setIsProcessing(false);
+		}
+	};
 
-  return (
-    <div className="bg-white rounded-2xl shadow-md p-6 mt-6">
-      {/* <h3 className="font-urbanist font-bold text-neutral-900 text-xl mb-4">
+	return (
+		<div className="bg-white rounded-2xl shadow-md p-6 mt-6">
+			{/* <h3 className="font-urbanist font-bold text-neutral-900 text-xl mb-4">
         Payment Method
       </h3> */}
 
-      {/* <div className="space-y-3 mb-6">
+			{/* <div className="space-y-3 mb-6">
         {paymentMethods.map((method) => {
           const Icon = method.icon;
           return (
@@ -113,8 +113,8 @@ export default function CartPaymentSection({
         })}
       </div> */}
 
-      {/* Payment Form based on selected method */}
-      {/* {paymentMethod === 'credit-card' && (
+			{/* Payment Form based on selected method */}
+			{/* {paymentMethod === 'credit-card' && (
         <div className="space-y-4 mb-6 p-4 bg-neutral-50 rounded-lg">
           <div>
             <label className="text-sm font-semibold text-neutral-700 block mb-1">
@@ -165,49 +165,50 @@ export default function CartPaymentSection({
           </div>
         </div>
       )} */}
-      
-      {error && (
-        <div className="mb-4 p-4 bg-red-50 border-2 border-red-200 rounded-lg">
-          <p className="text-sm text-red-800 font-semibold">{error}</p>
-        </div>
-      )}
 
-      <button
-        onClick={handleCheckout}
-        disabled={isProcessing}
-        className={`w-full px-5 py-4 rounded-xl font-bold text-white text-lg transition-all duration-300 ${
-          isProcessing
-            ? "bg-neutral-400 cursor-not-allowed"
-            : "bg-accent-500 hover:bg-accent-600 hover:shadow-lg"
-        }`}>
-        {isProcessing ? (
-          <span className="flex items-center justify-center gap-2">
-            <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
-              <circle
-                className="opacity-25"
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="currentColor"
-                strokeWidth="4"
-                fill="none"
-              />
-              <path
-                className="opacity-75"
-                fill="currentColor"
-                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-              />
-            </svg>
-            Processing
-          </span>
-        ) : (
-          "Proceed to Checkout"
-        )}
-      </button>
+			{error && (
+				<div className="mb-4 p-4 bg-red-50 border-2 border-red-200 rounded-lg">
+					<p className="text-sm text-red-800 font-semibold">{error}</p>
+				</div>
+			)}
 
-      <p className="text-xs text-neutral-500 text-center mt-4">
-        Your payment information is secure and encrypted
-      </p>
-    </div>
-  );
+			<button
+				onClick={handleCheckout}
+				disabled={isProcessing}
+				className={`w-full px-5 py-4 rounded-xl font-bold text-white text-lg transition-all duration-300 ${
+					isProcessing
+						? "bg-neutral-400 cursor-not-allowed"
+						: "bg-accent-500 hover:bg-accent-600 hover:shadow-lg"
+				}`}
+			>
+				{isProcessing ? (
+					<span className="flex items-center justify-center gap-2">
+						<svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+							<circle
+								className="opacity-25"
+								cx="12"
+								cy="12"
+								r="10"
+								stroke="currentColor"
+								strokeWidth="4"
+								fill="none"
+							/>
+							<path
+								className="opacity-75"
+								fill="currentColor"
+								d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+							/>
+						</svg>
+						Processing
+					</span>
+				) : (
+					"Proceed to Checkout"
+				)}
+			</button>
+
+			<p className="text-xs text-neutral-500 text-center mt-4">
+				Your payment information is secure and encrypted
+			</p>
+		</div>
+	);
 }
