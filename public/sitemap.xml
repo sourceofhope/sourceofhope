@@ -30,4 +30,8 @@
     <loc>https://thesourceofhope.org/members</loc>
     <changefreq>monthly</changefreq>
   </url>
+    <url>
+    <loc>https://thesourceofhope.org/store</loc>
+    <changefreq>weekly</changefreq>
+  </url>
 </urlset>
