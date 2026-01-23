@@ -19,7 +19,7 @@ export async function createStripeCheckoutSession({
   successUrl,
   cancelUrl,
 }) {
-  return post("/api/checkout/create-stripe-session", {
+  return post("/checkout/create-stripe-session", {
     items: items.map((item) => ({
       id: item.id,
       name: item.name || item.title || "Product",
@@ -55,7 +55,7 @@ export async function createPaypalCheckoutSession({
   successUrl,
   cancelUrl,
 }) {
-  return post("/api/checkout/create-paypal-order", {
+  return post("/checkout/create-paypal-order", {
     items: items.map((item) => ({
       id: item.id,
       name: item.name || item.title || "Product",

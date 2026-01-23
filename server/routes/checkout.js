@@ -143,7 +143,7 @@ router.post("/create-paypal-order", async (req, res) => {
     // Create PayPal order using REST API
     const paypalClientId = process.env.PAYPAL_CLIENT_ID;
     const paypalClientSecret = process.env.PAYPAL_CLIENT_SECRET;
-    const paypalMode = process.env.PAYPAL_MODE || "sandbox"; // sandbox or live
+    const { paypalMode } = getRuntimeEnv(req);
 
     if (!paypalClientId || !paypalClientSecret) {
       return res.status(500).json({

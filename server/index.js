@@ -110,7 +110,6 @@ app.use("/api/checkout", checkoutRoutes);
 app.use("/dev/api/checkout", checkoutRoutes);
 app.use("/app/api/checkout", checkoutRoutes);
 
-// Helpful 404 for debugging
 app.all("*", (req, res) => {
   res.status(404).json({
     message: "Route not found",
@@ -119,7 +118,6 @@ app.all("*", (req, res) => {
   });
 });
 
-// Only start server when NOT on Vercel
 if (!process.env.VERCEL) {
   app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
@@ -142,6 +140,7 @@ export function getRuntimeEnv(req) {
     frontendUrl: isProd
       ? process.env.FRONTEND_URL_PROD
       : process.env.FRONTEND_URL_DEV,
+    paypalMode: isProd ? "live" : "sandbox",
   };
 }
 

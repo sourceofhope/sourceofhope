@@ -1,8 +1,4 @@
-import { use, useState } from "react";
-// import {
-//   CreditCardIcon,
-//   BanknotesIcon,
-// } from "@heroicons/react/24/outline";
+import { useState } from "react";
 import { FaPaypal, FaStripeS } from "react-icons/fa";
 import {
   createStripeCheckoutSession,
@@ -21,7 +17,6 @@ export default function CartPaymentSection({
 }) {
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState(null);
-  // Read selected payment provider from URL params
   const [selectedProvider, setSelectedProvider] = useState(() => {
     const params = new URLSearchParams(window.location.search);
     return params.get("selected") || "stripe";
@@ -30,15 +25,15 @@ export default function CartPaymentSection({
   const checkoutProviders = [
     {
       id: "stripe",
-      name: "Stripe Checkout",
+      name: "Stripe",
       icon: FaStripeS,
-      description: "Credit/Debit Cards",
+      description: "Credit & Debit Cards",
     },
     {
       id: "paypal",
-      name: "PayPal Checkout",
+      name: "PayPal",
       icon: FaPaypal,
-      description: "PayPal Account",
+      description: "Linked PayPal Account",
     },
   ];
 
@@ -121,14 +116,35 @@ export default function CartPaymentSection({
                   ? "border-accent-500 bg-accent-50 shadow-md"
                   : "border-neutral-200 hover:border-neutral-300 hover:shadow-sm"
               }`}>
-              <div className="flex items-start gap-3">
-                <provider.icon
-                  className={`w-6 h-6 flex-shrink-0 ${
-                    selectedProvider === provider.id
-                      ? "text-accent-600"
-                      : "text-neutral-400"
-                  }`}
-                />
+              <div className="grid items-start gap-3">
+                <div className="flex justify-between">
+                  <provider.icon
+                    className={`w-6 h-6 flex-shrink-0 ${
+                      selectedProvider === provider.id
+                        ? "text-accent-600"
+                        : "text-neutral-400"
+                    }`}
+                  />
+                  {selectedProvider === provider.id && (
+                    <div className="flex-shrink-0">
+                      <div className="w-5 h-5 rounded-full bg-accent-500 flex items-center justify-center">
+                        <svg
+                          className="w-3 h-3 text-white"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor">
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={3}
+                            d="M5 13l4 4L19 7"
+                          />
+                        </svg>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
                 <div className="flex-1">
                   <div className="font-semibold text-neutral-900">
                     {provider.name}
@@ -137,35 +153,11 @@ export default function CartPaymentSection({
                     {provider.description}
                   </div>
                 </div>
-                {selectedProvider === provider.id && (
-                  <div className="flex-shrink-0">
-                    <div className="w-5 h-5 rounded-full bg-accent-500 flex items-center justify-center">
-                      <svg
-                        className="w-3 h-3 text-white"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor">
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={3}
-                          d="M5 13l4 4L19 7"
-                        />
-                      </svg>
-                    </div>
-                  </div>
-                )}
               </div>
             </button>
           ))}
         </div>
       </div>
-
-      {error && (
-        <div className="mb-4 p-4 bg-red-50 border-2 border-red-200 rounded-lg">
-          <p className="text-sm text-red-800 font-semibold">{error}</p>
-        </div>
-      )}
 
       {error && (
         <div className="mb-4 p-4 bg-red-50 border-2 border-red-200 rounded-lg">
