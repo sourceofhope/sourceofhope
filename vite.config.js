@@ -12,8 +12,15 @@ export default defineConfig({
     },
   },
   build: {
-    outDir: "dist",
-    emptyOutDir: true,
+    target: "es2017",
+    minify: false,
+    sourcemap: true,
+    cssTarget: "safari12",
+    rollupOptions: {
+      output: {
+        hoistTransitiveImports: false,
+      },
+    },
   },
   ssr: {
     noExternal: ["express", "cors", "dotenv", "stripe"],

@@ -11,10 +11,34 @@
     <loc>https://thesourceofhope.org/about</loc>
     <changefreq>monthly</changefreq>
   </url>
+  <url>
+    <loc>https://thesourceofhope.org/about/team</loc>
+    <changefreq>monthly</changefreq>
+  </url>
 
   <url>
     <loc>https://thesourceofhope.org/serve</loc>
     <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>https://thesourceofhope.org/serve/servingHope</loc>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://thesourceofhope.org/serve/educationHope</loc>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://thesourceofhope.org/serve/wellnessHope</loc>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://thesourceofhope.org/serve/outdoorHope</loc>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://thesourceofhope.org/serve/internationalHope</loc>
+    <changefreq>monthly</changefreq>
   </url>
 
   <url>
@@ -27,7 +51,20 @@
     <changefreq>weekly</changefreq>
   </url>
   <url>
+    <loc>https://thesourceofhope.org/media/press</loc>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://thesourceofhope.org/media/podcast</loc>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <url>
     <loc>https://thesourceofhope.org/members</loc>
     <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://thesourceofhope.org/store</loc>
+    <changefreq>weekly</changefreq>
   </url>
 </urlset>

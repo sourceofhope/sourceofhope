@@ -6,7 +6,6 @@ import fetch from "node-fetch";
 dotenv.config();
 
 const router = express.Router();
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 /**
  * Create a Stripe Checkout Session
@@ -14,6 +13,9 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
  */
 router.post("/create-stripe-session", async (req, res) => {
   try {
+    const { stripeSecretKey } = getRuntimeEnv(req);
+    const stripe = new Stripe(stripeSecretKey);
+
     const {
       items,
       shippingMethod,
@@ -23,7 +25,6 @@ router.post("/create-stripe-session", async (req, res) => {
       cancelUrl,
     } = req.body;
 
-    // Validate required fields
     if (!items || !Array.isArray(items) || items.length === 0) {
       return res.status(400).json({ error: "Cart items are required" });
     }
@@ -50,7 +51,6 @@ router.post("/create-stripe-session", async (req, res) => {
       quantity: item.quantity,
     }));
 
-    // Add shipping as a line item
     if (shippingCost && shippingCost > 0) {
       lineItems.push({
         price_data: {
@@ -65,7 +65,6 @@ router.post("/create-stripe-session", async (req, res) => {
       });
     }
 
-    // Add tax as a line item
     if (taxAmount && taxAmount > 0) {
       lineItems.push({
         price_data: {
@@ -135,7 +134,10 @@ router.post("/create-paypal-order", async (req, res) => {
     }
 
     // Calculate total amount
-    const itemsTotal = items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const itemsTotal = items.reduce(
+      (sum, item) => sum + item.price * item.quantity,
+      0,
+    );
     const totalAmount = itemsTotal + (shippingCost || 0) + (taxAmount || 0);
 
     // Create PayPal order using REST API
@@ -144,23 +146,26 @@ router.post("/create-paypal-order", async (req, res) => {
     const paypalMode = process.env.PAYPAL_MODE || "sandbox"; // sandbox or live
 
     if (!paypalClientId || !paypalClientSecret) {
-      return res.status(500).json({ 
-        error: "PayPal is not configured. Please contact support." 
+      return res.status(500).json({
+        error: "PayPal is not configured. Please contact support.",
       });
     }
 
-    const paypalApiUrl = paypalMode === "live" 
-      ? "https://api-m.paypal.com" 
-      : "https://api-m.sandbox.paypal.com";
+    const paypalApiUrl =
+      paypalMode === "live"
+        ? "https://api-m.paypal.com"
+        : "https://api-m.sandbox.paypal.com";
 
     // Get PayPal access token
-    const auth = Buffer.from(`${paypalClientId}:${paypalClientSecret}`).toString("base64");
-    
+    const auth = Buffer.from(
+      `${paypalClientId}:${paypalClientSecret}`,
+    ).toString("base64");
+
     console.log("Requesting PayPal access token...");
     const tokenResponse = await fetch(`${paypalApiUrl}/v1/oauth2/token`, {
       method: "POST",
       headers: {
-        "Authorization": `Basic ${auth}`,
+        Authorization: `Basic ${auth}`,
         "Content-Type": "application/x-www-form-urlencoded",
       },
       body: "grant_type=client_credentials",
@@ -169,7 +174,9 @@ router.post("/create-paypal-order", async (req, res) => {
     if (!tokenResponse.ok) {
       const errorText = await tokenResponse.text();
       console.error("PayPal auth error:", errorText);
-      throw new Error(`Failed to get PayPal access token: ${tokenResponse.status}`);
+      throw new Error(
+        `Failed to get PayPal access token: ${tokenResponse.status}`,
+      );
     }
 
     const { access_token } = await tokenResponse.json();
@@ -184,7 +191,7 @@ router.post("/create-paypal-order", async (req, res) => {
         currency_code: "USD",
         value: parseFloat(item.price.toFixed(2)).toFixed(2),
       },
-      quantity: item.quantity.toString()
+      quantity: item.quantity.toString(),
     }));
 
     // Create PayPal order
@@ -230,11 +237,14 @@ router.post("/create-paypal-order", async (req, res) => {
     console.log("shippingCost:", shippingCost);
     console.log("taxAmount:", taxAmount);
 
-    console.log("Creating PayPal order with data:", JSON.stringify(orderData, null, 2));
+    console.log(
+      "Creating PayPal order with data:",
+      JSON.stringify(orderData, null, 2),
+    );
     const orderResponse = await fetch(`${paypalApiUrl}/v2/checkout/orders`, {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${access_token}`,
+        Authorization: `Bearer ${access_token}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify(orderData),
@@ -249,14 +259,18 @@ router.post("/create-paypal-order", async (req, res) => {
       } catch (e) {
         errorData = { message: errorText };
       }
-      throw new Error(`Failed to create PayPal order: ${errorData.message || errorResponse.status}`);
+      throw new Error(
+        `Failed to create PayPal order: ${errorData.message || errorResponse.status}`,
+      );
     }
 
     const order = await orderResponse.json();
     console.log("PayPal order created:", order.id);
-    
+
     // Find the approval URL
-    const approvalUrl = order.links.find((link) => link.rel === "approve")?.href;
+    const approvalUrl = order.links.find(
+      (link) => link.rel === "approve",
+    )?.href;
 
     if (!approvalUrl) {
       throw new Error("PayPal approval URL not found");

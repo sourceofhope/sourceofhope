@@ -3,8 +3,11 @@ import { use, useState } from "react";
 //   CreditCardIcon,
 //   BanknotesIcon,
 // } from "@heroicons/react/24/outline";
-import {FaPaypal, FaStripeS} from "react-icons/fa";
-import { createStripeCheckoutSession, createPaypalCheckoutSession } from "../../../lib/api/checkout";
+import { FaPaypal, FaStripeS } from "react-icons/fa";
+import {
+  createStripeCheckoutSession,
+  createPaypalCheckoutSession,
+} from "../../../lib/api/checkout";
 
 export default function CartPaymentSection({
   items,
@@ -23,7 +26,6 @@ export default function CartPaymentSection({
     const params = new URLSearchParams(window.location.search);
     return params.get("selected") || "stripe";
   });
-
 
   const checkoutProviders = [
     {
@@ -48,7 +50,6 @@ export default function CartPaymentSection({
       const successUrl = `${window.location.origin}/store/cart/success`;
       const cancelUrl = `${window.location.origin}/store/cart?selected=${selectedProvider}`;
       if (selectedProvider === "stripe") {
-
         const response = await createStripeCheckoutSession({
           items,
           shippingMethod,
@@ -159,7 +160,13 @@ export default function CartPaymentSection({
           ))}
         </div>
       </div>
-      
+
+      {error && (
+        <div className="mb-4 p-4 bg-red-50 border-2 border-red-200 rounded-lg">
+          <p className="text-sm text-red-800 font-semibold">{error}</p>
+        </div>
+      )}
+
       {error && (
         <div className="mb-4 p-4 bg-red-50 border-2 border-red-200 rounded-lg">
           <p className="text-sm text-red-800 font-semibold">{error}</p>
