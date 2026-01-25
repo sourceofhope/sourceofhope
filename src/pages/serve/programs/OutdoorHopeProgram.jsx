@@ -1,8 +1,5 @@
 import { Helmet } from "react-helmet";
-import {
-  HeaderFlagContext,
-  useHeaderFlag,
-} from "../../../components/structure/Header";
+import { useSetHeaderBlocking } from "../../../components/structure/Header";
 import { useEffect } from "react";
 import Carousel from "../../../components/ui/Carousel";
 import Title from "../../../components/ui/text/Title";
@@ -12,14 +9,14 @@ import Blockquote from "../../../components/ui/text/Blockquote";
 import { ASSET_VERSION } from "../../../routes";
 
 export default function OutdoorHopeProgram() {
-  const { setIsBlocking } = useHeaderFlag();
+  const setBlocking = useSetHeaderBlocking();
 
   useEffect(() => {
-    setIsBlocking(true);
-    return () => setIsBlocking(false);
-  }, [setIsBlocking]);
+    setBlocking(true);
+    return () => setBlocking(false);
+  }, [setBlocking]);
   return (
-    <HeaderFlagContext.Provider value={true}>
+    <>
       <Helmet></Helmet>
       <section className="w-full md:justify-items-left items-center grid gap-5 pt-25 p-5 lg:px-35 text-sm md:text-md lg:text-lg">
         <article className="grid gap-3 justify-self-start justify-start">
@@ -153,7 +150,7 @@ export default function OutdoorHopeProgram() {
           </div>
         </article>
       </section>
-    </HeaderFlagContext.Provider>
+    </>
   );
 }
 

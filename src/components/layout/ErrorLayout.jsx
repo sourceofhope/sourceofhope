@@ -1,7 +1,7 @@
-import Header from "../structure/Header";
 import Footer from "../structure/Footer";
 import ExpressiveLink from "../ui/expressive/ExpressiveLink";
-import Favicon from "../ui/Favicon";
+import Header, { HeaderFlagContext } from "../structure/Header";
+import { useState } from "react";
 
 export default function ErrorLayout({ code = 500, message }) {
   const defaults = {
@@ -12,9 +12,11 @@ export default function ErrorLayout({ code = 500, message }) {
   };
   const display = defaults[code] || "An unexpected error occurred.";
 
+  const [isBlocking, setIsBlocking] = useState(true);
+
   return (
-    <>
-      <Header isBlocking={true} />
+    <HeaderFlagContext.Provider value={{ isBlocking, setIsBlocking }}>
+      <Header />
       <main className="w-full min-h-screen flex flex-col justify-center items-start gap-5 px-5 lg:px-35 text-sm md:text-md lg:text-lg">
         <h2 className="text-lg font-semibold">
           Error {code}: <span className="font-mono font-normal">{message}</span>
@@ -34,6 +36,6 @@ export default function ErrorLayout({ code = 500, message }) {
         </button>
       </main>
       <Footer />
-    </>
+    </HeaderFlagContext.Provider>
   );
 }

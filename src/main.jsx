@@ -20,6 +20,7 @@ import InternationalHopeProgram from "./pages/serve/programs/InternationalHopePr
 import FormPage from "./pages/form/FormPage.jsx";
 
 import { CANONICAL } from "./routes.jsx";
+import StorefrontPage from "./pages/storefront/StorefrontPage.jsx";
 
 export const router = createBrowserRouter(
   [
@@ -34,37 +35,31 @@ export const router = createBrowserRouter(
         { path: CANONICAL.connect, element: <ConnectPage /> },
         { path: CANONICAL.media, element: <MediaPage /> },
 
-        {
-          path: `serve/${CANONICAL.servingHope}`,
-          element: <ServingHopeProgram />,
-        },
-        {
-          path: `serve/${CANONICAL.educationHope}`,
-          element: <EducationHopeProgram />,
-        },
-        {
-          path: `serve/${CANONICAL.wellnessHope}`,
-          element: <WellnessHopeProgram />,
-        },
-        {
-          path: `serve/${CANONICAL.outdoorHope}`,
-          element: <OutdoorHopeProgram />,
-        },
-        {
-          path: `serve/${CANONICAL.internationalHope}`,
-          element: <InternationalHopeProgram />,
-        },
+      {
+        path: `serve/${CANONICAL.servingHope}`,
+        element: <ServingHopeProgram />,
+      },
+      {
+        path: `serve/${CANONICAL.educationHope}`,
+        element: <EducationHopeProgram />,
+      },
+      {
+        path: `serve/${CANONICAL.wellnessHope}`,
+        element: <WellnessHopeProgram />,
+      },
+      {
+        path: `serve/${CANONICAL.outdoorHope}`,
+        element: <OutdoorHopeProgram />,
+      },
+      {
+        path: `serve/${CANONICAL.internationalHope}`,
+        element: <InternationalHopeProgram />,
+      },
 
-        { path: `${CANONICAL.member}`, element: <FormPage /> },
-      ],
-    },
-  ],
-  {
-    future: {
-      v7_preloadRouter: false,
-    },
-  }
-);
+      { path: `${CANONICAL.member}`, element: <FormPage /> },
+    ],
+  },
+]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
