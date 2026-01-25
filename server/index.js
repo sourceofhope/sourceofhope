@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import checkoutRoutes from "./routes/checkout.js";
+import emailRoutes from "./routes/email.js";
 
 dotenv.config();
 
@@ -46,6 +47,11 @@ app.get(["/api/health", "/dev/api/health", "/app/api/health"], (req, res) => {
 app.use("/api/checkout", checkoutRoutes);
 app.use("/dev/api/checkout", checkoutRoutes);
 app.use("/app/api/checkout", checkoutRoutes);
+
+// ---- Mount email routes (local + Vercel) ----
+app.use("/api/email", emailRoutes);
+app.use("/dev/api/email", emailRoutes);
+app.use("/app/api/email", emailRoutes);
 
 // Helpful 404 for debugging
 app.all("*", (req, res) => {

@@ -14,7 +14,7 @@ import {
   XCircleIcon,
 } from "@heroicons/react/20/solid";
 import { HighlightedText } from "@/components/ui/expressive/ExpressiveText";
-import { post } from "../../../lib/api/client";
+import { sendEmail } from "@/lib/api/email";
 
 const formStatus = {
   IDLE: "IDLE",
@@ -214,24 +214,23 @@ export default function ConnectMapSection() {
 
     setStatus(formStatus.SUBMIT);
 
-    const { error } = await post("/send-email", {
-      fname: formData.fname,
-      lname: formData.lname,
-      email: formData.email,
-      phone: formData.phone,
-      msg: formData.msg,
-    });
+    try {
+      await sendEmail({
+        name: `${formData.fname} ${formData.lname}`,
+        email: formData.email,
+        message: `Phone: ${formData.phone || "Not provided"}\n\n${formData.msg}`,
+      });
 
-    if (error) {
+      setStatus(formStatus.SUCCESS);
+      reset();
+      
+      setTimeout(() => {
+        setStatus(formStatus.IDLE);
+      }, 5000);
+    } catch (error) {
+      console.error("Failed to send email:", error);
       setStatus(formStatus.ERROR);
-      return;
     }
-
-    setStatus(formStatus.SUCCESS);
-    reset();
-
-    setTimeout(() => {
-      setStatus(formStatus.IDLE);
-    }, 5000);
   }
 }
+
