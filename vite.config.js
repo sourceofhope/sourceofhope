@@ -5,20 +5,25 @@ import path from "node:path";
 import apiPlugin from "./vite-plugin-api.js";
 
 export default defineConfig({
-  plugins: [react(), tailwindcss(), apiPlugin()],
-  base: "/",
+  plugins: [react(), tailwindcss()],
+  base: process.env.DEPLOY_ENV === "gh-pages" ? "/sourceofhope/" : "/",
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
     },
   },
   build: {
-    target: "es2019",
+    target: "es2017",
+    minify: false,
+    sourcemap: true,
     cssTarget: "safari12",
     rollupOptions: {
       output: {
         hoistTransitiveImports: false,
       },
     },
+  },
+  ssr: {
+    noExternal: ["express", "cors", "dotenv", "stripe"],
   },
 });

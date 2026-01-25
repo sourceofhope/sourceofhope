@@ -1,11 +1,15 @@
 {
   "name": "thesourceofhope",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.2.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build && cp dist/index.html dist/404.html",
+    "dev:client": "vite",
+    "dev:server": "npm run dev --prefix server",
+    "dev": "start npm run dev:server && npm run dev:client",
+    "build:client": "vite build && node --input-type=module --eval \"import fs from 'fs'; fs.copyFileSync('dist/index.html', 'dist/404.html')\"",
+    "build:server": "npm install --prefix server",
+    "build": "npm run build:client && npm run build:server",
     "preview": "vite preview"
   },
   "devDependencies": {
@@ -18,7 +22,7 @@
     "dotenv": "^17.2.3",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
-    "react-helmet": "^6.1.0",
+    "react-helmet-async": "^2.0.5",
     "react-hook-form": "^7.70.0",
     "react-router-dom": "^7.8.2",
     "resend": "^6.7.0",

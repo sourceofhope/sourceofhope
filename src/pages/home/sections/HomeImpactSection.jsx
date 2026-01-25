@@ -45,7 +45,7 @@ export default function HomeImpactSection() {
             <ExpressiveLink
               className="inline-flex items-center gap-2 text-sm font-semibold text-neutral-300 hover:text-neutral-50 transition"
               ariaLabel="Learn more about The Source of Hope's impact in our community"
-              to={CANONICAL.about}>
+              to={CANONICAL.about.absolute}>
               VIEW OUR IMPACT
             </ExpressiveLink>
           </div>
