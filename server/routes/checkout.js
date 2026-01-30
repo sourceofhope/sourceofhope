@@ -1,9 +1,7 @@
 import express from "express";
 import Stripe from "stripe";
-import dotenv from "dotenv";
 import fetch from "node-fetch";
-
-dotenv.config();
+import { getRuntimeEnvironment } from "../utility/environment.js";
 
 const router = express.Router();
 
@@ -13,7 +11,7 @@ const router = express.Router();
  */
 router.post("/create-stripe-session", async (req, res) => {
   try {
-    const { stripeSecretKey } = getRuntimeEnv(req);
+    const { stripeSecretKey } = getRuntimeEnvironment(req);
     const stripe = new Stripe(stripeSecretKey);
 
     const {
@@ -143,7 +141,7 @@ router.post("/create-paypal-order", async (req, res) => {
     // Create PayPal order using REST API
     const paypalClientId = process.env.PAYPAL_CLIENT_ID;
     const paypalClientSecret = process.env.PAYPAL_CLIENT_SECRET;
-    const { paypalMode } = getRuntimeEnv(req);
+    const { paypalMode } = getRuntimeEnvironment(req);
 
     if (!paypalClientId || !paypalClientSecret) {
       return res.status(500).json({
