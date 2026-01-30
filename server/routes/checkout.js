@@ -139,9 +139,8 @@ router.post("/create-paypal-order", async (req, res) => {
     const totalAmount = itemsTotal + (shippingCost || 0) + (taxAmount || 0);
 
     // Create PayPal order using REST API
-    const paypalClientId = process.env.PAYPAL_CLIENT_ID;
-    const paypalClientSecret = process.env.PAYPAL_CLIENT_SECRET;
-    const { paypalMode } = getRuntimeEnvironment(req);
+    const { paypalMode, paypalClientId, paypalClientSecret } =
+      getRuntimeEnvironment(req);
 
     if (!paypalClientId || !paypalClientSecret) {
       return res.status(500).json({
@@ -150,7 +149,7 @@ router.post("/create-paypal-order", async (req, res) => {
     }
 
     const paypalApiUrl =
-      paypalMode === "live"
+      paypalMode === "production"
         ? "https://api-m.paypal.com"
         : "https://api-m.sandbox.paypal.com";
 
