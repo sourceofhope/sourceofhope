@@ -103,7 +103,7 @@ router.post("/create-stripe-session", async (req, res) => {
   } catch (error) {
     console.error("Stripe checkout error:", error);
     res.status(500).json({
-      error: "Failed to create checkout session",
+      error: "Failed to create Stripe checkout session",
       details: error.message,
     });
   }
@@ -283,7 +283,7 @@ router.post("/create-paypal-order", async (req, res) => {
   } catch (error) {
     console.error("PayPal checkout error:", error);
     res.status(500).json({
-      error: "Failed to create PayPal checkout",
+      error: "Failed to create PayPal checkout session",
       details: error.message,
     });
   }
