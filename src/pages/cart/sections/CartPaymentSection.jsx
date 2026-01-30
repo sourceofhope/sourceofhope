@@ -1,26 +1,21 @@
 import { useState } from "react";
-import { FaPaypal, FaStripeS } from "react-icons/fa";
-import {
-  createStripeCheckoutSession,
-  createPaypalCheckoutSession,
-} from "../../../lib/api/checkout";
+import { Link } from "react-router-dom";
+// import {
+//   CreditCardIcon,
+//   BanknotesIcon,
+// } from "@heroicons/react/24/outline";
+import {FaPaypal, FaStripeS} from "react-icons/fa";
+import { createStripeCheckout } from "../../../lib/api/checkout.js";
+import { createPaypalCheckout } from "../../../lib/api/checkout.js";
 
 export default function CartPaymentSection({
   items,
   shippingMethod,
-  paymentMethod,
-  setPaymentMethod,
-  total,
-  subtotal,
   shipping,
   tax,
 }) {
   const [isProcessing, setIsProcessing] = useState(false);
   const [error, setError] = useState(null);
-  const [selectedProvider, setSelectedProvider] = useState(() => {
-    const params = new URLSearchParams(window.location.search);
-    return params.get("selected") || "stripe";
-  });
 
   const checkoutProviders = [
     {
@@ -37,61 +32,59 @@ export default function CartPaymentSection({
     },
   ];
 
-  const handleCheckout = async () => {
+  const handleStripeCheckout = async (successUrl, cancelUrl) => {
+    const response = await createStripeCheckout({
+      items,
+      shippingMethod,
+      shippingCost: shipping,
+      taxAmount: tax,
+      successUrl,
+      cancelUrl,
+    });
+  
+    if (response.error) {
+      setError(response.error);
+      setIsProcessing(false);
+      return;
+    }
+  
+    if (response.data?.url) {
+      window.location.href = response.data.url;
+    } else {
+      setError("Failed to create checkout session");
+      setIsProcessing(false);
+    }
+  };
+
+  const handlePaypalCheckout = async (successUrl, cancelUrl) => {
+    const response = await createPaypalCheckout({
+      items,
+      shippingMethod,
+      shippingCost: shipping,
+      taxAmount: tax,
+      successUrl,
+      cancelUrl,
+    });
+
+    if (response.error) {
+      setError(response.error);
+      setIsProcessing(false);
+      return;
+    }
+
+    if (response.data?.approvalUrl) {
+      window.location.href = response.data.approvalUrl;
+    } else {
+      setError("Failed to create PayPal checkout");
+      setIsProcessing(false);
+    }
+  };
+
+ const handleCheckout = async () => {
     setIsProcessing(true);
     setError(null);
-
     try {
-      const successUrl = `${window.location.origin}/store/cart/success`;
-      const cancelUrl = `${window.location.origin}/store/cart?selected=${selectedProvider}`;
-      if (selectedProvider === "stripe") {
-        const response = await createStripeCheckoutSession({
-          items,
-          shippingMethod,
-          shippingCost: shipping,
-          taxAmount: tax,
-          successUrl,
-          cancelUrl,
-        });
 
-        if (response.error) {
-          setError(response.error);
-          setIsProcessing(false);
-          return;
-        }
-
-        // Redirect to Stripe Checkout
-        if (response.data?.url) {
-          window.location.href = response.data.url;
-        } else {
-          setError("Failed to create checkout session");
-          setIsProcessing(false);
-        }
-      } else if (selectedProvider === "paypal") {
-        // For PayPal, we'll redirect directly to PayPal's hosted checkout
-        const response = await createPaypalCheckoutSession({
-          items,
-          shippingMethod,
-          shippingCost: shipping,
-          taxAmount: tax,
-          successUrl,
-          cancelUrl,
-        });
-
-        if (response.error) {
-          setError(response.error);
-          setIsProcessing(false);
-          return;
-        }
-
-        // Redirect to PayPal Checkout
-        if (response.data?.approvalUrl) {
-          window.location.href = response.data.approvalUrl;
-        } else {
-          setError("Failed to create PayPal checkout");
-          setIsProcessing(false);
-        }
-      }
     } catch (err) {
       console.error("Checkout error:", err);
       setError("An unexpected error occurred. Please try again.");
@@ -104,53 +97,36 @@ export default function CartPaymentSection({
       {/* Payment Provider Selection */}
       <div className="mb-6">
         <h3 className="text-lg font-semibold mb-4 text-neutral-800">
-          Select Payment Method
+          Express checkout
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {checkoutProviders.map((provider) => (
             <button
               key={provider.id}
-              onClick={() => setSelectedProvider(provider.id)}
-              className={`p-4 border-2 rounded-xl transition-all duration-300 text-left ${
-                selectedProvider === provider.id
-                  ? "border-accent-500 bg-accent-50 shadow-md"
-                  : "border-neutral-200 hover:border-neutral-300 hover:shadow-sm"
-              }`}>
-              <div className="grid items-start gap-3">
-                <div className="flex justify-between">
-                  <provider.icon
-                    className={`w-6 h-6 flex-shrink-0 ${
-                      selectedProvider === provider.id
-                        ? "text-accent-600"
-                        : "text-neutral-400"
-                    }`}
-                  />
-                  {selectedProvider === provider.id && (
-                    <div className="flex-shrink-0">
-                      <div className="w-5 h-5 rounded-full bg-accent-500 flex items-center justify-center">
-                        <svg
-                          className="w-3 h-3 text-white"
-                          fill="none"
-                          viewBox="0 0 24 24"
-                          stroke="currentColor">
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={3}
-                            d="M5 13l4 4L19 7"
-                          />
-                        </svg>
-                      </div>
-                    </div>
-                  )}
-                </div>
+              onClick={async () => {
+                setIsProcessing(true);
+                setError(null);
+                const successUrl = `${window.location.origin}/store/cart/success`;
+                const cancelUrl = `${window.location.origin}/store/cart?shipping=${shippingMethod}`;
 
+                if (provider.id === "stripe") {
+                  await handleStripeCheckout(successUrl, cancelUrl);
+                } else if (provider.id === "paypal") {
+                  await handlePaypalCheckout(successUrl, cancelUrl);
+                }
+              }}
+              disabled={isProcessing}
+              className={`p-4 border-2 rounded-xl transition-all duration-300 text-left ${
+                isProcessing
+                  ? "border-neutral-300 bg-neutral-100 cursor-not-allowed opacity-50"
+                  : "border-neutral-200 hover:border-accent-500 hover:bg-accent-50 hover:shadow-md"
+              }`}
+            >
+              <div className="flex items-start gap-3">
+                <provider.icon className="w-6 h-6 flex-shrink-0 text-accent-600" />
                 <div className="flex-1">
-                  <div className="font-semibold text-neutral-900">
+                  <div className="font-semibold text-accent-600">
                     {provider.name}
-                  </div>
-                  <div className="text-sm text-neutral-600 mt-1">
-                    {provider.description}
                   </div>
                 </div>
               </div>
@@ -158,21 +134,21 @@ export default function CartPaymentSection({
           ))}
         </div>
       </div>
-
       {error && (
         <div className="mb-4 p-4 bg-red-50 border-2 border-red-200 rounded-lg">
           <p className="text-sm text-red-800 font-semibold">{error}</p>
         </div>
       )}
-
-      <button
+      <h3 className="text-lg font-semibold mb-4 text-neutral-800">Or</h3>
+      {/* <button
         onClick={handleCheckout}
         disabled={isProcessing}
         className={`w-full px-5 py-4 rounded-xl font-bold text-white text-lg transition-all duration-300 ${
           isProcessing
             ? "bg-neutral-400 cursor-not-allowed"
             : "bg-accent-500 hover:bg-accent-600 hover:shadow-lg"
-        }`}>
+        }`}
+      >
         {isProcessing ? (
           <span className="flex items-center justify-center gap-2">
             <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
@@ -194,13 +170,18 @@ export default function CartPaymentSection({
             Processing
           </span>
         ) : (
-          "Proceed to Checkout"
+          "Proceed Checkout"
         )}
       </button>
-
       <p className="text-xs text-neutral-500 text-center mt-4">
         Your payment information is secure and encrypted
-      </p>
+      </p> */}
+      <Link
+        to="/store/checkout"
+        className="w-full block px-5 py-4 rounded-xl font-bold text-white text-lg text-center bg-accent-500 hover:bg-accent-600 hover:shadow-lg transition-all duration-300"
+      >
+        Proceed to Checkout
+      </Link>
     </div>
   );
 }

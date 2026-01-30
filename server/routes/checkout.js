@@ -6,10 +6,251 @@ import { getRuntimeEnvironment } from "../utility/environment.js";
 const router = express.Router();
 
 /**
- * Create a Stripe Checkout Session
+ * Create an Embedded Stripe Checkout Session
+ * Create an Embedded Stripe Checkout Session
  * POST /api/checkout/create-stripe-session
+ * For embedding checkout directly in the page
  */
-router.post("/create-stripe-session", async (req, res) => {
+
+router.post('/create-stripe-session', async (req, res) => {
+  try {
+    const {
+      items,
+      shippingMethod,
+      shippingCost,
+      taxAmount,
+      return_url,
+    } = req.body;
+
+        console.log("CheckoutForm items:", items);
+    console.log("shippingMethod:", shippingMethod);
+    console.log("shippingCost:", shippingCost);
+    console.log("taxAmount:", taxAmount);
+    console.log("returnUrl:", return_url);
+    // Validate required fields
+    if (!items || !Array.isArray(items) || items.length === 0) {
+      return res.status(400).json({ error: "Cart items are required" });
+    }
+
+    if (!return_url) {
+      return res.status(400).json({ error: "Return URL is required" });
+    }
+
+    // Convert cart items to Stripe line items
+    const lineItems = items.map((item) => ({
+      price_data: {
+        currency: "usd",
+        product_data: {
+          name: item.name || item.title || "Product",
+          description: item.size ? `Size: ${item.size}` : undefined,
+          images: item.image ? [item.image] : undefined,
+          metadata: {
+            product_id: item.id,
+            size: item.size || "",
+          },
+        },
+        unit_amount: Math.round(parseFloat(item.price.toFixed(2)) * 100),
+      },
+      quantity: item.quantity,
+    }));
+
+    // Add shipping as a line item
+    if (shippingCost && shippingCost > 0) {
+      lineItems.push({
+        price_data: {
+          currency: "usd",
+          product_data: {
+            name: `Shipping (${shippingMethod})`,
+            description: "Shipping charges",
+          },
+          unit_amount: Math.round(parseFloat(shippingCost.toFixed(2)) * 100),
+        },
+        quantity: 1,
+      });
+    }
+
+    // Add tax as a line item
+    if (taxAmount && taxAmount > 0) {
+      lineItems.push({
+        price_data: {
+          currency: "usd",
+          product_data: {
+            name: "Tax",
+            description: "Sales tax (8.25%)",
+          },
+          unit_amount: Math.round(parseFloat(taxAmount.toFixed(2)) * 100),
+        },
+        quantity: 1,
+      });
+    }
+
+    // Create embedded checkout session
+    const session = await stripe.checkout.sessions.create({
+      ui_mode: 'embedded',
+      line_items: lineItems,
+      mode: 'payment',
+      return_url: return_url,
+      shipping_address_collection: {
+        allowed_countries: ["US"],
+      },
+      billing_address_collection: "required",
+      metadata: {
+        shipping_method: shippingMethod || "standard",
+        order_type: "storefront",
+      },
+    });
+
+    res.json({
+      clientSecret: session.client_secret,
+      sessionId: session.id,
+    });
+  } catch (error) {
+    console.error("Embedded checkout error:", error);
+    res.status(500).json({
+      error: "Failed to create embedded checkout session",
+      details: error.message,
+    });
+  }
+});
+
+/**
+ * Get Stripe Session Status
+ * GET /api/checkout/session-status
+ */
+router.get('/session-status', async (req, res) => {
+  const session = await stripe.checkout.sessions.retrieve(req.query.session_id);
+
+  res.send({
+    status: session.status,
+    customer_email: session.customer_details.email
+  });
+});
+
+
+/**
+ * Create a Stripe Checkout Order
+ * POST /api/checkout/create-stripe-checkout
+ */
+router.post("/create-stripe-checkout", async (req, res) => {
+  try {
+    const {
+      items,
+      shippingMethod,
+      shippingCost,
+      taxAmount,
+      return_url,
+    } = req.body;
+
+        console.log("CheckoutForm items:", items);
+    console.log("shippingMethod:", shippingMethod);
+    console.log("shippingCost:", shippingCost);
+    console.log("taxAmount:", taxAmount);
+    console.log("returnUrl:", return_url);
+    // Validate required fields
+    if (!items || !Array.isArray(items) || items.length === 0) {
+      return res.status(400).json({ error: "Cart items are required" });
+    }
+
+    if (!return_url) {
+      return res.status(400).json({ error: "Return URL is required" });
+    }
+
+    // Convert cart items to Stripe line items
+    const lineItems = items.map((item) => ({
+      price_data: {
+        currency: "usd",
+        product_data: {
+          name: item.name || item.title || "Product",
+          description: item.size ? `Size: ${item.size}` : undefined,
+          images: item.image ? [item.image] : undefined,
+          metadata: {
+            product_id: item.id,
+            size: item.size || "",
+          },
+        },
+        unit_amount: Math.round(parseFloat(item.price.toFixed(2)) * 100),
+      },
+      quantity: item.quantity,
+    }));
+
+    // Add shipping as a line item
+    if (shippingCost && shippingCost > 0) {
+      lineItems.push({
+        price_data: {
+          currency: "usd",
+          product_data: {
+            name: `Shipping (${shippingMethod})`,
+            description: "Shipping charges",
+          },
+          unit_amount: Math.round(parseFloat(shippingCost.toFixed(2)) * 100),
+        },
+        quantity: 1,
+      });
+    }
+
+    // Add tax as a line item
+    if (taxAmount && taxAmount > 0) {
+      lineItems.push({
+        price_data: {
+          currency: "usd",
+          product_data: {
+            name: "Tax",
+            description: "Sales tax (8.25%)",
+          },
+          unit_amount: Math.round(parseFloat(taxAmount.toFixed(2)) * 100),
+        },
+        quantity: 1,
+      });
+    }
+
+    // Create embedded checkout session
+    const session = await stripe.checkout.sessions.create({
+      ui_mode: 'embedded',
+      line_items: lineItems,
+      mode: 'payment',
+      return_url: return_url,
+      shipping_address_collection: {
+        allowed_countries: ["US"],
+      },
+      billing_address_collection: "required",
+      metadata: {
+        shipping_method: shippingMethod || "standard",
+        order_type: "storefront",
+      },
+    });
+
+    res.json({
+      clientSecret: session.client_secret,
+      sessionId: session.id,
+    });
+  } catch (error) {
+    console.error("Embedded checkout error:", error);
+    res.status(500).json({
+      error: "Failed to create embedded checkout session",
+      details: error.message,
+    });
+  }
+});
+
+/**
+ * Get Stripe Session Status
+ * GET /api/checkout/session-status
+ */
+router.get('/session-status', async (req, res) => {
+  const session = await stripe.checkout.sessions.retrieve(req.query.session_id);
+
+  res.send({
+    status: session.status,
+    customer_email: session.customer_details.email
+  });
+});
+
+
+/**
+ * Create a Stripe Checkout Order
+ * POST /api/checkout/create-stripe-checkout
+ */
+router.post("/create-stripe-checkout", async (req, res) => {
   try {
     const { stripeSecretKey } = getRuntimeEnvironment(req);
     const stripe = new Stripe(stripeSecretKey);
@@ -108,7 +349,7 @@ router.post("/create-stripe-session", async (req, res) => {
 });
 
 /**
- * Create a PayPal Order
+ * Create a PayPal Checkout Order
  * POST /api/checkout/create-paypal-order
  */
 router.post("/create-paypal-order", async (req, res) => {

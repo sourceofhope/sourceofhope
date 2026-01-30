@@ -1,70 +1,16 @@
 import Title from "../../../components/ui/text/Title";
 
 export default function CartSummarySection({
-  items,
   subtotal,
   shipping,
   tax,
   total,
-  shippingMethod,
-  setShippingMethod,
-  shippingCosts,
 }) {
   return (
     <section className="">
       <div className="bg-white rounded-2xl shadow-md p-5 sticky top-5">
         <Title className="flex flex-col gap-1 mb-5">Order Summary</Title>
-        <div className="space-y-5 mb-5">
-          <label className="text-sm font-semibold text-neutral-700 block mb-3">
-            Shipping Method:
-          </label>
-          {[
-            {
-              id: "standard",
-              name: "Standard Shipping",
-              time: "5-7 business days",
-            },
-            {
-              id: "express",
-              name: "Express Shipping",
-              time: "2-3 business days",
-            },
-            {
-              id: "overnight",
-              name: "Overnight Shipping",
-              time: "Next business day",
-            },
-          ].map((method) => (
-            <label
-              key={method.id}
-              className={`flex items-center justify-between p-3 border-2 rounded-lg cursor-pointer transition-all ${
-                shippingMethod === method.id
-                  ? "border-accent-500 bg-accent-50"
-                  : "border-neutral-200 hover:border-neutral-300"
-              }`}>
-              <div className="flex items-center gap-3">
-                <input
-                  type="radio"
-                  name="shipping"
-                  value={method.id}
-                  checked={shippingMethod === method.id}
-                  onChange={(e) => setShippingMethod(e.target.value)}
-                  className="w-4 h-4 accent-accent-500"
-                />
-                <div>
-                  <p className="font-semibold text-neutral-900 text-sm">
-                    {method.name}
-                  </p>
-                  <p className="text-xs text-neutral-600">{method.time}</p>
-                </div>
-              </div>
-              <span className="font-semibold text-neutral-900">
-                ${shippingCosts[method.id].toFixed(2)}
-              </span>
-            </label>
-          ))}
-        </div>
-        <div className="space-y-3 border-t-2 border-neutral-200 pt-4">
+        <div className="space-y-3 pt-4">
           <div className="flex justify-between text-neutral-700">
             <span>Subtotal:</span>
             <span className="font-semibold">${subtotal.toFixed(2)}</span>
