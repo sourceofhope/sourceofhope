@@ -1,5 +1,13 @@
-const API_BASE_URL =
-  import.meta.env.MODE === "development"
+const hostname = window.location.hostname.toLowerCase();
+
+const isLocal = hostname === "localhost" || hostname === "127.0.0.1";
+
+const isDevSite =
+  hostname === "dev.thesourceofhope.org" || hostname.startsWith("dev.");
+
+export const API_BASE_URL = isLocal
+  ? "http://localhost:3001/api"
+  : isDevSite
     ? "https://api.thesourceofhope.org/dev/api"
     : "https://api.thesourceofhope.org/app/api";
 

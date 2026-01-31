@@ -2,28 +2,48 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import checkoutRoutes from "./routes/checkout.js";
+import { getConfig } from "./utility/environment.js";
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// Allow your frontends
+const { frontendUrl } = getConfig();
+
+function normalizeOrigin(origin) {
+  if (!origin) return null;
+  try {
+    return new URL(origin).origin;
+  } catch {
+    return origin.replace(/\/$/, "");
+  }
+}
+
+const allowedOrigins = [
+  "https://thesourceofhope.org",
+  "https://www.thesourceofhope.org",
+  "https://dev.thesourceofhope.org",
+  "http://localhost:5173",
+  normalizeOrigin(frontendUrl),
+].filter(Boolean);
+
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "https://dev.thesourceofhope.org",
-      "https://thesourceofhope.org",
-    ],
+    origin(origin, callback) {
+      if (!origin) return callback(null, true);
+      if (!allowedOrigins.includes(origin)) {
+        return callback(new Error("CORS policy: Origin not allowed."), false);
+      }
+      return callback(null, true);
+    },
     credentials: true,
-  })
+  }),
 );
 
-// ---- STRIPE WEBHOOK (raw body) ----
-// Local:    /api/checkout/webhook
-// Vercel:   /dev/api/checkout/webhook OR /app/api/checkout/webhook
-
+// ---- STRIPE WEBHOOK (raw body must come BEFORE json) ----
+// Local:  /api/checkout/webhook
+// Vercel: /dev/api/checkout/webhook OR /app/api/checkout/webhook
 app.post(
   [
     "/api/checkout/webhook",
@@ -31,7 +51,7 @@ app.post(
     "/app/api/checkout/webhook",
   ],
   express.raw({ type: "application/json" }),
-  checkoutRoutes
+  checkoutRoutes,
 );
 
 // ---- JSON for everything else ----
@@ -42,44 +62,24 @@ app.get(["/api/health", "/dev/api/health", "/app/api/health"], (req, res) => {
   res.json({ status: "ok", message: "Source of Hope API is running" });
 });
 
-// ---- Mount checkout routes (local + Vercel) ----
-app.use("/api/checkout", checkoutRoutes);
-app.use("/dev/api/checkout", checkoutRoutes);
-app.use("/app/api/checkout", checkoutRoutes);
+const checkoutPrefixes = [
+  "/api/checkout",
+  "/dev/api/checkout",
+  "/app/api/checkout",
+];
+checkoutPrefixes.forEach((prefix) => app.use(prefix, checkoutRoutes));
 
-// Helpful 404 for debugging
 app.all("*", (req, res) => {
-  res.status(404).json({
-    message: "Route not found",
-    path: req.path,
-    method: req.method,
-  });
+  res
+    .status(404)
+    .json({ message: "Route not found", path: req.path, method: req.method });
 });
 
-// Only start server when NOT on Vercel
 if (!process.env.VERCEL) {
   app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
     console.log(`Environment: ${process.env.NODE_ENV || "development"}`);
   });
-}
-
-export function getRuntimeEnv(req) {
-  const url = req.originalUrl || "";
-  const isProd = url.startsWith("/app/api");
-
-  return {
-    isProd,
-    stripeSecretKey: isProd
-      ? process.env.STRIPE_SECRET_KEY_PROD
-      : process.env.STRIPE_SECRET_KEY_DEV,
-    stripeWebhookSecret: isProd
-      ? process.env.STRIPE_WEBHOOK_SECRET_PROD
-      : process.env.STRIPE_WEBHOOK_SECRET_DEV,
-    frontendUrl: isProd
-      ? process.env.FRONTEND_URL_PROD
-      : process.env.FRONTEND_URL_DEV,
-  };
 }
 
 export default app;

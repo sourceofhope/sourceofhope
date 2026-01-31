@@ -1,17 +1,21 @@
 import express from "express";
 import Stripe from "stripe";
-import { getRuntimeEnv } from "../index.js";
+import fetch from "node-fetch";
+import { getConfig } from "../utility/environment.js";
 
 const router = express.Router();
 
 /**
  * Create a Stripe Checkout Session
- * POST /dev/api/checkout/create-session
- * POST /app/api/checkout/create-session
+ * POST /api/checkout/create-stripe-session
  */
-router.post("/create-session", async (req, res) => {
+router.post("/create-stripe-session", async (req, res) => {
   try {
-    const { stripeSecretKey } = getRuntimeEnv(req);
+    const { stripeSecretKey } = getConfig();
+    if (!stripeSecretKey) {
+      return res.status(500).json({ error: "Stripe is not configured." });
+    }
+
     const stripe = new Stripe(stripeSecretKey);
 
     const {
@@ -31,6 +35,7 @@ router.post("/create-session", async (req, res) => {
       return res.status(400).json({ error: "Redirect URLs are required" });
     }
 
+    // Convert cart items to Stripe line items
     const lineItems = items.map((item) => ({
       price_data: {
         currency: "usd",
@@ -43,7 +48,7 @@ router.post("/create-session", async (req, res) => {
             size: item.size || "",
           },
         },
-        unit_amount: Math.round(item.price * 100),
+        unit_amount: Math.round(parseFloat(item.price.toFixed(2)) * 100), // Convert to cents
       },
       quantity: item.quantity,
     }));
@@ -56,7 +61,7 @@ router.post("/create-session", async (req, res) => {
             name: `Shipping (${shippingMethod})`,
             description: "Shipping charges",
           },
-          unit_amount: Math.round(shippingCost * 100),
+          unit_amount: Math.round(parseFloat(shippingCost.toFixed(2)) * 100),
         },
         quantity: 1,
       });
@@ -70,12 +75,13 @@ router.post("/create-session", async (req, res) => {
             name: "Tax",
             description: "Sales tax (8.25%)",
           },
-          unit_amount: Math.round(taxAmount * 100),
+          unit_amount: Math.round(parseFloat(taxAmount.toFixed(2)) * 100),
         },
         quantity: 1,
       });
     }
 
+    // Create Stripe Checkout Session
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       line_items: lineItems,
@@ -99,45 +105,183 @@ router.post("/create-session", async (req, res) => {
   } catch (error) {
     console.error("Stripe checkout error:", error);
     res.status(500).json({
-      error: "Failed to create checkout session",
+      error: "Failed to create Stripe checkout session",
       details: error.message,
     });
   }
 });
 
 /**
- * Stripe Webhook Handler
- * POST /dev/api/checkout/webhook
- * POST /app/api/checkout/webhook
+ * Create a PayPal Order
+ * POST /api/checkout/create-paypal-order
  */
-router.post("/webhook", async (req, res) => {
-  const { stripeSecretKey, stripeWebhookSecret } = getRuntimeEnv(req);
+router.post("/create-paypal-order", async (req, res) => {
+  try {
+    const { paypalClientId, paypalClientSecret, paypalApiUrl } = getConfig();
+
+    if (!paypalClientId || !paypalClientSecret || !paypalApiUrl) {
+      return res.status(500).json({
+        error: "PayPal is not configured. Please contact support.",
+      });
+    }
+
+    const auth = Buffer.from(
+      `${paypalClientId}:${paypalClientSecret}`,
+    ).toString("base64");
+
+    const tokenResponse = await fetch(`${paypalApiUrl}/v1/oauth2/token`, {
+      method: "POST",
+      headers: {
+        Authorization: `Basic ${auth}`,
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: "grant_type=client_credentials",
+    });
+
+    if (!tokenResponse.ok) {
+      const errorText = await tokenResponse.text();
+      console.error("PayPal auth error:", errorText);
+      throw new Error(
+        `Failed to get PayPal access token: ${tokenResponse.status}`,
+      );
+    }
+
+    const { access_token } = await tokenResponse.json();
+    console.log("Obtained PayPal access token.");
+
+    // Prepare PayPal order items
+    const paypalItems = items.map((item) => ({
+      name: item.name || "Product",
+      description: item.size ? `Size: ${item.size}` : "Product purchase",
+      unit_amount: {
+        currency_code: "USD",
+        value: parseFloat(item.price.toFixed(2)).toFixed(2),
+      },
+      quantity: item.quantity.toString(),
+    }));
+
+    // Create PayPal order
+    const orderData = {
+      intent: "CAPTURE",
+      purchase_units: [
+        {
+          amount: {
+            currency_code: "USD",
+            value: parseFloat(totalAmount.toFixed(2)).toFixed(2),
+            breakdown: {
+              item_total: {
+                currency_code: "USD",
+                value: parseFloat(itemsTotal.toFixed(2)).toFixed(2),
+              },
+              shipping: {
+                currency_code: "USD",
+                value: parseFloat((shippingCost || 0).toFixed(2)).toFixed(2),
+              },
+              tax_total: {
+                currency_code: "USD",
+                value: parseFloat((taxAmount || 0).toFixed(2)).toFixed(2),
+              },
+            },
+          },
+          items: paypalItems,
+          shipping: {
+            method: shippingMethod || "Standard Shipping",
+          },
+        },
+      ],
+      application_context: {
+        return_url: successUrl,
+        cancel_url: cancelUrl,
+        brand_name: "Source of Hope",
+        landing_page: "NO_PREFERENCE",
+        user_action: "PAY_NOW",
+      },
+    };
+
+    console.log(
+      "Creating PayPal order with data:",
+      JSON.stringify(orderData, null, 2),
+    );
+    const orderResponse = await fetch(`${paypalApiUrl}/v2/checkout/orders`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(orderData),
+    });
+
+    if (!orderResponse.ok) {
+      const errorText = await orderResponse.text();
+      console.error("PayPal order creation error:", errorText);
+      let errorData;
+      try {
+        errorData = JSON.parse(errorText);
+      } catch (e) {
+        errorData = { message: errorText };
+      }
+      throw new Error(
+        `Failed to create PayPal order: ${errorData.message || errorResponse.status}`,
+      );
+    }
+
+    const order = await orderResponse.json();
+
+    // Find the approval URL
+    const approvalUrl = order.links.find(
+      (link) => link.rel === "approve",
+    )?.href;
+
+    if (!approvalUrl) {
+      throw new Error("PayPal approval URL not found");
+    }
+
+    res.json({
+      orderId: order.id,
+      approvalUrl,
+    });
+  } catch (error) {
+    console.error("PayPal checkout error:", error);
+    res.status(500).json({
+      error: "Failed to create PayPal checkout session",
+      details: error.message,
+    });
+  }
+});
+
+router.post("/webhook", (req, res) => {
+  const { stripeSecretKey, stripeWebhookSecret } = getConfig();
+  if (!stripeSecretKey || !stripeWebhookSecret) {
+    return res.status(500).send("Stripe webhook not configured");
+  }
+
   const stripe = new Stripe(stripeSecretKey);
 
-  const sig = req.headers["stripe-signature"];
+  const signature = req.headers["stripe-signature"];
   let event;
 
   try {
-    event = stripe.webhooks.constructEvent(req.body, sig, stripeWebhookSecret);
+    event = stripe.webhooks.constructEvent(
+      req.body,
+      signature,
+      stripeWebhookSecret,
+    );
   } catch (err) {
     console.error("Webhook signature verification failed:", err.message);
-    return res.status(400).send(`Webhook Error: ${err.message}`);
+    return res.sendStatus(400);
   }
 
   switch (event.type) {
-    case "checkout.session.completed":
-      console.log("Payment successful:", event.data.object.id);
+    case "payment_intent.succeeded": {
+      const paymentIntent = event.data.object;
+      console.log(`PaymentIntent for ${paymentIntent.amount} succeeded`);
       break;
-
-    case "payment_intent.payment_failed":
-      console.error("Payment failed:", event.data.object.id);
-      break;
-
+    }
     default:
-      console.log(`Unhandled event type: ${event.type}`);
+      console.log(`Unhandled event type ${event.type}`);
   }
 
-  res.json({ received: true });
+  res.sendStatus(200);
 });
 
 export default router;
