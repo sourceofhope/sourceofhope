@@ -109,7 +109,7 @@ function MajorEventCard({ post }) {
           loading="lazy"
           decoding="async"
           onLoad={() => setLoaded(true)}
-          className={`absolute inset-0 h-full w-full object-cover ${
+          className={`absolute inset-0 h-full w-full object-contain ${
             loaded ? "opacity-100" : "opacity-0"
           }`}
         />
@@ -188,7 +188,7 @@ function CarouselCard({ post }) {
           src={src || `/${ASSET_VERSION}/core/placeholder.webp`}
           alt={image?.alt_text || ""}
           onLoad={() => setLoaded(true)}
-          className={`absolute inset-0 w-full h-full object-cover ${
+          className={`absolute inset-0 w-full h-full object-contain ${
             loaded ? "opacity-100" : "opacity-0"
           }`}
         />

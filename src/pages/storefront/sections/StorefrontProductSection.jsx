@@ -153,7 +153,7 @@ function ProductCard({ post }) {
           <Heading className="text-neutral-50">{post.acf?.title}</Heading>
           <p className="text-sm md:text-md">${post.acf?.price}</p>
           <span className="text-sm md:text-md inline-flex w-full justify-between items-center gap-1 font-semibold">
-            <span>View Product</span>
+            <span>Preview Product</span>
           </span>
         </div>
       </div>
