@@ -1,8 +1,11 @@
-const API_BASE_URL = window.location.hostname.includes("thesourceofhope.org")
-  ? import.meta.env.MODE === "development"
-    ? "https://api.thesourceofhope.org/dev/api"
-    : "https://api.thesourceofhope.org/app/api"
-  : "http://localhost:3001/api";
+const hostname = window.location.hostname;
+
+const API_BASE_URL =
+  hostname === "localhost" || hostname === "127.0.0.1"
+    ? "http://localhost:3001/api"
+    : hostname.startsWith("dev.")
+      ? "https://api.thesourceofhope.org/dev/api"
+      : "https://api.thesourceofhope.org/app/api";
 
 export function sanitize(str) {
   return String(str).replace(/[<>]/g, "");
