@@ -11,14 +11,22 @@ const PORT = process.env.PORT || 3001;
 
 const { frontendUrl } = getConfig();
 
-// CORS
+function normalizeOrigin(origin) {
+  if (!origin) return null;
+  try {
+    return new URL(origin).origin;
+  } catch {
+    return origin.replace(/\/$/, "");
+  }
+}
+
 const allowedOrigins = [
   "https://thesourceofhope.org",
   "https://www.thesourceofhope.org",
   "https://dev.thesourceofhope.org",
   "http://localhost:5173",
-  frontendUrl,
-];
+  normalizeOrigin(frontendUrl),
+].filter(Boolean);
 
 app.use(
   cors({
