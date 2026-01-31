@@ -45,7 +45,7 @@ export default function ServeEventsSection() {
             celebrations to the events that make a difference every month.
           </p>
         </div>
-        <section className="grid gap-5">
+        <section className="grid gap-5 min-h-60">
           <Heading className="text-xl">Featured Events</Heading>
           {!majorEvents && <div className="min-h-40 w-full"></div>}
           {majorEvents && majorEvents.length === 0 && (
@@ -61,7 +61,7 @@ export default function ServeEventsSection() {
             </Carousel>
           )}
         </section>
-        <section className="grid gap-5">
+        <section className="grid gap-5 min-h-60">
           <Heading className="text-xl">Recurring Programs</Heading>
           {!recurringEvents && <div className="min-h-40 w-full"></div>}
           {recurringEvents && recurringEvents.length === 0 && (
@@ -89,6 +89,11 @@ function MajorEventCard({ post }) {
   const [loaded, setLoaded] = useState(false);
   const image = getFeaturedImage(post);
   const src = getResponsiveImage(image, { width: 720 });
+
+  const eventTime = post.acf?.date ? Date.parse(post.acf.date) : NaN;
+  const isOutdated = Number.isFinite(eventTime)
+    ? eventTime < Date.now()
+    : false;
 
   return (
     <div
@@ -134,12 +139,27 @@ function MajorEventCard({ post }) {
       </div>
       <div className="p-6 grid gap-4">
         <p className="text-neutral-700 line-clamp-3">{post.acf?.summary}</p>
-        <div className="pt-2">
-          <AnchorButton
-            full
-            href={post.acf?.event_page.url}
-            text="Register Now"
-          />
+        isOutdated ?
+        <AnchorButton
+          full
+          href={post.acf?.event_page.url}
+          text="Register Now"
+        />
+        :
+        <div
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={text}
+          className={`
+        !no-underline group inline-flex items-center
+        rounded-2xl px-10 py-5
+        text-neutral-950 justify-between bg-neutral-400 hover:bg-neutral-500
+        transition-all duration-700 font-semibold w-full
+      `}>
+          <span className="flex w-full gap-3 items-center justify-between text-sm md:text-md">
+            <span>Event Completed</span>
+          </span>
         </div>
       </div>
     </div>
@@ -150,6 +170,11 @@ function CarouselCard({ post }) {
   const [loaded, setLoaded] = useState(false);
   const image = getFeaturedImage(post);
   const src = getResponsiveImage(image, { width: 420 });
+
+  const eventTime = post.acf?.date ? Date.parse(post.acf.date) : NaN;
+  const isOutdated = Number.isFinite(eventTime)
+    ? eventTime < Date.now()
+    : false;
 
   return (
     <div
@@ -191,13 +216,30 @@ function CarouselCard({ post }) {
         <p className="text-sm text-neutral-600 line-clamp-3">
           {post.acf?.summary}
         </p>
-        <div className="pt-2">
+        {isOutdated ? (
+          <div
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Event Completed"
+            className={`
+              pointer-events-none
+              select-none
+        !no-underline group inline-flex items-center
+        rounded-2xl px-10 py-5
+        text-neutral-950 justify-between bg-neutral-300 hover:bg-neutral-400
+        transition-all duration-700 font-semibold w-full
+      `}>
+            <span className="flex w-full gap-3 items-center justify-center text-sm md:text-md">
+              <span>Event Completed</span>
+            </span>
+          </div>
+        ) : (
           <AnchorButton
             full
             href={post.acf?.event_page.url}
             text="Register Now"
           />
-        </div>
+        )}
       </div>
     </div>
   );

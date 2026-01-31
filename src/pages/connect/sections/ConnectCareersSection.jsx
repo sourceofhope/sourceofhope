@@ -1,7 +1,7 @@
 import Title from "../../../components/ui/text/Title";
 import PageSection from "../../PageSection";
 import Heading from "../../../components/ui/text/Heading";
-import { AnchorButton } from "../../../components/ui/Button";
+import { AnchorButton, LinkButton } from "../../../components/ui/Button";
 import Bold from "../../../components/ui/text/Bold";
 import Blockquote from "../../../components/ui/text/Blockquote";
 import { HighlightedText } from "../../../components/ui/expressive/ExpressiveText";
@@ -36,6 +36,26 @@ export default function ConnectMapSection() {
           and community outreach, every role contributes to long-term impact
           while building transferable professional skills.
         </p>
+        <div className="flex flex-col lg:flex-row justify-items-center gap-5 text-center text-sm md:text-md">
+          <AnchorButton
+            full
+            href="https://app.joinhandshake.com/e/806999/jobs"
+            className="text-neutral-950 justify-between bg-neutral-200 hover:bg-neutral-300"
+            text="Apply for Emerging Professional"
+          />
+          <AnchorButton
+            full
+            href="https://www.eventbrite.com/o/quynh-chau-stone-92264017613"
+            className="text-neutral-950 justify-between bg-neutral-200 hover:bg-neutral-300"
+            text="Volunteer for an Event"
+          />
+          <LinkButton
+            to={CANONICAL.member.absolute}
+            full
+            className="text-neutral-950 justify-between bg-neutral-200 hover:bg-neutral-300"
+            text="Become a Community Sponsor"
+          />
+        </div>
         <article className="grid gap-5">
           <article className="bg-neutral-50 rounded-2xl shadow-sm p-5 grid gap-5 w-full">
             <Heading className="border-b-2 border-neutral-300 pb-2">
@@ -71,29 +91,26 @@ export default function ConnectMapSection() {
               </span>
             </div>
           </article>
-          <article className="grid gap-10 md:grid-cols-[6fr_3fr] py-5 items-end">
-            <div className="flex flex-col gap-5">
-              <p>
-                Paid positions are available for students attending our
-                partnered universities. Eligible students may be compensated
-                based on project needs and available scholarship funding.
-              </p>
-              <Blockquote className="border-accent-500 text-balance">
-                Paid opportunities are available{" "}
-                <HighlightedText>for eligible students</HighlightedText> through
-                our <Bold>partnered universities</Bold>, supporting both
-                professional growth and meaningful community impact.
-              </Blockquote>
-              <p>
-                Learn more about serving your community through our{" "}
-                <SimpleLink to={CANONICAL.serve.absolute}>
-                  volunteer programs
-                </SimpleLink>{" "}
-                or explore how our education and wellness initiatives support
-                long-term change.
-              </p>
-            </div>
-            <AnchorButton className=" px-10 py-5" text="APPLY" />
+          <article className="flex flex-col gap-5">
+            <p>
+              Paid positions are available for students attending our partnered
+              universities. Eligible students may be compensated based on
+              project needs and available scholarship funding.
+            </p>
+            <Blockquote className="border-accent-500 text-balance">
+              Paid opportunities are available{" "}
+              <HighlightedText>for eligible students</HighlightedText> through
+              our <Bold>partnered universities</Bold>, supporting both
+              professional growth and meaningful community impact.
+            </Blockquote>
+            <p>
+              Learn more about serving your community through our{" "}
+              <SimpleLink to={CANONICAL.serve.absolute}>
+                volunteer programs
+              </SimpleLink>{" "}
+              or explore how our education and wellness initiatives support
+              long-term change.
+            </p>
           </article>
         </article>
       </article>
