@@ -11,7 +11,7 @@ const router = express.Router();
  */
 router.post("/create-stripe-session", async (req, res) => {
   try {
-    const { stripeSecretKey } = getRuntimeEnvironment(req);
+    const { stripeSecretKey } = getRuntimeEnvironment(req);  
     const stripe = new Stripe(stripeSecretKey);
 
     const {
@@ -139,6 +139,7 @@ router.post("/create-paypal-order", async (req, res) => {
     const totalAmount = itemsTotal + (shippingCost || 0) + (taxAmount || 0);
 
     // Create PayPal order using REST API
+    console.log(`URL from Paypal order request: ${req.url}`);
     const { paypalMode, paypalClientId, paypalClientSecret } =
       getRuntimeEnvironment(req);
 
@@ -148,10 +149,7 @@ router.post("/create-paypal-order", async (req, res) => {
       });
     }
 
-    const paypalApiUrl =
-      paypalMode === "production"
-        ? "https://api-m.paypal.com"
-        : "https://api-m.sandbox.paypal.com";
+    const { paypalApiUrl } = getRuntimeEnvironment(req); 
 
     // Get PayPal access token
     const auth = Buffer.from(
@@ -177,9 +175,8 @@ router.post("/create-paypal-order", async (req, res) => {
     }
 
     const { access_token } = await tokenResponse.json();
-    console.log("PayPal access token obtained successfully");
-
-    console.log(items);
+    console.log("Obtained PayPal access token.");
+    
     // Prepare PayPal order items
     const paypalItems = items.map((item) => ({
       name: item.name || "Product",
@@ -229,11 +226,6 @@ router.post("/create-paypal-order", async (req, res) => {
       },
     };
 
-    console.log("items:", paypalItems);
-    console.log("shippingMethod:", shippingMethod);
-    console.log("shippingCost:", shippingCost);
-    console.log("taxAmount:", taxAmount);
-
     console.log(
       "Creating PayPal order with data:",
       JSON.stringify(orderData, null, 2),
@@ -262,7 +254,6 @@ router.post("/create-paypal-order", async (req, res) => {
     }
 
     const order = await orderResponse.json();
-    console.log("PayPal order created:", order.id);
 
     // Find the approval URL
     const approvalUrl = order.links.find(
