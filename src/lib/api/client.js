@@ -1,11 +1,15 @@
-const hostname = window.location.hostname;
+const hostname = window.location.hostname.toLowerCase();
 
-const API_BASE_URL =
-  hostname === "localhost" || hostname === "127.0.0.1"
-    ? "http://localhost:3001/api"
-    : window.location.host.includes("dev.")
-      ? "https://api.thesourceofhope.org/dev/api"
-      : "https://api.thesourceofhope.org/app/api";
+const isLocal = hostname === "localhost" || hostname === "127.0.0.1";
+
+const isDevSite =
+  hostname === "dev.thesourceofhope.org" || hostname.startsWith("dev.");
+
+export const API_BASE_URL = isLocal
+  ? "http://localhost:3001/api"
+  : isDevSite
+    ? "https://api.thesourceofhope.org/dev/api"
+    : "https://api.thesourceofhope.org/app/api";
 
 export function sanitize(str) {
   return String(str).replace(/[<>]/g, "");
