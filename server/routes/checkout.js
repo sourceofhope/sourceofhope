@@ -1,7 +1,7 @@
 import express from "express";
 import Stripe from "stripe";
 import fetch from "node-fetch";
-import { getRuntimeEnvironment } from "../utility/environment.js";
+import { getConfig } from "../utility/environment.js";
 
 const router = express.Router();
 
@@ -11,7 +11,11 @@ const router = express.Router();
  */
 router.post("/create-stripe-session", async (req, res) => {
   try {
-    const { stripeSecretKey } = getRuntimeEnvironment(req);  
+    const { stripeSecretKey } = getConfig();
+    if (!stripeSecretKey) {
+      return res.status(500).json({ error: "Stripe is not configured." });
+    }
+
     const stripe = new Stripe(stripeSecretKey);
 
     const {
@@ -113,50 +117,18 @@ router.post("/create-stripe-session", async (req, res) => {
  */
 router.post("/create-paypal-order", async (req, res) => {
   try {
-    const {
-      items,
-      shippingMethod,
-      shippingCost,
-      taxAmount,
-      successUrl,
-      cancelUrl,
-    } = req.body;
+    const { paypalClientId, paypalClientSecret, paypalApiUrl } = getConfig();
 
-    // Validate required fields
-    if (!items || !Array.isArray(items) || items.length === 0) {
-      return res.status(400).json({ error: "Cart items are required" });
-    }
-
-    if (!successUrl || !cancelUrl) {
-      return res.status(400).json({ error: "Redirect URLs are required" });
-    }
-
-    // Calculate total amount
-    const itemsTotal = items.reduce(
-      (sum, item) => sum + item.price * item.quantity,
-      0,
-    );
-    const totalAmount = itemsTotal + (shippingCost || 0) + (taxAmount || 0);
-
-    // Create PayPal order using REST API
-    console.log(`URL from Paypal order request: ${req.url}`);
-    const { paypalMode, paypalClientId, paypalClientSecret } =
-      getRuntimeEnvironment(req);
-
-    if (!paypalClientId || !paypalClientSecret) {
+    if (!paypalClientId || !paypalClientSecret || !paypalApiUrl) {
       return res.status(500).json({
         error: "PayPal is not configured. Please contact support.",
       });
     }
 
-    const { paypalApiUrl } = getRuntimeEnvironment(req); 
-
-    // Get PayPal access token
     const auth = Buffer.from(
       `${paypalClientId}:${paypalClientSecret}`,
     ).toString("base64");
 
-    console.log("Requesting PayPal access token...");
     const tokenResponse = await fetch(`${paypalApiUrl}/v1/oauth2/token`, {
       method: "POST",
       headers: {
@@ -176,7 +148,7 @@ router.post("/create-paypal-order", async (req, res) => {
 
     const { access_token } = await tokenResponse.json();
     console.log("Obtained PayPal access token.");
-    
+
     // Prepare PayPal order items
     const paypalItems = items.map((item) => ({
       name: item.name || "Product",
@@ -275,6 +247,41 @@ router.post("/create-paypal-order", async (req, res) => {
       details: error.message,
     });
   }
+});
+
+router.post("/webhook", (req, res) => {
+  const { stripeSecretKey, stripeWebhookSecret } = getConfig();
+  if (!stripeSecretKey || !stripeWebhookSecret) {
+    return res.status(500).send("Stripe webhook not configured");
+  }
+
+  const stripe = new Stripe(stripeSecretKey);
+
+  const signature = req.headers["stripe-signature"];
+  let event;
+
+  try {
+    event = stripe.webhooks.constructEvent(
+      req.body,
+      signature,
+      stripeWebhookSecret,
+    );
+  } catch (err) {
+    console.error("Webhook signature verification failed:", err.message);
+    return res.sendStatus(400);
+  }
+
+  switch (event.type) {
+    case "payment_intent.succeeded": {
+      const paymentIntent = event.data.object;
+      console.log(`PaymentIntent for ${paymentIntent.amount} succeeded`);
+      break;
+    }
+    default:
+      console.log(`Unhandled event type ${event.type}`);
+  }
+
+  res.sendStatus(200);
 });
 
 export default router;
