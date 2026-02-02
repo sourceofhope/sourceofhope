@@ -117,6 +117,15 @@ router.post("/create-stripe-session", async (req, res) => {
  */
 router.post("/create-paypal-order", async (req, res) => {
   try {
+    const {
+          items,
+          shippingMethod,
+          shippingCost,
+          taxAmount,
+          successUrl,
+          cancelUrl,
+        } = req.body;
+
     const { paypalClientId, paypalClientSecret, paypalApiUrl } = getConfig();
 
     if (!paypalClientId || !paypalClientSecret || !paypalApiUrl) {
@@ -124,6 +133,22 @@ router.post("/create-paypal-order", async (req, res) => {
         error: "PayPal is not configured. Please contact support.",
       });
     }
+
+    // Validate required fields
+    if (!items || !Array.isArray(items) || items.length === 0) {
+      return res.status(400).json({ error: "Cart items are required" });
+    }
+
+    if (!successUrl || !cancelUrl) {
+      return res.status(400).json({ error: "Redirect URLs are required" });
+    }
+
+        // Calculate total amount
+    const itemsTotal = items.reduce(
+      (sum, item) => sum + item.price * item.quantity,
+      0,
+    );
+    const totalAmount = itemsTotal + (shippingCost || 0) + (taxAmount || 0);
 
     const auth = Buffer.from(
       `${paypalClientId}:${paypalClientSecret}`,
@@ -198,10 +223,6 @@ router.post("/create-paypal-order", async (req, res) => {
       },
     };
 
-    console.log(
-      "Creating PayPal order with data:",
-      JSON.stringify(orderData, null, 2),
-    );
     const orderResponse = await fetch(`${paypalApiUrl}/v2/checkout/orders`, {
       method: "POST",
       headers: {
@@ -249,6 +270,11 @@ router.post("/create-paypal-order", async (req, res) => {
   }
 });
 
+
+/**
+ * Handle Stripe Webhook Events
+ * POST /api/checkout/webhook
+ */
 router.post("/webhook", (req, res) => {
   const { stripeSecretKey, stripeWebhookSecret } = getConfig();
   if (!stripeSecretKey || !stripeWebhookSecret) {
