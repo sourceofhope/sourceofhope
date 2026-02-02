@@ -21,6 +21,11 @@ export default function CheckoutForm({ items, shippingMethod, shippingCost, taxA
       return_url: returnUrl,
     });
     console.log("StripeCheckoutSection response:", response);
+    
+    if (response.error || !response.data) {
+      throw new Error(response.error || 'Failed to create checkout session');
+    }
+    
     return response.data.clientSecret;
   }, [items, shippingMethod, shippingCost, taxAmount, returnUrl]);
 

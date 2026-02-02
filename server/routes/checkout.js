@@ -14,6 +14,9 @@ const router = express.Router();
 
 router.post('/create-stripe-session', async (req, res) => {
   try {
+    const { stripeSecretKey } = getRuntimeEnvironment(req);
+    const stripe = new Stripe(stripeSecretKey);
+
     const {
       items,
       shippingMethod,
@@ -104,6 +107,8 @@ router.post('/create-stripe-session', async (req, res) => {
       clientSecret: session.client_secret,
       sessionId: session.id,
     });
+    console.log("Created embedded checkout session:", session.id);
+    console.log("Client secret:", session.client_secret);
   } catch (error) {
     console.error("Embedded checkout error:", error);
     res.status(500).json({
