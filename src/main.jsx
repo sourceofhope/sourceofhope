@@ -9,6 +9,8 @@ import ErrorBoundary from "./pages/ErrorBoundary.jsx";
 
 import HomePage from "./pages/home/HomePage.jsx";
 import AboutPage from "./pages/about/AboutPage.jsx";
+import TeamPage from "./pages/about/TeamPage.jsx";
+import TeamMemberBioPage from "./pages/about/TeamMemberBioPage.jsx";
 import ServePage from "./pages/serve/ServePage.jsx";
 import ConnectPage from "./pages/connect/ConnectPage.jsx";
 import MediaPage from "./pages/media/MediaPage.jsx";
@@ -27,7 +29,6 @@ import { CANONICAL } from "./routes.jsx";
 import ProductPage from "./pages/storefront/ProductPage.jsx";
 import PodcastPage from "./pages/media/PodcastPage.jsx";
 import PressPage from "./pages/media/PressPage.jsx";
-import TeamPage from "./pages/about/TeamPage.jsx";
 import { HelmetProvider } from "react-helmet-async";
 
 export const router = createBrowserRouter([
@@ -45,6 +46,10 @@ export const router = createBrowserRouter([
 			{
 				path: CANONICAL.about.team.relative,
 				element: <TeamPage />,
+			},
+			{
+				path: CANONICAL.about.teamMember.relative,
+				element: <TeamMemberBioPage />,
 			},
 
 			{
