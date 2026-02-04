@@ -46,8 +46,13 @@ export async function apiRequest(path, options = {}) {
   }
 }
 
-export function get(path) {
-  return apiRequest(path);
+export function get(path, queryParams) {
+  let fullPath = path;
+  if (queryParams) {
+    const searchParams = new URLSearchParams(queryParams);
+    fullPath = `${path}?${searchParams.toString()}`;
+  }
+  return apiRequest(fullPath);
 }
 
 export function post(path, body) {

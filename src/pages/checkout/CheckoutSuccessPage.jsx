@@ -6,22 +6,71 @@ import Title from "../../components/ui/text/Title";
 import { LinkButton } from "../../components/ui/Button";
 import { useCartActions } from "../../context/StoreCartContext";
 import { useSetHeaderBlocking } from "../../components/structure/Header";
+import { Navigate } from "react-router-dom";
+import { useState } from "react";
+import {fetchStripeSessionStatus} from "../../lib/api/checkout";
 
 export default function CartSuccessPage() {
-  const { clearCart } = useCartActions();
+  const [status, setStatus] = useState(null);
+  const [customerEmail, setCustomerEmail] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
 
+  const { clearCart } = useCartActions();
   const setBlocking = useSetHeaderBlocking();
+
+  useEffect(() => {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const sessionId = urlParams.get('session_id');
+
+    if (!sessionId) {
+      setIsLoading(false);
+      return;
+    }
+
+    fetchStripeSessionStatus(sessionId)
+      .then((response) => {
+        if (response.error) {
+          console.error('Error fetching session status:', response.error);
+          setStatus('error');
+          return;
+        }
+        setStatus(response.data.status);
+        setCustomerEmail(response.data.customer_email);
+      })
+      .catch((error) => {
+        console.error('Error fetching session status:', error);
+        setStatus('error');
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  }, []);
 
   useEffect(() => {
     setBlocking(true);
     return () => setBlocking(false);
-  }, [setBlocking]);
-
-  useEffect(() => {
-    // Clear the cart after successful purchase
-    clearCart();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (status === 'complete') {
+      clearCart();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [status]);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-neutral-50 flex items-center justify-center">
+        <div className="text-neutral-700">Loading...</div>
+      </div>
+    );
+  }
+
+  if (status === 'open') {
+    return <Navigate to="/store/checkout" />;
+  }
 
   return (
     <>
@@ -73,7 +122,7 @@ export default function CartSuccessPage() {
               <li className="flex items-start gap-2">
                 <span className="text-accent-600 font-bold">•</span>
                 <span>
-                  You'll receive an order confirmation email with your receipt
+                  You'll receive an order confirmation email with your receipt to your email: <strong>{customerEmail}</strong>
                 </span>
               </li>
               <li className="flex items-start gap-2">

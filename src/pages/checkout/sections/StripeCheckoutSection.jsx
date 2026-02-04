@@ -1,14 +1,27 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import { EmbeddedCheckoutProvider, EmbeddedCheckout } from '@stripe/react-stripe-js';
-import { createStripeCheckoutSession } from '../../../lib/api/checkout';
+import { createStripeCheckoutSession, fetchStripePublishableKey } from '../../../lib/api/checkout';
 
 export default function CheckoutForm({ items, shippingMethod, shippingCost, taxAmount }) {
-    const stripePromise = useMemo(() => 
-      loadStripe("pk_test_51SosHLJnHm4FhZYkiJEHSpznMJVwY0Jf6WKPss4xu0rO4bCSJ7kaBF0tfaApghBMeJnitZPHW9cE4dmE9eFl7sfd00ayEJ1cTx"),
-      []
+    const fetchPublishableKey = async () => {
+      const response = await fetchStripePublishableKey();
+      if (response.error || !response.data) {
+        throw new Error(
+          response.error || "Failed to retrieve Stripe publishable key",
+        );
+      }
+      return response.data.publishableKey;
+    };
+
+    const stripePromise = useMemo(
+      async () =>
+        loadStripe(
+          await fetchPublishableKey(),
+        ),
+      [],
     );
-    const returnUrl = `${window.location.origin}/store/checkout`;
+    const returnUrl = `${window.location.origin}/store/success`;
 
 
   const fetchClientSecret = useCallback(async () => {
@@ -21,24 +34,24 @@ export default function CheckoutForm({ items, shippingMethod, shippingCost, taxA
       return_url: returnUrl,
     });
     console.log("StripeCheckoutSection response:", response);
-    
+
     if (response.error || !response.data) {
-      throw new Error(response.error || 'Failed to create checkout session');
+      throw new Error(response.error || "Failed to create checkout session");
     }
-    
+
     return response.data.clientSecret;
   }, [items, shippingMethod, shippingCost, taxAmount, returnUrl]);
 
   const options = { fetchClientSecret };
 
   return (
-    <div id="checkout">
-      <EmbeddedCheckoutProvider
-        stripe={stripePromise}
-        options={options}
-      >
-        <EmbeddedCheckout />
-      </EmbeddedCheckoutProvider>
-    </div>
+      <div className="bg-white rounded-2xl shadow-md p-6">
+        <EmbeddedCheckoutProvider
+          stripe={stripePromise}
+          options={options}
+        >
+          <EmbeddedCheckout className="h-full" />
+        </EmbeddedCheckoutProvider>
+      </div>
   )
 }

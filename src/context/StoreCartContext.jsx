@@ -114,6 +114,7 @@ export function useCartActions() {
 
   function clearCart() {
     setCart([]);
+    setShippingMethod("standard");
   }
 
   function getCartItemCount() {

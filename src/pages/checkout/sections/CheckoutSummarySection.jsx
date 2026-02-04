@@ -1,10 +1,10 @@
 import Heading from "../../../components/ui/text/Heading";
 
-export default function CartSummarySection({
+export default function CheckoutSummarySection({
   subtotal,
   shipping,
   tax,
-  total,
+  total
 }) {
   return (
     <div className="bg-white rounded-2xl shadow-md p-5 sticky top-5">
@@ -31,5 +31,7 @@ export default function CartSummarySection({
         </div>
       </div>
     </div>
-  );
+  )
 }
+
+

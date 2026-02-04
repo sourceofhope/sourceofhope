@@ -4,7 +4,7 @@ import { Helmet } from "react-helmet-async";
 import CartItemsSection from "./sections/CartItemsSection";
 import CartShippingSection from "./sections/CartShippingSection";
 import CartSummarySection from "./sections/CartSummarySection";
-import CartPaymentSection from "./sections/CartPaymentSection";
+import { Link } from "react-router-dom";
 
 import {
   StoreCartContext,
@@ -102,6 +102,9 @@ const CartPage = () => {
       {cartItems && cartItems.length > 0 && (
         <div className="min-h-screen bg-neutral-50 pt-25 px-5 md:px-10 lg:px-35">
           <div className="max-w-7xl mx-auto">
+            <div className="flex flex-col gap-1">
+              <Title>Shopping Cart</Title>
+            </div>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 mt-5 pb-5">
               <div className="lg:col-span-2">
                 <CartItemsSection
@@ -123,12 +126,16 @@ const CartPage = () => {
                   tax={tax}
                   total={total}
                 />
-                <CartPaymentSection
-                  items={cartItems}
-                  shippingMethod={shippingMethod}
-                  shipping={shipping}
-                  tax={tax}
-                />
+                <div className="bg-white p-6 mt-6">
+                  <div className="mb-6">
+                    <Link
+                      to="/store/checkout"
+                      className="w-full block px-5 py-4 rounded-xl font-bold text-white text-lg text-center bg-accent-500 hover:bg-accent-600 hover:shadow-lg transition-all duration-300"
+                    >
+                      Proceed to Checkout
+                    </Link>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

@@ -14,9 +14,9 @@ export default function CartItemsSection({
   return (
     <section className="">
       <div className="bg-white rounded-2xl shadow-md p-5 pt-0 md:pt-5 space-y-3">
-        <div className="flex flex-col gap-1">
+        {/* <div className="flex flex-col gap-1">
           <Title>Shopping Cart</Title>
-        </div>
+        </div> */}
         <Heading>Your Selected Items</Heading>
 
         {items.map((item) => (

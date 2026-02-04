@@ -1,7 +1,26 @@
-import { post } from "./client";
+import { get, post } from "./client";
+
+/** 
+ * Fetch the Stripe session status from the server
+ * @param {string} sessionId - The Stripe session ID
+ * @returns {Promise} Response containing the session status and customer email
+ */
+export async function fetchStripeSessionStatus(sessionId) {
+  return get("/checkout/retrieve-stripe-session-status", {
+    session_id: sessionId,
+  });
+}
 
 /**
- * Create a Stripe checkout session for the cart items
+ * Fetch the Stripe publishable key from the server
+ * @returns {Promise} Response containing the Stripe publishable key
+ */
+export async function fetchStripePublishableKey() {
+  return post("/checkout/retrieve-stripe-publishable-key");
+}
+
+/**
+ * Create a Stripe checkout session for embedded checkout
  * @param {Object} params - Checkout parameters
  * @param {Array} params.items - Cart items with id, name, price, quantity, size
  * @param {string} params.shippingMethod - Selected shipping method
@@ -17,12 +36,7 @@ export async function createStripeCheckoutSession({
   taxAmount,
   return_url,
 }) { 
-      console.log("CheckoutForm items:", items);
-      console.log("shippingMethod:", shippingMethod);
-      console.log("shippingCost:", shippingCost);
-      console.log("taxAmount:", taxAmount);
-      console.log("return_url:", return_url);
-  return post("/api/checkout/create-stripe-session", {
+  return post("/checkout/create-stripe-session", {
     items: items.map((item) => ({
       id: item.id,
       name: item.name || item.title || "Product",
@@ -58,7 +72,7 @@ export async function createStripeCheckout({
   cancelUrl,
 }) {
   
-  return post("/api/checkout/create-stripe-checkout", {
+  return post("/checkout/create-stripe-checkout", {
     items: items.map((item) => ({
       id: item.id,
       name: item.name || item.title || "Product",
@@ -94,12 +108,7 @@ export async function createPaypalCheckout({
   successUrl,
   cancelUrl,
 }) {
-        console.log("CheckoutForm items:", items);
-      console.log("shippingMethod:", shippingMethod);
-      console.log("shippingCost:", shippingCost);
-      console.log("taxAmount:", taxAmount);
-      console.log("return_url:", cancelUrl);
-  return post("/api/checkout/create-paypal-order", {
+  return post("/checkout/create-paypal-order", {
     items: items.map((item) => ({
       id: item.id,
       name: item.name || item.title || "Product",
