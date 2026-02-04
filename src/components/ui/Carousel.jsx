@@ -59,7 +59,7 @@ export default function Carousel({
         {Array.from({ length: totalPages }).map((_, pageIndex) => (
           <div
             key={pageIndex}
-            className="grid gap-5 px-2 shrink-0"
+            className="grid gap-5 px-2 shrink-0 justify-items-center"
             style={{
               width: "100%",
               gridTemplateColumns: `repeat(${perView}, minmax(0, 1fr))`,
@@ -74,7 +74,7 @@ export default function Carousel({
           </div>
         ))}
       </div>
-      {(!hideControls || showProgress) && (
+      {(!hideControls || showProgress) && totalPages > 1 && (
         <div className="grid grid-flow-col gap-3 w-full items-center justify-between my-5 max-w-full select-none">
           {!hideControls && (
             <button
