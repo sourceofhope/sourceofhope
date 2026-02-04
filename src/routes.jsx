@@ -8,6 +8,7 @@ export const ROUTES = {
 		path: "about",
 		children: {
 			team: "team",
+			teamMember: "team/:memberSlug",
 		},
 	},
 
