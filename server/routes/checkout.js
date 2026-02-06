@@ -171,6 +171,75 @@ router.get('/retrieve-stripe-session-status', async (req, res) => {
   }
 });
 
+/**
+ * Get PayPal Order Status
+ * GET /api/checkout/retrieve-paypal-order-status
+ */
+router.get('/retrieve-paypal-order-status', async (req, res) => {
+  try {
+    const { paypalClientId, paypalClientSecret, paypalApiUrl } = getConfig();
+    
+    if (!paypalClientId || !paypalClientSecret) {
+      return res.status(500).json({ error: "PayPal is not configured." });
+    }
+
+    const token = req.query.token;
+    
+    if (!token) {
+      return res.status(400).json({ error: "PayPal token is required" });
+    }
+
+    // Get PayPal access token
+    const auth = Buffer.from(
+      `${paypalClientId}:${paypalClientSecret}`,
+    ).toString("base64");
+
+    const tokenResponse = await fetch(`${paypalApiUrl}/v1/oauth2/token`, {
+      method: "POST",
+      headers: {
+        Authorization: `Basic ${auth}`,
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: "grant_type=client_credentials",
+    });
+
+    if (!tokenResponse.ok) {
+      throw new Error("Failed to get PayPal access token");
+    }
+
+    const { access_token } = await tokenResponse.json();
+
+    // Get order details
+    const orderResponse = await fetch(`${paypalApiUrl}/v2/checkout/orders/${token}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${access_token}`,
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (!orderResponse.ok) {
+      throw new Error("Failed to retrieve PayPal order");
+    }
+
+    const order = await orderResponse.json();
+
+    // Extract customer email from payer info
+    const customerEmail = order.payer?.email_address || order.payer?.payer_info?.email || "";
+
+    res.json({
+      status: order.status === "APPROVED" || order.status === "COMPLETED" ? "complete" : order.status.toLowerCase(),
+      customer_email: customerEmail
+    });
+  } catch (error) {
+    console.error("Retrieve PayPal order status error:", error);
+    res.status(500).json({
+      error: "Failed to retrieve PayPal order status",
+      details: error.message,
+    });
+  }
+});
+
 
 /**
  * Create a Stripe Checkout Order
@@ -295,11 +364,6 @@ router.post("/create-paypal-order", async (req, res) => {
 
     const { paypalClientId, paypalClientSecret, paypalApiUrl } = getConfig();
 
-    // const paypalApiUrl =
-    //   paypalMode === "production"
-    //     ? "https://api-m.paypal.com"
-    //     : "https://api-m.sandbox.paypal.com";
-
     if (!paypalClientId || !paypalClientSecret) {
       return res.status(500).json({
         error: "PayPal is not configured. Please contact support.",
@@ -320,7 +384,20 @@ router.post("/create-paypal-order", async (req, res) => {
       (sum, item) => sum + item.price * item.quantity,
       0,
     );
-    const totalAmount = itemsTotal + (shippingCost || 0) + (taxAmount || 0);
+    
+    // Round each component to 2 decimal places to match PayPal's format
+    const itemsTotalRounded = parseFloat(itemsTotal.toFixed(2));
+    const shippingRounded = parseFloat((shippingCost || 0).toFixed(2));
+    const taxRounded = parseFloat((taxAmount || 0).toFixed(2));
+    const totalAmount = itemsTotalRounded + shippingRounded + taxRounded;
+    
+    console.log("PayPal amount breakdown:", {
+      itemsTotal: itemsTotalRounded,
+      shipping: shippingRounded,
+      tax: taxRounded,
+      total: totalAmount,
+      calculatedTotal: itemsTotalRounded + shippingRounded + taxRounded
+    });
 
     // Get PayPal access token
     const auth = Buffer.from(
@@ -366,19 +443,19 @@ router.post("/create-paypal-order", async (req, res) => {
         {
           amount: {
             currency_code: "USD",
-            value: parseFloat(totalAmount.toFixed(2)).toFixed(2),
+            value: totalAmount.toFixed(2),
             breakdown: {
               item_total: {
                 currency_code: "USD",
-                value: parseFloat(itemsTotal.toFixed(2)).toFixed(2),
+                value: itemsTotalRounded.toFixed(2),
               },
               shipping: {
                 currency_code: "USD",
-                value: parseFloat((shippingCost || 0).toFixed(2)).toFixed(2),
+                value: shippingRounded.toFixed(2),
               },
               tax_total: {
                 currency_code: "USD",
-                value: parseFloat((taxAmount || 0).toFixed(2)).toFixed(2),
+                value: taxRounded.toFixed(2),
               },
             },
           },

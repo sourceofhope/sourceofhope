@@ -8,7 +8,7 @@ import { useCartActions } from "../../context/StoreCartContext";
 import { useSetHeaderBlocking } from "../../components/structure/Header";
 import { Navigate } from "react-router-dom";
 import { useState } from "react";
-import {fetchStripeSessionStatus} from "../../lib/api/checkout";
+import { fetchStripeSessionStatus, fetchPaypalOrderStatus } from "../../lib/api/checkout";
 
 export default function CartSuccessPage() {
   const [status, setStatus] = useState(null);
@@ -22,29 +22,54 @@ export default function CartSuccessPage() {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const sessionId = urlParams.get('session_id');
+    const paypalToken = urlParams.get('token');
 
-    if (!sessionId) {
+    // If neither Stripe session_id nor PayPal token, not a valid success page
+    if (!sessionId && !paypalToken) {
       setIsLoading(false);
       return;
     }
 
-    fetchStripeSessionStatus(sessionId)
-      .then((response) => {
-        if (response.error) {
-          console.error('Error fetching session status:', response.error);
+    // Handle Stripe checkout success
+    if (sessionId) {
+      fetchStripeSessionStatus(sessionId)
+        .then((response) => {
+          if (response.error) {
+            console.error('Error fetching Stripe session status:', response.error);
+            setStatus('error');
+            return;
+          }
+          setStatus(response.data.status);
+          setCustomerEmail(response.data.customer_email);
+        })
+        .catch((error) => {
+          console.error('Error fetching Stripe session status:', error);
           setStatus('error');
-          return;
-        }
-        setStatus(response.data.status);
-        setCustomerEmail(response.data.customer_email);
-      })
-      .catch((error) => {
-        console.error('Error fetching session status:', error);
-        setStatus('error');
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
+    // Handle PayPal checkout success
+    else if (paypalToken) {
+      fetchPaypalOrderStatus(paypalToken)
+        .then((response) => {
+          if (response.error) {
+            console.error('Error fetching PayPal order status:', response.error);
+            setStatus('error');
+            return;
+          }
+          setStatus(response.data.status);
+          setCustomerEmail(response.data.customer_email);
+        })
+        .catch((error) => {
+          console.error('Error fetching PayPal order status:', error);
+          setStatus('error');
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
+    }
   }, []);
 
   useEffect(() => {

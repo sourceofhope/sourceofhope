@@ -12,6 +12,17 @@ export async function fetchStripeSessionStatus(sessionId) {
 }
 
 /**
+ * Fetch the PayPal order status from the server
+ * @param {string} token - The PayPal order token
+ * @returns {Promise} Response containing the order status and customer email
+ */
+export async function fetchPaypalOrderStatus(token) {
+  return get("/checkout/retrieve-paypal-order-status", {
+    token: token,
+  });
+}
+
+/**
  * Fetch the Stripe publishable key from the server
  * @returns {Promise} Response containing the Stripe publishable key
  */
