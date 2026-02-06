@@ -4,9 +4,11 @@ import { useEffect } from "react";
 import { useCartActions, SHIPPING_OPTIONS } from "../../context/StoreCartContext";
 import Title from "../../components/ui/text/Title";
 import ExpressCheckoutSection from "./sections/ExpressCheckoutSection";
-import StripeCheckoutSection from "./sections/StripeCheckoutSection";
+// import StripeCheckoutSection from "./sections/StripeCheckoutSection";
 import { useSetHeaderBlocking } from "../../components/structure/Header";
 import Cart from "../storefront/Cart";
+import SelfCheckoutSection from "./sections/SelfCheckoutSection";
+import CheckoutDetailsSection from "./sections/CheckoutDetailsSection"; // Order summary component
 
 export default function CheckoutPage() {
   const setBlocking = useSetHeaderBlocking();
@@ -66,13 +68,16 @@ export default function CheckoutPage() {
           </div>
         </section>
       ) : (
-        <div className="min-h-screen bg-neutral-50 pt-25 px-5 md:px-10 lg:px-35">
-          <div className="flex flex-col gap-1">
+        <div className="min-h-screen bg-neutral-50 pt-25 px-5 md:px-10 lg:px-20">
+          <div className="mb-8">
             <Title>Checkout</Title>
           </div>
-          <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-            {/* Left: Express Checkout Section (25%) */}
-            <div className="lg:col-span-1 space-y-8">
+          
+          {/* 3-Column Layout: Left (Express) | Center (Checkout Form) | Right (Order Summary) */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
+            
+            {/* Left Column: Express Checkout - 25% */}
+            <div className="lg:col-span-3 space-y-6">
               <ExpressCheckoutSection
                 items={cart}
                 shippingMethod={shippingMethod}
@@ -81,15 +86,29 @@ export default function CheckoutPage() {
               />
             </div>
 
-            {/* Right: Stripe Checkout Section (75%) */}
-            <div className="lg:col-span-3 space-y-8">
-              <StripeCheckoutSection
-                items={cart}
+            {/* Center Column: Main Checkout Form - 50% */}
+            <div className="lg:col-span-6 space-y-6">
+              <SelfCheckoutSection 
+                total={total} 
+                cart={cart}
+                shipping={shipping}
+                tax={tax}
+                shippingMethod={shippingMethod}
+              />
+            </div>
+
+            {/* Right Column: Order Summary - 25% */}
+            <div className="lg:col-span-3 space-y-6">
+              <CheckoutDetailsSection 
+                cart={cart} 
+                getCartItemCount={getCartItemCount}
+                subtotal={subtotal}
                 shippingMethod={shippingMethod}
                 shippingCost={shipping}
                 taxAmount={tax}
               />
             </div>
+            
           </div>
         </div>
       )}

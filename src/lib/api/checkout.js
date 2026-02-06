@@ -1,5 +1,52 @@
 import { get, post } from "./client";
 
+/**
+ * Fetch the Stripe Payment Intent status from the server
+ * @param {string} paymentIntentId - The Stripe Payment Intent ID
+ * @returns {Promise} Response containing the payment intent status and customer email
+ */
+export async function fetchPaymentIntentStatus(paymentIntentId) {
+  return get("/checkout/retrieve-stripe-payment-intent-status", {
+    payment_intent: paymentIntentId,
+  });
+}
+
+/**
+ * Creates a Stripe Payment Intent for direct payment processing
+ * @param {Object} params - Payment parameters
+ * @param {Array} params.items - Cart items with id, name, price, quantity, size
+ * @param {string} params.shippingMethod - Selected shipping method
+ * @param {number} params.shippingCost - Calculated shipping cost
+ * @param {number} params.taxAmount - Calculated tax amount
+ * @param {Object} params.shippingAddress - Shipping address details
+ * @param {Object} params.billingAddress - Billing address details
+ * @returns {Promise} Response containing payment intent client secret
+ */
+export async function createPaymentIntent({
+  items,
+  shippingMethod,
+  shippingCost,
+  taxAmount,
+  shippingAddress,
+  billingAddress,
+}) {
+  return post("/checkout/create-stripe-payment-intent", {
+    items: items.map((item) => ({
+      id: item.id,
+      name: item.name || item.title || "Product",
+      price: item.price,
+      quantity: item.quantity,
+      size: item.size,
+      image: item.image,
+    })),
+    shippingMethod,
+    shippingCost,
+    taxAmount,
+    shippingAddress,
+    billingAddress,
+  });
+}
+
 /** 
  * Fetch the Stripe session status from the server
  * @param {string} sessionId - The Stripe session ID

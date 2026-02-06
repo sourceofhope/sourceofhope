@@ -5,6 +5,118 @@ import { getConfig } from "../utility/environment.js";
 
 const router = express.Router();
 
+
+/**
+ * Get Stripe Payment Intent Status
+ * GET /api/checkout/retrieve-stripe-payment-intent-status
+ */
+router.get('/retrieve-stripe-payment-intent-status', async (req, res) => {
+  try {
+    const { stripeSecretKey } = getConfig();
+    if (!stripeSecretKey) {
+      return res.status(500).json({ error: "Stripe is not configured." });
+    }
+
+    const paymentIntentId = req.query.payment_intent;
+    
+    if (!paymentIntentId) {
+      return res.status(400).json({ error: "Payment Intent ID is required" });
+    }
+
+    const stripe = new Stripe(stripeSecretKey);
+    const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
+
+    res.json({
+      status: paymentIntent.status,
+      customer_email: paymentIntent.receipt_email || paymentIntent.shipping?.name || '',
+      amount: paymentIntent.amount,
+      currency: paymentIntent.currency,
+    });
+  } catch (error) {
+    console.error("Retrieve Payment Intent status error:", error);
+    res.status(500).json({
+      error: "Failed to retrieve Payment Intent status",
+      details: error.message,
+    });
+  }
+});
+
+/**
+ * Create a Stripe Payment Intent
+ * POST /api/checkout/create-stripe-payment-intent
+ * For direct payment processing with Stripe Elements
+ */
+router.post('/create-stripe-payment-intent', async (req, res) => {
+  try {
+    const { stripeSecretKey } = getConfig();
+    if (!stripeSecretKey) {
+      return res.status(500).json({ error: "Stripe is not configured." });
+    }
+
+    const stripe = new Stripe(stripeSecretKey);
+
+    const {
+      items,
+      shippingMethod,
+      shippingCost,
+      taxAmount,
+      shippingAddress,
+      billingAddress,
+    } = req.body;
+
+    // Validate required fields
+    if (!items || !Array.isArray(items) || items.length === 0) {
+      return res.status(400).json({ error: "Cart items are required" });
+    }
+
+    // Calculate total amount
+    const itemsTotal = items.reduce(
+      (sum, item) => sum + item.price * item.quantity,
+      0,
+    );
+    const totalAmount = itemsTotal + (shippingCost || 0) + (taxAmount || 0);
+
+    // Round to 2 decimal places and convert to cents
+    const amountInCents = Math.round(parseFloat(totalAmount.toFixed(2)) * 100);
+
+    // Create Payment Intent
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: amountInCents,
+      currency: "usd",
+      automatic_payment_methods: {
+        enabled: true,
+      },
+      metadata: {
+        shipping_method: shippingMethod || "standard",
+        order_type: "storefront",
+        items_count: items.length,
+      },
+      shipping: shippingAddress ? {
+        name: `${shippingAddress.firstName} ${shippingAddress.lastName}`,
+        address: {
+          line1: shippingAddress.address,
+          city: shippingAddress.city,
+          state: shippingAddress.state,
+          postal_code: shippingAddress.zipCode,
+          country: shippingAddress.country || "US",
+        },
+      } : undefined,
+    });
+
+    res.json({
+      clientSecret: paymentIntent.client_secret,
+      paymentIntentId: paymentIntent.id,
+    });
+
+  } catch (error) {
+    console.error("Payment Intent creation error:", error);
+    res.status(500).json({
+      error: "Failed to create payment intent",
+      details: error.message,
+    });
+  }
+});
+
 /**
  * Retrieve the Stripe publishable key
  * GET /api/checkout/retrieve-stripe-publishable-key
