@@ -5,20 +5,19 @@ import { getEnvironment } from "../utility/environment.js";
 
 const router = express.Router();
 
-
 /**
  * Get Stripe Payment Intent Status
  * GET /api/checkout/retrieve-stripe-payment-intent-status
  */
-router.get('/retrieve-stripe-payment-intent-status', async (req, res) => {
+router.get("/retrieve-stripe-payment-intent-status", async (req, res) => {
   try {
-    const { stripeSecretKey } = getConfig();
+    const { stripeSecretKey } = getEnvironment();
     if (!stripeSecretKey) {
       return res.status(500).json({ error: "Stripe is not configured." });
     }
 
     const paymentIntentId = req.query.payment_intent;
-    
+
     if (!paymentIntentId) {
       return res.status(400).json({ error: "Payment Intent ID is required" });
     }
@@ -28,7 +27,8 @@ router.get('/retrieve-stripe-payment-intent-status', async (req, res) => {
 
     res.json({
       status: paymentIntent.status,
-      customer_email: paymentIntent.receipt_email || paymentIntent.shipping?.name || '',
+      customer_email:
+        paymentIntent.receipt_email || paymentIntent.shipping?.name || "",
       amount: paymentIntent.amount,
       currency: paymentIntent.currency,
     });
@@ -46,9 +46,9 @@ router.get('/retrieve-stripe-payment-intent-status', async (req, res) => {
  * POST /api/checkout/create-stripe-payment-intent
  * For direct payment processing with Stripe Elements
  */
-router.post('/create-stripe-payment-intent', async (req, res) => {
+router.post("/create-stripe-payment-intent", async (req, res) => {
   try {
-    const { stripeSecretKey } = getConfig();
+    const { stripeSecretKey } = getEnvironment();
     if (!stripeSecretKey) {
       return res.status(500).json({ error: "Stripe is not configured." });
     }
@@ -91,23 +91,24 @@ router.post('/create-stripe-payment-intent', async (req, res) => {
         order_type: "storefront",
         items_count: items.length,
       },
-      shipping: shippingAddress ? {
-        name: `${shippingAddress.firstName} ${shippingAddress.lastName}`,
-        address: {
-          line1: shippingAddress.address,
-          city: shippingAddress.city,
-          state: shippingAddress.state,
-          postal_code: shippingAddress.zipCode,
-          country: shippingAddress.country || "US",
-        },
-      } : undefined,
+      shipping: shippingAddress
+        ? {
+            name: `${shippingAddress.firstName} ${shippingAddress.lastName}`,
+            address: {
+              line1: shippingAddress.address,
+              city: shippingAddress.city,
+              state: shippingAddress.state,
+              postal_code: shippingAddress.zipCode,
+              country: shippingAddress.country || "US",
+            },
+          }
+        : undefined,
     });
 
     res.json({
       clientSecret: paymentIntent.client_secret,
       paymentIntentId: paymentIntent.id,
     });
-
   } catch (error) {
     console.error("Payment Intent creation error:", error);
     res.status(500).json({
@@ -121,9 +122,9 @@ router.post('/create-stripe-payment-intent', async (req, res) => {
  * Retrieve the Stripe publishable key
  * GET /api/checkout/retrieve-stripe-publishable-key
  */
-router.post('/retrieve-stripe-publishable-key', async (req, res) => {
+router.post("/retrieve-stripe-publishable-key", async (req, res) => {
   try {
-    const { stripePublishableKey } = getConfig();
+    const { stripePublishableKey } = getEnvironment();
     if (!stripePublishableKey) {
       return res.status(500).json({ error: "Stripe is not configured." });
     }
@@ -145,7 +146,7 @@ router.post('/retrieve-stripe-publishable-key', async (req, res) => {
  * For embedding checkout directly in the page
  */
 
-router.post('/create-stripe-session', async (req, res) => {
+router.post("/create-stripe-session", async (req, res) => {
   try {
     const { stripeSecretKey } = getEnvironment();
     if (!stripeSecretKey) {
@@ -154,13 +155,8 @@ router.post('/create-stripe-session', async (req, res) => {
 
     const stripe = new Stripe(stripeSecretKey);
 
-    const {
-      items,
-      shippingMethod,
-      shippingCost,
-      taxAmount,
-      return_url,
-    } = req.body;
+    const { items, shippingMethod, shippingCost, taxAmount, return_url } =
+      req.body;
 
     // Validate required fields
     if (!items || !Array.isArray(items) || items.length === 0) {
@@ -221,9 +217,9 @@ router.post('/create-stripe-session', async (req, res) => {
 
     // Create embedded checkout session
     const session = await stripe.checkout.sessions.create({
-      ui_mode: 'embedded',
+      ui_mode: "embedded",
       line_items: lineItems,
-      mode: 'payment',
+      mode: "payment",
       return_url: `${return_url}?session_id={CHECKOUT_SESSION_ID}`,
       shipping_address_collection: {
         allowed_countries: ["US"],
@@ -239,7 +235,6 @@ router.post('/create-stripe-session', async (req, res) => {
       clientSecret: session.client_secret,
       sessionId: session.id,
     });
-
   } catch (error) {
     console.error("Embedded checkout error:", error);
     res.status(500).json({
@@ -254,15 +249,15 @@ router.post('/create-stripe-session', async (req, res) => {
  * GET /api/checkout/retrieve-stripe-session-status
  * retrieve-stripe-session-status
  */
-router.get('/retrieve-stripe-session-status', async (req, res) => {
+router.get("/retrieve-stripe-session-status", async (req, res) => {
   try {
-    const { stripeSecretKey } = getConfig();
+    const { stripeSecretKey } = getEnvironment();
     if (!stripeSecretKey) {
       return res.status(500).json({ error: "Stripe is not configured." });
     }
 
     const sessionId = req.query.session_id;
-    
+
     if (!sessionId) {
       return res.status(400).json({ error: "Session ID is required" });
     }
@@ -272,7 +267,7 @@ router.get('/retrieve-stripe-session-status', async (req, res) => {
 
     res.json({
       status: session.status,
-      customer_email: session.customer_details.email
+      customer_email: session.customer_details.email,
     });
   } catch (error) {
     console.error("Retrieve session status error:", error);
@@ -287,16 +282,17 @@ router.get('/retrieve-stripe-session-status', async (req, res) => {
  * Get PayPal Order Status
  * GET /api/checkout/retrieve-paypal-order-status
  */
-router.get('/retrieve-paypal-order-status', async (req, res) => {
+router.get("/retrieve-paypal-order-status", async (req, res) => {
   try {
-    const { paypalClientId, paypalClientSecret, paypalApiUrl } = getConfig();
-    
+    const { paypalClientId, paypalClientSecret, paypalApiUrl } =
+      getEnvironment();
+
     if (!paypalClientId || !paypalClientSecret) {
       return res.status(500).json({ error: "PayPal is not configured." });
     }
 
     const token = req.query.token;
-    
+
     if (!token) {
       return res.status(400).json({ error: "PayPal token is required" });
     }
@@ -322,13 +318,16 @@ router.get('/retrieve-paypal-order-status', async (req, res) => {
     const { access_token } = await tokenResponse.json();
 
     // Get order details
-    const orderResponse = await fetch(`${paypalApiUrl}/v2/checkout/orders/${token}`, {
-      method: "GET",
-      headers: {
-        Authorization: `Bearer ${access_token}`,
-        "Content-Type": "application/json",
+    const orderResponse = await fetch(
+      `${paypalApiUrl}/v2/checkout/orders/${token}`,
+      {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+          "Content-Type": "application/json",
+        },
       },
-    });
+    );
 
     if (!orderResponse.ok) {
       throw new Error("Failed to retrieve PayPal order");
@@ -337,11 +336,15 @@ router.get('/retrieve-paypal-order-status', async (req, res) => {
     const order = await orderResponse.json();
 
     // Extract customer email from payer info
-    const customerEmail = order.payer?.email_address || order.payer?.payer_info?.email || "";
+    const customerEmail =
+      order.payer?.email_address || order.payer?.payer_info?.email || "";
 
     res.json({
-      status: order.status === "APPROVED" || order.status === "COMPLETED" ? "complete" : order.status.toLowerCase(),
-      customer_email: customerEmail
+      status:
+        order.status === "APPROVED" || order.status === "COMPLETED"
+          ? "complete"
+          : order.status.toLowerCase(),
+      customer_email: customerEmail,
     });
   } catch (error) {
     console.error("Retrieve PayPal order status error:", error);
@@ -352,20 +355,19 @@ router.get('/retrieve-paypal-order-status', async (req, res) => {
   }
 });
 
-
 /**
  * Create a Stripe Checkout Order
  * POST /api/checkout/create-stripe-checkout
  */
 router.post("/create-stripe-checkout", async (req, res) => {
   try {
-    const { stripeSecretKey } = getConfig();
+    const { stripeSecretKey } = getEnvironment();
     if (!stripeSecretKey) {
       return res.status(500).json({ error: "Stripe is not configured." });
     }
 
     const stripe = new Stripe(stripeSecretKey);
-    
+
     const {
       items,
       shippingMethod,
