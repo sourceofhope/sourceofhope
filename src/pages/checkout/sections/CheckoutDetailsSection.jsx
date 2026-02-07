@@ -20,7 +20,7 @@ export default function CheckoutDetailsSection({
         {cart.map((item, index) => (
           <div
             key={`${item.id}-${item.size}-${index}`}
-            className="flex gap-3 p-3 border-2 border-neutral-200 rounded-xl hover:border-accent-500 transition-colors">
+            className="select-none flex gap-3 p-3 border-2 border-neutral-200 rounded-xl hover:border-accent-500 transition-colors">
             <div className="w-16 h-16 bg-neutral-200 rounded-lg flex items-center justify-center overflow-hidden flex-shrink-0">
               <img
                 src={item.image}
