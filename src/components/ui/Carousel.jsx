@@ -11,9 +11,9 @@ export default function Carousel({
   const slides = useMemo(
     () =>
       React.Children.toArray(children).filter(
-        (child) => typeof child !== "string"
+        (child) => typeof child !== "string",
       ),
-    [children]
+    [children],
   );
 
   const [perView, setPerView] = useState(itemsPerView.base);
@@ -59,7 +59,7 @@ export default function Carousel({
         {Array.from({ length: totalPages }).map((_, pageIndex) => (
           <div
             key={pageIndex}
-            className="grid gap-5 px-2 shrink-0"
+            className="grid gap-5 px-2 shrink-0 justify-items-center"
             style={{
               width: "100%",
               gridTemplateColumns: `repeat(${perView}, minmax(0, 1fr))`,
