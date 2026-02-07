@@ -1,7 +1,12 @@
 import { NavLink } from "react-router-dom";
 import { ArrowRightIcon, ArrowUpRightIcon } from "@heroicons/react/20/solid";
 
-export function AnchorButton({ text, href, className = "", full = false }) {
+export function AnchorButton({
+  text,
+  href,
+  className = "bg-accent-500 hover:bg-accent-600",
+  full = false,
+}) {
   return (
     <a
       href={href}
