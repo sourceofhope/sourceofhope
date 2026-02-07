@@ -1,16 +1,8 @@
 import { forwardRef } from "react";
 
-const Input = forwardRef(function Input(
-  {
-    title,
-    name,
-    type = "text",
-    error,
-    className = "",
-    border = true,
-    ...rest
-  },
-  ref
+const HookInput = forwardRef(function HookInput(
+  { title, name, type = "text", error, className = "", border = true, ...rest },
+  ref,
 ) {
   const hasError = !!error;
 
@@ -37,11 +29,12 @@ const Input = forwardRef(function Input(
         }`}
       />
 
-      <p className={`text-xs ${hasError ? "visible" : "invisible select-none"}`}>
+      <p
+        className={`text-xs ${hasError ? "visible" : "invisible select-none"}`}>
         {error?.message || `Please enter a valid ${title.toLowerCase()}.`}
       </p>
     </div>
   );
 });
 
-export default Input;
+export default HookInput;

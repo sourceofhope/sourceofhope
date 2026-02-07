@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-import Input from "../../../components/ui/Input";
+import LocalInput from "../../../components/ui/LocalInput";
 import Title from "../../../components/ui/text/Title";
 
 export default function FormInputSection() {
@@ -27,7 +27,7 @@ export default function FormInputSection() {
     <section className="grid gap-5 w-full p-5 lg:px-35">
       <Title>Community Impact Form</Title>
       <form className="flex flex-wrap justify-between gap-y-5">
-        <Input
+        <LocalInput
           title="First name"
           htmlFor="fname"
           type="text"
@@ -35,7 +35,7 @@ export default function FormInputSection() {
           className="w-full md:w-[49%]"
           border={false}
         />
-        <Input
+        <LocalInput
           title="Last Name"
           htmlFor="lname"
           type="text"
@@ -43,7 +43,7 @@ export default function FormInputSection() {
           className="w-full md:w-[49%]"
           border={false}
         />
-        <Input
+        <LocalInput
           title="Email Address"
           htmlFor="email"
           type="email"
@@ -68,7 +68,7 @@ export default function FormInputSection() {
             return true;
           }}
         />
-        <Input
+        <LocalInput
           title="Phone Number"
           htmlFor="phone"
           type="tel"

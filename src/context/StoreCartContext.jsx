@@ -1,10 +1,34 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
 const CART_STORAGE_KEY = "sourceofhope_cart";
+const SHIPPING_STORAGE_KEY = "sourceofhope_shipping";
+
+export const SHIPPING_OPTIONS = [
+  {
+    id: "standard",
+    name: "Standard Shipping",
+    time: "5-7 business days",
+    cost: 5.99,
+  },
+  {
+    id: "express",
+    name: "Express Shipping",
+    time: "2-3 business days",
+    cost: 12.99,
+  },
+  {
+    id: "overnight",
+    name: "Overnight Shipping",
+    time: "Next business day",
+    cost: 24.99,
+  },
+];
 
 export const StoreCartContext = createContext({
   cart: [],
   setCart: () => {},
+  shippingMethod: "standard",
+  setShippingMethod: () => {},
 });
 
 export const useStoreContext = () => useContext(StoreCartContext);
@@ -21,6 +45,17 @@ export function StoreCartProvider({ children }) {
     }
   });
 
+  const [shippingMethod, setShippingMethod] = useState(() => {
+    // Load shipping method from localStorage on initial mount
+    try {
+      const savedShipping = localStorage.getItem(SHIPPING_STORAGE_KEY);
+      return savedShipping || "standard";
+    } catch (error) {
+      console.error("Failed to load shipping method from localStorage:", error);
+      return "standard";
+    }
+  });
+
   // Save cart to localStorage whenever it changes
   useEffect(() => {
     try {
@@ -30,15 +65,24 @@ export function StoreCartProvider({ children }) {
     }
   }, [cart]);
 
+  // Save shipping method to localStorage whenever it changes
+  useEffect(() => {
+    try {
+      localStorage.setItem(SHIPPING_STORAGE_KEY, shippingMethod);
+    } catch (error) {
+      console.error("Failed to save shipping method to localStorage:", error);
+    }
+  }, [shippingMethod]);
+
   return (
-    <StoreCartContext.Provider value={{ cart, setCart }}>
+    <StoreCartContext.Provider value={{ cart, setCart, shippingMethod, setShippingMethod }}>
       {children}
     </StoreCartContext.Provider>
   );
 }
 
 export function useCartActions() {
-  const { cart, setCart } = useStoreContext();
+  const { cart, setCart, shippingMethod, setShippingMethod } = useStoreContext();
 
   function addToCart(item) {
     setCart((prev) => {
@@ -70,6 +114,7 @@ export function useCartActions() {
 
   function clearCart() {
     setCart([]);
+    setShippingMethod("standard");
   }
 
   function getCartItemCount() {
@@ -80,13 +125,27 @@ export function useCartActions() {
     return cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
   }
 
+  function getShippingCost() {
+    const option = SHIPPING_OPTIONS.find(opt => opt.id === shippingMethod);
+    return option ? option.cost : 0;
+  }
+
+  function updateShippingMethod(method) {
+    if (SHIPPING_OPTIONS.find(opt => opt.id === method)) {
+      setShippingMethod(method);
+    }
+  }
+
   return {
     cart,
+    shippingMethod,
     addToCart,
     updateCartItem,
     removeFromCart,
     clearCart,
     getCartItemCount,
     getCartTotal,
+    getShippingCost,
+    updateShippingMethod,
   };
 }

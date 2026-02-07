@@ -14,7 +14,8 @@ import ServePage from "./pages/serve/ServePage.jsx";
 import ConnectPage from "./pages/connect/ConnectPage.jsx";
 import MediaPage from "./pages/media/MediaPage.jsx";
 import CartPage from "./pages/cart/CartPage.jsx";
-import CartSuccessPage from "./pages/cart/CartSuccessPage.jsx";
+import CheckoutPage from "./pages/checkout/CheckoutPage.jsx";
+import CheckoutSuccessPage from "./pages/checkout/CheckoutSuccessPage.jsx";
 
 import ServingHopeProgram from "./pages/serve/programs/ServingHopeProgram.jsx";
 import EducationHopeProgram from "./pages/serve/programs/EducationHopeProgram.jsx";
@@ -110,10 +111,9 @@ export const router = createBrowserRouter([
       },
       { path: CANONICAL.storefront.cart.relative, element: <CartPage /> },
 
-      {
-        path: CANONICAL.storefront.success.relative,
-        element: <CartSuccessPage />,
-      },
+      { path: CANONICAL.storefront.checkout.relative, element: <CheckoutPage /> },
+
+      { path: CANONICAL.storefront.success.relative, element: <CheckoutSuccessPage /> },
     ],
   },
 ]);

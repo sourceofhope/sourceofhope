@@ -14,9 +14,9 @@ export default function CartItemsSection({
   return (
     <section className="">
       <div className="bg-white rounded-2xl shadow-md p-5 pt-0 md:pt-5 space-y-3">
-        <div className="flex flex-col gap-1">
+        {/* <div className="flex flex-col gap-1">
           <Title>Shopping Cart</Title>
-        </div>
+        </div> */}
         <Heading>Your Selected Items</Heading>
 
         {items.map((item) => (
@@ -37,7 +37,7 @@ export default function CartItemsSection({
             </div>
             <div className="flex-1 space-y-2">
               <a
-                href={`${CANONICAL.storefront.products.relative}/${item.slug}`}
+                href={`${CANONICAL.storefront.product.relative}/${item.slug}`}
                 className="!no-underline font-bold text-neutral-900 text-lg">
                 {item.title}
               </a>

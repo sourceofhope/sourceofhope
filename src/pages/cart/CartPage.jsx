@@ -1,25 +1,31 @@
-import { useState, useEffect, useContext, useRef } from "react";
+import { useEffect, useContext } from "react";
 import { CANONICAL, CANONICAL_URL } from "../../routes";
 import { Helmet } from "react-helmet-async";
 import CartItemsSection from "./sections/CartItemsSection";
+import CartShippingSection from "./sections/CartShippingSection";
 import CartSummarySection from "./sections/CartSummarySection";
-import CartPaymentSection from "./sections/CartPaymentSection";
+import { Link } from "react-router-dom";
 
 import {
   StoreCartContext,
   useCartActions,
+  SHIPPING_OPTIONS,
 } from "../../context/StoreCartContext";
 
 import { useSetHeaderBlocking } from "../../components/structure/Header";
 import { ShoppingBagIcon } from "@heroicons/react/20/solid";
 import Title from "../../components/ui/text/Title";
 import { AnchorButton, LinkButton } from "../../components/ui/Button";
-import ExpressiveLink from "../../components/ui/expressive/ExpressiveLink";
-import ExpressiveAnchor from "../../components/ui/expressive/ExpressiveAnchor";
 
 const CartPage = () => {
   const { cart: cartItems } = useContext(StoreCartContext);
-  const { updateCartItem, removeFromCart } = useCartActions();
+  const {
+    updateCartItem,
+    removeFromCart,
+    shippingMethod,
+    updateShippingMethod,
+    getShippingCost,
+  } = useCartActions();
 
   const setBlocking = useSetHeaderBlocking();
 
@@ -27,15 +33,6 @@ const CartPage = () => {
     setBlocking(true);
     return () => setBlocking(false);
   }, [setBlocking]);
-
-  const [shippingMethod, setShippingMethod] = useState("standard");
-  const [paymentMethod, setPaymentMethod] = useState("credit-card");
-
-  const shippingCosts = {
-    standard: 5.99,
-    express: 12.99,
-    overnight: 24.99,
-  };
 
   const updateQuantity = (id, newQuantity) => {
     if (newQuantity < 1) return;
@@ -52,7 +49,7 @@ const CartPage = () => {
 
   const subtotal =
     cartItems?.reduce((sum, item) => sum + item.price * item.quantity, 0) || 0;
-  const shipping = shippingCosts[shippingMethod];
+  const shipping = getShippingCost();
   const tax = subtotal * 0.0825; // 8.25% tax
   const total = subtotal + shipping + tax;
 
@@ -111,6 +108,9 @@ const CartPage = () => {
       {cartItems && cartItems.length > 0 && (
         <div className="min-h-screen bg-neutral-50 pt-25 px-5 md:px-10 lg:px-35">
           <div className="max-w-7xl mx-auto">
+            <div className="flex flex-col gap-1">
+              <Title>Shopping Cart</Title>
+            </div>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 mt-5 pb-5">
               <div className="lg:col-span-2">
                 <CartItemsSection
@@ -121,26 +121,26 @@ const CartPage = () => {
                 />
               </div>
               <div className="lg:col-span-1">
+                <CartShippingSection
+                  shippingMethod={shippingMethod}
+                  setShippingMethod={updateShippingMethod}
+                  shippingOptions={SHIPPING_OPTIONS}
+                />
                 <CartSummarySection
-                  items={cartItems}
                   subtotal={subtotal}
                   shipping={shipping}
                   tax={tax}
                   total={total}
-                  shippingMethod={shippingMethod}
-                  setShippingMethod={setShippingMethod}
-                  shippingCosts={shippingCosts}
                 />
-                <CartPaymentSection
-                  items={cartItems}
-                  shippingMethod={shippingMethod}
-                  paymentMethod={paymentMethod}
-                  setPaymentMethod={setPaymentMethod}
-                  total={total}
-                  subtotal={subtotal}
-                  shipping={shipping}
-                  tax={tax}
-                />
+                <div className="mt-6">
+                  <div className="mb-6">
+                    <Link
+                      to="/store/checkout"
+                      className="w-full !no-underline block px-5 py-4 rounded-xl font-bold text-white text-lg text-center bg-accent-500 hover:bg-accent-600 hover:shadow-lg transition-all duration-300">
+                      Proceed to Checkout
+                    </Link>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
