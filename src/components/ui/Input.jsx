@@ -6,7 +6,7 @@ export default function Input({
   type,
   onChange = () => true,
   className = "",
-  border = true,
+  border = false,
   setFormData,
 }) {
   const [isValid, setIsValid] = useState(true);

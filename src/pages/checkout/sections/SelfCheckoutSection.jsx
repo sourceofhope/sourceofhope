@@ -2,10 +2,17 @@ import { useState } from "react";
 import Heading from "../../../components/ui/text/Heading";
 import Input from "../../../components/ui/Input";
 import { loadStripe } from "@stripe/stripe-js";
-import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
-import { createPaymentIntent, fetchStripePublishableKey } from "../../../lib/api/checkout";
+import {
+  Elements,
+  PaymentElement,
+  useStripe,
+  useElements,
+} from "@stripe/react-stripe-js";
+import {
+  createPaymentIntent,
+  fetchStripePublishableKey,
+} from "../../../lib/api/checkout";
 
-// Payment form component
 function PaymentForm({ clientSecret, total, onSuccess }) {
   const stripe = useStripe();
   const elements = useElements();
@@ -48,7 +55,7 @@ function PaymentForm({ clientSecret, total, onSuccess }) {
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       <PaymentElement />
-      
+
       {error && (
         <div className="bg-red-50 border border-red-200 rounded-xl p-4">
           <p className="text-sm text-red-800 font-semibold">{error}</p>
@@ -58,13 +65,24 @@ function PaymentForm({ clientSecret, total, onSuccess }) {
       <button
         type="submit"
         disabled={!stripe || isProcessing}
-        className="w-full bg-accent-500 hover:bg-accent-600 disabled:bg-neutral-300 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 disabled:cursor-not-allowed"
-      >
+        className="w-full bg-accent-500 hover:bg-accent-600 disabled:bg-neutral-300 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 disabled:cursor-not-allowed">
         {isProcessing ? (
           <span className="flex items-center justify-center gap-2">
             <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
-              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+                fill="none"
+              />
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+              />
             </svg>
             Processing...
           </span>
@@ -75,7 +93,7 @@ function PaymentForm({ clientSecret, total, onSuccess }) {
 
       <div className="text-center">
         <p className="text-xs text-neutral-500">
-          🔒 Your payment information is encrypted and secure
+          Your payment information is encrypted and secure
         </p>
       </div>
     </form>
@@ -192,7 +210,9 @@ export default function SelfCheckoutSection({ total, cart }) {
         <>
           {/* Contact Information */}
           <div className="mb-6">
-            <h3 className="font-semibold text-neutral-900 mb-4">Contact Information</h3>
+            <h3 className="font-semibold text-neutral-900 mb-4">
+              Contact Information
+            </h3>
             <Input
               title="Email"
               htmlFor="email"
@@ -205,7 +225,9 @@ export default function SelfCheckoutSection({ total, cart }) {
 
           {/* Shipping Address */}
           <div className="mb-6">
-            <h3 className="font-semibold text-neutral-900 mb-4">Shipping Address</h3>
+            <h3 className="font-semibold text-neutral-900 mb-4">
+              Shipping Address
+            </h3>
             <div className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <Input
@@ -267,16 +289,16 @@ export default function SelfCheckoutSection({ total, cart }) {
           <button
             onClick={initializePayment}
             disabled={!isFormValid() || isLoading}
-            className="w-full bg-accent-500 hover:bg-accent-600 disabled:bg-neutral-300 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 disabled:cursor-not-allowed"
-          >
+            className="w-full bg-accent-500 hover:bg-accent-600 disabled:bg-neutral-300 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 disabled:cursor-not-allowed">
             {isLoading ? "Loading..." : "Continue to Payment"}
           </button>
         </>
       ) : (
-        stripePromise && clientSecret && (
+        stripePromise &&
+        clientSecret && (
           <Elements stripe={stripePromise} options={{ clientSecret }}>
-            <PaymentForm 
-              clientSecret={clientSecret} 
+            <PaymentForm
+              clientSecret={clientSecret}
               total={total}
               onSuccess={handlePaymentSuccess}
             />

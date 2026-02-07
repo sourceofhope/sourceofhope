@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import Heading from "../../../components/ui/text/Heading";
-import {FaPaypal, FaStripeS, FaApplePay, FaGooglePay} from "react-icons/fa";
+import { FaPaypal, FaStripeS, FaApplePay, FaGooglePay } from "react-icons/fa";
 import { createStripeCheckout } from "../../../lib/api/checkout.js";
 import { createPaypalCheckout } from "../../../lib/api/checkout.js";
 
@@ -50,13 +50,13 @@ export default function CartPaymentSection({
       successUrl,
       cancelUrl,
     });
-  
+
     if (response.error) {
       setError(response.error);
       setIsProcessing(false);
       return;
     }
-  
+
     if (response.data?.url) {
       window.location.href = response.data.url;
     } else {
@@ -115,8 +115,7 @@ export default function CartPaymentSection({
                 isProcessing
                   ? "border-neutral-300 bg-neutral-100 cursor-not-allowed opacity-50"
                   : "border-neutral-200 hover:border-accent-500 hover:bg-accent-50 hover:shadow-md"
-              }`}
-            >
+              }`}>
               <div className="flex items-start gap-3">
                 <provider.icon className="w-6 h-6 flex-shrink-0 text-accent-600" />
                 <div className="flex-1">
@@ -137,8 +136,7 @@ export default function CartPaymentSection({
       <h3 className="text-lg font-semibold mb-4 text-neutral-800">Or</h3>
       <Link
         to="/store/checkout"
-        className="w-full block px-5 py-4 rounded-xl font-bold text-white text-lg text-center bg-accent-500 hover:bg-accent-600 hover:shadow-lg transition-all duration-300"
-      >
+        className="w-full block px-5 py-4 rounded-xl font-bold text-white text-lg text-center bg-accent-500 hover:bg-accent-600 hover:shadow-lg transition-all duration-300">
         Proceed to Checkout
       </Link>
     </div>

@@ -1,13 +1,8 @@
 import Heading from "../../../components/ui/text/Heading";
 
-export default function CartSummarySection({
-  subtotal,
-  shipping,
-  tax,
-  total,
-}) {
+export default function CartSummarySection({ subtotal, shipping, tax, total }) {
   return (
-    <div className="bg-white rounded-2xl shadow-md p-5 sticky top-5">
+    <div className="bg-white rounded-2xl shadow-md p-5 top-5">
       <Heading className="flex flex-col gap-1 mb-5">Order Summary</Heading>
       <div className="space-y-3 pt-4">
         <div className="flex justify-between text-neutral-700">

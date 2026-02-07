@@ -19,7 +19,13 @@ import { AnchorButton, LinkButton } from "../../components/ui/Button";
 
 const CartPage = () => {
   const { cart: cartItems } = useContext(StoreCartContext);
-  const { updateCartItem, removeFromCart, shippingMethod, updateShippingMethod, getShippingCost } = useCartActions();
+  const {
+    updateCartItem,
+    removeFromCart,
+    shippingMethod,
+    updateShippingMethod,
+    getShippingCost,
+  } = useCartActions();
 
   const setBlocking = useSetHeaderBlocking();
 
@@ -126,12 +132,11 @@ const CartPage = () => {
                   tax={tax}
                   total={total}
                 />
-                <div className="bg-white p-6 mt-6">
+                <div className="mt-6">
                   <div className="mb-6">
                     <Link
                       to="/store/checkout"
-                      className="w-full block px-5 py-4 rounded-xl font-bold text-white text-lg text-center bg-accent-500 hover:bg-accent-600 hover:shadow-lg transition-all duration-300"
-                    >
+                      className="w-full !no-underline block px-5 py-4 rounded-xl font-bold text-white text-lg text-center bg-accent-500 hover:bg-accent-600 hover:shadow-lg transition-all duration-300">
                       Proceed to Checkout
                     </Link>
                   </div>

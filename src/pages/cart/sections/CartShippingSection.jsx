@@ -5,12 +5,13 @@ export default function CartShippingSection({
   setShippingMethod,
   shippingOptions,
 }) {
-  
   return (
     <section className="mt-5">
       <div className="mb-6">
         <div className="bg-white rounded-2xl shadow-md p-5 sticky top-5">
-          <Heading className="flex flex-col gap-1 mb-5">Shipping Method</Heading>
+          <Heading className="flex flex-col gap-1 mb-5">
+            Shipping Method
+          </Heading>
           <div className="space-y-3">
             {shippingOptions.map((method) => (
               <label

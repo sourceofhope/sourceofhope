@@ -1,42 +1,51 @@
 import { useState } from "react";
 import Heading from "../../../components/ui/text/Heading";
-import {FaPaypal, FaStripeS, FaApplePay, FaGooglePay} from "react-icons/fa";
-import { createStripeCheckout, createPaypalCheckout } from "../../../lib/api/checkout.js";
+import { FaPaypal, FaStripeS, FaApplePay, FaGooglePay } from "react-icons/fa";
+import {
+  createStripeCheckout,
+  createPaypalCheckout,
+} from "../../../lib/api/checkout.js";
 
-export default function ExpressCheckoutSection({  items,
+export default function ExpressCheckoutSection({
+  items,
   shippingMethod,
   shippingCost,
-  taxAmount}) {
+  taxAmount,
+}) {
   const [isProcessing, setIsProcessing] = useState(false);
   const [selectedMethod, setSelectedMethod] = useState(null);
   const [error, setError] = useState(null);
 
-    const checkoutProviders = [
-      {
-        id: "stripe",
-        name: "Stripe",
-        icon: FaStripeS,
-        description: "Linked Stripe Account",
-      },
-      {
-        id: "paypal",
-        name: "PayPal",
-        icon: FaPaypal,
-        description: "Linked PayPal Account",
-      },
-      {
-        id: "googlepay",
-        name: "",
-        icon: FaGooglePay,
-        description: "Linked Google Pay Account",
-      },
-      {
-        id: "applepay",
-        name: "",
-        icon: FaApplePay,
-        description: "Linked Apple Pay Account",
-      },
-    ];
+  const checkoutProviders = [
+    {
+      id: "stripe",
+      name: "Stripe",
+      icon: <FaStripeS className="size-8" />,
+      description: "Linked Stripe Account",
+      enabled: true,
+    },
+    {
+      id: "paypal",
+      name: "PayPal",
+      icon: <FaPaypal className="size-8" />,
+      description: "Linked PayPal Account",
+      enabled: true,
+    },
+    {
+      id: "googlepay",
+      name: "",
+      icon: <FaGooglePay className="size-10" />,
+      description: "Linked Google Pay Account",
+      enabled: false,
+    },
+    {
+      id: "applepay",
+      name: "",
+      icon: <FaApplePay className="size-10" />,
+      description: "Linked Apple Pay Account",
+      enabled: false,
+    },
+  ];
 
   const handleExpressCheckout = async (method) => {
     setIsProcessing(true);
@@ -51,9 +60,9 @@ export default function ExpressCheckoutSection({  items,
     } else if (method === "PayPal") {
       await handlePaypalCheckout(successUrl, cancelUrl);
     } else if (method === "Google Pay") {
-      // Implement Google Pay express checkout logic here
+      // TODO: Google Pay express checkout logic here
     } else if (method === "Apple Pay") {
-      // Implement Apple Pay express checkout logic here
+      // TODO: Apple Pay express checkout logic here
     }
 
     // Simulate payment processing
@@ -63,37 +72,8 @@ export default function ExpressCheckoutSection({  items,
       setSelectedMethod(null);
     }, 1500);
   };
-  //     id: "paypal",
-  //     name: "PayPal",
-  //     icon: "🅿️",
-  //     bgColor: "bg-[#0070ba]",
-  //     hoverColor: "hover:bg-[#005ea6]",
-  //   },
-  //   {
-  //     id: "stripe",
-  //     name: "Stripe",
-  //     icon: "💳",
-  //     bgColor: "bg-[#635bff]",
-  //     hoverColor: "hover:bg-[#5145e5]",
-  //   },
-  //   {
-  //     id: "googlepay",
-  //     name: "Google Pay",
-  //     icon: "🅖",
-  //     bgColor: "bg-white border-2 border-neutral-300 text-neutral-900",
-  //     hoverColor: "hover:bg-neutral-50",
-  //   },
-  //   {
-  //     id: "applepay",
-  //     name: "Apple Pay",
-  //     icon: "🍎",
-  //     bgColor: "bg-black",
-  //     hoverColor: "hover:bg-neutral-800",
-  //   },
-  // ];
 
   const handleStripeCheckout = async (successUrl, cancelUrl) => {
-    
     const response = await createStripeCheckout({
       items,
       shippingMethod,
@@ -102,13 +82,13 @@ export default function ExpressCheckoutSection({  items,
       successUrl,
       cancelUrl,
     });
-  
+
     if (response.error) {
       setError(response.error);
       setIsProcessing(false);
       return;
     }
-  
+
     if (response.data?.url) {
       window.location.href = response.data.url;
     } else {
@@ -141,12 +121,11 @@ export default function ExpressCheckoutSection({  items,
     }
   };
 
-
   return (
     <div className="bg-white rounded-2xl shadow-md p-6">
       <Heading className="text-xl mb-4">Express</Heading>
       <p className="text-neutral-600 text-sm mb-6">
-        Choose your preferred payment method for quick checkout
+        Choose your preferred payment and checkout in seconds
       </p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -158,31 +137,22 @@ export default function ExpressCheckoutSection({  items,
             className={`
               flex flex-col items-center justify-center gap-1
               ${method.bgColor} ${method.hoverColor}
-              ${method.id === "googlepay" ? "text-neutral-900" : "text-white"}
+              ${method.enabled ? "text-accent-500" : "text-neutral-500 bg-neutral-200 hover:scale-none hover:shadow-sm"}
               rounded-xl px-3 py-3
               font-semibold text-xs
               transition-all duration-300
               disabled:opacity-50 disabled:cursor-not-allowed
               transform hover:scale-105 active:scale-95
               shadow-sm hover:shadow-md
-            `}
-          >
-            <div className="flex items-start gap-3">
-              <method.icon className="w-6 h-6 flex-shrink-0 text-accent-600" />
-              <div className="flex-1">
-                <div className="font-semibold text-accent-600">
-                  {method.name}
-                </div>
-              </div>
-            </div>
+            `}>
+            {method.icon}
           </button>
         ))}
       </div>
 
       <div className="mt-6 p-4 bg-neutral-50 rounded-xl">
-        <p className="text-xs text-neutral-600 text-center">
-          🔒 All transactions are secure and encrypted. Your payment information
-          is never stored on our servers.
+        <p className="text-sm text-neutral-600 md:text-center">
+          All transactions are secure, encrypted, and never stored
         </p>
       </div>
     </div>
