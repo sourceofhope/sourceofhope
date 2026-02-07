@@ -37,6 +37,7 @@ export const ROUTES = {
     children: {
       product: "product/:productSlug",
       cart: "cart",
+      checkout: "checkout",
       success: "success",
     },
   },

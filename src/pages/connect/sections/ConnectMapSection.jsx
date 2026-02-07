@@ -1,7 +1,7 @@
 import PageSection from "../../PageSection";
 
 import Title from "@/components/ui/text/Title";
-import Input from "@/components/ui/Input";
+import HookInput from "@/components/ui/HookInput";
 import Heading from "@/components/ui/text/Heading";
 
 import { useState } from "react";
@@ -96,7 +96,7 @@ export default function ConnectMapSection() {
           <form
             className="grid w-full h-full"
             onSubmit={handleSubmit(onSubmit)}>
-            <Input
+            <HookInput
               title="First name"
               type="text"
               border={false}
@@ -117,7 +117,7 @@ export default function ConnectMapSection() {
                 },
               })}
             />
-            <Input
+            <HookInput
               title="Last Name"
               type="text"
               border={false}
@@ -138,7 +138,7 @@ export default function ConnectMapSection() {
                 },
               })}
             />
-            <Input
+            <HookInput
               title="Email Address"
               type="email"
               border={false}
@@ -151,7 +151,7 @@ export default function ConnectMapSection() {
                 },
               })}
             />
-            <Input
+            <HookInput
               title="Phone Number"
               type="tel"
               border={false}
@@ -168,7 +168,7 @@ export default function ConnectMapSection() {
                 },
               })}
             />
-            <Input
+            <HookInput
               title="Message"
               type="text"
               border={false}

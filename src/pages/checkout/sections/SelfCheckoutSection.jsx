@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Heading from "../../../components/ui/text/Heading";
-import Input from "../../../components/ui/Input";
+import LocalInput from "../../../components/ui/LocalInput";
 import { loadStripe } from "@stripe/stripe-js";
 import {
   Elements,
@@ -213,7 +213,7 @@ export default function SelfCheckoutSection({ total, cart }) {
             <h3 className="font-semibold text-neutral-900 mb-4">
               Contact Information
             </h3>
-            <Input
+            <LocalInput
               title="Email"
               htmlFor="email"
               type="email"
@@ -230,14 +230,14 @@ export default function SelfCheckoutSection({ total, cart }) {
             </h3>
             <div className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <Input
+                <LocalInput
                   title="First Name"
                   htmlFor="firstName"
                   type="text"
                   onChange={() => true}
                   setFormData={setFormData}
                 />
-                <Input
+                <LocalInput
                   title="Last Name"
                   htmlFor="lastName"
                   type="text"
@@ -245,7 +245,7 @@ export default function SelfCheckoutSection({ total, cart }) {
                   setFormData={setFormData}
                 />
               </div>
-              <Input
+              <LocalInput
                 title="Street Address"
                 htmlFor="address"
                 type="text"
@@ -254,14 +254,14 @@ export default function SelfCheckoutSection({ total, cart }) {
                 className="w-full"
               />
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <Input
+                <LocalInput
                   title="City"
                   htmlFor="city"
                   type="text"
                   onChange={() => true}
                   setFormData={setFormData}
                 />
-                <Input
+                <LocalInput
                   title="State / Province"
                   htmlFor="state"
                   type="text"
@@ -269,7 +269,7 @@ export default function SelfCheckoutSection({ total, cart }) {
                   setFormData={setFormData}
                 />
               </div>
-              <Input
+              <LocalInput
                 title="ZIP / Postal Code"
                 htmlFor="zipCode"
                 type="text"

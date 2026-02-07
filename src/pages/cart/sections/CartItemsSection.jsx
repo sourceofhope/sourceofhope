@@ -37,7 +37,7 @@ export default function CartItemsSection({
             </div>
             <div className="flex-1 space-y-2">
               <a
-                href={`${CANONICAL.storefront.products.relative}/${item.slug}`}
+                href={`${CANONICAL.storefront.product.relative}/${item.slug}`}
                 className="!no-underline font-bold text-neutral-900 text-lg">
                 {item.title}
               </a>
