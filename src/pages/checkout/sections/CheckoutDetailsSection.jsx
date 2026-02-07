@@ -1,11 +1,18 @@
 import Heading from "../../../components/ui/text/Heading";
 
-export default function CheckoutDetailsSection({ cart, getCartItemCount, subtotal, shippingMethod, shippingCost, taxAmount }) {
+export default function CheckoutDetailsSection({
+  cart,
+  getCartItemCount,
+  subtotal,
+  shippingMethod,
+  shippingCost,
+  taxAmount,
+}) {
   // Calculate total from prop values
   const total = subtotal + (shippingCost || 0) + (taxAmount || 0);
-  
+
   return (
-    <div className="bg-white rounded-2xl shadow-md p-5">
+    <div className="bg-neutral-50 md:sticky md:top-25 rounded-2xl shadow-md p-5">
       <div className="flex flex-col gap-1 mb-4">
         <Heading className="text-sm">Checkout Items</Heading>
       </div>
@@ -13,8 +20,7 @@ export default function CheckoutDetailsSection({ cart, getCartItemCount, subtota
         {cart.map((item, index) => (
           <div
             key={`${item.id}-${item.size}-${index}`}
-            className="flex gap-3 p-3 border-2 border-neutral-200 rounded-xl hover:border-accent-500 transition-colors"
-          >
+            className="flex gap-3 p-3 border-2 border-neutral-200 rounded-xl hover:border-accent-500 transition-colors">
             <div className="w-16 h-16 bg-neutral-200 rounded-lg flex items-center justify-center overflow-hidden flex-shrink-0">
               <img
                 src={item.image}
@@ -34,7 +40,7 @@ export default function CheckoutDetailsSection({ cart, getCartItemCount, subtota
               <p className="text-accent-600 font-semibold text-sm">
                 ${item.price.toFixed(2)}
               </p>
-              <div className="flex gap-2 text-xs text-neutral-600 mt-1">
+              <div className="flex gap-1 text-xs text-neutral-600 mt-1">
                 {item.size && <span>Size: {item.size}</span>}
                 <span>•</span>
                 <span>Qty: {item.quantity}</span>
@@ -46,14 +52,19 @@ export default function CheckoutDetailsSection({ cart, getCartItemCount, subtota
           </div>
         ))}
       </div>
-      
+
       {/* Order Summary */}
       <div className="mt-6 pt-4 border-t-2 border-neutral-200 space-y-3">
         <div className="flex justify-between text-sm">
-          <span className="text-neutral-600">Subtotal ({getCartItemCount()} item{getCartItemCount() !== 1 ? "s" : ""})</span>
-          <span className="font-semibold text-neutral-900">${subtotal.toFixed(2)}</span>
+          <span className="text-neutral-600">
+            Subtotal ({getCartItemCount()} item
+            {getCartItemCount() !== 1 ? "s" : ""})
+          </span>
+          <span className="font-semibold text-neutral-900">
+            ${subtotal.toFixed(2)}
+          </span>
         </div>
-        
+
         <div className="flex justify-between text-sm">
           <div className="flex flex-col">
             <span className="text-neutral-600">Shipping</span>
@@ -67,16 +78,20 @@ export default function CheckoutDetailsSection({ cart, getCartItemCount, subtota
             {shippingCost > 0 ? `$${shippingCost.toFixed(2)}` : "FREE"}
           </span>
         </div>
-        
+
         <div className="flex justify-between text-sm">
           <span className="text-neutral-600">Tax (8.25%)</span>
-          <span className="font-semibold text-neutral-900">${taxAmount.toFixed(2)}</span>
+          <span className="font-semibold text-neutral-900">
+            ${taxAmount.toFixed(2)}
+          </span>
         </div>
-        
+
         <div className="pt-3 border-t-2 border-neutral-300">
           <div className="flex justify-between items-center">
             <span className="text-lg font-bold text-neutral-900">Total</span>
-            <span className="text-2xl font-bold text-accent-600">${total.toFixed(2)}</span>
+            <span className="text-2xl font-bold text-accent-600">
+              ${total.toFixed(2)}
+            </span>
           </div>
         </div>
       </div>

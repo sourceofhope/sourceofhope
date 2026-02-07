@@ -34,14 +34,14 @@ export default function ExpressCheckoutSection({
     {
       id: "googlepay",
       name: "",
-      icon: <FaGooglePay className="size-10" />,
+      icon: <FaGooglePay className="size-8" />,
       description: "Linked Google Pay Account",
       enabled: false,
     },
     {
       id: "applepay",
       name: "",
-      icon: <FaApplePay className="size-10" />,
+      icon: <FaApplePay className="size-8" />,
       description: "Linked Apple Pay Account",
       enabled: false,
     },
@@ -122,7 +122,7 @@ export default function ExpressCheckoutSection({
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-md p-6">
+    <div className="bg-neutral-50 md:sticky md:top-25 rounded-2xl shadow-md p-6">
       <Heading className="text-xl mb-4">Express</Heading>
       <p className="text-neutral-600 text-sm mb-6">
         Choose your preferred payment and checkout in seconds
@@ -152,7 +152,7 @@ export default function ExpressCheckoutSection({
 
       <div className="mt-6 p-4 bg-neutral-50 rounded-xl">
         <p className="text-sm text-neutral-600 md:text-center">
-          All transactions are secure, encrypted, and never stored
+          All transactions are secure
         </p>
       </div>
     </div>

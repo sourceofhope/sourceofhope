@@ -1,7 +1,10 @@
 import { Helmet } from "react-helmet-async";
 import { CANONICAL_URL } from "../../routes";
 import { useEffect } from "react";
-import { useCartActions, SHIPPING_OPTIONS } from "../../context/StoreCartContext";
+import {
+  useCartActions,
+  SHIPPING_OPTIONS,
+} from "../../context/StoreCartContext";
 import Title from "../../components/ui/text/Title";
 import ExpressCheckoutSection from "./sections/ExpressCheckoutSection";
 // import StripeCheckoutSection from "./sections/StripeCheckoutSection";
@@ -18,7 +21,13 @@ export default function CheckoutPage() {
     return () => setBlocking(false);
   }, [setBlocking]);
 
-  const { cart, getCartTotal, getCartItemCount, getShippingCost, shippingMethod } = useCartActions();
+  const {
+    cart,
+    getCartTotal,
+    getCartItemCount,
+    getShippingCost,
+    shippingMethod,
+  } = useCartActions();
 
   const subtotal = getCartTotal();
   const shipping = getShippingCost();
@@ -61,21 +70,15 @@ export default function CheckoutPage() {
             </p>
             <a
               href="/store"
-              className="inline-block bg-accent-500 hover:bg-accent-600 text-white px-8 py-3 rounded-2xl transition-colors"
-            >
+              className="inline-block bg-accent-500 hover:bg-accent-600 text-white px-8 py-3 rounded-2xl transition-colors">
               Continue Shopping
             </a>
           </div>
         </section>
       ) : (
-        <div className="min-h-screen bg-neutral-50 pt-25 px-5 md:px-10 lg:px-20">
-          <div className="mb-8">
-            <Title>Checkout</Title>
-          </div>
-          
+        <div className="min-h-screen bg-neutral-50 pt-25 p-5 md:px-10 lg:px-15">
           {/* 3-Column Layout: Left (Express) | Center (Checkout Form) | Right (Order Summary) */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8">
-            
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-10">
             {/* Left Column: Express Checkout - 25% */}
             <div className="lg:col-span-3 space-y-6">
               <ExpressCheckoutSection
@@ -88,8 +91,8 @@ export default function CheckoutPage() {
 
             {/* Center Column: Main Checkout Form - 50% */}
             <div className="lg:col-span-6 space-y-6">
-              <SelfCheckoutSection 
-                total={total} 
+              <SelfCheckoutSection
+                total={total}
                 cart={cart}
                 shipping={shipping}
                 tax={tax}
@@ -99,8 +102,8 @@ export default function CheckoutPage() {
 
             {/* Right Column: Order Summary - 25% */}
             <div className="lg:col-span-3 space-y-6">
-              <CheckoutDetailsSection 
-                cart={cart} 
+              <CheckoutDetailsSection
+                cart={cart}
                 getCartItemCount={getCartItemCount}
                 subtotal={subtotal}
                 shippingMethod={shippingMethod}
@@ -108,7 +111,6 @@ export default function CheckoutPage() {
                 taxAmount={tax}
               />
             </div>
-            
           </div>
         </div>
       )}
