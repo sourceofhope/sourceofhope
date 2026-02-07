@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
-import { ArrowRightIcon, XMarkIcon } from "@heroicons/react/20/solid";
+import { Link } from "react-router-dom";
 
 import Carousel from "../../components/ui/Carousel";
 import PageSection from "../PageSection";
 import Title from "../../components/ui/text/Title";
 import { fetchContent, getFeaturedImage } from "../../cms";
 import { ASSET_VERSION, CANONICAL_URL } from "../../routes";
-import Overlay from "../../components/ui/Overlay";
 import { Helmet } from "react-helmet-async";
 import PageHeader from "../PageHeader";
+import { ArrowRightIcon, XMarkIcon } from "@heroicons/react/20/solid";
+import Overlay from "../../components/ui/Overlay";
+import ExpressiveLink from "../../components/ui/expressive/ExpressiveLink";
 
 export default function TeamPage() {
   return (
@@ -89,13 +91,13 @@ function CarouselLayer({ title, groupName, options = {} }) {
   useEffect(() => {
     fetchContent(
       `/team-member?per_page=100&_embed&meta_key=team_group&meta_value=${encodeURIComponent(
-        groupName
+        groupName,
       )}`,
-      options
+      options,
     )
       .then((data) => {
         const filtered = data.filter(
-          (member) => member.acf?.team_group === groupName
+          (member) => member.acf?.team_group === groupName,
         );
         setPosts(filtered);
       })
@@ -138,7 +140,7 @@ export function CarouselCard({ post }) {
 
   return (
     <>
-      <button
+      <div
         onClick={() => setActive(true)}
         className="relative h-full min-h-[320px] w-full group overflow-hidden rounded-2xl aspect-square">
         <img
@@ -154,24 +156,30 @@ export function CarouselCard({ post }) {
             loaded ? "opacity-100" : "opacity-0"
           }`}
         />
+        <Link
+          className="absolute inset-0 w-full h-full z-50 hidden md:block"
+          to={post.slug}
+        />
         <div className="absolute bottom-0 left-0 w-full p-5 bg-gradient-to-t from-black/90 to-transparent rounded-b-2xl flex flex-col">
-          <h2 className="md:line-clamp-1 text-md lg:group-hover:text-sm transition-all duration-750 font-semibold text-center text-neutral-50">
+          <h2
+            className={`md:line-clamp-1 text-md ${post.acf?.shortBiography ? "lg:group-hover:text-sm" : ""} transition-all duration-750 font-semibold text-center text-neutral-50`}>
             {post.acf?.name}
           </h2>
 
-          <h3 className="md:line-clamp-1 text-sm lg:group-hover:text-xs transition-all duration-750 font-semibold text-center text-neutral-300">
+          <h3
+            className={`md:line-clamp-1 text-sm ${post.acf?.shortBiography ? "lg:group-hover:text-xs" : ""} transition-all duration-750 font-semibold text-center text-neutral-300`}>
             {post.acf?.title}
           </h3>
 
           <p className="text-sm hidden lg:block text-gray-200 mt-2 max-h-0 opacity-0 overflow-hidden transition-[height_opacity] duration-750 group-hover:max-h-70 group-hover:opacity-100">
-            {post.acf?.bio}
+            {post.acf?.shortBiography}
           </p>
         </div>
 
-        <div className="absolute md:hidden right-5 top-5 p-1 rounded-full bg-black/70 text-neutral-50">
+        <div className="absolute right-5 top-5 p-1 rounded-full bg-black/70 text-neutral-50">
           <ArrowRightIcon className="w-4 h-4 transition-transform duration-750 group-hover:translate-x-0.5" />
         </div>
-      </button>
+      </div>
       <Overlay active={active} setActive={setActive}>
         <div className="flex flex-col gap-3">
           <div className="flex justify-between items-center">
@@ -185,8 +193,16 @@ export function CarouselCard({ post }) {
             </button>
           </div>
           <p className="text-sm leading-relaxed text-neutral-600">
-            {post.acf?.bio}
+            {post.acf?.shortBiography}
           </p>
+          <div className="flex justify-end w-fit">
+            <ExpressiveLink
+              ariaLabel={`Learn more about ${post.acf?.name} at the source of hope`}
+              to={post.slug}
+              className="font-semibold text-accent-700 hover:text-accent-800 transition-colors duration-750">
+              See full '{post.acf?.name}' Biography
+            </ExpressiveLink>
+          </div>
         </div>
       </Overlay>
     </>

@@ -1,7 +1,7 @@
 import express from "express";
 import Stripe from "stripe";
 import fetch from "node-fetch";
-import { getConfig } from "../utility/environment.js";
+import { getEnvironment } from "../utility/environment.js";
 
 const router = express.Router();
 
@@ -147,10 +147,10 @@ router.post('/retrieve-stripe-publishable-key', async (req, res) => {
 
 router.post('/create-stripe-session', async (req, res) => {
   try {
-    const { stripeSecretKey } = getConfig();
+    const { stripeSecretKey } = getEnvironment();
     if (!stripeSecretKey) {
       return res.status(500).json({ error: "Stripe is not configured." });
-      }
+    }
 
     const stripe = new Stripe(stripeSecretKey);
 
@@ -474,9 +474,10 @@ router.post("/create-paypal-order", async (req, res) => {
       cancelUrl,
     } = req.body;
 
-    const { paypalClientId, paypalClientSecret, paypalApiUrl } = getConfig();
+    const { paypalClientId, paypalClientSecret, paypalApiUrl } =
+      getEnvironment();
 
-    if (!paypalClientId || !paypalClientSecret) {
+    if (!paypalClientId || !paypalClientSecret || !paypalApiUrl) {
       return res.status(500).json({
         error: "PayPal is not configured. Please contact support.",
       });
@@ -496,27 +497,12 @@ router.post("/create-paypal-order", async (req, res) => {
       (sum, item) => sum + item.price * item.quantity,
       0,
     );
-    
-    // Round each component to 2 decimal places to match PayPal's format
-    const itemsTotalRounded = parseFloat(itemsTotal.toFixed(2));
-    const shippingRounded = parseFloat((shippingCost || 0).toFixed(2));
-    const taxRounded = parseFloat((taxAmount || 0).toFixed(2));
-    const totalAmount = itemsTotalRounded + shippingRounded + taxRounded;
-    
-    console.log("PayPal amount breakdown:", {
-      itemsTotal: itemsTotalRounded,
-      shipping: shippingRounded,
-      tax: taxRounded,
-      total: totalAmount,
-      calculatedTotal: itemsTotalRounded + shippingRounded + taxRounded
-    });
+    const totalAmount = itemsTotal + (shippingCost || 0) + (taxAmount || 0);
 
-    // Get PayPal access token
     const auth = Buffer.from(
       `${paypalClientId}:${paypalClientSecret}`,
     ).toString("base64");
 
-    console.log("Requesting PayPal access token...");
     const tokenResponse = await fetch(`${paypalApiUrl}/v1/oauth2/token`, {
       method: "POST",
       headers: {
@@ -535,7 +521,7 @@ router.post("/create-paypal-order", async (req, res) => {
     }
 
     const { access_token } = await tokenResponse.json();
-    console.log("PayPal access token obtained successfully");
+    console.log("Obtained PayPal access token.");
 
     // Prepare PayPal order items
     const paypalItems = items.map((item) => ({
@@ -632,6 +618,45 @@ router.post("/create-paypal-order", async (req, res) => {
       details: error.message,
     });
   }
+});
+
+/**
+ * Handle Stripe Webhook Events
+ * POST /api/checkout/webhook
+ */
+router.post("/webhook", (req, res) => {
+  const { stripeSecretKey, stripeWebhookSecret } = getEnvironment();
+  if (!stripeSecretKey || !stripeWebhookSecret) {
+    return res.status(500).send("Stripe webhook not configured");
+  }
+
+  const stripe = new Stripe(stripeSecretKey);
+
+  const signature = req.headers["stripe-signature"];
+  let event;
+
+  try {
+    event = stripe.webhooks.constructEvent(
+      req.body,
+      signature,
+      stripeWebhookSecret,
+    );
+  } catch (err) {
+    console.error("Webhook signature verification failed:", err.message);
+    return res.sendStatus(400);
+  }
+
+  switch (event.type) {
+    case "payment_intent.succeeded": {
+      const paymentIntent = event.data.object;
+      console.log(`PaymentIntent for ${paymentIntent.amount} succeeded`);
+      break;
+    }
+    default:
+      console.log(`Unhandled event type ${event.type}`);
+  }
+
+  res.sendStatus(200);
 });
 
 export default router;

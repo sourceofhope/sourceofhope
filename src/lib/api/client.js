@@ -1,8 +1,15 @@
-const API_BASE_URL = window.location.hostname.includes("thesourceofhope.org")
-  ? import.meta.env.MODE === "development"
+const hostname = window.location.hostname.toLowerCase();
+
+const isLocal = hostname === "localhost" || hostname === "127.0.0.1";
+
+const isDevSite =
+  hostname === "dev.thesourceofhope.org" || hostname.startsWith("dev.");
+
+export const API_BASE_URL = isLocal
+  ? "http://localhost:3001/api"
+  : isDevSite
     ? "https://api.thesourceofhope.org/dev/api"
-    : "https://api.thesourceofhope.org/app/api"
-  : "http://localhost:3001/api";
+    : "https://api.thesourceofhope.org/app/api";
 
 export function sanitize(str) {
   return String(str).replace(/[<>]/g, "");
@@ -10,9 +17,16 @@ export function sanitize(str) {
 
 export async function apiRequest(path, options = {}) {
   const { method = "GET", body, headers = {} } = options;
+  const url = `${API_BASE_URL}${path}`;
+  
+  console.log('🌐 API Request:', {
+    method,
+    url,
+    body
+  });
 
   try {
-    const res = await fetch(`${API_BASE_URL}${path}`, {
+    const res = await fetch(url, {
       method,
       headers: {
         "Content-Type": "application/json",
@@ -20,14 +34,19 @@ export async function apiRequest(path, options = {}) {
       },
       body: body ? JSON.stringify(body) : undefined,
     });
+    
+    console.log('📡 Response status:', res.status);
 
     const contentType = res.headers.get("content-type");
     const data =
       contentType && contentType.includes("application/json")
         ? await res.json()
         : null;
+    
+    console.log('📦 Response data:', data);
 
     if (!res.ok) {
+      console.error('❌ Request failed:', data);
       return {
         error: data?.error || "Request failed",
         status: res.status,
@@ -38,7 +57,8 @@ export async function apiRequest(path, options = {}) {
       data,
       status: res.status,
     };
-  } catch {
+  } catch (err) {
+    console.error('❌ Network error:', err);
     return {
       error: "Network error",
       status: 0,

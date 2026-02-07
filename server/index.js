@@ -2,29 +2,39 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import checkoutRoutes from "./routes/checkout.js";
+import emailRoutes from "./routes/email.js";
+import { getEnvironment } from "./utility/environment.js";
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// Middleware
+const { frontendUrl } = getEnvironment();
+
+function normalizeOrigin(origin) {
+  if (!origin) return null;
+  try {
+    return new URL(origin).origin;
+  } catch {
+    return origin.replace(/\/$/, "");
+  }
+}
+
 const allowedOrigins = [
   "https://thesourceofhope.org",
   "https://www.thesourceofhope.org",
-  "http://localhost:5173", // For local development
-];
+  "https://dev.thesourceofhope.org",
+  "http://localhost:5173",
+  normalizeOrigin(frontendUrl),
+].filter(Boolean);
 
 app.use(
   cors({
-    origin: function (origin, callback) {
-      // Allow requests with no origin (like mobile apps or curl requests)
+    origin(origin, callback) {
       if (!origin) return callback(null, true);
-
-      if (allowedOrigins.indexOf(origin) === -1) {
-        const msg =
-          "The CORS policy for this site does not allow access from the specified Origin.";
-        return callback(new Error(msg), false);
+      if (!allowedOrigins.includes(origin)) {
+        return callback(new Error("CORS policy: Origin not allowed."), false);
       }
       return callback(null, true);
     },
@@ -32,61 +42,9 @@ app.use(
   }),
 );
 
-const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET;
-
-// Stripe webhook route needs raw body, so it comes before express.json()
-app.post(
-  "/webhook",
-  express.raw({ type: "application/json" }),
-  (request, response) => {
-    // Only verify the event if you have an endpoint secret defined.
-    // Otherwise use the basic event deserialized with JSON.parse
-    if (endpointSecret) {
-      // Get the signature sent by Stripe
-      const signature = request.headers["stripe-signature"];
-      try {
-        event = stripe.webhooks.constructEvent(
-          request.body,
-          signature,
-          endpointSecret,
-        );
-      } catch (err) {
-        console.log(`Webhook signature verification failed.`, err.message);
-        return response.sendStatus(400);
-      }
-    }
-
-    let event = request.body;
-
-    // Handle the event
-    switch (event.type) {
-      case "payment_intent.succeeded":
-        const paymentIntent = event.data.object;
-        console.log(
-          `PaymentIntent for ${paymentIntent.amount} was successful!`,
-        );
-        // Then define and call a method to handle the successful payment intent.
-        // handlePaymentIntentSucceeded(paymentIntent);
-        break;
-      case "payment_method.attached":
-        const paymentMethod = event.data.object;
-        // Then define and call a method to handle the successful attachment of a PaymentMethod.
-        // handlePaymentMethodAttached(paymentMethod);
-        break;
-      default:
-        // Unexpected event type
-        console.log(`Unhandled event type ${event.type}.`);
-    }
-
-    // Return a 200 response to acknowledge receipt of the event
-    response.send();
-  },
-);
-
-// ---- STRIPE WEBHOOK (raw body) ----
-// Local:    /api/checkout/webhook
-// Vercel:   /dev/api/checkout/webhook OR /app/api/checkout/webhook
-
+// ---- STRIPE WEBHOOK (raw body must come BEFORE json) ----
+// Local:  /api/checkout/webhook
+// Vercel: /dev/api/checkout/webhook OR /app/api/checkout/webhook
 app.post(
   [
     "/api/checkout/webhook",
@@ -105,17 +63,23 @@ app.get(["/api/health", "/dev/api/health", "/app/api/health"], (req, res) => {
   res.json({ status: "ok", message: "Source of Hope API is running" });
 });
 
-// ---- Mount checkout routes (local + Vercel) ----
-app.use("/api/checkout", checkoutRoutes);
-app.use("/dev/api/checkout", checkoutRoutes);
-app.use("/app/api/checkout", checkoutRoutes);
+const checkoutPrefixes = [
+  "/api/checkout",
+  "/dev/api/checkout",
+  "/app/api/checkout",
+];
+checkoutPrefixes.forEach((prefix) => app.use(prefix, checkoutRoutes));
 
+// ---- Mount email routes (local + Vercel) ----
+app.use("/api/email", emailRoutes);
+app.use("/dev/api/email", emailRoutes);
+app.use("/app/api/email", emailRoutes);
+
+// Helpful 404 for debugging
 app.all("*", (req, res) => {
-  res.status(404).json({
-    message: "Route not found",
-    path: req.path,
-    method: req.method,
-  });
+  res
+    .status(404)
+    .json({ message: "Route not found", path: req.path, method: req.method });
 });
 
 if (!process.env.VERCEL) {

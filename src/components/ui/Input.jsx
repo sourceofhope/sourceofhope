@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { forwardRef } from "react";
 
 export default function Input({
   title,
@@ -14,38 +14,31 @@ export default function Input({
   return (
     <div
       className={`flex flex-col gap-1 ${
-        isValid ? "text-neutral-950" : "text-red-600"
+        hasError ? "text-red-600" : "text-neutral-950"
       } ${className}`}>
       <label
-        htmlFor={htmlFor}
+        htmlFor={name}
         className="text-sm md:text-md px-1 font-semibold select-none">
         {title}
       </label>
       <input
-        name={htmlFor}
+        id={name}
+        name={name}
         type={type}
-        onChange={(event) => {
-          const value = event.target.value;
-
-          if (setFormData) {
-            setFormData((prev) => ({
-              ...prev,
-              [htmlFor]: value,
-            }));
-          }
-
-          setIsValid(onChange(event));
-        }}
+        ref={ref}
+        {...rest}
         className={`bg-neutral-50 rounded-2xl shadow-sm w-full h-[4ch] px-2 ${
-          isValid
-            ? `${border ? "border-2" : "border-0"} border-neutral-950`
-            : "border-2 border-red-600"
+          hasError
+            ? "border-2 border-red-600"
+            : `${border ? "border-2" : "border-0"} border-neutral-950`
         }`}
       />
 
-      <p className={`text-xs ${isValid ? "invisible select-none" : "visible"}`}>
-        Please enter a valid {title.toLowerCase()}.
+      <p className={`text-xs ${hasError ? "visible" : "invisible select-none"}`}>
+        {error?.message || `Please enter a valid ${title.toLowerCase()}.`}
       </p>
     </div>
   );
-}
+});
+
+export default Input;

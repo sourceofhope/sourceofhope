@@ -5,13 +5,16 @@ import Input from "@/components/ui/Input";
 import Heading from "@/components/ui/text/Heading";
 
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 import {
   BuildingStorefrontIcon,
   EnvelopeIcon,
   MapIcon,
+  CheckCircleIcon,
+  XCircleIcon,
 } from "@heroicons/react/20/solid";
 import { HighlightedText } from "@/components/ui/expressive/ExpressiveText";
-import { post } from "../../../lib/api/client";
+import { sendEmail } from "@/lib/api/email";
 
 const formStatus = {
   IDLE: "IDLE",
@@ -21,23 +24,23 @@ const formStatus = {
 };
 
 export default function ConnectMapSection() {
-  const [formData, setFormData] = useState({
-    fname: "",
-    lname: "",
-    email: "",
-    phone: "",
-    msg: "",
-    company: "",
-  });
   const [status, setStatus] = useState(formStatus.IDLE);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm({ mode: "onBlur" });
 
-  const validateName = (event) => {
-    if (status === formStatus.SUBMIT) {
-      const trimmed = event.target.value.trim();
-      return trimmed.length > 0 && trimmed.length <= 50;
-    }
-    return true;
+  const message = {
+    IDLE: "Send",
+    SUBMIT: "Sending",
+    SUCCESS: "Sent",
+    ERROR: "Error",
   };
+
+  const isProcessing = status === formStatus.SUBMIT;
+
   return (
     <PageSection className="m-0 text-sm md:text-md lg:text-lg py-5 bg-neutral-200">
       <Title className="py-5 hidden md:block">
@@ -90,94 +93,156 @@ export default function ConnectMapSection() {
           </div>
         </article>
         <article className="w-full grid gap-5 row-start-1 md:row-start-auto h-full">
-          <form className="grid w-full h-full">
+          <form
+            className="grid w-full h-full"
+            onSubmit={handleSubmit(onSubmit)}>
             <Input
               title="First name"
-              htmlFor="fname"
               type="text"
               border={false}
-              onChange={validateName}
-              setFormData={setFormData}
+              error={errors.fname}
+              {...register("fname", {
+                required: "First name is required",
+                minLength: {
+                  value: 2,
+                  message: "First name must be at least 2 characters",
+                },
+                maxLength: {
+                  value: 50,
+                  message: "First name must be less than 50 characters",
+                },
+                pattern: {
+                  value: /^[A-Za-zÀ-ÖØ-öø-ÿ\s'-]+$/,
+                  message: "Please enter a valid name",
+                },
+              })}
             />
             <Input
               title="Last Name"
-              htmlFor="lname"
               type="text"
               border={false}
-              onChange={validateName}
-              setFormData={setFormData}
+              error={errors.lname}
+              {...register("lname", {
+                required: "Last name is required",
+                minLength: {
+                  value: 2,
+                  message: "Last name must be at least 2 characters",
+                },
+                maxLength: {
+                  value: 50,
+                  message: "Last name must be less than 50 characters",
+                },
+                pattern: {
+                  value: /^[A-Za-zÀ-ÖØ-öø-ÿ\s'-]+$/,
+                  message: "Please enter a valid name",
+                },
+              })}
             />
             <Input
               title="Email Address"
-              htmlFor="email"
               type="email"
               border={false}
-              setFormData={setFormData}
-              onChange={(event) => {
-                if (submit) {
-                  const input = event.target.value;
-                  if (typeof input !== "string") return false;
-
-                  const trimmed = input.trim();
-                  if (trimmed.length === 0 || trimmed.length > 50) return false;
-
-                  const valid =
-                    trimmed.includes("@") &&
-                    trimmed
-                      .substring(trimmed.lastIndexOf("@"), trimmed.length)
-                      .includes(".") &&
-                    trimmed.substring(0, trimmed.lastIndexOf("@")).length > 0;
-                  return valid;
-                }
-                return true;
-              }}
+              error={errors.email}
+              {...register("email", {
+                required: "Email is required",
+                pattern: {
+                  value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                  message: "Please enter a valid email address",
+                },
+              })}
             />
             <Input
               title="Phone Number"
-              htmlFor="phone"
               type="tel"
               border={false}
-              setFormData={setFormData}
-              onChange={(event) => {
-                if (submit) {
-                  const input = event.target.value;
-                  if (typeof input !== "string") return false;
-
-                  const trimmed = input.trim();
-                  if (trimmed.length === 0 || trimmed.length > 50) return false;
-
-                  const valid =
-                    input.split("-").length == 3 ||
-                    input.split(".").length == 3 ||
-                    (input.length >= 11 && input.length <= 13);
-                  return valid;
-                }
-                return true;
-              }}
+              error={errors.phone}
+              {...register("phone", {
+                required: "Phone number is required",
+                pattern: {
+                  value: /^[\d\s\-().+]+$/,
+                  message: "Please enter a valid phone number",
+                },
+                minLength: {
+                  value: 10,
+                  message: "Phone number must be at least 10 digits",
+                },
+              })}
             />
             <Input
               title="Message"
-              htmlFor="msg"
               type="text"
               border={false}
-              setFormData={setFormData}
+              error={errors.msg}
+              {...register("msg", {
+                required: "Message is required",
+                minLength: {
+                  value: 10,
+                  message: "Message must be at least 10 characters",
+                },
+                maxLength: {
+                  value: 500,
+                  message: "Message must be less than 500 characters",
+                },
+              })}
             />
-            <Input
+
+            {/* <Input
               title="Company"
-              htmlFor="company"
               type="text"
               border={false}
-              setFormData={setFormData}
               className="hidden"
-            />
+              {...register("company")}
+            /> */}
+
+            <div className="h-5" aria-live="polite" aria-atomic="true">
+              {status === formStatus.SUCCESS && (
+                <p className="text-sm text-green-700 flex items-center justify-center gap-2">
+                  <CheckCircleIcon className="w-5 h-5" />
+                  Message sent.
+                </p>
+              )}
+
+              {status === formStatus.ERROR && (
+                <p className="text-sm text-red-700 flex items-center justify-center gap-2">
+                  <XCircleIcon className="w-5 h-5" />
+                  Something went wrong. Try again.
+                </p>
+              )}
+            </div>
+
             <div className="flex flex-col gap-1">
-              <input
-                name="submit"
+              <button
                 type="submit"
-                value="Submit"
-                onSubmit={handleSubmit}
-                className="rounded-2xl w-full h-[4ch] px-2 bg-primary-700 text-neutral-50 font-semibold cursor-pointer hover:bg-primary-800 transition-colors duration-300"
-              />
+                disabled={isProcessing}
+                className={`w-full px-5 py-4 rounded-xl font-bold text-white text-lg transition-all duration-300 ${
+                  isProcessing
+                    ? "bg-neutral-400 cursor-not-allowed"
+                    : "bg-accent-500 hover:bg-accent-600 hover:shadow-lg"
+                }`}>
+                {isProcessing ? (
+                  <span className="flex items-center justify-center gap-2">
+                    <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                        fill="none"
+                      />
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      />
+                    </svg>
+                    Sending
+                  </span>
+                ) : (
+                  "Submit"
+                )}
+              </button>
             </div>
           </form>
         </article>
@@ -185,28 +250,25 @@ export default function ConnectMapSection() {
     </PageSection>
   );
 
-  async function handleSubmit(event) {
-    event.preventDefault();
+  async function onSubmit(formData) {
     setStatus(formStatus.SUBMIT);
 
-    if (formData.company) {
+    try {
+      await sendEmail({
+        name: `${formData.fname} ${formData.lname}`,
+        email: formData.email,
+        message: `Phone: ${formData.phone || "Not provided"}\n\n${formData.msg}`,
+      });
+
       setStatus(formStatus.SUCCESS);
-      return;
-    }
+      reset();
 
-    const { error } = await post("/contact", {
-      fname: formData.fname,
-      lname: formData.lname,
-      email: formData.email,
-      phone: formData.phone,
-      msg: formData.msg,
-    });
-
-    if (error) {
+      setTimeout(() => {
+        setStatus(formStatus.IDLE);
+      }, 5000);
+    } catch (error) {
+      console.error("Failed to send email:", error);
       setStatus(formStatus.ERROR);
-      return;
     }
-
-    setStatus(formStatus.SUCCESS);
   }
 }
