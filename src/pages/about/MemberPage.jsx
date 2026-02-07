@@ -98,18 +98,16 @@ export default function MemberPage() {
       <PageSection className="pt-10 pb-20">
         <div className="relative">
           <div className="float-right ml-8 mb-8 w-full sm:w-96">
-            <div className="bg-gradient-to-br from-neutral-50 to-white rounded-lg shadow-lg overflow-hidden border-4 border-white ring-1 ring-gray-200">
-              <img
-                src={
-                  image?.source_url ||
-                  `/${ASSET_VERSION}/core/Member-Placeholder.webp`
-                }
-                alt={image?.alt_text || name || "Team member"}
-                loading="lazy"
-                decoding="async"
-                className="object-cover transition-opacity duration-750"
-              />
-            </div>
+            <img
+              src={
+                image?.source_url ||
+                `/${ASSET_VERSION}/core/Member-Placeholder.webp`
+              }
+              alt={image?.alt_text || name || "Team member"}
+              loading="lazy"
+              decoding="async"
+              className="aspect-square object-cover size-full rounded-2xl transition-opacity duration-750"
+            />
           </div>
 
           <div className="mb-6">
