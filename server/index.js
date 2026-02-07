@@ -2,14 +2,14 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import checkoutRoutes from "./routes/checkout.js";
-import { getConfig } from "./utility/environment.js";
+import { getEnvironment } from "./utility/environment.js";
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-const { frontendUrl } = getConfig();
+const { frontendUrl } = getEnvironment();
 
 function normalizeOrigin(origin) {
   if (!origin) return null;

@@ -1,5 +1,5 @@
-export function getConfig() {
-  const cfg = {
+export function getEnvironment() {
+  const config = {
     stripeSecretKey: process.env.STRIPE_SECRET_KEY,
     stripeWebhookSecret: process.env.STRIPE_WEBHOOK_SECRET,
 
@@ -10,5 +10,5 @@ export function getConfig() {
     paypalApiUrl: process.env.PAYPAL_API_BASE,
   };
 
-  return cfg;
+  return config;
 }
