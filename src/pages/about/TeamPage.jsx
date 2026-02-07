@@ -89,13 +89,13 @@ function CarouselLayer({ title, groupName, options = {} }) {
   useEffect(() => {
     fetchContent(
       `/team-member?per_page=100&_embed&meta_key=team_group&meta_value=${encodeURIComponent(
-        groupName
+        groupName,
       )}`,
-      options
+      options,
     )
       .then((data) => {
         const filtered = data.filter(
-          (member) => member.acf?.team_group === groupName
+          (member) => member.acf?.team_group === groupName,
         );
         setPosts(filtered);
       })
@@ -164,7 +164,7 @@ export function CarouselCard({ post }) {
           </h3>
 
           <p className="text-sm hidden lg:block text-gray-200 mt-2 max-h-0 opacity-0 overflow-hidden transition-[height_opacity] duration-750 group-hover:max-h-70 group-hover:opacity-100">
-            {post.acf?.bio}
+            {post.acf?.shortBiography}
           </p>
         </div>
 
