@@ -25,7 +25,21 @@ const formStatus = {
 
 export default function ConnectMapSection() {
   const [status, setStatus] = useState(formStatus.IDLE);
-  const { register, handleSubmit, formState: { errors }, reset } = useForm({ mode: "onBlur"});
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm({ mode: "onBlur" });
+
+  const message = {
+    IDLE: "Send",
+    SUBMIT: "Sending",
+    SUCCESS: "Sent",
+    ERROR: "Error",
+  };
+
+  const isProcessing = status === formStatus.SUBMIT;
 
   return (
     <PageSection className="m-0 text-sm md:text-md lg:text-lg py-5 bg-neutral-200">
@@ -78,8 +92,10 @@ export default function ConnectMapSection() {
             </div>
           </div>
         </article>
-        <article className="w-full grid gap-5 row-start-1 md:row-start-auto">
-          <form className="flex flex-col w-full gap-1" onSubmit={handleSubmit(onSubmit)}>
+        <article className="w-full grid gap-5 row-start-1 md:row-start-auto h-full">
+          <form
+            className="grid w-full h-full"
+            onSubmit={handleSubmit(onSubmit)}>
             <Input
               title="First name"
               type="text"
@@ -178,30 +194,54 @@ export default function ConnectMapSection() {
               {...register("company")}
             /> */}
 
-            {status === formStatus.SUCCESS && (
-              <div className="flex items-center gap-2 p-4 bg-green-50 text-green-800 rounded-2xl border border-green-200">
-                <CheckCircleIcon className="w-5 h-5 flex-shrink-0" />
-                <p className="text-sm font-medium">
-                  Message sent successfully! We'll get back to you soon.
+            <div className="h-5" aria-live="polite" aria-atomic="true">
+              {status === formStatus.SUCCESS && (
+                <p className="text-sm text-green-700 flex items-center justify-center gap-2">
+                  <CheckCircleIcon className="w-5 h-5" />
+                  Message sent.
                 </p>
-              </div>
-            )}
+              )}
 
-            {status === formStatus.ERROR && (
-              <div className="flex items-center gap-2 p-4 bg-red-50 text-red-800 rounded-2xl border border-red-200">
-                <XCircleIcon className="w-5 h-5 flex-shrink-0" />
-                <p className="text-sm font-medium">
-                  Failed to send message. Please try again later.
+              {status === formStatus.ERROR && (
+                <p className="text-sm text-red-700 flex items-center justify-center gap-2">
+                  <XCircleIcon className="w-5 h-5" />
+                  Something went wrong. Try again.
                 </p>
-              </div>
-            )}
+              )}
+            </div>
 
             <div className="flex flex-col gap-1">
               <button
                 type="submit"
-                disabled={status === formStatus.SUBMIT}
-                className="rounded-2xl w-full h-[4ch] px-2 bg-primary-700 text-neutral-50 font-semibold cursor-pointer hover:bg-primary-800 disabled:bg-neutral-400 disabled:cursor-not-allowed transition-colors duration-300">
-                {status === formStatus.SUBMIT ? "Sending..." : "Submit"}
+                disabled={isProcessing}
+                className={`w-full px-5 py-4 rounded-xl font-bold text-white text-lg transition-all duration-300 ${
+                  isProcessing
+                    ? "bg-neutral-400 cursor-not-allowed"
+                    : "bg-accent-500 hover:bg-accent-600 hover:shadow-lg"
+                }`}>
+                {isProcessing ? (
+                  <span className="flex items-center justify-center gap-2">
+                    <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                        fill="none"
+                      />
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      />
+                    </svg>
+                    Sending
+                  </span>
+                ) : (
+                  "Submit"
+                )}
               </button>
             </div>
           </form>
@@ -211,7 +251,6 @@ export default function ConnectMapSection() {
   );
 
   async function onSubmit(formData) {
-
     setStatus(formStatus.SUBMIT);
 
     try {
@@ -223,7 +262,7 @@ export default function ConnectMapSection() {
 
       setStatus(formStatus.SUCCESS);
       reset();
-      
+
       setTimeout(() => {
         setStatus(formStatus.IDLE);
       }, 5000);
@@ -233,4 +272,3 @@ export default function ConnectMapSection() {
     }
   }
 }
-

@@ -1,12 +1,15 @@
 import express from "express";
 import { Resend } from "resend";
+import { getEnvironment } from "../utility/environment.js";
 
 const router = express.Router();
 
 // POST request to send email
 router.post("/send", async (req, res) => {
+  const { resendKey } = getEnvironment();
+
   try {
-    const resend = new Resend(process.env.RESEND_API_KEY);
+    const resend = new Resend(resendKey);
     const { name, email, message } = req.body;
 
     // Validation
@@ -20,8 +23,8 @@ router.post("/send", async (req, res) => {
     // email sending function
     const { data, error } = await resend.emails.send({
       from: "The Source of Hope <onboarding@resend.dev>",
-      to: ["treasurer@thesourceofhope.org"], 
-      replyTo: email, 
+      to: ["treasurer@thesourceofhope.org"],
+      replyTo: email,
       subject: `New Contact Form Submission from ${name}`,
       html: `
         <h2>New Contact Form Submission</h2>
