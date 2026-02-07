@@ -1,197 +1,158 @@
-# Source of Hope API Server
+# The Source of Hope
 
-Backend API server for handling Stripe payments and checkout functionality.
+This monorepo contains the front and backend used by the Source of Hope website.
+For full system documentation, see the `/docs` folder in the root of the project.
 
-## Setup
+---
 
-1. **Install dependencies:**
+## How This Works Together
 
-   ```bash
-   cd server
-   npm install
-   ```
+The website has three major parts:
 
-2. **Configure environment variables:**
-   - Copy `.env.template` to `.env`
-   - Add your Stripe secret key from https://dashboard.stripe.com/apikeys
-   - Update `FRONTEND_URL` if your frontend runs on a different port
+1. Frontend application (React + Vite)
+2. Headless CMS (content only)
+3. This API server (payments, forms, email)
 
-3. **Get your Stripe keys:**
-   - Log in to [Stripe Dashboard](https://dashboard.stripe.com/)
-   - Go to Developers → API keys
-   - Copy your "Secret key" (starts with `sk_test_` for test mode)
-   - Add it to `.env` as `STRIPE_SECRET_KEY`
+The frontend calls the API whenever a task requires security, payment processing, or server-side logic; the CMS is called for pulling content like event cards or team-member profiles.
 
-## Running the Server
+| Failure                | What to do         |
+| ---------------------- | ------------------ |
+| Content is wrong       | Check the CMS      |
+| Layout is wrong        | Check the frontend |
+| Checkout or forms fail | Check this server  |
 
-**Development mode (with auto-reload):**
+---
+
+## Quick Setup
+
+Install dependencies:
+
+```bash
+cd server
+npm i --legacy-peer-deps
+```
+
+## Configure environment variables
+
+Copy the template:
+
+```bash
+cp .env.template .env
+```
+
+Minimum required variables:
+
+```
+STRIPE_SECRET_KEY=
+PAYPAL_CLIENT_ID=
+PAYPAL_CLIENT_SECRET=
+PAYPAL_MODE=sandbox
+FRONTEND_URL=http://localhost:5173
+PORT=3001
+```
+
+## Running the Server & Frontend
+
+### Development (localhost)
 
 ```bash
 npm run dev
 ```
 
-**Production mode:**
+### Production (server)
 
 ```bash
-npm start
+npm build
 ```
 
-The server will run on `http://localhost:3001` by default.
+View the built frontend: visit `localhost:5317` in your browser;
+by default, the server runs at: `http://localhost:3001`.
 
-## Endpoints
-
-### Health Check
+Health check:
 
 ```
 GET /health
 ```
 
-Returns server status.
+Should return JSON: { status: "ok", message: "Source of Hope API is running" }
 
-### Create Stripe Checkout Session
+## Endpoints Used by the Frontend
+
+### Stripe Checkout
 
 ```
 POST /api/checkout/create-stripe-session
 ```
 
-Creates a Stripe checkout session and returns the checkout URL.
+Creates a Stripe checkout session and returns a checkout URL.
 
-**Request body:**
-
-```json
-{
-  "items": [
-    {
-      "id": "product-1",
-      "name": "Product Name",
-      "price": 29.99,
-      "quantity": 2,
-      "size": "M",
-      "image": "https://..."
-    }
-  ],
-  "shippingMethod": "standard",
-  "shippingCost": 5.99,
-  "taxAmount": 2.47,
-  "successUrl": "http://localhost:5173/cart/success",
-  "cancelUrl": "http://localhost:5173/cart"
-}
-```
-
-#### Testing with Stripe
-
-Use Stripe's test card numbers:
-
-- **Success:** `4242 4242 4242 4242`
-- **Decline:** `4000 0000 0000 0002`
-- Any future expiry date and any 3-digit CVC
-
-### Create Paypal Checkout Session
+### PayPal Checkout
 
 ```
 POST /api/checkout/create-paypal-session
 ```
 
-Creates a Paypal checkout session and returns the checkout URL.
+Creates a PayPal checkout session and returns a checkout URL.
 
-**Request body:**
+Both endpoints use the same request structure from the frontend cart.
+Testing Payments
 
-```json
-{
-  "items": [
-    {
-      "id": "product-1",
-      "name": "Product Name",
-      "price": 29.99,
-      "quantity": 2,
-      "size": "M",
-      "image": "https://..."
-    }
-  ],
-  "shippingMethod": "standard",
-  "shippingCost": 5.99,
-  "taxAmount": 2.47,
-  "successUrl": "http://localhost:5173/cart/success",
-  "cancelUrl": "http://localhost:5173/cart"
-}
-```
+| Result  | Card Number           |
+| ------- | --------------------- |
+| Success | `4242 4242 4242 4242` |
+| Decline | `4000 0000 0000 0002` |
 
-### PayPal Integration Setup Guide
+Any future expiry date and any CVC.
 
-#### Overview
+### PayPal Sandbox
 
-Your storefront now supports both Stripe and PayPal checkout options. Customers can choose their preferred payment method before proceeding to checkout.
+Use sandbox buyer accounts from the PayPal Developer Dashboard.
 
-#### PayPal Configuration
+## Environment Behavior
 
-#### 1. Create a PayPal Developer Account
+The frontend automatically selects the correct API based on the domain:
 
-1. Go to [PayPal Developer Dashboard](https://developer.paypal.com/dashboard/)
-2. Sign in or create a new developer account
-3. Click on "Dashboard" in the top navigation
+| Environment | API Used                    |
+| ----------- | --------------------------- |
+| Local       | `localhost:3001`            |
+| Development | `/dev/api (Vercel rewrite)` |
+| Production  | `/app/api (Vercel rewrite)` |
 
-#### 2. Create a Sandbox Application (for testing)
+This allows the same frontend code to work safely across environments.
 
-1. In the PayPal Developer Dashboard, click on "Apps & Credentials"
-2. Under "REST API apps", click "Create App"
-3. Enter your app name (e.g., "Source of Hope Store")
-4. Select "Merchant" as the app type
-5. Click "Create App"
+## Going Live With Payments
 
-#### 3. Get Your API Credentials
+When moving from testing to production:
 
-After creating the app, you'll see:
+- Replace Stripe test key with live secret key
+- Create a Live PayPal app and update credentials
+- Set `PAYPAL_MODE=live`
 
-- **Client ID**: Copy this value
-- **Secret**: Click "Show" and copy this value
+No code changes are required.
 
-#### 4. Configure Your Server
+## Deployment Options
 
-1. In the `server` folder, create a `.env` file (if it doesn't exist):
+This server can be deployed as:
 
-   ```bash
-   cd server
-   cp .env.template .env
-   ```
+- Vercel serverless functions
+- Railway / Render Node app
+- Containerized on AWS/GCP/Azure
+- Hosted at https://api.thesourceofhope.org
 
-2. Add your PayPal credentials to `server/.env`:
-   ```
-   PAYPAL_CLIENT_ID=your_sandbox_client_id_here
-   PAYPAL_CLIENT_SECRET=your_sandbox_client_secret_here
-   PAYPAL_MODE=sandbox
-   ```
+Important Rules
 
-#### 5. Testing PayPal Checkout
+- Never expose secret keys to the frontend
+- Never edit environment variables directly on a live server without version control
+- Always test checkout in sandbox before production deploy
 
-**Sandbox Test Accounts:**
-PayPal provides test accounts for sandbox testing:
+Where to Learn More
 
-1. In Developer Dashboard, go to "Sandbox" → "Accounts"
-2. You'll see test buyer and seller accounts
-3. Use these credentials when testing checkout
+For full documentation on:
 
-**Test Credit Cards:**
-When testing in sandbox mode, you can use PayPal's test accounts. No real money is charged.
+- System architecture
+- Project structure
+- Deployment flow
+- Developer task recipes
+- CMS and content workflows
 
-#### 6. Going Live (Production)
-
-When you're ready to accept real payments:
-
-1. Switch to "Live" mode in the PayPal Developer Dashboard
-2. Create a live REST API app (same process as sandbox)
-3. Get your **Live** Client ID and Secret
-4. Update your production `.env` file:
-   ```
-   PAYPAL_CLIENT_ID=your_live_client_id_here
-   PAYPAL_CLIENT_SECRET=your_live_client_secret_here
-   PAYPAL_MODE=live
-   ```
-
-## Deployment
-
-This server can be deployed to:
-
-- **Vercel/Netlify** (as serverless functions)
-- **Railway/Render** (as a Node.js app)
-- **AWS/GCP/Azure** (containerized or VM)
-- **Your existing API server** at `https://api.thesourceofhope.org`
+See `/docs`.
