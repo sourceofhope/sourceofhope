@@ -2,14 +2,15 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import checkoutRoutes from "./routes/checkout.js";
-import { getConfig } from "./utility/environment.js";
+import emailRoutes from "./routes/email.js";
+import { getEnvironment } from "./utility/environment.js";
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-const { frontendUrl } = getConfig();
+const { frontendUrl } = getEnvironment();
 
 function normalizeOrigin(origin) {
   if (!origin) return null;
@@ -69,6 +70,12 @@ const checkoutPrefixes = [
 ];
 checkoutPrefixes.forEach((prefix) => app.use(prefix, checkoutRoutes));
 
+// ---- Mount email routes (local + Vercel) ----
+app.use("/api/email", emailRoutes);
+app.use("/dev/api/email", emailRoutes);
+app.use("/app/api/email", emailRoutes);
+
+// Helpful 404 for debugging
 app.all("*", (req, res) => {
   res
     .status(404)

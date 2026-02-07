@@ -88,13 +88,13 @@ function CarouselLayer({ title, groupName, options = {} }) {
   useEffect(() => {
     fetchContent(
       `/team-member?per_page=100&_embed&meta_key=team_group&meta_value=${encodeURIComponent(
-        groupName
+        groupName,
       )}`,
-      options
+      options,
     )
       .then((data) => {
         const filtered = data.filter(
-          (member) => member.acf?.team_group === groupName
+          (member) => member.acf?.team_group === groupName,
         );
         setPosts(filtered);
       })
@@ -146,21 +146,41 @@ export function CarouselCard({ post }) {
             loaded ? "opacity-100" : "opacity-0"
           }`}
         />
-      </div>
-      <div className="flex flex-col items-center gap-1">
-        <h2 className="text-lg font-semibold text-neutral-900 text-center">
-          {post.acf?.name}
-        </h2>
-        <h3 className="text-sm text-neutral-600 text-center">
-          {post.acf?.title}
-        </h3>
-        <Link 
-          to={`/about/team/${memberSlug}`}
-          className="mt-2 text-blue-600 hover:text-blue-800 text-sm font-medium transition-colors duration-200 flex items-center gap-1"
-        >
-          View bio →
-        </Link>
-      </div>
-    </div>
+        <div className="absolute bottom-0 left-0 w-full p-5 bg-gradient-to-t from-black/90 to-transparent rounded-b-2xl flex flex-col">
+          <h2 className="md:line-clamp-1 text-md lg:group-hover:text-sm transition-all duration-750 font-semibold text-center text-neutral-50">
+            {post.acf?.name}
+          </h2>
+
+          <h3 className="md:line-clamp-1 text-sm lg:group-hover:text-xs transition-all duration-750 font-semibold text-center text-neutral-300">
+            {post.acf?.title}
+          </h3>
+
+          <p className="text-sm hidden lg:block text-gray-200 mt-2 max-h-0 opacity-0 overflow-hidden transition-[height_opacity] duration-750 group-hover:max-h-70 group-hover:opacity-100">
+            {post.acf?.shortBiography}
+          </p>
+        </div>
+
+        <div className="absolute md:hidden right-5 top-5 p-1 rounded-full bg-black/70 text-neutral-50">
+          <ArrowRightIcon className="w-4 h-4 transition-transform duration-750 group-hover:translate-x-0.5" />
+        </div>
+      </button>
+      <Overlay active={active} setActive={setActive}>
+        <div className="flex flex-col gap-3">
+          <div className="flex justify-between items-center">
+            <h2 className="text-xl font-semibold text-neutral-900">
+              {post.acf?.name}
+            </h2>
+            <button
+              onClick={() => setActive(false)}
+              className="rounded-full p-2 hover:bg-neutral-200 transition-colors duration-750">
+              <XMarkIcon className="w-5 h-5 text-neutral-600" />
+            </button>
+          </div>
+          <p className="text-sm leading-relaxed text-neutral-600">
+            {post.acf?.bio}
+          </p>
+        </div>
+      </Overlay>
+    </>
   );
 }
