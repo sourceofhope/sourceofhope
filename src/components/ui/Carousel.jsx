@@ -11,9 +11,9 @@ export default function Carousel({
   const slides = useMemo(
     () =>
       React.Children.toArray(children).filter(
-        (child) => typeof child !== "string"
+        (child) => typeof child !== "string",
       ),
-    [children]
+    [children],
   );
 
   const [perView, setPerView] = useState(itemsPerView.base);
@@ -74,7 +74,7 @@ export default function Carousel({
           </div>
         ))}
       </div>
-      {(!hideControls || showProgress) && totalPages > 1 && (
+      {(!hideControls || showProgress) && (
         <div className="grid grid-flow-col gap-3 w-full items-center justify-between my-5 max-w-full select-none">
           {!hideControls && (
             <button

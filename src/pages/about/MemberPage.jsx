@@ -105,7 +105,9 @@ export default function MemberPage() {
                   `/${ASSET_VERSION}/core/Member-Placeholder.webp`
                 }
                 alt={image?.alt_text || name || "Team member"}
-                className="w-full h-auto object-cover"
+                loading="lazy"
+                decoding="async"
+                className="object-cover transition-opacity duration-750"
               />
             </div>
           </div>
