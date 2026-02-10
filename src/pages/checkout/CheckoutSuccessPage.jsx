@@ -8,11 +8,15 @@ import { useCartActions } from "../../context/StoreCartContext";
 import { useSetHeaderBlocking } from "../../components/structure/Header";
 import { Navigate } from "react-router-dom";
 import { useState } from "react";
-import { fetchStripeSessionStatus, fetchPaypalOrderStatus, fetchPaymentIntentStatus } from "../../lib/api/checkout";
+import {
+  fetchStripeSessionStatus,
+  fetchPaypalOrderStatus,
+  fetchPaymentIntentStatus,
+} from "../../lib/api/checkout";
 
 export default function CartSuccessPage() {
   const [status, setStatus] = useState(null);
-  const [customerEmail, setCustomerEmail] = useState('');
+  const [customerEmail, setCustomerEmail] = useState("");
   const [isLoading, setIsLoading] = useState(true);
 
   const { clearCart } = useCartActions();
@@ -21,10 +25,10 @@ export default function CartSuccessPage() {
   useEffect(() => {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
-    const sessionId = urlParams.get('session_id');
-    const paypalToken = urlParams.get('token');
-    const paymentIntent = urlParams.get('payment_intent');
-    const paymentIntentClientSecret = urlParams.get('payment_intent_client_secret');
+    const sessionId = urlParams.get("session_id");
+    const paypalToken = urlParams.get("token");
+    const paymentIntent = urlParams.get("payment_intent");
+    // const paymentIntentClientSecret = urlParams.get('payment_intent_client_secret');
 
     // If no payment identifier, not a valid success page
     if (!sessionId && !paypalToken && !paymentIntent) {
@@ -37,16 +41,19 @@ export default function CartSuccessPage() {
       fetchStripeSessionStatus(sessionId)
         .then((response) => {
           if (response.error) {
-            console.error('Error fetching Stripe session status:', response.error);
-            setStatus('error');
+            console.error(
+              "Error fetching Stripe session status:",
+              response.error,
+            );
+            setStatus("error");
             return;
           }
           setStatus(response.data.status);
           setCustomerEmail(response.data.customer_email);
         })
         .catch((error) => {
-          console.error('Error fetching Stripe session status:', error);
-          setStatus('error');
+          console.error("Error fetching Stripe session status:", error);
+          setStatus("error");
         })
         .finally(() => {
           setIsLoading(false);
@@ -57,16 +64,19 @@ export default function CartSuccessPage() {
       fetchPaypalOrderStatus(paypalToken)
         .then((response) => {
           if (response.error) {
-            console.error('Error fetching PayPal order status:', response.error);
-            setStatus('error');
+            console.error(
+              "Error fetching PayPal order status:",
+              response.error,
+            );
+            setStatus("error");
             return;
           }
           setStatus(response.data.status);
           setCustomerEmail(response.data.customer_email);
         })
         .catch((error) => {
-          console.error('Error fetching PayPal order status:', error);
-          setStatus('error');
+          console.error("Error fetching PayPal order status:", error);
+          setStatus("error");
         })
         .finally(() => {
           setIsLoading(false);
@@ -77,27 +87,32 @@ export default function CartSuccessPage() {
       fetchPaymentIntentStatus(paymentIntent)
         .then((response) => {
           if (response.error) {
-            console.error('Error fetching Payment Intent status:', response.error);
-            setStatus('error');
+            console.error(
+              "Error fetching Payment Intent status:",
+              response.error,
+            );
+            setStatus("error");
             return;
           }
           // Map Payment Intent status to checkout status
           const piStatus = response.data.status;
-          if (piStatus === 'succeeded') {
-            setStatus('complete');
-          } else if (piStatus === 'processing') {
-            setStatus('processing');
-          } else if (piStatus === 'requires_payment_method') {
-            setStatus('open');
+          if (piStatus === "succeeded") {
+            setStatus("complete");
+          } else if (piStatus === "processing") {
+            setStatus("processing");
+          } else if (piStatus === "requires_payment_method") {
+            setStatus("open");
           } else {
-            setStatus('error');
+            setStatus("error");
           }
-          setCustomerEmail(response.data.customer_email || response.data.receipt_email || '');
+          setCustomerEmail(
+            response.data.customer_email || response.data.receipt_email || "",
+          );
           console.log(response.data);
         })
         .catch((error) => {
-          console.error('Error fetching Payment Intent status:', error);
-          setStatus('error');
+          console.error("Error fetching Payment Intent status:", error);
+          setStatus("error");
         })
         .finally(() => {
           setIsLoading(false);
@@ -112,7 +127,7 @@ export default function CartSuccessPage() {
   }, []);
 
   useEffect(() => {
-    if (status === 'complete') {
+    if (status === "complete") {
       clearCart();
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -126,23 +141,38 @@ export default function CartSuccessPage() {
     );
   }
 
-  if (status === 'open') {
+  if (status === "open") {
     return <Navigate to="/store/checkout" />;
   }
 
-  if (status === 'processing') {
+  if (status === "processing") {
     return (
       <div className="min-h-screen bg-neutral-50 flex items-center justify-center px-5 pt-25 py-10">
         <div className="max-w-2xl w-full bg-neutral-100 rounded-2xl shadow-lg p-5 text-center">
           <div className="mx-auto w-20 h-20 rounded-full bg-yellow-100 flex items-center justify-center">
-            <svg className="animate-spin h-12 w-12 text-yellow-600" viewBox="0 0 24 24">
-              <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
-              <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+            <svg
+              className="animate-spin h-12 w-12 text-yellow-600"
+              viewBox="0 0 24 24">
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+                fill="none"
+              />
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+              />
             </svg>
           </div>
           <Title className="mb-4">Payment Processing</Title>
           <p className="text-neutral-700 mb-6 text-sm md:text-md">
-            Your payment is being processed. You'll receive an email confirmation once it's complete.
+            Your payment is being processed. You'll receive an email
+            confirmation once it's complete.
           </p>
           <LinkButton to={CANONICAL.home.absolute} text="Back to Home" />
         </div>
@@ -150,22 +180,39 @@ export default function CartSuccessPage() {
     );
   }
 
-  if (status === 'error') {
+  if (status === "error") {
     return (
       <div className="min-h-screen bg-neutral-50 flex items-center justify-center px-5 pt-25 py-10">
         <div className="max-w-2xl w-full bg-neutral-100 rounded-2xl shadow-lg p-5 text-center">
           <div className="mx-auto w-20 h-20 rounded-full bg-red-100 flex items-center justify-center">
-            <svg className="w-12 h-12 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            <svg
+              className="w-12 h-12 text-red-600"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor">
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
             </svg>
           </div>
           <Title className="mb-4">Payment Error</Title>
           <p className="text-neutral-700 mb-6 text-sm md:text-md">
-            There was an issue processing your payment. Please try again or contact support.
+            There was an issue processing your payment. Please try again or
+            contact support.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <LinkButton to={CANONICAL.storefront.checkout.absolute} text="Try Again" />
-            <LinkButton to={CANONICAL.home.absolute} text="Back to Home" variant="secondary" />
+            <LinkButton
+              to={CANONICAL.storefront.checkout.absolute}
+              text="Try Again"
+            />
+            <LinkButton
+              to={CANONICAL.home.absolute}
+              text="Back to Home"
+              variant="secondary"
+            />
           </div>
         </div>
       </div>
@@ -222,7 +269,9 @@ export default function CartSuccessPage() {
               <li className="flex items-start gap-2">
                 <span className="text-accent-600 font-bold">•</span>
                 <span>
-                  You'll receive an order confirmation email with your receipt{customerEmail && ` to your email: `}<strong>{customerEmail}</strong>
+                  You'll receive an order confirmation email with your receipt
+                  {customerEmail && ` to your email: `}
+                  <strong>{customerEmail}</strong>
                 </span>
               </li>
               <li className="flex items-start gap-2">

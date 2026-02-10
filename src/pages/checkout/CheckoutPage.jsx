@@ -1,17 +1,13 @@
 import { Helmet } from "react-helmet-async";
 import { CANONICAL_URL } from "../../routes";
 import { useEffect } from "react";
-import {
-  useCartActions,
-  SHIPPING_OPTIONS,
-} from "../../context/StoreCartContext";
+import { useCartActions } from "../../context/StoreCartContext";
 import Title from "../../components/ui/text/Title";
 import ExpressCheckoutSection from "./sections/ExpressCheckoutSection";
-// import StripeCheckoutSection from "./sections/StripeCheckoutSection";
 import { useSetHeaderBlocking } from "../../components/structure/Header";
 import Cart from "../storefront/Cart";
 import SelfCheckoutSection from "./sections/SelfCheckoutSection";
-import CheckoutDetailsSection from "./sections/CheckoutDetailsSection"; // Order summary component
+import CheckoutDetailsSection from "./sections/CheckoutDetailsSection";
 
 export default function CheckoutPage() {
   const setBlocking = useSetHeaderBlocking();
