@@ -151,8 +151,8 @@ export default function ExpressCheckoutSection({
       </div>
 
       <div className="mt-6 p-4 bg-neutral-50 rounded-xl">
-        <p className="text-sm text-neutral-600 md:text-center">
-          All transactions are secure
+        <p className="text-sm text-neutral-600 text-center">
+          All transactions are securely stored
         </p>
       </div>
     </div>
