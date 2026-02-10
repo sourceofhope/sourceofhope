@@ -7,7 +7,7 @@ This section explains how the system is designed and where changes belong.
 
 Read order:
 
-1. `SYSTEM_OVERVIEW.md`
+1. `SYSTEM_ARCHITECTURE.md`
 2. `REPOSITORY_LAYOUT.md`
 3. `ROUTING_AND_CANONICAL_URLS.md`
 4. `CMS_INTEGRATION.md`
@@ -16,6 +16,8 @@ Read order:
 7. `DEPLOYMENT.md`
 8. `UI_COMPONENT_CONVENTIONS.md`
 9. `TROUBLESHOOTING.md`
+10. `CI_CD_AND_VERCEL_WORKFLOWS.md`
+11. `SERVER_CONFIGURATION_AND_ENVIRONMENT.md`
 
 Key project rule:
 
