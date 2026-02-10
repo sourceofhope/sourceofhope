@@ -76,7 +76,7 @@ export default function CheckoutPage() {
           </div>
         </section>
       ) : (
-        <div className="min-h-screen bg-neutral-50 pt-25 p-5 md:px-10 lg:px-15">
+        <div className="min-h-screen bg-neutral-50 pt-30 p-5 md:px-10 lg:px-15">
           {/* 3-Column Layout: Left (Express) | Center (Checkout Form) | Right (Order Summary) */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-10">
             {/* Left Column: Express Checkout - 25% */}
