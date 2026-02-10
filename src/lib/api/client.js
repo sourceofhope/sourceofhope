@@ -1,13 +1,11 @@
 const hostname = window.location.hostname.toLowerCase();
 
-const isLocal = hostname === "localhost" || hostname === "127.0.0.1";
-
-const isDevSite =
+export const IS_LOCAL = hostname === "localhost" || hostname === "127.0.0.1";
+export const IS_DEVELOPMENT =
   hostname === "dev.thesourceofhope.org" || hostname.startsWith("dev.");
-
-export const API_BASE_URL = isLocal
+export const API_BASE_URL = IS_LOCAL
   ? "http://localhost:3001/api"
-  : isDevSite
+  : IS_DEVELOPMENT
     ? "https://api.thesourceofhope.org/dev/api"
     : "https://api.thesourceofhope.org/app/api";
 
@@ -17,16 +15,8 @@ export function sanitize(str) {
 
 export async function apiRequest(path, options = {}) {
   const { method = "GET", body, headers = {} } = options;
-  const url = `${API_BASE_URL}${path}`;
-  
-  console.log('🌐 API Request:', {
-    method,
-    url,
-    body
-  });
-
   try {
-    const res = await fetch(url, {
+    const res = await fetch(`${API_BASE_URL}${path}`, {
       method,
       headers: {
         "Content-Type": "application/json",
@@ -34,31 +24,22 @@ export async function apiRequest(path, options = {}) {
       },
       body: body ? JSON.stringify(body) : undefined,
     });
-    
-    console.log('📡 Response status:', res.status);
-
     const contentType = res.headers.get("content-type");
     const data =
       contentType && contentType.includes("application/json")
         ? await res.json()
         : null;
-    
-    console.log('📦 Response data:', data);
-
     if (!res.ok) {
-      console.error('❌ Request failed:', data);
       return {
         error: data?.error || "Request failed",
         status: res.status,
       };
     }
-
     return {
       data,
       status: res.status,
     };
-  } catch (err) {
-    console.error('❌ Network error:', err);
+  } catch {
     return {
       error: "Network error",
       status: 0,
