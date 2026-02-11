@@ -2,6 +2,8 @@ import { useState } from "react";
 import Heading from "../../../components/ui/text/Heading";
 import LocalInput from "../../../components/ui/LocalInput";
 import { loadStripe } from "@stripe/stripe-js";
+import { FaLock, FaEdit } from "react-icons/fa";
+import { useCartActions } from "../../../context/StoreCartContext";
 import {
   Elements,
   PaymentElement,
@@ -13,7 +15,7 @@ import {
   fetchStripePublishableKey,
 } from "../../../lib/api/checkout";
 
-function PaymentForm({ clientSecret, total, onSuccess }) {
+function PaymentForm({ clientSecret, total, processingFee, onSuccess }) {
   const stripe = useStripe();
   const elements = useElements();
   const [isProcessing, setIsProcessing] = useState(false);
@@ -94,13 +96,17 @@ function PaymentForm({ clientSecret, total, onSuccess }) {
       <div className="text-center">
         <p className="text-xs text-neutral-500">
           Your payment information is encrypted and secure
+          <FaLock className="text-accent-500 inline-block ml-1" />
         </p>
       </div>
     </form>
   );
 }
 
-export default function SelfCheckoutSection({ total, cart }) {
+export default function SelfCheckoutSection({ total, cart, taxAmount }) {
+  const { shippingMethod, getShippingCost } = useCartActions();
+  const shippingCost = getShippingCost();
+
   const [formData, setFormData] = useState({
     email: "",
     firstName: "",
@@ -117,6 +123,11 @@ export default function SelfCheckoutSection({ total, cart }) {
   const [clientSecret, setClientSecret] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [coverProcessingFee, setCoverProcessingFee] = useState(false);
+
+  // Calculate amounts in correct order
+  const processingFee = coverProcessingFee ? total * 0.03 : 0;
+  const finalTotal = parseFloat(total.toFixed(2)) + parseFloat(processingFee.toFixed(2));
 
   // Load Stripe and create Payment Intent when form is complete
   const initializePayment = async () => {
@@ -133,12 +144,20 @@ export default function SelfCheckoutSection({ total, cart }) {
       const stripe = await loadStripe(keyResponse.data.publishableKey);
       setStripePromise(stripe);
 
+      // Log the amounts being sent
+      console.log("Payment Intent Request:", {
+        total: total.toFixed(2),
+        processingFee: processingFee.toFixed(2),
+        finalTotal: finalTotal.toFixed(2),
+      });
+
       // Create Payment Intent
       const response = await createPaymentIntent({
         items: cart,
-        shippingMethod: "standard",
-        shippingCost: 0,
-        taxAmount: total * 0.0825,
+        shippingMethod: shippingMethod,
+        shippingCost: shippingCost,
+        taxAmount: taxAmount,
+        processingFee: processingFee,
         shippingAddress: {
           firstName: formData.firstName,
           lastName: formData.lastName,
@@ -157,11 +176,16 @@ export default function SelfCheckoutSection({ total, cart }) {
           zipCode: formData.zipCode,
           country: formData.country,
         },
+        totalAmount: finalTotal, // Pass the final total amount to the server
+        email: formData.email, // Pass email for receipt
       });
 
       if (response.error || !response.data) {
         throw new Error(response.error || "Failed to initialize payment");
       }
+
+      // Store email in session storage immediately when payment is initialized
+      sessionStorage.setItem('checkoutEmail', formData.email);
 
       setClientSecret(response.data.clientSecret);
     } catch (err) {
@@ -169,6 +193,12 @@ export default function SelfCheckoutSection({ total, cart }) {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleEditInformation = () => {
+    setClientSecret(null);
+    setStripePromise(null);
+    setError(null);
   };
 
   const handlePaymentSuccess = (paymentIntent) => {
@@ -210,13 +240,14 @@ export default function SelfCheckoutSection({ total, cart }) {
         <>
           {/* Contact Information */}
           <div className="mb-6">
-            <h3 className="font-semibold text-neutral-900 mb-4">
-              Contact Information
-            </h3>
+          <h3 className="font-semibold text-neutral-900 mb-4">
+            Contact Information
+          </h3>
             <LocalInput
               title="Email"
               htmlFor="email"
               type="email"
+              value={formData.email}
               onChange={validateEmail}
               setFormData={setFormData}
               className="w-full"
@@ -234,6 +265,7 @@ export default function SelfCheckoutSection({ total, cart }) {
                   title="First Name"
                   htmlFor="firstName"
                   type="text"
+                  value={formData.firstName}
                   onChange={() => true}
                   setFormData={setFormData}
                 />
@@ -241,6 +273,7 @@ export default function SelfCheckoutSection({ total, cart }) {
                   title="Last Name"
                   htmlFor="lastName"
                   type="text"
+                  value={formData.lastName}
                   onChange={() => true}
                   setFormData={setFormData}
                 />
@@ -249,6 +282,7 @@ export default function SelfCheckoutSection({ total, cart }) {
                 title="Street Address"
                 htmlFor="address"
                 type="text"
+                value={formData.address}
                 onChange={() => true}
                 setFormData={setFormData}
                 className="w-full"
@@ -258,6 +292,7 @@ export default function SelfCheckoutSection({ total, cart }) {
                   title="City"
                   htmlFor="city"
                   type="text"
+                  value={formData.city}
                   onChange={() => true}
                   setFormData={setFormData}
                 />
@@ -265,6 +300,7 @@ export default function SelfCheckoutSection({ total, cart }) {
                   title="State / Province"
                   htmlFor="state"
                   type="text"
+                  value={formData.state}
                   onChange={() => true}
                   setFormData={setFormData}
                 />
@@ -273,6 +309,7 @@ export default function SelfCheckoutSection({ total, cart }) {
                 title="ZIP / Postal Code"
                 htmlFor="zipCode"
                 type="text"
+                value={formData.zipCode}
                 onChange={validateZipCode}
                 setFormData={setFormData}
                 className="w-full"
@@ -286,23 +323,126 @@ export default function SelfCheckoutSection({ total, cart }) {
             </div>
           )}
 
+          {/* Processing Fee Support */}
+          <div className="mb-6 bg-accent-50 border border-accent-200 rounded-xl p-4">
+            <h4 className="font-semibold text-neutral-900 mb-2 text-sm">
+              Support 100% of the Mission
+            </h4>
+            <p className="text-xs text-neutral-700 mb-3">
+              Online payments include a 3% processing cost charged by the credit
+              card companies. You may choose to add this small amount so your
+              full donation goes directly to serving the community.
+            </p>
+            <label className="flex items-start gap-3 cursor-pointer group">
+              <input
+                type="checkbox"
+                checked={coverProcessingFee}
+                onChange={(e) => setCoverProcessingFee(e.target.checked)}
+                className="mt-0.5 w-4 h-4 text-accent-600 border-neutral-300 rounded focus:ring-accent-500 cursor-pointer"
+              />
+              <span className="text-sm text-neutral-800 group-hover:text-accent-700 transition-colors">
+                Yes, I would like to cover the 3% processing cost so 100% goes
+                to the mission.
+                {coverProcessingFee && (
+                  <span className="block text-xs text-accent-600 font-medium mt-1">
+                    +${processingFee.toFixed(2)} processing support
+                  </span>
+                )}
+              </span>
+            </label>
+          </div>
+
           <button
             onClick={initializePayment}
             disabled={!isFormValid() || isLoading}
-            className="w-full bg-accent-500 hover:bg-accent-600 disabled:bg-neutral-300 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 disabled:cursor-not-allowed">
+            className="w-full bg-accent-500 hover:bg-accent-600 disabled:bg-neutral-300 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 disabled:cursor-not-allowed"
+          >
             {isLoading ? "Loading..." : "Continue to Payment"}
           </button>
         </>
       ) : (
         stripePromise &&
         clientSecret && (
-          <Elements stripe={stripePromise} options={{ clientSecret }}>
-            <PaymentForm
-              clientSecret={clientSecret}
-              total={total}
-              onSuccess={handlePaymentSuccess}
-            />
-          </Elements>
+          <>
+            {/* Review Contact Information */}
+            <div className="mb-6 bg-neutral-50 rounded-xl p-4 border border-neutral-200">
+              <div className="flex justify-between items-center mb-3">
+                <h3 className="font-semibold text-neutral-900">
+                  Contact & Shipping Information
+                </h3>
+                <button
+                  type="button"
+                  onClick={handleEditInformation}
+                  className="text-accent-600 hover:text-accent-700 text-sm font-medium transition-colors"
+                  aria-label="Edit contact information"
+                >
+                  <FaEdit className="size-5" />
+                </button>
+              </div>
+              <div className="space-y-2 text-sm text-neutral-700">
+                <div>
+                  <span className="font-medium">Email:</span> {formData.email}
+                </div>
+                <div>
+                  <span className="font-medium">Name:</span>{" "}
+                  {formData.firstName} {formData.lastName}
+                </div>
+                <div>
+                  <span className="font-medium">Address:</span>{" "}
+                  {formData.address}
+                </div>
+                <div>
+                  <span className="font-medium">City, State ZIP:</span>{" "}
+                  {formData.city}, {formData.state} {formData.zipCode}
+                </div>
+                {coverProcessingFee && (
+                  <div className="pt-2 border-t border-neutral-300">
+                    <span className="text-accent-600 font-medium text-xs">
+                      ✓ Supporting 100% of mission (+${processingFee.toFixed(2)} processing support)
+                    </span>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Payment Form */}
+            <div className="mb-4">
+              <h3 className="font-semibold text-neutral-900 mb-4">
+                Payment Information
+              </h3>
+              
+              {/* Order Summary */}
+              <div className="bg-neutral-50 rounded-xl p-4 mb-4 text-sm">
+                <div className="space-y-2">
+                  {processingFee > 0 && <div className="flex justify-between">
+                    <span className="text-neutral-600">Total</span>
+                    <span className="font-medium">${total.toFixed(2)}</span>
+                  </div>}
+                  {processingFee > 0 && (
+                    <div className="flex justify-between text-accent-600">
+                      <span>Processing Support (3%)</span>
+                      <span className="font-medium">${processingFee.toFixed(2)}</span>
+                    </div>
+                  )}
+                  <div className="border-t border-neutral-300 pt-2 mt-2">
+                    <div className="flex justify-between font-bold text-base">
+                      <span>Total</span>
+                      <span>${finalTotal.toFixed(2)}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <Elements stripe={stripePromise} options={{ clientSecret }}>
+                <PaymentForm
+                  clientSecret={clientSecret}
+                  total={finalTotal}
+                  processingFee={processingFee}
+                  onSuccess={handlePaymentSuccess}
+                />
+              </Elements>
+            </div>
+          </>
         )
       )}
     </div>

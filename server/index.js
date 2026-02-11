@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import checkoutRoutes from "./routes/checkout.js";
 import emailRoutes from "./routes/email.js";
+import providersRoutes from "./routes/providers.js";
 import { getEnvironment } from "./utility/environment.js";
 
 dotenv.config();
@@ -74,6 +75,11 @@ checkoutPrefixes.forEach((prefix) => app.use(prefix, checkoutRoutes));
 app.use("/api/email", emailRoutes);
 app.use("/dev/api/email", emailRoutes);
 app.use("/app/api/email", emailRoutes);
+
+// ---- Mount providers routes (local + Vercel) ----
+app.use("/api/providers", providersRoutes);
+app.use("/dev/api/providers", providersRoutes);
+app.use("/app/api/providers", providersRoutes);
 
 // Helpful 404 for debugging
 app.all("*", (req, res) => {

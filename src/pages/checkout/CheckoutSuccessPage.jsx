@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { Helmet } from "react-helmet-async";
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
 import { CANONICAL, CANONICAL_URL } from "../../routes";
@@ -14,17 +14,23 @@ export default function CartSuccessPage() {
   const [status, setStatus] = useState(null);
   const [customerEmail, setCustomerEmail] = useState('');
   const [isLoading, setIsLoading] = useState(true);
+  const hasProcessed = useRef(false);
 
   const { clearCart } = useCartActions();
   const setBlocking = useSetHeaderBlocking();
 
   useEffect(() => {
+    // Prevent duplicate processing on re-renders
+    if (hasProcessed.current) return;
+    hasProcessed.current = true;
+
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const sessionId = urlParams.get('session_id');
     const paypalToken = urlParams.get('token');
     const paymentIntent = urlParams.get('payment_intent');
-    const paymentIntentClientSecret = urlParams.get('payment_intent_client_secret');
+    const email = sessionStorage.getItem('checkoutEmail') || ''; // Retrieve email from session storage
+    sessionStorage.removeItem('checkoutEmail'); // Clean up after use
 
     // If no payment identifier, not a valid success page
     if (!sessionId && !paypalToken && !paymentIntent) {
@@ -42,7 +48,7 @@ export default function CartSuccessPage() {
             return;
           }
           setStatus(response.data.status);
-          setCustomerEmail(response.data.customer_email);
+          setCustomerEmail(response.data.customer_email || email);
         })
         .catch((error) => {
           console.error('Error fetching Stripe session status:', error);
@@ -62,7 +68,7 @@ export default function CartSuccessPage() {
             return;
           }
           setStatus(response.data.status);
-          setCustomerEmail(response.data.customer_email);
+          setCustomerEmail(response.data.customer_email || email);
         })
         .catch((error) => {
           console.error('Error fetching PayPal order status:', error);
@@ -81,19 +87,23 @@ export default function CartSuccessPage() {
             setStatus('error');
             return;
           }
+          
+          console.log('Payment Intent status response:', response.data);
           // Map Payment Intent status to checkout status
           const piStatus = response.data.status;
+
           if (piStatus === 'succeeded') {
             setStatus('complete');
+            setCustomerEmail(email);
           } else if (piStatus === 'processing') {
             setStatus('processing');
+            setCustomerEmail(email);
           } else if (piStatus === 'requires_payment_method') {
             setStatus('open');
           } else {
             setStatus('error');
           }
-          setCustomerEmail(response.data.customer_email || response.data.receipt_email || '');
-          console.log(response.data);
+          
         })
         .catch((error) => {
           console.error('Error fetching Payment Intent status:', error);

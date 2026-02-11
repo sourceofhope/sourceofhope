@@ -1,6 +1,14 @@
 import { get, post } from "./client";
 
 /**
+ * Fetch available checkout providers
+ * @returns {Promise} Response containing array of checkout providers
+ */
+export async function fetchCheckoutProviders() {
+  return get("/providers/checkout");
+}
+
+/**
  * Fetch the Stripe Payment Intent status from the server
  * @param {string} paymentIntentId - The Stripe Payment Intent ID
  * @returns {Promise} Response containing the payment intent status and customer email
@@ -27,8 +35,11 @@ export async function createPaymentIntent({
   shippingMethod,
   shippingCost,
   taxAmount,
+  processingFee,
   shippingAddress,
   billingAddress,
+  totalAmount,
+  email, // Add email parameter for receipt email
 }) {
   return post("/checkout/create-stripe-payment-intent", {
     items: items.map((item) => ({
@@ -42,8 +53,11 @@ export async function createPaymentIntent({
     shippingMethod,
     shippingCost,
     taxAmount,
+    processingFee,
     shippingAddress,
     billingAddress,
+    totalAmount,
+    email, // Add email parameter for receipt email
   });
 }
 

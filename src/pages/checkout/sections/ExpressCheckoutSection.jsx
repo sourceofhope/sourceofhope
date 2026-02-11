@@ -1,10 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Heading from "../../../components/ui/text/Heading";
-import { FaPaypal, FaStripeS, FaApplePay, FaGooglePay } from "react-icons/fa";
+import { FaPaypal, FaStripeS, FaApplePay, FaGooglePay, FaLock } from "react-icons/fa";
 import {
   createStripeCheckout,
   createPaypalCheckout,
+  fetchCheckoutProviders,
 } from "../../../lib/api/checkout.js";
+
+const iconMap = {
+  stripe: <FaStripeS className="size-10 md:size-8" />,
+  paypal: <FaPaypal className="size-10 md:size-8" />,
+  googlepay: <FaGooglePay className="size-10 md:size-8" />,
+  applepay: <FaApplePay className="size-10 md:size-8" />,
+};
 
 export default function ExpressCheckoutSection({
   items,
@@ -15,37 +23,31 @@ export default function ExpressCheckoutSection({
   const [isProcessing, setIsProcessing] = useState(false);
   const [selectedMethod, setSelectedMethod] = useState(null);
   const [error, setError] = useState(null);
+  const [checkoutProviders, setCheckoutProviders] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const checkoutProviders = [
-    {
-      id: "stripe",
-      name: "Stripe",
-      icon: <FaStripeS className="size-10 md:size-8" />,
-      description: "Linked Stripe Account",
-      enabled: true,
-    },
-    {
-      id: "paypal",
-      name: "PayPal",
-      icon: <FaPaypal className="size-10 md:size-8" />,
-      description: "Linked PayPal Account",
-      enabled: true,
-    },
-    {
-      id: "googlepay",
-      name: "",
-      icon: <FaGooglePay className="size-10 md:size-8" />,
-      description: "Linked Google Pay Account",
-      enabled: false,
-    },
-    {
-      id: "applepay",
-      name: "",
-      icon: <FaApplePay className="size-10 md:size-8" />,
-      description: "Linked Apple Pay Account",
-      enabled: false,
-    },
-  ];
+  useEffect(() => {
+    const loadProviders = async () => {
+      try {
+        const response = await fetchCheckoutProviders();
+        console.log("Fetched checkout providers:", response.data);
+        if (response.data?.data && Array.isArray(response.data.data)) {
+          setCheckoutProviders(response.data.data);
+        } else {
+          console.error("Invalid provider data format:", response.data);
+          setCheckoutProviders([]);
+        }
+      } catch (err) {
+        console.error("Failed to load checkout providers:", err);
+        setError("Failed to load payment options");
+        setCheckoutProviders([]);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadProviders();
+  }, []);
 
   const handleExpressCheckout = async (method) => {
     setIsProcessing(true);
@@ -64,13 +66,6 @@ export default function ExpressCheckoutSection({
     } else if (method === "Apple Pay") {
       // TODO: Apple Pay express checkout logic here
     }
-
-    // Simulate payment processing
-    setTimeout(() => {
-      alert(`${method} checkout initiated! Total: $${total.toFixed(2)}`);
-      setIsProcessing(false);
-      setSelectedMethod(null);
-    }, 1500);
   };
 
   const handleStripeCheckout = async (successUrl, cancelUrl) => {
@@ -128,31 +123,41 @@ export default function ExpressCheckoutSection({
         Choose your preferred payment and checkout in seconds
       </p>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        {checkoutProviders.map((method) => (
-          <button
-            key={method.id}
-            onClick={() => handleExpressCheckout(method.name)}
-            disabled={isProcessing}
-            className={`
-              flex flex-col items-center justify-center gap-1
-              ${method.bgColor} ${method.hoverColor}
-              ${method.enabled ? "text-accent-500" : "text-neutral-500 bg-neutral-200 hover:scale-none hover:shadow-sm"}
-              rounded-xl px-3 py-3
-              font-semibold text-xs
-              transition-all duration-300
-              disabled:opacity-50 disabled:cursor-not-allowed
-              transform hover:scale-105 active:scale-95
-              shadow-sm hover:shadow-md
-            `}>
-            {method.icon}
-          </button>
-        ))}
-      </div>
+      {isLoading ? (
+        <div className="flex justify-center items-center py-8">
+          <div className="text-neutral-500">Loading payment options...</div>
+        </div>
+      ) : error ? (
+        <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-4">
+          <p className="text-sm text-red-800">{error}</p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {checkoutProviders.filter((method) => method.enabled).map((method) => (
+            <button
+              key={method.id}
+              onClick={() => handleExpressCheckout(method.name)}
+              disabled={isProcessing || !method.enabled}
+              className={`
+                flex flex-col items-center justify-center gap-1
+                ${method.enabled ? "text-accent-500 hover:scale-105" : "text-neutral-500 bg-neutral-200"}
+                rounded-xl px-3 py-3
+                font-semibold text-xs
+                transition-all duration-300
+                disabled:opacity-50 disabled:cursor-not-allowed
+                transform active:scale-95
+                shadow-sm hover:shadow-md
+              `}>
+              {iconMap[method.icon]}
+            </button>
+          ))}
+        </div>
+      )}
 
       <div className="mt-6 p-4 bg-neutral-50 rounded-xl">
-        <p className="text-sm text-neutral-600 md:text-center">
+        <p className="text-sm text-neutral-600 md:text-center flex items-center justify-center gap-2">
           All transactions are secure
+          <FaLock className="text-accent-500" />
         </p>
       </div>
     </div>
