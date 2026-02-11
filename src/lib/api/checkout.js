@@ -131,6 +131,7 @@ export async function createStripeCheckoutSession({
  * @param {string} params.shippingMethod - Selected shipping method
  * @param {number} params.shippingCost - Calculated shipping cost
  * @param {number} params.taxAmount - Calculated tax amount
+ * @param {number} params.processingFee - Optional processing fee support
  * @param {string} params.successUrl - URL to redirect after successful payment
  * @param {string} params.cancelUrl - URL to redirect if payment is cancelled
  * @returns {Promise} Response containing checkout session URL
@@ -140,6 +141,7 @@ export async function createStripeCheckout({
   shippingMethod,
   shippingCost,
   taxAmount,
+  processingFee,
   successUrl,
   cancelUrl,
 }) {
@@ -156,6 +158,7 @@ export async function createStripeCheckout({
     shippingMethod,
     shippingCost,
     taxAmount,
+    processingFee,
     successUrl,
     cancelUrl,
   });
@@ -168,6 +171,7 @@ export async function createStripeCheckout({
  * @param {string} params.shippingMethod - Selected shipping method
  * @param {number} params.shippingCost - Calculated shipping cost
  * @param {number} params.taxAmount - Calculated tax amount
+ * @param {number} params.processingFee - Optional processing fee support
  * @param {string} params.successUrl - URL to redirect after successful payment
  * @param {string} params.cancelUrl - URL to redirect if payment is cancelled
  * @returns {Promise} Response containing PayPal approval URL
@@ -177,6 +181,7 @@ export async function createPaypalCheckout({
   shippingMethod,
   shippingCost,
   taxAmount,
+  processingFee,
   successUrl,
   cancelUrl,
 }) {
@@ -192,6 +197,7 @@ export async function createPaypalCheckout({
     shippingMethod,
     shippingCost,
     taxAmount,
+    processingFee,
     successUrl,
     cancelUrl,
   });

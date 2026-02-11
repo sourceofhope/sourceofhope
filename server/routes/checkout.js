@@ -393,6 +393,7 @@ router.post("/create-stripe-checkout", async (req, res) => {
       shippingMethod,
       shippingCost,
       taxAmount,
+      processingFee,
       successUrl,
       cancelUrl,
     } = req.body;
@@ -451,6 +452,20 @@ router.post("/create-stripe-checkout", async (req, res) => {
       });
     }
 
+    if (processingFee && processingFee > 0) {
+      lineItems.push({
+        price_data: {
+          currency: "usd",
+          product_data: {
+            name: "Processing Support",
+            description: "Supporting 100% of the mission (3%)",
+          },
+          unit_amount: Math.round(parseFloat(processingFee.toFixed(2)) * 100),
+        },
+        quantity: 1,
+      });
+    }
+
     // Create Stripe Checkout Session
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
@@ -492,6 +507,7 @@ router.post("/create-paypal-order", async (req, res) => {
       shippingMethod,
       shippingCost,
       taxAmount,
+      processingFee,
       successUrl,
       cancelUrl,
     } = req.body;
@@ -519,7 +535,7 @@ router.post("/create-paypal-order", async (req, res) => {
       (sum, item) => sum + item.price * item.quantity,
       0,
     );
-    const totalAmount = itemsTotal + (shippingCost || 0) + (taxAmount || 0);
+    const totalAmount = itemsTotal + (shippingCost || 0) + (taxAmount || 0) + (processingFee || 0);
 
     const auth = Buffer.from(
       `${paypalClientId}:${paypalClientSecret}`,
@@ -556,6 +572,19 @@ router.post("/create-paypal-order", async (req, res) => {
       quantity: item.quantity.toString(),
     }));
 
+    // Add processing fee as a separate item if present
+    if (processingFee && processingFee > 0) {
+      paypalItems.push({
+        name: "Processing Support",
+        description: "Supporting 100% of the mission (3%)",
+        unit_amount: {
+          currency_code: "USD",
+          value: parseFloat(processingFee.toFixed(2)).toFixed(2),
+        },
+        quantity: "1",
+      });
+    }
+
     // Create PayPal order
     const orderData = {
       intent: "CAPTURE",
@@ -567,7 +596,7 @@ router.post("/create-paypal-order", async (req, res) => {
             breakdown: {
               item_total: {
                 currency_code: "USD",
-                value: parseFloat(itemsTotal.toFixed(2)).toFixed(2),
+                value: parseFloat((itemsTotal + (processingFee || 0)).toFixed(2)).toFixed(2),
               },
               shipping: {
                 currency_code: "USD",

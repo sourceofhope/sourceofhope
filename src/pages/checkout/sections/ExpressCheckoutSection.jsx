@@ -25,6 +25,11 @@ export default function ExpressCheckoutSection({
   const [error, setError] = useState(null);
   const [checkoutProviders, setCheckoutProviders] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [coverProcessingFee, setCoverProcessingFee] = useState(false);
+
+  // Calculate processing fee (3%)
+  const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const processingFee = coverProcessingFee ? (subtotal + taxAmount + shippingCost) * 0.03 : 0;
 
   useEffect(() => {
     const loadProviders = async () => {
@@ -74,6 +79,7 @@ export default function ExpressCheckoutSection({
       shippingMethod,
       shippingCost: shippingCost,
       taxAmount: taxAmount,
+      processingFee: processingFee,
       successUrl,
       cancelUrl,
     });
@@ -98,6 +104,7 @@ export default function ExpressCheckoutSection({
       shippingMethod,
       shippingCost: shippingCost,
       taxAmount: taxAmount,
+      processingFee: processingFee,
       successUrl,
       cancelUrl,
     });
@@ -122,6 +129,35 @@ export default function ExpressCheckoutSection({
       <p className="text-neutral-600 text-sm mb-6">
         Choose your preferred payment and checkout in seconds
       </p>
+
+      {/* Processing Fee Support */}
+      <div className="mb-6 bg-accent-50 border border-accent-200 rounded-xl p-4">
+        <h4 className="font-semibold text-neutral-900 mb-2 text-sm">
+          Support 100% of the Mission
+        </h4>
+        <p className="text-xs text-neutral-700 mb-3">
+          Online payments include a 3% processing cost charged by the credit
+          card companies. You may choose to add this small amount so your
+          full donation goes directly to serving the community.
+        </p>
+        <label className="flex items-start gap-3 cursor-pointer group">
+          <input
+            type="checkbox"
+            checked={coverProcessingFee}
+            onChange={(e) => setCoverProcessingFee(e.target.checked)}
+            className="mt-0.5 w-4 h-4 text-accent-600 border-neutral-300 rounded focus:ring-accent-500 cursor-pointer"
+          />
+          <span className="text-sm text-neutral-800 group-hover:text-accent-700 transition-colors">
+            Yes, I would like to cover the 3% processing cost so 100% goes
+            to the mission.
+            {coverProcessingFee && (
+              <span className="block text-xs text-accent-600 font-medium mt-1">
+                +${processingFee.toFixed(2)} processing support
+              </span>
+            )}
+          </span>
+        </label>
+      </div>
 
       {isLoading ? (
         <div className="flex justify-center items-center py-8">
