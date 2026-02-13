@@ -90,9 +90,7 @@ export default function CheckoutPage() {
               <SelfCheckoutSection
                 total={total}
                 cart={cart}
-                shipping={shipping}
-                tax={tax}
-                shippingMethod={shippingMethod}
+                taxAmount={tax}
               />
             </div>
 

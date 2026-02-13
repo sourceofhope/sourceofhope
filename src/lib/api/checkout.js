@@ -1,6 +1,14 @@
 import { get, post } from "./client";
 
 /**
+ * Fetch available checkout providers
+ * @returns {Promise} Response containing array of checkout providers
+ */
+export async function fetchCheckoutProviders() {
+  return get("/providers/checkout");
+}
+
+/**
  * Fetch the Stripe Payment Intent status from the server
  * @param {string} paymentIntentId - The Stripe Payment Intent ID
  * @returns {Promise} Response containing the payment intent status and customer email
@@ -27,8 +35,11 @@ export async function createPaymentIntent({
   shippingMethod,
   shippingCost,
   taxAmount,
+  processingFee,
   shippingAddress,
   billingAddress,
+  totalAmount,
+  email, // Add email parameter for receipt email
 }) {
   return post("/checkout/create-stripe-payment-intent", {
     items: items.map((item) => ({
@@ -42,8 +53,11 @@ export async function createPaymentIntent({
     shippingMethod,
     shippingCost,
     taxAmount,
+    processingFee,
     shippingAddress,
     billingAddress,
+    totalAmount,
+    email, // Add email parameter for receipt email
   });
 }
 
@@ -117,6 +131,7 @@ export async function createStripeCheckoutSession({
  * @param {string} params.shippingMethod - Selected shipping method
  * @param {number} params.shippingCost - Calculated shipping cost
  * @param {number} params.taxAmount - Calculated tax amount
+ * @param {number} params.processingFee - Optional processing fee support
  * @param {string} params.successUrl - URL to redirect after successful payment
  * @param {string} params.cancelUrl - URL to redirect if payment is cancelled
  * @returns {Promise} Response containing checkout session URL
@@ -126,6 +141,7 @@ export async function createStripeCheckout({
   shippingMethod,
   shippingCost,
   taxAmount,
+  processingFee,
   successUrl,
   cancelUrl,
 }) {
@@ -142,6 +158,7 @@ export async function createStripeCheckout({
     shippingMethod,
     shippingCost,
     taxAmount,
+    processingFee,
     successUrl,
     cancelUrl,
   });
@@ -154,6 +171,7 @@ export async function createStripeCheckout({
  * @param {string} params.shippingMethod - Selected shipping method
  * @param {number} params.shippingCost - Calculated shipping cost
  * @param {number} params.taxAmount - Calculated tax amount
+ * @param {number} params.processingFee - Optional processing fee support
  * @param {string} params.successUrl - URL to redirect after successful payment
  * @param {string} params.cancelUrl - URL to redirect if payment is cancelled
  * @returns {Promise} Response containing PayPal approval URL
@@ -163,6 +181,7 @@ export async function createPaypalCheckout({
   shippingMethod,
   shippingCost,
   taxAmount,
+  processingFee,
   successUrl,
   cancelUrl,
 }) {
@@ -178,6 +197,7 @@ export async function createPaypalCheckout({
     shippingMethod,
     shippingCost,
     taxAmount,
+    processingFee,
     successUrl,
     cancelUrl,
   });

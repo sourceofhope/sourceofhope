@@ -8,8 +8,12 @@ export default function LocalInput({
   className = "",
   border = false,
   setFormData,
+  value,
 }) {
   const [isValid, setIsValid] = useState(true);
+
+  // Determine if this is a controlled or uncontrolled input
+  const isControlled = value !== undefined;
 
   return (
     <div
@@ -24,6 +28,7 @@ export default function LocalInput({
       <input
         name={htmlFor}
         type={type}
+        {...(isControlled ? { value } : {})}
         onChange={(event) => {
           const value = event.target.value;
 

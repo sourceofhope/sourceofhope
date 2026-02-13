@@ -1,6 +1,5 @@
 import express from "express";
 import Stripe from "stripe";
-import fetch from "node-fetch";
 import { getEnvironment } from "../utility/environment.js";
 
 const router = express.Router();
@@ -25,13 +24,21 @@ router.get("/retrieve-stripe-payment-intent-status", async (req, res) => {
     const stripe = new Stripe(stripeSecretKey);
     const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
 
+        // Try multiple sources for email
+    const customerEmail = 
+      paymentIntent.receipt_email || 
+      paymentIntent.metadata?.customer_email || 
+      paymentIntent.charges?.data[0]?.billing_details?.email ||
+      '';
+
     res.json({
       status: paymentIntent.status,
-      customer_email:
-        paymentIntent.receipt_email || paymentIntent.shipping?.name || "",
+      customer_email: customerEmail,
       amount: paymentIntent.amount,
       currency: paymentIntent.currency,
     });
+
+
   } catch (error) {
     console.error("Retrieve Payment Intent status error:", error);
     res.status(500).json({
@@ -60,8 +67,11 @@ router.post("/create-stripe-payment-intent", async (req, res) => {
       shippingMethod,
       shippingCost,
       taxAmount,
+      processingFee,
       shippingAddress,
       billingAddress,
+      totalAmount,
+      email,
     } = req.body;
 
     // Validate required fields
@@ -69,12 +79,21 @@ router.post("/create-stripe-payment-intent", async (req, res) => {
       return res.status(400).json({ error: "Cart items are required" });
     }
 
-    // Calculate total amount
-    const itemsTotal = items.reduce(
-      (sum, item) => sum + item.price * item.quantity,
-      0,
-    );
-    const totalAmount = itemsTotal + (shippingCost || 0) + (taxAmount || 0);
+    // Calculate total amount (now including processing fee)
+    // const itemsTotal = items.reduce(
+    //   (sum, item) => sum + item.price * item.quantity,
+    //   0,
+    // );
+    // const totalAmount = itemsTotal + (shippingCost || 0) + (taxAmount || 0) + (processingFee || 0);
+    
+    // Log the amounts being sent
+    // console.log("Creating Payment Intent:", {
+    //   itemsTotal: itemsTotal.toFixed(2),
+    //   shippingCost: (shippingCost || 0).toFixed(2),
+    //   taxAmount: (taxAmount || 0).toFixed(2),
+    //   processingFee: (processingFee || 0).toFixed(2),
+    //   totalAmount: totalAmount.toFixed(2),
+    // });
 
     // Round to 2 decimal places and convert to cents
     const amountInCents = Math.round(parseFloat(totalAmount.toFixed(2)) * 100);
@@ -86,10 +105,13 @@ router.post("/create-stripe-payment-intent", async (req, res) => {
       automatic_payment_methods: {
         enabled: true,
       },
+      receipt_email: email,
       metadata: {
         shipping_method: shippingMethod || "standard",
         order_type: "storefront",
         items_count: items.length,
+        customer_email: email,
+        processing_fee: processingFee ? processingFee.toFixed(2) : "0.00",
       },
       shipping: shippingAddress
         ? {
@@ -284,9 +306,8 @@ router.get("/retrieve-stripe-session-status", async (req, res) => {
  */
 router.get("/retrieve-paypal-order-status", async (req, res) => {
   try {
-    const { paypalClientId, paypalClientSecret, paypalApiUrl } =
-      getEnvironment();
-
+    const { paypalClientId, paypalClientSecret, paypalApiUrl } = getEnvironment();
+    
     if (!paypalClientId || !paypalClientSecret) {
       return res.status(500).json({ error: "PayPal is not configured." });
     }
@@ -373,6 +394,7 @@ router.post("/create-stripe-checkout", async (req, res) => {
       shippingMethod,
       shippingCost,
       taxAmount,
+      processingFee,
       successUrl,
       cancelUrl,
     } = req.body;
@@ -431,6 +453,20 @@ router.post("/create-stripe-checkout", async (req, res) => {
       });
     }
 
+    if (processingFee && processingFee > 0) {
+      lineItems.push({
+        price_data: {
+          currency: "usd",
+          product_data: {
+            name: "Processing Support",
+            description: "Supporting 100% of the mission (3%)",
+          },
+          unit_amount: Math.round(parseFloat(processingFee.toFixed(2)) * 100),
+        },
+        quantity: 1,
+      });
+    }
+
     // Create Stripe Checkout Session
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
@@ -472,6 +508,7 @@ router.post("/create-paypal-order", async (req, res) => {
       shippingMethod,
       shippingCost,
       taxAmount,
+      processingFee,
       successUrl,
       cancelUrl,
     } = req.body;
@@ -499,7 +536,7 @@ router.post("/create-paypal-order", async (req, res) => {
       (sum, item) => sum + item.price * item.quantity,
       0,
     );
-    const totalAmount = itemsTotal + (shippingCost || 0) + (taxAmount || 0);
+    const totalAmount = itemsTotal + (shippingCost || 0) + (taxAmount || 0) + (processingFee || 0);
 
     const auth = Buffer.from(
       `${paypalClientId}:${paypalClientSecret}`,
@@ -536,6 +573,19 @@ router.post("/create-paypal-order", async (req, res) => {
       quantity: item.quantity.toString(),
     }));
 
+    // Add processing fee as a separate item if present
+    if (processingFee && processingFee > 0) {
+      paypalItems.push({
+        name: "Processing Support",
+        description: "Supporting 100% of the mission (3%)",
+        unit_amount: {
+          currency_code: "USD",
+          value: parseFloat(processingFee.toFixed(2)).toFixed(2),
+        },
+        quantity: "1",
+      });
+    }
+
     // Create PayPal order
     const orderData = {
       intent: "CAPTURE",
@@ -547,15 +597,15 @@ router.post("/create-paypal-order", async (req, res) => {
             breakdown: {
               item_total: {
                 currency_code: "USD",
-                value: itemsTotalRounded.toFixed(2),
+                value: parseFloat((itemsTotal + (processingFee || 0)).toFixed(2)).toFixed(2),
               },
               shipping: {
                 currency_code: "USD",
-                value: shippingRounded.toFixed(2),
+                value: parseFloat((shippingCost || 0).toFixed(2)).toFixed(2),
               },
               tax_total: {
                 currency_code: "USD",
-                value: taxRounded.toFixed(2),
+                value: parseFloat((taxAmount || 0).toFixed(2)).toFixed(2),
               },
             },
           },
