@@ -56,10 +56,13 @@ export default function CheckoutDetailsSection({
       {/* Order Summary */}
       <div className="mt-6 pt-4 border-t-2 border-neutral-200 space-y-3">
         <div className="flex justify-between text-sm">
-          <span className="text-neutral-600">
-            Subtotal ({getCartItemCount()} item
-            {getCartItemCount() !== 1 ? "s" : ""})
-          </span>
+          <div className="flex flex-col">
+            <span className="text-neutral-600">Subtotal</span>
+            <span className="text-xs text-neutral-500 mt-0.5">
+              {getCartItemCount()} item
+              {getCartItemCount() !== 1 ? "s" : ""}
+            </span>
+          </div>
           <span className="font-semibold text-neutral-900">
             ${subtotal.toFixed(2)}
           </span>
@@ -80,7 +83,10 @@ export default function CheckoutDetailsSection({
         </div>
 
         <div className="flex justify-between text-sm">
-          <span className="text-neutral-600">Tax (8.25%)</span>
+          <div className="flex flex-col">
+            <span className="text-neutral-600">Tax</span>
+            <span className="text-xs text-neutral-500 mt-0.5">8.25%</span>
+          </div>
           <span className="font-semibold text-neutral-900">
             ${taxAmount.toFixed(2)}
           </span>

@@ -127,7 +127,8 @@ export default function SelfCheckoutSection({ total, cart, taxAmount }) {
 
   // Calculate amounts in correct order
   const processingFee = coverProcessingFee ? total * 0.03 : 0;
-  const finalTotal = parseFloat(total.toFixed(2)) + parseFloat(processingFee.toFixed(2));
+  const finalTotal =
+    parseFloat(total.toFixed(2)) + parseFloat(processingFee.toFixed(2));
 
   // Load Stripe and create Payment Intent when form is complete
   const initializePayment = async () => {
@@ -185,7 +186,7 @@ export default function SelfCheckoutSection({ total, cart, taxAmount }) {
       }
 
       // Store email in session storage immediately when payment is initialized
-      sessionStorage.setItem('checkoutEmail', formData.email);
+      sessionStorage.setItem("checkoutEmail", formData.email);
 
       setClientSecret(response.data.clientSecret);
     } catch (err) {
@@ -240,9 +241,9 @@ export default function SelfCheckoutSection({ total, cart, taxAmount }) {
         <>
           {/* Contact Information */}
           <div className="mb-6">
-          <h3 className="font-semibold text-neutral-900 mb-4">
-            Contact Information
-          </h3>
+            <h3 className="font-semibold text-neutral-900 mb-4">
+              Contact Information
+            </h3>
             <LocalInput
               title="Email"
               htmlFor="email"
@@ -326,7 +327,7 @@ export default function SelfCheckoutSection({ total, cart, taxAmount }) {
           {/* Processing Fee Support */}
           <div className="mb-6 bg-accent-50 border border-accent-200 rounded-xl p-4">
             <h4 className="font-semibold text-neutral-900 mb-2 text-sm">
-              Support 100% of the Mission
+              Support the mission
             </h4>
             <p className="text-xs text-neutral-700 mb-3">
               Online payments include a 3% processing cost charged by the credit
@@ -340,14 +341,15 @@ export default function SelfCheckoutSection({ total, cart, taxAmount }) {
                 onChange={(e) => setCoverProcessingFee(e.target.checked)}
                 className="mt-0.5 w-4 h-4 text-accent-600 border-neutral-300 rounded focus:ring-accent-500 cursor-pointer"
               />
-              <span className="text-sm text-neutral-800 group-hover:text-accent-700 transition-colors">
-                Yes, I would like to cover the 3% processing cost so 100% goes
-                to the mission.
-                {coverProcessingFee && (
-                  <span className="block text-xs text-accent-600 font-medium mt-1">
+              <span className="text-xs md:text-sm text-neutral-800 group-hover:text-accent-700 transition-colors">
+                Yes, I would like to cover the 3% processing fee so 100% goes to
+                the mission.
+                {
+                  <span
+                    className={`${coverProcessingFee ? "opacity-100" : "opacity-0"} block text-xs text-accent-600 font-medium mt-1`}>
                     +${processingFee.toFixed(2)} processing support
                   </span>
-                )}
+                }
               </span>
             </label>
           </div>
@@ -355,8 +357,7 @@ export default function SelfCheckoutSection({ total, cart, taxAmount }) {
           <button
             onClick={initializePayment}
             disabled={!isFormValid() || isLoading}
-            className="w-full bg-accent-500 hover:bg-accent-600 disabled:bg-neutral-300 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 disabled:cursor-not-allowed"
-          >
+            className="w-full bg-accent-500 hover:bg-accent-600 disabled:bg-neutral-300 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 disabled:cursor-not-allowed">
             {isLoading ? "Loading..." : "Continue to Payment"}
           </button>
         </>
@@ -374,8 +375,7 @@ export default function SelfCheckoutSection({ total, cart, taxAmount }) {
                   type="button"
                   onClick={handleEditInformation}
                   className="text-accent-600 hover:text-accent-700 text-sm font-medium transition-colors"
-                  aria-label="Edit contact information"
-                >
+                  aria-label="Edit contact information">
                   <FaEdit className="size-5" />
                 </button>
               </div>
@@ -398,7 +398,8 @@ export default function SelfCheckoutSection({ total, cart, taxAmount }) {
                 {coverProcessingFee && (
                   <div className="pt-2 border-t border-neutral-300">
                     <span className="text-accent-600 font-medium text-xs">
-                      ✓ Supporting 100% of mission (+${processingFee.toFixed(2)} processing support)
+                      ✓ Supporting 100% of mission (+${processingFee.toFixed(2)}{" "}
+                      processing support)
                     </span>
                   </div>
                 )}
@@ -410,18 +411,22 @@ export default function SelfCheckoutSection({ total, cart, taxAmount }) {
               <h3 className="font-semibold text-neutral-900 mb-4">
                 Payment Information
               </h3>
-              
+
               {/* Order Summary */}
               <div className="bg-neutral-50 rounded-xl p-4 mb-4 text-sm">
                 <div className="space-y-2">
-                  {processingFee > 0 && <div className="flex justify-between">
-                    <span className="text-neutral-600">Total</span>
-                    <span className="font-medium">${total.toFixed(2)}</span>
-                  </div>}
+                  {processingFee > 0 && (
+                    <div className="flex justify-between">
+                      <span className="text-neutral-600">Total</span>
+                      <span className="font-medium">${total.toFixed(2)}</span>
+                    </div>
+                  )}
                   {processingFee > 0 && (
                     <div className="flex justify-between text-accent-600">
                       <span>Processing Support (3%)</span>
-                      <span className="font-medium">${processingFee.toFixed(2)}</span>
+                      <span className="font-medium">
+                        ${processingFee.toFixed(2)}
+                      </span>
                     </div>
                   )}
                   <div className="border-t border-neutral-300 pt-2 mt-2">
