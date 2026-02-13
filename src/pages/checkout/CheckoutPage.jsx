@@ -1,17 +1,13 @@
 import { Helmet } from "react-helmet-async";
 import { CANONICAL_URL } from "../../routes";
 import { useEffect } from "react";
-import {
-  useCartActions,
-  SHIPPING_OPTIONS,
-} from "../../context/StoreCartContext";
+import { useCartActions } from "../../context/StoreCartContext";
 import Title from "../../components/ui/text/Title";
 import ExpressCheckoutSection from "./sections/ExpressCheckoutSection";
-// import StripeCheckoutSection from "./sections/StripeCheckoutSection";
 import { useSetHeaderBlocking } from "../../components/structure/Header";
 import Cart from "../storefront/Cart";
 import SelfCheckoutSection from "./sections/SelfCheckoutSection";
-import CheckoutDetailsSection from "./sections/CheckoutDetailsSection"; // Order summary component
+import CheckoutDetailsSection from "./sections/CheckoutDetailsSection";
 
 export default function CheckoutPage() {
   const setBlocking = useSetHeaderBlocking();
@@ -76,7 +72,7 @@ export default function CheckoutPage() {
           </div>
         </section>
       ) : (
-        <div className="min-h-screen bg-neutral-50 pt-25 p-5 md:px-10 lg:px-15">
+        <div className="min-h-screen bg-neutral-50 pt-30 p-5 md:px-10 lg:px-15">
           {/* 3-Column Layout: Left (Express) | Center (Checkout Form) | Right (Order Summary) */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 lg:gap-10">
             {/* Left Column: Express Checkout - 25% */}

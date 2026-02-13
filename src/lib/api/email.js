@@ -1,11 +1,7 @@
-// Send email via server API
-export async function sendEmail(emailData) {
-  const apiUrl = import.meta.env.DEV
-    ? "http://localhost:3001/api/email/send"
-    : "https://thesourceofhope.org/api/email/send";
+import { post } from "./client";
 
-  const response = await fetch(apiUrl, {
-    method: "POST",
+export async function sendEmail(emailData) {
+  const response = post("/email/send", {
     headers: {
       "Content-Type": "application/json",
     },
