@@ -104,7 +104,8 @@ export default function CheckoutDetailsSection({
               {STANDARD_PROCESSING_RATE * 100}%
             </span>
           </div>
-          <span className="font-semibold text-neutral-900">
+          <span
+            className={`font-semibold text-neutral-900 ${processingFee === 0 ? "line-through" : null}`}>
             ${processingFee.toFixed(2)}
           </span>
         </div>
