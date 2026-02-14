@@ -175,7 +175,7 @@ export default function ExpressCheckoutSection({
       )}
 
       {/* Processing Fee Support */}
-      <div className="mt-5 bg-accent-50 border border-accent-200 rounded-xl p-4">
+      <div className="mt-5 h-35 bg-accent-50 border border-accent-200 rounded-xl p-4">
         <h4 className="font-semibold text-neutral-900 mb-2 text-sm">
           Support the mission
         </h4>
@@ -187,17 +187,7 @@ export default function ExpressCheckoutSection({
             className="mt-0.5 w-4 h-4 text-accent-600 border-neutral-300 rounded focus:ring-accent-500 cursor-pointer"
           />
           <span className="hidden md:block text-xs text-neutral-800 group-hover:text-accent-700 transition-colors">
-            Yes, I would like to cover the processing fee.
-            {
-              <span
-                className={`${coverProcessingFee ? "opacity-100" : "opacity-0"} block text-xs text-accent-600 font-medium mt-1`}>
-                +${processingFee.toFixed(2)} processing support
-              </span>
-            }
-          </span>
-          <span className="md:hidden text-xs md:text-sm text-neutral-800 group-hover:text-accent-700 transition-colors">
-            Yes, I would like to cover the 3% processing fee so 100% goes to the
-            mission.
+            Yes, I would like to cover the processing fee
             {
               <span
                 className={`${coverProcessingFee ? "opacity-100" : "opacity-0"} block text-xs text-accent-600 font-medium mt-1`}>

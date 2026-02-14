@@ -1,3 +1,8 @@
+const PAYPAL_API_LOCATION = {
+  production: "https://api.paypal.com/",
+  development: "https://api.sandbox.paypal.com",
+};
+
 export function getEnvironment() {
   const config = {
     stripeSecretKey: process.env.STRIPE_SECRET_KEY,
@@ -8,7 +13,7 @@ export function getEnvironment() {
 
     paypalClientId: process.env.PAYPAL_CLIENT_ID,
     paypalClientSecret: process.env.PAYPAL_CLIENT_SECRET,
-    paypalApiUrl: process.env.PAYPAL_API_BASE,
+    paypalApiUrl: PAYPAL_API_LOCATION[process.env.PAYPAL_API],
 
     resendKey: process.env.RESEND_API_KEY,
   };

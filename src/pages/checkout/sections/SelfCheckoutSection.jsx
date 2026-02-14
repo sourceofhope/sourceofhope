@@ -325,7 +325,7 @@ export default function SelfCheckoutSection({ total, cart, taxAmount }) {
           )}
 
           {/* Processing Fee Support */}
-          <div className="mb-6 bg-accent-50 border border-accent-200 rounded-xl p-4">
+          <div className="mb-6 h-35 bg-accent-50 border border-accent-200 rounded-xl p-4 pt-5">
             <h4 className="font-semibold text-neutral-900 mb-2 text-sm">
               Support the mission
             </h4>
@@ -342,8 +342,7 @@ export default function SelfCheckoutSection({ total, cart, taxAmount }) {
                 className="mt-0.5 w-4 h-4 text-accent-600 border-neutral-300 rounded focus:ring-accent-500 cursor-pointer"
               />
               <span className="text-xs md:text-sm text-neutral-800 group-hover:text-accent-700 transition-colors">
-                Yes, I would like to cover the 3% processing fee so 100% goes to
-                the mission.
+                Yes, I would like to cover the processing fee
                 {
                   <span
                     className={`${coverProcessingFee ? "opacity-100" : "opacity-0"} block text-xs text-accent-600 font-medium mt-1`}>
