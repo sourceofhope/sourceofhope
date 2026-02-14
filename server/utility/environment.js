@@ -1,14 +1,23 @@
-export function getConfig() {
-  const cfg = {
+const PAYPAL_API_LOCATION = {
+  production: "https://api.paypal.com/",
+  development: "https://api.sandbox.paypal.com",
+};
+
+export function getEnvironment() {
+  const config = {
     stripeSecretKey: process.env.STRIPE_SECRET_KEY,
     stripeWebhookSecret: process.env.STRIPE_WEBHOOK_SECRET,
+    stripePublishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
+    stripeSalesTaxRateId: process.env.STRIPE_SALES_TAX_RATE_ID,
 
     frontendUrl: process.env.FRONTEND_URL,
 
     paypalClientId: process.env.PAYPAL_CLIENT_ID,
     paypalClientSecret: process.env.PAYPAL_CLIENT_SECRET,
-    paypalApiUrl: process.env.PAYPAL_API_BASE,
+    paypalApiUrl: PAYPAL_API_LOCATION[process.env.PAYPAL_API],
+
+    resendKey: process.env.RESEND_API_KEY,
   };
 
-  return cfg;
+  return config;
 }

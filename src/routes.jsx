@@ -8,6 +8,7 @@ export const ROUTES = {
 		path: "about",
 		children: {
 			team: "team",
+			member: "team/:memberSlug",
 		},
 	},
 
@@ -34,8 +35,9 @@ export const ROUTES = {
 	storefront: {
 		path: "store",
 		children: {
-			products: "product",
+			product: "product/:productSlug",
 			cart: "cart",
+			checkout: "checkout",
 			success: "success",
 		},
 	},
@@ -68,8 +70,7 @@ function build(node, base = "") {
 }
 
 export const CANONICAL = {
-	home: { absolute: "/", relative: "" },
-
+	home: build(ROUTES.home),
 	about: build(ROUTES.about),
 	serve: build(ROUTES.serve),
 	connect: build(ROUTES.connect),

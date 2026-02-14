@@ -1,13 +1,11 @@
 const hostname = window.location.hostname.toLowerCase();
 
-const isLocal = hostname === "localhost" || hostname === "127.0.0.1";
-
-const isDevSite =
+export const IS_LOCAL = hostname === "localhost" || hostname === "127.0.0.1";
+export const IS_DEVELOPMENT =
   hostname === "dev.thesourceofhope.org" || hostname.startsWith("dev.");
-
-export const API_BASE_URL = isLocal
+export const API_BASE_URL = IS_LOCAL
   ? "http://localhost:3001/api"
-  : isDevSite
+  : IS_DEVELOPMENT
     ? "https://api.thesourceofhope.org/dev/api"
     : "https://api.thesourceofhope.org/app/api";
 
@@ -17,7 +15,6 @@ export function sanitize(str) {
 
 export async function apiRequest(path, options = {}) {
   const { method = "GET", body, headers = {} } = options;
-
   try {
     const res = await fetch(`${API_BASE_URL}${path}`, {
       method,
@@ -27,20 +24,17 @@ export async function apiRequest(path, options = {}) {
       },
       body: body ? JSON.stringify(body) : undefined,
     });
-
     const contentType = res.headers.get("content-type");
     const data =
       contentType && contentType.includes("application/json")
         ? await res.json()
         : null;
-
     if (!res.ok) {
       return {
         error: data?.error || "Request failed",
         status: res.status,
       };
     }
-
     return {
       data,
       status: res.status,
@@ -53,8 +47,13 @@ export async function apiRequest(path, options = {}) {
   }
 }
 
-export function get(path) {
-  return apiRequest(path);
+export function get(path, queryParams) {
+  let fullPath = path;
+  if (queryParams) {
+    const searchParams = new URLSearchParams(queryParams);
+    fullPath = `${path}?${searchParams.toString()}`;
+  }
+  return apiRequest(fullPath);
 }
 
 export function post(path, body) {

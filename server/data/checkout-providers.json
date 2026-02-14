@@ -1,0 +1,32 @@
+{
+  "providers": [
+    {
+      "id": "stripe",
+      "name": "Stripe",
+      "description": "Linked Stripe Account",
+      "enabled": true,
+      "icon": "stripe"
+    },
+    {
+      "id": "paypal",
+      "name": "PayPal",
+      "description": "Linked PayPal Account",
+      "enabled": true,
+      "icon": "paypal"
+    },
+    {
+      "id": "googlepay",
+      "name": "Google Pay",
+      "description": "Linked Google Pay Account",
+      "enabled": false,
+      "icon": "googlepay"
+    },
+    {
+      "id": "applepay",
+      "name": "Apple Pay",
+      "description": "Linked Apple Pay Account",
+      "enabled": false,
+      "icon": "applepay"
+    }
+  ]
+}

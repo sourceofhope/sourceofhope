@@ -1,6 +1,7 @@
 import { ArrowUpRightIcon } from "@heroicons/react/20/solid";
 import Heading from "../../../components/ui/text/Heading";
 import { HighlightedText } from "../../../components/ui/expressive/ExpressiveText";
+import SimpleLink from "../../../components/ui/SimpleLink";
 
 export default function StorefrontFooterSection() {
   return (
@@ -58,6 +59,20 @@ export default function StorefrontFooterSection() {
             action="Book Now"
             code="HOPEWELLNESS10"
           />
+        </div>
+        <div className="grid gap-5">
+          <Heading>Become a Partner Today</Heading>
+          <p className="text-neutral-600">
+            Our <SimpleLink>Community Partners</SimpleLink> receive exclusive
+            benefits, meaningful visibility, and the opportunity to make a
+            direct impact in the lives of individuals and families we serve. By
+            partnering with us, your business or organization aligns with a
+            mission rooted in hope, service, and community transformation.
+            Together, we can expand outreach, strengthen local initiatives, and
+            create lasting change. Join us today and be recognized as a leader
+            who invests not only in business growth, but in the well-being of
+            our community.
+          </p>
         </div>
       </div>
     </section>

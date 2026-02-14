@@ -17,7 +17,7 @@ export default function ProductPage() {
   const [product, setProduct] = useState(null);
   const [added, setAdded] = useState(false);
   const [loading, setLoading] = useState(true);
-  const { slug } = useParams();
+  const { productSlug } = useParams();
   const { addToCart } = useCartActions();
 
   const setBlocking = useSetHeaderBlocking();
@@ -50,7 +50,7 @@ export default function ProductPage() {
   useEffect(() => {
     async function loadProduct() {
       try {
-        const data = await fetchContent(`/product?slug=${slug}&_embed`);
+        const data = await fetchContent(`/product?slug=${productSlug}&_embed`);
 
         if (!data.length) throw new Error("Product not found");
         const post = data[0];
@@ -72,7 +72,7 @@ export default function ProductPage() {
       }
     }
     loadProduct();
-  }, [slug]);
+  }, [productSlug]);
 
   useEffect(() => {
     if (!loading && product?.title) {
@@ -96,13 +96,13 @@ export default function ProductPage() {
 
         <link
           rel="canonical"
-          href={`${CANONICAL_URL.storefront.product}/${slug}`}
+          href={`${CANONICAL_URL.storefront.product}/${productSlug}`}
         />
 
         <meta property="og:type" content="website" />
         <meta
           property="og:url"
-          content={`${CANONICAL_URL.storefront.product}/${slug}`}
+          content={`${CANONICAL_URL.storefront.product}/${productSlug}`}
         />
         <meta
           property="og:title"
@@ -116,7 +116,7 @@ export default function ProductPage() {
         <meta name="twitter:card" content="summary_large_image" />
         <meta
           name="twitter:url"
-          content={`${CANONICAL_URL.storefront.product}/${slug}`}
+          content={`${CANONICAL_URL.storefront.product}/${productSlug}`}
         />
         <meta
           name="twitter:title"

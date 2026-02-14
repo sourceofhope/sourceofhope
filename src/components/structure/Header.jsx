@@ -15,8 +15,43 @@ import Favicon from "../ui/Favicon";
 
 import { CANONICAL } from "../../routes";
 import { fetchContent } from "../../cms";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import Icon from "../ui/Icon";
+
+function getHeaderLinks() {
+  return [
+    {
+      label: "ABOUT",
+      route: CANONICAL.about,
+      children: [{ label: "TEAM", route: CANONICAL.about.team }],
+    },
+    {
+      label: "SERVE",
+      route: CANONICAL.serve,
+      children: [
+        { label: "SERVING & SHARING HOPE", route: CANONICAL.serve.servingHope },
+        { label: "EDUCATION FOR HOPE", route: CANONICAL.serve.educationHope },
+        { label: "WELLNESS OF HOPE", route: CANONICAL.serve.wellnessHope },
+        { label: "HOPE FOR THE OUTDOORS", route: CANONICAL.serve.outdoorHope },
+        {
+          label: "INTERNATIONAL HOPE",
+          route: CANONICAL.serve.internationalHope,
+        },
+      ],
+    },
+    { label: "MEMBERS", route: CANONICAL.member },
+    { label: "CONNECT", route: CANONICAL.connect },
+    {
+      label: "MEDIA",
+      route: CANONICAL.media,
+      children: [
+        { label: "PRESS", route: CANONICAL.media.press },
+        { label: "PODCAST", route: CANONICAL.media.podcast },
+      ],
+    },
+    { label: "STORE", route: CANONICAL.storefront },
+  ];
+}
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -52,7 +87,7 @@ export default function Header() {
 
   useEffect(() => {
     setTimeout(fetchBanner, 0);
-  }, []);
+  }, [fetchBanner]);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 0);
@@ -86,7 +121,7 @@ export default function Header() {
           ${
             scrolled
               ? `bg-primary-800 text-neutral-50 border-transparent`
-              : `bg-transparent ${open ? "border-b-4" : null} ${
+              : `bg-transparent ${open ? "border-b-4" : ""} ${
                   isBlocking ? "text-primary-800" : "text-neutral-50"
                 }`
           }`}>
@@ -97,11 +132,14 @@ export default function Header() {
               THE SOURCE OF HOPE
             </h1>
           </div>
+
           <nav className="hidden md:flex gap-3 z-10" aria-label="Primary">
             <HeaderNavigator />
           </nav>
+
           <HeaderMenu open={open} setOpen={setOpen} />
         </section>
+
         <div
           className={`md:hidden transition-opacity duration-500 ease-out ${
             open ? "opacity-100" : "opacity-0 pointer-events-none"
@@ -110,7 +148,11 @@ export default function Header() {
             <nav
               className="flex flex-col justify-end items-center px-5 pb-5 h-fit"
               aria-label="Mobile">
-              <HeaderNavigator />
+              <HeaderNavigator
+                isMobile
+                open={open}
+                onClose={() => setOpen(false)}
+              />
             </nav>
           )}
         </div>
@@ -124,7 +166,7 @@ function HeaderBanner({ link = "", text = "Donate Today!", open, setOpen }) {
     link.startsWith("https://") ? (
       <a
         href={link}
-        className="flex gap-3 justify-between md:justify-center h-15 md:h-10  items-center px-5 lg:px-35 bg-accent-500 border-b-2 text-neutral-50 border-accent-700 fixed top-0 left-0 right-0 z-[9998] w-full overflow-hidden">
+        className="flex gap-3 justify-between md:justify-center h-15 md:h-10 items-center px-5 lg:px-35 bg-accent-500 border-b-2 text-neutral-50 border-accent-700 fixed top-0 left-0 right-0 z-[9998] w-full overflow-hidden">
         <p className="hover:underline font-semibold">{text}</p>
         <button
           className="justify-self-end z-[9999]"
@@ -143,7 +185,7 @@ function HeaderBanner({ link = "", text = "Donate Today!", open, setOpen }) {
     ) : (
       <Link
         to={link}
-        className="flex gap-3 justify-between md:justify-center h-15 md:h-10  items-center px-5 lg:px-35 bg-accent-500 border-b-2 text-neutral-50 border-accent-700 fixed top-0 left-0 right-0 z-[9999] w-full overflow-hidden">
+        className="flex gap-3 justify-between md:justify-center h-15 md:h-10 items-center px-5 lg:px-35 bg-accent-500 border-b-2 text-neutral-50 border-accent-700 fixed top-0 left-0 right-0 z-[9999] w-full overflow-hidden">
         <p className="hover:underline font-semibold">{text}</p>
         <button
           className="justify-self-end"
@@ -167,7 +209,7 @@ function HeaderMenu({ open, setOpen }) {
   return (
     <button
       className="block md:hidden"
-      onClick={() => setOpen((open) => !open)}
+      onClick={() => setOpen((v) => !v)}
       aria-expanded={open}
       aria-label={open ? "Close menu" : "Open menu"}>
       <Icon>
@@ -181,79 +223,44 @@ function HeaderMenu({ open, setOpen }) {
   );
 }
 
-function HeaderNavigator() {
-  const [hovering, setHovering] = useState(null);
+function HeaderNavigator({ isMobile = false, open, onClose = () => {} }) {
+  const links = getHeaderLinks();
+  return isMobile ? (
+    <MobileNavigator links={links} open={open} onClose={onClose} />
+  ) : (
+    <DesktopNavigator links={links} />
+  );
+}
 
-  const links = [
-    {
-      label: "ABOUT",
-      route: CANONICAL.about,
-      children: [{ label: "TEAM", route: CANONICAL.about.team }],
-    },
-    {
-      label: "SERVE",
-      route: CANONICAL.serve,
-      children: [
-        { label: "SERVING & SHARING HOPE", route: CANONICAL.serve.servingHope },
-        { label: "EDUCATION FOR HOPE", route: CANONICAL.serve.educationHope },
-        { label: "WELLNESS OF HOPE", route: CANONICAL.serve.wellnessHope },
-        { label: "HOPE FOR THE OUTDOORS", route: CANONICAL.serve.outdoorHope },
-        {
-          label: "INTERNATIONAL HOPE",
-          route: CANONICAL.serve.internationalHope,
-        },
-      ],
-    },
-    {
-      label: "MEMBERS",
-      route: CANONICAL.member,
-    },
-    {
-      label: "CONNECT",
-      route: CANONICAL.connect,
-    },
-    {
-      label: "MEDIA",
-      route: CANONICAL.media,
-      children: [
-        { label: "PRESS", route: CANONICAL.media.press },
-        { label: "PODCAST", route: CANONICAL.media.podcast },
-      ],
-    },
-    {
-      label: "STORE",
-      route: CANONICAL.storefront,
-    },
-  ];
+function DesktopNavigator({ links }) {
+  const [hovering, setHovering] = useState(null);
 
   return (
     <>
-      {links.map(({ label, route, children }) => {
-        return (
-          <HeaderButton
-            key={label}
-            className={`
-                py-2.5 h-full w-full font-bold
-                ${
-                  hovering
-                    ? hovering == label
-                      ? "opacity-100"
-                      : "opacity-80"
-                    : ""
-                }`}
-            hovering={hovering}
-            setHovering={setHovering}
-            route={route}
-            children={children || []}
-            label={label}
-          />
-        );
-      })}
+      {links.map(({ label, route, children }) => (
+        <DesktopNavigatorItem
+          key={label}
+          label={label}
+          route={route}
+          children={children || []}
+          hovering={hovering}
+          setHovering={setHovering}
+          className={`
+            py-2.5 h-full w-full font-bold
+            ${
+              hovering
+                ? hovering === label
+                  ? "opacity-100"
+                  : "opacity-80"
+                : ""
+            }`}
+        />
+      ))}
     </>
   );
 }
 
-function HeaderButton({
+function DesktopNavigatorItem({
   ariaLabel,
   label,
   className,
@@ -262,8 +269,11 @@ function HeaderButton({
   hovering,
   setHovering,
 }) {
+  const isOpen = hovering === label;
+  const hasChildren = children.length > 0;
+
   return (
-    <div className="w-full select-none">
+    <div className="w-full select-none relative">
       <NavLink
         onMouseEnter={() => setHovering(label)}
         onMouseLeave={() => setHovering(null)}
@@ -274,17 +284,15 @@ function HeaderButton({
         <Icon>
           <ChevronRightIcon
             className={`w-6 h-6 transition-transform duration-500 ${
-              hovering === label && children.length > 0
+              isOpen && hasChildren
                 ? "rotate-90"
                 : "rotate-0 group-hover:translate-x-1"
             }`}
             onClick={(e) => {
-              if (children.length > 0) {
-                e.preventDefault();
-                e.stopPropagation();
-              }
-
-              setHovering(label === hovering ? null : label);
+              if (!hasChildren) return;
+              e.preventDefault();
+              e.stopPropagation();
+              setHovering(isOpen ? null : label);
             }}
             focusable="false"
             aria-hidden="true"
@@ -292,52 +300,137 @@ function HeaderButton({
           />
         </Icon>
       </NavLink>
-      {children.length > 0 && (
-        <>
-          <div
-            onMouseEnter={() => {
-              if (hovering) {
-                setHovering(label);
-              }
-            }}
-            onMouseLeave={() => {
-              if (hovering) {
-                setHovering(null);
-              }
-            }}
-            className={`${
-              hovering == label
-                ? "opacity-100 pointer-events-auto"
-                : "opacity-0 -translate-y-1 pointer-events-none"
-            } absolute hidden md:flex z-50 transition-[opacity_transform] delay-150 duration-300 bg-neutral-50 min-w-40 rounded-lg p-3 py-5 shadow-md text-accent-800 flex-col font-semibold text-sm`}>
-            {children.map(({ label, route }) => {
-              return (
-                <NavLink
-                  className="py-2.5 hover:bg-neutral-200 duration-300 transition-colors !no-underline px-3 rounded-md"
-                  key={route.absolute}
-                  to={route.absolute}>
-                  {label}
-                </NavLink>
-              );
-            })}
-          </div>
-          {hovering == label &&
-            children.map(({ label, route }) => {
-              return (
-                <NavLink
-                  onClick={(e) => {
-                    e.stopPropagation();
-                  }}
-                  aria-label={ariaLabel}
-                  key={route.absolute}
-                  to={route.absolute}
-                  className={`pl-5 md:hidden !no-underline group transition-[color_transform] ease-in-out duration-300 inline-flex w-full justify-between items-center gap-1 focus:outline-none ${className}`}>
-                  {label}
-                </NavLink>
-              );
-            })}
-        </>
+
+      {hasChildren && (
+        <div
+          onMouseEnter={() => setHovering(label)}
+          onMouseLeave={() => setHovering(null)}
+          className={`${
+            isOpen
+              ? "opacity-100 pointer-events-auto"
+              : "opacity-0 -translate-y-1 pointer-events-none"
+          } absolute hidden md:flex z-50 transition-[opacity_transform] delay-150 duration-300 bg-neutral-50 min-w-40 w-max rounded-lg p-3 py-5 shadow-md text-accent-800 flex-col font-semibold text-sm`}>
+          {children.map(({ label: childLabel, route: childRoute }) => (
+            <NavLink
+              className="py-2.5 hover:bg-neutral-200 duration-300 transition-colors !no-underline px-3 rounded-md"
+              key={childRoute.absolute}
+              to={childRoute.absolute}>
+              {childLabel}
+            </NavLink>
+          ))}
+        </div>
       )}
+    </div>
+  );
+}
+
+function MobileNavigator({ links, open, onClose }) {
+  const navigate = useNavigate();
+
+  const root = { title: "BACK", route: null, items: links };
+  const [stack, setStack] = useState([root]);
+
+  const [visible, setVisible] = useState(true);
+
+  useEffect(() => {
+    if (!open) {
+      setStack([root]);
+      setVisible(true);
+    }
+  }, [open]);
+
+  const current = stack[stack.length - 1];
+  const canGoBack = stack.length > 1;
+
+  const transition = (nextStack) => {
+    // Fade out
+    setVisible(false);
+
+    setTimeout(() => {
+      setStack(nextStack);
+      // Fade in
+      setVisible(true);
+    }, 150);
+  };
+
+  const goBack = () => {
+    if (!canGoBack) return;
+    transition(stack.slice(0, -1));
+  };
+
+  const openChildren = (parent) => {
+    transition([
+      ...stack,
+      {
+        title: parent.label,
+        route: parent.route,
+        items: parent.children || [],
+      },
+    ]);
+  };
+
+  const goTo = (e, to) => {
+    e.preventDefault();
+    if (!to) return;
+    navigate(to);
+    onClose?.();
+  };
+
+  return (
+    <div className="w-full">
+      <div
+        className={`transition-opacity duration-200 ease-out ${
+          visible ? "opacity-100" : "opacity-0"
+        }`}>
+        {canGoBack && (
+          <button
+            type="button"
+            onClick={goBack}
+            className="py-2.5 w-full group font-bold inline-flex items-center justify-between gap-2"
+            aria-label="Back">
+            <span>{stack[stack.length - 2]?.title || "BACK"}</span>
+            <Icon>
+              <ChevronRightIcon
+                className="w-6 h-6 rotate-180 transition-transform duration-500 group-hover:-translate-x-1"
+                focusable="false"
+                aria-hidden="true"
+                role="presentation"
+              />
+            </Icon>
+          </button>
+        )}
+
+        {current.items.map((item) => {
+          const hasChildren = (item.children || []).length > 0;
+
+          return (
+            <div key={item.route.absolute} className="w-full">
+              <NavLink
+                to={item.route.absolute}
+                className="!no-underline py-2.5 h-full w-full group font-bold inline-flex justify-between items-center gap-1"
+                onClick={(event) => {
+                  if (hasChildren) {
+                    event.preventDefault();
+                    openChildren(item);
+                  } else {
+                    goTo(event, item.route.absolute);
+                  }
+                }}
+                aria-label={item.label}>
+                <span className="text-left">{item.label}</span>
+                <Icon>
+                  <ChevronRightIcon
+                    className="w-6 h-6 transition-transform duration-500 rotate-0 group-hover:translate-x-1"
+                    focusable="false"
+                    aria-hidden="true"
+                    role="presentation"
+                  />
+                </Icon>
+              </NavLink>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }
