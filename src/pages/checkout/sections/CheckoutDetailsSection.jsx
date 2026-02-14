@@ -99,7 +99,7 @@ export default function CheckoutDetailsSection({
 
         <div className="flex justify-between text-sm">
           <div className="flex flex-col">
-            <span className="text-neutral-600">Fee</span>
+            <span className="text-neutral-600">Fee(s)</span>
             <span className="text-xs text-neutral-500 mt-0.5">
               {STANDARD_PROCESSING_RATE * 100}%
             </span>

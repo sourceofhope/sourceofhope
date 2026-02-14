@@ -61,7 +61,7 @@ export async function createPaymentIntent({
   });
 }
 
-/** 
+/**
  * Fetch the Stripe session status from the server
  * @param {string} sessionId - The Stripe session ID
  * @returns {Promise} Response containing the session status and customer email
@@ -107,7 +107,7 @@ export async function createStripeCheckoutSession({
   shippingCost,
   taxAmount,
   return_url,
-}) { 
+}) {
   return post("/checkout/create-stripe-session", {
     items: items.map((item) => ({
       id: item.id,
@@ -145,7 +145,6 @@ export async function createStripeCheckout({
   successUrl,
   cancelUrl,
 }) {
-  
   return post("/checkout/create-stripe-checkout", {
     items: items.map((item) => ({
       id: item.id,

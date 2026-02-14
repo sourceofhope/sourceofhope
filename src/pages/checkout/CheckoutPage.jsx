@@ -83,6 +83,7 @@ export default function CheckoutPage() {
               <ExpressCheckoutSection
                 total={total}
                 items={cart}
+                processingFee={processingFee}
                 shippingMethod={shippingMethod}
                 shippingCost={shipping}
                 taxAmount={tax}

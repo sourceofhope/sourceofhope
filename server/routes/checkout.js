@@ -4,6 +4,54 @@ import { getEnvironment } from "../utility/environment.js";
 
 const router = express.Router();
 
+export const SHIPPING_OPTIONS = [
+  {
+    id: "standard",
+    name: "Standard Shipping",
+    time: "5-7 business days",
+  },
+  {
+    id: "express",
+    name: "Express Shipping",
+    time: "2-3 business days",
+  },
+  {
+    id: "overnight",
+    name: "Overnight Shipping",
+    time: "Next business day",
+  },
+];
+
+function buildStripeShippingOptions(shippingMethod, shippingCost) {
+  const option = SHIPPING_OPTIONS.find((opt) => opt.id === shippingMethod);
+
+  if (!option) return [];
+
+  return [
+    {
+      shipping_rate_data: {
+        type: "fixed_amount",
+        fixed_amount: {
+          amount: Math.round(shippingCost * 100), // convert to cents
+          currency: "usd",
+        },
+        display_name: option.name,
+        delivery_estimate: {
+          minimum: {
+            unit: "business_day",
+            value: parseInt(option.time.split("-")[0]) || 1,
+          },
+          maximum: {
+            unit: "business_day",
+            value:
+              parseInt(option.time.split("-")[1]) || parseInt(option.time) || 1,
+          },
+        },
+      },
+    },
+  ];
+}
+
 /**
  * Get Stripe Payment Intent Status
  * GET /api/checkout/retrieve-stripe-payment-intent-status
@@ -24,12 +72,12 @@ router.get("/retrieve-stripe-payment-intent-status", async (req, res) => {
     const stripe = new Stripe(stripeSecretKey);
     const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
 
-        // Try multiple sources for email
-    const customerEmail = 
-      paymentIntent.receipt_email || 
-      paymentIntent.metadata?.customer_email || 
+    // Try multiple sources for email
+    const customerEmail =
+      paymentIntent.receipt_email ||
+      paymentIntent.metadata?.customer_email ||
       paymentIntent.charges?.data[0]?.billing_details?.email ||
-      '';
+      "";
 
     res.json({
       status: paymentIntent.status,
@@ -37,8 +85,6 @@ router.get("/retrieve-stripe-payment-intent-status", async (req, res) => {
       amount: paymentIntent.amount,
       currency: paymentIntent.currency,
     });
-
-
   } catch (error) {
     console.error("Retrieve Payment Intent status error:", error);
     res.status(500).json({
@@ -85,7 +131,7 @@ router.post("/create-stripe-payment-intent", async (req, res) => {
     //   0,
     // );
     // const totalAmount = itemsTotal + (shippingCost || 0) + (taxAmount || 0) + (processingFee || 0);
-    
+
     // Log the amounts being sent
     // console.log("Creating Payment Intent:", {
     //   itemsTotal: itemsTotal.toFixed(2),
@@ -170,15 +216,21 @@ router.post("/retrieve-stripe-publishable-key", async (req, res) => {
 
 router.post("/create-stripe-session", async (req, res) => {
   try {
-    const { stripeSecretKey } = getEnvironment();
+    const { stripeSecretKey, stripeSalesTaxRateId } = getEnvironment();
     if (!stripeSecretKey) {
       return res.status(500).json({ error: "Stripe is not configured." });
     }
 
     const stripe = new Stripe(stripeSecretKey);
 
-    const { items, shippingMethod, shippingCost, taxAmount, return_url } =
-      req.body;
+    const {
+      items,
+      shippingMethod,
+      shippingCost,
+      taxAmount,
+      processingFee,
+      return_url,
+    } = req.body;
 
     // Validate required fields
     if (!items || !Array.isArray(items) || items.length === 0) {
@@ -205,37 +257,27 @@ router.post("/create-stripe-session", async (req, res) => {
         unit_amount: Math.round(parseFloat(item.price.toFixed(2)) * 100),
       },
       quantity: item.quantity,
+      tax_rates: stripeSalesTaxRateId ? [stripeSalesTaxRateId] : undefined,
     }));
 
-    // Add shipping as a line item
-    if (shippingCost && shippingCost > 0) {
+    if (processingFee && processingFee > 0) {
       lineItems.push({
         price_data: {
           currency: "usd",
           product_data: {
-            name: `Shipping (${shippingMethod})`,
-            description: "Shipping charges",
+            name: "Processing Support",
+            description: "Supporting 100% of the mission (3%)",
           },
-          unit_amount: Math.round(parseFloat(shippingCost.toFixed(2)) * 100),
+          unit_amount: Math.round(parseFloat(processingFee.toFixed(2)) * 100),
         },
         quantity: 1,
       });
     }
 
-    // Add tax as a line item
-    if (taxAmount && taxAmount > 0) {
-      lineItems.push({
-        price_data: {
-          currency: "usd",
-          product_data: {
-            name: "Tax",
-            description: "Sales tax (8.25%)",
-          },
-          unit_amount: Math.round(parseFloat(taxAmount.toFixed(2)) * 100),
-        },
-        quantity: 1,
-      });
-    }
+    const shippingOptions = buildStripeShippingOptions(
+      shippingMethod,
+      shippingCost,
+    );
 
     // Create embedded checkout session
     const session = await stripe.checkout.sessions.create({
@@ -246,10 +288,14 @@ router.post("/create-stripe-session", async (req, res) => {
       shipping_address_collection: {
         allowed_countries: ["US"],
       },
+      shipping_options: shippingOptions,
       billing_address_collection: "required",
       metadata: {
         shipping_method: shippingMethod || "standard",
         order_type: "storefront",
+        stripe_tax_rate_id: stripeSalesTaxRateId || "",
+        ui_tax_amount:
+          typeof taxAmount === "number" ? taxAmount.toFixed(2) : "0.00",
       },
     });
 
@@ -306,8 +352,9 @@ router.get("/retrieve-stripe-session-status", async (req, res) => {
  */
 router.get("/retrieve-paypal-order-status", async (req, res) => {
   try {
-    const { paypalClientId, paypalClientSecret, paypalApiUrl } = getEnvironment();
-    
+    const { paypalClientId, paypalClientSecret, paypalApiUrl } =
+      getEnvironment();
+
     if (!paypalClientId || !paypalClientSecret) {
       return res.status(500).json({ error: "PayPal is not configured." });
     }
@@ -382,7 +429,7 @@ router.get("/retrieve-paypal-order-status", async (req, res) => {
  */
 router.post("/create-stripe-checkout", async (req, res) => {
   try {
-    const { stripeSecretKey } = getEnvironment();
+    const { stripeSecretKey, stripeSalesTaxRateId } = getEnvironment();
     if (!stripeSecretKey) {
       return res.status(500).json({ error: "Stripe is not configured." });
     }
@@ -423,35 +470,8 @@ router.post("/create-stripe-checkout", async (req, res) => {
         unit_amount: Math.round(parseFloat(item.price.toFixed(2)) * 100), // Convert to cents
       },
       quantity: item.quantity,
+      tax_rates: stripeSalesTaxRateId ? [stripeSalesTaxRateId] : undefined,
     }));
-
-    if (shippingCost && shippingCost > 0) {
-      lineItems.push({
-        price_data: {
-          currency: "usd",
-          product_data: {
-            name: `Shipping (${shippingMethod})`,
-            description: "Shipping charges",
-          },
-          unit_amount: Math.round(parseFloat(shippingCost.toFixed(2)) * 100),
-        },
-        quantity: 1,
-      });
-    }
-
-    if (taxAmount && taxAmount > 0) {
-      lineItems.push({
-        price_data: {
-          currency: "usd",
-          product_data: {
-            name: "Tax",
-            description: "Sales tax (8.25%)",
-          },
-          unit_amount: Math.round(parseFloat(taxAmount.toFixed(2)) * 100),
-        },
-        quantity: 1,
-      });
-    }
 
     if (processingFee && processingFee > 0) {
       lineItems.push({
@@ -467,6 +487,11 @@ router.post("/create-stripe-checkout", async (req, res) => {
       });
     }
 
+    const shippingOptions = buildStripeShippingOptions(
+      shippingMethod,
+      shippingCost,
+    );
+
     // Create Stripe Checkout Session
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
@@ -477,10 +502,14 @@ router.post("/create-stripe-checkout", async (req, res) => {
       shipping_address_collection: {
         allowed_countries: ["US"],
       },
+      shipping_options: shippingOptions,
       billing_address_collection: "required",
       metadata: {
-        shipping_method: shippingMethod,
+        shipping_method: shippingMethod || "standard",
         order_type: "storefront",
+        stripe_tax_rate_id: stripeSalesTaxRateId || "",
+        ui_tax_amount:
+          typeof taxAmount === "number" ? taxAmount.toFixed(2) : "0.00",
       },
     });
 
@@ -536,7 +565,11 @@ router.post("/create-paypal-order", async (req, res) => {
       (sum, item) => sum + item.price * item.quantity,
       0,
     );
-    const totalAmount = itemsTotal + (shippingCost || 0) + (taxAmount || 0) + (processingFee || 0);
+    const totalAmount =
+      itemsTotal +
+      (shippingCost || 0) +
+      (taxAmount || 0) +
+      (processingFee || 0);
 
     const auth = Buffer.from(
       `${paypalClientId}:${paypalClientSecret}`,
@@ -597,7 +630,9 @@ router.post("/create-paypal-order", async (req, res) => {
             breakdown: {
               item_total: {
                 currency_code: "USD",
-                value: parseFloat((itemsTotal + (processingFee || 0)).toFixed(2)).toFixed(2),
+                value: parseFloat(
+                  (itemsTotal + (processingFee || 0)).toFixed(2),
+                ).toFixed(2),
               },
               shipping: {
                 currency_code: "USD",
