@@ -175,7 +175,7 @@ export default function ExpressCheckoutSection({
       )}
 
       {/* Processing Fee Support */}
-      <div className="mt-5 h-35 bg-accent-50 border border-accent-200 rounded-xl p-4">
+      <div className="mt-5 bg-accent-50 border border-accent-200 rounded-xl p-4">
         <h4 className="font-semibold text-neutral-900 mb-2 text-sm">
           Support the mission
         </h4>

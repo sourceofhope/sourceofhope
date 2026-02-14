@@ -325,7 +325,7 @@ export default function SelfCheckoutSection({ total, cart, taxAmount }) {
           )}
 
           {/* Processing Fee Support */}
-          <div className="mb-6 h-35 bg-accent-50 border border-accent-200 rounded-xl p-4 pt-5">
+          <div className="mb-6 bg-accent-50 border border-accent-200 rounded-xl p-4 pt-5">
             <h4 className="font-semibold text-neutral-900 mb-2 text-sm">
               Support the mission
             </h4>
