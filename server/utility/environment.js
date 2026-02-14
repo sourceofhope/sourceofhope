@@ -8,7 +8,7 @@ export function getEnvironment() {
     stripeSecretKey: process.env.STRIPE_SECRET_KEY,
     stripeWebhookSecret: process.env.STRIPE_WEBHOOK_SECRET,
     stripePublishableKey: process.env.STRIPE_PUBLISHABLE_KEY,
-    stripeSalesTaxRateId: process.env.STRIPE_TAX_RATE_ID,
+    stripeSalesTaxRateId: process.env.STRIPE_SALES_TAX_RATE_ID,
 
     frontendUrl: process.env.FRONTEND_URL,
 

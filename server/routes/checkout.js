@@ -478,8 +478,8 @@ router.post("/create-stripe-checkout", async (req, res) => {
         price_data: {
           currency: "usd",
           product_data: {
-            name: "Processing Support",
-            description: "Supporting 100% of the mission (3%)",
+            name: "Processing Fee Coverage (3%)",
+            description: "Support the Mission — Cover Fees (3%)",
           },
           unit_amount: Math.round(parseFloat(processingFee.toFixed(2)) * 100),
         },
@@ -609,8 +609,8 @@ router.post("/create-paypal-order", async (req, res) => {
     // Add processing fee as a separate item if present
     if (processingFee && processingFee > 0) {
       paypalItems.push({
-        name: "Processing Support",
-        description: "Supporting 100% of the mission (3%)",
+        name: "Processing Fee Coverage (3%)",
+        description: "Support the Mission — Cover Fees (3%)",
         unit_amount: {
           currency_code: "USD",
           value: parseFloat(processingFee.toFixed(2)).toFixed(2),
