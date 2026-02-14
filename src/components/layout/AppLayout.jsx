@@ -1,17 +1,14 @@
 import { Outlet, ScrollRestoration } from "react-router-dom";
-import Header, { HeaderFlagContext } from "../structure/Header";
-import { Suspense, useState } from "react";
+import { HeaderProvider } from "../../context/HeaderContext";
+import { Suspense } from "react";
 import { StoreCartProvider } from "../../context/StoreCartContext";
 import Loader from "../structure/Loader";
 import Footer from "../structure/Footer";
+import Header from "../structure/Header";
 
 export default function AppLayout() {
-  const [isBlocking, setIsBlocking] = useState(false);
-  const [bannerActive, setBannerActive] = useState(false);
-
   return (
-    <HeaderFlagContext.Provider
-      value={{ bannerActive, setBannerActive, isBlocking, setIsBlocking }}>
+    <HeaderProvider>
       <StoreCartProvider>
         <Header />
         <main className="w-full min-h-screen text-sm md:text-md lg:text-lg">
@@ -22,6 +19,6 @@ export default function AppLayout() {
         </main>
         <Footer />
       </StoreCartProvider>
-    </HeaderFlagContext.Provider>
+    </HeaderProvider>
   );
 }

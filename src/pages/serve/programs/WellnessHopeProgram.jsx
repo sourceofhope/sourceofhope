@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet-async";
-import { useSetHeaderBlocking } from "../../../components/structure/Header";
+import { useHeaderContext } from "../../../context/HeaderContext";
 import { useEffect } from "react";
 import Heading from "../../../components/ui/text/Heading";
 import Title from "../../../components/ui/text/Title";
@@ -9,12 +9,13 @@ import Bold from "../../../components/ui/text/Bold";
 import { HighlightedText } from "../../../components/ui/expressive/ExpressiveText";
 
 export default function WellnessHopeProgram() {
-  const setBlocking = useSetHeaderBlocking();
+  const { setIsBlocking } = useHeaderContext();
 
   useEffect(() => {
-    setBlocking(true);
-    return () => setBlocking(false);
-  }, [setBlocking]);
+    setIsBlocking(true);
+    return () => setIsBlocking(false);
+  }, [setIsBlocking]);
+
   return (
     <>
       <Helmet>

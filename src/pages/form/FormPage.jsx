@@ -1,20 +1,20 @@
 import { Helmet } from "react-helmet-async";
 import { CANONICAL_URL } from "../../routes";
-import { useSetHeaderBlocking } from "../../components/structure/Header";
 import { useEffect } from "react";
 import FormDescriptionSection from "./sections/FormDescriptionSection";
 import FormInputSection from "./sections/FormInputSection";
 import FormShowcaseSection from "./sections/FormShowcaseSection";
 import Title from "../../components/ui/text/Title";
 import Heading from "../../components/ui/text/Heading";
+import { useHeaderContext } from "../../context/HeaderContext";
 
 export default function FormPage() {
-  const setBlocking = useSetHeaderBlocking();
+  const { setIsBlocking } = useHeaderContext();
 
   useEffect(() => {
-    setBlocking(true);
-    return () => setBlocking(false);
-  }, [setBlocking]);
+    setIsBlocking(true);
+    return () => setIsBlocking(false);
+  }, [setIsBlocking]);
   return (
     <>
       <Helmet>

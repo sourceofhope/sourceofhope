@@ -1,18 +1,18 @@
 import { Helmet } from "react-helmet-async";
-import { useSetHeaderBlocking } from "../../components/structure/Header";
 import StorefrontProductSection from "./sections/StorefrontProductSection";
 import StorefrontFooterSection from "./sections/StorefrontFooterSection";
 import { useEffect } from "react";
 import { CANONICAL_URL } from "../../routes";
 import Cart from "./Cart";
+import { useHeaderContext } from "../../context/HeaderContext";
 
 export default function StorefrontPage() {
-  const setBlocking = useSetHeaderBlocking();
+  const { setIsBlocking } = useHeaderContext();
 
   useEffect(() => {
-    setBlocking(true);
-    return () => setBlocking(false);
-  }, [setBlocking]);
+    setIsBlocking(true);
+    return () => setIsBlocking(false);
+  }, [setIsBlocking]);
 
   return (
     <>

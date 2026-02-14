@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet-async";
-import { useSetHeaderBlocking } from "../../../components/structure/Header";
+import { useHeaderContext } from "../../../context/HeaderContext";
 import { useEffect } from "react";
 import ExpressiveAnchor from "../../../components/ui/expressive/ExpressiveAnchor";
 import Carousel from "../../../components/ui/Carousel";
@@ -17,12 +17,12 @@ import { HighlightedText } from "../../../components/ui/expressive/ExpressiveTex
 import Emphasis from "../../../components/ui/Emphasis";
 
 export default function InternationalHopeProgram() {
-  const setBlocking = useSetHeaderBlocking();
+  const { setIsBlocking } = useHeaderContext();
 
   useEffect(() => {
-    setBlocking(true);
-    return () => setBlocking(false);
-  }, [setBlocking]);
+    setIsBlocking(true);
+    return () => setIsBlocking(false);
+  }, [setIsBlocking]);
   return (
     <>
       <Helmet>

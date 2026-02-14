@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { CANONICAL } from "../../routes";
 import { ShoppingBagIcon } from "@heroicons/react/20/solid";
 import { useCartActions } from "../../context/StoreCartContext";
-import { useHeaderContext } from "../../components/structure/Header";
+import { useHeaderContext } from "../../context/HeaderContext";
 
 export default function Cart() {
   const { getCartItemCount } = useCartActions();

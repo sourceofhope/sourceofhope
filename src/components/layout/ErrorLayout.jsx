@@ -1,9 +1,9 @@
-import Header, { HeaderFlagContext } from "../structure/Header";
-import { useState } from "react";
+import { HeaderContext } from "../../context/HeaderContext";
 import { CANONICAL } from "../../routes";
 import { StoreCartProvider } from "../../context/StoreCartContext";
 import Footer from "../structure/Footer";
 import ExpressiveLink from "../ui/expressive/ExpressiveLink";
+import Header from "../structure/Header";
 
 export default function ErrorLayout({ code = 500, message }) {
   const defaults = {
@@ -14,12 +14,8 @@ export default function ErrorLayout({ code = 500, message }) {
   };
   const display = defaults[code] || "An unexpected error occurred.";
 
-  const [isBlocking, setIsBlocking] = useState(false);
-  const [bannerActive, setBannerActive] = useState(false);
-
   return (
-    <HeaderFlagContext.Provider
-      value={{ bannerActive, setBannerActive, isBlocking, setIsBlocking }}>
+    <HeaderContext>
       <StoreCartProvider>
         <Header />
         <main className="w-full min-h-screen flex flex-col justify-center items-start gap-5 px-5 lg:px-35 text-sm md:text-md lg:text-lg">
@@ -45,6 +41,6 @@ export default function ErrorLayout({ code = 500, message }) {
         </main>
         <Footer />
       </StoreCartProvider>
-    </HeaderFlagContext.Provider>
+    </HeaderContext>
   );
 }

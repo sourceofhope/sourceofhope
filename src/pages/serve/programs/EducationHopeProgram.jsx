@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet-async";
-import { useSetHeaderBlocking } from "../../../components/structure/Header";
+import { useHeaderContext } from "../../../context/HeaderContext";
 import { useEffect } from "react";
 import ExpressiveAnchor from "../../../components/ui/expressive/ExpressiveAnchor";
 import Carousel from "../../../components/ui/Carousel";
@@ -18,12 +18,12 @@ import Icon from "../../../components/ui/Icon";
 import { HighlightedText } from "../../../components/ui/expressive/ExpressiveText";
 
 export default function EducationHopeProgram() {
-  const setBlocking = useSetHeaderBlocking();
+  const { setIsBlocking } = useHeaderContext();
 
   useEffect(() => {
-    setBlocking(true);
-    return () => setBlocking(false);
-  }, [setBlocking]);
+    setIsBlocking(true);
+    return () => setIsBlocking(false);
+  }, [setIsBlocking]);
   return (
     <>
       <Helmet>

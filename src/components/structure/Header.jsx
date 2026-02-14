@@ -1,16 +1,10 @@
-import {
-  useState,
-  useEffect,
-  useContext,
-  createContext,
-  useCallback,
-} from "react";
+import { useState, useEffect, useCallback } from "react";
 import {
   Bars3Icon,
   ChevronRightIcon,
   XMarkIcon,
 } from "@heroicons/react/20/solid";
-
+import { useHeaderContext } from "../../context/HeaderContext";
 import Favicon from "../ui/Favicon";
 
 import { CANONICAL } from "../../routes";
@@ -424,22 +418,3 @@ function MobileNavigator({ links, open, onClose }) {
     </div>
   );
 }
-
-export function useHeaderBlocking() {
-  const { isBlocking } = useHeaderContext();
-  return isBlocking;
-}
-
-export function useSetHeaderBlocking() {
-  const { setIsBlocking } = useHeaderContext();
-  return setIsBlocking;
-}
-
-export const HeaderFlagContext = createContext({
-  bannerActive: false,
-  setBannerActive: () => {},
-  isBlocking: false,
-  setIsBlocking: () => {},
-});
-
-export const useHeaderContext = () => useContext(HeaderFlagContext);

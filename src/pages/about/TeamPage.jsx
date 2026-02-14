@@ -134,10 +134,6 @@ export function CarouselCard({ post }) {
 
   const image = getFeaturedImage(post);
 
-  useEffect(() => {
-    document.body.style.overflow = active ? "hidden" : "";
-  }, [active]);
-
   return (
     <>
       <div
@@ -159,6 +155,7 @@ export function CarouselCard({ post }) {
         <Link
           className="absolute inset-0 w-full h-full z-50 hidden md:block"
           to={post.slug}
+          onClick={(e) => e.stopPropagation()}
         />
         <div className="absolute bottom-0 left-0 w-full p-5 bg-gradient-to-t from-black/90 to-transparent rounded-b-2xl flex flex-col">
           <h2
