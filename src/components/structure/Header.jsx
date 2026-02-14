@@ -309,7 +309,7 @@ function DesktopNavigatorItem({
             isOpen
               ? "opacity-100 pointer-events-auto"
               : "opacity-0 -translate-y-1 pointer-events-none"
-          } absolute hidden md:flex z-50 transition-[opacity_transform] delay-150 duration-300 bg-neutral-50 min-w-40 rounded-lg p-3 py-5 shadow-md text-accent-800 flex-col font-semibold text-sm`}>
+          } absolute hidden md:flex z-50 transition-[opacity_transform] delay-150 duration-300 bg-neutral-50 min-w-40 w-max rounded-lg p-3 py-5 shadow-md text-accent-800 flex-col font-semibold text-sm`}>
           {children.map(({ label: childLabel, route: childRoute }) => (
             <NavLink
               className="py-2.5 hover:bg-neutral-200 duration-300 transition-colors !no-underline px-3 rounded-md"
