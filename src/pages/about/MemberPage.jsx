@@ -68,16 +68,13 @@ export default function MemberPage() {
   }
 
   const image = getFeaturedImage(member);
-  const { name, title, shortBiography, longBiography } = member.acf || {};
+  const { name, title, bio, longBiography } = member.acf || {};
 
   return (
     <>
       <Helmet>
         <title>{name || "Team Member"} | The Source of Hope</title>
-        <meta
-          name="description"
-          content={shortBiography || `Learn more about ${name}`}
-        />
+        <meta name="description" content={bio || `Learn more about ${name}`} />
         <link
           rel="canonical"
           href={`${CANONICAL_URL.about}/team/${memberSlug}`}
@@ -121,12 +118,12 @@ export default function MemberPage() {
             )}
           </div>
 
-          {shortBiography && (
+          {bio && (
             <div className="prose prose-lg prose-neutral max-w-none">
               <p
                 className="text-neutral-700 leading-relaxed text-justify"
                 style={{ textAlign: "justify" }}>
-                {shortBiography}
+                {bio}
               </p>
             </div>
           )}

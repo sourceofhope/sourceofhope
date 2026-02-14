@@ -162,17 +162,17 @@ export function CarouselCard({ post }) {
         />
         <div className="absolute bottom-0 left-0 w-full p-5 bg-gradient-to-t from-black/90 to-transparent rounded-b-2xl flex flex-col">
           <h2
-            className={`md:line-clamp-1 text-md ${post.acf?.shortBiography ? "lg:group-hover:text-sm" : ""} transition-all duration-750 font-semibold text-center text-neutral-50`}>
+            className={`md:line-clamp-1 text-md ${post.acf?.bio ? "lg:group-hover:text-sm" : ""} transition-all duration-750 font-semibold text-center text-neutral-50`}>
             {post.acf?.name}
           </h2>
 
           <h3
-            className={`md:line-clamp-1 text-sm ${post.acf?.shortBiography ? "lg:group-hover:text-xs" : ""} transition-all duration-750 font-semibold text-center text-neutral-300`}>
+            className={`md:line-clamp-1 text-sm ${post.acf?.bio ? "lg:group-hover:text-xs" : ""} transition-all duration-750 font-semibold text-center text-neutral-300`}>
             {post.acf?.title}
           </h3>
 
           <p className="text-sm hidden lg:block text-gray-200 mt-2 max-h-0 opacity-0 overflow-hidden transition-[height_opacity] duration-750 group-hover:max-h-70 group-hover:opacity-100">
-            {post.acf?.shortBiography}
+            {post.acf?.bio}
           </p>
         </div>
 
@@ -193,7 +193,7 @@ export function CarouselCard({ post }) {
             </button>
           </div>
           <p className="text-sm leading-relaxed text-neutral-600">
-            {post.acf?.shortBiography}
+            {post.acf?.bio}
           </p>
           <div className="flex justify-end w-fit">
             <ExpressiveLink
