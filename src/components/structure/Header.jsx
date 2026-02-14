@@ -267,6 +267,9 @@ function HeaderButton({
       <NavLink
         onMouseEnter={() => setHovering(label)}
         onMouseLeave={() => setHovering(null)}
+        onClick={(e) => {
+          setHovering(label);
+        }}
         aria-label={ariaLabel}
         to={route.absolute}
         className={`!no-underline group transition-[color_transform] ease-in-out duration-300 inline-flex w-full justify-between items-center gap-1 focus:outline-none ${className}`}>
@@ -310,29 +313,40 @@ function HeaderButton({
                 ? "opacity-100 pointer-events-auto"
                 : "opacity-0 -translate-y-1 pointer-events-none"
             } absolute hidden md:flex z-50 transition-[opacity_transform] delay-150 duration-300 bg-neutral-50 min-w-40 rounded-lg p-3 py-5 shadow-md text-accent-800 flex-col font-semibold text-sm`}>
-            {children.map(({ label, route }) => {
+            {children.map(({ label: childLabel, route: childRoute }) => {
               return (
                 <NavLink
                   className="py-2.5 hover:bg-neutral-200 duration-300 transition-colors !no-underline px-3 rounded-md"
-                  key={route.absolute}
-                  to={route.absolute}>
-                  {label}
+                  key={childRoute.absolute}
+                  to={childRoute.absolute}>
+                  {childLabel}
                 </NavLink>
               );
             })}
           </div>
           {hovering == label &&
-            children.map(({ label, route }) => {
+            children.map(({ label: childLabel, route: childRoute }) => {
               return (
                 <NavLink
+                  onMouseEnter={() => {
+                    if (hovering) {
+                      setHovering(label);
+                    }
+                  }}
+                  onMouseLeave={() => {
+                    if (hovering) {
+                      setHovering(null);
+                    }
+                  }}
                   onClick={(e) => {
                     e.stopPropagation();
+                    setHovering(label);
                   }}
                   aria-label={ariaLabel}
-                  key={route.absolute}
-                  to={route.absolute}
+                  key={childRoute.absolute}
+                  to={childRoute.absolute}
                   className={`pl-5 md:hidden !no-underline group transition-[color_transform] ease-in-out duration-300 inline-flex w-full justify-between items-center gap-1 focus:outline-none ${className}`}>
-                  {label}
+                  {childLabel}
                 </NavLink>
               );
             })}
