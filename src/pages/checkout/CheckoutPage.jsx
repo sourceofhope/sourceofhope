@@ -19,17 +19,20 @@ export default function CheckoutPage() {
 
   const {
     cart,
+    getCartCost,
+    getTaxCost,
+    getProcessingFeeCost,
     getCartTotal,
     getCartItemCount,
     getShippingCost,
     shippingMethod,
   } = useCartActions();
 
-  const subtotal = getCartTotal();
+  const subtotal = getCartCost();
   const shipping = getShippingCost();
-  const taxRate = 0.0825;
-  const tax = subtotal * taxRate;
-  const total = subtotal + shipping + tax;
+  const tax = getTaxCost();
+  const processingFee = getProcessingFeeCost();
+  const total = getCartTotal();
 
   return (
     <>
@@ -78,6 +81,7 @@ export default function CheckoutPage() {
             {/* Left Column: Express Checkout - 25% */}
             <div className="lg:col-span-3 space-y-6">
               <ExpressCheckoutSection
+                total={total}
                 items={cart}
                 shippingMethod={shippingMethod}
                 shippingCost={shipping}
@@ -87,11 +91,7 @@ export default function CheckoutPage() {
 
             {/* Center Column: Main Checkout Form - 50% */}
             <div className="lg:col-span-6 space-y-6">
-              <SelfCheckoutSection
-                total={total}
-                cart={cart}
-                taxAmount={tax}
-              />
+              <SelfCheckoutSection total={total} cart={cart} taxAmount={tax} />
             </div>
 
             {/* Right Column: Order Summary - 25% */}
@@ -103,6 +103,8 @@ export default function CheckoutPage() {
                 shippingMethod={shippingMethod}
                 shippingCost={shipping}
                 taxAmount={tax}
+                processingFee={processingFee}
+                total={total}
               />
             </div>
           </div>

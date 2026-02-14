@@ -1,6 +1,16 @@
 import Heading from "../../../components/ui/text/Heading";
+import {
+  STANDARD_PROCESSING_RATE,
+  STANDARD_TAX_RATE,
+} from "../../../context/StoreCartContext";
 
-export default function CartSummarySection({ subtotal, shipping, tax, total }) {
+export default function CartSummarySection({
+  subtotal,
+  shipping,
+  tax,
+  fee,
+  total,
+}) {
   return (
     <div className="bg-white rounded-2xl shadow-md p-5 top-5">
       <Heading className="flex flex-col gap-1 mb-5">Order Summary</Heading>
@@ -16,8 +26,16 @@ export default function CartSummarySection({ subtotal, shipping, tax, total }) {
         </div>
 
         <div className="flex justify-between text-neutral-700">
-          <span>Tax (8.25%):</span>
+          <span>Tax ({STANDARD_TAX_RATE * 100}%):</span>
           <span className="font-semibold">${tax.toFixed(2)}</span>
+        </div>
+
+        <div className="flex justify-between text-neutral-700">
+          <span>Fee ({STANDARD_PROCESSING_RATE * 100}%):</span>
+          <span
+            className={`font-semibold ${fee === 0 ? "line-through" : null}`}>
+            ${fee.toFixed(2)}
+          </span>
         </div>
 
         <div className="flex justify-between text-lg font-bold text-neutral-900 pt-3 border-t-2 border-neutral-200">

@@ -22,6 +22,7 @@ const iconMap = {
 
 export default function ExpressCheckoutSection({
   items,
+  processingFee,
   shippingMethod,
   shippingCost,
   taxAmount,
@@ -31,16 +32,6 @@ export default function ExpressCheckoutSection({
   const [error, setError] = useState(null);
   const [checkoutProviders, setCheckoutProviders] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [coverProcessingFee, setCoverProcessingFee] = useState(false);
-
-  // Calculate processing fee (3%)
-  const subtotal = items.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0,
-  );
-  const processingFee = coverProcessingFee
-    ? (subtotal + taxAmount + shippingCost) * 0.03
-    : 0;
 
   useEffect(() => {
     const loadProviders = async () => {
@@ -173,30 +164,6 @@ export default function ExpressCheckoutSection({
             ))}
         </div>
       )}
-
-      {/* Processing Fee Support */}
-      <div className="mt-5 bg-accent-50 border border-accent-200 rounded-xl p-4">
-        <h4 className="font-semibold text-neutral-900 mb-2 text-sm">
-          Support the mission
-        </h4>
-        <label className="flex items-start gap-3 cursor-pointer group">
-          <input
-            type="checkbox"
-            checked={coverProcessingFee}
-            onChange={(e) => setCoverProcessingFee(e.target.checked)}
-            className="mt-0.5 w-4 h-4 text-accent-600 border-neutral-300 rounded focus:ring-accent-500 cursor-pointer"
-          />
-          <span className="hidden md:block text-xs text-neutral-800 group-hover:text-accent-700 transition-colors">
-            Yes, I would like to cover the processing fee
-            {
-              <span
-                className={`${coverProcessingFee ? "opacity-100" : "opacity-0"} block text-xs text-accent-600 font-medium mt-1`}>
-                +${processingFee.toFixed(2)} processing support
-              </span>
-            }
-          </span>
-        </label>
-      </div>
 
       <div className="mt-8 p-4 bg-neutral-50 rounded-xl">
         <p className="text-sm text-neutral-600 md:text-center flex items-center justify-center gap-2">

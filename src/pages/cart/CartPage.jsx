@@ -20,11 +20,17 @@ import { AnchorButton, LinkButton } from "../../components/ui/Button";
 const CartPage = () => {
   const { cart: cartItems } = useContext(StoreCartContext);
   const {
+    applyFee,
     updateCartItem,
     removeFromCart,
     shippingMethod,
     updateShippingMethod,
+    updateProcessingFee,
+    getCartCost,
     getShippingCost,
+    getProcessingFeeCost,
+    getCartTotal,
+    getTaxCost,
   } = useCartActions();
 
   const setBlocking = useSetHeaderBlocking();
@@ -47,11 +53,11 @@ const CartPage = () => {
     updateCartItem(id, { size: newSize });
   };
 
-  const subtotal =
-    cartItems?.reduce((sum, item) => sum + item.price * item.quantity, 0) || 0;
+  const subtotal = getCartCost();
   const shipping = getShippingCost();
-  const tax = subtotal * 0.0825; // 8.25% tax
-  const total = subtotal + shipping + tax;
+  const tax = getTaxCost();
+  const processingFee = getProcessingFeeCost();
+  const total = getCartTotal();
 
   return (
     <>
@@ -124,6 +130,9 @@ const CartPage = () => {
                 <CartShippingSection
                   shippingMethod={shippingMethod}
                   setShippingMethod={updateShippingMethod}
+                  setApplyFee={updateProcessingFee}
+                  applyFee={applyFee}
+                  processingFee={processingFee}
                   shippingOptions={SHIPPING_OPTIONS}
                 />
                 <CartSummarySection
@@ -131,6 +140,7 @@ const CartPage = () => {
                   shipping={shipping}
                   tax={tax}
                   total={total}
+                  fee={processingFee}
                 />
                 <div className="mt-6">
                   <div className="mb-6">

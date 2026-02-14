@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 
 const CART_STORAGE_KEY = "sourceofhope_cart";
 const SHIPPING_STORAGE_KEY = "sourceofhope_shipping";
+const PROCESSING_FEE_KEY = "sourceofhope_processing";
 
 export const SHIPPING_OPTIONS = [
   {
@@ -24,11 +25,16 @@ export const SHIPPING_OPTIONS = [
   },
 ];
 
+export const STANDARD_TAX_RATE = 0.0825;
+export const STANDARD_PROCESSING_RATE = 0.03;
+
 export const StoreCartContext = createContext({
   cart: [],
   setCart: () => {},
   shippingMethod: "standard",
   setShippingMethod: () => {},
+  processingFee: false,
+  setProcessingFee: () => {},
 });
 
 export const useStoreContext = () => useContext(StoreCartContext);
@@ -74,20 +80,53 @@ export function StoreCartProvider({ children }) {
     }
   }, [shippingMethod]);
 
+  const [applyFee, setApplyFee] = useState(() => {
+    try {
+      const savedProcessingFee = localStorage.getItem(PROCESSING_FEE_KEY);
+      return savedProcessingFee ? JSON.parse(savedProcessingFee) : false;
+    } catch (error) {
+      console.error("Failed to load processing fee from localStorage:", error);
+      return false;
+    }
+  });
+
+  useEffect(() => {
+    try {
+      localStorage.setItem(PROCESSING_FEE_KEY, JSON.stringify(applyFee));
+    } catch (error) {
+      console.error("Failed to save processing fee to localStorage:", error);
+    }
+  }, [applyFee]);
+
   return (
-    <StoreCartContext.Provider value={{ cart, setCart, shippingMethod, setShippingMethod }}>
+    <StoreCartContext.Provider
+      value={{
+        cart,
+        setCart,
+        shippingMethod,
+        setShippingMethod,
+        applyFee,
+        setApplyFee,
+      }}>
       {children}
     </StoreCartContext.Provider>
   );
 }
 
 export function useCartActions() {
-  const { cart, setCart, shippingMethod, setShippingMethod } = useStoreContext();
+  const {
+    cart,
+    setCart,
+    shippingMethod,
+    setShippingMethod,
+    applyFee,
+    setApplyFee,
+  } = useStoreContext();
 
   function addToCart(item) {
     setCart((prev) => {
       const existingItemIndex = prev.findIndex(
-        (i) => i.id === item.id && i.size === item.size
+        (i) => i.id === item.id && i.size === item.size,
       );
 
       if (existingItemIndex !== -1) {
@@ -104,7 +143,7 @@ export function useCartActions() {
 
   function updateCartItem(id, updates) {
     setCart((prev) =>
-      prev.map((item) => (item.id === id ? { ...item, ...updates } : item))
+      prev.map((item) => (item.id === id ? { ...item, ...updates } : item)),
     );
   }
 
@@ -122,30 +161,62 @@ export function useCartActions() {
   }
 
   function getCartTotal() {
-    return cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    return (
+      getCartCost() + getShippingCost() + getProcessingFeeCost() + getTaxCost()
+    );
+  }
+
+  function getCartCost() {
+    const subtotal = cart.reduce(
+      (sum, item) => sum + item.price * item.quantity,
+      0,
+    );
+    return subtotal;
+  }
+
+  function getTaxCost() {
+    const taxFee = getCartCost() * STANDARD_TAX_RATE;
+    return taxFee;
   }
 
   function getShippingCost() {
-    const option = SHIPPING_OPTIONS.find(opt => opt.id === shippingMethod);
+    const option = SHIPPING_OPTIONS.find((opt) => opt.id === shippingMethod);
     return option ? option.cost : 0;
   }
 
   function updateShippingMethod(method) {
-    if (SHIPPING_OPTIONS.find(opt => opt.id === method)) {
+    if (SHIPPING_OPTIONS.find((opt) => opt.id === method)) {
       setShippingMethod(method);
     }
   }
 
+  function updateProcessingFee(toggle) {
+    setApplyFee(!!toggle);
+  }
+
+  function getProcessingFeeCost() {
+    const processingFee = applyFee
+      ? (getCartCost() + getTaxCost() + getShippingCost()) *
+        STANDARD_PROCESSING_RATE
+      : 0;
+    return processingFee;
+  }
+
   return {
     cart,
+    applyFee,
     shippingMethod,
     addToCart,
     updateCartItem,
     removeFromCart,
     clearCart,
+    getCartCost,
+    getTaxCost,
     getCartItemCount,
     getCartTotal,
     getShippingCost,
     updateShippingMethod,
+    updateProcessingFee,
+    getProcessingFeeCost,
   };
 }

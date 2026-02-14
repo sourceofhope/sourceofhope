@@ -324,35 +324,6 @@ export default function SelfCheckoutSection({ total, cart, taxAmount }) {
             </div>
           )}
 
-          {/* Processing Fee Support */}
-          <div className="mb-6 bg-accent-50 border border-accent-200 rounded-xl p-4 pt-5">
-            <h4 className="font-semibold text-neutral-900 mb-2 text-sm">
-              Support the mission
-            </h4>
-            <p className="text-xs text-neutral-700 mb-3">
-              Online payments include a 3% processing cost charged by the credit
-              card companies. You may choose to add this small amount so your
-              full donation goes directly to serving the community.
-            </p>
-            <label className="flex items-start gap-3 cursor-pointer group">
-              <input
-                type="checkbox"
-                checked={coverProcessingFee}
-                onChange={(e) => setCoverProcessingFee(e.target.checked)}
-                className="mt-0.5 w-4 h-4 text-accent-600 border-neutral-300 rounded focus:ring-accent-500 cursor-pointer"
-              />
-              <span className="text-xs md:text-sm text-neutral-800 group-hover:text-accent-700 transition-colors">
-                Yes, I would like to cover the processing fee
-                {
-                  <span
-                    className={`${coverProcessingFee ? "opacity-100" : "opacity-0"} block text-xs text-accent-600 font-medium mt-1`}>
-                    +${processingFee.toFixed(2)} processing support
-                  </span>
-                }
-              </span>
-            </label>
-          </div>
-
           <button
             onClick={initializePayment}
             disabled={!isFormValid() || isLoading}

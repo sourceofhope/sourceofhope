@@ -2,7 +2,6 @@ import { useEffect, useRef } from "react";
 import { Helmet } from "react-helmet-async";
 import { CheckCircleIcon } from "@heroicons/react/24/solid";
 import { CANONICAL, CANONICAL_URL } from "../../routes";
-import Title from "../../components/ui/text/Title";
 import { LinkButton } from "../../components/ui/Button";
 import { useCartActions } from "../../context/StoreCartContext";
 import { useSetHeaderBlocking } from "../../components/structure/Header";
@@ -13,6 +12,7 @@ import {
   fetchPaypalOrderStatus,
   fetchPaymentIntentStatus,
 } from "../../lib/api/checkout";
+import Title from "../../components/ui/text/Title";
 
 export default function CartSuccessPage() {
   const [status, setStatus] = useState(null);
@@ -30,11 +30,11 @@ export default function CartSuccessPage() {
 
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
-    const sessionId = urlParams.get('session_id');
-    const paypalToken = urlParams.get('token');
-    const paymentIntent = urlParams.get('payment_intent');
-    const email = sessionStorage.getItem('checkoutEmail') || ''; // Retrieve email from session storage
-    sessionStorage.removeItem('checkoutEmail'); // Clean up after use
+    const sessionId = urlParams.get("session_id");
+    const paypalToken = urlParams.get("token");
+    const paymentIntent = urlParams.get("payment_intent");
+    const email = sessionStorage.getItem("checkoutEmail") || ""; // Retrieve email from session storage
+    sessionStorage.removeItem("checkoutEmail"); // Clean up after use
 
     // If no payment identifier, not a valid success page
     if (!sessionId && !paypalToken && !paymentIntent) {
@@ -100,23 +100,22 @@ export default function CartSuccessPage() {
             setStatus("error");
             return;
           }
-          
-          console.log('Payment Intent status response:', response.data);
+
+          console.log("Payment Intent status response:", response.data);
           // Map Payment Intent status to checkout status
           const piStatus = response.data.status;
 
-          if (piStatus === 'succeeded') {
-            setStatus('complete');
+          if (piStatus === "succeeded") {
+            setStatus("complete");
             setCustomerEmail(email);
-          } else if (piStatus === 'processing') {
-            setStatus('processing');
+          } else if (piStatus === "processing") {
+            setStatus("processing");
             setCustomerEmail(email);
-          } else if (piStatus === 'requires_payment_method') {
-            setStatus('open');
+          } else if (piStatus === "requires_payment_method") {
+            setStatus("open");
           } else {
             setStatus("error");
           }
-          
         })
         .catch((error) => {
           console.error("Error fetching Payment Intent status:", error);

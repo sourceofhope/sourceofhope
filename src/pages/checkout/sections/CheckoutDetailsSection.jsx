@@ -1,4 +1,8 @@
 import Heading from "../../../components/ui/text/Heading";
+import {
+  STANDARD_PROCESSING_RATE,
+  STANDARD_TAX_RATE,
+} from "../../../context/StoreCartContext";
 
 export default function CheckoutDetailsSection({
   cart,
@@ -7,10 +11,9 @@ export default function CheckoutDetailsSection({
   shippingMethod,
   shippingCost,
   taxAmount,
+  processingFee,
+  total,
 }) {
-  // Calculate total from prop values
-  const total = subtotal + (shippingCost || 0) + (taxAmount || 0);
-
   return (
     <div className="bg-neutral-50 md:sticky md:top-25 rounded-2xl shadow-md p-5">
       <div className="flex flex-col gap-1 mb-4">
@@ -85,10 +88,24 @@ export default function CheckoutDetailsSection({
         <div className="flex justify-between text-sm">
           <div className="flex flex-col">
             <span className="text-neutral-600">Tax</span>
-            <span className="text-xs text-neutral-500 mt-0.5">8.25%</span>
+            <span className="text-xs text-neutral-500 mt-0.5">
+              {STANDARD_TAX_RATE * 100}%
+            </span>
           </div>
           <span className="font-semibold text-neutral-900">
             ${taxAmount.toFixed(2)}
+          </span>
+        </div>
+
+        <div className="flex justify-between text-sm">
+          <div className="flex flex-col">
+            <span className="text-neutral-600">Fee</span>
+            <span className="text-xs text-neutral-500 mt-0.5">
+              {STANDARD_PROCESSING_RATE * 100}%
+            </span>
+          </div>
+          <span className="font-semibold text-neutral-900">
+            ${processingFee.toFixed(2)}
           </span>
         </div>
 
