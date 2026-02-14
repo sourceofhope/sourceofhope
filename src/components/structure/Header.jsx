@@ -120,12 +120,16 @@ export default function Header() {
                 }`
           }`}>
         <section className="flex gap-5 w-full items-center justify-between px-5 lg:px-35">
-          <div className="h-25 flex gap-5 flex-row items-center w-fit z-0 overflow-clip">
+          <NavLink
+            to={CANONICAL.home.absolute}
+            onClick={(e) => setOpen(false)}
+            aria-label="Go Home"
+            className="!no-underline h-25 flex gap-5 flex-row items-center w-fit z-0 overflow-clip">
             <Favicon />
             <h1 className="font-bold hidden lg:block whitespace-nowrap text-ellipsis overflow-hidden">
               THE SOURCE OF HOPE
             </h1>
-          </div>
+          </NavLink>
 
           <nav className="hidden md:flex gap-3 z-10" aria-label="Primary">
             <HeaderNavigator />
@@ -142,11 +146,7 @@ export default function Header() {
             <nav
               className="flex flex-col justify-end items-center px-5 pb-5 h-fit"
               aria-label="Mobile">
-              <HeaderNavigator
-                isMobile
-                open={open}
-                onClose={() => setOpen(false)}
-              />
+              <HeaderNavigator isMobile open={open} />
             </nav>
           )}
         </div>
@@ -207,10 +207,10 @@ function HeaderMenu({ open, setOpen }) {
   );
 }
 
-function HeaderNavigator({ isMobile = false, open, onClose = () => {} }) {
+function HeaderNavigator({ isMobile = false, open }) {
   const links = getHeaderLinks();
   return isMobile ? (
-    <MobileNavigator links={links} open={open} onClose={onClose} />
+    <MobileNavigator links={links} open={open} />
   ) : (
     <DesktopNavigator links={links} />
   );
@@ -308,7 +308,7 @@ function DesktopNavigatorItem({
   );
 }
 
-function MobileNavigator({ links, open, onClose }) {
+function MobileNavigator({ links, open }) {
   const navigate = useNavigate();
 
   const root = { title: "BACK", route: null, items: links };
@@ -357,7 +357,6 @@ function MobileNavigator({ links, open, onClose }) {
     e.preventDefault();
     if (!to) return;
     navigate(to);
-    onClose?.();
   };
 
   return (
@@ -394,7 +393,6 @@ function MobileNavigator({ links, open, onClose }) {
                 className="!no-underline py-2.5 h-full w-full group font-bold inline-flex justify-between items-center gap-1"
                 onClick={(event) => {
                   if (hasChildren) {
-                    event.preventDefault();
                     openChildren(item);
                   } else {
                     goTo(event, item.route.absolute);
