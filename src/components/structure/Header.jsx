@@ -326,29 +326,45 @@ function DesktopNavigatorItem({
 
 function MobileNavigator({ links, open, onClose }) {
   const navigate = useNavigate();
-  const root = { title: "BACK", route: null, items: links, parentLabel: null };
+
+  const root = { title: "BACK", route: null, items: links };
   const [stack, setStack] = useState([root]);
 
+  const [visible, setVisible] = useState(true);
+
   useEffect(() => {
-    if (!open) setStack([root]);
+    if (!open) {
+      setStack([root]);
+      setVisible(true);
+    }
   }, [open]);
 
   const current = stack[stack.length - 1];
   const canGoBack = stack.length > 1;
 
+  const transition = (nextStack) => {
+    // Fade out
+    setVisible(false);
+
+    setTimeout(() => {
+      setStack(nextStack);
+      // Fade in
+      setVisible(true);
+    }, 150);
+  };
+
   const goBack = () => {
     if (!canGoBack) return;
-    setStack((s) => s.slice(0, -1));
+    transition(stack.slice(0, -1));
   };
 
   const openChildren = (parent) => {
-    setStack((s) => [
-      ...s,
+    transition([
+      ...stack,
       {
         title: parent.label,
         route: parent.route,
         items: parent.children || [],
-        parentLabel: parent.label,
       },
     ]);
   };
@@ -362,47 +378,59 @@ function MobileNavigator({ links, open, onClose }) {
 
   return (
     <div className="w-full">
-      {canGoBack && (
-        <button
-          type="button"
-          onClick={goBack}
-          className="py-2.5 w-full font-bold inline-flex items-center  justify-between gap-2"
-          aria-label="Back">
-          <span>{stack[stack.length - 2]?.title || "BACK"}</span>
-          <Icon>
-            <ChevronRightIcon
-              className="w-6 h-6 rotate-180 transition-transform duration-300"
-              aria-hidden="true"
-            />
-          </Icon>
-        </button>
-      )}
+      <div
+        className={`transition-opacity duration-200 ease-out ${
+          visible ? "opacity-100" : "opacity-0"
+        }`}>
+        {canGoBack && (
+          <button
+            type="button"
+            onClick={goBack}
+            className="py-2.5 w-full group font-bold inline-flex items-center justify-between gap-2"
+            aria-label="Back">
+            <span>{stack[stack.length - 2]?.title || "BACK"}</span>
+            <Icon>
+              <ChevronRightIcon
+                className="w-6 h-6 rotate-180 transition-transform duration-500 group-hover:-translate-x-1"
+                focusable="false"
+                aria-hidden="true"
+                role="presentation"
+              />
+            </Icon>
+          </button>
+        )}
 
-      {current.items.map((item) => {
-        const hasChildren = (item.children || []).length > 0;
+        {current.items.map((item) => {
+          const hasChildren = (item.children || []).length > 0;
 
-        return (
-          <div key={item.route.absolute} className="w-full">
-            <NavLink
-              to={item.route.absolute}
-              type="button"
-              className="!no-underline py-2.5 h-full w-full font-bold inline-flex justify-between items-center gap-1"
-              onClick={(event) => {
-                if (hasChildren) openChildren(item);
-                else goTo(event, item.route.absolute);
-              }}
-              aria-label={item.label}>
-              <span className="text-left">{item.label}</span>
-              <Icon>
-                <ChevronRightIcon
-                  className="w-6 h-6 transition-transform duration-300"
-                  aria-hidden="true"
-                />
-              </Icon>
-            </NavLink>
-          </div>
-        );
-      })}
+          return (
+            <div key={item.route.absolute} className="w-full">
+              <NavLink
+                to={item.route.absolute}
+                className="!no-underline py-2.5 h-full w-full group font-bold inline-flex justify-between items-center gap-1"
+                onClick={(event) => {
+                  if (hasChildren) {
+                    event.preventDefault();
+                    openChildren(item);
+                  } else {
+                    goTo(event, item.route.absolute);
+                  }
+                }}
+                aria-label={item.label}>
+                <span className="text-left">{item.label}</span>
+                <Icon>
+                  <ChevronRightIcon
+                    className="w-6 h-6 transition-transform duration-500 rotate-0 group-hover:translate-x-1"
+                    focusable="false"
+                    aria-hidden="true"
+                    role="presentation"
+                  />
+                </Icon>
+              </NavLink>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }
