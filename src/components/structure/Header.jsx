@@ -162,61 +162,51 @@ export default function Header() {
 }
 
 function HeaderBanner({ link = "", text = "Donate Today!", open, setOpen }) {
-  return open ? (
-    link.startsWith("https://") ? (
-      <a
-        href={link}
-        className="flex gap-3 justify-between md:justify-center h-15 md:h-10 items-center px-5 lg:px-35 bg-accent-500 border-b-2 text-neutral-50 border-accent-700 fixed top-0 left-0 right-0 z-[9998] w-full overflow-hidden">
-        <p className="hover:underline font-semibold">{text}</p>
-        <button
-          className="justify-self-end z-[9999]"
-          aria-label="Close banner"
-          onClick={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            setOpen(false);
-          }}
-          aria-expanded={open}>
-          <Icon>
-            <XMarkIcon className="w-6 h-6" />
-          </Icon>
-        </button>
-      </a>
-    ) : (
-      <Link
-        to={link}
-        className="flex gap-3 justify-between md:justify-center h-15 md:h-10 items-center px-5 lg:px-35 bg-accent-500 border-b-2 text-neutral-50 border-accent-700 fixed top-0 left-0 right-0 z-[9999] w-full overflow-hidden">
-        <p className="hover:underline font-semibold">{text}</p>
-        <button
-          className="justify-self-end"
-          aria-label="Close banner"
-          onClick={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            setOpen(false);
-          }}
-          aria-expanded={open}>
-          <Icon>
-            <XMarkIcon className="w-6 h-6" />
-          </Icon>
-        </button>
-      </Link>
-    )
-  ) : null;
+  if (!open) return null;
+
+  const isExternal = link?.startsWith("https://");
+
+  return (
+    <div
+      className="flex gap-3 justify-between md:justify-center h-15 md:h-10 items-center px-5 lg:px-35 bg-accent-500 border-b-2 text-neutral-50 border-accent-700 fixed top-0 left-0 right-0 z-[9998] w-full overflow-hidden"
+      role="region"
+      aria-label="Site banner">
+      {isExternal ? (
+        <a href={link} className="hover:underline font-semibold">
+          {text}
+        </a>
+      ) : (
+        <Link to={link} className="hover:underline font-semibold">
+          {text}
+        </Link>
+      )}
+
+      <button
+        type="button"
+        className="justify-self-end z-[9999]"
+        aria-label="Close banner"
+        onClick={() => setOpen(false)}>
+        <Icon>
+          <XMarkIcon className="w-6 h-6" aria-hidden="true" focusable="false" />
+        </Icon>
+      </button>
+    </div>
+  );
 }
 
 function HeaderMenu({ open, setOpen }) {
   return (
     <button
+      type="button"
       className="block md:hidden"
       onClick={() => setOpen((v) => !v)}
       aria-expanded={open}
       aria-label={open ? "Close menu" : "Open menu"}>
       <Icon>
         {open ? (
-          <XMarkIcon className="w-6 h-6" />
+          <XMarkIcon className="w-6 h-6" aria-hidden="true" focusable="false" />
         ) : (
-          <Bars3Icon className="w-6 h-6" />
+          <Bars3Icon className="w-6 h-6" aria-hidden="true" focusable="false" />
         )}
       </Icon>
     </button>
