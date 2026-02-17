@@ -89,21 +89,42 @@ function CarouselLayer({ title, groupName, options = {} }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchContent(
-      `/team-member?per_page=100&_embed&meta_key=team_group&meta_value=${encodeURIComponent(
-        groupName,
-      )}`,
-      options,
-    )
+    let cancelled = false;
+
+    setLoading(true);
+
+    const endpoint = `/team-member?per_page=100&_embed&meta_key=team_group&meta_value=${encodeURIComponent(
+      groupName,
+    )}`;
+
+    fetchContent(endpoint, options, {
+      ttlMs: 5 * 60_000,
+      staleMs: 60 * 60_000 * 24,
+      timeoutMs: 10_000,
+      retries: 2,
+    })
       .then((data) => {
-        const filtered = data.filter(
-          (member) => member.acf?.team_group === groupName,
-        );
+        if (cancelled) return;
+        const filtered = Array.isArray(data)
+          ? data.filter((member) => member.acf?.team_group === groupName)
+          : [];
+
         setPosts(filtered);
       })
-      .catch(() => setPosts([]))
-      .finally(() => setLoading(false));
-  }, []);
+      .catch(() => {
+        if (cancelled) return;
+        setPosts([]);
+      })
+      .finally(() => {
+        if (cancelled) return;
+        setLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [groupName]);
+
   return (
     <div className="grid gap-5">
       <Title>{title}</Title>
