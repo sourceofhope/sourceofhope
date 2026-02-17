@@ -114,6 +114,7 @@ router.post("/create-stripe-payment-intent", async (req, res) => {
       shippingCost,
       taxAmount,
       processingFee,
+      subtotal,
       shippingAddress,
       billingAddress,
       totalAmount,
@@ -144,21 +145,162 @@ router.post("/create-stripe-payment-intent", async (req, res) => {
     // Round to 2 decimal places and convert to cents
     const amountInCents = Math.round(parseFloat(totalAmount.toFixed(2)) * 100);
 
+    // Get shipping method name
+    const shippingOption = SHIPPING_OPTIONS.find((opt) => opt.id === shippingMethod);
+    const shippingMethodName = shippingOption ? shippingOption.name : "Standard Shipping";
+
+    // Build metadata with comprehensive checkout summary
+    const metadata = {
+      order_type: "storefront",
+      items_count: items.length.toString(),
+      shipping_method: shippingMethodName,
+    };
+
+    // Create or retrieve a Stripe Customer to attach the invoice
+    let customer;
+    try {
+      // Search for existing customer by email
+      const existingCustomers = await stripe.customers.search({
+        query: `email:'${email}'`,
+        limit: 1,
+      });
+
+      if (existingCustomers.data.length > 0) {
+        customer = existingCustomers.data[0];
+      } else {
+        // Create new customer
+        customer = await stripe.customers.create({
+          email: email,
+          name: `${shippingAddress.firstName} ${shippingAddress.lastName}`,
+          address: {
+            line1: shippingAddress.address,
+            city: shippingAddress.city,
+            state: shippingAddress.state,
+            postal_code: shippingAddress.zipCode,
+            country: shippingAddress.country || "US",
+          },
+          shipping: {
+            name: `${shippingAddress.firstName} ${shippingAddress.lastName}`,
+            address: {
+              line1: shippingAddress.address,
+              city: shippingAddress.city,
+              state: shippingAddress.state,
+              postal_code: shippingAddress.zipCode,
+              country: shippingAddress.country || "US",
+            },
+          },
+          metadata: {
+            source: "storefront_checkout",
+          },
+        });
+      }
+    } catch (customerError) {
+      console.error("Customer creation/search error:", customerError);
+      // Fall back to creating payment intent without customer
+      customer = null;
+    }
+
+    // Create an Invoice with line items for the structured checkout summary
+    let invoice = null;
+    if (customer) {
+      try {
+        console.log("Creating invoice for customer:", customer.id);
+        
+        // Step 1: Create the invoice FIRST (empty)
+        invoice = await stripe.invoices.create({
+          customer: customer.id,
+          collection_method: "charge_automatically",
+          auto_advance: false,
+          description: `Order from ${email}`,
+          metadata: {
+            order_type: "storefront",
+            shipping_method: shippingMethodName,
+            items_count: items.length.toString(),
+          },
+        });
+        
+        console.log("Invoice created:", invoice.id);
+        
+        // Step 2: Add invoice items directly to THIS invoice
+        // Add cart items
+        for (const item of items) {
+          const itemAmount = Math.round(parseFloat((item.price * item.quantity).toFixed(2)) * 100);
+          console.log(`Adding item to invoice: ${item.name}, Amount: $${itemAmount / 100}`);
+          
+          await stripe.invoiceItems.create({
+            customer: customer.id,
+            invoice: invoice.id, // Attach to specific invoice
+            amount: itemAmount,
+            currency: "usd",
+            description: `${item.name || item.title || "Product"}${item.size ? ` (Size: ${item.size})` : ""} × ${item.quantity}`,
+          });
+        }
+
+        // Add shipping
+        if (shippingCost && shippingCost > 0) {
+          const shippingAmount = Math.round(parseFloat(shippingCost.toFixed(2)) * 100);
+          console.log(`Adding shipping to invoice: ${shippingMethodName}, Amount: $${shippingAmount / 100}`);
+          
+          await stripe.invoiceItems.create({
+            customer: customer.id,
+            invoice: invoice.id, // Attach to specific invoice
+            amount: shippingAmount,
+            currency: "usd",
+            description: `Shipping (${shippingMethodName})`,
+          });
+        }
+
+        // Add tax
+        if (taxAmount && taxAmount > 0) {
+          const taxAmountCents = Math.round(parseFloat(taxAmount.toFixed(2)) * 100);
+          console.log(`Adding tax to invoice: Amount: $${taxAmountCents / 100}`);
+          
+          await stripe.invoiceItems.create({
+            customer: customer.id,
+            invoice: invoice.id, // Attach to specific invoice
+            amount: taxAmountCents,
+            currency: "usd",
+            description: "Sales Tax",
+          });
+        }
+
+        // Add processing fee
+        if (processingFee && processingFee > 0) {
+          const processingFeeCents = Math.round(parseFloat(processingFee.toFixed(2)) * 100);
+          console.log(`Adding processing fee to invoice: Amount: $${processingFeeCents / 100}`);
+          
+          await stripe.invoiceItems.create({
+            customer: customer.id,
+            invoice: invoice.id, // Attach to specific invoice
+            amount: processingFeeCents,
+            currency: "usd",
+            description: "Processing Support (3%)",
+          });
+        }
+
+        // Step 3: Finalize the invoice to calculate totals
+        console.log("Finalizing invoice:", invoice.id);
+        invoice = await stripe.invoices.finalizeInvoice(invoice.id);
+
+        console.log("Invoice finalized successfully:", invoice.id, "Amount:", invoice.amount_due / 100);
+      } catch (invoiceError) {
+        console.error("Invoice creation error:", invoiceError);
+        console.error("Error details:", JSON.stringify(invoiceError, null, 2));
+        // Continue without invoice if it fails
+        invoice = null;
+      }
+    }
+
     // Create Payment Intent
-    const paymentIntent = await stripe.paymentIntents.create({
+    const paymentIntentParams = {
       amount: amountInCents,
       currency: "usd",
       automatic_payment_methods: {
         enabled: true,
       },
       receipt_email: email,
-      metadata: {
-        shipping_method: shippingMethod || "standard",
-        order_type: "storefront",
-        items_count: items.length,
-        customer_email: email,
-        processing_fee: processingFee ? processingFee.toFixed(2) : "0.00",
-      },
+      description: `Order from ${email} - ${items.length} item(s)`,
+      metadata: metadata,
       shipping: shippingAddress
         ? {
             name: `${shippingAddress.firstName} ${shippingAddress.lastName}`,
@@ -171,7 +313,34 @@ router.post("/create-stripe-payment-intent", async (req, res) => {
             },
           }
         : undefined,
-    });
+    };
+
+    // Attach customer if available
+    if (customer) {
+      paymentIntentParams.customer = customer.id;
+    }
+    
+    // Link invoice to payment intent metadata
+    if (invoice) {
+      paymentIntentParams.metadata.invoice_id = invoice.id;
+      paymentIntentParams.metadata.invoice_number = invoice.number || "";
+    }
+
+    const paymentIntent = await stripe.paymentIntents.create(paymentIntentParams);
+
+    // For testing/immediate processing: Mark invoice as paid out of band
+    // In production, this should be handled by webhook when payment_intent.succeeded event fires
+    if (invoice && invoice.status === 'open') {
+      try {
+        await stripe.invoices.pay(invoice.id, {
+          paid_out_of_band: true,
+        });
+        console.log(`Invoice ${invoice.id} marked as paid (out of band)`);
+      } catch (invoicePayError) {
+        console.error("Failed to mark invoice as paid:", invoicePayError.message);
+        // Don't fail the request if invoice payment marking fails
+      }
+    }
 
     res.json({
       clientSecret: paymentIntent.client_secret,
@@ -545,6 +714,7 @@ router.post("/create-paypal-order", async (req, res) => {
     const { paypalClientId, paypalClientSecret, paypalApiUrl } =
       getEnvironment();
 
+    console.log(paypalApiUrl);
     if (!paypalClientId || !paypalClientSecret || !paypalApiUrl) {
       return res.status(500).json({
         error: "PayPal is not configured. Please contact support.",
@@ -560,16 +730,22 @@ router.post("/create-paypal-order", async (req, res) => {
       return res.status(400).json({ error: "Redirect URLs are required" });
     }
 
-    // Calculate total amount
+    // Calculate total amount with proper decimal precision
     const itemsTotal = items.reduce(
       (sum, item) => sum + item.price * item.quantity,
       0,
     );
-    const totalAmount =
-      itemsTotal +
-      (shippingCost || 0) +
-      (taxAmount || 0) +
-      (processingFee || 0);
+    
+    // Use parseFloat and toFixed to ensure proper decimal precision
+    const itemsTotalFixed = parseFloat(itemsTotal.toFixed(2));
+    const shippingCostFixed = parseFloat((shippingCost || 0).toFixed(2));
+    const taxAmountFixed = parseFloat((taxAmount || 0).toFixed(2));
+    const processingFeeFixed = parseFloat((processingFee || 0).toFixed(2));
+    
+    // Calculate total by adding the fixed decimal values
+    const totalAmount = parseFloat(
+      (itemsTotalFixed + shippingCostFixed + taxAmountFixed + processingFeeFixed).toFixed(2)
+    );
 
     const auth = Buffer.from(
       `${paypalClientId}:${paypalClientSecret}`,
@@ -630,17 +806,15 @@ router.post("/create-paypal-order", async (req, res) => {
             breakdown: {
               item_total: {
                 currency_code: "USD",
-                value: parseFloat(
-                  (itemsTotal + (processingFee || 0)).toFixed(2),
-                ).toFixed(2),
+                value: (itemsTotalFixed + processingFeeFixed).toFixed(2),
               },
               shipping: {
                 currency_code: "USD",
-                value: parseFloat((shippingCost || 0).toFixed(2)).toFixed(2),
+                value: shippingCostFixed.toFixed(2),
               },
               tax_total: {
                 currency_code: "USD",
-                value: parseFloat((taxAmount || 0).toFixed(2)).toFixed(2),
+                value: taxAmountFixed.toFixed(2),
               },
             },
           },
@@ -711,7 +885,7 @@ router.post("/create-paypal-order", async (req, res) => {
  * Handle Stripe Webhook Events
  * POST /api/checkout/webhook
  */
-router.post("/webhook", (req, res) => {
+router.post("/webhook", async (req, res) => {
   const { stripeSecretKey, stripeWebhookSecret } = getEnvironment();
   if (!stripeSecretKey || !stripeWebhookSecret) {
     return res.status(500).send("Stripe webhook not configured");
@@ -737,6 +911,24 @@ router.post("/webhook", (req, res) => {
     case "payment_intent.succeeded": {
       const paymentIntent = event.data.object;
       console.log(`PaymentIntent for ${paymentIntent.amount} succeeded`);
+      
+      // Mark the associated invoice as paid if one exists
+      const invoiceId = paymentIntent.metadata?.invoice_id;
+      if (invoiceId) {
+        try {
+          const invoice = await stripe.invoices.retrieve(invoiceId);
+          
+          // Only mark as paid if still open
+          if (invoice.status === 'open' || invoice.status === 'draft') {
+            await stripe.invoices.pay(invoiceId, {
+              paid_out_of_band: true,
+            });
+            console.log(`Invoice ${invoiceId} marked as paid`);
+          }
+        } catch (invoiceError) {
+          console.error(`Failed to mark invoice ${invoiceId} as paid:`, invoiceError.message);
+        }
+      }
       break;
     }
     default:

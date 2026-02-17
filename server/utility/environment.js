@@ -14,7 +14,7 @@ export function getEnvironment() {
 
     paypalClientId: process.env.PAYPAL_CLIENT_ID,
     paypalClientSecret: process.env.PAYPAL_CLIENT_SECRET,
-    paypalApiUrl: PAYPAL_API_LOCATION[process.env.PAYPAL_API],
+    paypalApiUrl: PAYPAL_API_LOCATION['development'], // Default to sandbox for testing
 
     resendKey: process.env.RESEND_API_KEY,
   };
