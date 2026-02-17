@@ -354,7 +354,6 @@ function MobileNavigator({ links, open }) {
   };
 
   const goTo = (e, to) => {
-    e.preventDefault();
     if (!to) return;
     navigate(to);
   };
