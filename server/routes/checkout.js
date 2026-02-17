@@ -560,17 +560,6 @@ router.post("/create-paypal-order", async (req, res) => {
       return res.status(400).json({ error: "Redirect URLs are required" });
     }
 
-    // Calculate total amount
-    const itemsTotal = items.reduce(
-      (sum, item) => sum + item.price * item.quantity,
-      0,
-    );
-    const totalAmount =
-      itemsTotal +
-      (shippingCost || 0) +
-      (taxAmount || 0) +
-      (processingFee || 0);
-
     const auth = Buffer.from(
       `${paypalClientId}:${paypalClientSecret}`,
     ).toString("base64");
@@ -619,6 +608,16 @@ router.post("/create-paypal-order", async (req, res) => {
       });
     }
 
+    const paypalItemTotal = paypalItems.reduce((sum, it) => {
+      const unit = Number(it.unit_amount.value);
+      const qty = Number(it.quantity);
+      return sum + unit * qty;
+    }, 0);
+
+    const shipping = Number((shippingCost || 0).toFixed(2));
+    const tax = Number((taxAmount || 0).toFixed(2));
+    const totalAmount = paypalItemTotal + shipping + tax;
+
     // Create PayPal order
     const orderData = {
       intent: "CAPTURE",
@@ -630,18 +629,10 @@ router.post("/create-paypal-order", async (req, res) => {
             breakdown: {
               item_total: {
                 currency_code: "USD",
-                value: parseFloat(
-                  (itemsTotal + (processingFee || 0)).toFixed(2),
-                ).toFixed(2),
+                value: paypalItemTotal.toFixed(2),
               },
-              shipping: {
-                currency_code: "USD",
-                value: parseFloat((shippingCost || 0).toFixed(2)).toFixed(2),
-              },
-              tax_total: {
-                currency_code: "USD",
-                value: parseFloat((taxAmount || 0).toFixed(2)).toFixed(2),
-              },
+              shipping: { currency_code: "USD", value: shipping.toFixed(2) },
+              tax_total: { currency_code: "USD", value: tax.toFixed(2) },
             },
           },
           items: paypalItems,
