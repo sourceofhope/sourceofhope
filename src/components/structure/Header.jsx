@@ -272,12 +272,6 @@ function DesktopNavigatorItem({
                 ? "rotate-90"
                 : "rotate-0 group-hover:translate-x-1"
             }`}
-            onClick={(e) => {
-              if (!hasChildren) return;
-              e.preventDefault();
-              e.stopPropagation();
-              setHovering(isOpen ? null : label);
-            }}
             focusable="false"
             aria-hidden="true"
             role="presentation"
