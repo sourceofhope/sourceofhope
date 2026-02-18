@@ -20,7 +20,7 @@ export default function CartSuccessPage() {
   const [isLoading, setIsLoading] = useState(true);
   const hasProcessed = useRef(false);
 
-  const { clearCart } = useCartActions();
+  const { clearCart, updateProcessingFee } = useCartActions();
 
   useEffect(() => {
     // Prevent duplicate processing on re-renders
@@ -136,6 +136,7 @@ export default function CartSuccessPage() {
   useEffect(() => {
     if (status === "complete") {
       clearCart();
+      updateProcessingFee(0); // Reset processing fee after successful checkout
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);

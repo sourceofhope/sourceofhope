@@ -30,13 +30,12 @@ export default function CartSummarySection({
           <span className="font-semibold">${tax.toFixed(2)}</span>
         </div>
 
-        <div className="flex justify-between text-neutral-700">
-          <span>Fee ({STANDARD_PROCESSING_RATE * 100}%):</span>
-          <span
-            className={`font-semibold ${fee === 0 ? "line-through" : null}`}>
-            ${fee.toFixed(2)}
-          </span>
-        </div>
+        {fee > 0 && (
+          <div className="flex justify-between text-neutral-700">
+            <span>Fee ({STANDARD_PROCESSING_RATE * 100}%):</span>
+            <span className="font-semibold">${fee.toFixed(2)}</span>
+          </div>
+        )}
 
         <div className="flex justify-between text-lg font-bold text-neutral-900 pt-3 border-t-2 border-neutral-200">
           <span>Total:</span>

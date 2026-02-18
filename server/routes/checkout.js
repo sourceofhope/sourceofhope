@@ -126,22 +126,6 @@ router.post("/create-stripe-payment-intent", async (req, res) => {
       return res.status(400).json({ error: "Cart items are required" });
     }
 
-    // Calculate total amount (now including processing fee)
-    // const itemsTotal = items.reduce(
-    //   (sum, item) => sum + item.price * item.quantity,
-    //   0,
-    // );
-    // const totalAmount = itemsTotal + (shippingCost || 0) + (taxAmount || 0) + (processingFee || 0);
-
-    // Log the amounts being sent
-    // console.log("Creating Payment Intent:", {
-    //   itemsTotal: itemsTotal.toFixed(2),
-    //   shippingCost: (shippingCost || 0).toFixed(2),
-    //   taxAmount: (taxAmount || 0).toFixed(2),
-    //   processingFee: (processingFee || 0).toFixed(2),
-    //   totalAmount: totalAmount.toFixed(2),
-    // });
-
     // Round to 2 decimal places and convert to cents
     const amountInCents = Math.round(parseFloat(totalAmount.toFixed(2)) * 100);
 
@@ -200,98 +184,7 @@ router.post("/create-stripe-payment-intent", async (req, res) => {
       customer = null;
     }
 
-    // Create an Invoice with line items for the structured checkout summary
-    let invoice = null;
-    if (customer) {
-      try {
-        console.log("Creating invoice for customer:", customer.id);
-        
-        // Step 1: Create the invoice FIRST (empty)
-        invoice = await stripe.invoices.create({
-          customer: customer.id,
-          collection_method: "charge_automatically",
-          auto_advance: false,
-          description: `Order from ${email}`,
-          metadata: {
-            order_type: "storefront",
-            shipping_method: shippingMethodName,
-            items_count: items.length.toString(),
-          },
-        });
-        
-        console.log("Invoice created:", invoice.id);
-        
-        // Step 2: Add invoice items directly to THIS invoice
-        // Add cart items
-        for (const item of items) {
-          const itemAmount = Math.round(parseFloat((item.price * item.quantity).toFixed(2)) * 100);
-          console.log(`Adding item to invoice: ${item.name}, Amount: $${itemAmount / 100}`);
-          
-          await stripe.invoiceItems.create({
-            customer: customer.id,
-            invoice: invoice.id, // Attach to specific invoice
-            amount: itemAmount,
-            currency: "usd",
-            description: `${item.name || item.title || "Product"}${item.size ? ` (Size: ${item.size})` : ""} × ${item.quantity}`,
-          });
-        }
-
-        // Add shipping
-        if (shippingCost && shippingCost > 0) {
-          const shippingAmount = Math.round(parseFloat(shippingCost.toFixed(2)) * 100);
-          console.log(`Adding shipping to invoice: ${shippingMethodName}, Amount: $${shippingAmount / 100}`);
-          
-          await stripe.invoiceItems.create({
-            customer: customer.id,
-            invoice: invoice.id, // Attach to specific invoice
-            amount: shippingAmount,
-            currency: "usd",
-            description: `Shipping (${shippingMethodName})`,
-          });
-        }
-
-        // Add tax
-        if (taxAmount && taxAmount > 0) {
-          const taxAmountCents = Math.round(parseFloat(taxAmount.toFixed(2)) * 100);
-          console.log(`Adding tax to invoice: Amount: $${taxAmountCents / 100}`);
-          
-          await stripe.invoiceItems.create({
-            customer: customer.id,
-            invoice: invoice.id, // Attach to specific invoice
-            amount: taxAmountCents,
-            currency: "usd",
-            description: "Sales Tax",
-          });
-        }
-
-        // Add processing fee
-        if (processingFee && processingFee > 0) {
-          const processingFeeCents = Math.round(parseFloat(processingFee.toFixed(2)) * 100);
-          console.log(`Adding processing fee to invoice: Amount: $${processingFeeCents / 100}`);
-          
-          await stripe.invoiceItems.create({
-            customer: customer.id,
-            invoice: invoice.id, // Attach to specific invoice
-            amount: processingFeeCents,
-            currency: "usd",
-            description: "Processing Support (3%)",
-          });
-        }
-
-        // Step 3: Finalize the invoice to calculate totals
-        console.log("Finalizing invoice:", invoice.id);
-        invoice = await stripe.invoices.finalizeInvoice(invoice.id);
-
-        console.log("Invoice finalized successfully:", invoice.id, "Amount:", invoice.amount_due / 100);
-      } catch (invoiceError) {
-        console.error("Invoice creation error:", invoiceError);
-        console.error("Error details:", JSON.stringify(invoiceError, null, 2));
-        // Continue without invoice if it fails
-        invoice = null;
-      }
-    }
-
-    // Create Payment Intent
+    // Create Payment Intent first - this is the actual payment transaction
     const paymentIntentParams = {
       amount: amountInCents,
       currency: "usd",
@@ -300,7 +193,20 @@ router.post("/create-stripe-payment-intent", async (req, res) => {
       },
       receipt_email: email,
       description: `Order from ${email} - ${items.length} item(s)`,
-      metadata: metadata,
+      metadata: {
+        ...metadata,
+        // Store full order details in metadata for invoice creation in webhook
+        items: JSON.stringify(items.map(item => ({
+          name: item.name || item.title,
+          quantity: item.quantity,
+          price: item.price,
+          size: item.size || ''
+        }))),
+        shipping_cost: shippingCost?.toString() || '0',
+        tax_amount: taxAmount?.toString() || '0',
+        processing_fee: processingFee?.toString() || '0',
+        shipping_method_name: shippingMethodName,
+      },
       shipping: shippingAddress
         ? {
             name: `${shippingAddress.firstName} ${shippingAddress.lastName}`,
@@ -319,28 +225,10 @@ router.post("/create-stripe-payment-intent", async (req, res) => {
     if (customer) {
       paymentIntentParams.customer = customer.id;
     }
-    
-    // Link invoice to payment intent metadata
-    if (invoice) {
-      paymentIntentParams.metadata.invoice_id = invoice.id;
-      paymentIntentParams.metadata.invoice_number = invoice.number || "";
-    }
 
     const paymentIntent = await stripe.paymentIntents.create(paymentIntentParams);
 
-    // For testing/immediate processing: Mark invoice as paid out of band
-    // In production, this should be handled by webhook when payment_intent.succeeded event fires
-    if (invoice && invoice.status === 'open') {
-      try {
-        await stripe.invoices.pay(invoice.id, {
-          paid_out_of_band: true,
-        });
-        console.log(`Invoice ${invoice.id} marked as paid (out of band)`);
-      } catch (invoicePayError) {
-        console.error("Failed to mark invoice as paid:", invoicePayError.message);
-        // Don't fail the request if invoice payment marking fails
-      }
-    }
+    console.log(`PaymentIntent created: ${paymentIntent.id}`);
 
     res.json({
       clientSecret: paymentIntent.client_secret,
@@ -453,6 +341,9 @@ router.post("/create-stripe-session", async (req, res) => {
       ui_mode: "embedded",
       line_items: lineItems,
       mode: "payment",
+      invoice_creation: {
+        enabled: true,
+      },
       return_url: `${return_url}?session_id={CHECKOUT_SESSION_ID}`,
       shipping_address_collection: {
         allowed_countries: ["US"],
@@ -885,6 +776,7 @@ router.post("/create-paypal-order", async (req, res) => {
  * Handle Stripe Webhook Events
  * POST /api/checkout/webhook
  */
+// Handle Stripe Webhook Events
 router.post("/webhook", async (req, res) => {
   const { stripeSecretKey, stripeWebhookSecret } = getEnvironment();
   if (!stripeSecretKey || !stripeWebhookSecret) {
@@ -912,23 +804,102 @@ router.post("/webhook", async (req, res) => {
       const paymentIntent = event.data.object;
       console.log(`PaymentIntent for ${paymentIntent.amount} succeeded`);
       
-      // Mark the associated invoice as paid if one exists
-      const invoiceId = paymentIntent.metadata?.invoice_id;
-      if (invoiceId) {
+      // Create invoice as a receipt with line items after successful payment
+      if (paymentIntent.customer) {
         try {
-          const invoice = await stripe.invoices.retrieve(invoiceId);
+          const metadata = paymentIntent.metadata;
+          const items = metadata.items ? JSON.parse(metadata.items) : [];
+          const shippingCost = parseFloat(metadata.shipping_cost || 0);
+          const taxAmount = parseFloat(metadata.tax_amount || 0);
+          const processingFee = parseFloat(metadata.processing_fee || 0);
+          const shippingMethodName = metadata.shipping_method_name || "Standard Shipping";
           
-          // Only mark as paid if still open
-          if (invoice.status === 'open' || invoice.status === 'draft') {
-            await stripe.invoices.pay(invoiceId, {
-              paid_out_of_band: true,
+          console.log(`Creating invoice for PaymentIntent ${paymentIntent.id}`);
+          
+          // Create invoice in draft - won't create another payment
+          const invoice = await stripe.invoices.create({
+            customer: paymentIntent.customer,
+            auto_advance: false,
+            collection_method: "send_invoice",
+            days_until_due: 1,
+            description: `Receipt for ${paymentIntent.description}`,
+            metadata: {
+              payment_intent_id: paymentIntent.id,
+              order_type: metadata.order_type || "storefront",
+              shipping_method: shippingMethodName,
+            },
+          });
+          
+          // Add line items
+          for (const item of items) {
+            const itemAmount = Math.round(parseFloat((item.price * item.quantity).toFixed(2)) * 100);
+            await stripe.invoiceItems.create({
+              customer: paymentIntent.customer,
+              invoice: invoice.id,
+              amount: itemAmount,
+              currency: "usd",
+              description: `${item.name}${item.size ? ` (Size: ${item.size})` : ""} × ${item.quantity}`,
             });
-            console.log(`Invoice ${invoiceId} marked as paid`);
           }
+          
+          if (shippingCost > 0) {
+            await stripe.invoiceItems.create({
+              customer: paymentIntent.customer,
+              invoice: invoice.id,
+              amount: Math.round(shippingCost * 100),
+              currency: "usd",
+              description: `Shipping (${shippingMethodName})`,
+            });
+          }
+          
+          if (taxAmount > 0) {
+            await stripe.invoiceItems.create({
+              customer: paymentIntent.customer,
+              invoice: invoice.id,
+              amount: Math.round(taxAmount * 100),
+              currency: "usd",
+              description: "Sales Tax",
+            });
+          }
+          
+          if (processingFee > 0) {
+            await stripe.invoiceItems.create({
+              customer: paymentIntent.customer,
+              invoice: invoice.id,
+              amount: Math.round(processingFee * 100),
+              currency: "usd",
+              description: "Processing Support (3%)",
+            });
+          }
+          
+          // Keep as draft - shows line items in dashboard without creating new payment
+          console.log(`Invoice ${invoice.id} created (draft) as receipt for PaymentIntent ${paymentIntent.id}`);
         } catch (invoiceError) {
-          console.error(`Failed to mark invoice ${invoiceId} as paid:`, invoiceError.message);
+          console.error("Failed to create invoice:", invoiceError.message);
         }
       }
+      break;
+    }
+    case "invoice.created": {
+      // No longer needed since we create invoice in payment_intent.succeeded
+      break;
+    }
+    case "payment_intent.created": {
+      const paymentIntent = event.data.object;
+      console.log(`PaymentIntent created with ID: ${paymentIntent.id}`);
+      // Add your handling logic here
+      break;
+    }
+    case "charge.succeeded": {
+      const charge = event.data.object;
+      console.log(`Charge succeeded for amount ${charge.amount}`);
+      // Add your handling logic here
+      break;
+    }
+    case "charge.updated": {
+      const charge = event.data.object;
+      console.log(`Charge updated with ID: ${charge.id}`);
+      // Add your handling logic here
       break;
     }
     default:
