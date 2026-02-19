@@ -161,9 +161,13 @@ export function useCartActions() {
   }
 
   function getCartTotal() {
-    return (
-      getCartCost() + getShippingCost() + getProcessingFeeCost() + getTaxCost()
-    );
+    // Match Stripe/PayPal rounding: round each component, then sum and round final total
+    const subtotal = parseFloat(getCartCost().toFixed(2));
+    const shipping = parseFloat(getShippingCost().toFixed(2));
+    const processing = parseFloat(getProcessingFeeCost().toFixed(2));
+    const tax = parseFloat(getTaxCost().toFixed(2));
+    const total = subtotal + shipping + processing + tax;
+    return parseFloat(total.toFixed(2));
   }
 
   function getCartCost() {
@@ -171,17 +175,17 @@ export function useCartActions() {
       (sum, item) => sum + item.price * item.quantity,
       0,
     );
-    return subtotal;
+    return parseFloat(subtotal.toFixed(2));
   }
 
   function getTaxCost() {
     const taxFee = getCartCost() * STANDARD_TAX_RATE;
-    return taxFee;
+    return parseFloat(taxFee.toFixed(2));
   }
 
   function getShippingCost() {
     const option = SHIPPING_OPTIONS.find((opt) => opt.id === shippingMethod);
-    return option ? option.cost : 0;
+    return option ? parseFloat(option.cost.toFixed(2)) : 0;
   }
 
   function updateShippingMethod(method) {
@@ -199,7 +203,7 @@ export function useCartActions() {
       ? (getCartCost() + getTaxCost() + getShippingCost()) *
         STANDARD_PROCESSING_RATE
       : 0;
-    return processingFee;
+    return parseFloat(processingFee.toFixed(2));
   }
 
   return {

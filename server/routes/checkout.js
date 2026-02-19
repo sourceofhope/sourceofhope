@@ -530,8 +530,22 @@ router.post("/create-stripe-checkout", async (req, res) => {
         unit_amount: Math.round(parseFloat(item.price.toFixed(2)) * 100), // Convert to cents
       },
       quantity: item.quantity,
-      tax_rates: stripeSalesTaxRateId ? [stripeSalesTaxRateId] : undefined,
     }));
+
+    // Add tax as a line item if provided
+    if (taxAmount && taxAmount > 0) {
+      lineItems.push({
+        price_data: {
+          currency: "usd",
+          product_data: {
+            name: "Sales Tax",
+            description: "Estimated sales tax",
+          },
+          unit_amount: Math.round(parseFloat(taxAmount.toFixed(2)) * 100),
+        },
+        quantity: 1,
+      });
+    }
 
     if (processingFee && processingFee > 0) {
       lineItems.push({
@@ -567,9 +581,6 @@ router.post("/create-stripe-checkout", async (req, res) => {
       metadata: {
         shipping_method: shippingMethod || "standard",
         order_type: "storefront",
-        stripe_tax_rate_id: stripeSalesTaxRateId || "",
-        ui_tax_amount:
-          typeof taxAmount === "number" ? taxAmount.toFixed(2) : "0.00",
       },
     });
 
