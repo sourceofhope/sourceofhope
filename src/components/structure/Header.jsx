@@ -119,12 +119,12 @@ export default function Header() {
                   isBlocking ? "text-primary-800" : "text-neutral-50"
                 }`
           }`}>
-        <section className="flex gap-5 w-full items-center justify-between px-5 lg:px-35">
+        <section className="flex gap-5 h-15 md:h-20 w-full items-center justify-between px-5 lg:px-35">
           <NavLink
             to={CANONICAL.home.absolute}
             onClick={(e) => setOpen(false)}
             aria-label="Go Home"
-            className="!no-underline h-25 flex gap-5 flex-row items-center w-fit z-0 overflow-clip">
+            className="!no-underline h-full flex gap-5 flex-row items-center w-fit z-0 overflow-clip">
             <Favicon />
             <h1 className="font-bold hidden lg:block whitespace-nowrap text-ellipsis overflow-hidden">
               THE SOURCE OF HOPE
@@ -220,7 +220,7 @@ function DesktopNavigator({ links }) {
   const [hovering, setHovering] = useState(null);
 
   return (
-    <>
+    <nav className="flex flex-row gap-5">
       {links.map(({ label, route, children }) => (
         <DesktopNavigatorItem
           key={label}
@@ -240,7 +240,7 @@ function DesktopNavigator({ links }) {
             }`}
         />
       ))}
-    </>
+    </nav>
   );
 }
 
@@ -353,7 +353,7 @@ function MobileNavigator({ links, open }) {
   };
 
   return (
-    <div className="w-full">
+    <nav className="w-full">
       <div
         className={`transition-opacity duration-200 ease-out ${
           visible ? "opacity-100" : "opacity-0"
@@ -406,6 +406,6 @@ function MobileNavigator({ links, open }) {
           );
         })}
       </div>
-    </div>
+    </nav>
   );
 }
