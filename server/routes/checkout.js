@@ -114,7 +114,9 @@ router.post("/create-stripe-payment-intent", async (req, res) => {
       shippingCost,
       taxAmount,
       processingFee,
+      subtotal,
       shippingAddress,
+      billingAddress,
       totalAmount,
       email,
     } = req.body;
@@ -128,12 +130,8 @@ router.post("/create-stripe-payment-intent", async (req, res) => {
     const amountInCents = Math.round(parseFloat(totalAmount.toFixed(2)) * 100);
 
     // Get shipping method name
-    const shippingOption = SHIPPING_OPTIONS.find(
-      (opt) => opt.id === shippingMethod,
-    );
-    const shippingMethodName = shippingOption
-      ? shippingOption.name
-      : "Standard Shipping";
+    const shippingOption = SHIPPING_OPTIONS.find((opt) => opt.id === shippingMethod);
+    const shippingMethodName = shippingOption ? shippingOption.name : "Standard Shipping";
 
     // Build metadata with comprehensive checkout summary
     const metadata = {
@@ -198,17 +196,15 @@ router.post("/create-stripe-payment-intent", async (req, res) => {
       metadata: {
         ...metadata,
         // Store full order details in metadata for invoice creation in webhook
-        items: JSON.stringify(
-          items.map((item) => ({
-            name: item.name || item.title,
-            quantity: item.quantity,
-            price: item.price,
-            size: item.size || "",
-          })),
-        ),
-        shipping_cost: shippingCost?.toString() || "0",
-        tax_amount: taxAmount?.toString() || "0",
-        processing_fee: processingFee?.toString() || "0",
+        items: JSON.stringify(items.map(item => ({
+          name: item.name || item.title,
+          quantity: item.quantity,
+          price: item.price,
+          size: item.size || ''
+        }))),
+        shipping_cost: shippingCost?.toString() || '0',
+        tax_amount: taxAmount?.toString() || '0',
+        processing_fee: processingFee?.toString() || '0',
         shipping_method_name: shippingMethodName,
       },
       shipping: shippingAddress
@@ -230,8 +226,7 @@ router.post("/create-stripe-payment-intent", async (req, res) => {
       paymentIntentParams.customer = customer.id;
     }
 
-    const paymentIntent =
-      await stripe.paymentIntents.create(paymentIntentParams);
+    const paymentIntent = await stripe.paymentIntents.create(paymentIntentParams);
 
     console.log(`PaymentIntent created: ${paymentIntent.id}`);
 
@@ -505,6 +500,7 @@ router.post("/create-stripe-checkout", async (req, res) => {
       items,
       shippingMethod,
       shippingCost,
+      taxAmount,
       processingFee,
       successUrl,
       cancelUrl,
@@ -531,11 +527,25 @@ router.post("/create-stripe-checkout", async (req, res) => {
             size: item.size || "",
           },
         },
-        unit_amount: Math.round(parseFloat(item.price.toFixed(2)) * 100),
+        unit_amount: Math.round(parseFloat(item.price.toFixed(2)) * 100), // Convert to cents
       },
       quantity: item.quantity,
-      tax_rates: stripeSalesTaxRateId ? [stripeSalesTaxRateId] : undefined,
     }));
+
+    // Add tax as a line item if provided
+    if (taxAmount && taxAmount > 0) {
+      lineItems.push({
+        price_data: {
+          currency: "usd",
+          product_data: {
+            name: "Sales Tax",
+            description: "Estimated sales tax",
+          },
+          unit_amount: Math.round(parseFloat(taxAmount.toFixed(2)) * 100),
+        },
+        quantity: 1,
+      });
+    }
 
     if (processingFee && processingFee > 0) {
       lineItems.push({
@@ -622,6 +632,23 @@ router.post("/create-paypal-order", async (req, res) => {
       return res.status(400).json({ error: "Redirect URLs are required" });
     }
 
+    // Calculate total amount with proper decimal precision
+    const itemsTotal = items.reduce(
+      (sum, item) => sum + item.price * item.quantity,
+      0,
+    );
+    
+    // Use parseFloat and toFixed to ensure proper decimal precision
+    const itemsTotalFixed = parseFloat(itemsTotal.toFixed(2));
+    const shippingCostFixed = parseFloat((shippingCost || 0).toFixed(2));
+    const taxAmountFixed = parseFloat((taxAmount || 0).toFixed(2));
+    const processingFeeFixed = parseFloat((processingFee || 0).toFixed(2));
+    
+    // Calculate total by adding the fixed decimal values
+    const totalAmount = parseFloat(
+      (itemsTotalFixed + shippingCostFixed + taxAmountFixed + processingFeeFixed).toFixed(2)
+    );
+
     const auth = Buffer.from(
       `${paypalClientId}:${paypalClientSecret}`,
     ).toString("base64");
@@ -681,15 +708,15 @@ router.post("/create-paypal-order", async (req, res) => {
             breakdown: {
               item_total: {
                 currency_code: "USD",
-                value: paypalItemTotal.toFixed(2),
+                value: (itemsTotalFixed + processingFeeFixed).toFixed(2),
               },
               shipping: {
                 currency_code: "USD",
-                value: shipping.toFixed(2),
+                value: shippingCostFixed.toFixed(2),
               },
               tax_total: {
                 currency_code: "USD",
-                value: tax.toFixed(2),
+                value: taxAmountFixed.toFixed(2),
               },
             },
           },
@@ -787,7 +814,7 @@ router.post("/webhook", async (req, res) => {
     case "payment_intent.succeeded": {
       const paymentIntent = event.data.object;
       console.log(`PaymentIntent for ${paymentIntent.amount} succeeded`);
-
+      
       // Create invoice as a receipt with line items after successful payment
       if (paymentIntent.customer) {
         try {
@@ -796,11 +823,10 @@ router.post("/webhook", async (req, res) => {
           const shippingCost = parseFloat(metadata.shipping_cost || 0);
           const taxAmount = parseFloat(metadata.tax_amount || 0);
           const processingFee = parseFloat(metadata.processing_fee || 0);
-          const shippingMethodName =
-            metadata.shipping_method_name || "Standard Shipping";
-
+          const shippingMethodName = metadata.shipping_method_name || "Standard Shipping";
+          
           console.log(`Creating invoice for PaymentIntent ${paymentIntent.id}`);
-
+          
           // Create invoice in draft - won't create another payment
           const invoice = await stripe.invoices.create({
             customer: paymentIntent.customer,
@@ -814,12 +840,10 @@ router.post("/webhook", async (req, res) => {
               shipping_method: shippingMethodName,
             },
           });
-
+          
           // Add line items
           for (const item of items) {
-            const itemAmount = Math.round(
-              parseFloat((item.price * item.quantity).toFixed(2)) * 100,
-            );
+            const itemAmount = Math.round(parseFloat((item.price * item.quantity).toFixed(2)) * 100);
             await stripe.invoiceItems.create({
               customer: paymentIntent.customer,
               invoice: invoice.id,
@@ -828,7 +852,7 @@ router.post("/webhook", async (req, res) => {
               description: `${item.name}${item.size ? ` (Size: ${item.size})` : ""} × ${item.quantity}`,
             });
           }
-
+          
           if (shippingCost > 0) {
             await stripe.invoiceItems.create({
               customer: paymentIntent.customer,
@@ -838,7 +862,7 @@ router.post("/webhook", async (req, res) => {
               description: `Shipping (${shippingMethodName})`,
             });
           }
-
+          
           if (taxAmount > 0) {
             await stripe.invoiceItems.create({
               customer: paymentIntent.customer,
@@ -848,7 +872,7 @@ router.post("/webhook", async (req, res) => {
               description: "Sales Tax",
             });
           }
-
+          
           if (processingFee > 0) {
             await stripe.invoiceItems.create({
               customer: paymentIntent.customer,
@@ -858,11 +882,9 @@ router.post("/webhook", async (req, res) => {
               description: "Processing Support (3%)",
             });
           }
-
+          
           // Keep as draft - shows line items in dashboard without creating new payment
-          console.log(
-            `Invoice ${invoice.id} created (draft) as receipt for PaymentIntent ${paymentIntent.id}`,
-          );
+          console.log(`Invoice ${invoice.id} created (draft) as receipt for PaymentIntent ${paymentIntent.id}`);
         } catch (invoiceError) {
           console.error("Failed to create invoice:", invoiceError.message);
         }
