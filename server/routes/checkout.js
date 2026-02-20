@@ -115,7 +115,6 @@ router.post("/create-stripe-payment-intent", async (req, res) => {
       taxAmount,
       processingFee,
       shippingAddress,
-      billingAddress,
       totalAmount,
       email,
     } = req.body;
@@ -125,39 +124,92 @@ router.post("/create-stripe-payment-intent", async (req, res) => {
       return res.status(400).json({ error: "Cart items are required" });
     }
 
-    // Calculate total amount (now including processing fee)
-    // const itemsTotal = items.reduce(
-    //   (sum, item) => sum + item.price * item.quantity,
-    //   0,
-    // );
-    // const totalAmount = itemsTotal + (shippingCost || 0) + (taxAmount || 0) + (processingFee || 0);
-
-    // Log the amounts being sent
-    // console.log("Creating Payment Intent:", {
-    //   itemsTotal: itemsTotal.toFixed(2),
-    //   shippingCost: (shippingCost || 0).toFixed(2),
-    //   taxAmount: (taxAmount || 0).toFixed(2),
-    //   processingFee: (processingFee || 0).toFixed(2),
-    //   totalAmount: totalAmount.toFixed(2),
-    // });
-
     // Round to 2 decimal places and convert to cents
     const amountInCents = Math.round(parseFloat(totalAmount.toFixed(2)) * 100);
 
-    // Create Payment Intent
-    const paymentIntent = await stripe.paymentIntents.create({
+    // Get shipping method name
+    const shippingOption = SHIPPING_OPTIONS.find(
+      (opt) => opt.id === shippingMethod,
+    );
+    const shippingMethodName = shippingOption
+      ? shippingOption.name
+      : "Standard Shipping";
+
+    // Build metadata with comprehensive checkout summary
+    const metadata = {
+      order_type: "storefront",
+      items_count: items.length.toString(),
+      shipping_method: shippingMethodName,
+    };
+
+    // Create or retrieve a Stripe Customer to attach the invoice
+    let customer;
+    try {
+      // Search for existing customer by email
+      const existingCustomers = await stripe.customers.search({
+        query: `email:'${email}'`,
+        limit: 1,
+      });
+
+      if (existingCustomers.data.length > 0) {
+        customer = existingCustomers.data[0];
+      } else {
+        // Create new customer
+        customer = await stripe.customers.create({
+          email: email,
+          name: `${shippingAddress.firstName} ${shippingAddress.lastName}`,
+          address: {
+            line1: shippingAddress.address,
+            city: shippingAddress.city,
+            state: shippingAddress.state,
+            postal_code: shippingAddress.zipCode,
+            country: shippingAddress.country || "US",
+          },
+          shipping: {
+            name: `${shippingAddress.firstName} ${shippingAddress.lastName}`,
+            address: {
+              line1: shippingAddress.address,
+              city: shippingAddress.city,
+              state: shippingAddress.state,
+              postal_code: shippingAddress.zipCode,
+              country: shippingAddress.country || "US",
+            },
+          },
+          metadata: {
+            source: "storefront_checkout",
+          },
+        });
+      }
+    } catch (customerError) {
+      console.error("Customer creation/search error:", customerError);
+      // Fall back to creating payment intent without customer
+      customer = null;
+    }
+
+    // Create Payment Intent first - this is the actual payment transaction
+    const paymentIntentParams = {
       amount: amountInCents,
       currency: "usd",
       automatic_payment_methods: {
         enabled: true,
       },
       receipt_email: email,
+      description: `Order from ${email} - ${items.length} item(s)`,
       metadata: {
-        shipping_method: shippingMethod || "standard",
-        order_type: "storefront",
-        items_count: items.length,
-        customer_email: email,
-        processing_fee: processingFee ? processingFee.toFixed(2) : "0.00",
+        ...metadata,
+        // Store full order details in metadata for invoice creation in webhook
+        items: JSON.stringify(
+          items.map((item) => ({
+            name: item.name || item.title,
+            quantity: item.quantity,
+            price: item.price,
+            size: item.size || "",
+          })),
+        ),
+        shipping_cost: shippingCost?.toString() || "0",
+        tax_amount: taxAmount?.toString() || "0",
+        processing_fee: processingFee?.toString() || "0",
+        shipping_method_name: shippingMethodName,
       },
       shipping: shippingAddress
         ? {
@@ -171,7 +223,17 @@ router.post("/create-stripe-payment-intent", async (req, res) => {
             },
           }
         : undefined,
-    });
+    };
+
+    // Attach customer if available
+    if (customer) {
+      paymentIntentParams.customer = customer.id;
+    }
+
+    const paymentIntent =
+      await stripe.paymentIntents.create(paymentIntentParams);
+
+    console.log(`PaymentIntent created: ${paymentIntent.id}`);
 
     res.json({
       clientSecret: paymentIntent.client_secret,
@@ -284,6 +346,9 @@ router.post("/create-stripe-session", async (req, res) => {
       ui_mode: "embedded",
       line_items: lineItems,
       mode: "payment",
+      invoice_creation: {
+        enabled: true,
+      },
       return_url: `${return_url}?session_id={CHECKOUT_SESSION_ID}`,
       shipping_address_collection: {
         allowed_countries: ["US"],
@@ -440,7 +505,6 @@ router.post("/create-stripe-checkout", async (req, res) => {
       items,
       shippingMethod,
       shippingCost,
-      taxAmount,
       processingFee,
       successUrl,
       cancelUrl,
@@ -467,7 +531,7 @@ router.post("/create-stripe-checkout", async (req, res) => {
             size: item.size || "",
           },
         },
-        unit_amount: Math.round(parseFloat(item.price.toFixed(2)) * 100), // Convert to cents
+        unit_amount: Math.round(parseFloat(item.price.toFixed(2)) * 100),
       },
       quantity: item.quantity,
       tax_rates: stripeSalesTaxRateId ? [stripeSalesTaxRateId] : undefined,
@@ -507,9 +571,6 @@ router.post("/create-stripe-checkout", async (req, res) => {
       metadata: {
         shipping_method: shippingMethod || "standard",
         order_type: "storefront",
-        stripe_tax_rate_id: stripeSalesTaxRateId || "",
-        ui_tax_amount:
-          typeof taxAmount === "number" ? taxAmount.toFixed(2) : "0.00",
       },
     });
 
@@ -545,6 +606,7 @@ router.post("/create-paypal-order", async (req, res) => {
     const { paypalClientId, paypalClientSecret, paypalApiUrl } =
       getEnvironment();
 
+    console.log(paypalApiUrl);
     if (!paypalClientId || !paypalClientSecret || !paypalApiUrl) {
       return res.status(500).json({
         error: "PayPal is not configured. Please contact support.",
@@ -631,8 +693,14 @@ router.post("/create-paypal-order", async (req, res) => {
                 currency_code: "USD",
                 value: paypalItemTotal.toFixed(2),
               },
-              shipping: { currency_code: "USD", value: shipping.toFixed(2) },
-              tax_total: { currency_code: "USD", value: tax.toFixed(2) },
+              shipping: {
+                currency_code: "USD",
+                value: shipping.toFixed(2),
+              },
+              tax_total: {
+                currency_code: "USD",
+                value: tax.toFixed(2),
+              },
             },
           },
           items: paypalItems,
@@ -702,7 +770,8 @@ router.post("/create-paypal-order", async (req, res) => {
  * Handle Stripe Webhook Events
  * POST /api/checkout/webhook
  */
-router.post("/webhook", (req, res) => {
+// Handle Stripe Webhook Events
+router.post("/webhook", async (req, res) => {
   const { stripeSecretKey, stripeWebhookSecret } = getEnvironment();
   if (!stripeSecretKey || !stripeWebhookSecret) {
     return res.status(500).send("Stripe webhook not configured");
@@ -728,6 +797,108 @@ router.post("/webhook", (req, res) => {
     case "payment_intent.succeeded": {
       const paymentIntent = event.data.object;
       console.log(`PaymentIntent for ${paymentIntent.amount} succeeded`);
+
+      // Create invoice as a receipt with line items after successful payment
+      if (paymentIntent.customer) {
+        try {
+          const metadata = paymentIntent.metadata;
+          const items = metadata.items ? JSON.parse(metadata.items) : [];
+          const shippingCost = parseFloat(metadata.shipping_cost || 0);
+          const taxAmount = parseFloat(metadata.tax_amount || 0);
+          const processingFee = parseFloat(metadata.processing_fee || 0);
+          const shippingMethodName =
+            metadata.shipping_method_name || "Standard Shipping";
+
+          console.log(`Creating invoice for PaymentIntent ${paymentIntent.id}`);
+
+          // Create invoice in draft - won't create another payment
+          const invoice = await stripe.invoices.create({
+            customer: paymentIntent.customer,
+            auto_advance: false,
+            collection_method: "send_invoice",
+            days_until_due: 1,
+            description: `Receipt for ${paymentIntent.description}`,
+            metadata: {
+              payment_intent_id: paymentIntent.id,
+              order_type: metadata.order_type || "storefront",
+              shipping_method: shippingMethodName,
+            },
+          });
+
+          // Add line items
+          for (const item of items) {
+            const itemAmount = Math.round(
+              parseFloat((item.price * item.quantity).toFixed(2)) * 100,
+            );
+            await stripe.invoiceItems.create({
+              customer: paymentIntent.customer,
+              invoice: invoice.id,
+              amount: itemAmount,
+              currency: "usd",
+              description: `${item.name}${item.size ? ` (Size: ${item.size})` : ""} × ${item.quantity}`,
+            });
+          }
+
+          if (shippingCost > 0) {
+            await stripe.invoiceItems.create({
+              customer: paymentIntent.customer,
+              invoice: invoice.id,
+              amount: Math.round(shippingCost * 100),
+              currency: "usd",
+              description: `Shipping (${shippingMethodName})`,
+            });
+          }
+
+          if (taxAmount > 0) {
+            await stripe.invoiceItems.create({
+              customer: paymentIntent.customer,
+              invoice: invoice.id,
+              amount: Math.round(taxAmount * 100),
+              currency: "usd",
+              description: "Sales Tax",
+            });
+          }
+
+          if (processingFee > 0) {
+            await stripe.invoiceItems.create({
+              customer: paymentIntent.customer,
+              invoice: invoice.id,
+              amount: Math.round(processingFee * 100),
+              currency: "usd",
+              description: "Processing Support (3%)",
+            });
+          }
+
+          // Keep as draft - shows line items in dashboard without creating new payment
+          console.log(
+            `Invoice ${invoice.id} created (draft) as receipt for PaymentIntent ${paymentIntent.id}`,
+          );
+        } catch (invoiceError) {
+          console.error("Failed to create invoice:", invoiceError.message);
+        }
+      }
+      break;
+    }
+    case "invoice.created": {
+      // No longer needed since we create invoice in payment_intent.succeeded
+      break;
+    }
+    case "payment_intent.created": {
+      const paymentIntent = event.data.object;
+      console.log(`PaymentIntent created with ID: ${paymentIntent.id}`);
+      // Add your handling logic here
+      break;
+    }
+    case "charge.succeeded": {
+      const charge = event.data.object;
+      console.log(`Charge succeeded for amount ${charge.amount}`);
+      // Add your handling logic here
+      break;
+    }
+    case "charge.updated": {
+      const charge = event.data.object;
+      console.log(`Charge updated with ID: ${charge.id}`);
+      // Add your handling logic here
       break;
     }
     default:

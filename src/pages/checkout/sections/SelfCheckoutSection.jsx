@@ -152,6 +152,11 @@ export default function SelfCheckoutSection({ total, cart, taxAmount }) {
         finalTotal: finalTotal.toFixed(2),
       });
 
+      // Calculate subtotal (before shipping and tax)
+      const subtotal = cart.reduce((sum, item) => {
+        return sum + (item.price * item.quantity);
+      }, 0);
+
       // Create Payment Intent
       const response = await createPaymentIntent({
         items: cart,
@@ -159,6 +164,7 @@ export default function SelfCheckoutSection({ total, cart, taxAmount }) {
         shippingCost: shippingCost,
         taxAmount: taxAmount,
         processingFee: processingFee,
+        subtotal: subtotal,
         shippingAddress: {
           firstName: formData.firstName,
           lastName: formData.lastName,
