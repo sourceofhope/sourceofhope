@@ -5,17 +5,15 @@ import CartItemsSection from "./sections/CartItemsSection";
 import CartShippingSection from "./sections/CartShippingSection";
 import CartSummarySection from "./sections/CartSummarySection";
 import { Link } from "react-router-dom";
-
 import {
   StoreCartContext,
   useCartActions,
   SHIPPING_OPTIONS,
 } from "../../context/StoreCartContext";
-
-import { useSetHeaderBlocking } from "../../components/structure/Header";
 import { ShoppingBagIcon } from "@heroicons/react/20/solid";
 import Title from "../../components/ui/text/Title";
 import { AnchorButton, LinkButton } from "../../components/ui/Button";
+import { useHeaderContext } from "../../context/HeaderContext";
 
 const CartPage = () => {
   const { cart: cartItems } = useContext(StoreCartContext);
@@ -33,12 +31,12 @@ const CartPage = () => {
     getTaxCost,
   } = useCartActions();
 
-  const setBlocking = useSetHeaderBlocking();
+  const { setIsBlocking } = useHeaderContext();
 
   useEffect(() => {
-    setBlocking(true);
-    return () => setBlocking(false);
-  }, [setBlocking]);
+    setIsBlocking(true);
+    return () => setIsBlocking(false);
+  }, [setIsBlocking]);
 
   const updateQuantity = (id, newQuantity) => {
     if (newQuantity < 1) return;

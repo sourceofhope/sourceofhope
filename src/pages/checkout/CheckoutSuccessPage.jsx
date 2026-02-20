@@ -4,7 +4,7 @@ import { CheckCircleIcon } from "@heroicons/react/24/solid";
 import { CANONICAL, CANONICAL_URL } from "../../routes";
 import { LinkButton } from "../../components/ui/Button";
 import { useCartActions } from "../../context/StoreCartContext";
-import { useSetHeaderBlocking } from "../../components/structure/Header";
+import { useHeaderContext } from "../../context/HeaderContext";
 import { Navigate } from "react-router-dom";
 import { useState } from "react";
 import {
@@ -20,8 +20,7 @@ export default function CartSuccessPage() {
   const [isLoading, setIsLoading] = useState(true);
   const hasProcessed = useRef(false);
 
-  const { clearCart } = useCartActions();
-  const setBlocking = useSetHeaderBlocking();
+  const { clearCart, updateProcessingFee } = useCartActions();
 
   useEffect(() => {
     // Prevent duplicate processing on re-renders
@@ -127,15 +126,17 @@ export default function CartSuccessPage() {
     }
   }, []);
 
+  const { setIsBlocking } = useHeaderContext();
+
   useEffect(() => {
-    setBlocking(true);
-    return () => setBlocking(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    setIsBlocking(true);
+    return () => setIsBlocking(false);
+  }, [setIsBlocking]);
 
   useEffect(() => {
     if (status === "complete") {
       clearCart();
+      updateProcessingFee(0); // Reset processing fee after successful checkout
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);

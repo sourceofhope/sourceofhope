@@ -1,106 +1,156 @@
 import { useState } from "react";
+import { useForm } from "react-hook-form";
 
-import LocalInput from "../../../components/ui/LocalInput";
+import HookInput from "../../../components/ui/HookInput";
 import Title from "../../../components/ui/text/Title";
 
+import { CheckCircleIcon, XCircleIcon } from "@heroicons/react/20/solid";
+import { sendEmail } from "@/lib/api/email";
+
+const formStatus = {
+  IDLE: "IDLE",
+  SUBMIT: "SUBMIT",
+  ERROR: "ERROR",
+  SUCCESS: "SUCCESS",
+};
+
 export default function FormInputSection() {
-  const [submit, setSubmit] = useState(false);
+  const [status, setStatus] = useState(formStatus.IDLE);
 
-  const validateName = (event) => {
-    if (submit) {
-      const input = event.target.value;
-      if (typeof input !== "string") return false;
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm({
+    mode: "onBlur",
+    defaultValues: {
+      fname: "",
+      lname: "",
+      email: "",
+      phone: "",
+      membership: "",
+      company: "",
+    },
+  });
 
-      const trimmed = input.trim();
-      if (trimmed.length === 0 || trimmed.length > 50) return false;
+  const isProcessing = status === formStatus.SUBMIT;
 
-      // const allowedCharactersRegex = /^[\p{L}\p{M}'- ]+$/u;
-      // const consecutiveCharactersRegex = /--|''|\s{2,}/;
+  async function onSubmit(formData) {
+    setStatus(formStatus.SUBMIT);
 
-      // if (!allowedCharactersRegex.test(trimmed)) return false;
-      // if (!consecutiveCharactersRegex.test(trimmed)) return false;
+    if (formData.company) {
+      setStatus(formStatus.SUCCESS);
+      reset();
+      setTimeout(() => setStatus(formStatus.IDLE), 3000);
+      return;
     }
-    return true;
-  };
+
+    try {
+      await sendEmail({
+        name: `${formData.fname} ${formData.lname}`.trim(),
+        email: formData.email,
+        message: [
+          `Membership: ${formData.membership || "Not provided"}`,
+          `Phone: ${formData.phone || "Not provided"}`,
+        ].join("\n"),
+      });
+
+      setStatus(formStatus.SUCCESS);
+      reset();
+
+      setTimeout(() => {
+        setStatus(formStatus.IDLE);
+      }, 5000);
+    } catch (error) {
+      console.error("Failed to send email:", error);
+      setStatus(formStatus.ERROR);
+    }
+  }
 
   return (
-    <section className="grid gap-5 w-full p-5 lg:px-35">
+    <section className="grid gap-5 w-full p-5 lg:px-36">
       <Title>Community Impact Form</Title>
-      <form className="flex flex-wrap justify-between gap-y-5">
-        <LocalInput
+
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="grid h-full gap-3 md:grid-cols-2">
+        <HookInput
           title="First name"
-          htmlFor="fname"
           type="text"
-          onChange={validateName}
-          className="w-full md:w-[49%]"
           border={false}
+          error={errors.fname}
+          {...register("fname", {
+            required: "First name is required",
+            minLength: { value: 2, message: "Minimum 2 characters" },
+            maxLength: { value: 50, message: "Maximum 50 characters" },
+            pattern: {
+              value: /^[A-Za-zÀ-ÖØ-öø-ÿ\s'-]+$/,
+              message: "Enter a valid name",
+            },
+          })}
         />
-        <LocalInput
-          title="Last Name"
-          htmlFor="lname"
+
+        <HookInput
+          title="Last name"
           type="text"
-          onChange={validateName}
-          className="w-full md:w-[49%]"
           border={false}
+          error={errors.lname}
+          {...register("lname", {
+            required: "Last name is required",
+            minLength: { value: 2, message: "Minimum 2 characters" },
+            maxLength: { value: 50, message: "Maximum 50 characters" },
+            pattern: {
+              value: /^[A-Za-zÀ-ÖØ-öø-ÿ\s'-]+$/,
+              message: "Enter a valid name",
+            },
+          })}
         />
-        <LocalInput
-          title="Email Address"
-          htmlFor="email"
+
+        <HookInput
+          title="Email address"
           type="email"
-          className="w-full md:w-[49%]"
           border={false}
-          onChange={(event) => {
-            if (submit) {
-              const input = event.target.value;
-              if (typeof input !== "string") return false;
-
-              const trimmed = input.trim();
-              if (trimmed.length === 0 || trimmed.length > 50) return false;
-
-              const valid =
-                trimmed.includes("@") &&
-                trimmed
-                  .substring(trimmed.lastIndexOf("@"), trimmed.length)
-                  .includes(".") &&
-                trimmed.substring(0, trimmed.lastIndexOf("@")).length > 0;
-              return valid;
-            }
-            return true;
-          }}
+          error={errors.email}
+          {...register("email", {
+            required: "Email is required",
+            pattern: {
+              value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+              message: "Enter a valid email",
+            },
+          })}
         />
-        <LocalInput
-          title="Phone Number"
-          htmlFor="phone"
+
+        <HookInput
+          title="Phone number"
           type="tel"
-          className="w-full md:w-[49%]"
           border={false}
-          onChange={(event) => {
-            if (submit) {
-              const input = event.target.value;
-              if (typeof input !== "string") return false;
-
-              const trimmed = input.trim();
-              if (trimmed.length === 0 || trimmed.length > 50) return false;
-
-              const valid =
-                input.split("-").length == 3 ||
-                input.split(".").length == 3 ||
-                (input.length >= 11 && input.length <= 13);
-              return valid;
-            }
-            return true;
-          }}
+          error={errors.phone}
+          {...register("phone", {
+            required: "Phone number is required",
+            pattern: {
+              value: /^[\d\s\-().+]+$/,
+              message: "Enter a valid phone number",
+            },
+            minLength: { value: 10, message: "At least 10 digits" },
+          })}
         />
-        <div className="flex flex-col gap-1 w-full md:w-[49%]">
-          <label
-            htmlFor="membership"
-            className="text-sm md:text-md font-semibold">
-            Membership Type
+
+        <div className="flex flex-col gap-1 w-full md:col-span-2">
+          <label htmlFor="membership" className="text-sm font-semibold">
+            Membership type
           </label>
+
           <select
-            name="membership"
-            className="bg-neutral-50 rounded-2xl border-0 shadow-sm w-full h-[4ch] px-2 select-none">
-            <option value="empty"></option>
+            id="membership"
+            className={`bg-neutral-50 rounded-2xl border-0 shadow-sm w-full h-[4ch] px-3 focus:outline-none focus:ring-2 focus:ring-accent-500 ${
+              errors.membership ? "ring-2 ring-red-400" : ""
+            }`}
+            defaultValue=""
+            {...register("membership")}>
+            <option value="" disabled>
+              Select membership (optional)
+            </option>
             <option value="bronze">
               Hope Advocate [Bronze Pin] ($50/month)
             </option>
@@ -112,23 +162,66 @@ export default function FormInputSection() {
             </option>
           </select>
         </div>
-        <div className="flex flex-col gap-1 w-full md:w-[49%]">
-          <label
-            htmlFor="submit"
-            className="text-sm md:text-md hidden md:block invisible select-none">
-            Submit
-          </label>
-          <input
-            name="submit"
-            type="submit"
-            value="Submit"
-            onSubmit={(event) => {
-              event.preventDefault();
-              setSubmit(true);
-            }}
-            className="rounded-2xl w-full h-[4ch] px-2 bg-primary-700 text-neutral-50 font-semibold cursor-pointer hover:bg-primary-800 transition-colors duration-300"
-          />
+
+        <input
+          tabIndex={-1}
+          autoComplete="off"
+          className="hidden"
+          aria-hidden="true"
+          {...register("company")}
+        />
+
+        <div
+          className="h-5 md:col-span-2"
+          aria-live="polite"
+          aria-atomic="true">
+          {status === formStatus.SUCCESS && (
+            <p className="text-sm text-green-700 flex items-center justify-center gap-2">
+              <CheckCircleIcon className="w-5 h-5" />
+              Message sent.
+            </p>
+          )}
+
+          {status === formStatus.ERROR && (
+            <p className="text-sm text-red-700 flex items-center justify-center gap-2">
+              <XCircleIcon className="w-5 h-5" />
+              Something went wrong. Try again.
+            </p>
+          )}
         </div>
+
+        <button
+          type="submit"
+          disabled={isProcessing}
+          className={`md:col-span-2 w-full px-5 py-4 rounded-xl font-bold text-white text-lg transition-all duration-300 ${
+            isProcessing
+              ? "bg-neutral-400 cursor-not-allowed"
+              : "bg-accent-500 hover:bg-accent-600 hover:shadow-lg"
+          }`}>
+          {isProcessing ? (
+            <span className="flex items-center justify-center gap-2">
+              <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                  fill="none"
+                />
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                />
+              </svg>
+              Sending
+            </span>
+          ) : (
+            "Submit"
+          )}
+        </button>
       </form>
     </section>
   );

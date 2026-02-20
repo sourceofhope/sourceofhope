@@ -1,16 +1,10 @@
-import {
-  useState,
-  useEffect,
-  useContext,
-  createContext,
-  useCallback,
-} from "react";
+import { useState, useEffect, useCallback } from "react";
 import {
   Bars3Icon,
   ChevronRightIcon,
   XMarkIcon,
 } from "@heroicons/react/20/solid";
-
+import { useHeaderContext } from "../../context/HeaderContext";
 import Favicon from "../ui/Favicon";
 
 import { CANONICAL } from "../../routes";
@@ -125,13 +119,17 @@ export default function Header() {
                   isBlocking ? "text-primary-800" : "text-neutral-50"
                 }`
           }`}>
-        <section className="flex gap-5 w-full items-center justify-between px-5 lg:px-35">
-          <div className="h-25 flex gap-5 flex-row items-center w-fit z-0 overflow-clip">
+        <section className="flex gap-5 h-15 md:h-20 w-full items-center justify-between px-5 lg:px-35">
+          <NavLink
+            to={CANONICAL.home.absolute}
+            onClick={(e) => setOpen(false)}
+            aria-label="Go Home"
+            className="!no-underline h-full flex gap-5 flex-row items-center w-fit z-0 overflow-clip">
             <Favicon />
             <h1 className="font-bold hidden lg:block whitespace-nowrap text-ellipsis overflow-hidden">
               THE SOURCE OF HOPE
             </h1>
-          </div>
+          </NavLink>
 
           <nav className="hidden md:flex gap-3 z-10" aria-label="Primary">
             <HeaderNavigator />
@@ -148,11 +146,7 @@ export default function Header() {
             <nav
               className="flex flex-col justify-end items-center px-5 pb-5 h-fit"
               aria-label="Mobile">
-              <HeaderNavigator
-                isMobile
-                open={open}
-                onClose={() => setOpen(false)}
-              />
+              <HeaderNavigator isMobile open={open} />
             </nav>
           )}
         </div>
@@ -162,71 +156,61 @@ export default function Header() {
 }
 
 function HeaderBanner({ link = "", text = "Donate Today!", open, setOpen }) {
-  return open ? (
-    link.startsWith("https://") ? (
-      <a
-        href={link}
-        className="flex gap-3 justify-between md:justify-center h-15 md:h-10 items-center px-5 lg:px-35 bg-accent-500 border-b-2 text-neutral-50 border-accent-700 fixed top-0 left-0 right-0 z-[9998] w-full overflow-hidden">
-        <p className="hover:underline font-semibold">{text}</p>
-        <button
-          className="justify-self-end z-[9999]"
-          aria-label="Close banner"
-          onClick={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            setOpen(false);
-          }}
-          aria-expanded={open}>
-          <Icon>
-            <XMarkIcon className="w-6 h-6" />
-          </Icon>
-        </button>
-      </a>
-    ) : (
-      <Link
-        to={link}
-        className="flex gap-3 justify-between md:justify-center h-15 md:h-10 items-center px-5 lg:px-35 bg-accent-500 border-b-2 text-neutral-50 border-accent-700 fixed top-0 left-0 right-0 z-[9999] w-full overflow-hidden">
-        <p className="hover:underline font-semibold">{text}</p>
-        <button
-          className="justify-self-end"
-          aria-label="Close banner"
-          onClick={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            setOpen(false);
-          }}
-          aria-expanded={open}>
-          <Icon>
-            <XMarkIcon className="w-6 h-6" />
-          </Icon>
-        </button>
-      </Link>
-    )
-  ) : null;
+  if (!open) return null;
+
+  const isExternal = link?.startsWith("https://");
+
+  return (
+    <div
+      className="flex gap-3 justify-between md:justify-center h-15 md:h-10 items-center px-5 lg:px-35 bg-accent-500 border-b-2 text-neutral-50 border-accent-700 fixed top-0 left-0 right-0 z-[9998] w-full overflow-hidden"
+      role="region"
+      aria-label="Site banner">
+      {isExternal ? (
+        <a href={link} className="hover:underline font-semibold">
+          {text}
+        </a>
+      ) : (
+        <Link to={link} className="hover:underline font-semibold">
+          {text}
+        </Link>
+      )}
+
+      <button
+        type="button"
+        className="justify-self-end z-[9999]"
+        aria-label="Close banner"
+        onClick={() => setOpen(false)}>
+        <Icon>
+          <XMarkIcon className="w-6 h-6" aria-hidden="true" focusable="false" />
+        </Icon>
+      </button>
+    </div>
+  );
 }
 
 function HeaderMenu({ open, setOpen }) {
   return (
     <button
+      type="button"
       className="block md:hidden"
       onClick={() => setOpen((v) => !v)}
       aria-expanded={open}
       aria-label={open ? "Close menu" : "Open menu"}>
       <Icon>
         {open ? (
-          <XMarkIcon className="w-6 h-6" />
+          <XMarkIcon className="w-6 h-6" aria-hidden="true" focusable="false" />
         ) : (
-          <Bars3Icon className="w-6 h-6" />
+          <Bars3Icon className="w-6 h-6" aria-hidden="true" focusable="false" />
         )}
       </Icon>
     </button>
   );
 }
 
-function HeaderNavigator({ isMobile = false, open, onClose = () => {} }) {
+function HeaderNavigator({ isMobile = false, open }) {
   const links = getHeaderLinks();
   return isMobile ? (
-    <MobileNavigator links={links} open={open} onClose={onClose} />
+    <MobileNavigator links={links} open={open} />
   ) : (
     <DesktopNavigator links={links} />
   );
@@ -236,7 +220,7 @@ function DesktopNavigator({ links }) {
   const [hovering, setHovering] = useState(null);
 
   return (
-    <>
+    <nav className="flex flex-row gap-5">
       {links.map(({ label, route, children }) => (
         <DesktopNavigatorItem
           key={label}
@@ -256,7 +240,7 @@ function DesktopNavigator({ links }) {
             }`}
         />
       ))}
-    </>
+    </nav>
   );
 }
 
@@ -288,12 +272,6 @@ function DesktopNavigatorItem({
                 ? "rotate-90"
                 : "rotate-0 group-hover:translate-x-1"
             }`}
-            onClick={(e) => {
-              if (!hasChildren) return;
-              e.preventDefault();
-              e.stopPropagation();
-              setHovering(isOpen ? null : label);
-            }}
             focusable="false"
             aria-hidden="true"
             role="presentation"
@@ -324,7 +302,7 @@ function DesktopNavigatorItem({
   );
 }
 
-function MobileNavigator({ links, open, onClose }) {
+function MobileNavigator({ links, open }) {
   const navigate = useNavigate();
 
   const root = { title: "BACK", route: null, items: links };
@@ -370,14 +348,12 @@ function MobileNavigator({ links, open, onClose }) {
   };
 
   const goTo = (e, to) => {
-    e.preventDefault();
     if (!to) return;
     navigate(to);
-    onClose?.();
   };
 
   return (
-    <div className="w-full">
+    <nav className="w-full">
       <div
         className={`transition-opacity duration-200 ease-out ${
           visible ? "opacity-100" : "opacity-0"
@@ -410,7 +386,6 @@ function MobileNavigator({ links, open, onClose }) {
                 className="!no-underline py-2.5 h-full w-full group font-bold inline-flex justify-between items-center gap-1"
                 onClick={(event) => {
                   if (hasChildren) {
-                    event.preventDefault();
                     openChildren(item);
                   } else {
                     goTo(event, item.route.absolute);
@@ -431,25 +406,6 @@ function MobileNavigator({ links, open, onClose }) {
           );
         })}
       </div>
-    </div>
+    </nav>
   );
 }
-
-export function useHeaderBlocking() {
-  const { isBlocking } = useHeaderContext();
-  return isBlocking;
-}
-
-export function useSetHeaderBlocking() {
-  const { setIsBlocking } = useHeaderContext();
-  return setIsBlocking;
-}
-
-export const HeaderFlagContext = createContext({
-  bannerActive: false,
-  setBannerActive: () => {},
-  isBlocking: false,
-  setIsBlocking: () => {},
-});
-
-export const useHeaderContext = () => useContext(HeaderFlagContext);

@@ -144,8 +144,8 @@ export default function MemberPage() {
         <div className="mt-12">
           <Link
             to="/about/team"
-            className="inline-flex items-center gap-2 text-primary-700 font-medium transition-colors duration-200">
-            <ArrowLeftIcon className="w-5 h-5" />
+            className="!no-underline inline-flex items-center group gap-2 text-primary-700 font-medium transition-colors duration-200">
+            <ArrowLeftIcon className="w-5 h-5 group-hover:-translate-x-1 transition-transform duration-300" />
             Back to Team
           </Link>
         </div>

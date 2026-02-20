@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet-async";
-import { useSetHeaderBlocking } from "../../../components/structure/Header";
+import { useHeaderContext } from "../../../context/HeaderContext";
 import { useEffect } from "react";
 import Carousel from "../../../components/ui/Carousel";
 import Title from "../../../components/ui/text/Title";
@@ -12,12 +12,13 @@ import ExpressiveAnchor from "../../../components/ui/expressive/ExpressiveAnchor
 import { HighlightedText } from "../../../components/ui/expressive/ExpressiveText";
 
 export default function OutdoorHopeProgram() {
-  const setBlocking = useSetHeaderBlocking();
+  const { setIsBlocking } = useHeaderContext();
 
   useEffect(() => {
-    setBlocking(true);
-    return () => setBlocking(false);
-  }, [setBlocking]);
+    setIsBlocking(true);
+    return () => setIsBlocking(false);
+  }, [setIsBlocking]);
+
   return (
     <>
       <Helmet>

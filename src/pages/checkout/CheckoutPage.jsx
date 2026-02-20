@@ -4,19 +4,18 @@ import { useEffect } from "react";
 import { useCartActions } from "../../context/StoreCartContext";
 import Title from "../../components/ui/text/Title";
 import ExpressCheckoutSection from "./sections/ExpressCheckoutSection";
-import { useSetHeaderBlocking } from "../../components/structure/Header";
 import Cart from "../storefront/Cart";
 import SelfCheckoutSection from "./sections/SelfCheckoutSection";
 import CheckoutDetailsSection from "./sections/CheckoutDetailsSection";
+import { useHeaderContext } from "../../context/HeaderContext";
 
 export default function CheckoutPage() {
-  const setBlocking = useSetHeaderBlocking();
+  const { setIsBlocking } = useHeaderContext();
 
   useEffect(() => {
-    setBlocking(true);
-    return () => setBlocking(false);
-  }, [setBlocking]);
-
+    setIsBlocking(true);
+    return () => setIsBlocking(false);
+  }, [setIsBlocking]);
   const {
     cart,
     getCartCost,

@@ -1,5 +1,4 @@
 import { Helmet } from "react-helmet-async";
-import { useSetHeaderBlocking } from "../../components/structure/Header";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { fetchContent, getFeaturedImage, getResponsiveImage } from "../../cms";
@@ -12,6 +11,7 @@ import Cart from "./Cart";
 import { useCartActions } from "../../context/StoreCartContext";
 import Takeover from "../../components/ui/Takeover";
 import Loader from "../../components/structure/Loader";
+import { useHeaderContext } from "../../context/HeaderContext";
 
 export default function ProductPage() {
   const [product, setProduct] = useState(null);
@@ -19,8 +19,6 @@ export default function ProductPage() {
   const [loading, setLoading] = useState(true);
   const { productSlug } = useParams();
   const { addToCart } = useCartActions();
-
-  const setBlocking = useSetHeaderBlocking();
 
   const handleAddToCart = (e) => {
     e.preventDefault();
@@ -42,10 +40,12 @@ export default function ProductPage() {
     addToCart(cartItem);
   };
 
+  const { setIsBlocking } = useHeaderContext();
+
   useEffect(() => {
-    setBlocking(true);
-    return () => setBlocking(false);
-  }, [setBlocking]);
+    setIsBlocking(true);
+    return () => setIsBlocking(false);
+  }, [setIsBlocking]);
 
   useEffect(() => {
     async function loadProduct() {
