@@ -138,7 +138,7 @@ export default function ExpressCheckoutSection({
 
       {isLoading ? (
         <div className="flex justify-center items-center py-8">
-          <div className="text-neutral-500">Loading payment options</div>
+          <div className="text-neutral-500">Loading payment options...</div>
         </div>
       ) : error ? (
         <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-4">
