@@ -697,6 +697,16 @@ router.post("/create-paypal-order", async (req, res) => {
       });
     }
 
+    const paypalItemTotal = paypalItems.reduce((sum, it) => {
+      const unit = Number(it.unit_amount.value);
+      const qty = Number(it.quantity);
+      return sum + unit * qty;
+    }, 0);
+
+    const shipping = Number((shippingCost || 0).toFixed(2));
+    const tax = Number((taxAmount || 0).toFixed(2));
+    const totalAmount = paypalItemTotal + shipping + tax;
+
     // Create PayPal order
     const orderData = {
       intent: "CAPTURE",
