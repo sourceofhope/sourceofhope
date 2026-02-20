@@ -21,7 +21,7 @@ export default function CheckoutSummarySection({
         </div>
 
         <div className="flex justify-between text-neutral-700">
-          <span>Tax (8.25%):</span>
+          <span>Estimated Tax (8.25%):</span>
           <span className="font-semibold">${tax.toFixed(2)}</span>
         </div>
 
