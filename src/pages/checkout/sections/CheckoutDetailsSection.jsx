@@ -87,7 +87,7 @@ export default function CheckoutDetailsSection({
 
         <div className="flex justify-between text-sm">
           <div className="flex flex-col">
-            <span className="text-neutral-600">Tax</span>
+            <span className="text-neutral-600">Estimated Tax</span>
             <span className="text-xs text-neutral-500 mt-0.5">
               {STANDARD_TAX_RATE * 100}%
             </span>
@@ -97,18 +97,20 @@ export default function CheckoutDetailsSection({
           </span>
         </div>
 
-        {processingFee > 0 && (<div className="flex justify-between text-sm">
-          <div className="flex flex-col">
-            <span className="text-neutral-600">Fee(s)</span>
-            <span className="text-xs text-neutral-500 mt-0.5">
-              {STANDARD_PROCESSING_RATE * 100}%
+        {processingFee > 0 && (
+          <div className="flex justify-between text-sm">
+            <div className="flex flex-col">
+              <span className="text-neutral-600">Fee(s)</span>
+              <span className="text-xs text-neutral-500 mt-0.5">
+                {STANDARD_PROCESSING_RATE * 100}%
+              </span>
+            </div>
+            <span
+              className={`font-semibold text-neutral-900 ${processingFee === 0 ? "line-through" : null}`}>
+              ${processingFee.toFixed(2)}
             </span>
           </div>
-          <span
-            className={`font-semibold text-neutral-900 ${processingFee === 0 ? "line-through" : null}`}>
-            ${processingFee.toFixed(2)}
-          </span>
-        </div>)}
+        )}
 
         <div className="pt-3 border-t-2 border-neutral-300">
           <div className="flex justify-between items-center">
