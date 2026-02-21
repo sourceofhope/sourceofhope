@@ -249,7 +249,6 @@ function CustomAmountCard({ isSelected, amount, onAmountChange }) {
             onClick={(e) => {
               e.stopPropagation();
               onAmountChange(preset);
-              onSelect();
             }}
             className="bg-neutral-200 hover:bg-neutral-300 rounded-xl px-3 py-2 font-semibold">
             ${preset}
