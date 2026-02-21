@@ -264,31 +264,30 @@ function CustomAmountCard({ isSelected, amount, onAmountChange }) {
   );
 }
 
-function formatInt(n) {
-  return new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 }).format(n);
-}
-
-function formatMoney(n) {
-  return new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 }).format(n);
-}
-
 function IndividualImpactEstimator({
   amount,
   className = "",
   assumptions = IMPACT_MODEL,
 }) {
+  const formatNumber = (n) => {
+    return new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 }).format(
+      n,
+    );
+  };
+
   const impact = useMemo(() => {
-    const meals = assumptions.dollarsPerMeal
-      ? amount / assumptions.dollarsPerMeal
-      : 0;
+    const meals =
+      amount > 0 ? Math.max(amount / assumptions.dollarsPerMeal, 1) : 0;
 
-    const wellnessAssists = assumptions.dollarsPerWellnessAssist
-      ? amount / assumptions.dollarsPerWellnessAssist
-      : 0;
+    const wellnessAssists =
+      amount > 0
+        ? Math.max(amount / assumptions.dollarsPerWellnessAssist, 1)
+        : 0;
 
-    const studentSupports = assumptions.dollarsPerStudentSupport
-      ? amount / assumptions.dollarsPerStudentSupport
-      : 0;
+    const studentSupports =
+      amount > 0
+        ? Math.max(amount / assumptions.dollarsPerStudentSupport, 1)
+        : 0;
     return {
       meals: Math.floor(meals),
       wellnessAssists: Math.floor(wellnessAssists),
@@ -305,7 +304,7 @@ function IndividualImpactEstimator({
         <div className="grid gap-1">
           <Heading>Estimated monthly impact</Heading>
           <p className="text-sm text-neutral-700 max-w-[80ch]">
-            Based on <Bold>${formatMoney(amount)}/month</Bold>. These are{" "}
+            Based on <Bold>${formatNumber(amount)}/month</Bold>. These are{" "}
             estimates to help supporters understand how recurring gifts sustain
             mission work.
           </p>
@@ -320,21 +319,21 @@ function IndividualImpactEstimator({
         <ImpactStat
           icon={<HeartIcon className="w-5 h-5" />}
           label="Meals supported"
-          value={formatInt(Math.round(impact?.meals || 0))}
+          value={formatNumber(Math.round(impact?.meals || 0))}
           sublabel="home-cooked meals (estimated)"
         />
 
         <ImpactStat
           icon={<CheckCircleIcon className="w-5 h-5" />}
           label="Wellness support"
-          value={formatInt(Math.round(impact?.wellnessAssists || 0))}
+          value={formatNumber(Math.round(impact?.wellnessAssists || 0))}
           sublabel="subsidy units (estimated)"
         />
 
         <ImpactStat
           icon={<CheckCircleIcon className="w-5 h-5" />}
           label="Education support"
-          value={formatInt(Math.round(impact?.studentSupports || 0))}
+          value={formatNumber(Math.round(impact?.studentSupports || 0))}
           sublabel="student support units (estimated)"
         />
       </div>
@@ -365,7 +364,7 @@ function ImpactStat({ icon, label, value, sublabel }) {
         <p className="text-sm font-semibold">{label}</p>
       </div>
 
-      <p className="text-4xl font-extrabold leading-none">{value}</p>
+      <p className="text-4xl font-extrabold leading-none pl-2">{value}</p>
       <p className="text-xs text-neutral-600">{sublabel}</p>
     </div>
   );

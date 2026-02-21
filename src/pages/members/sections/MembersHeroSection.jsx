@@ -20,7 +20,7 @@ export default function MembersHeroSection() {
         . Membership is for supporters who want a consistent monthly impact.
       </Blockquote>
       <p className="text-neutral-800">
-        Membership starts at <Bold>$50/month</Bold>. Every tier helps us{" "}
+        Membership starts at <Bold>$1/month</Bold>. Every tier helps us{" "}
         <Bold>feed, educate, and restore hope</Bold> through our programs and
         community partners.
       </p>
