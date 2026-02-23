@@ -15,6 +15,7 @@ import {
   fetchStripePublishableKey,
 } from "../../../lib/api/checkout";
 
+
 function PaymentForm({ clientSecret, total, processingFee, onSuccess }) {
   const stripe = useStripe();
   const elements = useElements();
@@ -102,11 +103,7 @@ function PaymentForm({ clientSecret, total, processingFee, onSuccess }) {
     </form>
   );
 }
-
-export default function SelfCheckoutSection({ total, cart, taxAmount }) {
-  const { shippingMethod, getShippingCost } = useCartActions();
-  const shippingCost = getShippingCost();
-
+export default function SelfCheckoutSection({ cart, getCartItemCount, subtotal, shippingMethod, shippingCost, taxAmount, processingFee, total }) {
   const [formData, setFormData] = useState({
     email: "",
     firstName: "",
@@ -123,12 +120,9 @@ export default function SelfCheckoutSection({ total, cart, taxAmount }) {
   const [clientSecret, setClientSecret] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [coverProcessingFee, setCoverProcessingFee] = useState(false);
 
-  // Calculate amounts in correct order
-  const processingFee = coverProcessingFee ? total * 0.03 : 0;
-  const finalTotal =
-    parseFloat(total.toFixed(2)) + parseFloat(processingFee.toFixed(2));
+  // calculate pre-total amounts
+  const pretotal = parseFloat((subtotal + shippingCost + taxAmount).toFixed(2));
 
   // Load Stripe and create Payment Intent when form is complete
   const initializePayment = async () => {
@@ -144,18 +138,6 @@ export default function SelfCheckoutSection({ total, cart, taxAmount }) {
 
       const stripe = await loadStripe(keyResponse.data.publishableKey);
       setStripePromise(stripe);
-
-      // Log the amounts being sent
-      console.log("Payment Intent Request:", {
-        total: total.toFixed(2),
-        processingFee: processingFee.toFixed(2),
-        finalTotal: finalTotal.toFixed(2),
-      });
-
-      // Calculate subtotal (before shipping and tax)
-      const subtotal = cart.reduce((sum, item) => {
-        return sum + (item.price * item.quantity);
-      }, 0);
 
       // Create Payment Intent
       const response = await createPaymentIntent({
@@ -183,7 +165,7 @@ export default function SelfCheckoutSection({ total, cart, taxAmount }) {
           zipCode: formData.zipCode,
           country: formData.country,
         },
-        totalAmount: finalTotal, // Pass the final total amount to the server
+        totalAmount: total.toFixed(2), // Pass the final total amount to the server
         email: formData.email, // Pass email for receipt
       });
 
@@ -333,7 +315,8 @@ export default function SelfCheckoutSection({ total, cart, taxAmount }) {
           <button
             onClick={initializePayment}
             disabled={!isFormValid() || isLoading}
-            className="w-full bg-accent-500 hover:bg-accent-600 disabled:bg-neutral-300 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 disabled:cursor-not-allowed">
+            className="w-full bg-accent-500 hover:bg-accent-600 disabled:bg-neutral-300 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 disabled:cursor-not-allowed"
+          >
             {isLoading ? "Loading..." : "Continue to Payment"}
           </button>
         </>
@@ -351,7 +334,8 @@ export default function SelfCheckoutSection({ total, cart, taxAmount }) {
                   type="button"
                   onClick={handleEditInformation}
                   className="text-accent-600 hover:text-accent-700 text-sm font-medium transition-colors"
-                  aria-label="Edit contact information">
+                  aria-label="Edit contact information"
+                >
                   <FaEdit className="size-5" />
                 </button>
               </div>
@@ -371,7 +355,7 @@ export default function SelfCheckoutSection({ total, cart, taxAmount }) {
                   <span className="font-medium">City, State ZIP:</span>{" "}
                   {formData.city}, {formData.state} {formData.zipCode}
                 </div>
-                {coverProcessingFee && (
+                {processingFee > 0 && (
                   <div className="pt-2 border-t border-neutral-300">
                     <span className="text-accent-600 font-medium text-xs">
                       ✓ Supporting 100% of mission (+${processingFee.toFixed(2)}{" "}
@@ -391,12 +375,11 @@ export default function SelfCheckoutSection({ total, cart, taxAmount }) {
               {/* Order Summary */}
               <div className="bg-neutral-50 rounded-xl p-4 mb-4 text-sm">
                 <div className="space-y-2">
-                  {processingFee > 0 && (
-                    <div className="flex justify-between">
-                      <span className="text-neutral-600">Total</span>
-                      <span className="font-medium">${total.toFixed(2)}</span>
-                    </div>
-                  )}
+                  <div className="flex justify-between">
+                    <span className="text-neutral-600">Total</span>
+                    <span className="font-medium">${pretotal.toFixed(2)}</span>
+                  </div>
+
                   {processingFee > 0 && (
                     <div className="flex justify-between text-accent-600">
                       <span>Processing Support (3%)</span>
@@ -405,19 +388,21 @@ export default function SelfCheckoutSection({ total, cart, taxAmount }) {
                       </span>
                     </div>
                   )}
-                  <div className="border-t border-neutral-300 pt-2 mt-2">
-                    <div className="flex justify-between font-bold text-base">
-                      <span>Total</span>
-                      <span>${finalTotal.toFixed(2)}</span>
+                  {processingFee > 0 && (
+                    <div className="border-t border-neutral-300 pt-2 mt-2">
+                      <div className="flex justify-between font-bold text-base">
+                        <span>Total</span>
+                        <span>${total.toFixed(2)}</span>
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </div>
               </div>
 
               <Elements stripe={stripePromise} options={{ clientSecret }}>
                 <PaymentForm
                   clientSecret={clientSecret}
-                  total={finalTotal}
+                  total={total}
                   processingFee={processingFee}
                   onSuccess={handlePaymentSuccess}
                 />

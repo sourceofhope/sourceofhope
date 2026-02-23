@@ -127,7 +127,7 @@ router.post("/create-stripe-payment-intent", async (req, res) => {
     }
 
     // Round to 2 decimal places and convert to cents
-    const amountInCents = Math.round(parseFloat(totalAmount.toFixed(2)) * 100);
+    const amountInCents = Math.round(parseFloat(totalAmount * 100));
 
     // Get shipping method name
     const shippingOption = SHIPPING_OPTIONS.find((opt) => opt.id === shippingMethod);
@@ -227,8 +227,6 @@ router.post("/create-stripe-payment-intent", async (req, res) => {
     }
 
     const paymentIntent = await stripe.paymentIntents.create(paymentIntentParams);
-
-    console.log(`PaymentIntent created: ${paymentIntent.id}`);
 
     res.json({
       clientSecret: paymentIntent.client_secret,
@@ -790,6 +788,7 @@ router.post("/create-paypal-order", async (req, res) => {
 // Handle Stripe Webhook Events
 router.post("/webhook", async (req, res) => {
   const { stripeSecretKey, stripeWebhookSecret } = getEnvironment();
+  console.log(`Stripe web hook secret: ${stripeWebhookSecret}`);
   if (!stripeSecretKey || !stripeWebhookSecret) {
     return res.status(500).send("Stripe webhook not configured");
   }
