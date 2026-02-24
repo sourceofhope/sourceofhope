@@ -126,7 +126,7 @@ router.post("/create-stripe-payment-intent", async (req, res) => {
     }
 
     // Round to 2 decimal places and convert to cents
-    const amountInCents = Math.round(parseFloat(totalAmount.toFixed(2)) * 100);
+    const amountInCents = Math.round(parseFloat(totalAmount).toFixed(2) * 100);
 
     // Create Payment Intent
     const paymentIntent = await stripe.paymentIntents.create({
@@ -367,7 +367,6 @@ router.post("/retrieve-stripe-publishable-key", async (req, res) => {
 
 /**
  * Create an Embedded Stripe Checkout Session
- * Create an Embedded Stripe Checkout Session
  * POST /api/checkout/create-stripe-session
  * For embedding checkout directly in the page
  */
@@ -415,29 +414,34 @@ router.post("/create-stripe-session", async (req, res) => {
         unit_amount: Math.round(parseFloat(item.price.toFixed(2)) * 100),
       },
       quantity: item.quantity,
-      tax_rates: stripeSalesTaxRateId ? [stripeSalesTaxRateId] : undefined,
+      // Note: tax_rates is for pre-configured Stripe Tax Rates, not calculated amounts
+      // We'll add tax as a separate line item below if provided
     }));
 
-    if (processingFee && processingFee > 0) {
-      lineItems.push({
-        price_data: {
-          currency: "usd",
-          product_data: {
-            name: "Processing Support",
-            description: "Supporting 100% of the mission (3%)",
-          },
-          unit_amount: Math.round(parseFloat(processingFee.toFixed(2)) * 100),
-        },
-        quantity: 1,
-      });
-    }
+    // Apply tax via tax_rates (shown after subtotal)
+    const taxRates = stripeSalesTaxRateId ? [stripeSalesTaxRateId] : undefined;
+    
+    lineItems.forEach(item => {
+      if (taxRates) {
+        item.tax_rates = taxRates;
+      }
+    });
 
+    // Add processing fee to shipping cost
+    const totalShippingCost = (shippingCost || 0) + (processingFee || 0);
     const shippingOptions = buildStripeShippingOptions(
       shippingMethod,
-      shippingCost,
+      totalShippingCost,
     );
 
+    if (processingFee && processingFee > 0 && shippingOptions.length > 0) {
+      const originalName = shippingOptions[0].shipping_rate_data.display_name;
+      shippingOptions[0].shipping_rate_data.display_name = 
+        `${originalName} + Processing Fee (3%)`;
+    }
+
     // Create embedded checkout session
+    // Display: Products → Subtotal → Tax → Shipping + Fee → Total
     const session = await stripe.checkout.sessions.create({
       ui_mode: "embedded",
       line_items: lineItems,
@@ -604,6 +608,8 @@ router.post("/create-stripe-checkout", async (req, res) => {
       cancelUrl,
     } = req.body;
 
+    console.log(`tax amount received: ${taxAmount}`);
+
     if (!items || !Array.isArray(items) || items.length === 0) {
       return res.status(400).json({ error: "Cart items are required" });
     }
@@ -628,16 +634,33 @@ router.post("/create-stripe-checkout", async (req, res) => {
         unit_amount: Math.round(parseFloat(item.price.toFixed(2)) * 100), // Convert to cents
       },
       quantity: item.quantity,
-      tax_rates: stripeSalesTaxRateId ? [stripeSalesTaxRateId] : undefined,
+      // Note: tax_rates is for pre-configured Stripe Tax Rates, not calculated amounts
+      // We'll add tax as a separate line item below if provided
     }));
 
+    // Add calculated tax as line item (displays after products, before subtotal)
+    if (taxAmount && taxAmount > 0) {
+      lineItems.push({
+        price_data: {
+          currency: "usd",
+          product_data: {
+            name: "Sales Tax",
+            description: "State and local taxes",
+          },
+          unit_amount: Math.round(parseFloat(taxAmount.toFixed(2)) * 100),
+        },
+        quantity: 1,
+      });
+    }
+
+    // Add processing fee as line item
     if (processingFee && processingFee > 0) {
       lineItems.push({
         price_data: {
           currency: "usd",
           product_data: {
-            name: "Processing Fee Coverage (3%)",
-            description: "Support the Mission — Cover Fees (3%)",
+            name: "Processing Support",
+            description: "Supporting 100% of the mission (3%)",
           },
           unit_amount: Math.round(parseFloat(processingFee.toFixed(2)) * 100),
         },
@@ -645,12 +668,14 @@ router.post("/create-stripe-checkout", async (req, res) => {
       });
     }
 
+    // Shipping stays separate
     const shippingOptions = buildStripeShippingOptions(
       shippingMethod,
       shippingCost,
     );
 
-    // Create Stripe Checkout Session
+    // Create embedded checkout session
+    // Display: Products → Tax → Processing Fee → Subtotal → Shipping → Total
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       line_items: lineItems,
