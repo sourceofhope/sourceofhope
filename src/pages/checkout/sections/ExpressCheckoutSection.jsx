@@ -12,10 +12,6 @@ import {
   createPaypalCheckout,
   fetchCheckoutProviders,
 } from "../../../lib/api/checkout.js";
-import {
-  STANDARD_PROCESSING_RATE,
-  STANDARD_TAX_RATE,
-} from "../../../context/StoreCartContext.jsx";
 
 const iconMap = {
   stripe: <FaStripeS className="size-10 md:size-8" />,

@@ -3,7 +3,7 @@ import Icon from "./Icon";
 
 export default function Favicon({ className }) {
   return (
-    <Icon className={`w-10 h-10 ${className}`}>
+    <Icon className={`size-8 md:size-10 ${className}`}>
       <img
         src={`/${ASSET_VERSION}/core/TSOH-Favicon.webp`}
         alt=""

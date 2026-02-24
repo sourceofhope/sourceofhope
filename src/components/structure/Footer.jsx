@@ -53,6 +53,7 @@ export default function Footer() {
                 <li>
                   <a href="tel:4699690244">(469)-969-0244</a>
                 </li>
+                <li>EIN: 46-2491772</li>
               </ul>
               <p className="mt-5">
                 ©{new Date().getFullYear()} The Source Of Hope

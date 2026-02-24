@@ -26,7 +26,7 @@ export default function CartSummarySection({
         </div>
 
         <div className="flex justify-between text-neutral-700">
-          <span>Tax ({STANDARD_TAX_RATE * 100}%):</span>
+          <span>Estimated Tax ({STANDARD_TAX_RATE * 100}%):</span>
           <span className="font-semibold">${tax.toFixed(2)}</span>
         </div>
 
