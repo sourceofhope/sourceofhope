@@ -200,6 +200,7 @@ router.post("/create-membership-payment-intent", async (req, res) => {
 
     // Map membership types to product details
     const membershipProducts = {
+      // Legacy tiers
       bronze: {
         id: "prod_membership_bronze",
         name: "Hope Advocate [Bronze Pin]",
@@ -214,6 +215,28 @@ router.post("/create-membership-payment-intent", async (req, res) => {
         id: "prod_membership_gold",
         name: "Hope Enterprise Partner [Gold Pin]",
         description: "Gold tier membership - Monthly recurring subscription for enterprise partnerships",
+      },
+      // Individual monthly support
+      individual: {
+        id: "prod_membership_individual",
+        name: "Monthly Individual Support",
+        description: "Individual monthly support - Recurring gift sustaining meals, wellness care, and education programs",
+      },
+      // Company partnership tiers
+      partner: {
+        id: "prod_membership_partner",
+        name: "Company Partner",
+        description: "Company Partner - Monthly partnership sustaining community outreach and program operations",
+      },
+      sponsor: {
+        id: "prod_membership_sponsor",
+        name: "Program Sponsor",
+        description: "Program Sponsor - Monthly partnership expanding capacity and strengthening sustained service",
+      },
+      champion: {
+        id: "prod_membership_champion",
+        name: "Impact Champion",
+        description: "Impact Champion - Monthly partnership underwriting major mission work across programs",
       },
     };
 

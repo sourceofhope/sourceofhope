@@ -1,7 +1,8 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import Title from "../../../components/ui/text/Title";
 import Heading from "../../../components/ui/text/Heading";
 import Bold from "../../../components/ui/text/Bold";
+import MembersCheckoutSection from "./MembersCheckoutSection";
 
 import {
   CheckCircleIcon,
@@ -97,21 +98,64 @@ const COMPANY_FEATURES = [
 ];
 
 export default function MembersPlansSection() {
+  const [checkoutSelection, setCheckoutSelection] = useState(null);
+  const [individualAmount, setIndividualAmount] = useState(75);
+  const [selectedCompanyId, setSelectedCompanyId] = useState("partner");
+
+  const handleJoinIndividual = (amount) => {
+    setCheckoutSelection({
+      type: "individual",
+      planId: "individual",
+      planName: "Monthly Individual Support",
+      amount,
+      note: "Recurring monthly gift. Cancel anytime.",
+      makesPossible: [
+        "Sustains home-cooked meal outreach",
+        "Supports wellness care access",
+        "Funds education and mentorship programs",
+      ],
+    });
+  };
+
+  const handleJoinCompany = (plan) => {
+    setCheckoutSelection({
+      type: "company",
+      planId: plan.id,
+      planName: plan.name,
+      amount: plan.priceMonthly,
+      note: plan.note,
+      makesPossible: plan.makesPossible,
+    });
+  };
+
+  if (checkoutSelection) {
+    return (
+      <section className="w-full p-5 lg:px-20">
+        <MembersCheckoutSection
+          selection={checkoutSelection}
+          onBack={() => setCheckoutSelection(null)}
+        />
+      </section>
+    );
+  }
+
   return (
     <section className="grid gap-10 w-full p-5 lg:px-20">
-      <IndividualsMonthlySupportSection />
-      <CompanyPartnershipSection />
+      <IndividualsMonthlySupportSection
+        amount={individualAmount}
+        onAmountChange={setIndividualAmount}
+        onJoin={handleJoinIndividual}
+      />
+      <CompanyPartnershipSection
+        selectedId={selectedCompanyId}
+        onSelectId={setSelectedCompanyId}
+        onJoin={handleJoinCompany}
+      />
     </section>
   );
 }
 
-function IndividualsMonthlySupportSection() {
-  const [customAmount, setCustomAmount] = useState(75);
-
-  async function handleJoinIndividual(amount) {
-    console.log(`Individual Subscription: $${amount}`);
-  }
-
+function IndividualsMonthlySupportSection({ amount: customAmount, onAmountChange: setCustomAmount, onJoin }) {
   return (
     <div className="grid gap-5">
       <div className="grid gap-3">
@@ -128,7 +172,7 @@ function IndividualsMonthlySupportSection() {
           <CustomAmountCard
             amount={customAmount}
             onAmountChange={setCustomAmount}
-            onJoin={() => handleJoinIndividual(customAmount)}
+            onJoin={() => onJoin(customAmount)}
           />
         </div>
 
@@ -161,7 +205,7 @@ function IndividualsMonthlySupportSection() {
 
             <button
               type="button"
-              onClick={() => handleJoinIndividual(customAmount)}
+              onClick={() => onJoin(customAmount)}
               className="w-full px-5 py-4 rounded-xl font-bold text-white text-lg transition-all duration-300 bg-accent-500 hover:bg-accent-600 hover:shadow-lg">
               Support monthly
             </button>
@@ -189,7 +233,7 @@ function IndividualsMonthlySupportSection() {
           </div>
           <button
             type="button"
-            onClick={() => handleJoinIndividual(customAmount)}
+            onClick={() => onJoin(customAmount)}
             className="px-4 py-3 rounded-xl font-bold text-white bg-accent-500 hover:bg-accent-600">
             Support
           </button>
@@ -242,7 +286,7 @@ function CustomAmountCard({ isSelected, amount, onAmountChange }) {
       </div>
 
       <div className="grid md:grid-cols-4 gap-2">
-        {[25, 50, 75, 100].map((preset) => (
+        {[25, 50, 75, 100].map((preset) => (  
           <button
             key={preset}
             type="button"
@@ -250,7 +294,7 @@ function CustomAmountCard({ isSelected, amount, onAmountChange }) {
               e.stopPropagation();
               onAmountChange(preset);
             }}
-            className="bg-neutral-200 hover:bg-neutral-300 rounded-xl px-3 py-2 font-semibold">
+            className={`${preset === amount ? "text-white bg-accent-500 hover:bg-accent-600" : "bg-neutral-100 hover:bg-neutral-300"} rounded-xl px-3 py-2 font-semibold`}>
             ${preset}
           </button>
         ))}
@@ -370,19 +414,11 @@ function ImpactStat({ icon, label, value, sublabel }) {
   );
 }
 
-function CompanyPartnershipSection() {
-  const [selectedId, setSelectedId] = useState("partner");
-
+function CompanyPartnershipSection({ selectedId, onSelectId: setSelectedId, onJoin }) {
   const selectedPlan = useMemo(
     () => COMPANIES.find((p) => p.id === selectedId) ?? COMPANIES[0],
     [selectedId],
   );
-
-  async function handleJoinCompany(id) {
-    console.log("JOIN COMPANY (placeholder):", {
-      id,
-    });
-  }
 
   return (
     <div className="grid gap-5 mt-5">
@@ -403,7 +439,7 @@ function CompanyPartnershipSection() {
               plan={plan}
               isSelected={selectedId === plan.id}
               onSelect={() => setSelectedId(plan.id)}
-              onJoin={() => handleJoinCompany(plan)}
+              onJoin={() => onJoin(plan)}
             />
           ))}
         </div>
@@ -437,7 +473,7 @@ function CompanyPartnershipSection() {
 
             <button
               type="button"
-              onClick={() => handleJoinCompany(selectedPlan)}
+              onClick={() => onJoin(selectedPlan)}
               className="w-full px-5 py-4 rounded-xl font-bold text-white text-lg transition-all duration-300 bg-accent-500 hover:bg-accent-600 hover:shadow-lg">
               Start partnership
             </button>
@@ -502,7 +538,7 @@ function CompanyPartnershipSection() {
             </div>
             <button
               type="button"
-              onClick={() => handleJoinCompany(selectedPlan)}
+              onClick={() => onJoin(selectedPlan)}
               className="px-4 py-3 rounded-xl font-bold text-white bg-accent-500 hover:bg-accent-600">
               Partner
             </button>
