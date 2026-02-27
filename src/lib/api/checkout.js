@@ -84,6 +84,35 @@ export async function fetchPaypalOrderStatus(token) {
 }
 
 /**
+ * Creates a Stripe Payment Intent for membership subscription
+ * @param {Object} params - Membership parameters
+ * @param {string} params.membershipType - Type of membership (bronze, silver, gold)
+ * @param {number} params.amount - Monthly membership amount
+ * @param {string} params.firstName - First name
+ * @param {string} params.lastName - Last name
+ * @param {string} params.email - Email address
+ * @param {string} params.phone - Phone number
+ * @returns {Promise} Response containing payment intent client secret
+ */
+export async function createMembershipPaymentIntent({
+  membershipType,
+  amount,
+  firstName,
+  lastName,
+  email,
+  phone,
+}) {
+  return post("/checkout/create-membership-payment-intent", {
+    membershipType,
+    amount,
+    firstName,
+    lastName,
+    email,
+    phone,
+  });
+}
+
+/**
  * Fetch the Stripe publishable key from the server
  * @returns {Promise} Response containing the Stripe publishable key
  */

@@ -91,7 +91,15 @@ export default function CheckoutPage() {
 
             {/* Center Column: Main Checkout Form - 50% */}
             <div className="lg:col-span-6 space-y-6">
-              <SelfCheckoutSection total={total} cart={cart} taxAmount={tax} />
+              <SelfCheckoutSection 
+                cart={cart}
+                getCartItemCount={getCartItemCount}
+                subtotal={subtotal}
+                shippingMethod={shippingMethod}
+                shippingCost={shipping}
+                taxAmount={tax}
+                processingFee={processingFee}
+                total={total}/>
             </div>
 
             {/* Right Column: Order Summary - 25% */}

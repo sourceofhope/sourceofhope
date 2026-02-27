@@ -166,8 +166,9 @@ export function useCartActions() {
     const shipping = parseFloat(getShippingCost().toFixed(2));
     const processing = parseFloat(getProcessingFeeCost().toFixed(2));
     const tax = parseFloat(getTaxCost().toFixed(2));
-    const total = subtotal + shipping + processing + tax;
-    return parseFloat(total.toFixed(2));
+    const pretotal = parseFloat((subtotal + shipping + tax).toFixed(2));
+    const total = parseFloat((pretotal + processing).toFixed(2));
+    return total;
   }
 
   function getCartCost() {
