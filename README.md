@@ -45,12 +45,15 @@ The frontend calls the API whenever a task requires security, payment processing
 Clone the repository:
 
 ```bash
-
 git clone https://github.com/sourceofhope/sourceofhope.git
 cd sourceofhope
 ```
 
 Install dependencies:
+```bash
+cd sourceofhope
+npm i --legacy-peer-deps
+```
 
 ```bash
 cd server
@@ -58,50 +61,38 @@ npm i --legacy-peer-deps
 ```
 
 ## Configure environment variables
-
 Copy the template:
-
 ```bash
 cp .env.template .env
 ```
+update the .env with test/sandbox api key or live/production api key 
 
-Minimum required variables:
-
-```
-STRIPE_SECRET_KEY=
-PAYPAL_CLIENT_ID=
-PAYPAL_CLIENT_SECRET=
-PAYPAL_MODE=sandbox
-FRONTEND_URL=http://localhost:5173
-PORT=3001
-```
 
 ## Running the Server & Frontend
-
 ### Development (localhost)
-
 ```bash
+cd sourceofhope
+npm run dev:client
+
+cd server
 npm run dev
 ```
 
 ### Production (server)
-
 ```bash
 npm build
 ```
 
-View the built frontend: visit `localhost:5317` in your browser;
-by default, the server runs at: `http://localhost:3001`.
-
 Health check:
-
 ```
-GET /health
+GET api/health
 ```
-
 Should return JSON: { status: "ok", message: "Source of Hope API is running" }
 
+
 ## Endpoints Used by the Frontend
+The API Docs will be available at
+localhost:3000/api-docs
 
 ### Stripe Checkout
 
@@ -110,6 +101,13 @@ POST /api/checkout/create-stripe-session
 ```
 
 Creates a Stripe checkout session and returns a checkout URL.
+
+| Result  | Card Number           |
+| ------- | --------------------- |
+| Success | `4242 4242 4242 4242` |
+| Decline | `4000 0000 0000 0002` |
+
+Any future expiry date and any CVC.
 
 ### PayPal Checkout
 
@@ -122,12 +120,7 @@ Creates a PayPal checkout session and returns a checkout URL.
 Both endpoints use the same request structure from the frontend cart.
 Testing Payments
 
-| Result  | Card Number           |
-| ------- | --------------------- |
-| Success | `4242 4242 4242 4242` |
-| Decline | `4000 0000 0000 0002` |
 
-Any future expiry date and any CVC.
 
 ### PayPal Sandbox
 
@@ -144,40 +137,3 @@ The frontend automatically selects the correct API based on the domain:
 | Production  | `/app/api (Vercel rewrite)` |
 
 This allows the same frontend code to work safely across environments.
-
-## Going Live With Payments
-
-When moving from testing to production:
-
-- Replace Stripe test key with live secret key
-- Create a Live PayPal app and update credentials
-- Set `PAYPAL_MODE=live`
-
-No code changes are required.
-
-## Deployment Options
-
-This server can be deployed as:
-
-- Vercel serverless functions
-- Railway / Render Node app
-- Containerized on AWS/GCP/Azure
-- Hosted at https://api.thesourceofhope.org
-
-Important Rules
-
-- Never expose secret keys to the frontend
-- Never edit environment variables directly on a live server without version control
-- Always test checkout in sandbox before production deploy
-
-Where to Learn More
-
-For full documentation on:
-
-- System architecture
-- Project structure
-- Deployment flow
-- Developer task recipes
-- CMS and content workflows
-
-See `/docs`.
