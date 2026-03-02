@@ -34,6 +34,24 @@ export default function ProductPage() {
       url: "#",
     };
 
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ ecommerce: null }); // clear previous ecommerce data
+    window.dataLayer.push({
+      event: "add_to_cart",
+      ecommerce: {
+        currency: "USD",
+        value: product.price,
+        items: [
+          {
+            item_id: String(product.id),
+            item_name: product.title,
+            price: product.price,
+            quantity: 1,
+          },
+        ],
+      },
+    });
+
     setAdded(true);
     setTimeout(() => setAdded(false), 1000);
 

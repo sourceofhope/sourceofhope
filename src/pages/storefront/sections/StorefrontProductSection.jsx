@@ -94,6 +94,24 @@ function ProductCard({ post }) {
       cartItem.size = post.acf.size;
     }
 
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ ecommerce: null });
+    window.dataLayer.push({
+      event: "add_to_cart",
+      ecommerce: {
+        currency: "USD",
+        value: priceValue,
+        items: [
+          {
+            item_id: String(post.id),
+            item_name: post.acf?.title || "Untitled Product",
+            price: priceValue,
+            quantity: 1,
+          },
+        ],
+      },
+    });
+
     setAdded(true);
     setTimeout(() => setAdded(false), 1000);
 
