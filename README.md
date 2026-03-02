@@ -86,7 +86,7 @@ npm build
 ### Endpoints used by the Frontend
 The API Docs will be available at
 ```
-localhost:3001/api/docs
+http://localhost:3001/api/docs
 ```
 
 Health check:
