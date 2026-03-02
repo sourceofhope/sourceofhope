@@ -125,7 +125,7 @@ function ProductCard({ post }) {
           <p className="text-sm md:text-md">
             ${parseFloat(post.acf?.price).toFixed(2)}
           </p>
-          <button className="text-sm md:text-md inline-flex h-fit w-full items-center gap-3 font-bold">
+          <button className="clsAddToCart text-sm md:text-md inline-flex h-fit w-full items-center gap-3 font-bold" id='add-to-cart-button'>
             Add To Cart
             <PlusIcon className="opacity-0 group-hover:opacity-100 duration-300 transition-opacity aspect-square w-[1em]" />
           </button>
