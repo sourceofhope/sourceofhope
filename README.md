@@ -61,11 +61,11 @@ npm i --legacy-peer-deps
 ```
 
 ## Configure environment variables
-Copy the template:
+Copy the .env template:
 ```bash
 cp .env.template .env
 ```
-update the .env with test/sandbox api key or live/production api key 
+Update the .env with test/sandbox api key or live/production api key 
 
 
 ## Running the Server & Frontend
@@ -83,19 +83,18 @@ npm run dev
 npm build
 ```
 
+### Endpoints used by the Frontend
+The API Docs will be available at
+localhost:3000/api-docs
+
 Health check:
 ```
-GET api/health
+GET /api/health
 ```
 Should return JSON: { status: "ok", message: "Source of Hope API is running" }
 
 
-## Endpoints Used by the Frontend
-The API Docs will be available at
-localhost:3000/api-docs
-
 ### Stripe Checkout
-
 ```
 POST /api/checkout/create-stripe-session
 ```
@@ -110,17 +109,13 @@ Creates a Stripe checkout session and returns a checkout URL.
 Any future expiry date and any CVC.
 
 ### PayPal Checkout
-
 ```
 POST /api/checkout/create-paypal-session
 ```
 
 Creates a PayPal checkout session and returns a checkout URL.
 
-Both endpoints use the same request structure from the frontend cart.
-Testing Payments
-
-
+#### Both endpoints use the same request structure from the frontend cart.
 
 ### PayPal Sandbox
 
