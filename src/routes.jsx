@@ -24,6 +24,7 @@ export const ROUTES = {
 	},
 
 	connect: { path: "connect" },
+	planGiving: { path: "plan-giving" },
 	media: {
 		path: "media",
 		children: {
@@ -74,6 +75,7 @@ export const CANONICAL = {
 	about: build(ROUTES.about),
 	serve: build(ROUTES.serve),
 	connect: build(ROUTES.connect),
+	planGiving: build(ROUTES.planGiving),
 	media: build(ROUTES.media),
 	member: build(ROUTES.member),
 	storefront: build(ROUTES.storefront),
