@@ -369,7 +369,7 @@ router.post("/create-membership-payment-intent", async (req, res) => {
 
 /**
  * Retrieve the Stripe publishable key
- * GET /api/checkout/retrieve-stripe-publishable-key
+ * POST /api/checkout/retrieve-stripe-publishable-key
  */
 router.post("/retrieve-stripe-publishable-key", async (req, res) => {
   try {
