@@ -102,14 +102,14 @@ function MajorEventCard({ post }) {
         bg-white shadow-md
         transition-all duration-500
       ">
-      <div className="relative aspect-[16/9]">
+      <div className="relative w-full overflow-hidden">
         <img
           src={src || `/${ASSET_VERSION}/core/placeholder.webp`}
           alt={image?.alt_text || ""}
           loading="lazy"
           decoding="async"
           onLoad={() => setLoaded(true)}
-          className={`absolute inset-0 h-full w-full object-contain ${
+          className={`w-full h-auto object-contain transition-opacity duration-300 ${
             loaded ? "opacity-100" : "opacity-0"
           }`}
         />
@@ -118,49 +118,51 @@ function MajorEventCard({ post }) {
           <h3 className="text-2xl font-semibold leading-tight">
             {post.acf?.title}
           </h3>
-          <div className="flex flex-wrap gap-2 text-xs">
-            <span className="px-3 py-1 rounded-full bg-white/20 backdrop-blur">
-              {post.acf?.date
-                ? new Date(post.acf.date).toLocaleString("en-US", {
-                    weekday: "short",
-                    month: "short",
-                    day: "numeric",
-                    year: "numeric",
-                    hour: "numeric",
-                    minute: "2-digit",
-                  })
-                : "Date TBA"}
-            </span>
-            <span className="px-3 py-1 rounded-full bg-white/20 backdrop-blur">
-              {post.acf?.location}
-            </span>
-          </div>
         </div>
       </div>
       <div className="p-6 grid gap-4">
-        <p className="text-neutral-700 line-clamp-3">{post.acf?.summary}</p>
-        isOutdated ?
-        <AnchorButton
-          full
-          href={post.acf?.event_page.url}
-          text="Register Now"
-        />
-        :
-        <div
-          href={href}
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label={text}
-          className={`
-        !no-underline group inline-flex items-center
-        rounded-2xl px-10 py-5
-        text-neutral-950 justify-between bg-neutral-400 hover:bg-neutral-500
-        transition-all duration-700 font-semibold w-full
-      `}>
-          <span className="flex w-full gap-3 items-center justify-between text-sm md:text-md">
-            <span>Event Completed</span>
+        <div className="flex flex-wrap gap-2 text-xs text-neutral-600">
+          <span className="px-3 py-1 rounded-full bg-neutral-100 border">
+            {post.acf?.date
+              ? new Date(post.acf.date).toLocaleString("en-US", {
+                  weekday: "short",
+                  month: "short",
+                  day: "numeric",
+                  year: "numeric",
+                  hour: "numeric",
+                  minute: "2-digit",
+                })
+              : "Date TBA"}
+          </span>
+          <span className="px-3 py-1 rounded-full bg-neutral-100 border">
+            {post.acf?.location}
           </span>
         </div>
+        <p className="text-neutral-700 line-clamp-3">{post.acf?.summary}</p>
+        {isOutdated ? (
+          <div
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Event Completed"
+            className={`
+              pointer-events-none
+              select-none
+        !no-underline group inline-flex items-center
+        rounded-2xl px-10 py-5
+        text-neutral-950 justify-between bg-neutral-300 hover:bg-neutral-400
+        transition-all duration-700 font-semibold w-full
+      `}>
+            <span className="flex w-full gap-3 items-center justify-center text-sm md:text-md">
+              <span>Event Completed</span>
+            </span>
+          </div>
+        ) : (
+          <AnchorButton
+            full
+            href={post.acf?.event_page.url}
+            text="Register Now"
+          />
+        )}
       </div>
     </div>
   );
