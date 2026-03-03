@@ -1,5 +1,8 @@
 import { useState } from "react";
-import { CheckCircleIcon, ExclamationCircleIcon } from "@heroicons/react/20/solid";
+import {
+  CheckCircleIcon,
+  ExclamationCircleIcon,
+} from "@heroicons/react/20/solid";
 import PageSection from "../../PageSection";
 import LocalInput from "../../../components/ui/LocalInput";
 import Title from "../../../components/ui/text/Title";
@@ -31,7 +34,8 @@ export default function PlanGivingContactSection() {
     message: "",
   });
 
-  const validateEmail = (e) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e.target.value);
+  const validateEmail = (e) =>
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e.target.value);
   const validatePhone = (e) =>
     e.target.value.length === 0 || e.target.value.length >= 10;
 
@@ -98,7 +102,7 @@ export default function PlanGivingContactSection() {
 
       <form
         onSubmit={handleSubmit}
-        className="bg-white rounded-2xl shadow-sm border border-neutral-100 p-6 md:p-8 grid gap-5 max-w-2xl">
+        className="bg-white rounded-2xl shadow-sm border border-neutral-100 p-6 md:p-8 grid gap-5">
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
           <LocalInput
             title="First Name"

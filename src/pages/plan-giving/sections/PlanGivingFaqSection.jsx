@@ -93,7 +93,7 @@ const faqs = [
 
 export default function PlanGivingFaqSection() {
   return (
-    <PageSection className="grid gap-8 bg-neutral-50 rounded-3xl py-10">
+    <PageSection className="grid gap-8 bg-neutral-50 rounded-3xl">
       <div className="grid gap-1">
         <Heading>PLANNED GIVING</Heading>
         <Title>Frequently Asked Questions</Title>
