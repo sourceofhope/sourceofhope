@@ -161,18 +161,18 @@ function SuccessView({ selection, email }) {
  * @param {string}   selection.type       - "individual" | "company"
  * @param {number}   selection.amount     - Monthly amount in USD
  * @param {string}   selection.planName   - Display name for the plan
- * @param {string}   [selection.planId]   - Plan identifier (company tier id or "individual")
- * @param {string}   [selection.note]     - Short description of the plan
- * @param {string[]} [selection.makesPossible] - Bullet points shown in the sidebar
+ * @param {string}   selection.planId   - Plan identifier (company tier id or "individual")
+ * @param {string}   selection.note     - Short description of the plan
+ * @param {string[]} selection.makesPossible - Bullet points shown in the sidebar
  * @param {Function} onBack               - Callback to return to plan selection
  */
 export default function MembersCheckoutSection({ selection, onBack }) {
-  const [formData, setFormData] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-  });
+  const isCompany = selection.type === "company";
+  const [formData, setFormData] = useState(() =>
+    isCompany
+      ? { companyName: "", contactName: "", companyInfo: "", email: "", phone: "" }
+      : { firstName: "", lastName: "", email: "", phone: "" }
+  );
   const [stripePromise, setStripePromise] = useState(null);
   const [clientSecret, setClientSecret] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -182,11 +182,11 @@ export default function MembersCheckoutSection({ selection, onBack }) {
   const validateEmail = (e) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e.target.value);
 
-  const isFormValid = () =>
-    formData.email &&
-    formData.firstName &&
-    formData.lastName &&
-    validateEmail({ target: { value: formData.email } });
+  const isFormValid = () => {
+    const emailOk = !!(formData.email && validateEmail({ target: { value: formData.email } }));
+    if (isCompany) return emailOk && !!formData.companyName && !!formData.contactName;
+    return emailOk && !!formData.firstName && !!formData.lastName;
+  };
 
   const initializePayment = async () => {
     try {
@@ -202,10 +202,19 @@ export default function MembersCheckoutSection({ selection, onBack }) {
       setStripePromise(stripe);
 
       const response = await createMembershipPaymentIntent({
-        membershipType: selection.planId || "individual",
+        membershipPlanId: selection.planId || 'individual',
+        membershipType: selection.type || "individual",
         amount: selection.amount,
-        firstName: formData.firstName,
-        lastName: formData.lastName,
+        ...(isCompany
+          ? {
+              companyName: formData.companyName,
+              contactName: formData.contactName,
+              companyInfo: formData.companyInfo,
+            }
+          : {
+              firstName: formData.firstName,
+              lastName: formData.lastName,
+            }),
         email: formData.email,
         phone: formData.phone,
       });
@@ -276,42 +285,89 @@ export default function MembersCheckoutSection({ selection, onBack }) {
           <>
             <div className="grid gap-4">
               <h3 className="font-semibold text-neutral-900">
-                Your information
+                {isCompany ? "Company information" : "Your information"}
               </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <LocalInput
-                  title="First Name"
-                  htmlFor="firstName"
-                  type="text"
-                  value={formData.firstName}
-                  onChange={() => true}
-                  setFormData={setFormData}
-                />
-                <LocalInput
-                  title="Last Name"
-                  htmlFor="lastName"
-                  type="text"
-                  value={formData.lastName}
-                  onChange={() => true}
-                  setFormData={setFormData}
-                />
-              </div>
-              <LocalInput
-                title="Email"
-                htmlFor="email"
-                type="email"
-                value={formData.email}
-                onChange={validateEmail}
-                setFormData={setFormData}
-              />
-              <LocalInput
-                title="Phone (optional)"
-                htmlFor="phone"
-                type="tel"
-                value={formData.phone}
-                onChange={() => true}
-                setFormData={setFormData}
-              />
+              {isCompany ? (
+                <>
+                  <LocalInput
+                    title="Company Name"
+                    htmlFor="companyName"
+                    type="text"
+                    value={formData.companyName}
+                    onChange={() => true}
+                    setFormData={setFormData}
+                  />
+                  <LocalInput
+                    title="Company Info (optional)"
+                    htmlFor="companyInfo"
+                    type="text"
+                    value={formData.companyInfo}
+                    onChange={() => true}
+                    setFormData={setFormData}
+                  />
+                  <LocalInput
+                    title="Contact Name"
+                    htmlFor="contactName"
+                    type="text"
+                    value={formData.contactName}
+                    onChange={() => true}
+                    setFormData={setFormData}
+                  />
+                  <LocalInput
+                    title="Contact Email"
+                    htmlFor="email"
+                    type="email"
+                    value={formData.email}
+                    onChange={validateEmail}
+                    setFormData={setFormData}
+                  />
+                  <LocalInput
+                    title="Contact Phone (optional)"
+                    htmlFor="phone"
+                    type="tel"
+                    value={formData.phone}
+                    onChange={() => true}
+                    setFormData={setFormData}
+                  />
+                </>
+              ) : (
+                <>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <LocalInput
+                      title="First Name"
+                      htmlFor="firstName"
+                      type="text"
+                      value={formData.firstName}
+                      onChange={() => true}
+                      setFormData={setFormData}
+                    />
+                    <LocalInput
+                      title="Last Name"
+                      htmlFor="lastName"
+                      type="text"
+                      value={formData.lastName}
+                      onChange={() => true}
+                      setFormData={setFormData}
+                    />
+                  </div>
+                  <LocalInput
+                    title="Email"
+                    htmlFor="email"
+                    type="email"
+                    value={formData.email}
+                    onChange={validateEmail}
+                    setFormData={setFormData}
+                  />
+                  <LocalInput
+                    title="Phone (optional)"
+                    htmlFor="phone"
+                    type="tel"
+                    value={formData.phone}
+                    onChange={() => true}
+                    setFormData={setFormData}
+                  />
+                </>
+              )}
             </div>
 
             {error && (
@@ -347,10 +403,29 @@ export default function MembersCheckoutSection({ selection, onBack }) {
                   </button>
                 </div>
                 <div className="space-y-1 text-sm text-neutral-700">
-                  <div>
-                    <span className="font-medium">Name:</span>{" "}
-                    {formData.firstName} {formData.lastName}
-                  </div>
+                  {isCompany ? (
+                    <>
+                      <div>
+                        <span className="font-medium">Company:</span>{" "}
+                        {formData.companyName}
+                      </div>
+                      {formData.companyInfo && (
+                        <div>
+                          <span className="font-medium">About:</span>{" "}
+                          {formData.companyInfo}
+                        </div>
+                      )}
+                      <div>
+                        <span className="font-medium">Contact:</span>{" "}
+                        {formData.contactName}
+                      </div>
+                    </>
+                  ) : (
+                    <div>
+                      <span className="font-medium">Name:</span>{" "}
+                      {formData.firstName} {formData.lastName}
+                    </div>
+                  )}
                   <div>
                     <span className="font-medium">Email:</span> {formData.email}
                   </div>
