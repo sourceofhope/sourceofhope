@@ -31,7 +31,7 @@ import PressPage from "./pages/media/PressPage.jsx";
 import { HelmetProvider } from "react-helmet-async";
 import MemberPage from "./pages/about/MemberPage.jsx";
 import MembersPage from "./pages/members/MembersPage.jsx";
-import PlanGivingPage from "./pages/plan-giving/PlanGivingPage.jsx";
+import GivingPage from "./pages/giving/GivingPage.jsx";
 
 export const router = createBrowserRouter([
   {
@@ -85,8 +85,8 @@ export const router = createBrowserRouter([
       },
 
       {
-        path: CANONICAL.planGiving.relative,
-        element: <PlanGivingPage />,
+        path: CANONICAL.giving.relative,
+        element: <GivingPage />,
       },
 
       {

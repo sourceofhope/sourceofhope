@@ -2,12 +2,12 @@ import { Helmet } from "react-helmet-async";
 import { CANONICAL_URL, ASSET_VERSION } from "../../routes";
 import PageHeader from "../PageHeader";
 
-import PlanGivingIntroSection from "./sections/PlanGivingIntroSection";
-import PlanGivingFactsSection from "./sections/PlanGivingFactsSection";
-import PlanGivingFaqSection from "./sections/PlanGivingFaqSection";
-import PlanGivingContactSection from "./sections/PlanGivingContactSection";
+import GivingIntroSection from "./sections/GivingIntroSection";
+import GivingFactsSection from "./sections/GivingFactsSection";
+import GivingFAQSection from "./sections/GivingFAQSection";
+import GivingContactSection from "./sections/GivingContactSection";
 
-export default function PlanGivingPage() {
+export default function GivingPage() {
   return (
     <>
       <Helmet>
@@ -16,10 +16,10 @@ export default function PlanGivingPage() {
           name="description"
           content="Leave a lasting legacy with The Source of Hope through planned giving. Learn how bequests, trusts, and beneficiary designations can create transformational impact for generations to come."
         />
-        <link rel="canonical" href={CANONICAL_URL.planGiving} />
+        <link rel="canonical" href={CANONICAL_URL.giving} />
 
         <meta property="og:type" content="website" />
-        <meta property="og:url" content={CANONICAL_URL.planGiving} />
+        <meta property="og:url" content={CANONICAL_URL.giving} />
         <meta
           property="og:title"
           content="Planned Giving | The Source of Hope"
@@ -30,7 +30,7 @@ export default function PlanGivingPage() {
         />
 
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:url" content={CANONICAL_URL.planGiving} />
+        <meta name="twitter:url" content={CANONICAL_URL.giving} />
         <meta
           name="twitter:title"
           content="Planned Giving | The Source of Hope"
@@ -50,10 +50,10 @@ export default function PlanGivingPage() {
         </p>
       </PageHeader>
 
-      <PlanGivingIntroSection />
-      <PlanGivingFactsSection />
-      <PlanGivingFaqSection />
-      <PlanGivingContactSection />
+      <GivingIntroSection />
+      <GivingFactsSection />
+      <GivingFAQSection />
+      <GivingContactSection />
     </>
   );
 }

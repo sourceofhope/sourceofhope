@@ -91,7 +91,7 @@ const faqs = [
   },
 ];
 
-export default function PlanGivingFaqSection() {
+export default function GivingFAQSection() {
   return (
     <PageSection className="grid gap-8 bg-neutral-50 rounded-3xl">
       <div className="grid gap-1">

@@ -23,7 +23,7 @@ const GIVING_OPTIONS = [
   "Other / Not sure yet",
 ];
 
-export default function PlanGivingContactSection() {
+export default function GivingContactSection() {
   const [status, setStatus] = useState(STATUS.IDLE);
   const [formData, setFormData] = useState({
     fname: "",

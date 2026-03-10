@@ -6,7 +6,7 @@ import Emphasis from "../../../components/ui/Emphasis";
 import { HighlightedText } from "../../../components/ui/expressive/ExpressiveText";
 import Blockquote from "../../../components/ui/text/Blockquote";
 
-export default function PlanGivingIntroSection() {
+export default function GivingIntroSection() {
   return (
     <PageSection className="grid gap-6 text-sm md:text-md lg:text-lg">
       <div className="grid gap-1 justify-self-start">

@@ -33,7 +33,17 @@ function getHeaderLinks() {
         },
       ],
     },
-    { label: "MEMBERS", route: CANONICAL.member },
+    {
+      label: "MEMBERS",
+      route: CANONICAL.member,
+      children: [
+        { label: "PLANNED GIVING", route: CANONICAL.giving },
+        {
+          label: "QUICK DONATE",
+          route: { absolute: "https://donate.stripe.com/8wM5kHal16fC4so8ww" },
+        },
+      ],
+    },
     { label: "CONNECT", route: CANONICAL.connect },
     {
       label: "MEDIA",

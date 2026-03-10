@@ -45,7 +45,7 @@ const facts = [
   },
 ];
 
-export default function PlanGivingFactsSection() {
+export default function GivingFactsSection() {
   return (
     <PageSection className="grid gap-8">
       <div className="grid gap-1">
