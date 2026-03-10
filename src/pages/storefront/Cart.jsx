@@ -13,7 +13,7 @@ export default function Cart() {
       className={`
           fixed right-5 md:right-10 z-[9999]
           transition-[top,bottom] duration-500 bottom-5
-          ${bannerActive ? "md:top-10" : "md:top-2.5"}
+          ${bannerActive ? "md:top-12.5" : "md:top-2.5"}
         `}>
       <Link
         to={CANONICAL.storefront.cart.absolute}

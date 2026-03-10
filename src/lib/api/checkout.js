@@ -95,18 +95,26 @@ export async function fetchPaypalOrderStatus(token) {
  * @returns {Promise} Response containing payment intent client secret
  */
 export async function createMembershipPaymentIntent({
+  membershipPlanId,
   membershipType,
   amount,
   firstName,
   lastName,
+  companyName,
+  contactName,
+  companyInfo,
   email,
   phone,
 }) {
   return post("/checkout/create-membership-payment-intent", {
+    membershipPlanId,
     membershipType,
     amount,
     firstName,
     lastName,
+    companyName,
+    contactName,
+    companyInfo,
     email,
     phone,
   });

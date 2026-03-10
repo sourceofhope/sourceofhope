@@ -185,17 +185,29 @@ router.post("/create-membership-payment-intent", async (req, res) => {
     const stripe = new Stripe(stripeSecretKey, { apiVersion: "2022-11-15" });
 
     const {
+      membershipPlanId,
       membershipType,
       amount,
       firstName,
       lastName,
+      companyName,
+      contactName,
+      companyInfo,
       email,
       phone,
     } = req.body;
 
+    const isCompanyMembership = "company" === membershipType;
+
     // Validate required fields
-    if (!membershipType || !amount || !firstName || !lastName || !email) {
+    if (!membershipType || !amount || !email) {
       return res.status(400).json({ error: "Missing required fields" });
+    }
+    if (isCompanyMembership && (!companyName || !contactName)) {
+      return res.status(400).json({ error: "Company name and contact name are required" });
+    }
+    if (!isCompanyMembership && (!firstName || !lastName)) {
+      return res.status(400).json({ error: "First name and last name are required" });
     }
 
     // Map membership types to product details
@@ -240,7 +252,7 @@ router.post("/create-membership-payment-intent", async (req, res) => {
       },
     };
 
-    const productConfig = membershipProducts[membershipType];
+    const productConfig = membershipProducts[membershipPlanId];
     if (!productConfig) {
       return res.status(400).json({ error: "Invalid membership type" });
     }
@@ -258,19 +270,25 @@ router.post("/create-membership-payment-intent", async (req, res) => {
       customer = existingCustomers.data[0];
       // Update customer info
       customer = await stripe.customers.update(customer.id, {
-        name: `${firstName} ${lastName}`,
+        name: isCompanyMembership ? companyName : `${firstName} ${lastName}`,
         phone: phone || undefined,
         metadata: {
           membership_type: membershipType,
+          ...(isCompanyMembership
+            ? { contact_name: contactName, company_info: companyInfo || "" }
+            : {}),
         },
       });
     } else {
       customer = await stripe.customers.create({
         email,
-        name: `${firstName} ${lastName}`,
+        name: isCompanyMembership ? companyName : `${firstName} ${lastName}`,
         phone: phone || undefined,
         metadata: {
           membership_type: membershipType,
+          ...(isCompanyMembership
+            ? { contact_name: contactName, company_info: companyInfo || "" }
+            : {}),
         },
       });
     }
@@ -329,6 +347,24 @@ router.post("/create-membership-payment-intent", async (req, res) => {
     }
 
     // Create the subscription
+    const subscriptionMetadata = isCompanyMembership
+      ? {
+          membership_type: membershipType,
+          membership_name: membershipName,
+          company_name: companyName,
+          contact_name: contactName,
+          company_info: companyInfo || "",
+          contact_email: email,
+          contact_phone: phone || "",
+        }
+      : {
+          membership_type: membershipType,
+          membership_name: membershipName,
+          customer_name: `${firstName} ${lastName}`,
+          customer_email: email,
+          customer_phone: phone || "",
+        };
+
     const subscription = await stripe.subscriptions.create({
       customer: customer.id,
       items: [
@@ -342,18 +378,18 @@ router.post("/create-membership-payment-intent", async (req, res) => {
         save_default_payment_method: "on_subscription",
       },
       expand: ["latest_invoice.payment_intent"],
-      metadata: {
-        membership_type: membershipType,
-        membership_name: membershipName,
-        customer_name: `${firstName} ${lastName}`,
-        customer_phone: phone || "",
-      },
+      metadata: subscriptionMetadata,
     });
 
-    const clientSecret = subscription.latest_invoice.payment_intent.client_secret;
+    const paymentIntent = subscription.latest_invoice.payment_intent;
+
+    // Propagate metadata to the PaymentIntent so it appears on the Stripe dashboard transaction view
+    await stripe.paymentIntents.update(paymentIntent.id, {
+      metadata: subscriptionMetadata,
+    });
 
     res.json({
-      clientSecret,
+      clientSecret: paymentIntent.client_secret,
       subscriptionId: subscription.id,
       customerId: customer.id,
       invoiceId: subscription.latest_invoice.id,
@@ -369,7 +405,7 @@ router.post("/create-membership-payment-intent", async (req, res) => {
 
 /**
  * Retrieve the Stripe publishable key
- * GET /api/checkout/retrieve-stripe-publishable-key
+ * POST /api/checkout/retrieve-stripe-publishable-key
  */
 router.post("/retrieve-stripe-publishable-key", async (req, res) => {
   try {
