@@ -34,6 +34,24 @@ export default function ProductPage() {
       url: "#",
     };
 
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ ecommerce: null }); // clear previous ecommerce data
+    window.dataLayer.push({
+      event: "add_to_cart",
+      ecommerce: {
+        currency: "USD",
+        value: product.price,
+        items: [
+          {
+            item_id: String(product.id),
+            item_name: product.title,
+            price: product.price,
+            quantity: 1,
+          },
+        ],
+      },
+    });
+
     setAdded(true);
     setTimeout(() => setAdded(false), 1000);
 
@@ -183,10 +201,10 @@ export default function ProductPage() {
               {product?.shortDescription}
             </p>
             <div className="flex flex-col md:flex-row gap-5 mt-5">
-              <button
+              <button 
                 onClick={handleAddToCart}
                 aria-label="Add To Cart"
-                className="group inline-flex items-center
+                className="clsAddToCart group inline-flex items-center
         rounded-2xl px-10 py-5
         bg-emerald-500 hover:bg-emerald-600
         transition-all duration-700 w-full font-semibold text-neutral-50">

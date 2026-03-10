@@ -20,7 +20,7 @@ export default function CartSuccessPage() {
   const [isLoading, setIsLoading] = useState(true);
   const hasProcessed = useRef(false);
 
-  const { clearCart, updateProcessingFee } = useCartActions();
+  const { clearCart, updateProcessingFee, cart, getCartTotal, getTaxCost, getShippingCost } = useCartActions();
 
   useEffect(() => {
     // Prevent duplicate processing on re-renders
@@ -135,8 +135,34 @@ export default function CartSuccessPage() {
 
   useEffect(() => {
     if (status === "complete") {
+      const urlParams = new URLSearchParams(window.location.search);
+      const transactionId =
+        urlParams.get("session_id") ||
+        urlParams.get("token") ||
+        urlParams.get("payment_intent") ||
+        "unknown";
+
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({ ecommerce: null });
+      window.dataLayer.push({
+        event: "purchase",
+        ecommerce: {
+          transaction_id: transactionId,
+          value: getCartTotal(),
+          tax: getTaxCost(),
+          shipping: getShippingCost(),
+          currency: "USD",
+          items: cart.map((item) => ({
+            item_id: String(item.id),
+            item_name: item.title,
+            price: item.price,
+            quantity: item.quantity,
+          })),
+        },
+      });
+
       clearCart();
-      updateProcessingFee(0); // Reset processing fee after successful checkout
+      updateProcessingFee(0);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [status]);

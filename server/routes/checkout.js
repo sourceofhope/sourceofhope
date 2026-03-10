@@ -115,6 +115,7 @@ router.post("/create-stripe-payment-intent", async (req, res) => {
       taxAmount,
       processingFee,
       shippingAddress,
+      billingAddress,
       totalAmount,
       email,
     } = req.body;
@@ -125,91 +126,22 @@ router.post("/create-stripe-payment-intent", async (req, res) => {
     }
 
     // Round to 2 decimal places and convert to cents
-    const amountInCents = Math.round(parseFloat(totalAmount.toFixed(2)) * 100);
+    const amountInCents = Math.round(parseFloat(totalAmount).toFixed(2) * 100);
 
-    // Get shipping method name
-    const shippingOption = SHIPPING_OPTIONS.find(
-      (opt) => opt.id === shippingMethod,
-    );
-    const shippingMethodName = shippingOption
-      ? shippingOption.name
-      : "Standard Shipping";
-
-    // Build metadata with comprehensive checkout summary
-    const metadata = {
-      order_type: "storefront",
-      items_count: items.length.toString(),
-      shipping_method: shippingMethodName,
-    };
-
-    // Create or retrieve a Stripe Customer to attach the invoice
-    let customer;
-    try {
-      // Search for existing customer by email
-      const existingCustomers = await stripe.customers.search({
-        query: `email:'${email}'`,
-        limit: 1,
-      });
-
-      if (existingCustomers.data.length > 0) {
-        customer = existingCustomers.data[0];
-      } else {
-        // Create new customer
-        customer = await stripe.customers.create({
-          email: email,
-          name: `${shippingAddress.firstName} ${shippingAddress.lastName}`,
-          address: {
-            line1: shippingAddress.address,
-            city: shippingAddress.city,
-            state: shippingAddress.state,
-            postal_code: shippingAddress.zipCode,
-            country: shippingAddress.country || "US",
-          },
-          shipping: {
-            name: `${shippingAddress.firstName} ${shippingAddress.lastName}`,
-            address: {
-              line1: shippingAddress.address,
-              city: shippingAddress.city,
-              state: shippingAddress.state,
-              postal_code: shippingAddress.zipCode,
-              country: shippingAddress.country || "US",
-            },
-          },
-          metadata: {
-            source: "storefront_checkout",
-          },
-        });
-      }
-    } catch (customerError) {
-      console.error("Customer creation/search error:", customerError);
-      // Fall back to creating payment intent without customer
-      customer = null;
-    }
-
-    // Create Payment Intent first - this is the actual payment transaction
-    const paymentIntentParams = {
+    // Create Payment Intent
+    const paymentIntent = await stripe.paymentIntents.create({
       amount: amountInCents,
       currency: "usd",
       automatic_payment_methods: {
         enabled: true,
       },
       receipt_email: email,
-      description: `Order from ${email} - ${items.length} item(s)`,
       metadata: {
-        ...metadata,
-        // Store full order details in metadata for invoice creation in webhook
-        items: JSON.stringify(
-          items.map((item) => ({
-            name: item.name || item.title,
-            quantity: item.quantity,
-            price: item.price,
-            size: item.size || "",
-          })),
-        ),
-        shipping_cost: shippingCost?.toString() || "0",
-        tax_amount: taxAmount?.toString() || "0",
-        processing_fee: processingFee?.toString() || "0",
-        shipping_method_name: shippingMethodName,
+        shipping_method: shippingMethod || "standard",
+        order_type: "storefront",
+        items_count: items.length,
+        customer_email: email,
+        processing_fee: processingFee ? processingFee.toFixed(2) : "0.00",
       },
       shipping: shippingAddress
         ? {
@@ -223,17 +155,7 @@ router.post("/create-stripe-payment-intent", async (req, res) => {
             },
           }
         : undefined,
-    };
-
-    // Attach customer if available
-    if (customer) {
-      paymentIntentParams.customer = customer.id;
-    }
-
-    const paymentIntent =
-      await stripe.paymentIntents.create(paymentIntentParams);
-
-    console.log(`PaymentIntent created: ${paymentIntent.id}`);
+    });
 
     res.json({
       clientSecret: paymentIntent.client_secret,
@@ -249,8 +171,241 @@ router.post("/create-stripe-payment-intent", async (req, res) => {
 });
 
 /**
+ * Create a membership subscription with Stripe
+ * POST /api/checkout/create-membership-payment-intent
+ * Creates a Setup Intent for recurring membership subscriptions
+ */
+router.post("/create-membership-payment-intent", async (req, res) => {
+  try {
+    const { stripeSecretKey } = getEnvironment();
+    if (!stripeSecretKey) {
+      return res.status(500).json({ error: "Stripe configuration missing" });
+    }
+
+    const stripe = new Stripe(stripeSecretKey, { apiVersion: "2022-11-15" });
+
+    const {
+      membershipPlanId,
+      membershipType,
+      amount,
+      firstName,
+      lastName,
+      companyName,
+      contactName,
+      companyInfo,
+      email,
+      phone,
+    } = req.body;
+
+    const isCompanyMembership = "company" === membershipType;
+
+    // Validate required fields
+    if (!membershipType || !amount || !email) {
+      return res.status(400).json({ error: "Missing required fields" });
+    }
+    if (isCompanyMembership && (!companyName || !contactName)) {
+      return res.status(400).json({ error: "Company name and contact name are required" });
+    }
+    if (!isCompanyMembership && (!firstName || !lastName)) {
+      return res.status(400).json({ error: "First name and last name are required" });
+    }
+
+    // Map membership types to product details
+    const membershipProducts = {
+      // Legacy tiers
+      bronze: {
+        id: "prod_membership_bronze",
+        name: "Hope Advocate [Bronze Pin]",
+        description: "Bronze tier membership - Monthly recurring subscription providing community impact support",
+      },
+      silver: {
+        id: "prod_membership_silver",
+        name: "Hope Professional [Silver Pin]",
+        description: "Silver tier membership - Monthly recurring subscription for professional partners",
+      },
+      gold: {
+        id: "prod_membership_gold",
+        name: "Hope Enterprise Partner [Gold Pin]",
+        description: "Gold tier membership - Monthly recurring subscription for enterprise partnerships",
+      },
+      // Individual monthly support
+      individual: {
+        id: "prod_membership_individual",
+        name: "Monthly Individual Support",
+        description: "Individual monthly support - Recurring gift sustaining meals, wellness care, and education programs",
+      },
+      // Company partnership tiers
+      partner: {
+        id: "prod_membership_partner",
+        name: "Company Partner",
+        description: "Company Partner - Monthly partnership sustaining community outreach and program operations",
+      },
+      sponsor: {
+        id: "prod_membership_sponsor",
+        name: "Program Sponsor",
+        description: "Program Sponsor - Monthly partnership expanding capacity and strengthening sustained service",
+      },
+      champion: {
+        id: "prod_membership_champion",
+        name: "Impact Champion",
+        description: "Impact Champion - Monthly partnership underwriting major mission work across programs",
+      },
+    };
+
+    const productConfig = membershipProducts[membershipPlanId];
+    if (!productConfig) {
+      return res.status(400).json({ error: "Invalid membership type" });
+    }
+
+    const membershipName = productConfig.name;
+
+    // Find or create customer
+    let customer;
+    const existingCustomers = await stripe.customers.search({
+      query: `email:"${email}"`,
+      limit: 1,
+    });
+
+    if (existingCustomers.data.length > 0) {
+      customer = existingCustomers.data[0];
+      // Update customer info
+      customer = await stripe.customers.update(customer.id, {
+        name: isCompanyMembership ? companyName : `${firstName} ${lastName}`,
+        phone: phone || undefined,
+        metadata: {
+          membership_type: membershipType,
+          ...(isCompanyMembership
+            ? { contact_name: contactName, company_info: companyInfo || "" }
+            : {}),
+        },
+      });
+    } else {
+      customer = await stripe.customers.create({
+        email,
+        name: isCompanyMembership ? companyName : `${firstName} ${lastName}`,
+        phone: phone || undefined,
+        metadata: {
+          membership_type: membershipType,
+          ...(isCompanyMembership
+            ? { contact_name: contactName, company_info: companyInfo || "" }
+            : {}),
+        },
+      });
+    }
+
+    // Check if the product exists or create it
+    let product;
+    try {
+      product = await stripe.products.retrieve(productConfig.id);
+    } catch (retrieveErr) {
+      // Product doesn't exist, try to create it
+      try {
+        product = await stripe.products.create({
+          id: productConfig.id,
+          name: productConfig.name,
+          description: productConfig.description,
+          metadata: {
+            type: "membership",
+            membership_type: membershipType,
+          },
+        });
+      } catch (createErr) {
+        // If product already exists (race condition), retrieve it
+        if (createErr.code === "resource_already_exists") {
+          product = await stripe.products.retrieve(productConfig.id);
+        } else {
+          throw createErr;
+        }
+      }
+    }
+
+    // Search for existing price for this product
+    const prices = await stripe.prices.list({
+      product: product.id,
+      recurring: { interval: "month" },
+      active: true,
+      limit: 10,
+    });
+
+    let price = prices.data.find(
+      (p) => p.unit_amount === Math.round(amount * 100)
+    );
+
+    // If price doesn't exist, create it
+    if (!price) {
+      price = await stripe.prices.create({
+        product: product.id,
+        unit_amount: Math.round(amount * 100),
+        currency: "usd",
+        recurring: {
+          interval: "month",
+        },
+        metadata: {
+          membership_type: membershipType,
+        },
+      });
+    }
+
+    // Create the subscription
+    const subscriptionMetadata = isCompanyMembership
+      ? {
+          membership_type: membershipType,
+          membership_name: membershipName,
+          company_name: companyName,
+          contact_name: contactName,
+          company_info: companyInfo || "",
+          contact_email: email,
+          contact_phone: phone || "",
+        }
+      : {
+          membership_type: membershipType,
+          membership_name: membershipName,
+          customer_name: `${firstName} ${lastName}`,
+          customer_email: email,
+          customer_phone: phone || "",
+        };
+
+    const subscription = await stripe.subscriptions.create({
+      customer: customer.id,
+      items: [
+        {
+          price: price.id,
+        },
+      ],
+      payment_behavior: "default_incomplete",
+      payment_settings: {
+        payment_method_types: ["card"],
+        save_default_payment_method: "on_subscription",
+      },
+      expand: ["latest_invoice.payment_intent"],
+      metadata: subscriptionMetadata,
+    });
+
+    const paymentIntent = subscription.latest_invoice.payment_intent;
+
+    // Propagate metadata to the PaymentIntent so it appears on the Stripe dashboard transaction view
+    await stripe.paymentIntents.update(paymentIntent.id, {
+      metadata: subscriptionMetadata,
+    });
+
+    res.json({
+      clientSecret: paymentIntent.client_secret,
+      subscriptionId: subscription.id,
+      customerId: customer.id,
+      invoiceId: subscription.latest_invoice.id,
+    });
+  } catch (error) {
+    console.error("Membership subscription creation error:", error);
+    res.status(500).json({
+      error: "Failed to create membership subscription",
+      details: error.message,
+    });
+  }
+});
+
+/**
  * Retrieve the Stripe publishable key
- * GET /api/checkout/retrieve-stripe-publishable-key
+ * POST /api/checkout/retrieve-stripe-publishable-key
  */
 router.post("/retrieve-stripe-publishable-key", async (req, res) => {
   try {
@@ -270,7 +425,6 @@ router.post("/retrieve-stripe-publishable-key", async (req, res) => {
 });
 
 /**
- * Create an Embedded Stripe Checkout Session
  * Create an Embedded Stripe Checkout Session
  * POST /api/checkout/create-stripe-session
  * For embedding checkout directly in the page
@@ -319,36 +473,38 @@ router.post("/create-stripe-session", async (req, res) => {
         unit_amount: Math.round(parseFloat(item.price.toFixed(2)) * 100),
       },
       quantity: item.quantity,
-      tax_rates: stripeSalesTaxRateId ? [stripeSalesTaxRateId] : undefined,
+      // Note: tax_rates is for pre-configured Stripe Tax Rates, not calculated amounts
+      // We'll add tax as a separate line item below if provided
     }));
 
-    if (processingFee && processingFee > 0) {
-      lineItems.push({
-        price_data: {
-          currency: "usd",
-          product_data: {
-            name: "Processing Support",
-            description: "Supporting 100% of the mission (3%)",
-          },
-          unit_amount: Math.round(parseFloat(processingFee.toFixed(2)) * 100),
-        },
-        quantity: 1,
-      });
-    }
+    // Apply tax via tax_rates (shown after subtotal)
+    const taxRates = stripeSalesTaxRateId ? [stripeSalesTaxRateId] : undefined;
+    
+    lineItems.forEach(item => {
+      if (taxRates) {
+        item.tax_rates = taxRates;
+      }
+    });
 
+    // Add processing fee to shipping cost
+    const totalShippingCost = (shippingCost || 0) + (processingFee || 0);
     const shippingOptions = buildStripeShippingOptions(
       shippingMethod,
-      shippingCost,
+      totalShippingCost,
     );
 
+    if (processingFee && processingFee > 0 && shippingOptions.length > 0) {
+      const originalName = shippingOptions[0].shipping_rate_data.display_name;
+      shippingOptions[0].shipping_rate_data.display_name = 
+        `${originalName} + Processing Fee (3%)`;
+    }
+
     // Create embedded checkout session
+    // Display: Products → Subtotal → Tax → Shipping + Fee → Total
     const session = await stripe.checkout.sessions.create({
       ui_mode: "embedded",
       line_items: lineItems,
       mode: "payment",
-      invoice_creation: {
-        enabled: true,
-      },
       return_url: `${return_url}?session_id={CHECKOUT_SESSION_ID}`,
       shipping_address_collection: {
         allowed_countries: ["US"],
@@ -505,10 +661,13 @@ router.post("/create-stripe-checkout", async (req, res) => {
       items,
       shippingMethod,
       shippingCost,
+      taxAmount,
       processingFee,
       successUrl,
       cancelUrl,
     } = req.body;
+
+    console.log(`tax amount received: ${taxAmount}`);
 
     if (!items || !Array.isArray(items) || items.length === 0) {
       return res.status(400).json({ error: "Cart items are required" });
@@ -531,19 +690,36 @@ router.post("/create-stripe-checkout", async (req, res) => {
             size: item.size || "",
           },
         },
-        unit_amount: Math.round(parseFloat(item.price.toFixed(2)) * 100),
+        unit_amount: Math.round(parseFloat(item.price.toFixed(2)) * 100), // Convert to cents
       },
       quantity: item.quantity,
-      tax_rates: stripeSalesTaxRateId ? [stripeSalesTaxRateId] : undefined,
+      // Note: tax_rates is for pre-configured Stripe Tax Rates, not calculated amounts
+      // We'll add tax as a separate line item below if provided
     }));
 
+    // Add calculated tax as line item (displays after products, before subtotal)
+    if (taxAmount && taxAmount > 0) {
+      lineItems.push({
+        price_data: {
+          currency: "usd",
+          product_data: {
+            name: "Sales Tax",
+            description: "State and local taxes",
+          },
+          unit_amount: Math.round(parseFloat(taxAmount.toFixed(2)) * 100),
+        },
+        quantity: 1,
+      });
+    }
+
+    // Add processing fee as line item
     if (processingFee && processingFee > 0) {
       lineItems.push({
         price_data: {
           currency: "usd",
           product_data: {
-            name: "Processing Fee Coverage (3%)",
-            description: "Support the Mission — Cover Fees (3%)",
+            name: "Processing Support",
+            description: "Supporting 100% of the mission (3%)",
           },
           unit_amount: Math.round(parseFloat(processingFee.toFixed(2)) * 100),
         },
@@ -551,12 +727,14 @@ router.post("/create-stripe-checkout", async (req, res) => {
       });
     }
 
+    // Shipping stays separate
     const shippingOptions = buildStripeShippingOptions(
       shippingMethod,
       shippingCost,
     );
 
-    // Create Stripe Checkout Session
+    // Create embedded checkout session
+    // Display: Products → Tax → Processing Fee → Subtotal → Shipping → Total
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       line_items: lineItems,
@@ -571,6 +749,9 @@ router.post("/create-stripe-checkout", async (req, res) => {
       metadata: {
         shipping_method: shippingMethod || "standard",
         order_type: "storefront",
+        stripe_tax_rate_id: stripeSalesTaxRateId || "",
+        ui_tax_amount:
+          typeof taxAmount === "number" ? taxAmount.toFixed(2) : "0.00",
       },
     });
 
@@ -606,7 +787,6 @@ router.post("/create-paypal-order", async (req, res) => {
     const { paypalClientId, paypalClientSecret, paypalApiUrl } =
       getEnvironment();
 
-    console.log(paypalApiUrl);
     if (!paypalClientId || !paypalClientSecret || !paypalApiUrl) {
       return res.status(500).json({
         error: "PayPal is not configured. Please contact support.",
@@ -693,14 +873,8 @@ router.post("/create-paypal-order", async (req, res) => {
                 currency_code: "USD",
                 value: paypalItemTotal.toFixed(2),
               },
-              shipping: {
-                currency_code: "USD",
-                value: shipping.toFixed(2),
-              },
-              tax_total: {
-                currency_code: "USD",
-                value: tax.toFixed(2),
-              },
+              shipping: { currency_code: "USD", value: shipping.toFixed(2) },
+              tax_total: { currency_code: "USD", value: tax.toFixed(2) },
             },
           },
           items: paypalItems,
@@ -770,8 +944,7 @@ router.post("/create-paypal-order", async (req, res) => {
  * Handle Stripe Webhook Events
  * POST /api/checkout/webhook
  */
-// Handle Stripe Webhook Events
-router.post("/webhook", async (req, res) => {
+router.post("/webhook", (req, res) => {
   const { stripeSecretKey, stripeWebhookSecret } = getEnvironment();
   if (!stripeSecretKey || !stripeWebhookSecret) {
     return res.status(500).send("Stripe webhook not configured");
@@ -797,110 +970,45 @@ router.post("/webhook", async (req, res) => {
     case "payment_intent.succeeded": {
       const paymentIntent = event.data.object;
       console.log(`PaymentIntent for ${paymentIntent.amount} succeeded`);
-
-      // Create invoice as a receipt with line items after successful payment
-      if (paymentIntent.customer) {
-        try {
-          const metadata = paymentIntent.metadata;
-          const items = metadata.items ? JSON.parse(metadata.items) : [];
-          const shippingCost = parseFloat(metadata.shipping_cost || 0);
-          const taxAmount = parseFloat(metadata.tax_amount || 0);
-          const processingFee = parseFloat(metadata.processing_fee || 0);
-          const shippingMethodName =
-            metadata.shipping_method_name || "Standard Shipping";
-
-          console.log(`Creating invoice for PaymentIntent ${paymentIntent.id}`);
-
-          // Create invoice in draft - won't create another payment
-          const invoice = await stripe.invoices.create({
-            customer: paymentIntent.customer,
-            auto_advance: false,
-            collection_method: "send_invoice",
-            days_until_due: 1,
-            description: `Receipt for ${paymentIntent.description}`,
-            metadata: {
-              payment_intent_id: paymentIntent.id,
-              order_type: metadata.order_type || "storefront",
-              shipping_method: shippingMethodName,
-            },
-          });
-
-          // Add line items
-          for (const item of items) {
-            const itemAmount = Math.round(
-              parseFloat((item.price * item.quantity).toFixed(2)) * 100,
-            );
-            await stripe.invoiceItems.create({
-              customer: paymentIntent.customer,
-              invoice: invoice.id,
-              amount: itemAmount,
-              currency: "usd",
-              description: `${item.name}${item.size ? ` (Size: ${item.size})` : ""} × ${item.quantity}`,
-            });
-          }
-
-          if (shippingCost > 0) {
-            await stripe.invoiceItems.create({
-              customer: paymentIntent.customer,
-              invoice: invoice.id,
-              amount: Math.round(shippingCost * 100),
-              currency: "usd",
-              description: `Shipping (${shippingMethodName})`,
-            });
-          }
-
-          if (taxAmount > 0) {
-            await stripe.invoiceItems.create({
-              customer: paymentIntent.customer,
-              invoice: invoice.id,
-              amount: Math.round(taxAmount * 100),
-              currency: "usd",
-              description: "Sales Tax",
-            });
-          }
-
-          if (processingFee > 0) {
-            await stripe.invoiceItems.create({
-              customer: paymentIntent.customer,
-              invoice: invoice.id,
-              amount: Math.round(processingFee * 100),
-              currency: "usd",
-              description: "Processing Support (3%)",
-            });
-          }
-
-          // Keep as draft - shows line items in dashboard without creating new payment
-          console.log(
-            `Invoice ${invoice.id} created (draft) as receipt for PaymentIntent ${paymentIntent.id}`,
-          );
-        } catch (invoiceError) {
-          console.error("Failed to create invoice:", invoiceError.message);
-        }
-      }
+      
+      // If this payment intent is for a subscription, the invoice will be paid automatically
+      // So we don't need to manually mark it as paid
       break;
     }
-    case "invoice.created": {
-      // No longer needed since we create invoice in payment_intent.succeeded
+    
+    case "invoice.paid": {
+      const invoice = event.data.object;
+      console.log(`Invoice ${invoice.id} paid for customer ${invoice.customer}`);
+      // Invoice automatically marked as paid by Stripe when payment succeeds
       break;
     }
-    case "payment_intent.created": {
-      const paymentIntent = event.data.object;
-      console.log(`PaymentIntent created with ID: ${paymentIntent.id}`);
-      // Add your handling logic here
+    
+    case "invoice.payment_failed": {
+      const invoice = event.data.object;
+      console.log(`Invoice ${invoice.id} payment failed for customer ${invoice.customer}`);
+      // Handle failed payment - could send email notification
       break;
     }
-    case "charge.succeeded": {
-      const charge = event.data.object;
-      console.log(`Charge succeeded for amount ${charge.amount}`);
-      // Add your handling logic here
+    
+    case "customer.subscription.created": {
+      const subscription = event.data.object;
+      console.log(`Subscription ${subscription.id} created for customer ${subscription.customer}`);
       break;
     }
-    case "charge.updated": {
-      const charge = event.data.object;
-      console.log(`Charge updated with ID: ${charge.id}`);
-      // Add your handling logic here
+    
+    case "customer.subscription.updated": {
+      const subscription = event.data.object;
+      console.log(`Subscription ${subscription.id} updated. Status: ${subscription.status}`);
       break;
     }
+    
+    case "customer.subscription.deleted": {
+      const subscription = event.data.object;
+      console.log(`Subscription ${subscription.id} cancelled for customer ${subscription.customer}`);
+      // Handle subscription cancellation - could update database
+      break;
+    }
+    
     default:
       console.log(`Unhandled event type ${event.type}`);
   }

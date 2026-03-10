@@ -12,10 +12,6 @@ import {
   createPaypalCheckout,
   fetchCheckoutProviders,
 } from "../../../lib/api/checkout.js";
-import {
-  STANDARD_PROCESSING_RATE,
-  STANDARD_TAX_RATE,
-} from "../../../context/StoreCartContext.jsx";
 
 const iconMap = {
   stripe: <FaStripeS className="size-10 md:size-8" />,
@@ -138,7 +134,7 @@ export default function ExpressCheckoutSection({
 
       {isLoading ? (
         <div className="flex justify-center items-center py-8">
-          <div className="text-neutral-500">Loading payment options</div>
+          <div className="text-neutral-500">Loading payment options...</div>
         </div>
       ) : error ? (
         <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-4">
@@ -146,26 +142,26 @@ export default function ExpressCheckoutSection({
         </div>
       ) : (
         <div className="grid grid-cols-1 gap-3">
-          {checkoutProviders.map((method) => (
-            <button
-              key={method.id}
-              onClick={() => {
-                if (method.enabled) handleExpressCheckout(method.name);
-              }}
-              disabled={isProcessing || !method.enabled}
-              className={`
+          {checkoutProviders
+            .filter((method) => method.enabled)
+            .map((method) => (
+              <button
+                key={method.id}
+                onClick={() => handleExpressCheckout(method.name)}
+                disabled={isProcessing || !method.enabled}
+                className={`
                 flex flex-col items-center justify-center gap-1
-                ${method.enabled ? "text-accent-500 hover:scale-105 hover:shadow-md" : "text-neutral-500 bg-neutral-200"}
+                ${method.enabled ? "text-accent-500 hover:scale-105" : "text-neutral-500 bg-neutral-200"}
                 rounded-xl px-3 py-3
                 font-semibold text-xs
                 transition-all duration-300
                 disabled:opacity-50 disabled:cursor-not-allowed
                 transform active:scale-95
-                shadow-sm
+                shadow-sm hover:shadow-md
               `}>
-              {iconMap[method.icon]}
-            </button>
-          ))}
+                {iconMap[method.icon]}
+              </button>
+            ))}
         </div>
       )}
 

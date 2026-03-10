@@ -32,7 +32,7 @@ export default function ServeShowcaseSection() {
           entrepreneurship and workforce development, community service, and
           academic mentorship.
         </p>
-        <Blockquote className="border-accent-600 text-balance w-1/2">
+        <Blockquote className="border-accent-600 text-balance max-w-2xl">
           "Give a man a fish, and you feed him for a day. Teach a man to fish,
           and you feed him for a lifetime."
         </Blockquote>

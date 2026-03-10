@@ -1,10 +1,12 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import swaggerUi from "swagger-ui-express";
 import checkoutRoutes from "./routes/checkout.js";
 import emailRoutes from "./routes/email.js";
 import providersRoutes from "./routes/providers.js";
 import { getEnvironment } from "./utility/environment.js";
+import { swaggerSpec } from "./swagger.js";
 
 dotenv.config();
 
@@ -26,18 +28,20 @@ const allowedOrigins = [
   "https://thesourceofhope.org",
   "https://www.thesourceofhope.org",
   "https://dev.thesourceofhope.org",
-  "http://localhost:5173",
   normalizeOrigin(frontendUrl),
 ].filter(Boolean);
+
+const localhostPattern = /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?$/;
 
 app.use(
   cors({
     origin(origin, callback) {
       if (!origin) return callback(null, true);
-      if (!allowedOrigins.includes(origin)) {
-        return callback(new Error("CORS policy: Origin not allowed."), false);
+      if (localhostPattern.test(origin) || allowedOrigins.includes(origin)) {
+        return callback(null, true);
       }
-      return callback(null, true);
+      console.warn(`[CORS] Blocked origin: ${origin}`);
+      return callback(new Error("CORS policy: Origin not allowed."), false);
     },
     credentials: true,
   }),
@@ -80,6 +84,14 @@ app.use("/app/api/email", emailRoutes);
 app.use("/api/providers", providersRoutes);
 app.use("/dev/api/providers", providersRoutes);
 app.use("/app/api/providers", providersRoutes);
+
+// ---- Swagger UI (local dev only) ----
+if (!process.env.VERCEL) {
+  app.use("/api/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec, {
+    customSiteTitle: "Source of Hope API Docs",
+    swaggerOptions: { defaultModelsExpandDepth: 1, docExpansion: "list" },
+  }));
+}
 
 // Helpful 404 for debugging
 app.all("*", (req, res) => {

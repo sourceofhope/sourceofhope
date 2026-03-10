@@ -33,7 +33,17 @@ function getHeaderLinks() {
         },
       ],
     },
-    { label: "MEMBERS", route: CANONICAL.member },
+    {
+      label: "MEMBERS",
+      route: CANONICAL.member,
+      children: [
+        { label: "PLANNED GIVING", route: CANONICAL.giving },
+        {
+          label: "QUICK DONATE",
+          route: { absolute: "https://donate.stripe.com/8wM5kHal16fC4so8ww" },
+        },
+      ],
+    },
     { label: "CONNECT", route: CANONICAL.connect },
     {
       label: "MEDIA",
@@ -272,6 +282,12 @@ function DesktopNavigatorItem({
                 ? "rotate-90"
                 : "rotate-0 group-hover:translate-x-1"
             }`}
+            onClick={(e) => {
+              if (!hasChildren) return;
+              e.preventDefault();
+              e.stopPropagation();
+              setHovering(isOpen ? null : label);
+            }}
             focusable="false"
             aria-hidden="true"
             role="presentation"
@@ -348,6 +364,7 @@ function MobileNavigator({ links, open }) {
   };
 
   const goTo = (e, to) => {
+    e.preventDefault();
     if (!to) return;
     navigate(to);
   };

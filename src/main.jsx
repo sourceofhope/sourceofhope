@@ -23,7 +23,6 @@ import WellnessHopeProgram from "./pages/serve/programs/WellnessHopeProgram.jsx"
 import OutdoorHopeProgram from "./pages/serve/programs/OutdoorHopeProgram.jsx";
 import InternationalHopeProgram from "./pages/serve/programs/InternationalHopeProgram.jsx";
 
-import FormPage from "./pages/form/FormPage.jsx";
 import StorefrontPage from "./pages/storefront/StorefrontPage.jsx";
 import { CANONICAL } from "./routes.jsx";
 import ProductPage from "./pages/storefront/ProductPage.jsx";
@@ -31,6 +30,8 @@ import PodcastPage from "./pages/media/PodcastPage.jsx";
 import PressPage from "./pages/media/PressPage.jsx";
 import { HelmetProvider } from "react-helmet-async";
 import MemberPage from "./pages/about/MemberPage.jsx";
+import MembersPage from "./pages/members/MembersPage.jsx";
+import GivingPage from "./pages/giving/GivingPage.jsx";
 
 export const router = createBrowserRouter([
   {
@@ -84,6 +85,11 @@ export const router = createBrowserRouter([
       },
 
       {
+        path: CANONICAL.giving.relative,
+        element: <GivingPage />,
+      },
+
+      {
         path: CANONICAL.media.relative,
         element: <MediaPage />,
       },
@@ -98,7 +104,7 @@ export const router = createBrowserRouter([
 
       {
         path: CANONICAL.member.relative,
-        element: <FormPage />,
+        element: <MembersPage />,
       },
 
       {
@@ -111,9 +117,15 @@ export const router = createBrowserRouter([
       },
       { path: CANONICAL.storefront.cart.relative, element: <CartPage /> },
 
-      { path: CANONICAL.storefront.checkout.relative, element: <CheckoutPage /> },
+      {
+        path: CANONICAL.storefront.checkout.relative,
+        element: <CheckoutPage />,
+      },
 
-      { path: CANONICAL.storefront.success.relative, element: <CheckoutSuccessPage /> },
+      {
+        path: CANONICAL.storefront.success.relative,
+        element: <CheckoutSuccessPage />,
+      },
     ],
   },
 ]);

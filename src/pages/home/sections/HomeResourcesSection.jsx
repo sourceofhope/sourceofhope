@@ -86,7 +86,6 @@ function HomeResourceCard({ title, caption, src, to }) {
                 {title}
               </h2>{" "}
               <button
-                aria-label="Close preview"
                 onClick={() => setActive(false)}
                 className="rounded-full p-2 hover:bg-neutral-200 transition-colors duration-750">
                 <XMarkIcon className="w-5 h-5 text-neutral-600" />
