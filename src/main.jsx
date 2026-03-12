@@ -84,10 +84,10 @@ export const router = createBrowserRouter([
         element: <ConnectPage />,
       },
 
-      {
-        path: CANONICAL.giving.relative,
-        element: <GivingPage />,
-      },
+      // {
+      //   path: CANONICAL.giving.relative,
+      //   element: <GivingPage />,
+      // },
 
       {
         path: CANONICAL.media.relative,
