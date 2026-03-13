@@ -155,7 +155,11 @@ export default function MembersPlansSection() {
   );
 }
 
-function IndividualsMonthlySupportSection({ amount: customAmount, onAmountChange: setCustomAmount, onJoin }) {
+function IndividualsMonthlySupportSection({
+  amount: customAmount,
+  onAmountChange: setCustomAmount,
+  onJoin,
+}) {
   return (
     <div className="grid gap-5">
       <div className="grid gap-3">
@@ -286,7 +290,7 @@ function CustomAmountCard({ isSelected, amount, onAmountChange }) {
       </div>
 
       <div className="grid md:grid-cols-4 gap-2">
-        {[25, 50, 75, 100].map((preset) => (  
+        {[25, 50, 75, 100].map((preset) => (
           <button
             key={preset}
             type="button"
@@ -414,7 +418,11 @@ function ImpactStat({ icon, label, value, sublabel }) {
   );
 }
 
-function CompanyPartnershipSection({ selectedId, onSelectId: setSelectedId, onJoin }) {
+function CompanyPartnershipSection({
+  selectedId,
+  onSelectId: setSelectedId,
+  onJoin,
+}) {
   const selectedPlan = useMemo(
     () => COMPANIES.find((p) => p.id === selectedId) ?? COMPANIES[0],
     [selectedId],
@@ -486,13 +494,8 @@ function CompanyPartnershipSection({ selectedId, onSelectId: setSelectedId, onJo
         </aside>
       </div>
 
-      <div className="bg-neutral-200 rounded-2xl p-5 lg:p-6 grid gap-4">
-        <div className="grid gap-1">
-          <Heading>Partnership details</Heading>
-          <p className="text-sm text-neutral-700">
-            On mobile, you’ll only see the selected partnership’s details.
-          </p>
-        </div>
+      <div className="grid gap-4">
+        <Heading>Partnership details</Heading>
 
         <div className="grid gap-4 lg:hidden">
           <SelectedCompanyIncludes plan={selectedPlan} />
