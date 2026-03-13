@@ -184,7 +184,7 @@ function IndividualsMonthlySupportSection({
           <div className="bg-neutral-100 rounded-2xl shadow-sm p-5 grid gap-3">
             <div className="flex items-start justify-between gap-3">
               <div className="grid gap-1">
-                <Heading>Custom monthly support</Heading>
+                <Heading>Individual Membership</Heading>
                 <p className="text-sm text-neutral-600">
                   Monthly • Cancel anytime
                 </p>
@@ -228,7 +228,7 @@ function IndividualsMonthlySupportSection({
           <div className="grid">
             <p className="text-xs text-neutral-600">Selected</p>
             <p className="font-extrabold leading-tight">
-              Custom monthly support
+              Individual Membership
             </p>
             <p className="text-sm text-neutral-600">
               ${Number(customAmount || 0).toFixed(0)}
@@ -366,36 +366,31 @@ function IndividualImpactEstimator({
       <div className="grid md:grid-cols-3 gap-4">
         <ImpactStat
           icon={<HeartIcon className="w-5 h-5" />}
-          label="Meals supported"
+          label="Meals Supported"
           value={formatNumber(Math.round(impact?.meals || 0))}
           sublabel="home-cooked meals (estimated)"
         />
 
         <ImpactStat
           icon={<CheckCircleIcon className="w-5 h-5" />}
-          label="Wellness support"
+          label="Wellness Support"
           value={formatNumber(Math.round(impact?.wellnessAssists || 0))}
-          sublabel="subsidy units (estimated)"
+          sublabel="Wellness kits (estimated)"
         />
 
         <ImpactStat
           icon={<CheckCircleIcon className="w-5 h-5" />}
-          label="Education support"
+          label="Education Impact"
           value={formatNumber(Math.round(impact?.studentSupports || 0))}
-          sublabel="student support units (estimated)"
+          sublabel="Students supported (estimated)"
         />
       </div>
 
       <div className="bg-neutral-100 rounded-2xl p-4 shadow-sm grid gap-2">
         <p className="text-sm text-neutral-700">
-          <Bold>Why monthly matters:</Bold> recurring support lets us plan
-          ahead, purchase supplies responsibly, and respond quickly when needs
-          rise.
-        </p>
-
-        <p className="text-xs text-neutral-600">
-          Our estimates use internal assumptions (e.g., average cost per meal).
-          Adjust the model constants when you finalize real numbers.
+          <Bold>Why monthly matters:</Bold> <br /> recurring support lets us
+          plan ahead, purchase supplies responsibly, and respond quickly when
+          needs rise.
         </p>
       </div>
     </section>
@@ -494,58 +489,54 @@ function CompanyPartnershipSection({
         </aside>
       </div>
 
-      <div className="grid gap-4">
-        <Heading>Partnership details</Heading>
+      <Heading>Partnership details</Heading>
 
-        <div className="grid gap-4 lg:hidden">
-          <SelectedCompanyIncludes plan={selectedPlan} />
-        </div>
+      <div className="grid gap-4 lg:hidden">
+        <SelectedCompanyIncludes plan={selectedPlan} />
+      </div>
 
-        <div className="hidden lg:block overflow-x-auto">
-          <div className="min-w-[860px] grid grid-cols-[320px_repeat(3,1fr)] gap-2">
-            <div />
-            {COMPANIES.map((p) => (
-              <div
-                key={p.id}
-                className={`rounded-xl p-3 text-center font-bold ${
-                  selectedId === p.id
-                    ? "bg-neutral-900 text-white"
-                    : "bg-neutral-100"
-                }`}>
-                {p.name}
-                <div className="text-xs font-semibold opacity-80">
-                  ${p.priceMonthly}/mo
-                </div>
+      <div className="hidden lg:block overflow-x-auto">
+        <div className="min-w-[860px] grid grid-cols-[320px_repeat(3,1fr)] gap-2">
+          <div />
+          {COMPANIES.map((p) => (
+            <div
+              key={p.id}
+              className={`rounded-xl p-3 text-center font-bold ${
+                selectedId === p.id
+                  ? "bg-neutral-900 text-white"
+                  : "bg-neutral-100"
+              }`}>
+              {p.name}
+              <div className="text-xs font-semibold opacity-80">
+                ${p.priceMonthly}/mo
               </div>
-            ))}
-
-            {COMPANY_FEATURES.map((feature) => (
-              <CompanyFeatureRow
-                key={feature}
-                feature={feature}
-                plans={COMPANIES}
-              />
-            ))}
-          </div>
-        </div>
-        <div className="lg:hidden sticky bottom-3 z-10">
-          <div className="bg-neutral-100 shadow-lg rounded-2xl p-4 flex items-center justify-between gap-3">
-            <div className="grid">
-              <p className="text-xs text-neutral-600">Selected</p>
-              <p className="font-extrabold leading-tight">
-                {selectedPlan.name}
-              </p>
-              <p className="text-sm text-neutral-600">
-                ${selectedPlan.priceMonthly}/mo
-              </p>
             </div>
-            <button
-              type="button"
-              onClick={() => onJoin(selectedPlan)}
-              className="px-4 py-3 rounded-xl font-bold text-white bg-accent-500 hover:bg-accent-600">
-              Partner
-            </button>
+          ))}
+
+          {COMPANY_FEATURES.map((feature) => (
+            <CompanyFeatureRow
+              key={feature}
+              feature={feature}
+              plans={COMPANIES}
+            />
+          ))}
+        </div>
+      </div>
+      <div className="lg:hidden sticky bottom-3 z-10">
+        <div className="bg-neutral-100 shadow-lg rounded-2xl p-4 flex items-center justify-between gap-3">
+          <div className="grid">
+            <p className="text-xs text-neutral-600">Selected</p>
+            <p className="font-extrabold leading-tight">{selectedPlan.name}</p>
+            <p className="text-sm text-neutral-600">
+              ${selectedPlan.priceMonthly}/mo
+            </p>
           </div>
+          <button
+            type="button"
+            onClick={() => onJoin(selectedPlan)}
+            className="px-4 py-3 rounded-xl font-bold text-white bg-accent-500 hover:bg-accent-600">
+            Partner
+          </button>
         </div>
       </div>
     </div>
