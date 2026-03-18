@@ -82,7 +82,7 @@ export async function POST(request: Request) {
             return NextResponse.json({ error: 'Stripe configuration missing' }, { status: 500 });
         }
 
-        const stripe = new Stripe(stripeSecretKey, { apiVersion: '2020-08-27' });
+        const stripe = new Stripe(stripeSecretKey);
         const body = (await request.json()) as MembershipRequestBody;
         const {
             membershipPlanId,

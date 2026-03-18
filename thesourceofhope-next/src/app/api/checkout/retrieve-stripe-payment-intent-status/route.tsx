@@ -21,15 +21,12 @@ export async function GET(request: Request) {
             return NextResponse.json({ error: 'Payment Intent ID is required' }, { status: 400 });
         }
 
-        const stripe = new Stripe(stripeSecretKey, {
-            apiVersion: '2020-08-27',
-        });
+        const stripe = new Stripe(stripeSecretKey);
         const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
 
         const customerEmail =
             paymentIntent.receipt_email ||
             paymentIntent.metadata?.customer_email ||
-            paymentIntent.charges?.data?.[0]?.billing_details?.email ||
             '';
 
         return NextResponse.json({

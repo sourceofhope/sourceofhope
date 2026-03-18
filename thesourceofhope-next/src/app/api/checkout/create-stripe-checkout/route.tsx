@@ -70,7 +70,7 @@ export async function POST(request: Request) {
         }
 
         const stripe = new Stripe(stripeSecretKey, {
-            apiVersion: '2020-08-27',
+
         });
 
         const body = (await request.json()) as CreateStripeCheckoutBody;
