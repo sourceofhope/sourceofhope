@@ -2,6 +2,10 @@ import type { Metadata } from "next";
 import Script from "next/script";
 import { Montserrat, Urbanist } from "next/font/google";
 import "./globals.css";
+import Header from "@/components/layout/Header";
+import Footer from "@/components/layout/Footer";
+import { HeaderProvider } from "@/context/HeaderContext";
+import { StoreCartProvider } from "@/context/StoreCartContext";
 
 const urbanist = Urbanist({
   variable: "--font-urbanist",
@@ -116,7 +120,15 @@ export default function RootLayout({
           }}
         />
         
-        <div className="w-full bg-neutral-50">{children}</div>
+        <HeaderProvider>
+          <StoreCartProvider>
+            <Header />
+            <main className="w-full min-h-screen text-sm md:text-md lg:text-lg">
+              {children}
+            </main>
+            <Footer />
+          </StoreCartProvider>
+        </HeaderProvider>
       </body>
     </html>
   );

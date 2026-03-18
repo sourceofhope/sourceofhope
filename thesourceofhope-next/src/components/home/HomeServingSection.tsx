@@ -8,6 +8,7 @@ export default function HomeServingSection() {
   return (
     <PageSection className="hidden md:flex relative py-20 px-5 lg:px-35 bg-neutral-100 gap-8">
       <div className="flex-1 h-96 overflow-hidden rounded-lg">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={`/${ASSET_VERSION}/core/TSOH-Service.webp`}
           alt="People cooking food at Serving Hope Event"

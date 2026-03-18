@@ -52,6 +52,7 @@ export default function HomeImpactSection() {
           </div>
         </article>
         <div className="hidden lg:block relative h-96">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={`/${ASSET_VERSION}/core/placeholder.webp`}
             alt="Community members benefiting from The Source of Hope programs"

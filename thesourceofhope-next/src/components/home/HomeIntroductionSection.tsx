@@ -35,6 +35,7 @@ export default function HomeIntroductionSection() {
           maskImage: "linear-gradient(to bottom, white 80%, transparent 100%)",
         }}
       >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={`/${ASSET_VERSION}/core/TSOH-Poster.webp`}
           alt="The Source of Hope community impact"
@@ -83,10 +84,10 @@ export default function HomeIntroductionSection() {
           safety, and resources to live healthier, fulfilling lives.
         </p>
         <div className="flex gap-5 flex-col md:flex-row">
-          <LinkButton href="/give">
+          <LinkButton href="https://donate.stripe.com/8wM5kHal16fC4so8ww">
             DONATE NOW
           </LinkButton>
-          <LinkButton href="/serve">
+          <LinkButton href="/about">
             VOLUNTEER
           </LinkButton>
         </div>

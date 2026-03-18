@@ -16,6 +16,7 @@ function HomeResourceCard({ title, href, description, image }: ResourceCardProps
   return (
     <div className="group flex flex-col gap-4 rounded-lg overflow-hidden bg-neutral-100 hover:shadow-lg transition">
       <div className="relative h-48 overflow-hidden">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={image}
           alt={title}

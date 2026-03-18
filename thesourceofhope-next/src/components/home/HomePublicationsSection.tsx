@@ -20,6 +20,7 @@ function PublicationCard({ title, category, image, link }: PublicationProps) {
       className="group flex flex-col gap-3 rounded-lg overflow-hidden bg-neutral-900 text-neutral-50 hover:shadow-lg transition"
     >
       <div className="relative h-48 overflow-hidden">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={image}
           alt={title}

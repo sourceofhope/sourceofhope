@@ -13,6 +13,7 @@ export default function HomeMissionSection() {
         <Title className="text-xlg md:hidden lg:text-xxlg font-urbanist text-center">
           Our Mission
         </Title>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={`/${ASSET_VERSION}/core/TSOH-Founder.webp`}
           alt="The Source of Hope Founder, Quynh Chau Stone"
