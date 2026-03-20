@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-:root {
+@theme {
   /* Primary Colors */
   --color-primary-50: #f5f7fb;
   --color-primary-100: #e6ebf5;
@@ -41,7 +41,9 @@
   --font-urbanist: "Urbanist", Helvetica, Arial, sans-serif;
   --font-inter: "Inter", Helvetica, Arial, sans-serif;
   --font-montserrat: "Montserrat", Helvetica, Arial, sans-serif;
+}
 
+:root {
   /* Font Sizes */
   --text-xxxlg: 3rem;
   --text-xxlg: 2rem;

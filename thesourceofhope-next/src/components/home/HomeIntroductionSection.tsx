@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
-import { LinkButton } from "@/components/ui/Button";
+import { AnchorButton, LinkButton } from "@/components/ui/Button";
 
 const ASSET_VERSION = "v2";
 
@@ -84,12 +84,16 @@ export default function HomeIntroductionSection() {
           safety, and resources to live healthier, fulfilling lives.
         </p>
         <div className="flex gap-5 flex-col md:flex-row">
-          <LinkButton href="https://donate.stripe.com/8wM5kHal16fC4so8ww">
-            DONATE NOW
-          </LinkButton>
-          <LinkButton href="/about">
-            VOLUNTEER
-          </LinkButton>
+          <AnchorButton
+            className="w-fit"
+            href="https://donate.stripe.com/8wM5kHal16fC4so8ww"
+            text="DONATE NOW"
+          />
+          <LinkButton
+            className="w-fit"
+            href="/about"
+            text="OUR MISSION"
+          />
         </div>
       </div>
     </section>

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { LinkButton } from "@/components/ui/Button";
 
 const ASSET_VERSION = "v2";
 
@@ -24,7 +25,7 @@ export default function Footer() {
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
-                    src={`/${ASSET_VERSION}/core/TSOH-Logo.webp`}
+                    src={"/" + ASSET_VERSION + "/core/TSOH-Logo.webp"}
                     alt="The Source of Hope Logo"
                     className="w-full h-full object-contain rounded-lg"
                   />
@@ -147,7 +148,7 @@ function FooterParallax() {
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           className="w-full overflow-hidden h-full object-cover brightness-[.8] contrast-[1.1]"
-          src={`/${ASSET_VERSION}/core/TSOH-Family.webp`}
+          src={"/" + ASSET_VERSION + "/core/TSOH-Family.webp"}
           alt="Community"
           loading="lazy"
         />
@@ -194,12 +195,7 @@ function FooterCard() {
         wellness tips, and community updates right to your inbox by subscribing
         to our newsletter.
       </p>
-      <Link
-        href="/members"
-        className="w-fit px-6 py-2 bg-accent-500 hover:bg-accent-600 text-neutral-50 font-semibold rounded transition"
-      >
-        SUBSCRIBE
-      </Link>
+      <LinkButton className='w-fit' href="/members" text="SUBSCRIBE" />
       <p className="text-sm text-neutral-600 italic">
         No spam, unsubscribe anytime.
       </p>

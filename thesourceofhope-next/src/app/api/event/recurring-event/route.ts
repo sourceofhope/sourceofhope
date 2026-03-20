@@ -24,10 +24,16 @@ const RECURRING_EVENT_QUERY = `
 }
 `;
 
-export async function GET() {
+// /api/event/recurring-event route handler to fetch recurring events
+export async function GET(request: Request) {
   try {
+    const { searchParams } = new URL(request.url);
+    const perPage = parseInt(searchParams.get('per_page') || '3', 10);
+    
     const events = await client.fetch(RECURRING_EVENT_QUERY);
-    return NextResponse.json(events);
+    const limitedEvents = events.slice(0, perPage);
+    
+    return NextResponse.json(limitedEvents);
   } catch (error) {
     const message = error instanceof Error ? error.message : 'Unknown error';
     return NextResponse.json(

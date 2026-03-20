@@ -7,12 +7,18 @@ import { useHeaderContext } from "@/context/HeaderContext";
 import {
   Bars3Icon,
   XMarkIcon,
-  ChevronDownIcon,
-} from "@heroicons/react/24/outline";
+  ChevronRightIcon,
+} from "@heroicons/react/20/solid";
 
 const ASSET_VERSION = "v2";
 
-const navigationLinks = [
+interface NavLink {
+  label: string;
+  href: string;
+  children?: NavLink[];
+}
+
+const getHeaderLinks = (): NavLink[] => [
   {
     label: "ABOUT",
     href: "/about",
@@ -34,7 +40,10 @@ const navigationLinks = [
     href: "/members",
     children: [
       { label: "PLANNED GIVING", href: "/giving" },
-      { label: "QUICK DONATE", href: "https://donate.stripe.com/8wM5kHal16fC4so8ww" },
+      {
+        label: "QUICK DONATE",
+        href: "https://donate.stripe.com/8wM5kHal16fC4so8ww",
+      },
     ],
   },
   { label: "CONNECT", href: "/connect" },
@@ -54,10 +63,12 @@ export default function Header() {
   const [open, setOpen] = useState(false);
   const [bannerOpen, setBannerOpen] = useState(true);
   const pathname = usePathname();
-  const headerContext = useHeaderContext();
 
-  const isBlocking = headerContext?.isBlocking ?? false;
-  const bannerActive = headerContext?.bannerActive ?? false;
+  const header = useHeaderContext() ?? {};
+  const {
+    isBlocking = false,
+    bannerActive = false,
+  } = header;
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 0);
@@ -81,19 +92,21 @@ export default function Header() {
       <header
         className={`backdrop-filter fixed ${
           bannerActive && bannerOpen ? "top-15 md:top-10" : "top-0"
-        } left-0 right-0 z-[9998] text-sm md:text-md w-full transition-[height_backdrop] ease-in duration-200 md:border-none ${
-          open
-            ? `md:backdrop-blur-none backdrop-blur-sm shadow-lg ${
-                isBlocking ? "border-primary-800/100" : "border-neutral-50"
-              }`
-            : "shadow-none backdrop-blur-none border-none"
-        } ${
-          scrolled
-            ? "bg-primary-800 text-neutral-50 border-transparent"
-            : `bg-transparent ${open ? "border-b-4" : ""} ${
-                isBlocking ? "text-primary-800" : "text-neutral-50"
-              }`
-        }`}
+        } left-0 right-0 z-[9998] text-sm md:text-md w-full transition-[height_backdrop] ease-in duration-200 md:border-none
+          ${
+            open
+              ? `md:backdrop-blur-none backdrop-blur-sm shadow-lg ${
+                  isBlocking ? "border-primary-800/100 " : "border-neutral-50"
+                }`
+              : "shadow-none backdrop-blur-none border-none"
+          }
+          ${
+            scrolled
+              ? `bg-primary-800 text-neutral-50 border-transparent`
+              : `bg-transparent ${open ? "border-b-4" : ""} ${
+                  isBlocking ? "text-primary-800" : "text-neutral-50"
+                }`
+          }`}
       >
         <section className="flex gap-5 h-15 md:h-20 w-full items-center justify-between px-5 lg:px-35">
           <Link
@@ -125,7 +138,7 @@ export default function Header() {
               className="flex flex-col justify-end items-center px-5 pb-5 h-fit"
               aria-label="Mobile"
             >
-              <HeaderNavigator isMobile={true} />
+              <HeaderNavigator isMobile={true} open={open} />
             </nav>
           )}
         </div>
@@ -145,146 +158,8 @@ function Favicon() {
   );
 }
 
-function HeaderMenu({
-  open,
-  setOpen,
-}: {
-  open: boolean;
-  setOpen: (value: boolean) => void;
-}) {
-  return (
-    <button
-      type="button"
-      className="block md:hidden"
-      onClick={() => setOpen(!open)}
-      aria-expanded={open}
-      aria-label={open ? "Close menu" : "Open menu"}
-    >
-      {open ? (
-        <XMarkIcon className="w-6 h-6" aria-hidden="true" />
-      ) : (
-        <Bars3Icon className="w-6 h-6" aria-hidden="true" />
-      )}
-    </button>
-  );
-}
-
-function HeaderNavigator({
-  isMobile = false,
-}: {
-  isMobile?: boolean;
-}) {
-  return (
-    <>
-      {navigationLinks.map((link) => (
-        <NavItem
-          key={link.label}
-          label={link.label}
-          href={link.href}
-          submenu={link.children}
-          isMobile={isMobile}
-        />
-      ))}
-    </>
-  );
-}
-
-function NavItem({
-  label,
-  href,
-  submenu,
-  isMobile = false,
-}: {
-  label: string;
-  href: string;
-  submenu?: { label: string; href: string }[];
-  isMobile?: boolean;
-}) {
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const pathname = usePathname();
-  const isActive = pathname === href || pathname.startsWith(href + "/");
-
-  if (isMobile) {
-    return (
-      <div className="w-full">
-        <button
-          onClick={() => setDropdownOpen(!dropdownOpen)}
-          className="w-full py-2 text-center font-semibold flex items-center justify-center gap-2 hover:opacity-75 transition"
-        >
-          {label}
-          {submenu && submenu.length > 0 && (
-            <ChevronDownIcon
-              className={`w-4 h-4 transition-transform ${
-                dropdownOpen ? "rotate-180" : ""
-              }`}
-            />
-          )}
-        </button>
-        {dropdownOpen && submenu && submenu.length > 0 && (
-          <div className="flex flex-col gap-2 py-2 px-3 bg-neutral-100/10">
-            {submenu.map((child) => (
-              <MobileNavLink
-                key={child.label}
-                label={child.label}
-                href={child.href}
-              />
-            ))}
-          </div>
-        )}
-      </div>
-    );
-  }
-
-  return (
-    <div className="relative group">
-      <Link
-        href={href}
-        className={`py-2 px-3 rounded transition font-semibold ${
-          isActive
-            ? "bg-primary-700/50 text-neutral-50"
-            : "hover:bg-primary-700/30 text-current"
-        }`}
-      >
-        {label}
-      </Link>
-      {submenu && submenu.length > 0 && (
-        <div className="absolute left-0 top-full hidden group-hover:flex flex-col bg-primary-800 rounded shadow-lg overflow-hidden z-50">
-          {submenu.map((child) => (
-            <Link
-              key={child.label}
-              href={child.href}
-              className="px-4 py-2 text-neutral-50 hover:bg-primary-700 transition whitespace-nowrap text-sm"
-            >
-              {child.label}
-            </Link>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
-
-function MobileNavLink({ label, href }: { label: string; href: string }) {
-  const isExternal = href.startsWith("http");
-  
-  if (isExternal) {
-    return (
-      <a
-        href={href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="text-sm py-1 hover:opacity-75 transition"
-      >
-        {label}
-      </a>
-    );
-  }
-
-  return (
-    <Link href={href} className="text-sm py-1 hover:opacity-75 transition">
-      {label}
-    </Link>
-  );
+function Icon({ children }: { children: React.ReactNode }) {
+  return <>{children}</>;
 }
 
 function HeaderBanner({ onClose }: { onClose: () => void }) {
@@ -312,8 +187,256 @@ function HeaderBanner({ onClose }: { onClose: () => void }) {
         aria-label="Close banner"
         onClick={onClose}
       >
-        <XMarkIcon className="w-6 h-6" aria-hidden="true" />
+        <Icon>
+          <XMarkIcon className="w-6 h-6" aria-hidden="true" />
+        </Icon>
       </button>
     </div>
+  );
+}
+
+function HeaderMenu({
+  open,
+  setOpen,
+}: {
+  open: boolean;
+  setOpen: (value: boolean) => void;
+}) {
+  return (
+    <button
+      type="button"
+      className="block md:hidden"
+      onClick={() => setOpen(!open)}
+      aria-expanded={open}
+      aria-label={open ? "Close menu" : "Open menu"}
+    >
+      <Icon>
+        {open ? (
+          <XMarkIcon className="w-6 h-6" aria-hidden="true" />
+        ) : (
+          <Bars3Icon className="w-6 h-6" aria-hidden="true" />
+        )}
+      </Icon>
+    </button>
+  );
+}
+
+function HeaderNavigator({
+  isMobile = false,
+  open,
+}: {
+  isMobile?: boolean;
+  open?: boolean;
+}) {
+  const links = getHeaderLinks();
+  return isMobile ? (
+    <MobileNavigator links={links} open={open ?? false} />
+  ) : (
+    <DesktopNavigator links={links} />
+  );
+}
+
+function DesktopNavigator({ links }: { links: NavLink[] }) {
+  const [hovering, setHovering] = useState<string | null>(null);
+
+  return (
+    <nav className="flex flex-row gap-5">
+      {links.map(({ label, href, children }) => (
+        <DesktopNavigatorItem
+          key={label}
+          label={label}
+          href={href}
+          children={children || []}
+          hovering={hovering}
+          setHovering={setHovering}
+          className={`
+            py-2.5 h-full w-full font-bold
+            ${
+              hovering
+                ? hovering === label
+                  ? "opacity-100"
+                  : "opacity-80"
+                : ""
+            }`}
+        />
+      ))}
+    </nav>
+  );
+}
+
+function DesktopNavigatorItem({
+  label,
+  href,
+  children,
+  hovering,
+  setHovering,
+  className,
+}: {
+  label: string;
+  href: string;
+  children: NavLink[];
+  hovering: string | null;
+  setHovering: (value: string | null) => void;
+  className?: string;
+}) {
+  const isOpen = hovering === label;
+  const hasChildren = children.length > 0;
+
+  return (
+    <div className="w-full select-none relative">
+      <Link
+        href={href}
+        onMouseEnter={() => setHovering(label)}
+        onMouseLeave={() => setHovering(null)}
+        className={`!no-underline group transition-[color_transform] ease-in-out duration-300 inline-flex w-full justify-between items-center gap-1 focus:outline-none ${className}`}
+      >
+        <span>{label}</span>
+        <Icon>
+          <ChevronRightIcon
+            className={`w-6 h-6 transition-transform duration-500 ${
+              isOpen && hasChildren
+                ? "rotate-90"
+                : "rotate-0 group-hover:translate-x-1"
+            }`}
+            onClick={(e: React.MouseEvent) => {
+              if (!hasChildren) return;
+              e.preventDefault();
+              e.stopPropagation();
+              setHovering(isOpen ? null : label);
+            }}
+            aria-hidden="true"
+          />
+        </Icon>
+      </Link>
+
+      {hasChildren && (
+        <div
+          onMouseEnter={() => setHovering(label)}
+          onMouseLeave={() => setHovering(null)}
+          className={`${
+            isOpen
+              ? "opacity-100 pointer-events-auto"
+              : "opacity-0 -translate-y-1 pointer-events-none"
+          } absolute hidden md:flex z-50 transition-[opacity_transform] delay-150 duration-300 bg-neutral-50 min-w-40 w-max rounded-lg p-3 py-5 shadow-md text-accent-800 flex-col font-semibold text-sm`}
+        >
+          {children.map(({ label: childLabel, href: childHref }) => (
+            <Link
+              className="py-2.5 hover:bg-neutral-200 duration-300 transition-colors !no-underline px-3 rounded-md"
+              key={childHref}
+              href={childHref}
+            >
+              {childLabel}
+            </Link>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function MobileNavigator({
+  links,
+  open,
+}: {
+  links: NavLink[];
+  open: boolean;
+}) {
+  interface StackItem {
+    title: string;
+    href: string | null;
+    items: NavLink[];
+  }
+
+  const root: StackItem = { title: "BACK", href: null, items: links };
+  const [stack, setStack] = useState<StackItem[]>([root]);
+  const [visible, setVisible] = useState(true);
+
+  useEffect(() => {
+    if (!open) {
+      setStack([root]);
+      setVisible(true);
+    }
+  }, [open]);
+
+  const current = stack[stack.length - 1];
+  const canGoBack = stack.length > 1;
+
+  const transition = (nextStack: StackItem[]) => {
+    setVisible(false);
+
+    setTimeout(() => {
+      setStack(nextStack);
+      setVisible(true);
+    }, 150);
+  };
+
+  const goBack = () => {
+    if (!canGoBack) return;
+    transition(stack.slice(0, -1));
+  };
+
+  const openChildren = (parent: NavLink) => {
+    transition([
+      ...stack,
+      {
+        title: parent.label,
+        href: parent.href,
+        items: parent.children || [],
+      },
+    ]);
+  };
+
+  return (
+    <nav className="w-full">
+      <div
+        className={`transition-opacity duration-200 ease-out ${
+          visible ? "opacity-100" : "opacity-0"
+        }`}
+      >
+        {canGoBack && (
+          <button
+            type="button"
+            onClick={goBack}
+            className="py-2.5 w-full group font-bold inline-flex items-center justify-between gap-2"
+            aria-label="Back"
+          >
+            <span>{stack[stack.length - 2]?.title || "BACK"}</span>
+            <Icon>
+              <ChevronRightIcon
+                className="w-6 h-6 rotate-180 transition-transform duration-500 group-hover:-translate-x-1"
+                aria-hidden="true"
+              />
+            </Icon>
+          </button>
+        )}
+
+        {current.items.map((item) => {
+          const hasChildren = (item.children || []).length > 0;
+
+          return (
+            <div key={item.href} className="w-full">
+              <Link
+                href={item.href}
+                className="!no-underline py-2.5 h-full w-full group font-bold inline-flex justify-between items-center gap-1"
+                onClick={(event) => {
+                  if (hasChildren) {
+                    event.preventDefault();
+                    openChildren(item);
+                  }
+                }}
+              >
+                <span className="text-left">{item.label}</span>
+                <Icon>
+                  <ChevronRightIcon
+                    className="w-6 h-6 transition-transform duration-500 rotate-0 group-hover:translate-x-1"
+                    aria-hidden="true"
+                  />
+                </Icon>
+              </Link>
+            </div>
+          );
+        })}
+      </div>
+    </nav>
   );
 }
