@@ -20,6 +20,7 @@ export async function OPTIONS() {
   });
 }
 
+// POST: /api/checkout/retrieve-stripe-publishable-key
 export async function POST() {
   try {
     const { stripePublishableKey } = getEnvironment();
