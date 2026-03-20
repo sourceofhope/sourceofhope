@@ -1,7 +1,7 @@
 import PageSection from '@/components/ui/PageSection';
 import Title from '@/components/ui/Title';
-import Heading from '@/components/ui/Heading';
 import ExpressiveCard from '@/components/ui/ExpressiveCard';
+import Link from 'next/link';
 
 export default function ServeGuidelinesSection() {
   return (
@@ -75,21 +75,21 @@ export default function ServeGuidelinesSection() {
         <ul className="list-disc pl-5">
           <li>
             Visit{' '}
-            <a
+            <Link
               className="font-semibold text-accent-500"
               href="/volunteer"
             >
               thesourceofhope.org/volunteer
-            </a>
+            </Link>
           </li>
           <li>
             Or email us at{' '}
-            <a
+            <Link
               className="font-semibold text-accent-500"
               href="mailto:info@thesourceofhope.org?subject=Volunteer Sign-up"
             >
               info@thesourceofhope.org
-            </a>
+            </Link>
           </li>
         </ul>
         <p className="md:text-balance">

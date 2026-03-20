@@ -41,10 +41,9 @@
   --font-urbanist: "Urbanist", Helvetica, Arial, sans-serif;
   --font-inter: "Inter", Helvetica, Arial, sans-serif;
   --font-montserrat: "Montserrat", Helvetica, Arial, sans-serif;
-}
 
-:root {
   /* Font Sizes */
+  --text-xxxxlg: 4rem;
   --text-xxxlg: 3rem;
   --text-xxlg: 2rem;
   --text-xlg: 1.5rem;
@@ -52,7 +51,9 @@
   --text-md: 1rem;
   --text-sm: 0.875rem;
   --text-xs: 0.75rem;
+}
 
+:root {
   /* Spacing */
   --spacing-15: 3.75rem;
   --spacing-35: 8.75rem;
