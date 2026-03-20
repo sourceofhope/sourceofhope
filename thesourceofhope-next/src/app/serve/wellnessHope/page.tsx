@@ -1,17 +1,164 @@
 import { Metadata } from "next";
+import Title from "@/components/ui/Title";
+import Heading from "@/components/ui/Heading";
+import { AnchorButton } from "@/components/ui/Button";
+import Bold from "@/components/ui/Bold";
+import HighlightedText from "@/components/ui/HighlightedText";
+
+const ASSET_VERSION = 'v2';
+const CANONICAL_URL = 'https://thesourceofhope.org/serve/wellness-hope';
 
 export const metadata: Metadata = {
-  title: "Wellness Hope | The Source of Hope",
-  description: "Learn about our Wellness Hope program.",
+  title: "Wellness of Hope Program | The Source of Hope",
+  description: "Discover The Source of Hope's Wellness of Hope Program, providing free or reduced-cost holistic treatments—fire cupping, lymphatic drainage, detox therapies, and more—to low-income individuals, seniors, teachers, first responders, and families across Dallas–Fort Worth.",
+  alternates: {
+    canonical: CANONICAL_URL,
+  },
+  openGraph: {
+    type: "website",
+    url: CANONICAL_URL,
+    title: "Wellness of Hope Program | The Source of Hope",
+    description: "Experience compassionate holistic care through the Wellness of Hope Program. We provide reduced-cost wellness treatments—including fire cupping, lymphatic drainage, ear candling, and detox therapies—to seniors, teachers, first responders, and families in need.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Wellness of Hope Program | The Source of Hope",
+    description: "Join the Wellness of Hope Program, offering holistic wellness treatments and assessments at reduced cost for low-income individuals, seniors, educators, first responders, and families throughout Dallas–Fort Worth.",
+  },
 };
 
 export default function WellnessHope() {
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold">Wellness Hope</h1>
-        <p className="text-gray-600 mt-4">Coming soon...</p>
+    <section className="w-full md:justify-items-left items-center grid gap-5 pt-25 p-5 lg:px-35 text-sm md:text-md lg:text-lg">
+      <div className="grid gap-3 justify-self-start justify-start">
+        <Title>Wellness of Hope</Title>
+        <Heading>Free Holistic Clinic Services</Heading>
       </div>
-    </div>
+
+      <article className="grid gap-5">
+        <p>
+          <Bold>The Wellness of Hope</Bold> Clinic provides holistic treatments like fire cupping and lymphatic drainage to low-income individuals, including senior citizens, teachers, first responders, and others in need. In partnership with{' '}
+          <Bold>Stone International Wellness Center</Bold>, the clinic offers both therapeutic and cosmetic services to improve well-being and boost confidence. These services make a life-changing impact for those who may not{' '}
+          <HighlightedText>otherwise afford such care</HighlightedText>. The clinic also provides reduced cosmetic services and classes to the general public.
+        </p>
+
+        <article className="bg-neutral-50 rounded-2xl shadow-sm p-5 grid gap-2">
+          <Heading className="border-b-2 border-neutral-300 pb-2">Current Available Time Slots</Heading>
+          <div className="grid gap-1">
+            <div className="flex justify-between">
+              <span>Monday</span>
+              <span>6:00 AM - 2:00 PM</span>
+            </div>
+            <div className="flex justify-between">
+              <span>Tuesday</span>
+              <span>6:00 AM - 2:00 PM</span>
+            </div>
+          </div>
+        </article>
+
+        <p>
+          We offer free makeovers to individuals living with HIV/AIDs and low income individuals to help improve their self-esteem. Provide free haircuts to senior citizens 65+, teachers, fire fighters, police officers, and veterans{' '}
+          <HighlightedText>every month</HighlightedText>.
+        </p>
+
+        <AnchorButton
+          text="APPLY"
+          href="https://docs.google.com/forms/d/e/1FAIpQLSfhp1mGMEWzJSX17i34Zz2Cv05hLyfuzIdLtIbakamIr5pIZw/viewform"
+          className="md:hidden w-fit"
+        />
+      </article>
+
+      <article className="grid gap-5">
+        <Title>Our Services</Title>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 place-items-center">
+          <WellnessShowcaseCard
+            src={`/${ASSET_VERSION}/wellnessHope/Wellness-1.webp`}
+            title="FACIAL AND BODY TREATMENTS"
+          />
+          <WellnessShowcaseCard
+            src={`/${ASSET_VERSION}/wellnessHope/Wellness-2.webp`}
+            title="HAIR SERVICES"
+          />
+          <WellnessShowcaseCard
+            src={`/${ASSET_VERSION}/wellnessHope/Wellness-3.webp`}
+            title="PERMANENT COSMETICS"
+          />
+        </div>
+      </article>
+
+      <article className="grid gap-5">
+        <Title>Holistic Assessment</Title>
+
+        <div className="grid grid-cols-1 md:grid-cols-[6fr_3fr] gap-5 items-center">
+          <div className="flex flex-col gap-5">
+            <p>
+              <Bold>The Source of Hope</Bold> Community Wellness Program, in partnership with{' '}
+              <Bold>Stone International Wellness Center</Bold>, is proud to offer free or reduced-cost holistic treatments for eligible individuals. Through this initiative, community members can schedule a variety of{' '}
+              <HighlightedText>rotating holistic treatments</HighlightedText>, updated every fourth quarter to better meet evolving needs.
+            </p>
+
+            <article className="bg-neutral-50 rounded-2xl shadow-sm p-5 grid gap-2">
+              <Heading className="border-b-2 border-neutral-300 pb-2">Eligible Individuals</Heading>
+              <div className="grid gap-1">
+                <div className="flex justify-between">Teachers & Mentors</div>
+                <div className="flex justify-between">Veterans</div>
+                <div className="flex justify-between">First Responders</div>
+                <div className="flex justify-between">Senior Citizens</div>
+              </div>
+            </article>
+
+            <p>
+              We are also excited to provide complimentary holistic assessments, previously valued at $250, to help you better understand your unique wellness needs. These assessments guide you toward the most suitable treatments offered through our partnership with{' '}
+              <Bold>Stone International Wellness Center</Bold>, reinforcing our shared commitment to supporting the community&apos;s complete well-being.
+            </p>
+          </div>
+
+          <div className="flex flex-col gap-5">
+            <div className="relative h-full w-full group overflow-hidden rounded-xl text-accent-background aspect-square shadow-lg">
+              <img
+                src={`/${ASSET_VERSION}/wellnessHope/WH-ResourceTile.webp`}
+                alt="Holistic wellness care"
+                className="w-full h-full object-cover brightness-[.85] contrast-[1.1]"
+              />
+              <div className="absolute bottom-0 h-[60%] w-full bg-gradient-to-t from-black/60 to-transparent rounded-xl">
+                <div className="absolute bottom-0 w-full p-5 text-neutral-50">
+                  <p className="text-sm uppercase font-semibold">Holistic Wellness</p>
+                  <p className="text-lg font-bold">Caring for the whole community</p>
+                </div>
+              </div>
+            </div>
+            <AnchorButton
+              text="APPLY"
+              href="https://docs.google.com/forms/d/e/1FAIpQLSfhp1mGMEWzJSX17i34Zz2Cv05hLyfuzIdLtIbakamIr5pIZw/viewform"
+            />
+          </div>
+        </div>
+      </article>
+    </section>
+  );
+}
+
+function WellnessShowcaseCard({ 
+  title, 
+  src, 
+  alt 
+}: { 
+  title: string; 
+  src: string; 
+  alt?: string; 
+}) {
+  return (
+    <article className="relative w-full">
+      <img
+        src={src}
+        alt={alt || title}
+        className="w-full aspect-square bg-accent-900 rounded-2xl shadow-sm object-cover"
+      />
+      <div className="absolute flex bottom-0 p-5 px-10 h-1/4 w-full rounded-b-2xl bg-neutral-100 items-center justify-center">
+        <h2 className="w-fit h-fit text-balance text-center text-md font-semibold">
+          {title}
+        </h2>
+      </div>
+    </article>
   );
 }
