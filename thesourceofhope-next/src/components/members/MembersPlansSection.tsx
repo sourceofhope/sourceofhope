@@ -604,7 +604,16 @@ function CompanyPartnershipSection({ selectedId, onSelectId: setSelectedId, onJo
 }
 
 export default function MembersPlansSection() {
-  const [checkoutSelection, setCheckoutSelection] = useState(null);
+  type CheckoutSelection = {
+    type: "individual" | "company";
+    planId: string;
+    planName: string;
+    amount: number;
+    note: string;
+    makesPossible: string[];
+  };
+
+  const [checkoutSelection, setCheckoutSelection] = useState<CheckoutSelection | null>(null);
   const [individualAmount, setIndividualAmount] = useState(75);
   const [selectedCompanyId, setSelectedCompanyId] = useState("partner");
 

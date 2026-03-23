@@ -82,7 +82,7 @@ export async function POST(request: Request) {
             return NextResponse.json({ error: 'Stripe configuration missing' }, { status: 500 });
         }
 
-        const stripe = new Stripe(stripeSecretKey);
+        const stripe = new Stripe(stripeSecretKey, { apiVersion: '2022-11-15' } as any);
         const body = (await request.json()) as MembershipRequestBody;
         const {
             membershipPlanId,
@@ -99,17 +99,16 @@ export async function POST(request: Request) {
 
         const isCompanyMembership = membershipType === 'company';
 
+        // Validate required fields
         if (!membershipType || !amount || !email) {
             return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
         }
-
         if (isCompanyMembership && (!companyName || !contactName)) {
             return NextResponse.json(
                 { error: 'Company name and contact name are required' },
                 { status: 400 },
             );
         }
-
         if (!isCompanyMembership && (!firstName || !lastName)) {
             return NextResponse.json(
                 { error: 'First name and last name are required' },
@@ -117,43 +116,53 @@ export async function POST(request: Request) {
             );
         }
 
-        if (!membershipPlanId || !(membershipPlanId in membershipProducts)) {
+        const productConfig = membershipProducts[membershipPlanId as MembershipPlanId];
+        if (!productConfig) {
             return NextResponse.json({ error: 'Invalid membership type' }, { status: 400 });
         }
 
-        const productConfig = membershipProducts[membershipPlanId];
         const membershipName = productConfig.name;
 
-        const customerMetadata = {
-            membership_type: membershipType,
-            ...(isCompanyMembership ? { contact_name: contactName || '', company_info: companyInfo || '' } : {}),
-        };
-
-        const existingCustomers = await stripe.customers.list({
-            email,
+        // Find or create customer
+        let customer;
+        const existingCustomers = await (stripe.customers.search as any)({
+            query: `email:"${email}"`,
             limit: 1,
         });
 
-        let customer: Stripe.Customer;
         if (existingCustomers.data.length > 0) {
-            customer = await stripe.customers.update(existingCustomers.data[0].id, {
+            customer = existingCustomers.data[0];
+            // Update customer info
+            customer = await stripe.customers.update(customer.id, {
                 name: isCompanyMembership ? companyName : `${firstName} ${lastName}`,
                 phone: phone || undefined,
-                metadata: customerMetadata,
+                metadata: {
+                    membership_type: membershipType,
+                    ...(isCompanyMembership
+                        ? { contact_name: contactName, company_info: companyInfo || '' }
+                        : {}),
+                },
             });
         } else {
             customer = await stripe.customers.create({
                 email,
                 name: isCompanyMembership ? companyName : `${firstName} ${lastName}`,
                 phone: phone || undefined,
-                metadata: customerMetadata,
+                metadata: {
+                    membership_type: membershipType,
+                    ...(isCompanyMembership
+                        ? { contact_name: contactName, company_info: companyInfo || '' }
+                        : {}),
+                },
             });
         }
 
-        let product: Stripe.Product;
+        // Check if the product exists or create it
+        let product;
         try {
-            product = await stripe.products.retrieve(productConfig.id) as Stripe.Product;
-        } catch {
+            product = await stripe.products.retrieve(productConfig.id);
+        } catch (retrieveErr) {
+            // Product doesn't exist, try to create it
             try {
                 product = await stripe.products.create({
                     id: productConfig.id,
@@ -164,28 +173,30 @@ export async function POST(request: Request) {
                         membership_type: membershipType,
                     },
                 });
-            } catch (createError) {
-                const code = typeof createError === 'object' && createError && 'code' in createError
-                    ? String((createError as { code?: string }).code)
-                    : '';
+            } catch (createErr) {
+                // If product already exists (race condition), retrieve it
+                const code = (createErr as any).code;
                 if (code === 'resource_already_exists') {
-                    product = await stripe.products.retrieve(productConfig.id) as Stripe.Product;
+                    product = await stripe.products.retrieve(productConfig.id);
                 } else {
-                    throw createError;
+                    throw createErr;
                 }
             }
         }
 
+        // Search for existing price for this product
         const prices = await stripe.prices.list({
             product: product.id,
+            recurring: { interval: 'month' },
             active: true,
             limit: 10,
         });
 
-        let price = prices.data.find((entry) => {
-            return entry.unit_amount === Math.round(amount * 100) && entry.recurring?.interval === 'month';
-        });
+        let price = prices.data.find(
+            (p) => p.unit_amount === Math.round(amount * 100)
+        );
 
+        // If price doesn't exist, create it
         if (!price) {
             price = await stripe.prices.create({
                 product: product.id,
@@ -200,36 +211,32 @@ export async function POST(request: Request) {
             });
         }
 
-        const subscriptionMetadata: Record<string, string> = {
-            membership_type: membershipType,
-            membership_name: membershipName,
-        };
+        // Create the subscription
+        const subscriptionMetadata: Record<string, string> = isCompanyMembership
+            ? {
+                  membership_type: membershipType,
+                  membership_name: membershipName,
+                  company_name: companyName || '',
+                  contact_name: contactName || '',
+                  company_info: companyInfo || '',
+                  contact_email: email,
+                  contact_phone: phone || '',
+              }
+            : {
+                  membership_type: membershipType,
+                  membership_name: membershipName,
+                  customer_name: `${firstName} ${lastName}`,
+                  customer_email: email,
+                  customer_phone: phone || '',
+              };
 
-        if (isCompanyMembership) {
-            subscriptionMetadata.company_name = companyName || '';
-            subscriptionMetadata.contact_name = contactName || '';
-            subscriptionMetadata.company_info = companyInfo || '';
-            subscriptionMetadata.contact_email = email;
-            subscriptionMetadata.contact_phone = phone || '';
-        } else {
-            subscriptionMetadata.customer_name = `${firstName} ${lastName}`;
-            subscriptionMetadata.customer_email = email;
-            subscriptionMetadata.customer_phone = phone || '';
-        }
-
-        const subscription = await (stripe.subscriptions.create as unknown as (params: Record<string, unknown>) => Promise<{
-            id: string;
-            customer: string;
-            latest_invoice?: {
-                id: string;
-                payment_intent?: {
-                    id: string;
-                    client_secret?: string | null;
-                } | string | null;
-            } | string | null;
-        }>)({
+        const subscription = await stripe.subscriptions.create({
             customer: customer.id,
-            items: [{ price: price.id }],
+            items: [
+                {
+                    price: price.id,
+                },
+            ],
             payment_behavior: 'default_incomplete',
             payment_settings: {
                 payment_method_types: ['card'],
@@ -237,19 +244,11 @@ export async function POST(request: Request) {
             },
             expand: ['latest_invoice.payment_intent'],
             metadata: subscriptionMetadata,
-        });
+        } as any);
 
-        const latestInvoice = typeof subscription.latest_invoice === 'string' || !subscription.latest_invoice
-            ? null
-            : subscription.latest_invoice;
-        const paymentIntent = latestInvoice && latestInvoice.payment_intent && typeof latestInvoice.payment_intent !== 'string'
-            ? latestInvoice.payment_intent
-            : null;
+        const paymentIntent = (subscription.latest_invoice as any).payment_intent;
 
-        if (!latestInvoice?.id || !paymentIntent?.id) {
-            throw new Error('Stripe did not return an invoice payment intent');
-        }
-
+        // Propagate metadata to the PaymentIntent so it appears on the Stripe dashboard transaction view
         await stripe.paymentIntents.update(paymentIntent.id, {
             metadata: subscriptionMetadata,
         });
@@ -258,7 +257,7 @@ export async function POST(request: Request) {
             clientSecret: paymentIntent.client_secret,
             subscriptionId: subscription.id,
             customerId: customer.id,
-            invoiceId: latestInvoice.id,
+            invoiceId: (subscription.latest_invoice as any).id,
         });
     } catch (error) {
         console.error('Membership subscription creation error:', error);

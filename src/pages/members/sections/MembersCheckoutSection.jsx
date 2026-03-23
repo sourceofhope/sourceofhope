@@ -198,6 +198,7 @@ export default function MembersCheckoutSection({ selection, onBack }) {
         throw new Error("Failed to load payment system");
       }
 
+      console.log("Stripe publishable key retrieved:", keyResponse.data.publishableKey);
       const stripe = await loadStripe(keyResponse.data.publishableKey);
       setStripePromise(stripe);
 

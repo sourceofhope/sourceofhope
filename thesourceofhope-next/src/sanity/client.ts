@@ -1,10 +1,13 @@
 import "server-only";
 import { createClient } from "next-sanity";
+import { getEnvironment } from "@/lib/environment";
 
-const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || "sgzdqn9z";
-const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || "production";
-const apiVersion = process.env.NEXT_PUBLIC_SANITY_API_VERSION || "2026-03-16";
-const token = process.env.SANITY_API_READ_TOKEN;
+const { sanityProjectId, sanityDataset, sanityApiVersion, sanityApiReadToken } = getEnvironment();
+
+const projectId = sanityProjectId || "sgzdqn9z";
+const dataset = sanityDataset || "production";
+const apiVersion = sanityApiVersion || "2026-03-16";
+const token = sanityApiReadToken;
 
 export const client = createClient({
   projectId,
