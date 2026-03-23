@@ -11,25 +11,25 @@ const STRIPE_WEB_HOOK_SECRET: Record<string, string> = {
 
 export function getEnvironment() {
   const config = {
-    stripeSecretKey: process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY,
-    stripeWebhookSecret: STRIPE_WEB_HOOK_SECRET[process.env.NEXT_PUBLIC_STRIPE_WEBHOOK_SECRET || "init"],
+    stripeSecretKey: process.env.STRIPE_SECRET_KEY,
+    stripeWebhookSecret: STRIPE_WEB_HOOK_SECRET[process.env.STRIPE_WEBHOOK_SECRET || "init"],
     stripePublishableKey: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
-    stripeSalesTaxRateId: process.env.NEXT_PUBLIC_STRIPE_SALES_TAX_RATE_ID,
+    stripeSalesTaxRateId: process.env.STRIPE_SALES_TAX_RATE_ID,
 
-    databaseUrl: process.env.NEXT_PUBLIC_DATABASE_URL,
+    databaseUrl: process.env.DATABASE_URL,
 
     frontendUrl: process.env.NEXT_PUBLIC_FRONTEND_URL,
 
     paypalClientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID,
-    paypalClientSecret: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_SECRET,
-    paypalApiUrl: PAYPAL_API_LOCATION[process.env.NEXT_PUBLIC_PAYPAL_API || "development"],
+    paypalClientSecret: process.env.PAYPAL_CLIENT_SECRET,
+    paypalApiUrl: PAYPAL_API_LOCATION[process.env.PAYPAL_API || "development"],
 
-    resendKey: process.env.NEXT_PUBLIC_RESEND_API_KEY,
+    resendKey: process.env.RESEND_API_KEY,
 
     sanityProjectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
     sanityDataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
     sanityApiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION,
-    sanityApiReadToken: process.env.NEXT_PUBLIC_SANITY_API_READ_TOKEN,
+    sanityApiReadToken: process.env.SANITY_API_READ_TOKEN,
   };
 
   return config;
