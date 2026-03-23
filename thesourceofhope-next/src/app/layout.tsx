@@ -63,8 +63,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         
         {/* Font Loading Script */}
-        <Script
-          strategy="beforeInteractive"
+        <script
           dangerouslySetInnerHTML={{
             __html: `
               window.run = window.run || function () {};
@@ -73,9 +72,8 @@ export default function RootLayout({
         />
 
         {/* Structured Data */}
-        <Script
+        <script
           type="application/ld+json"
-          strategy="beforeInteractive"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
