@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Script from "next/script";
 import { Montserrat, Urbanist } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
@@ -61,7 +60,7 @@ export default function RootLayout({
         {/* Fonts */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        
+
         {/* Font Loading Script */}
         <script
           dangerouslySetInnerHTML={{
@@ -88,22 +87,9 @@ export default function RootLayout({
             }),
           }}
         />
-      </head>
-      <body className={`${urbanist.variable} ${montserrat.variable} antialiased bg-neutral-50 font-inter text-neutral-900`}>
-        {/* Google Tag Manager (noscript) */}
-        <noscript>
-          <iframe
-            src="https://www.googletagmanager.com/ns.html?id=GTM-P9G4WGS3"
-            height="0"
-            width="0"
-            style={{ display: "none", visibility: "hidden" }}
-          />
-        </noscript>
-        
+
         {/* Google Tag Manager Script */}
-        <Script
-          id="gtm-init"
-          strategy="afterInteractive"
+        <script
           dangerouslySetInnerHTML={{
             __html: `
               (function (w, d, s, l, i) {
@@ -119,6 +105,17 @@ export default function RootLayout({
             `,
           }}
         />
+      </head>
+      <body className={`${urbanist.variable} ${montserrat.variable} antialiased bg-neutral-50 font-inter text-neutral-900`}>
+        {/* Google Tag Manager (noscript) */}
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-P9G4WGS3"
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+          />
+        </noscript>
         
         <HeaderProvider>
           <StoreCartProvider>

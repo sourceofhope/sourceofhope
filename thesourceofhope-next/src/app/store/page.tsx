@@ -1,17 +1,27 @@
-import { Metadata } from "next";
+'use client';
 
-export const metadata: Metadata = {
-  title: "Store | The Source of Hope",
-  description: "Explore products and support The Source of Hope.",
-};
+import { useEffect } from 'react';
+import StorefrontProductSection from "@/components/store/StorefrontProductSection";
+import StorefrontFooterSection from "@/components/store/StorefrontFooterSection";
+import Cart from "@/components/store/Cart";
+import { useHeaderContext } from "@/context/HeaderContext";
 
 export default function Store() {
+  const headerContext = useHeaderContext();
+  const setIsBlocking = headerContext?.setIsBlocking;
+
+  useEffect(() => {
+    if (setIsBlocking) {
+      setIsBlocking(true);
+      return () => setIsBlocking(false);
+    }
+  }, [setIsBlocking]);
+
   return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold">Store</h1>
-        <p className="text-gray-600 mt-4">Coming soon...</p>
-      </div>
-    </div>
+    <>
+      <Cart />
+      <StorefrontProductSection />
+      <StorefrontFooterSection />
+    </>
   );
 }

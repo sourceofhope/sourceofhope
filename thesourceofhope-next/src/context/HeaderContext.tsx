@@ -12,6 +12,7 @@ interface HeaderContextType {
   bannerActive?: boolean;
   banner?: Banner | null;
   setBannerActive?: (active: boolean) => void;
+  setIsBlocking?: (active: boolean) => void;
 }
 
 const HeaderContext = createContext<HeaderContextType | undefined>(undefined);
@@ -19,7 +20,7 @@ const HeaderContext = createContext<HeaderContextType | undefined>(undefined);
 export function HeaderProvider({ children }: { children: React.ReactNode }) {
   const [banner] = useState<Banner | null>(null);
   const [bannerActive, setBannerActive] = useState(false);
-  const [isBlocking] = useState(false);
+  const [isBlocking, setIsBlocking] = useState(false);
 
   return (
     <HeaderContext.Provider
@@ -28,6 +29,7 @@ export function HeaderProvider({ children }: { children: React.ReactNode }) {
         bannerActive,
         banner,
         setBannerActive,
+        setIsBlocking,
       }}
     >
       {children}
