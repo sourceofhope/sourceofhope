@@ -30,14 +30,14 @@ interface Team extends SanityDocument {
 const TEAM_ORDER = [
   "Executive Board",
   "Director Board",
-  "Interns Spring 2026",
-  "Interns Fall 2025",
-  "Interns Summer 2025",
+  "EPP Spring 2026",
+  "EPP Fall 2025",
+  "EPP Summer 2025",
   "Advisory Spring 2025",
-  "Interns Spring 2025",
-  "Interns Fall 2024",
-  "Interns Summer 2024",
-  "Interns Spring 2024",
+  "EPP Spring 2025",
+  "EPP Fall 2024",
+  "EPP Summer 2024",
+  "EPP Spring 2024",
 ];
 
 export const metadata: Metadata = {
@@ -48,29 +48,28 @@ export const metadata: Metadata = {
 
 // Helper function to sort teams by preferred order
 function sortTeamsByOrder(teams: Team[]): Team[] {
+  // Create a map for O(1) lookups instead of O(n) indexOf calls
+  const teamIndexMap = new Map<string, number>();
+  TEAM_ORDER.forEach((name, index) => {
+    teamIndexMap.set(name.toLowerCase().trim(), index);
+  });
+
   return teams.sort((a, b) => {
-    // Normalize names for comparison (case-insensitive, trimmed)
-    const normalizeName = (name: string) => name.toLowerCase().trim();
-    const normalizeOrderName = (name: string) => name.toLowerCase().trim();
+    const aIndex = teamIndexMap.get(a.name.toLowerCase().trim());
+    const bIndex = teamIndexMap.get(b.name.toLowerCase().trim());
     
-    const normalizedAName = normalizeName(a.name);
-    const normalizedBName = normalizeName(b.name);
-    
-    const normalizedOrder = TEAM_ORDER.map(normalizeOrderName);
-    
-    const indexA = normalizedOrder.indexOf(normalizedAName);
-    const indexB = normalizedOrder.indexOf(normalizedBName);
-
-    // Teams in TEAM_ORDER come first, in specified order
-    if (indexA !== -1 && indexB !== -1) {
-      return indexA - indexB;
+    // Both teams are in TEAM_ORDER - sort by their defined order
+    if (aIndex !== undefined && bIndex !== undefined) {
+      return aIndex - bIndex;
     }
-
-    // If only one is in TEAM_ORDER, it comes first
-    if (indexA !== -1) return -1;
-    if (indexB !== -1) return 1;
-
-    // If neither is in TEAM_ORDER, sort alphabetically
+    
+    // Only team A is in TEAM_ORDER - it comes first
+    if (aIndex !== undefined) return -1;
+    
+    // Only team B is in TEAM_ORDER - it comes first
+    if (bIndex !== undefined) return 1;
+    
+    // Neither is in TEAM_ORDER - sort alphabetically
     return a.name.localeCompare(b.name);
   });
 }

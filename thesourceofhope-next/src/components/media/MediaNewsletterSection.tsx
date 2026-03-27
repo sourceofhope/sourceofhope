@@ -164,10 +164,8 @@ function CarouselCard({ post }: { post: Post }) {
         <h2 className="line-clamp-2 text-base font-semibold leading-tight transition-colors duration-300">
           {post.acf?.title}
         </h2>
-        <div className="w-fit">
-          <ExpressiveAnchor href={post.acf?.url || '#'}>
-            Read newsletter
-          </ExpressiveAnchor>
+        <div className="w-fit text-sm font-semibold text-blue-400 group-hover:text-blue-300 transition-colors duration-300">
+          Read newsletter
         </div>
       </div>
     </a>
