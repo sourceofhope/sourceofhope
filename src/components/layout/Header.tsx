@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useHeaderContext } from "@/context/HeaderContext";
 import {
@@ -65,10 +66,7 @@ export default function Header() {
   const pathname = usePathname();
 
   const header = useHeaderContext() ?? {};
-  const {
-    isBlocking = false,
-    bannerActive = false,
-  } = header;
+  const { isBlocking = false, bannerActive = false } = header;
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 0);
@@ -106,15 +104,13 @@ export default function Header() {
               : `bg-transparent ${open ? "border-b-4" : ""} ${
                   isBlocking ? "text-primary-800" : "text-neutral-50"
                 }`
-          }`}
-      >
+          }`}>
         <section className="flex gap-5 h-15 md:h-20 w-full items-center justify-between px-5 lg:px-35">
           <Link
             href="/"
             onClick={() => setOpen(false)}
             aria-label="Go Home"
-            className="!no-underline h-full flex gap-5 flex-row items-center w-fit z-0 overflow-clip"
-          >
+            className="!no-underline h-full flex gap-5 flex-row items-center w-fit z-0 overflow-clip">
             <Favicon />
             <h1 className="font-bold hidden lg:block whitespace-nowrap text-ellipsis overflow-hidden">
               THE SOURCE OF HOPE
@@ -131,13 +127,11 @@ export default function Header() {
         <div
           className={`md:hidden transition-opacity duration-500 ease-out ${
             open ? "opacity-100" : "opacity-0 pointer-events-none"
-          }`}
-        >
+          }`}>
           {open && (
             <nav
               className="flex flex-col justify-end items-center px-5 pb-5 h-fit"
-              aria-label="Mobile"
-            >
+              aria-label="Mobile">
               <HeaderNavigator isMobile={true} open={open} />
             </nav>
           )}
@@ -149,17 +143,36 @@ export default function Header() {
 
 function Favicon() {
   return (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
-      src={`/${ASSET_VERSION}/core/TSOH-Logo.webp`}
-      alt="The Source of Hope"
-      className="h-12 w-12 object-contain"
-    />
+    <Icon className={`size-8 md:size-10`}>
+      <Image
+        src={`/${ASSET_VERSION}/core/TSOH-Favicon.webp`}
+        alt="The Source of Hope logo"
+        width={40}
+        height={40}
+        className="w-full h-full object-contain rounded-lg"
+        draggable={false}
+      />
+    </Icon>
   );
 }
 
-function Icon({ children }: { children: React.ReactNode }) {
-  return <>{children}</>;
+function Icon({
+  className,
+  children,
+}: {
+  className?: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div
+      aria-hidden="true"
+      className={`
+        flex items-center justify-center select-none
+        ${className}
+      `}>
+      {children}
+    </div>
+  );
 }
 
 function HeaderBanner({ onClose }: { onClose: () => void }) {
@@ -170,14 +183,12 @@ function HeaderBanner({ onClose }: { onClose: () => void }) {
     <div
       className="flex gap-3 justify-between md:justify-center h-15 md:h-10 items-center px-5 lg:px-35 bg-accent-500 border-b-2 text-neutral-50 border-accent-700 fixed top-0 left-0 right-0 z-[9998] w-full overflow-hidden"
       role="region"
-      aria-label="Site banner"
-    >
+      aria-label="Site banner">
       <a
         href={bannerLink}
         target="_blank"
         rel="noopener noreferrer"
-        className="hover:underline font-semibold"
-      >
+        className="hover:underline font-semibold">
         {bannerText}
       </a>
 
@@ -185,8 +196,7 @@ function HeaderBanner({ onClose }: { onClose: () => void }) {
         type="button"
         className="justify-self-end z-[9999]"
         aria-label="Close banner"
-        onClick={onClose}
-      >
+        onClick={onClose}>
         <Icon>
           <XMarkIcon className="w-6 h-6" aria-hidden="true" />
         </Icon>
@@ -208,8 +218,7 @@ function HeaderMenu({
       className="block md:hidden"
       onClick={() => setOpen(!open)}
       aria-expanded={open}
-      aria-label={open ? "Close menu" : "Open menu"}
-    >
+      aria-label={open ? "Close menu" : "Open menu"}>
       <Icon>
         {open ? (
           <XMarkIcon className="w-6 h-6" aria-hidden="true" />
@@ -288,8 +297,7 @@ function DesktopNavigatorItem({
         href={href}
         onMouseEnter={() => setHovering(label)}
         onMouseLeave={() => setHovering(null)}
-        className={`!no-underline group transition-[color_transform] ease-in-out duration-300 inline-flex w-full justify-between items-center gap-1 focus:outline-none ${className}`}
-      >
+        className={`!no-underline group transition-[color_transform] ease-in-out duration-300 inline-flex w-full justify-between items-center gap-1 focus:outline-none ${className}`}>
         <span>{label}</span>
         <Icon>
           <ChevronRightIcon
@@ -317,14 +325,12 @@ function DesktopNavigatorItem({
             isOpen
               ? "opacity-100 pointer-events-auto"
               : "opacity-0 -translate-y-1 pointer-events-none"
-          } absolute hidden md:flex z-50 transition-[opacity_transform] delay-150 duration-300 bg-neutral-50 min-w-40 w-max rounded-lg p-3 py-5 shadow-md text-accent-800 flex-col font-semibold text-sm`}
-        >
+          } absolute hidden md:flex z-50 transition-[opacity_transform] delay-150 duration-300 bg-neutral-50 min-w-40 w-max rounded-lg p-3 py-5 shadow-md text-accent-800 flex-col font-semibold text-sm`}>
           {children.map(({ label: childLabel, href: childHref }) => (
             <Link
               className="py-2.5 hover:bg-neutral-200 duration-300 transition-colors !no-underline px-3 rounded-md"
               key={childHref}
-              href={childHref}
-            >
+              href={childHref}>
               {childLabel}
             </Link>
           ))}
@@ -334,13 +340,7 @@ function DesktopNavigatorItem({
   );
 }
 
-function MobileNavigator({
-  links,
-  open,
-}: {
-  links: NavLink[];
-  open: boolean;
-}) {
+function MobileNavigator({ links, open }: { links: NavLink[]; open: boolean }) {
   interface StackItem {
     title: string;
     href: string | null;
@@ -391,15 +391,13 @@ function MobileNavigator({
       <div
         className={`transition-opacity duration-200 ease-out ${
           visible ? "opacity-100" : "opacity-0"
-        }`}
-      >
+        }`}>
         {canGoBack && (
           <button
             type="button"
             onClick={goBack}
             className="py-2.5 w-full group font-bold inline-flex items-center justify-between gap-2"
-            aria-label="Back"
-          >
+            aria-label="Back">
             <span>{stack[stack.length - 2]?.title || "BACK"}</span>
             <Icon>
               <ChevronRightIcon
@@ -423,8 +421,7 @@ function MobileNavigator({
                     event.preventDefault();
                     openChildren(item);
                   }
-                }}
-              >
+                }}>
                 <span className="text-left">{item.label}</span>
                 <Icon>
                   <ChevronRightIcon

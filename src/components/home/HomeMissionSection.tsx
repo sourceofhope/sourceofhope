@@ -26,10 +26,10 @@ export default function HomeMissionSection() {
           Our Mission
         </Title>
         <Blockquote className="text-md md:text-lg md:text-justify">
-          &quot;Bringing hope and healing by providing <Emphasis>meals</Emphasis>,{" "}
-          <Emphasis>education</Emphasis>, <Emphasis>wellness</Emphasis>, and{" "}
-          <Emphasis>resources</Emphasis> that uplift and empower communities in
-          need.&quot;
+          &quot;Bringing hope and healing by providing{" "}
+          <Emphasis>meals</Emphasis>, <Emphasis>education</Emphasis>,{" "}
+          <Emphasis>wellness</Emphasis>, and <Emphasis>resources</Emphasis> that
+          uplift and empower communities in need.&quot;
         </Blockquote>
         <p className="text-md md:text-lg pl-5 w-fit">
           <ExpressiveAnchor href="https://www.linkedin.com/in/quynh-chau-qc-stone-87185b34/">
