@@ -1,8 +1,7 @@
 import Title from "@/components/ui/Title";
 import Emphasis from "@/components/ui/Emphasis";
 import ExpressiveLink from "@/components/ui/ExpressiveLink";
-import { ArrowRightIcon } from "@heroicons/react/20/solid";
-import Link from "next/link";
+import PageSection from "@/components/ui/PageSection";
 
 const ASSET_VERSION = "v2";
 
@@ -13,22 +12,15 @@ interface ResourceCardProps {
   image: string;
 }
 
-function HomeResourceCard({
-  title,
-  href,
-  description,
-  image,
-}: ResourceCardProps) {
+function HomeResourceCard({ title, href, description, image }: ResourceCardProps) {
   return (
-    <Link
-      href={href}
-      className="no-underline! group relative flex flex-col gap-4 rounded-lg overflow-hidden bg-neutral-100 hover:shadow-sm transition duration-700">
-      <div className="relative h-80 overflow-hidden">
+    <div className="group flex flex-col gap-4 rounded-lg overflow-hidden bg-neutral-100 hover:shadow-lg transition">
+      <div className="relative h-48 overflow-hidden">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={image}
           alt={title}
-          className="w-full h-full object-cover group-hover:scale-105 transition duration-700"
+          className="w-full h-full object-cover group-hover:scale-105 transition"
           loading="lazy"
         />
       </div>
@@ -37,28 +29,25 @@ function HomeResourceCard({
           {title}
         </h3>
         <p className="text-sm text-neutral-700 line-clamp-3">{description}</p>
+        <ExpressiveLink to={href} className="text-sm">
+          Learn More
+        </ExpressiveLink>
       </div>
-      <div className="absolute right-5 top-5 p-1 rounded-full bg-black/70 h-fit w-fit text-neutral-50">
-        <ArrowRightIcon
-          className="w-[1em] h-[1em] transition-transform ease-in-out duration-750 group-hover:translate-x-0.5"
-          aria-hidden="true"
-        />
-      </div>
-    </Link>
+    </div>
   );
 }
 
 export default function HomeResourcesSection() {
   return (
-    <section className="grid gap-8 py-5 px-5 md:px-15 w-full md:mb-15 p-5 md:py-10">
-      <Title className="text-center text-balance text-2xl md:text-3xl">
+    <PageSection className="w-full md:mb-15 p-5 md:py-10 lg:px-15">
+      <Title className="mb-10 text-center text-balance text-2xl md:text-3xl">
         We provide a number of{" "}
-        <ExpressiveLink disableArrow to="/serve">
-          <Emphasis className="no-underline!">resources</Emphasis>
+        <ExpressiveLink to="/serve">
+          <Emphasis>resources</Emphasis>
         </ExpressiveLink>{" "}
         to our community.
       </Title>
-      <div className="w-full grid grid-flow-row md:grid-cols-3 gap-10">
+      <div className="w-full grid grid-flow-row md:grid-cols-3 gap-5 md:gap-10">
         <HomeResourceCard
           title="Education For Hope"
           href="/serve/educationHope"
@@ -96,6 +85,6 @@ export default function HomeResourcesSection() {
           image={`/${ASSET_VERSION}/internationalHope/IH-ResourceTile.webp`}
         />
       </div>
-    </section>
+    </PageSection>
   );
 }

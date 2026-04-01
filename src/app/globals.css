@@ -65,16 +65,11 @@
 }
 
 html {
-  background-color: rgb(var(--color-primary-500));
   scroll-behavior: smooth;
 }
 
-a:hover {
-  text-decoration: underline;
-}
-
 body {
-  background-color: rgb(var(--color-primary-500));
+  background-color: rgb(245, 247, 251);
   color: rgb(17, 24, 39);
   font-family: var(--font-inter);
 }

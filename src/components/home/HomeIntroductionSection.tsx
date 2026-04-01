@@ -33,7 +33,8 @@ export default function HomeIntroductionSection() {
           WebkitMaskImage:
             "linear-gradient(to bottom, white 80%, transparent 100%)",
           maskImage: "linear-gradient(to bottom, white 80%, transparent 100%)",
-        }}>
+        }}
+      >
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           src={`/${ASSET_VERSION}/core/TSOH-Poster.webp`}
@@ -57,7 +58,8 @@ export default function HomeIntroductionSection() {
                   videoRef.current.classList.add("opacity-100");
                 }
               }}
-              onError={() => setVideoFailed(true)}>
+              onError={() => setVideoFailed(true)}
+            >
               <source
                 src={`/${ASSET_VERSION}/core/TSOH-Poster.webm`}
                 type="video/webm"
@@ -85,9 +87,13 @@ export default function HomeIntroductionSection() {
           <AnchorButton
             className="w-fit"
             href="https://donate.stripe.com/8wM5kHal16fC4so8ww"
-            text="DONATE"
+            text="DONATE NOW"
           />
-          <LinkButton className="w-fit" href="/about" text="OUR MISSION" />
+          <LinkButton
+            className="w-fit"
+            href="/about"
+            text="OUR MISSION"
+          />
         </div>
       </div>
     </section>
