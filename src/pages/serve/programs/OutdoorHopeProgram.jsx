@@ -1,0 +1,227 @@
+import { Helmet } from "react-helmet-async";
+import { useHeaderContext } from "../../../context/HeaderContext";
+import { useEffect } from "react";
+import Carousel from "../../../components/ui/Carousel";
+import Title from "../../../components/ui/text/Title";
+import Heading from "../../../components/ui/text/Heading";
+import ExpressiveCard from "../../../components/ui/expressive/ExpressiveCard";
+import Blockquote from "../../../components/ui/text/Blockquote";
+import { ASSET_VERSION, CANONICAL_URL } from "../../../routes";
+import Bold from "../../../components/ui/text/Bold";
+import ExpressiveAnchor from "../../../components/ui/expressive/ExpressiveAnchor";
+import { HighlightedText } from "../../../components/ui/expressive/ExpressiveText";
+
+export default function OutdoorHopeProgram() {
+  const { setIsBlocking } = useHeaderContext();
+
+  useEffect(() => {
+    setIsBlocking(true);
+    return () => setIsBlocking(false);
+  }, [setIsBlocking]);
+
+  return (
+    <>
+      <Helmet>
+        <title>Hope for the Great Outdoors Program | The Source of Hope</title>
+        <meta
+          name="description"
+          content="Discover The Source of Hope’s Hope for the Great Outdoors Program—connecting youth and families with nature through camping, fishing, hunting, survival skills, and outdoor education. Building confidence, leadership, and respect for the environment."
+        />
+        <link rel="canonical" href={CANONICAL_URL.outdoorHope} />
+
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={CANONICAL_URL.outdoorHope} />
+        <meta
+          property="og:title"
+          content="Hope for the Great Outdoors Program | The Source of Hope"
+        />
+        <meta
+          property="og:description"
+          content="Join Hope for the Great Outdoors—an outdoor education and leadership program offering camping, fishing, hunting, survival skills, and environmental stewardship experiences for youth and families."
+        />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content={CANONICAL_URL.outdoorHope} />
+        <meta
+          name="twitter:title"
+          content="Hope for the Great Outdoors Program | The Source of Hope"
+        />
+        <meta
+          name="twitter:description"
+          content="Experience nature with purpose through The Source of Hope’s Hope for the Great Outdoors Program—teaching life skills, confidence, leadership, and environmental stewardship through outdoor adventures."
+        />
+      </Helmet>
+
+      <section className="w-full md:justify-items-left items-center grid gap-5 pt-25 p-5 lg:px-35 text-sm md:text-md lg:text-lg">
+        <article className="grid gap-3 justify-self-start justify-start">
+          <Title>Hope For The Outdoors</Title>
+          <Heading>Teaching our Community</Heading>
+        </article>
+        <article className="grid gap-5">
+          <p>
+            At <Bold>The Source of Hope</Bold>, we are excited to introduce{" "}
+            <Bold>Hope for the Great Outdoors</Bold>, a program dedicated to
+            bringing{" "}
+            <HighlightedText>
+              outdoor experiences and education to our community
+            </HighlightedText>
+            . Many individuals, especially those from urban backgrounds, may
+            never have had the opportunity to explore nature. Our initiative
+            aims to bridge that gap by offering{" "}
+            <Bold>
+              hands-on learning and immersive outdoor experiences in a safe
+            </Bold>
+            , inclusive, and supportive environment.
+          </p>
+          <p>
+            Led by our founder, Wesley Stone, a retired wildlife biologist, this
+            program provides valuable education on camping, fishing, hunting,
+            and outdoor survival skills. Whether you're a beginner or an outdoor
+            enthusiast, this initiative is designed to inspire confidence in
+            nature while fostering a{" "}
+            <Bold>deep respect for wildlife and the environment.</Bold>
+          </p>
+          <p>
+            Email us at{" "}
+            <a
+              href="mailto:info@thesourceofhope.org"
+              className="text-accent-500">
+              info@thesourceofhope.org
+            </a>{" "}
+            to get involved.
+          </p>
+        </article>
+        <article className="bg-neutral-50 rounded-2xl shadow-sm p-5 grid gap-5 w-full">
+          <Heading className="border-b-2 border-neutral-300 pb-2">
+            Get Involved
+          </Heading>
+          <div className="grid gap-5 md:grid-cols-[2fr_7fr]">
+            <span className="font-medium">Volunteer</span>
+            <span className="text-neutral-600">
+              Help us organize and lead outdoor activities, no experience
+              required, just a passion for nature and community
+            </span>
+          </div>
+          <div className="grid gap-5 md:grid-cols-[2fr_7fr]">
+            <span className="font-medium">Sponsor</span>
+            <span className="text-neutral-600">
+              Support our mission by providing funding or outdoor gear to make
+              these experiences accessible to more people
+            </span>
+          </div>
+        </article>
+        <article className="grid gap-5">
+          <Title>What We Offer</Title>
+          <p>
+            Our approach to responsible hunting ensures that participants
+            understand the ethics of conservation, hunting only for sustenance,
+            following proper harvesting techniques, and respecting wildlife
+            habitats.
+          </p>
+          <ExpressiveCard title="Outdoor Skills Training">
+            <p>
+              Learn essential survival techniques, including fire-building,
+              shelter construction, and navigation
+            </p>
+          </ExpressiveCard>
+          <ExpressiveCard title="Hunting & Conservation Education">
+            <p>
+              Gain hands-on experience with bow and arrow training, hunting
+              calendars, and firearm safety classes
+            </p>
+          </ExpressiveCard>
+          <ExpressiveCard title="Fishing & Wildlife Exploration">
+            <p>
+              Discover fishing techniques, responsible angling, and an
+              understanding of local ecosystems
+            </p>
+          </ExpressiveCard>
+          <ExpressiveCard title="Annual Community Camping Trip">
+            <p>
+              A tradition that brings together The Source of Hope family for
+              bonding, learning, and adventure
+            </p>
+          </ExpressiveCard>
+        </article>
+        <article className="grid gap-5">
+          <Title>Program Benefits</Title>
+          <div className="grid grid-flow-row md:grid-cols-[6fr_3fr] gap-5 items-center">
+            <div className="flex flex-col gap-5 col-start-auto md:col-start-1">
+              <p>
+                Wesley will guide the community through proper hunting
+                practices, including bow and arrow education, hunting calendars,
+                and gun safety classes. We place a strong emphasis on
+                responsible hunting, as it is crucial for us to respect and
+                <HighlightedText>
+                  preserve our natural environment
+                </HighlightedText>
+                . Participants will learn the importance of harvesting animals
+                correctly and only hunting what they eat.
+              </p>
+              <Blockquote className="border-accent-600">
+                Interested in safe gun handling or who would like to improve
+                their skills? Check out{" "}
+                <ExpressiveAnchor
+                  inText
+                  className="text-accent-500 text-sm md:text-md lg:text-lg"
+                  href="https://texasgunsafety.com/about/">
+                  Texas Gun Safety
+                </ExpressiveAnchor>
+                to learn more about how to operate a firearm carefully!
+              </Blockquote>
+              <p>
+                We'll bring <Bold>The Source of Hope</Bold> family together for
+                an annual camping trip each year, offering a unique chance to
+                <HighlightedText>bond and learn!</HighlightedText>
+              </p>
+            </div>
+            <Carousel hideControls auto>
+              <CarouselCard
+                src={`/${ASSET_VERSION}/outdoorHope/OH-Carousel-1.webp`}
+              />
+              <CarouselCard
+                src={`/${ASSET_VERSION}/outdoorHope/OH-Carousel-2.webp`}
+              />
+              <CarouselCard
+                src={`/${ASSET_VERSION}/outdoorHope/OH-Carousel-3.webp`}
+              />
+              <CarouselCard
+                src={`/${ASSET_VERSION}/outdoorHope/OH-Carousel-4.webp`}
+              />
+              <CarouselCard
+                src={`/${ASSET_VERSION}/outdoorHope/OH-Carousel-5.webp`}
+              />
+            </Carousel>
+          </div>
+        </article>
+      </section>
+    </>
+  );
+}
+
+function CarouselCard({
+  src = `/${ASSET_VERSION}/core/TSOH-Family.webp`,
+  alt,
+}) {
+  return (
+    <button
+      className="
+    relative h-full
+    group overflow-hidden rounded-2xl text-accent-background aspect-square
+  ">
+      <img
+        src={src}
+        alt={alt}
+        className="w-full h-full object-cover transition-transform brightness-[.8] contrast-[1.1]"
+      />
+      <div className="absolute bottom-0 bg-gradient-to-t from-black/60 to-transparent rounded-2xl h-[60%] w-full text-left">
+        <div className="absolute bottom-0 w-full p-5 text-neutral-50">
+          <p className="text-sm uppercase font-semibold">
+            Hope for The Great Outdoors
+          </p>
+          <p className="text-lg font-bold">Empowering exploration.</p>
+        </div>
+      </div>
+    </button>
+  );
+}
