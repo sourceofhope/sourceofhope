@@ -279,14 +279,22 @@ export default function SelfCheckoutSection({
             <h3 className="font-semibold text-neutral-900 mb-4">
               Contact Information
             </h3>
-            <input
-              type="email"
-              placeholder="Email"
-              value={formData.email}
-              onChange={(e) => handleInputChange('email', e.target.value)}
-              className="w-full px-4 py-2 border-2 border-neutral-300 rounded-lg focus:border-accent-500 focus:outline-none mb-4"
-              required
-            />
+            <div className="grid gap-1">
+              <label htmlFor="checkout-email" className="text-sm font-semibold text-neutral-800">
+                Email
+              </label>
+              <input
+                id="checkout-email"
+                name="email"
+                type="email"
+                autoComplete="email"
+                inputMode="email"
+                value={formData.email}
+                onChange={(e) => handleInputChange('email', e.target.value)}
+                className="w-full px-4 py-2 border-2 border-neutral-300 rounded-lg focus:border-accent-500 focus:outline-none mb-4"
+                required
+              />
+            </div>
           </div>
 
           {/* Shipping Address */}
@@ -296,57 +304,100 @@ export default function SelfCheckoutSection({
             </h3>
             <div className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="grid gap-1">
+                  <label htmlFor="checkout-first-name" className="text-sm font-semibold text-neutral-800">
+                    First Name
+                  </label>
+                  <input
+                    id="checkout-first-name"
+                    name="given-name"
+                    type="text"
+                    autoComplete="given-name"
+                    value={formData.firstName}
+                    onChange={(e) => handleInputChange('firstName', e.target.value)}
+                    className="w-full px-4 py-2 border-2 border-neutral-300 rounded-lg focus:border-accent-500 focus:outline-none"
+                    required
+                  />
+                </div>
+                <div className="grid gap-1">
+                  <label htmlFor="checkout-last-name" className="text-sm font-semibold text-neutral-800">
+                    Last Name
+                  </label>
+                  <input
+                    id="checkout-last-name"
+                    name="family-name"
+                    type="text"
+                    autoComplete="family-name"
+                    value={formData.lastName}
+                    onChange={(e) => handleInputChange('lastName', e.target.value)}
+                    className="w-full px-4 py-2 border-2 border-neutral-300 rounded-lg focus:border-accent-500 focus:outline-none"
+                    required
+                  />
+                </div>
+              </div>
+              <div className="grid gap-1">
+                <label htmlFor="checkout-address" className="text-sm font-semibold text-neutral-800">
+                  Street Address
+                </label>
                 <input
+                  id="checkout-address"
+                  name="address-line1"
                   type="text"
-                  placeholder="First Name"
-                  value={formData.firstName}
-                  onChange={(e) => handleInputChange('firstName', e.target.value)}
-                  className="w-full px-4 py-2 border-2 border-neutral-300 rounded-lg focus:border-accent-500 focus:outline-none"
-                  required
-                />
-                <input
-                  type="text"
-                  placeholder="Last Name"
-                  value={formData.lastName}
-                  onChange={(e) => handleInputChange('lastName', e.target.value)}
+                  autoComplete="address-line1"
+                  value={formData.address}
+                  onChange={(e) => handleInputChange('address', e.target.value)}
                   className="w-full px-4 py-2 border-2 border-neutral-300 rounded-lg focus:border-accent-500 focus:outline-none"
                   required
                 />
               </div>
-              <input
-                type="text"
-                placeholder="Street Address"
-                value={formData.address}
-                onChange={(e) => handleInputChange('address', e.target.value)}
-                className="w-full px-4 py-2 border-2 border-neutral-300 rounded-lg focus:border-accent-500 focus:outline-none"
-                required
-              />
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="grid gap-1">
+                  <label htmlFor="checkout-city" className="text-sm font-semibold text-neutral-800">
+                    City
+                  </label>
+                  <input
+                    id="checkout-city"
+                    name="address-level2"
+                    type="text"
+                    autoComplete="address-level2"
+                    value={formData.city}
+                    onChange={(e) => handleInputChange('city', e.target.value)}
+                    className="w-full px-4 py-2 border-2 border-neutral-300 rounded-lg focus:border-accent-500 focus:outline-none"
+                    required
+                  />
+                </div>
+                <div className="grid gap-1">
+                  <label htmlFor="checkout-state" className="text-sm font-semibold text-neutral-800">
+                    State / Province
+                  </label>
+                  <input
+                    id="checkout-state"
+                    name="address-level1"
+                    type="text"
+                    autoComplete="address-level1"
+                    value={formData.state}
+                    onChange={(e) => handleInputChange('state', e.target.value)}
+                    className="w-full px-4 py-2 border-2 border-neutral-300 rounded-lg focus:border-accent-500 focus:outline-none"
+                    required
+                  />
+                </div>
+              </div>
+              <div className="grid gap-1">
+                <label htmlFor="checkout-zip" className="text-sm font-semibold text-neutral-800">
+                  ZIP / Postal Code
+                </label>
                 <input
+                  id="checkout-zip"
+                  name="postal-code"
                   type="text"
-                  placeholder="City"
-                  value={formData.city}
-                  onChange={(e) => handleInputChange('city', e.target.value)}
-                  className="w-full px-4 py-2 border-2 border-neutral-300 rounded-lg focus:border-accent-500 focus:outline-none"
-                  required
-                />
-                <input
-                  type="text"
-                  placeholder="State / Province"
-                  value={formData.state}
-                  onChange={(e) => handleInputChange('state', e.target.value)}
+                  autoComplete="postal-code"
+                  inputMode="numeric"
+                  value={formData.zipCode}
+                  onChange={(e) => handleInputChange('zipCode', e.target.value)}
                   className="w-full px-4 py-2 border-2 border-neutral-300 rounded-lg focus:border-accent-500 focus:outline-none"
                   required
                 />
               </div>
-              <input
-                type="text"
-                placeholder="ZIP / Postal Code"
-                value={formData.zipCode}
-                onChange={(e) => handleInputChange('zipCode', e.target.value)}
-                className="w-full px-4 py-2 border-2 border-neutral-300 rounded-lg focus:border-accent-500 focus:outline-none"
-                required
-              />
             </div>
           </div>
 

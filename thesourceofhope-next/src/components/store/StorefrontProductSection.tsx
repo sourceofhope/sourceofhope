@@ -285,7 +285,7 @@ function ProductCard({ product }: { product: Product }) {
             </button>
           </div>
           <div className="flex flex-row justify-between">
-            <p className="text-base font-semibold text-primary-800">
+            <p className="text-md font-semibold text-primary-800">
               ${parseFloat(product.acf?.price || '0').toFixed(2)}
             </p>
           </div>

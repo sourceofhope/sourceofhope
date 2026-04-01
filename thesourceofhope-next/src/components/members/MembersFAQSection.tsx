@@ -35,7 +35,7 @@ export default function MembersFAQSection() {
           <article
             key={item.q}
             className="bg-neutral-100 rounded-2xl p-5 shadow-sm grid gap-2">
-            <Heading className="text-base">{item.q}</Heading>
+            <Heading className="text-md">{item.q}</Heading>
             <p className="text-sm text-neutral-700">{item.a}</p>
           </article>
         ))}

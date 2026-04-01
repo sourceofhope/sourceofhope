@@ -161,7 +161,7 @@ function CarouselCard({ post }: { post: Post }) {
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
       </div>
       <div className="relative flex flex-col gap-2 p-5 text-neutral-50">
-        <h2 className="line-clamp-2 text-base font-semibold leading-tight transition-colors duration-300">
+        <h2 className="line-clamp-2 text-md font-semibold leading-tight transition-colors duration-300">
           {post.acf?.title}
         </h2>
         <div className="w-fit text-sm font-semibold text-blue-400 group-hover:text-blue-300 transition-colors duration-300">

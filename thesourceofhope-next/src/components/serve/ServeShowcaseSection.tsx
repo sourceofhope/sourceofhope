@@ -7,7 +7,7 @@ import Bold from '@/components/ui/Bold';
 
 export default function ServeShowcaseSection() {
   return (
-    <PageSection className="justify-items-center grid gap-5 text-sm md:text-base lg:text-lg">
+    <PageSection className="justify-items-center grid gap-5 text-sm md:text-md lg:text-lg">
       <div className="grid gap-1 justify-self-start justify-start">
         <Title>Be the Source Of Hope</Title>
         <Heading>
@@ -32,8 +32,8 @@ export default function ServeShowcaseSection() {
           academic mentorship.
         </p>
         <Blockquote className="border-accent-600 text-balance max-w-2xl">
-          &quote;Give a man a fish, and you feed him for a day. Teach a man to fish,
-          and you feed him for a lifetime.&quote;
+          &quot;Give a man a fish, and you feed him for a day. Teach a man to fish,
+          and you feed him for a lifetime.&quot;
         </Blockquote>
         <p>
           By equipping individuals with practical tools and real-world
@@ -66,8 +66,8 @@ export default function ServeShowcaseSection() {
           mentorship.
         </p>
         <p className="pl-3 py-0 border-l-4 border-accent-600 text-balance">
-          &quote;Give a man a fish, and you feed him for a day. Teach a man to fish,
-          and you feed him for a lifetime.&quote;
+          &quot;Give a man a fish, and you feed him for a day. Teach a man to fish,
+          and you feed him for a lifetime.&quot;
         </p>
         <p>
           Every effort creates stronger families and thriving communities. True{' '}

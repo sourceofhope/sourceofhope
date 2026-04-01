@@ -294,7 +294,7 @@ function IndividualsMonthlySupportSection({ amount, onAmountChange, onJoin }: an
             <div className="flex items-end justify-between">
               <div className="text-3xl font-extrabold">
                 ${Number(amount || 0).toFixed(0)}
-                <span className="text-base font-semibold text-neutral-600">
+                <span className="text-md font-semibold text-neutral-600">
                   /mo
                 </span>
               </div>
@@ -368,7 +368,7 @@ function CompanyPlanCard({ plan, isSelected, onSelect, onJoin }: any) {
       <div className="flex items-end justify-between">
         <div className="text-3xl font-extrabold">
           ${plan.priceMonthly}
-          <span className="text-base font-semibold text-neutral-600">/mo</span>
+          <span className="text-md font-semibold text-neutral-600">/mo</span>
         </div>
         <p className="text-xs text-neutral-600">Cancel anytime</p>
       </div>
@@ -525,7 +525,7 @@ function CompanyPartnershipSection({ selectedId, onSelectId: setSelectedId, onJo
             <div className="flex items-end justify-between">
               <div className="text-3xl font-extrabold">
                 ${selectedPlan.priceMonthly}
-                <span className="text-base font-semibold text-neutral-600">
+                <span className="text-md font-semibold text-neutral-600">
                   /mo
                 </span>
               </div>

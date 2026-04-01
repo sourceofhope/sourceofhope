@@ -217,7 +217,7 @@ export default function CheckoutSuccessPage() {
             </svg>
           </div>
           <Heading className="mb-4">Payment Processing</Heading>
-          <p className="text-neutral-700 mb-6 text-sm md:text-base">
+          <p className="text-neutral-700 mb-6 text-sm md:text-md">
             Your payment is being processed. You'll receive an email confirmation once it's complete.
           </p>
           <button
@@ -246,7 +246,7 @@ export default function CheckoutSuccessPage() {
             </svg>
           </div>
           <Heading className="mb-4">Payment Error</Heading>
-          <p className="text-neutral-700 mb-6 text-sm md:text-base">
+          <p className="text-neutral-700 mb-6 text-sm md:text-md">
             There was an issue processing your payment. Please try again or contact support.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -277,14 +277,14 @@ export default function CheckoutSuccessPage() {
 
         <Heading className="mb-4">Order Successful!</Heading>
 
-        <p className="text-neutral-700 mb-6 text-sm md:text-base text-left">
+        <p className="text-neutral-700 mb-6 text-sm md:text-md text-left">
           Thank you for your purchase! We've received your order and will send you a confirmation email
           shortly.
         </p>
 
         <div className="bg-neutral-200 border-2 border-accent-200 rounded-lg p-6 mb-8">
-          <h3 className="font-bold text-neutral-900 mb-2 text-sm md:text-base">What's Next?</h3>
-          <ul className="text-left text-neutral-700 space-y-1 text-sm md:text-base">
+          <h3 className="font-bold text-neutral-900 mb-2 text-sm md:text-md">What's Next?</h3>
+          <ul className="text-left text-neutral-700 space-y-1 text-sm md:text-md">
             <li className="flex items-start gap-2">
               <span className="text-accent-600 font-bold">•</span>
               <span>

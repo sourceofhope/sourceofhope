@@ -39,7 +39,7 @@ export function ExpressiveNumber({
         <span ref={spanRef}>0</span>
         {post}
       </div>
-      <p className="text-sm md:text-base text-neutral-300 mt-2">{caption}</p>
+      <p className="text-sm md:text-md text-neutral-300 mt-2">{caption}</p>
     </div>
   );
 }

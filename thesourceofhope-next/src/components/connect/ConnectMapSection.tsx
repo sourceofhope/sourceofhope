@@ -76,7 +76,7 @@ export default function ConnectMapSection() {
               <div className="flex items-center justify-center w-10 h-10 rounded-full bg-accent-100 border-2 border-neutral-300">
                 <EnvelopeIcon className="w-5 h-5" />
               </div>
-              <Heading className="text-base">Contact</Heading>
+              <Heading className="text-md">Contact</Heading>
               <p className="text-sm leading-relaxed">
                 +1 (469) 969-0244
                 <br />
@@ -87,7 +87,7 @@ export default function ConnectMapSection() {
               <div className="flex items-center justify-center w-10 h-10 rounded-full bg-accent-100 border-2 border-neutral-300">
                 <BuildingStorefrontIcon className="w-5 h-5" />
               </div>
-              <Heading className="text-base">Hours</Heading>
+              <Heading className="text-md">Hours</Heading>
               <p className="text-sm leading-relaxed">
                 Mon – Fri: 10:00 – 5:00
                 <br />
@@ -98,7 +98,7 @@ export default function ConnectMapSection() {
               <div className="flex items-center justify-center w-10 h-10 rounded-full bg-accent-100 border-2 border-neutral-300">
                 <MapIcon className="w-5 h-5" />
               </div>
-              <Heading className="text-base">Location</Heading>
+              <Heading className="text-md">Location</Heading>
               <p className="text-sm leading-relaxed">
                 1108 W Parker Rd, Ste 102
                 <br />

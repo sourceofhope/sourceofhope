@@ -1,10 +1,16 @@
 import type { Metadata } from "next";
-import { Montserrat, Urbanist } from "next/font/google";
+import { Inter, Montserrat, Urbanist } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { HeaderProvider } from "@/context/HeaderContext";
 import { StoreCartProvider } from "@/context/StoreCartContext";
+
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+});
 
 const urbanist = Urbanist({
   variable: "--font-urbanist",
@@ -106,7 +112,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={`${urbanist.variable} ${montserrat.variable} antialiased bg-neutral-50 font-inter text-neutral-900`}>
+      <body className={`${inter.variable} ${urbanist.variable} ${montserrat.variable} antialiased bg-neutral-50 font-inter text-neutral-900`}>
         {/* Google Tag Manager (noscript) */}
         <noscript>
           <iframe
