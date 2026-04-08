@@ -1,3 +1,4 @@
+import Link from "next/link";
 import HighlightedText from "@/components/ui/HighlightedText";
 import Blockquote from "@/components/ui/Blockquote";
 import Bold from "@/components/ui/Bold";
@@ -24,11 +25,11 @@ export default function MembersHeroSection() {
         </p>
         <Blockquote className="text-neutral-600 max-w-[60ch] border-accent-600">
           Prefer to give once? You can also donate anytime from our{" "}
-          <a
+          <Link
             className="font-semibold text-accent-500"
-            href="https://donate.stripe.com/8wM5kHal16fC4so8ww">
+            href="/donate">
             Donate page
-          </a>
+          </Link>
           . Membership is for supporters who want a consistent monthly impact.
         </Blockquote>
         <p>

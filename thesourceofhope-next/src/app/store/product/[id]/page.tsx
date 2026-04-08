@@ -5,7 +5,7 @@ import { useParams } from 'next/navigation';
 import { CheckIcon, HeartIcon, PlusIcon } from '@heroicons/react/20/solid';
 import Title from '@/components/ui/Title';
 import Heading from '@/components/ui/Heading';
-import { LinkButton, AnchorButton } from '@/components/ui/Button';
+import { LinkButton } from '@/components/ui/Button';
 import { useCartActions } from '@/context/StoreCartContext';
 import { useHeaderContext } from '@/context/HeaderContext';
 import Cart from '@/components/store/Cart';
@@ -151,8 +151,8 @@ export default function ProductPage() {
                 full
               />
 
-              <AnchorButton
-                href="https://donate.stripe.com/8wM5kHal16fC4so8ww"
+              <LinkButton
+                href="/donate"
                 text="Make a Donation"
                 full
               />
@@ -218,8 +218,8 @@ export default function ProductPage() {
                 <PlusIcon className="w-[1em] h-[1em] transition-transform duration-500" />
               </span>
             </button>
-            <AnchorButton
-              href="https://donate.stripe.com/8wM5kHal16fC4so8ww"
+            <LinkButton
+              href="/donate"
               text="Make a Donation"
               full
             />

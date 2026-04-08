@@ -1,4 +1,4 @@
-import { AnchorButton } from "@/components/ui/Button";
+import { LinkButton } from "@/components/ui/Button";
 import Title from "@/components/ui/Title";
 import PageSection from "@/components/ui/PageSection";
 import { BanknotesIcon } from "@heroicons/react/20/solid";
@@ -16,8 +16,8 @@ export default function HomeDonationSection() {
           of Hope with love, support, and transformation.
         </p>
         <div className="w-fit pt-4">
-          <AnchorButton 
-            href="https://donate.stripe.com/8wM5kHal16fC4so8ww"
+          <LinkButton
+            href="/donate"
             text="DONATE NOW"
           />
         </div>

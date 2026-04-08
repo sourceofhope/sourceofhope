@@ -42,7 +42,7 @@ const getHeaderLinks = (): NavLink[] => [
       { label: "PLANNED GIVING", href: "/giving" },
       {
         label: "QUICK DONATE",
-        href: "https://donate.stripe.com/8wM5kHal16fC4so8ww",
+        href: "/donate",
       },
     ],
   },
@@ -164,7 +164,7 @@ function Icon({ children }: { children: React.ReactNode }) {
 
 function HeaderBanner({ onClose }: { onClose: () => void }) {
   const bannerText = "Donate Today!";
-  const bannerLink = "https://donate.stripe.com/8wM5kHal16fC4so8ww";
+  const bannerLink = "/donate";
 
   return (
     <div
@@ -172,14 +172,12 @@ function HeaderBanner({ onClose }: { onClose: () => void }) {
       role="region"
       aria-label="Site banner"
     >
-      <a
+      <Link
         href={bannerLink}
-        target="_blank"
-        rel="noopener noreferrer"
         className="hover:underline font-semibold"
       >
         {bannerText}
-      </a>
+      </Link>
 
       <button
         type="button"

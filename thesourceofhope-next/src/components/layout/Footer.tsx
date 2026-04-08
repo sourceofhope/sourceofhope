@@ -109,13 +109,9 @@ export default function Footer() {
                   <Link href="/members">Get Involved</Link>
                 </li>
                 <li>
-                  <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href="https://donate.stripe.com/8wM5kHal16fC4so8ww"
-                  >
+                  <Link href="/donate">
                     Donate
-                  </a>
+                  </Link>
                 </li>
                 <li>
                   <Link href="/serve">Volunteer</Link>

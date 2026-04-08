@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { ShoppingBagIcon } from '@heroicons/react/20/solid';
 import Title from '@/components/ui/Title';
-import { LinkButton, AnchorButton } from '@/components/ui/Button';
+import { LinkButton } from '@/components/ui/Button';
 import { useCartActions, SHIPPING_OPTIONS } from '@/context/StoreCartContext';
 import { useHeaderContext } from '@/context/HeaderContext';
 import CartItemsSection from '@/components/store/cart/CartItemsSection';
@@ -86,8 +86,8 @@ export default function CartPage() {
                 full
               />
 
-              <AnchorButton
-                href="https://donate.stripe.com/8wM5kHal16fC4so8ww"
+              <LinkButton
+                href="/donate"
                 text="Make a Donation"
                 full
               />
