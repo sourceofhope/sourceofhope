@@ -1,11 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import Title from "@/components/ui/Title";
-import Emphasis from "@/components/ui/Emphasis";
 import ExpressiveLink from "@/components/ui/ExpressiveLink";
 import ExpressiveAnchor from "@/components/ui/ExpressiveAnchor";
 import PageSection from "@/components/ui/PageSection";
+import Carousel from "@/components/ui/Carousel";
+import HighlightedText from "../ui/HighlightedText";
 
 const ASSET_VERSION = "v2";
 
@@ -21,17 +22,11 @@ interface Publication {
 export default function HomePublicationsSection() {
   const [posts, setPosts] = useState<Publication[]>([]);
   const [loading, setLoading] = useState(true);
-  const [activeIndex, setActiveIndex] = useState(0);
-  const [imageLoaded, setImageLoaded] = useState(false);
-
-  const activePost = posts[activeIndex];
 
   useEffect(() => {
-    // Simulate fetching publications
-    // In a real scenario, this would fetch from Sanity CMS
     const fetchPosts = async () => {
       try {
-        // Mock data for now - replace with actual Sanity query
+        // Replace this with your real CMS query
         const mockPosts: Publication[] = [
           {
             id: "1",
@@ -81,117 +76,117 @@ export default function HomePublicationsSection() {
         ];
 
         setPosts(mockPosts);
-        setActiveIndex(0);
       } catch {
         setPosts([]);
       } finally {
         setLoading(false);
       }
     };
-
-    if ("requestIdleCallback" in window) {
-      requestIdleCallback(() => fetchPosts());
-    } else {
-      setTimeout(fetchPosts, 1);
-    }
-
-    // Auto-rotate carousel every 5 seconds
-    if (!loading && posts.length > 0) {
-      const timer = setInterval(() => {
-        setActiveIndex((prev) => (prev + 1) % posts.length);
-        setImageLoaded(false);
-      }, 5000);
-      return () => clearInterval(timer);
-    }
-  }, [loading, posts.length]);
-
-  const formatDate = (dateString?: string) => {
-    if (!dateString) return "";
-    const date = new Date(dateString);
-    return `${date.toLocaleString("default", { month: "short" })} ${date.getDate()}, ${date.getFullYear()}`;
-  };
+    fetchPosts();
+  }, []);
 
   return (
-    <PageSection className="py-15 px-5 lg:px-35 w-full">
-      <div className="grid grid-flow-row w-full md:grid-cols-2 items-center gap-5 text-sm md:text-md lg:text-lg min-h-90">
-        {/* Left side: Text and CTA */}
-        <article className="grid gap-5 justify-items-start">
-          <Title className="text-2xl md:text-3xl">
-            <Emphasis>LATEST UPDATES</Emphasis>
-          </Title>
-          <p className="text-left text-balance text-neutral-700 dark:text-neutral-900">
-            {!loading && activePost?.summary
-              ? activePost.summary
-              : "Stay connected with the latest stories, programs, and community impact from The Source of Hope."}
-          </p>
-          <div className="w-fit text-neutral-600 dark:text-neutral-400">
-            {!loading && posts.length > 0 && activePost?.url && (
-              <ExpressiveAnchor href={activePost.url} className="font-semibold">
-                Read more {activePost.title}
-              </ExpressiveAnchor>
-            )}
-            {(loading || posts.length === 0) && (
-              <ExpressiveLink to="/media" className="font-semibold">
-                Read Publications
-              </ExpressiveLink>
-            )}
-          </div>
-        </article>
+    <PageSection className="py-15 px-5 md:pb-0 lg:px-15 w-full">
+      <div className="grid grid-flow-row md:grid-flow-col gap-8 items-center">
+        <div className="flex flex-col gap-4 max-w-2xl">
+          <HighlightedText className="w-fit self-center md:self-auto">
+            <Title>LATEST UPDATES</Title>
+          </HighlightedText>
 
-        {/* Right side: Carousel */}
-        <div
-          className={`min-h-64 flex items-center justify-center ${
-            loading ? "opacity-0" : "opacity-100 transition-opacity duration-750"
-          }`}
-        >
-          {!loading && posts.length === 0 && (
-            <p className="w-full text-center text-neutral-500">
-              No updates to display
-            </p>
-          )}
-          {!loading && posts.length > 0 && (
-            <div className="w-full">
-              {/* Carousel Image */}
-              <div className="relative h-72 md:h-80 w-full overflow-hidden rounded-2xl">
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={activePost?.imageUrl || `/${ASSET_VERSION}/core/placeholder.webp`}
-                  alt={activePost?.title || "Publication"}
-                  className={`${
-                    imageLoaded ? "opacity-100" : "opacity-0"
-                  } w-full h-full object-cover transition-opacity duration-300`}
-                  onLoad={() => setImageLoaded(true)}
-                  loading="lazy"
-                  decoding="async"
-                />
-                {/* Date Badge */}
-                <div className="absolute top-4 left-4 z-10 bg-accent-600 rounded-full px-3 py-1 text-xs font-semibold text-neutral-50">
-                  {formatDate(activePost?.date)}
+          <p className="text-neutral-700 dark:text-neutral-900 text-balance">
+            Stay connected with the latest stories, programs, and community
+            impact from The Source of Hope.
+          </p>
+
+          <div className="w-fit">
+            <ExpressiveLink to="/media" className="font-semibold">
+              View All Publications
+            </ExpressiveLink>
+          </div>
+        </div>
+
+        {loading && (
+          <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+            {Array.from({ length: 3 }).map((_, index) => (
+              <div
+                key={index}
+                className="overflow-hidden rounded-3xl bg-neutral-100 animate-pulse">
+                <div className="h-64 bg-neutral-200" />
+                <div className="flex flex-col gap-3 p-6">
+                  <div className="h-4 w-24 rounded bg-neutral-200" />
+                  <div className="h-6 w-3/4 rounded bg-neutral-200" />
+                  <div className="h-4 w-full rounded bg-neutral-200" />
+                  <div className="h-4 w-5/6 rounded bg-neutral-200" />
+                  <div className="h-5 w-32 rounded bg-neutral-200 mt-2" />
                 </div>
               </div>
+            ))}
+          </div>
+        )}
 
-              {/* Progress Indicators and Controls */}
-              <div className="flex gap-2 justify-center mt-4">
-                {posts.map((_, index) => (
-                  <button
-                    key={index}
-                    className={`h-2 rounded-full transition-all ${
-                      index === activeIndex
-                        ? "bg-accent-600 w-8"
-                        : "bg-neutral-300 w-2 hover:bg-accent-400"
-                    }`}
-                    onClick={() => {
-                      setActiveIndex(index);
-                      setImageLoaded(false);
-                    }}
-                    aria-label={`Go to publication ${index + 1}`}
-                  />
-                ))}
-              </div>
-            </div>
-          )}
-        </div>
+        {!loading && posts.length === 0 && (
+          <p className="text-center text-neutral-500">No updates to display</p>
+        )}
+
+        {!loading && posts.length > 0 && (
+          <Carousel auto showProgress itemsPerView={{ base: 1, md: 1, lg: 1 }}>
+            {posts.map((post) => (
+              <PublicationCard key={post.id} post={post} />
+            ))}
+          </Carousel>
+        )}
       </div>
     </PageSection>
   );
+}
+
+function PublicationCard({ post }: { post: Publication }) {
+  return (
+    <article className="group flex h-full flex-col overflow-hidden rounded-3xl border border-neutral-200 bg-white transition duration-300">
+      <div className="relative h-64 overflow-hidden">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={post.imageUrl || `/${ASSET_VERSION}/core/placeholder.webp`}
+          alt={post.title}
+          className="h-full w-full object-cover transition duration-500"
+          loading="lazy"
+          decoding="async"
+        />
+
+        {post.date && (
+          <div className="absolute left-4 top-4 rounded-full bg-black/70 px-3 py-1 text-xs font-semibold text-white backdrop-blur-sm">
+            {formatDate(post.date)}
+          </div>
+        )}
+      </div>
+
+      <div className="flex flex-1 flex-col gap-4 p-6">
+        <h3 className="text-lg font-bold text-neutral-900">{post.title}</h3>
+
+        <p className="line-clamp-3 text-sm leading-6 text-neutral-700">
+          {post.summary ||
+            "Stay connected with the latest stories, programs, and community impact from The Source of Hope."}
+        </p>
+
+        <div className="mt-auto">
+          {post.url ? (
+            <ExpressiveAnchor href={post.url} className="font-semibold">
+              Read more
+            </ExpressiveAnchor>
+          ) : (
+            <ExpressiveLink to="/media" className="font-semibold">
+              Read more
+            </ExpressiveLink>
+          )}
+        </div>
+      </div>
+    </article>
+  );
+}
+
+function formatDate(dateString: string) {
+  const date = new Date(dateString);
+  return `${date.toLocaleString("default", {
+    month: "short",
+  })} ${date.getDate()}, ${date.getFullYear()}`;
 }

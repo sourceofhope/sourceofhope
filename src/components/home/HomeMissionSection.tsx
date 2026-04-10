@@ -8,7 +8,7 @@ const ASSET_VERSION = "v2";
 
 export default function HomeMissionSection() {
   return (
-    <PageSection className="grid grid-flow-row md:grid-cols-[1fr_2fr] pb-5 items-center w-full gap-10 md:gap-5 justify-items-end md:justify-between">
+    <PageSection className="grid grid-flow-row md:grid-cols-[1fr_2fr] pt-5 pb-5 items-center w-full gap-10 md:gap-5 justify-items-end md:justify-between">
       <div className="grid grid-flow-row gap-5 justify-items-center">
         <Title className="text-xlg md:hidden lg:text-xxlg font-urbanist text-center">
           Our Mission
@@ -21,15 +21,15 @@ export default function HomeMissionSection() {
           loading="lazy"
         />
       </div>
-      <div className="grid gap-3 max-w-[400px] md:max-w-[500px] lg:max-w-[600px]">
+      <div className="grid gap-3 max-w-100 md:max-w-125 lg:max-w-150">
         <Title className="hidden text-xlg md:block lg:text-xxlg pl-5 w-fit font-urbanist">
           Our Mission
         </Title>
-        <Blockquote className="text-md md:text-lg md:text-justify">
-          &quot;Bringing hope and healing by providing <Emphasis>meals</Emphasis>,{" "}
-          <Emphasis>education</Emphasis>, <Emphasis>wellness</Emphasis>, and{" "}
-          <Emphasis>resources</Emphasis> that uplift and empower communities in
-          need.&quot;
+        <Blockquote className="text-md md:text-lg">
+          &quot;Bringing hope and healing by providing{" "}
+          <Emphasis>meals</Emphasis>, <Emphasis>education</Emphasis>,{" "}
+          <Emphasis>wellness</Emphasis>, and <Emphasis>resources</Emphasis>{" "}
+          {"that "} uplift and empower communities in need.&quot;
         </Blockquote>
         <p className="text-md md:text-lg pl-5 w-fit">
           <ExpressiveAnchor href="https://www.linkedin.com/in/quynh-chau-qc-stone-87185b34/">

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useHeaderContext } from "@/context/HeaderContext";
@@ -65,10 +65,7 @@ export default function Header() {
   const pathname = usePathname();
 
   const header = useHeaderContext() ?? {};
-  const {
-    isBlocking = false,
-    bannerActive = false,
-  } = header;
+  const { isBlocking = false, bannerActive = false } = header;
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 0);
@@ -78,6 +75,7 @@ export default function Header() {
   }, []);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setOpen(false);
   }, [pathname]);
 
@@ -92,11 +90,11 @@ export default function Header() {
       <header
         className={`backdrop-filter fixed ${
           bannerActive && bannerOpen ? "top-15 md:top-10" : "top-0"
-        } left-0 right-0 z-[9998] text-sm md:text-md w-full transition-[height_backdrop] ease-in duration-200 md:border-none
+        } left-0 right-0 z-9998 text-sm md:text-md w-full transition-[height_backdrop] ease-in duration-200 md:border-none
           ${
             open
               ? `md:backdrop-blur-none backdrop-blur-sm shadow-lg ${
-                  isBlocking ? "border-primary-800/100 " : "border-neutral-50"
+                  isBlocking ? "border-primary-800 " : "border-neutral-50"
                 }`
               : "shadow-none backdrop-blur-none border-none"
           }
@@ -106,15 +104,13 @@ export default function Header() {
               : `bg-transparent ${open ? "border-b-4" : ""} ${
                   isBlocking ? "text-primary-800" : "text-neutral-50"
                 }`
-          }`}
-      >
+          }`}>
         <section className="flex gap-5 h-15 md:h-20 w-full items-center justify-between px-5 lg:px-35">
           <Link
             href="/"
             onClick={() => setOpen(false)}
             aria-label="Go Home"
-            className="!no-underline h-full flex gap-5 flex-row items-center w-fit z-0 overflow-clip"
-          >
+            className="no-underline! h-full flex gap-5 flex-row items-center w-fit z-0 overflow-clip">
             <Favicon />
             <h1 className="font-bold hidden lg:block whitespace-nowrap text-ellipsis overflow-hidden">
               THE SOURCE OF HOPE
@@ -131,13 +127,11 @@ export default function Header() {
         <div
           className={`md:hidden transition-opacity duration-500 ease-out ${
             open ? "opacity-100" : "opacity-0 pointer-events-none"
-          }`}
-        >
+          }`}>
           {open && (
             <nav
               className="flex flex-col justify-end items-center px-5 pb-5 h-fit"
-              aria-label="Mobile"
-            >
+              aria-label="Mobile">
               <HeaderNavigator isMobile={true} open={open} />
             </nav>
           )}
@@ -151,9 +145,9 @@ function Favicon() {
   return (
     // eslint-disable-next-line @next/next/no-img-element
     <img
-      src={`/${ASSET_VERSION}/core/TSOH-Logo.webp`}
+      src={`/${ASSET_VERSION}/core/TSOH-Favicon.webp`}
       alt="The Source of Hope"
-      className="h-12 w-12 object-contain"
+      className="size-10 md:size-12 object-contain"
     />
   );
 }
@@ -168,23 +162,18 @@ function HeaderBanner({ onClose }: { onClose: () => void }) {
 
   return (
     <div
-      className="flex gap-3 justify-between md:justify-center h-15 md:h-10 items-center px-5 lg:px-35 bg-accent-500 border-b-2 text-neutral-50 border-accent-700 fixed top-0 left-0 right-0 z-[9998] w-full overflow-hidden"
+      className="flex gap-3 justify-between md:justify-center h-15 md:h-10 items-center px-5 lg:px-35 bg-accent-500 border-b-2 text-neutral-50 border-accent-700 fixed top-0 left-0 right-0 z-9998 w-full overflow-hidden"
       role="region"
-      aria-label="Site banner"
-    >
-      <Link
-        href={bannerLink}
-        className="hover:underline font-semibold"
-      >
+      aria-label="Site banner">
+      <Link href={bannerLink} className="hover:underline font-semibold">
         {bannerText}
       </Link>
 
       <button
         type="button"
-        className="justify-self-end z-[9999]"
+        className="justify-self-end z-9999"
         aria-label="Close banner"
-        onClick={onClose}
-      >
+        onClick={onClose}>
         <Icon>
           <XMarkIcon className="w-6 h-6" aria-hidden="true" />
         </Icon>
@@ -206,8 +195,7 @@ function HeaderMenu({
       className="block md:hidden"
       onClick={() => setOpen(!open)}
       aria-expanded={open}
-      aria-label={open ? "Close menu" : "Open menu"}
-    >
+      aria-label={open ? "Close menu" : "Open menu"}>
       <Icon>
         {open ? (
           <XMarkIcon className="w-6 h-6" aria-hidden="true" />
@@ -244,7 +232,6 @@ function DesktopNavigator({ links }: { links: NavLink[] }) {
           key={label}
           label={label}
           href={href}
-          children={children || []}
           hovering={hovering}
           setHovering={setHovering}
           className={`
@@ -255,8 +242,9 @@ function DesktopNavigator({ links }: { links: NavLink[] }) {
                   ? "opacity-100"
                   : "opacity-80"
                 : ""
-            }`}
-        />
+            }`}>
+          {children || []}
+        </DesktopNavigatorItem>
       ))}
     </nav>
   );
@@ -286,8 +274,7 @@ function DesktopNavigatorItem({
         href={href}
         onMouseEnter={() => setHovering(label)}
         onMouseLeave={() => setHovering(null)}
-        className={`!no-underline group transition-[color_transform] ease-in-out duration-300 inline-flex w-full justify-between items-center gap-1 focus:outline-none ${className}`}
-      >
+        className={`no-underline! group transition-[color_transform] ease-in-out duration-300 inline-flex w-full justify-between items-center gap-1 focus:outline-none ${className}`}>
         <span>{label}</span>
         <Icon>
           <ChevronRightIcon
@@ -315,14 +302,12 @@ function DesktopNavigatorItem({
             isOpen
               ? "opacity-100 pointer-events-auto"
               : "opacity-0 -translate-y-1 pointer-events-none"
-          } absolute hidden md:flex z-50 transition-[opacity_transform] delay-150 duration-300 bg-neutral-50 min-w-40 w-max rounded-lg p-3 py-5 shadow-md text-accent-800 flex-col font-semibold text-sm`}
-        >
+          } absolute hidden md:flex z-50 transition-[opacity_transform] delay-150 duration-300 bg-neutral-50 min-w-40 w-max rounded-lg p-3 py-5 shadow-md text-accent-800 flex-col font-semibold text-sm`}>
           {children.map(({ label: childLabel, href: childHref }) => (
             <Link
-              className="py-2.5 hover:bg-neutral-200 duration-300 transition-colors !no-underline px-3 rounded-md"
+              className="py-2.5 hover:bg-neutral-200 duration-300 transition-colors no-underline! px-3 rounded-md"
               key={childHref}
-              href={childHref}
-            >
+              href={childHref}>
               {childLabel}
             </Link>
           ))}
@@ -332,29 +317,27 @@ function DesktopNavigatorItem({
   );
 }
 
-function MobileNavigator({
-  links,
-  open,
-}: {
-  links: NavLink[];
-  open: boolean;
-}) {
+function MobileNavigator({ links, open }: { links: NavLink[]; open: boolean }) {
   interface StackItem {
     title: string;
     href: string | null;
     items: NavLink[];
   }
 
-  const root: StackItem = { title: "BACK", href: null, items: links };
+  const root: StackItem = useMemo(
+    () => ({ title: "BACK", href: null, items: links }),
+    [links],
+  );
   const [stack, setStack] = useState<StackItem[]>([root]);
   const [visible, setVisible] = useState(true);
 
   useEffect(() => {
     if (!open) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setStack([root]);
       setVisible(true);
     }
-  }, [open]);
+  }, [open, root]);
 
   const current = stack[stack.length - 1];
   const canGoBack = stack.length > 1;
@@ -389,15 +372,13 @@ function MobileNavigator({
       <div
         className={`transition-opacity duration-200 ease-out ${
           visible ? "opacity-100" : "opacity-0"
-        }`}
-      >
+        }`}>
         {canGoBack && (
           <button
             type="button"
             onClick={goBack}
             className="py-2.5 w-full group font-bold inline-flex items-center justify-between gap-2"
-            aria-label="Back"
-          >
+            aria-label="Back">
             <span>{stack[stack.length - 2]?.title || "BACK"}</span>
             <Icon>
               <ChevronRightIcon
@@ -415,14 +396,13 @@ function MobileNavigator({
             <div key={item.href} className="w-full">
               <Link
                 href={item.href}
-                className="!no-underline py-2.5 h-full w-full group font-bold inline-flex justify-between items-center gap-1"
+                className="no-underline! py-2.5 h-full w-full group font-bold inline-flex justify-between items-center gap-1"
                 onClick={(event) => {
                   if (hasChildren) {
                     event.preventDefault();
                     openChildren(item);
                   }
-                }}
-              >
+                }}>
                 <span className="text-left">{item.label}</span>
                 <Icon>
                   <ChevronRightIcon

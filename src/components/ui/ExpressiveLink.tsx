@@ -7,6 +7,7 @@ interface ExpressiveLinkProps {
   to: string;
   className?: string;
   ariaLabel?: string;
+  inline?: boolean;
 }
 
 export default function ExpressiveLink({
@@ -14,15 +15,17 @@ export default function ExpressiveLink({
   children,
   className = "",
   ariaLabel,
+  inline = true,
 }: ExpressiveLinkProps) {
   return (
     <Link
       href={to}
       aria-label={ariaLabel}
-      className={`group inline-flex items-center gap-2 text-accent-600 hover:text-accent-700 font-semibold transition ${className}`}
-    >
+      className={`group inline-flex items-center gap-2 hover:text-accent-700 font-semibold transition ${className}`}>
       {children}
-      <ArrowRightIcon className="w-4 h-4 transition group-hover:translate-x-1" />
+      {inline && (
+        <ArrowRightIcon className="w-4 h-4 transition group-hover:translate-x-1" />
+      )}
     </Link>
   );
 }

@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useEffect } from 'react';
+import { useEffect } from "react";
 
 interface TakeoverProps {
   children: React.ReactNode;
@@ -17,7 +17,7 @@ export default function Takeover({
   children,
   active,
   setActive,
-  className = '',
+  className = "",
 }: TakeoverProps) {
   useEffect(() => {
     if (active) {
@@ -30,10 +30,9 @@ export default function Takeover({
 
   return (
     <div
-      className={`fixed bottom-20 right-5 md:right-10 z-[9998] transition-all duration-300 ${
-        active ? 'opacity-100' : 'opacity-0 pointer-events-none'
-      } ${className}`}
-    >
+      className={`fixed bottom-20 right-5 md:right-10 z-9998 transition-all duration-300 ${
+        active ? "opacity-100" : "opacity-0 pointer-events-none"
+      } ${className}`}>
       {children}
     </div>
   );

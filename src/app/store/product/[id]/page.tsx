@@ -1,16 +1,17 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { useParams } from 'next/navigation';
-import { CheckIcon, HeartIcon, PlusIcon } from '@heroicons/react/20/solid';
-import Title from '@/components/ui/Title';
-import Heading from '@/components/ui/Heading';
-import { LinkButton } from '@/components/ui/Button';
-import { useCartActions } from '@/context/StoreCartContext';
-import { useHeaderContext } from '@/context/HeaderContext';
-import Cart from '@/components/store/Cart';
-import Takeover from '@/components/ui/Takeover';
-import Loader from '@/components/structure/Loader';
+import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
+import Image from "next/image";
+import { CheckIcon, HeartIcon, PlusIcon } from "@heroicons/react/20/solid";
+import Title from "@/components/ui/Title";
+import Heading from "@/components/ui/Heading";
+import { LinkButton } from "@/components/ui/Button";
+import { useCartActions } from "@/context/StoreCartContext";
+import { useHeaderContext } from "@/context/HeaderContext";
+import Cart from "@/components/store/Cart";
+import Takeover from "@/components/ui/Takeover";
+import Loader from "@/components/structure/Loader";
 
 interface Product {
   id: string;
@@ -24,7 +25,7 @@ interface Product {
     size?: string;
   };
   _embedded?: {
-    'wp:featuredmedia': Array<{
+    "wp:featuredmedia": Array<{
       alt_text: string;
       source_url: string;
     }>;
@@ -34,12 +35,12 @@ interface Product {
 export default function ProductPage() {
   const params = useParams();
   const id = params.id as string;
-  
+
   const [product, setProduct] = useState<Product | null>(null);
   const [added, setAdded] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  
+
   const { addToCart } = useCartActions();
   const headerContext = useHeaderContext();
   const setIsBlocking = headerContext?.setIsBlocking;
@@ -57,16 +58,16 @@ export default function ProductPage() {
     async function loadProduct() {
       try {
         const response = await fetch(`/api/product/${id}`);
-        
+
         if (!response.ok) {
-          throw new Error('Product not found');
+          throw new Error("Product not found");
         }
-        
+
         const data = await response.json();
         setProduct(data);
         setError(false);
       } catch (err) {
-        console.error('Failed to load product:', err);
+        console.error("Failed to load product:", err);
         setError(true);
       } finally {
         setLoading(false);
@@ -91,7 +92,7 @@ export default function ProductPage() {
       name: product.acf.title,
       price: product.acf.price,
       quantity: 1,
-      image: product._embedded?.['wp:featuredmedia']?.[0]?.source_url,
+      image: product._embedded?.["wp:featuredmedia"]?.[0]?.source_url,
       size: product.acf.size,
     };
 
@@ -99,9 +100,9 @@ export default function ProductPage() {
     (window as any).dataLayer = (window as any).dataLayer || [];
     (window as any).dataLayer.push({ ecommerce: null });
     (window as any).dataLayer.push({
-      event: 'add_to_cart',
+      event: "add_to_cart",
       ecommerce: {
-        currency: 'USD',
+        currency: "USD",
         value: product.acf.price,
         items: [
           {
@@ -140,22 +141,14 @@ export default function ProductPage() {
 
             <Title>We Can&apos;t Find That Product</Title>
             <p className="text-gray-700 leading-relaxed mb-10">
-              We couldn&apos;t find the product you were looking for, but every visit
-              here still supports our mission.
+              We couldn&apos;t find the product you were looking for, but every
+              visit here still supports our mission.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-5 justify-center">
-              <LinkButton
-                href="/store"
-                text="Browse our Store"
-                full
-              />
+              <LinkButton href="/store" text="Browse our Store" full />
 
-              <LinkButton
-                href="/donate"
-                text="Make a Donation"
-                full
-              />
+              <LinkButton href="/donate" text="Make a Donation" full />
             </div>
           </div>
         </section>
@@ -163,8 +156,9 @@ export default function ProductPage() {
     );
   }
 
-  const imageUrl = product._embedded?.['wp:featuredmedia']?.[0]?.source_url;
-  const imageAlt = product._embedded?.['wp:featuredmedia']?.[0]?.alt_text || product.acf.title;
+  const imageUrl = product._embedded?.["wp:featuredmedia"]?.[0]?.source_url;
+  const imageAlt =
+    product._embedded?.["wp:featuredmedia"]?.[0]?.alt_text || product.acf.title;
 
   return (
     <>
@@ -172,8 +166,7 @@ export default function ProductPage() {
       <Takeover
         className="bg-neutral-400 rounded-2xl px-5 py-3 w-fit h-fit text-neutral-600 flex justify-between gap-3 items-center"
         active={added}
-        setActive={setAdded}
-      >
+        setActive={setAdded}>
         <p>Added To Cart</p>
         <CheckIcon className="size-5 shrink-0" />
       </Takeover>
@@ -184,10 +177,11 @@ export default function ProductPage() {
           <div className="w-full max-w-2xl">
             <div className="relative w-full aspect-square rounded-2xl overflow-hidden bg-neutral-100">
               {imageUrl ? (
-                <img
+                <Image
                   src={imageUrl}
                   alt={imageAlt}
-                  className="absolute inset-0 w-full h-full object-cover"
+                  fill
+                  className="object-cover"
                 />
               ) : (
                 <div className="absolute inset-0 w-full h-full bg-neutral-200 flex items-center justify-center">
@@ -211,18 +205,13 @@ export default function ProductPage() {
             <button
               onClick={handleAddToCart}
               aria-label="Add To Cart"
-              className="clsAddToCart group inline-flex items-center rounded-2xl px-10 py-5 bg-emerald-500 hover:bg-emerald-600 transition-all duration-700 w-full font-semibold text-neutral-50"
-            >
+              className="clsAddToCart group inline-flex items-center rounded-2xl px-10 py-5 bg-emerald-500 hover:bg-emerald-600 transition-all duration-700 w-full font-semibold text-neutral-50">
               <span className="flex w-full gap-3 items-center justify-between text-sm md:text-md">
                 <span>Add To Cart</span>
                 <PlusIcon className="w-[1em] h-[1em] transition-transform duration-500" />
               </span>
             </button>
-            <LinkButton
-              href="/donate"
-              text="Make a Donation"
-              full
-            />
+            <LinkButton href="/donate" text="Make a Donation" full />
           </div>
 
           {/* Long Description */}

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { Inter, Montserrat, Urbanist } from "next/font/google";
+import { Inter, Urbanist, Montserrat } from "next/font/google";
+import { GoogleTagManager } from "@next/third-parties/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
@@ -57,63 +58,39 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const schemaData = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "The Source of Hope",
+    url: "https://thesourceofhope.org",
+    sameAs: [
+      "https://www.facebook.com/thesourceofhope",
+      "https://www.instagram.com/thesourceofhope",
+      "https://www.linkedin.com/company/thesourceofhope",
+    ],
+  };
+
   return (
     <html lang="en" itemType="http://schema.org/WebPage">
       <head>
-        {/* Theme Color */}
         <meta name="theme-color" content="#1b2b69" />
-        
-        {/* Fonts */}
         <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-
-        {/* Font Loading Script */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.run = window.run || function () {};
-            `,
-          }}
+        <link
+          rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossOrigin="anonymous"
         />
-
-        {/* Structured Data */}
         <script
           type="application/ld+json"
+          suppressHydrationWarning
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@type": "Organization",
-              name: "The Source of Hope",
-              url: "https://thesourceofhope.org",
-              sameAs: [
-                "https://www.facebook.com/thesourceofhope",
-                "https://www.instagram.com/thesourceofhope",
-                "https://www.linkedin.com/company/thesourceofhope",
-              ],
-            }),
+            __html: JSON.stringify(schemaData),
           }}
         />
-
-        {/* Google Tag Manager Script */}
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function (w, d, s, l, i) {
-                w[l] = w[l] || [];
-                w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
-                var f = d.getElementsByTagName(s)[0],
-                  j = d.createElement(s),
-                  dl = l != "dataLayer" ? "&l=" + l : "";
-                j.async = true;
-                j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
-                f.parentNode.insertBefore(j, f);
-              })(window, document, "script", "dataLayer", "GTM-P9G4WGS3");
-            `,
-          }}
-        />
+        <GoogleTagManager gtmId="GTM-P9G4WGS3" />
       </head>
-      <body className={`${inter.variable} ${urbanist.variable} ${montserrat.variable} antialiased bg-neutral-50 font-inter text-neutral-900`}>
-        {/* Google Tag Manager (noscript) */}
+      <body
+        className={`${inter.variable} ${urbanist.variable} ${montserrat.variable} antialiased bg-primary-900 font-inter text-neutral-900`}>
         <noscript>
           <iframe
             src="https://www.googletagmanager.com/ns.html?id=GTM-P9G4WGS3"
@@ -122,7 +99,6 @@ export default function RootLayout({
             style={{ display: "none", visibility: "hidden" }}
           />
         </noscript>
-        
         <HeaderProvider>
           <StoreCartProvider>
             <Header />
