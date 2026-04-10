@@ -1,3 +1,4 @@
+import Image from "next/image";
 import PageSection from "@/components/ui/PageSection";
 import Title from "@/components/ui/Title";
 import Blockquote from "@/components/ui/Blockquote";
@@ -13,11 +14,12 @@ export default function AboutMissionSection() {
         <div className="grid gap-5">
           <Title className="font-semibold md:text-balance">
             Founded in 2014 on{" "}
-            <span className="hidden md:inline-block">our guiding</span> principle
+            <span className="hidden md:inline-block">our guiding</span>{" "}
+            principle
           </Title>
           <Blockquote className="text-neutral-600">
-            &quot;Empower with dignity, meet urgent needs while equipping people with
-            lifelong skills, wellness, and community so hope becomes
+            &quot;Empower with dignity, meet urgent needs while equipping people
+            with lifelong skills, wellness, and community so hope becomes
             sustainable.&quot;
           </Blockquote>
           <p className="pl-5 w-fit text-neutral-600">
@@ -26,7 +28,7 @@ export default function AboutMissionSection() {
             </ExpressiveAnchor>
           </p>
         </div>
-        
+
         <div className="grid gap-5">
           <h3 className="border-b-2 pb-1/2 w-fit font-semibold">Mission</h3>
           <p>
@@ -42,11 +44,14 @@ export default function AboutMissionSection() {
           </p>
         </div>
       </article>
-      
+
       <article className="grid self-center justify-items-end">
-        <img
+        <Image
           src={`/${ASSET_VERSION}/servingHope/SH-ResourceTile.webp`}
-          className="block w-full aspect-square bg-accent-900 max-w-[450px] rounded-2xl object-cover object-center"
+          alt="The Source of Hope resource tile"
+          width={450}
+          height={450}
+          className="block w-full aspect-square bg-accent-900 max-w-112.5 rounded-2xl object-cover object-center"
         />
       </article>
     </PageSection>

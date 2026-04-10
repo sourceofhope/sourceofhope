@@ -7,7 +7,7 @@ import Heading from "@/components/ui/Heading";
 
 export default function AboutDescriptionSection() {
   return (
-    <PageSection className="justify-items-center grid gap-5 text-sm md:text-md lg:text-lg">
+    <PageSection className="justify-items-center grid gap-5 pt-5 text-sm md:text-md lg:text-lg">
       <div className="grid gap-1 justify-self-start justify-start">
         <Title className="font-semibold text-balance">
           We&rsquo;re a <HighlightedText>501(c)(3)</HighlightedText>{" "}
@@ -16,7 +16,7 @@ export default function AboutDescriptionSection() {
         </Title>
         <Heading>Here to Serve and Empower</Heading>
       </div>
-      
+
       <div className="hidden md:flex flex-col gap-5 text-neutral-600">
         <p>
           The Source of Hope serves individuals and families through{" "}
@@ -29,9 +29,9 @@ export default function AboutDescriptionSection() {
         </p>
 
         <p>
-          Our work doesn&rsquo;t stop at short-term help, we focus on what lasts. By
-          sharing <Bold>practical skills</Bold> through holistic health
-          education, outdoor survival and leadership experiences, and
+          Our work doesn&rsquo;t stop at short-term help, we focus on what
+          lasts. By sharing <Bold>practical skills</Bold> through holistic
+          health education, outdoor survival and leadership experiences, and
           entrepreneurial mentorship, we help people build confidence,
           independence, and purpose. As a fully independent nonprofit, our
           mission is sustained by dedicated <Bold>volunteers</Bold>,{" "}

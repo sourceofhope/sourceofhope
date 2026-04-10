@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { LinkButton } from "@/components/ui/Button";
+import Heading from "../ui/Heading";
 
 const ASSET_VERSION = "v2";
 
@@ -176,9 +177,9 @@ function FooterColumn({
 function FooterCard() {
   return (
     <article className="flex flex-col gap-3 rounded-2xl shadow-2xl overflow-hidden w-175 max-w-fit h-fit py-5 px-10 bg-neutral-50 text-neutral-950">
-      <h3 className="text-lg font-bold text-neutral-950">
+      <Heading className="text-lg font-bold text-neutral-950">
         SUBSCRIBE TO OUR NEWSLETTER
-      </h3>
+      </Heading>
       <div className="h-fit w-full text-lg md:text-xlg font-urbanist font-semibold">
         <h2 className="hidden md:block">Be the first to know about events</h2>
         <h2 className="block md:hidden">Get Updates</h2>

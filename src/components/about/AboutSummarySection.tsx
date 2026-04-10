@@ -7,7 +7,7 @@ import Emphasis from "@/components/ui/Emphasis";
 
 export default function AboutSummarySection() {
   return (
-    <PageSection className="grid gap-5 text-sm md:text-md lg:text-lg">
+    <PageSection className="grid gap-5 pb-5 text-sm md:text-md lg:text-lg">
       <Title className="font-semibold text-balance">
         Ready to take <HighlightedText>your next step</HighlightedText>?
       </Title>
@@ -37,7 +37,8 @@ export default function AboutSummarySection() {
           funding—everything we do is made possible through the generosity of
           people who believe in this mission. When you stand with us, you become
           part of something deeply human and deeply hopeful—
-          <Emphasis>one life, one family, one step forward at a time.</Emphasis>
+          <Emphasis>one life</Emphasis>, <Emphasis>one family</Emphasis>,{" "}
+          <Emphasis>one step forward at a time</Emphasis>.
         </p>
       </div>
       <div className="flex flex-col lg:flex-row justify-items-center gap-5 text-center text-sm md:text-md">

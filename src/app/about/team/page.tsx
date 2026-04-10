@@ -57,18 +57,18 @@ function sortTeamsByOrder(teams: Team[]): Team[] {
   return teams.sort((a, b) => {
     const aIndex = teamIndexMap.get(a.name.toLowerCase().trim());
     const bIndex = teamIndexMap.get(b.name.toLowerCase().trim());
-    
+
     // Both teams are in TEAM_ORDER - sort by their defined order
     if (aIndex !== undefined && bIndex !== undefined) {
       return aIndex - bIndex;
     }
-    
+
     // Only team A is in TEAM_ORDER - it comes first
     if (aIndex !== undefined) return -1;
-    
+
     // Only team B is in TEAM_ORDER - it comes first
     if (bIndex !== undefined) return 1;
-    
+
     // Neither is in TEAM_ORDER - sort alphabetically
     return a.name.localeCompare(b.name);
   });
@@ -77,16 +77,19 @@ function sortTeamsByOrder(teams: Team[]): Team[] {
 export default async function Team() {
   try {
     // Fetch teams from API endpoint
-    const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'}/api/team-member`, {
-      next: { revalidate: 30 }
-    });
-    
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000"}/api/team-member`,
+      {
+        next: { revalidate: 30 },
+      },
+    );
+
     if (!response.ok) {
-      throw new Error('Failed to fetch team data');
+      throw new Error("Failed to fetch team data");
     }
-    
+
     const teamsWithMembers: Team[] = await response.json();
-    
+
     // Sort the teams by preferred order
     const sortedTeams = sortTeamsByOrder(teamsWithMembers);
 
@@ -145,9 +148,7 @@ export default async function Team() {
         </PageHeader>
         <section className="w-full md:justify-items-left items-center grid my-5 px-5 lg:px-35 min-h-screen">
           <div className="text-center">
-            <h2 className="text-3xl font-bold font-urbanist mb-4">
-              Team
-            </h2>
+            <h2 className="text-3xl font-bold font-urbanist mb-4">Team</h2>
             <p className="text-neutral-600">
               Unable to load team data. Please try again later.
             </p>
@@ -196,4 +197,3 @@ function CarouselContent({ members }: { members: TeamMember[] }) {
     </Carousel>
   );
 }
-
