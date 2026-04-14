@@ -5,6 +5,8 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { LinkButton } from "@/components/ui/Button";
 import Heading from "../ui/Heading";
+import ParallaxSection from "../ui/parallax/ParallaxSection";
+import ParallaxLayer from "../ui/parallax/ParallaxLayer";
 
 const ASSET_VERSION = "v2";
 
@@ -136,18 +138,21 @@ export default function Footer() {
 function FooterParallax() {
   return (
     <>
-      <section className="hidden md:block relative h-115 overflow-hidden">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          className="w-full overflow-hidden h-full object-cover brightness-[.8] contrast-[1.1]"
-          src={"/" + ASSET_VERSION + "/core/TSOH-Family.webp"}
-          alt="Community"
-          loading="lazy"
-        />
-        <div className="absolute inset-0 flex w-full items-center justify-center p-5 lg:px-35">
+      <ParallaxSection className="hidden md:block relative h-115 overflow-hidden">
+        <ParallaxLayer layer={0} ratio={1}>
+          <img
+            className="w-full overflow-hidden h-full object-cover brightness-[.8] contrast-[1.1]"
+            src={`/${ASSET_VERSION}/core/TSOH-Family.webp`}
+            alt=""
+          />
+        </ParallaxLayer>
+        <ParallaxLayer
+          layer={1}
+          ratio={0}
+          className="flex w-full items-center justify-center p-5 lg:px-35">
           <FooterCard />
-        </div>
-      </section>
+        </ParallaxLayer>
+      </ParallaxSection>
       <section className="w-full block md:hidden bg-primary-700 p-5 justify-center">
         <FooterCard />
       </section>
