@@ -1,11 +1,16 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { PencilIcon } from '@heroicons/react/24/solid';
-import { loadStripe } from '@stripe/stripe-js';
-import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js';
-import Heading from '@/components/ui/Heading';
-import { CartItem } from '@/context/StoreCartContext';
+import { useState, useEffect } from "react";
+import { PencilIcon } from "@heroicons/react/24/solid";
+import { loadStripe } from "@stripe/stripe-js";
+import {
+  Elements,
+  PaymentElement,
+  useStripe,
+  useElements,
+} from "@stripe/react-stripe-js";
+import Heading from "@/components/ui/Heading";
+import { CartItem } from "@/context/StoreCartContext";
 
 interface SelfCheckoutSectionProps {
   cart: CartItem[];
@@ -35,7 +40,12 @@ interface PaymentFormProps {
   onSuccess: (paymentIntent: any) => void;
 }
 
-function PaymentForm({ clientSecret, total, processingFee, onSuccess }: PaymentFormProps) {
+function PaymentForm({
+  clientSecret,
+  total,
+  processingFee,
+  onSuccess,
+}: PaymentFormProps) {
   const stripe = useStripe();
   const elements = useElements();
   const [isProcessing, setIsProcessing] = useState(false);
@@ -53,7 +63,7 @@ function PaymentForm({ clientSecret, total, processingFee, onSuccess }: PaymentF
 
     const { error: submitError } = await elements.submit();
     if (submitError) {
-      setError(submitError.message || 'An error occurred');
+      setError(submitError.message || "An error occurred");
       setIsProcessing(false);
       return;
     }
@@ -61,15 +71,15 @@ function PaymentForm({ clientSecret, total, processingFee, onSuccess }: PaymentF
     const { error: confirmError, paymentIntent } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: `${typeof window !== 'undefined' ? window.location.origin : ''}/store/success`,
+        return_url: `${typeof window !== "undefined" ? window.location.origin : ""}/store/success`,
       },
-      redirect: 'if_required',
+      redirect: "if_required",
     });
 
     if (confirmError) {
-      setError(confirmError.message || 'Payment failed');
+      setError(confirmError.message || "Payment failed");
       setIsProcessing(false);
-    } else if (paymentIntent && paymentIntent.status === 'succeeded') {
+    } else if (paymentIntent && paymentIntent.status === "succeeded") {
       onSuccess(paymentIntent);
     }
   };
@@ -87,8 +97,7 @@ function PaymentForm({ clientSecret, total, processingFee, onSuccess }: PaymentF
       <button
         type="submit"
         disabled={!stripe || isProcessing}
-        className="w-full bg-accent-500 hover:bg-accent-600 disabled:bg-neutral-300 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 disabled:cursor-not-allowed"
-      >
+        className="w-full bg-accent-500 hover:bg-accent-600 disabled:bg-neutral-300 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 disabled:cursor-not-allowed">
         {isProcessing ? (
           <span className="flex items-center justify-center gap-2">
             <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
@@ -107,7 +116,7 @@ function PaymentForm({ clientSecret, total, processingFee, onSuccess }: PaymentF
                 d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
               />
             </svg>
-            Processing...
+            Processing
           </span>
         ) : (
           `Complete Purchase • $${total.toFixed(2)}`
@@ -134,15 +143,15 @@ export default function SelfCheckoutSection({
   total,
 }: SelfCheckoutSectionProps) {
   const [formData, setFormData] = useState({
-    email: '',
-    firstName: '',
-    lastName: '',
-    address: '',
-    city: '',
-    state: '',
-    zipCode: '',
-    country: 'United States',
-    phone: '',
+    email: "",
+    firstName: "",
+    lastName: "",
+    address: "",
+    city: "",
+    state: "",
+    zipCode: "",
+    country: "United States",
+    phone: "",
   });
 
   const [stripePromise, setStripePromise] = useState<any>(null);
@@ -189,67 +198,75 @@ export default function SelfCheckoutSection({
       setError(null);
 
       // Fetch Stripe publishable key
-      const keyResponse = await fetch('/api/checkout/retrieve-stripe-publishable-key', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-      });
+      const keyResponse = await fetch(
+        "/api/checkout/retrieve-stripe-publishable-key",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+        },
+      );
       const keyData = await keyResponse.json();
 
       if (keyData.error || !keyData.publishableKey) {
-        throw new Error('Failed to load payment system');
+        throw new Error("Failed to load payment system");
       }
 
       const stripe = await loadStripe(keyData.publishableKey);
       setStripePromise(stripe);
 
       // Create Payment Intent
-      const response = await fetch('/api/checkout/create-stripe-payment-intent', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          items: cart,
-          shippingMethod,
-          shippingCost,
-          taxAmount,
-          processingFee,
-          subtotal,
-          shippingAddress: {
-            firstName: formData.firstName,
-            lastName: formData.lastName,
-            address: formData.address,
-            city: formData.city,
-            state: formData.state,
-            zipCode: formData.zipCode,
-            country: formData.country,
-          },
-          billingAddress: {
-            firstName: formData.firstName,
-            lastName: formData.lastName,
-            address: formData.address,
-            city: formData.city,
-            state: formData.state,
-            zipCode: formData.zipCode,
-            country: formData.country,
-          },
-          totalAmount: total.toFixed(2),
-          email: formData.email,
-        }),
-      });
+      const response = await fetch(
+        "/api/checkout/create-stripe-payment-intent",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            items: cart,
+            shippingMethod,
+            shippingCost,
+            taxAmount,
+            processingFee,
+            subtotal,
+            shippingAddress: {
+              firstName: formData.firstName,
+              lastName: formData.lastName,
+              address: formData.address,
+              city: formData.city,
+              state: formData.state,
+              zipCode: formData.zipCode,
+              country: formData.country,
+            },
+            billingAddress: {
+              firstName: formData.firstName,
+              lastName: formData.lastName,
+              address: formData.address,
+              city: formData.city,
+              state: formData.state,
+              zipCode: formData.zipCode,
+              country: formData.country,
+            },
+            totalAmount: total.toFixed(2),
+            email: formData.email,
+          }),
+        },
+      );
 
       const data = await response.json();
 
       if (data.error || !data.clientSecret) {
-        throw new Error(data.error || 'Failed to initialize payment');
+        throw new Error(data.error || "Failed to initialize payment");
       }
 
       // Store email in sessionStorage
-      if (typeof window !== 'undefined') {
-        sessionStorage.setItem('checkoutEmail', formData.email);
+      if (typeof window !== "undefined") {
+        sessionStorage.setItem("checkoutEmail", formData.email);
       }
 
       setClientSecret(data.clientSecret);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to initialize payment');
+      setError(
+        err instanceof Error ? err.message : "Failed to initialize payment",
+      );
     } finally {
       setIsLoading(false);
     }
@@ -263,7 +280,7 @@ export default function SelfCheckoutSection({
 
   const handlePaymentSuccess = (paymentIntent: any) => {
     // Redirect to success page
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       window.location.href = `/store/success?payment_intent=${paymentIntent.id}`;
     }
   };
@@ -280,7 +297,9 @@ export default function SelfCheckoutSection({
               Contact Information
             </h3>
             <div className="grid gap-1">
-              <label htmlFor="checkout-email" className="text-sm font-semibold text-neutral-800">
+              <label
+                htmlFor="checkout-email"
+                className="text-sm font-semibold text-neutral-800">
                 Email
               </label>
               <input
@@ -290,7 +309,7 @@ export default function SelfCheckoutSection({
                 autoComplete="email"
                 inputMode="email"
                 value={formData.email}
-                onChange={(e) => handleInputChange('email', e.target.value)}
+                onChange={(e) => handleInputChange("email", e.target.value)}
                 className="w-full px-4 py-2 border-2 border-neutral-300 rounded-lg focus:border-accent-500 focus:outline-none mb-4"
                 required
               />
@@ -305,7 +324,9 @@ export default function SelfCheckoutSection({
             <div className="space-y-4">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="grid gap-1">
-                  <label htmlFor="checkout-first-name" className="text-sm font-semibold text-neutral-800">
+                  <label
+                    htmlFor="checkout-first-name"
+                    className="text-sm font-semibold text-neutral-800">
                     First Name
                   </label>
                   <input
@@ -314,13 +335,17 @@ export default function SelfCheckoutSection({
                     type="text"
                     autoComplete="given-name"
                     value={formData.firstName}
-                    onChange={(e) => handleInputChange('firstName', e.target.value)}
+                    onChange={(e) =>
+                      handleInputChange("firstName", e.target.value)
+                    }
                     className="w-full px-4 py-2 border-2 border-neutral-300 rounded-lg focus:border-accent-500 focus:outline-none"
                     required
                   />
                 </div>
                 <div className="grid gap-1">
-                  <label htmlFor="checkout-last-name" className="text-sm font-semibold text-neutral-800">
+                  <label
+                    htmlFor="checkout-last-name"
+                    className="text-sm font-semibold text-neutral-800">
                     Last Name
                   </label>
                   <input
@@ -329,14 +354,18 @@ export default function SelfCheckoutSection({
                     type="text"
                     autoComplete="family-name"
                     value={formData.lastName}
-                    onChange={(e) => handleInputChange('lastName', e.target.value)}
+                    onChange={(e) =>
+                      handleInputChange("lastName", e.target.value)
+                    }
                     className="w-full px-4 py-2 border-2 border-neutral-300 rounded-lg focus:border-accent-500 focus:outline-none"
                     required
                   />
                 </div>
               </div>
               <div className="grid gap-1">
-                <label htmlFor="checkout-address" className="text-sm font-semibold text-neutral-800">
+                <label
+                  htmlFor="checkout-address"
+                  className="text-sm font-semibold text-neutral-800">
                   Street Address
                 </label>
                 <input
@@ -345,14 +374,16 @@ export default function SelfCheckoutSection({
                   type="text"
                   autoComplete="address-line1"
                   value={formData.address}
-                  onChange={(e) => handleInputChange('address', e.target.value)}
+                  onChange={(e) => handleInputChange("address", e.target.value)}
                   className="w-full px-4 py-2 border-2 border-neutral-300 rounded-lg focus:border-accent-500 focus:outline-none"
                   required
                 />
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div className="grid gap-1">
-                  <label htmlFor="checkout-city" className="text-sm font-semibold text-neutral-800">
+                  <label
+                    htmlFor="checkout-city"
+                    className="text-sm font-semibold text-neutral-800">
                     City
                   </label>
                   <input
@@ -361,13 +392,15 @@ export default function SelfCheckoutSection({
                     type="text"
                     autoComplete="address-level2"
                     value={formData.city}
-                    onChange={(e) => handleInputChange('city', e.target.value)}
+                    onChange={(e) => handleInputChange("city", e.target.value)}
                     className="w-full px-4 py-2 border-2 border-neutral-300 rounded-lg focus:border-accent-500 focus:outline-none"
                     required
                   />
                 </div>
                 <div className="grid gap-1">
-                  <label htmlFor="checkout-state" className="text-sm font-semibold text-neutral-800">
+                  <label
+                    htmlFor="checkout-state"
+                    className="text-sm font-semibold text-neutral-800">
                     State / Province
                   </label>
                   <input
@@ -376,14 +409,16 @@ export default function SelfCheckoutSection({
                     type="text"
                     autoComplete="address-level1"
                     value={formData.state}
-                    onChange={(e) => handleInputChange('state', e.target.value)}
+                    onChange={(e) => handleInputChange("state", e.target.value)}
                     className="w-full px-4 py-2 border-2 border-neutral-300 rounded-lg focus:border-accent-500 focus:outline-none"
                     required
                   />
                 </div>
               </div>
               <div className="grid gap-1">
-                <label htmlFor="checkout-zip" className="text-sm font-semibold text-neutral-800">
+                <label
+                  htmlFor="checkout-zip"
+                  className="text-sm font-semibold text-neutral-800">
                   ZIP / Postal Code
                 </label>
                 <input
@@ -393,7 +428,7 @@ export default function SelfCheckoutSection({
                   autoComplete="postal-code"
                   inputMode="numeric"
                   value={formData.zipCode}
-                  onChange={(e) => handleInputChange('zipCode', e.target.value)}
+                  onChange={(e) => handleInputChange("zipCode", e.target.value)}
                   className="w-full px-4 py-2 border-2 border-neutral-300 rounded-lg focus:border-accent-500 focus:outline-none"
                   required
                 />
@@ -410,9 +445,8 @@ export default function SelfCheckoutSection({
           <button
             onClick={initializePayment}
             disabled={!isFormValid() || isLoading}
-            className="w-full bg-accent-500 hover:bg-accent-600 disabled:bg-neutral-300 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 disabled:cursor-not-allowed"
-          >
-            {isLoading ? 'Loading...' : 'Continue to Payment'}
+            className="w-full bg-accent-500 hover:bg-accent-600 disabled:bg-neutral-300 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 disabled:cursor-not-allowed">
+            {isLoading ? "Loading" : "Continue to Payment"}
           </button>
         </>
       ) : (
@@ -429,8 +463,7 @@ export default function SelfCheckoutSection({
                   type="button"
                   onClick={handleEditInformation}
                   className="text-accent-600 hover:text-accent-700 text-sm font-medium transition-colors"
-                  aria-label="Edit contact information"
-                >
+                  aria-label="Edit contact information">
                   <PencilIcon className="w-5 h-5" />
                 </button>
               </div>
@@ -439,18 +472,22 @@ export default function SelfCheckoutSection({
                   <span className="font-medium">Email:</span> {formData.email}
                 </div>
                 <div>
-                  <span className="font-medium">Name:</span> {formData.firstName} {formData.lastName}
+                  <span className="font-medium">Name:</span>{" "}
+                  {formData.firstName} {formData.lastName}
                 </div>
                 <div>
-                  <span className="font-medium">Address:</span> {formData.address}
+                  <span className="font-medium">Address:</span>{" "}
+                  {formData.address}
                 </div>
                 <div>
-                  <span className="font-medium">City, State ZIP:</span> {formData.city}, {formData.state} {formData.zipCode}
+                  <span className="font-medium">City, State ZIP:</span>{" "}
+                  {formData.city}, {formData.state} {formData.zipCode}
                 </div>
                 {processingFee > 0 && (
                   <div className="pt-2 border-t border-neutral-300">
                     <span className="text-accent-600 font-medium text-xs">
-                      ✓ Supporting 100% of mission (+${processingFee.toFixed(2)} processing support)
+                      ✓ Supporting 100% of mission (+${processingFee.toFixed(2)}{" "}
+                      processing support)
                     </span>
                   </div>
                 )}
@@ -474,7 +511,9 @@ export default function SelfCheckoutSection({
                   {processingFee > 0 && (
                     <div className="flex justify-between text-accent-600">
                       <span>Processing Support (3%)</span>
-                      <span className="font-medium">${processingFee.toFixed(2)}</span>
+                      <span className="font-medium">
+                        ${processingFee.toFixed(2)}
+                      </span>
                     </div>
                   )}
                   {processingFee > 0 && (

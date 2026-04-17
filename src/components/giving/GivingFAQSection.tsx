@@ -8,106 +8,106 @@ const faqs = [
     question: "What is planned giving?",
     answer: (
       <p>
-        Planned giving allows donors to make charitable gifts through their
-        estate plans or through strategic financial vehicles — such as{" "}
-        <Bold>wills</Bold>, <Bold>trusts</Bold>,{" "}
-        <Bold>retirement accounts</Bold>, or <Bold>life insurance</Bold>.
+        Planned giving is a way to support The Source of Hope through a future
+        gift, often as part of your overall financial or estate plans. This can
+        include a gift in your <Bold>will</Bold>, <Bold>trust</Bold>,{" "}
+        <Bold>retirement account</Bold>, or <Bold>life insurance policy</Bold>.
       </p>
     ),
   },
   {
-    question: "Why should our nonprofit implement a planned giving program?",
+    question: "Do I need to be wealthy to make a planned gift?",
     answer: (
-      <ul className="list-disc list-inside space-y-1">
-        <li>Builds long-term financial sustainability</li>
-        <li>Creates future endowment growth</li>
-        <li>Strengthens donor loyalty</li>
-        <li>Encourages larger transformational gifts</li>
-        <li>Requires minimal upfront cost to start</li>
-      </ul>
+      <p>
+        <Bold>No.</Bold> Planned giving is not only for wealthy individuals.
+        Many supporters choose to leave a meaningful future gift of any size as
+        a way to reflect their values and make a lasting difference.
+      </p>
     ),
   },
   {
     question: "What types of planned gifts are most common?",
     answer: (
-      <>
-        <ul className="list-disc list-inside space-y-1">
-          <li>Bequests in a will or trust</li>
-          <li>
-            Beneficiary designations (retirement accounts, life insurance)
-          </li>
-          <li>Charitable gift annuities (if appropriate)</li>
-        </ul>
-        <p className="mt-3">
-          <Bold>Start simple</Bold> — bequests alone can significantly impact
-          future funding.
-        </p>
-      </>
+      <ul className="list-disc list-inside space-y-1">
+        <li>A gift through your will or living trust</li>
+        <li>A beneficiary designation on a retirement account</li>
+        <li>A beneficiary designation on a life insurance policy</li>
+        <li>Other charitable giving arrangements that fit your goals</li>
+      </ul>
     ),
   },
   {
-    question: "Who should we approach first?",
+    question:
+      "Can I support The Source of Hope and still take care of my family?",
     answer: (
-      <>
-        <ul className="list-disc list-inside space-y-1">
-          <li>Loyal long-term donors</li>
-          <li>Board members</li>
-          <li>Volunteers</li>
-          <li>Donors over age 55</li>
-          <li>Donors who consistently give annually</li>
-        </ul>
-        <p className="mt-3 font-semibold text-neutral-800">
-          Planned giving is about relationships, not net worth alone.
-        </p>
-      </>
+      <p>
+        Yes. A planned gift is often a way to care for both your loved ones and
+        the causes you value. Many supporters choose a gift option that allows
+        them to provide for family first while also leaving a legacy of hope.
+      </p>
     ),
   },
   {
-    question: "Will this compete with our annual fundraising?",
+    question: "Do I need an attorney or financial advisor?",
     answer: (
-      <>
-        <p>
-          <Bold>No — it complements it.</Bold> Planned giving often:
-        </p>
-        <ul className="list-disc list-inside space-y-1 mt-2">
-          <li>Increases annual giving</li>
-          <li>Deepens donor engagement</li>
-          <li>Strengthens long-term loyalty</li>
-        </ul>
-      </>
+      <p>
+        In many cases, it is helpful to speak with your attorney, financial
+        advisor, or estate planning professional to make sure your wishes are
+        clearly documented. They can help you choose the giving option that best
+        fits your personal goals.
+      </p>
     ),
   },
   {
-    question: "What is the first step?",
+    question: "Can I make a planned gift if I already give annually?",
     answer: (
-      <ol className="list-decimal list-inside space-y-1">
-        <li>Establish a simple gift acceptance policy</li>
-        <li>Approve bequest language</li>
-        <li>Educate your board</li>
-        <li>Add planned giving messaging to your website</li>
-        <li>Begin conversations with loyal supporters</li>
-      </ol>
+      <p>
+        Absolutely. Many of our most faithful supporters continue their regular
+        giving while also choosing to make a planned gift as part of their
+        long-term legacy.
+      </p>
+    ),
+  },
+  {
+    question: "How will my planned gift make an impact?",
+    answer: (
+      <p>
+        Your gift can help strengthen the future of The Source of Hope and
+        support our mission for years to come. Planned gifts help create lasting
+        impact for the individuals, families, and communities we serve.
+      </p>
+    ),
+  },
+  {
+    question:
+      "How do I let you know if I have included The Source of Hope in my plans?",
+    answer: (
+      <p>
+        We would be honored to know about your intentions so we can thank you
+        and ensure your gift is used in alignment with your wishes. You can
+        reach out to our team directly to start a confidential conversation.
+      </p>
     ),
   },
 ];
 
 export default function GivingFAQSection() {
   return (
-    <PageSection className="grid gap-8 bg-neutral-50 rounded-3xl">
+    <PageSection className="grid gap-8 rounded-3xl bg-neutral-50">
       <div className="grid gap-1">
         <Heading>PLANNED GIVING</Heading>
         <Title>Frequently Asked Questions</Title>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+      <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
         {faqs.map(({ question, answer }) => (
           <div
             key={question}
-            className="bg-white rounded-2xl shadow-sm p-6 grid gap-3 border border-neutral-100">
-            <h3 className="font-urbanist font-bold text-md md:text-lg text-neutral-900">
+            className="grid gap-3 rounded-2xl border border-neutral-100 bg-white p-6 shadow-sm">
+            <h3 className="font-urbanist text-md font-bold text-neutral-900 md:text-lg">
               {question}
             </h3>
-            <div className="text-sm md:text-md text-neutral-700">{answer}</div>
+            <div className="text-sm text-neutral-700 md:text-md">{answer}</div>
           </div>
         ))}
       </div>

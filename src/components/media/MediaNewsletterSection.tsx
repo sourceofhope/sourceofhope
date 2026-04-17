@@ -1,49 +1,32 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import PageSection from '@/components/ui/PageSection';
-import Title from '@/components/ui/Title';
-import Heading from '@/components/ui/Heading';
-import Carousel from '@/components/ui/Carousel';
-import Blockquote from '@/components/ui/Blockquote';
-import HighlightedText from '@/components/ui/HighlightedText';
-import ExpressiveAnchor from '@/components/ui/ExpressiveAnchor';
+import { useState } from "react";
+import PageSection from "@/components/ui/PageSection";
+import Title from "@/components/ui/Title";
+import Heading from "@/components/ui/Heading";
+import Carousel from "@/components/ui/Carousel";
+import Blockquote from "@/components/ui/Blockquote";
+import HighlightedText from "@/components/ui/HighlightedText";
 
-interface Post {
+export interface MediaNewsletterPost {
   id: number;
   acf?: {
     title: string;
     url: string;
   };
   _embedded?: {
-    'wp:featuredmedia'?: Array<{
+    "wp:featuredmedia"?: Array<{
       alt_text: string;
       source_url: string;
     }>;
   };
 }
 
-export default function MediaNewsletterSection() {
-  const [newsletters, setNewsletters] = useState<Post[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const fetchNewsletters = async () => {
-      try {
-        const response = await fetch('/api/newsletter?per_page=5');
-        const data = await response.json();
-        setNewsletters(Array.isArray(data) ? data : []);
-      } catch (error) {
-        console.error('Failed to fetch newsletters:', error);
-        setNewsletters([]);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchNewsletters();
-  }, []);
-
+export default function MediaNewsletterSection({
+  newsletters,
+}: {
+  newsletters: MediaNewsletterPost[];
+}) {
   return (
     <PageSection className="grid gap-5 relative m-0 text-sm md:text-md lg:text-lg">
       <Title>Our Newsletter</Title>
@@ -61,9 +44,9 @@ export default function MediaNewsletterSection() {
         </Blockquote>
         <p>
           Stay informed and be a part of the change we&apos;re creating. By
-          subscribing, you&apos;ll be the first to know about our upcoming events,
-          volunteer opportunities, and how you can make a difference in the
-          lives of those we serve.
+          subscribing, you&apos;ll be the first to know about our upcoming
+          events, volunteer opportunities, and how you can make a difference in
+          the lives of those we serve.
         </p>
       </article>
       <article className="bg-neutral-50 rounded-2xl shadow-sm p-5 grid gap-2">
@@ -112,20 +95,17 @@ export default function MediaNewsletterSection() {
           community dedicated to creating hope and lasting change together.
         </p>
         <Heading>Latest Newsletters</Heading>
-        <div
-          className={`min-h-60 flex items-center ${
-            loading
-              ? 'opacity-0'
-              : 'opacity-100 transition-opacity duration-750'
-          }`}
-        >
-          {!loading && newsletters.length === 0 && (
+        <div className="min-h-60 flex items-center opacity-100 transition-opacity duration-750">
+          {newsletters.length === 0 && (
             <p className="text-center w-full text-gray-500 py-10">
               No newsletters to display
             </p>
           )}
-          {!loading && newsletters.length > 0 && (
-            <Carousel auto={true} itemsPerView={{ base: 1, md: 2, lg: 3 }}>
+          {newsletters.length > 0 && (
+            <Carousel
+              auto={true}
+              showProgress
+              itemsPerView={{ base: 1, md: 2, lg: 3 }}>
               {newsletters.map((post) => (
                 <CarouselCard key={post.id} post={post} />
               ))}
@@ -137,31 +117,30 @@ export default function MediaNewsletterSection() {
   );
 }
 
-function CarouselCard({ post }: { post: Post }) {
+function CarouselCard({ post }: { post: MediaNewsletterPost }) {
   const [loaded, setLoaded] = useState(false);
-  const image = post._embedded?.['wp:featuredmedia']?.[0];
+  const image = post._embedded?.["wp:featuredmedia"]?.[0];
   const src = image?.source_url;
 
   return (
     <a
       href={post.acf?.url}
-      className="group relative flex flex-col overflow-hidden rounded-2xl bg-neutral-900 shadow-md transition-all duration-500 hover:shadow-xl"
-    >
+      className="group h-full relative flex flex-col overflow-hidden rounded-2xl bg-neutral-900 shadow-md transition-all duration-500 hover:shadow-xl">
       <div className="relative aspect-[4/5] overflow-hidden">
         <img
-          src={src || '/v2/core/placeholder.webp'}
-          alt={image?.alt_text || ''}
+          src={src || "/v2/core/placeholder.webp"}
+          alt={image?.alt_text || ""}
           loading="lazy"
           decoding="async"
           onLoad={() => setLoaded(true)}
           className={`h-full w-full object-cover transition-opacity duration-700 ${
-            loaded ? 'opacity-100' : 'opacity-0'
+            loaded ? "opacity-100" : "opacity-0"
           }`}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
       </div>
       <div className="relative flex flex-col gap-2 p-5 text-neutral-50">
-        <h2 className="line-clamp-2 text-md font-semibold leading-tight transition-colors duration-300">
+        <h2 className="line-clamp-1 text-md font-semibold leading-tight transition-colors duration-300">
           {post.acf?.title}
         </h2>
         <div className="w-fit text-sm font-semibold text-blue-400 group-hover:text-blue-300 transition-colors duration-300">

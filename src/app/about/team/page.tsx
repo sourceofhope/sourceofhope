@@ -3,6 +3,7 @@ import PageHeader from "@/components/layout/PageHeader";
 import PageSection from "@/components/ui/PageSection";
 import Title from "@/components/ui/Title";
 import Carousel from "@/components/ui/Carousel";
+import { client } from "@/sanity/client";
 import { type SanityDocument } from "next-sanity";
 import { CarouselCard } from "./CarouselCard";
 
@@ -26,6 +27,29 @@ interface Team extends SanityDocument {
   members: TeamMember[];
 }
 
+const TEAMS_WITH_MEMBERS_QUERY = `
+*[_type == "team"] {
+  _id,
+  name,
+  slug,
+  description,
+  "members": *[_type == "teamMember" && team._ref == ^._id] | order(name asc) {
+    _id,
+    name,
+    slug,
+    title,
+    bio,
+    image,
+    team->{
+      _id,
+      name,
+    }
+  }
+}
+`;
+
+const options = { next: { revalidate: 30 } };
+
 // Define the preferred order of teams
 const TEAM_ORDER = [
   "Executive Board",
@@ -45,6 +69,20 @@ export const metadata: Metadata = {
   description:
     "Meet the team at The Source of Hope dedicated to serving our community.",
 };
+
+async function getTeams() {
+  try {
+    const teams = await client.fetch<Team[]>(TEAMS_WITH_MEMBERS_QUERY, {}, options);
+    return teams
+      .filter((team) => team.members.length > 0)
+      .map((team) => ({
+        ...team,
+        members: sortMembersByImage(team.members),
+      }));
+  } catch {
+    return null;
+  }
+}
 
 // Helper function to sort teams by preferred order
 function sortTeamsByOrder(teams: Team[]): Team[] {
@@ -75,69 +113,9 @@ function sortTeamsByOrder(teams: Team[]): Team[] {
 }
 
 export default async function Team() {
-  try {
-    // Fetch teams from API endpoint
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000"}/api/team-member`,
-      {
-        next: { revalidate: 30 },
-      },
-    );
+  const teamsWithMembers = await getTeams();
 
-    if (!response.ok) {
-      throw new Error("Failed to fetch team data");
-    }
-
-    const teamsWithMembers: Team[] = await response.json();
-
-    // Sort the teams by preferred order
-    const sortedTeams = sortTeamsByOrder(teamsWithMembers);
-
-    if (sortedTeams.length === 0) {
-      return (
-        <>
-          <PageHeader>
-            <h1 className="font-urbanist font-bold text-neutral-50 text-xxxlg">
-              TEAM
-            </h1>
-            <p className="font-semibold text-neutral-200 text-sm">WHO WE ARE</p>
-          </PageHeader>
-          <section className="w-full md:justify-items-left items-center grid my-5 px-5 lg:px-35 min-h-screen">
-            <div className="text-center">
-              <h2 className="text-3xl font-bold font-urbanist mb-4">
-                Team Members
-              </h2>
-              <p className="text-neutral-600">
-                No team members found. Check back soon!
-              </p>
-            </div>
-          </section>
-        </>
-      );
-    }
-
-    return (
-      <>
-        <PageHeader>
-          <h1 className="font-urbanist font-bold text-neutral-50 text-xxxlg">
-            TEAM
-          </h1>
-          <p className="font-semibold text-neutral-200 text-sm">WHO WE ARE</p>
-        </PageHeader>
-        <PageSection className="pt-5">
-          <div className="grid gap-5">
-            {sortedTeams.map((team) => (
-              <CarouselLayer
-                key={team._id}
-                title={team.name}
-                members={team.members}
-              />
-            ))}
-          </div>
-        </PageSection>
-      </>
-    );
-  } catch (error) {
+  if (teamsWithMembers === null) {
     return (
       <>
         <PageHeader>
@@ -157,6 +135,61 @@ export default async function Team() {
       </>
     );
   }
+
+  const sortedTeams = sortTeamsByOrder(teamsWithMembers);
+
+  if (sortedTeams.length === 0) {
+    return (
+      <>
+        <PageHeader>
+          <h1 className="font-urbanist font-bold text-neutral-50 text-xxxlg">
+            TEAM
+          </h1>
+          <p className="font-semibold text-neutral-200 text-sm">WHO WE ARE</p>
+        </PageHeader>
+        <section className="w-full md:justify-items-left items-center grid my-5 px-5 lg:px-35 min-h-screen">
+          <div className="text-center">
+            <h2 className="text-3xl font-bold font-urbanist mb-4">
+              Team Members
+            </h2>
+            <p className="text-neutral-600">
+              No team members found. Check back soon!
+            </p>
+          </div>
+        </section>
+      </>
+    );
+  }
+
+  return (
+    <>
+      <PageHeader>
+        <h1 className="font-urbanist font-bold text-neutral-50 text-xxxlg">
+          TEAM
+        </h1>
+        <p className="font-semibold text-neutral-200 text-sm">WHO WE ARE</p>
+      </PageHeader>
+      <PageSection className="pt-5">
+        <div className="grid gap-5">
+          {sortedTeams.map((team) => (
+            <CarouselLayer
+              key={team._id}
+              title={team.name}
+              members={team.members}
+            />
+          ))}
+        </div>
+      </PageSection>
+    </>
+  );
+}
+
+function sortMembersByImage(members: TeamMember[]): TeamMember[] {
+  return members.sort((a, b) => {
+    const aHasImage = a.image?.sourceUrl ? 1 : 0;
+    const bHasImage = b.image?.sourceUrl ? 1 : 0;
+    return bHasImage - aHasImage;
+  });
 }
 
 interface CarouselLayerProps {

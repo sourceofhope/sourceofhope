@@ -45,7 +45,7 @@ export async function generateMetadata({
   const member = await client.fetch<TeamMember>(
     MEMBER_QUERY,
     { slug },
-    options
+    options,
   );
 
   if (!member) {
@@ -69,7 +69,7 @@ export default async function TeamMember({
   const member = await client.fetch<TeamMember>(
     MEMBER_QUERY,
     { slug },
-    options
+    options,
   );
 
   if (!member) {
@@ -89,64 +89,69 @@ export default async function TeamMember({
         )}
       </PageHeader>
 
-      <section className="w-full grid my-5 px-5 lg:px-35 pb-20">
-        <div className="relative">
-          {/* Member Image - Float Right */}
-          {member.image?.sourceUrl && (
-            <div className="float-right ml-8 mb-8 w-full sm:w-96">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={member.image.sourceUrl}
-                alt={member.image.altText || member.name}
-                loading="lazy"
-                decoding="async"
-                className="aspect-square object-cover w-full rounded-2xl shadow-lg"
-              />
-            </div>
-          )}
+      <section className="w-full px-5 py-8 pb-20 lg:px-35">
+        <div className="mx-auto max-w-7xl">
+          <div className="grid gap-10 lg:grid-cols-[minmax(0,1fr)_380px] lg:items-start">
+            {/* Main Content */}
+            <div className="order-2 lg:order-1">
+              <div className="space-y-6">
+                <div>
+                  <h2 className="text-3xl font-bold uppercase text-primary-600">
+                    {member.name}
+                  </h2>
+                  {member.title && (
+                    <p className="mt-2 text-lg font-medium text-neutral-600">
+                      {member.title}
+                    </p>
+                  )}
+                </div>
 
-          {/* Member Info */}
-          <div className="mb-6">
-            <h2 className="text-3xl font-bold text-primary-600 uppercase mb-2">
-              {member.name}
-            </h2>
-            {member.title && (
-              <p className="text-lg text-neutral-600 font-medium mb-4">
-                {member.title}
-              </p>
+                {member.bio && (
+                  <div className="prose prose-lg prose-neutral max-w-none">
+                    <p className="whitespace-pre-wrap leading-relaxed text-neutral-700">
+                      {member.bio}
+                    </p>
+                  </div>
+                )}
+
+                {member.team?.name && (
+                  <div className="border-t border-neutral-200 pt-6">
+                    <p className="text-sm font-medium text-neutral-600">
+                      Team:{" "}
+                      <span className="text-accent-600">
+                        {member.team.name}
+                      </span>
+                    </p>
+                  </div>
+                )}
+
+                <div className="pt-4">
+                  <Link
+                    href="/about/team"
+                    className="inline-flex items-center gap-2 font-medium text-primary-700 transition-colors duration-200 hover:text-primary-800 group">
+                    <ArrowLeftIcon className="h-5 w-5 transition-transform duration-300 group-hover:-translate-x-1" />
+                    Back to Team
+                  </Link>
+                </div>
+              </div>
+            </div>
+
+            {/* Image */}
+            {member.image?.sourceUrl && (
+              <aside className="order-1 lg:order-2">
+                <div className="overflow-hidden rounded-2xl bg-neutral-100 shadow-lg">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={member.image.sourceUrl}
+                    alt={member.image.altText || member.name}
+                    loading="lazy"
+                    decoding="async"
+                    className="aspect-square w-full object-cover"
+                  />
+                </div>
+              </aside>
             )}
           </div>
-
-          {/* Bio */}
-          {member.bio && (
-            <div className="prose prose-lg prose-neutral max-w-none">
-              <p className="text-neutral-700 leading-relaxed whitespace-pre-wrap">
-                {member.bio}
-              </p>
-            </div>
-          )}
-
-          {/* Team Info */}
-          {member.team?.name && (
-            <div className="mt-6 pt-6 border-t border-neutral-200">
-              <p className="text-sm font-medium text-neutral-600">
-                Team: <span className="text-accent-600">{member.team.name}</span>
-              </p>
-            </div>
-          )}
-
-          <div className="clear-both"></div>
-        </div>
-
-        {/* Back Link */}
-        <div className="mt-12">
-          <Link
-            href="/about/team"
-            className="inline-flex items-center group gap-2 text-primary-700 font-medium transition-colors duration-200 hover:text-primary-800"
-          >
-            <ArrowLeftIcon className="w-5 h-5 group-hover:-translate-x-1 transition-transform duration-300" />
-            Back to Team
-          </Link>
         </div>
       </section>
     </>

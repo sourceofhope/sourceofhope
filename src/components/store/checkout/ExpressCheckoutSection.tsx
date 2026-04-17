@@ -1,16 +1,16 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { LockClosedIcon } from '@heroicons/react/24/solid';
-import Heading from '@/components/ui/Heading';
-import { CartItem } from '@/context/StoreCartContext';
+import { useState, useEffect } from "react";
+import { LockClosedIcon } from "@heroicons/react/24/solid";
+import Heading from "@/components/ui/Heading";
+import { CartItem } from "@/context/StoreCartContext";
 import {
   FaPaypal,
   FaStripeS,
   FaApplePay,
   FaGooglePay,
   FaLock,
-} from 'react-icons/fa';
+} from "react-icons/fa";
 
 interface CheckoutProvider {
   id: string;
@@ -47,27 +47,29 @@ export default function ExpressCheckoutSection({
   const [isProcessing, setIsProcessing] = useState(false);
   const [selectedMethod, setSelectedMethod] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
-  const [checkoutProviders, setCheckoutProviders] = useState<CheckoutProvider[]>([]);
+  const [checkoutProviders, setCheckoutProviders] = useState<
+    CheckoutProvider[]
+  >([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const loadProviders = async () => {
       try {
-        const response = await fetch('/api/checkout-providers');
+        const response = await fetch("/api/checkout-providers");
         const data = await response.json();
-        
-        console.log('Checkout API Response:', data);
-        
+
+        console.log("Checkout API Response:", data);
+
         if (data?.data && Array.isArray(data.data)) {
-          console.log('Providers loaded:', data.data);
+          console.log("Providers loaded:", data.data);
           setCheckoutProviders(data.data);
         } else {
-          console.warn('No providers found or invalid format:', data);
+          console.warn("No providers found or invalid format:", data);
           setCheckoutProviders([]);
         }
       } catch (err) {
-        console.error('Failed to load checkout providers:', err);
-        setError('Failed to load payment options');
+        console.error("Failed to load checkout providers:", err);
+        setError("Failed to load payment options");
         setCheckoutProviders([]);
       } finally {
         setIsLoading(false);
@@ -82,27 +84,30 @@ export default function ExpressCheckoutSection({
     setSelectedMethod(method);
     setError(null);
 
-    const successUrl = `${typeof window !== 'undefined' ? window.location.origin : ''}/store/success`;
-    const cancelUrl = `${typeof window !== 'undefined' ? window.location.origin : ''}/store/checkout`;
+    const successUrl = `${typeof window !== "undefined" ? window.location.origin : ""}/store/success`;
+    const cancelUrl = `${typeof window !== "undefined" ? window.location.origin : ""}/store/checkout`;
 
-    if (method === 'Stripe') {
+    if (method === "Stripe") {
       await handleStripeCheckout(successUrl, cancelUrl);
-    } else if (method === 'PayPal') {
+    } else if (method === "PayPal") {
       await handlePaypalCheckout(successUrl, cancelUrl);
-    } else if (method === 'Google Pay') {
+    } else if (method === "Google Pay") {
       // TODO: Google Pay express checkout logic
       setIsProcessing(false);
-    } else if (method === 'Apple Pay') {
+    } else if (method === "Apple Pay") {
       // TODO: Apple Pay express checkout logic
       setIsProcessing(false);
     }
   };
 
-  const handleStripeCheckout = async (successUrl: string, cancelUrl: string) => {
+  const handleStripeCheckout = async (
+    successUrl: string,
+    cancelUrl: string,
+  ) => {
     try {
-      const response = await fetch('/api/checkout/create-stripe-checkout', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/checkout/create-stripe-checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           items,
           shippingMethod,
@@ -125,20 +130,23 @@ export default function ExpressCheckoutSection({
       if (data.url) {
         window.location.href = data.url;
       } else {
-        setError('Failed to create checkout session');
+        setError("Failed to create checkout session");
         setIsProcessing(false);
       }
     } catch (err) {
-      setError('Failed to process Stripe checkout');
+      setError("Failed to process Stripe checkout");
       setIsProcessing(false);
     }
   };
 
-  const handlePaypalCheckout = async (successUrl: string, cancelUrl: string) => {
+  const handlePaypalCheckout = async (
+    successUrl: string,
+    cancelUrl: string,
+  ) => {
     try {
-      const response = await fetch('/api/checkout/create-paypal-order', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/checkout/create-paypal-order", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           items,
           shippingMethod,
@@ -161,11 +169,11 @@ export default function ExpressCheckoutSection({
       if (data.approvalUrl) {
         window.location.href = data.approvalUrl;
       } else {
-        setError('Failed to create PayPal order');
+        setError("Failed to create PayPal order");
         setIsProcessing(false);
       }
     } catch (err) {
-      setError('Failed to process PayPal checkout');
+      setError("Failed to process PayPal checkout");
       setIsProcessing(false);
     }
   };
@@ -179,7 +187,9 @@ export default function ExpressCheckoutSection({
 
       {isLoading ? (
         <div className="flex justify-center items-center py-8">
-          <div className="text-neutral-500">Loading payment options...</div>
+          <div className="text-neutral-500 text-sm">
+            Loading Payment Options
+          </div>
         </div>
       ) : error ? (
         <div className="bg-red-50 border border-red-200 rounded-xl p-4 mb-4">
@@ -196,15 +206,14 @@ export default function ExpressCheckoutSection({
                 disabled={isProcessing || !method.enabled}
                 className={`
                   flex flex-col items-center justify-center gap-1
-                  ${method.enabled && !isProcessing ? 'text-accent-500 hover:scale-105' : 'text-neutral-500 bg-neutral-200'}
+                  ${method.enabled && !isProcessing ? "text-accent-500 hover:scale-105" : "text-neutral-500 bg-neutral-200"}
                   rounded-xl px-3 py-3
                   font-semibold text-xs
                   transition-all duration-300
                   disabled:opacity-50 disabled:cursor-not-allowed
                   transform active:scale-95
                   shadow-sm hover:shadow-md
-                `}
-              >
+                `}>
                 {iconMap[method.icon as keyof typeof iconMap]}
               </button>
             ))}

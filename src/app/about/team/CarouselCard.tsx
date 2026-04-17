@@ -1,10 +1,10 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import Link from 'next/link';
-import { XMarkIcon, ArrowRightIcon } from '@heroicons/react/20/solid';
-import Overlay from '@/components/ui/Overlay';
-import ExpressiveAnchor from '@/components/ui/ExpressiveAnchor';
+import { useState } from "react";
+import Link from "next/link";
+import { XMarkIcon, ArrowRightIcon } from "@heroicons/react/20/solid";
+import Overlay from "@/components/ui/Overlay";
+import ExpressiveAnchor from "@/components/ui/ExpressiveAnchor";
 import { type SanityDocument } from "next-sanity";
 
 interface TeamMember extends SanityDocument {
@@ -31,17 +31,16 @@ export function CarouselCard({ member }: CarouselCardProps) {
     <>
       <div
         onClick={() => setActive(true)}
-        className="relative h-full min-h-[320px] w-full group overflow-hidden rounded-2xl aspect-square cursor-pointer"
-      >
+        className="relative h-full min-h-80 w-full group overflow-hidden rounded-2xl aspect-square cursor-pointer">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={member.image?.sourceUrl || '/v2/core/Member-Placeholder.webp'}
+          src={member.image?.sourceUrl || "/v2/core/Member-Placeholder.webp"}
           alt={member.image?.altText || member.name}
           onLoad={() => setLoaded(true)}
           loading="lazy"
           decoding="async"
           className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-750 ${
-            loaded ? 'opacity-100' : 'opacity-0'
+            loaded ? "opacity-100" : "opacity-0"
           }`}
         />
 
@@ -52,20 +51,18 @@ export function CarouselCard({ member }: CarouselCardProps) {
         />
 
         {/* Gradient overlay with text */}
-        <div className="absolute bottom-0 left-0 w-full p-5 bg-gradient-to-t from-black/90 to-transparent rounded-b-2xl flex flex-col">
+        <div className="absolute bottom-0 left-0 w-full p-5 bg-linear-to-t from-black/90 to-transparent rounded-b-2xl flex flex-col">
           <h2
             className={`md:line-clamp-1 text-md ${
-              member.bio ? 'lg:group-hover:text-sm' : ''
-            } transition-all duration-750 font-semibold text-center text-neutral-50`}
-          >
+              member.bio ? "lg:group-hover:text-sm" : ""
+            } transition-all duration-750 font-semibold text-center text-neutral-50`}>
             {member.name}
           </h2>
 
           <h3
             className={`md:line-clamp-1 text-sm ${
-              member.bio ? 'lg:group-hover:text-xs' : ''
-            } transition-all duration-750 font-semibold text-center text-neutral-300`}
-          >
+              member.bio ? "lg:group-hover:text-xs" : ""
+            } transition-all duration-750 font-semibold text-center text-neutral-300`}>
             {member.title}
           </h3>
 
@@ -89,17 +86,17 @@ export function CarouselCard({ member }: CarouselCardProps) {
             </h2>
             <button
               onClick={() => setActive(false)}
-              className="rounded-full p-2 hover:bg-neutral-200 transition-colors duration-750"
-            >
+              className="rounded-full p-2 hover:bg-neutral-200 transition-colors duration-750">
               <XMarkIcon className="w-5 h-5 text-neutral-600" />
             </button>
           </div>
-          <p className="text-sm leading-relaxed text-neutral-600">{member.bio}</p>
+          <p className="text-sm leading-relaxed text-neutral-600">
+            {member.bio}
+          </p>
           <div className="flex justify-end w-fit">
             <ExpressiveAnchor
               href={`/about/team/${member.slug.current}`}
-              className="font-semibold text-accent-700 hover:text-accent-800 transition-colors duration-750"
-            >
+              className="font-semibold text-accent-700 hover:text-accent-800 transition-colors duration-750">
               See full &apos;{member.name}&apos; Biography
             </ExpressiveAnchor>
           </div>

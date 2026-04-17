@@ -1,7 +1,52 @@
 import { Metadata } from "next";
 import PageHeader from "@/components/layout/PageHeader";
-import MediaBlogPage from "@/components/media/MediaBlogSection";
-import MediaNewsletterSection from "@/components/media/MediaNewsletterSection";
+import MediaBlogPage, {
+  type MediaBlogPost,
+} from "@/components/media/MediaBlogSection";
+import MediaNewsletterSection, {
+  type MediaNewsletterPost,
+} from "@/components/media/MediaNewsletterSection";
+import { client } from "@/sanity/client";
+
+const PUBLICATION_QUERY = `
+*[_type == "publication"] | order(date desc)[0...10] {
+  "id": externalId,
+  "acf": {
+    "title": title,
+    "date": date,
+    "summary": summary,
+    "url": url
+  },
+  "_embedded": {
+    "wp:featuredmedia": [
+      {
+        "alt_text": featuredMedia.altText,
+        "source_url": featuredMedia.sourceUrl
+      }
+    ]
+  }
+}
+`;
+
+const NEWSLETTER_QUERY = `
+*[_type == "newsletter"] | order(_createdAt desc)[0...5] {
+  "id": externalId,
+  "acf": {
+    "title": title,
+    "url": url
+  },
+  "_embedded": {
+    "wp:featuredmedia": [
+      {
+        "alt_text": featuredMedia.altText,
+        "source_url": featuredMedia.sourceUrl
+      }
+    ]
+  }
+}
+`;
+
+const options = { next: { revalidate: 30 } };
 
 export const metadata: Metadata = {
   title: "Media | The Source of Hope",
@@ -21,7 +66,12 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Media() {
+export default async function Media() {
+  const [posts, newsletters] = await Promise.all([
+    client.fetch<MediaBlogPost[]>(PUBLICATION_QUERY, {}, options),
+    client.fetch<MediaNewsletterPost[]>(NEWSLETTER_QUERY, {}, options),
+  ]);
+
   return (
     <>
       <PageHeader>
@@ -32,8 +82,8 @@ export default function Media() {
           OUR COMMUNITY CONTRIBUTION
         </p>
       </PageHeader>
-      <MediaBlogPage />
-      <MediaNewsletterSection />
+      <MediaBlogPage posts={posts} />
+      <MediaNewsletterSection newsletters={newsletters} />
     </>
   );
 }

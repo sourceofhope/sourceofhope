@@ -24,9 +24,9 @@ export default function Serve() {
         </p>
       </PageHeader>
       <ServeShowcaseSection />
+      <ServeEventsSection />
       <ServeProgramsSection />
       <ServeDonationSection />
-      <ServeEventsSection />
       <ServeGuidelinesSection />
     </>
   );

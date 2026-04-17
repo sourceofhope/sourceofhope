@@ -1,18 +1,18 @@
-'use client';
+"use client";
 
-import { useState, useEffect, useRef } from 'react';
-import { HeartIcon, CheckCircleIcon } from '@heroicons/react/24/solid';
-import { loadStripe } from '@stripe/stripe-js';
+import { useState, useEffect, useRef } from "react";
+import { HeartIcon, CheckCircleIcon } from "@heroicons/react/24/solid";
+import { loadStripe } from "@stripe/stripe-js";
 import {
   Elements,
   PaymentElement,
   useStripe,
   useElements,
-} from '@stripe/react-stripe-js';
-import Link from 'next/link';
-import Title from '@/components/ui/Title';
-import Heading from '@/components/ui/Heading';
-import { useHeaderContext } from '@/context/HeaderContext';
+} from "@stripe/react-stripe-js";
+import Link from "next/link";
+import Title from "@/components/ui/Title";
+import Heading from "@/components/ui/Heading";
+import { useHeaderContext } from "@/context/HeaderContext";
 
 const STANDARD_PROCESSING_RATE = 0.03;
 
@@ -41,7 +41,7 @@ function PaymentForm({ total, onSuccess }: PaymentFormProps) {
 
     const { error: submitError } = await elements.submit();
     if (submitError) {
-      setError(submitError.message || 'An error occurred');
+      setError(submitError.message || "An error occurred");
       setIsProcessing(false);
       return;
     }
@@ -51,13 +51,13 @@ function PaymentForm({ total, onSuccess }: PaymentFormProps) {
       confirmParams: {
         return_url: `${window.location.origin}/donate?success=true`,
       },
-      redirect: 'if_required',
+      redirect: "if_required",
     });
 
     if (confirmError) {
-      setError(confirmError.message || 'Payment failed');
+      setError(confirmError.message || "Payment failed");
       setIsProcessing(false);
-    } else if (paymentIntent && paymentIntent.status === 'succeeded') {
+    } else if (paymentIntent && paymentIntent.status === "succeeded") {
       onSuccess(paymentIntent.id);
     }
   };
@@ -75,8 +75,7 @@ function PaymentForm({ total, onSuccess }: PaymentFormProps) {
       <button
         type="submit"
         disabled={!stripe || isProcessing}
-        className="w-full bg-accent-500 hover:bg-accent-600 disabled:bg-neutral-300 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 disabled:cursor-not-allowed"
-      >
+        className="w-full bg-accent-500 hover:bg-accent-600 disabled:bg-neutral-300 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 disabled:cursor-not-allowed">
         {isProcessing ? (
           <span className="flex items-center justify-center gap-2">
             <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
@@ -115,14 +114,16 @@ function PaymentForm({ total, onSuccess }: PaymentFormProps) {
 
 export default function DonatePage() {
   const [selectedAmount, setSelectedAmount] = useState<number | null>(100);
-  const [customAmount, setCustomAmount] = useState('');
+  const [customAmount, setCustomAmount] = useState("");
   const [coverFee, setCoverFee] = useState(false);
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [dedication, setDedication] = useState('');
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [dedication, setDedication] = useState("");
 
-  const [stripePromise, setStripePromise] = useState<ReturnType<typeof loadStripe> | null>(null);
+  const [stripePromise, setStripePromise] = useState<ReturnType<
+    typeof loadStripe
+  > | null>(null);
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [loadError, setLoadError] = useState<string | null>(null);
@@ -141,9 +142,7 @@ export default function DonatePage() {
 
   // Resolved donation amount
   const donationAmount =
-    selectedAmount !== null
-      ? selectedAmount
-      : parseFloat(customAmount) || 0;
+    selectedAmount !== null ? selectedAmount : parseFloat(customAmount) || 0;
 
   // Track the amount/fee that were used when the PaymentIntent was created.
   // If either changes after initialization, invalidate the intent so a fresh
@@ -174,15 +173,15 @@ export default function DonatePage() {
 
   const isFormValid =
     donationAmount >= 0.5 &&
-    firstName.trim() !== '' &&
-    lastName.trim() !== '' &&
+    firstName.trim() !== "" &&
+    lastName.trim() !== "" &&
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   const isCoolingDown = Date.now() < cooldownUntil;
 
   const handleAmountSelect = (amount: number) => {
     setSelectedAmount(amount);
-    setCustomAmount('');
+    setCustomAmount("");
   };
 
   const handleCustomAmountChange = (value: string) => {
@@ -197,23 +196,23 @@ export default function DonatePage() {
 
       // Load publishable key
       const keyResponse = await fetch(
-        '/api/checkout/retrieve-stripe-publishable-key',
-        { method: 'POST', headers: { 'Content-Type': 'application/json' } },
+        "/api/checkout/retrieve-stripe-publishable-key",
+        { method: "POST", headers: { "Content-Type": "application/json" } },
       );
       const keyData = await keyResponse.json();
 
       if (keyData.error || !keyData.publishableKey) {
-        throw new Error('Failed to load payment system');
+        throw new Error("Failed to load payment system");
       }
 
       setStripePromise(loadStripe(keyData.publishableKey));
 
       // Create donation payment intent
       const response = await fetch(
-        '/api/checkout/create-donation-payment-intent',
+        "/api/checkout/create-donation-payment-intent",
         {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             amount: donationAmount,
             processingFee,
@@ -229,14 +228,16 @@ export default function DonatePage() {
       const data = await response.json();
 
       if (data.error || !data.clientSecret) {
-        throw new Error(data.error || 'Failed to initialize payment');
+        throw new Error(data.error || "Failed to initialize payment");
       }
 
       intentAmountRef.current = donationAmount;
       intentCoverFeeRef.current = coverFee;
       setClientSecret(data.clientSecret);
     } catch (err) {
-      setLoadError(err instanceof Error ? err.message : 'Failed to initialize payment');
+      setLoadError(
+        err instanceof Error ? err.message : "Failed to initialize payment",
+      );
     } finally {
       setIsLoading(false);
       // 15-second cooldown after every attempt to slow rapid re-clicking.
@@ -267,8 +268,11 @@ export default function DonatePage() {
           <Heading className="mb-1">Donation Received</Heading>
           <Title className="mb-4">Thank You!</Title>
           <p className="text-neutral-700 leading-relaxed mb-2">
-            Your donation of{' '}
-            <strong className="text-accent-600">${donationAmount.toFixed(2)}</strong> has been received.
+            Your donation of{" "}
+            <strong className="text-accent-600">
+              ${donationAmount.toFixed(2)}
+            </strong>{" "}
+            has been received.
           </p>
           <p className="text-sm text-neutral-500 mb-8">
             A receipt will be sent to <strong>{email}</strong>. Your generosity
@@ -277,8 +281,7 @@ export default function DonatePage() {
           <div className="w-full h-px bg-neutral-100 mb-8" />
           <Link
             href="/"
-            className="inline-block bg-accent-500 hover:bg-accent-600 text-white font-bold px-8 py-4 rounded-xl transition-all duration-300 no-underline!"
-          >
+            className="inline-block bg-accent-500 hover:bg-accent-600 text-white font-bold px-8 py-4 rounded-xl transition-all duration-300 no-underline!">
             Back to Home
           </Link>
         </div>
@@ -289,7 +292,7 @@ export default function DonatePage() {
   // ── Main form ──────────────────────────────────────────────────────────────
   return (
     <div className="min-h-screen bg-neutral-50 pt-25 px-5 md:px-10 lg:px-20 pb-16">
-      <div className="max-w-[70%] mx-auto">
+      <div className="px-0 lg:px-15">
         {/* Page header */}
         <div className="flex flex-col gap-1 mb-8">
           <div className="flex items-center gap-3">
@@ -307,7 +310,6 @@ export default function DonatePage() {
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
           {/* Left: amount + donor info */}
           <div className="lg:col-span-3 space-y-6">
-
             {/* Amount selection */}
             <div className="bg-white rounded-2xl shadow-md p-6">
               <Heading className="mb-4">Choose an Amount</Heading>
@@ -319,10 +321,9 @@ export default function DonatePage() {
                     onClick={() => handleAmountSelect(amount)}
                     className={`py-3 rounded-xl font-semibold text-sm transition-all duration-200 ${
                       selectedAmount === amount
-                        ? 'bg-accent-500 text-white shadow-sm'
-                        : 'bg-neutral-100 text-neutral-800 hover:bg-neutral-200'
-                    }`}
-                  >
+                        ? "bg-accent-500 text-white shadow-sm"
+                        : "bg-neutral-100 text-neutral-800 hover:bg-neutral-200"
+                    }`}>
                     ${amount}
                   </button>
                 ))}
@@ -350,7 +351,9 @@ export default function DonatePage() {
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                 <div className="grid gap-1">
-                  <label htmlFor="donate-first-name" className="text-sm font-semibold text-neutral-800">
+                  <label
+                    htmlFor="donate-first-name"
+                    className="text-sm font-semibold text-neutral-800">
                     First Name <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -364,7 +367,9 @@ export default function DonatePage() {
                   />
                 </div>
                 <div className="grid gap-1">
-                  <label htmlFor="donate-last-name" className="text-sm font-semibold text-neutral-800">
+                  <label
+                    htmlFor="donate-last-name"
+                    className="text-sm font-semibold text-neutral-800">
                     Last Name <span className="text-red-500">*</span>
                   </label>
                   <input
@@ -380,7 +385,9 @@ export default function DonatePage() {
               </div>
 
               <div className="grid gap-1 mb-4">
-                <label htmlFor="donate-email" className="text-sm font-semibold text-neutral-800">
+                <label
+                  htmlFor="donate-email"
+                  className="text-sm font-semibold text-neutral-800">
                   Email <span className="text-red-500">*</span>
                 </label>
                 <input
@@ -396,9 +403,13 @@ export default function DonatePage() {
               </div>
 
               <div className="grid gap-1">
-                <label htmlFor="donate-dedication" className="text-sm font-semibold text-neutral-800">
-                  Dedication / In Memory of{' '}
-                  <span className="text-neutral-400 font-normal">(optional)</span>
+                <label
+                  htmlFor="donate-dedication"
+                  className="text-sm font-semibold text-neutral-800">
+                  Dedication / In Memory of{" "}
+                  <span className="text-neutral-400 font-normal">
+                    (optional)
+                  </span>
                 </label>
                 <textarea
                   id="donate-dedication"
@@ -415,17 +426,16 @@ export default function DonatePage() {
 
           {/* Right: summary + cover-fee + payment */}
           <div className="lg:col-span-2 space-y-5">
-
             {/* Cover fee */}
             <div className="bg-accent-50 border border-accent-200 rounded-xl p-4 pt-5">
               <h4 className="font-semibold text-neutral-900 mb-2 text-sm">
                 Support the mission
               </h4>
               <p className="text-xs text-neutral-700 mb-3">
-                Online payments include a{' '}
-                <strong>3% processing cost</strong> charged by the credit card
-                companies. You may choose to add this small amount so your full
-                donation goes directly to serving the community.
+                Online payments include a <strong>3% processing cost</strong>{" "}
+                charged by the credit card companies. You may choose to add this
+                small amount so your full donation goes directly to serving the
+                community.
               </p>
               <label className="flex items-start gap-3 cursor-pointer group">
                 <input
@@ -437,8 +447,7 @@ export default function DonatePage() {
                 <span className="text-xs md:text-sm text-neutral-800 group-hover:text-accent-700 transition-colors">
                   Yes, I would like to cover the processing fee
                   <span
-                    className={`${coverFee ? 'opacity-100' : 'opacity-0'} block text-xs text-accent-600 font-medium mt-1`}
-                  >
+                    className={`${coverFee ? "opacity-100" : "opacity-0"} block text-xs text-accent-600 font-medium mt-1`}>
                     +${processingFee.toFixed(2)} processing support
                   </span>
                 </span>
@@ -451,7 +460,9 @@ export default function DonatePage() {
               <div className="space-y-2 text-sm text-neutral-700">
                 <div className="flex justify-between">
                   <span>Donation</span>
-                  <span>${donationAmount > 0 ? donationAmount.toFixed(2) : '—'}</span>
+                  <span>
+                    ${donationAmount > 0 ? donationAmount.toFixed(2) : "—"}
+                  </span>
                 </div>
                 {coverFee && (
                   <div className="flex justify-between text-accent-600">
@@ -461,7 +472,7 @@ export default function DonatePage() {
                 )}
                 <div className="border-t border-neutral-200 pt-2 mt-2 flex justify-between font-bold text-neutral-900">
                   <span>Total</span>
-                  <span>${total > 0 ? total.toFixed(2) : '—'}</span>
+                  <span>${total > 0 ? total.toFixed(2) : "—"}</span>
                 </div>
               </div>
             </div>
@@ -474,15 +485,13 @@ export default function DonatePage() {
                     <Heading>Payment</Heading>
                     <button
                       onClick={handleEditDonation}
-                      className="text-xs text-accent-600 hover:text-accent-700 underline"
-                    >
+                      className="text-xs text-accent-600 hover:text-accent-700 underline">
                       Edit
                     </button>
                   </div>
                   <Elements
                     stripe={stripePromise}
-                    options={{ clientSecret, appearance: { theme: 'stripe' } }}
-                  >
+                    options={{ clientSecret, appearance: { theme: "stripe" } }}>
                     <PaymentForm
                       total={total}
                       onSuccess={handlePaymentSuccess}
@@ -504,11 +513,12 @@ export default function DonatePage() {
                   <button
                     onClick={handleInitializePayment}
                     disabled={!isFormValid || isLoading || isCoolingDown}
-                    className="w-full bg-accent-500 hover:bg-accent-600 disabled:bg-neutral-300 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 disabled:cursor-not-allowed"
-                  >
+                    className="w-full bg-accent-500 hover:bg-accent-600 disabled:bg-neutral-300 text-white font-bold py-4 px-6 rounded-xl transition-all duration-300 disabled:cursor-not-allowed">
                     {isLoading ? (
                       <span className="flex items-center justify-center gap-2">
-                        <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
+                        <svg
+                          className="animate-spin h-5 w-5"
+                          viewBox="0 0 24 24">
                           <circle
                             className="opacity-25"
                             cx="12"
@@ -527,11 +537,11 @@ export default function DonatePage() {
                         Loading...
                       </span>
                     ) : isCoolingDown ? (
-                      'Please wait a moment...'
+                      "Please wait a moment..."
                     ) : donationAmount > 0 ? (
                       `Continue to Payment • $${total.toFixed(2)}`
                     ) : (
-                      'Enter an amount to continue'
+                      "Enter an amount to continue"
                     )}
                   </button>
 
@@ -545,14 +555,14 @@ export default function DonatePage() {
             </div>
 
             {/* Legal */}
-            <p className="text-xs text-neutral-500 text-center leading-relaxed px-1">
-              The Source of Hope is a 501(c)(3) nonprofit organization. Donations
-              are tax-deductible to the extent permitted by applicable law. No
-              goods or services were provided in exchange for this contribution.
-              By submitting payment you authorize The Source of Hope to charge
-              the stated amount to your payment method. All transactions are
-              processed securely through Stripe. You will receive an email
-              receipt upon successful payment.
+            <p className="text-justify text-xs text-neutral-500 text-center leading-relaxed px-1">
+              The Source of Hope is a 501(c)(3) nonprofit organization.
+              Donations are tax-deductible to the extent permitted by applicable
+              law. No goods or services were provided in exchange for this
+              contribution. By submitting payment you authorize The Source of
+              Hope to charge the stated amount to your payment method. All
+              transactions are processed securely through Stripe. You will
+              receive an email receipt upon successful payment.
             </p>
           </div>
         </div>

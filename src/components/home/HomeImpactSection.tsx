@@ -16,7 +16,7 @@ export default function HomeImpactSection() {
             <Title className="tracking-wide text-center md:text-left text-neutral-50">
               COMMUNITY IMPACT
             </Title>
-            <p className="text-lg text-neutral-300 leading-relaxed">
+            <p className="text-md lg:text-lg text-neutral-300 leading-relaxed">
               Real <Emphasis className="text-neutral-100">results</Emphasis> and
               powerful <Emphasis className="text-neutral-100">change</Emphasis>{" "}
               in our community
@@ -45,8 +45,7 @@ export default function HomeImpactSection() {
             <ExpressiveLink
               className="inline-flex items-center gap-2 text-sm font-semibold text-neutral-300 hover:text-neutral-50 transition"
               ariaLabel="Learn more about The Source of Hope's impact in our community"
-              to="/about"
-            >
+              to="/about">
               VIEW OUR IMPACT
             </ExpressiveLink>
           </div>

@@ -1,7 +1,6 @@
 import { Metadata } from "next";
 import PageHeader from "@/components/layout/PageHeader";
 import GivingIntroSection from "@/components/giving/GivingIntroSection";
-import GivingFactsSection from "@/components/giving/GivingFactsSection";
 import GivingFAQSection from "@/components/giving/GivingFAQSection";
 import GivingContactSection from "@/components/giving/GivingContactSection";
 
@@ -36,7 +35,6 @@ export default function GivingPage() {
       </PageHeader>
 
       <GivingIntroSection />
-      <GivingFactsSection />
       <GivingFAQSection />
       <GivingContactSection />
     </>
