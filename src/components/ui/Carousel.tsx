@@ -101,7 +101,7 @@ export default function Carousel({
         </div>
       </div>
 
-      {(!hideControls || showProgress) && totalPages > 1 && (
+      {(!hideControls || showProgress) && (
         <div className="mt-5 flex items-center justify-between gap-4">
           {!hideControls ? (
             <button

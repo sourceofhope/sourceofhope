@@ -32,6 +32,7 @@ const TEAMS_WITH_MEMBERS_QUERY = `
     name,
     slug,
     title,
+    shortBio,
     bio,
     image,
     team->{

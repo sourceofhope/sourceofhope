@@ -100,27 +100,17 @@ export default async function TeamMember({
                     {member.name}
                   </h2>
                   {member.title && (
-                    <p className="mt-2 text-lg font-medium text-neutral-600">
+                    <p className="mt-2 text-md font-medium text-neutral-600">
                       {member.title}
+                      {member.team?.name && <span>, {member.team.name}</span>}
                     </p>
                   )}
                 </div>
 
                 {member.bio && (
-                  <div className="prose prose-lg prose-neutral max-w-none">
+                  <div className="text-md prose prose-lg prose-neutral max-w-none">
                     <p className="whitespace-pre-wrap leading-relaxed text-neutral-700">
                       {member.bio}
-                    </p>
-                  </div>
-                )}
-
-                {member.team?.name && (
-                  <div className="border-t border-neutral-200 pt-6">
-                    <p className="text-sm font-medium text-neutral-600">
-                      Team:{" "}
-                      <span className="text-accent-600">
-                        {member.team.name}
-                      </span>
                     </p>
                   </div>
                 )}

@@ -72,7 +72,11 @@ export const metadata: Metadata = {
 
 async function getTeams() {
   try {
-    const teams = await client.fetch<Team[]>(TEAMS_WITH_MEMBERS_QUERY, {}, options);
+    const teams = await client.fetch<Team[]>(
+      TEAMS_WITH_MEMBERS_QUERY,
+      {},
+      options,
+    );
     return teams
       .filter((team) => team.members.length > 0)
       .map((team) => ({

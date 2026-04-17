@@ -12,6 +12,7 @@ interface TeamMember extends SanityDocument {
   name: string;
   slug: { current: string };
   title?: string;
+  shortBio?: string;
   bio?: string;
   image?: {
     sourceUrl?: string;
@@ -54,20 +55,20 @@ export function CarouselCard({ member }: CarouselCardProps) {
         <div className="absolute bottom-0 left-0 w-full p-5 bg-linear-to-t from-black/90 to-transparent rounded-b-2xl flex flex-col">
           <h2
             className={`md:line-clamp-1 text-md ${
-              member.bio ? "lg:group-hover:text-sm" : ""
+              (member.shortBio ?? member.bio) ? "lg:group-hover:text-sm" : ""
             } transition-all duration-750 font-semibold text-center text-neutral-50`}>
             {member.name}
           </h2>
 
           <h3
             className={`md:line-clamp-1 text-sm ${
-              member.bio ? "lg:group-hover:text-xs" : ""
+              (member.shortBio ?? member.bio) ? "lg:group-hover:text-xs" : ""
             } transition-all duration-750 font-semibold text-center text-neutral-300`}>
             {member.title}
           </h3>
 
           <p className="text-sm hidden lg:block text-gray-200 mt-2 max-h-0 opacity-0 overflow-hidden transition-[height_opacity] duration-750 group-hover:max-h-70 group-hover:opacity-100">
-            {member.bio}
+            {member.shortBio ?? member.bio}
           </p>
         </div>
 
