@@ -1,6 +1,6 @@
 "use client";
 
-const ASSET_VERSION = "v2";
+import { ASSET_VERSION } from "@/lib/environment";
 
 interface PageHeaderProps {
   src?: string;
@@ -15,8 +15,7 @@ export default function PageHeader({
 }: PageHeaderProps) {
   return (
     <section
-      className={`w-full md:justify-items-left items-center relative flex my-0 mb-10 h-100 md:h-85 ${className}`}
-    >
+      className={`w-full md:justify-items-left items-center relative flex my-0 mb-10 h-100 md:h-85 ${className}`}>
       <img
         className="absolute inset-0 z-0 h-full w-full object-cover brightness-[.65] contrast-[1.1]
         [mask-image:linear-gradient(to_bottom,white_80%,transparent_100%)] [webkit-mask-image:linear-gradient(to_bottom,white_80%,transparent_100%)]
@@ -27,8 +26,7 @@ export default function PageHeader({
         alt="Page header background"
       />
       <div
-        className={`absolute z-10 w-fit self-end top-[58%] md:top-[52%] grid px-5 lg:px-35 items-start ${className}`}
-      >
+        className={`absolute z-10 w-fit self-end top-[58%] md:top-[52%] grid px-5 lg:px-35 items-start ${className}`}>
         {children}
       </div>
     </section>

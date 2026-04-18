@@ -8,8 +8,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { ArrowRightIcon, XMarkIcon } from "@heroicons/react/20/solid";
 import Overlay from "../ui/Overlay";
-
-const ASSET_VERSION = "v2";
+import { ASSET_VERSION } from "@/lib/environment";
 
 interface ResourceCardProps {
   title: string;

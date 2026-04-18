@@ -13,8 +13,8 @@ import Bold from "@/components/ui/Bold";
 import HighlightedText from "@/components/ui/HighlightedText";
 import Emphasis from "@/components/ui/Emphasis";
 import Block from "@/components/layout/Block";
+import { ASSET_VERSION } from "@/lib/environment";
 
-const ASSET_VERSION = "v2";
 const CANONICAL_URL = "https://thesourceofhope.org/serve/international-hope";
 
 export const metadata: Metadata = {

@@ -5,8 +5,7 @@ import PageSection from "@/components/ui/PageSection";
 import Carousel from "@/components/ui/Carousel";
 import { client } from "@/lib/client";
 import HighlightedText from "../ui/HighlightedText";
-
-const ASSET_VERSION = "v2";
+import { ASSET_VERSION } from "@/lib/environment";
 
 interface Publication {
   id: number;

@@ -7,8 +7,7 @@ import Heading from "@/components/ui/Heading";
 import Carousel from "@/components/ui/Carousel";
 import { AnchorButton } from "@/components/ui/Button";
 import { getFeaturedImage, getResponsiveImage } from "@/lib/image-utils";
-
-const ASSET_VERSION = "v2";
+import { ASSET_VERSION } from "@/lib/environment";
 
 interface EventPost {
   id: string;

@@ -1,13 +1,11 @@
-'use client';
+"use client";
 
 import Heading from "@/components/ui/Heading";
 import Title from "@/components/ui/Title";
 import Bold from "@/components/ui/Bold";
 import Link from "next/link";
 import { useState } from "react";
-import {
-  loadStripe,
-} from "@stripe/stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 import {
   Elements,
   PaymentElement,
@@ -18,9 +16,7 @@ import { CheckCircleIcon, ShieldCheckIcon } from "@heroicons/react/20/solid";
 import { FaEdit, FaLock } from "react-icons/fa";
 import { getEnvironment } from "@/lib/environment";
 
-const stripePromise = loadStripe(
-   getEnvironment().stripePublishableKey || ""
-);
+const stripePromise = loadStripe(getEnvironment().stripePublishableKey || "");
 
 function MembershipPaymentForm({ amount, onSuccess }: any) {
   const stripe = useStripe();
@@ -42,14 +38,13 @@ function MembershipPaymentForm({ amount, onSuccess }: any) {
       return;
     }
 
-    const { error: confirmError, paymentIntent } =
-      await stripe.confirmPayment({
-        elements,
-        confirmParams: {
-          return_url: `${window.location.origin}/members`,
-        },
-        redirect: "if_required",
-      });
+    const { error: confirmError, paymentIntent } = await stripe.confirmPayment({
+      elements,
+      confirmParams: {
+        return_url: `${window.location.origin}/members`,
+      },
+      redirect: "if_required",
+    });
 
     if (confirmError) {
       setError(confirmError.message || "An error occurred");
@@ -161,7 +156,7 @@ function SuccessView({ selection, email }: any) {
 
 export default function MembersCheckoutSection({ selection, onBack }: any) {
   const isCompany = selection.type === "company";
-  
+
   type FormData = {
     companyName: string;
     contactName: string;
@@ -191,7 +186,7 @@ export default function MembersCheckoutSection({ selection, onBack }: any) {
           lastName: "",
           email: "",
           phone: "",
-        }
+        },
   );
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -220,7 +215,7 @@ export default function MembersCheckoutSection({ selection, onBack }: any) {
         "/api/checkout/retrieve-stripe-publishable-key",
         {
           method: "POST",
-        }
+        },
       );
 
       if (!keyResponse.ok) {
@@ -230,7 +225,7 @@ export default function MembersCheckoutSection({ selection, onBack }: any) {
       const keyData = await keyResponse.json();
       if (keyData.error || !keyData.publishableKey) {
         throw new Error(
-          keyData.error || "Failed to initialize payment processor"
+          keyData.error || "Failed to initialize payment processor",
         );
       }
 
@@ -248,7 +243,7 @@ export default function MembersCheckoutSection({ selection, onBack }: any) {
             amount: selection.amount,
             ...formData,
           }),
-        }
+        },
       );
 
       if (!intentResponse.ok) {
@@ -257,9 +252,7 @@ export default function MembersCheckoutSection({ selection, onBack }: any) {
 
       const intentData = await intentResponse.json();
       if (intentData.error || !intentData.clientSecret) {
-        throw new Error(
-          intentData.error || "Failed to create payment intent"
-        );
+        throw new Error(intentData.error || "Failed to create payment intent");
       }
 
       setClientSecret(intentData.clientSecret);
@@ -340,7 +333,10 @@ export default function MembersCheckoutSection({ selection, onBack }: any) {
                       type="text"
                       value={formData.companyName}
                       onChange={(e) =>
-                        setFormData({ ...formData, companyName: e.target.value })
+                        setFormData({
+                          ...formData,
+                          companyName: e.target.value,
+                        })
                       }
                       required
                       className="bg-white rounded-xl border border-neutral-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent-500"
@@ -358,7 +354,10 @@ export default function MembersCheckoutSection({ selection, onBack }: any) {
                       id="companyInfo"
                       value={formData.companyInfo}
                       onChange={(e) =>
-                        setFormData({ ...formData, companyInfo: e.target.value })
+                        setFormData({
+                          ...formData,
+                          companyInfo: e.target.value,
+                        })
                       }
                       rows={3}
                       className="bg-white rounded-xl border border-neutral-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent-500"
@@ -377,7 +376,10 @@ export default function MembersCheckoutSection({ selection, onBack }: any) {
                       type="text"
                       value={formData.contactName}
                       onChange={(e) =>
-                        setFormData({ ...formData, contactName: e.target.value })
+                        setFormData({
+                          ...formData,
+                          contactName: e.target.value,
+                        })
                       }
                       required
                       className="bg-white rounded-xl border border-neutral-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent-500"
@@ -436,7 +438,10 @@ export default function MembersCheckoutSection({ selection, onBack }: any) {
                         type="text"
                         value={formData.firstName}
                         onChange={(e) =>
-                          setFormData({ ...formData, firstName: e.target.value })
+                          setFormData({
+                            ...formData,
+                            firstName: e.target.value,
+                          })
                         }
                         required
                         className="bg-white rounded-xl border border-neutral-200 px-4 py-3 focus:outline-none focus:ring-2 focus:ring-accent-500"
@@ -518,80 +523,77 @@ export default function MembersCheckoutSection({ selection, onBack }: any) {
             </button>
           </>
         ) : clientSecret ? (
-            <>
-              {/* Contact Information Summary */}
-              <div className="bg-neutral-50 rounded-xl p-4 border border-neutral-200">
-                <div className="flex justify-between items-center mb-3">
-                  <h3 className="font-semibold text-neutral-900">
-                    Your information
-                  </h3>
-                  <button
-                    type="button"
-                    onClick={handleEditContact}
-                    className="text-accent-600 hover:text-accent-700 text-sm font-medium transition-colors"
-                    aria-label="Edit contact information">
-                    <span className="size-5">
-                      <FaEdit />
-                    </span>
-                  </button>
-                </div>
-                <div className="space-y-1 text-sm text-neutral-700">
-                  {isCompany ? (
-                    <>
-                      <div>
-                        <span className="font-medium">Company:</span>{" "}
-                        {formData.companyName}
-                      </div>
-                      {formData.companyInfo && (
-                        <div>
-                          <span className="font-medium">About:</span>{" "}
-                          {formData.companyInfo}
-                        </div>
-                      )}
-                      <div>
-                        <span className="font-medium">Contact:</span>{" "}
-                        {formData.contactName}
-                      </div>
-                    </>
-                  ) : (
-                    <div>
-                      <span className="font-medium">Name:</span>{" "}
-                      {formData.firstName} {formData.lastName}
-                    </div>
-                  )}
-                  <div>
-                    <span className="font-medium">Email:</span> {formData.email}
-                  </div>
-                  {formData.phone && (
-                    <div>
-                      <span className="font-medium">Phone:</span>{" "}
-                      {formData.phone}
-                    </div>
-                  )}
-                </div>
-              </div>
-
-              {/* Payment Form Section */}
-              <div>
-                <h3 className="font-semibold text-neutral-900 mb-4">
-                  Payment Information
+          <>
+            {/* Contact Information Summary */}
+            <div className="bg-neutral-50 rounded-xl p-4 border border-neutral-200">
+              <div className="flex justify-between items-center mb-3">
+                <h3 className="font-semibold text-neutral-900">
+                  Your information
                 </h3>
-                {error && (
-                  <div className="mb-4 bg-red-50 border border-red-200 rounded-xl p-4">
-                    <p className="text-sm text-red-800 font-semibold">
-                      {error}
-                    </p>
+                <button
+                  type="button"
+                  onClick={handleEditContact}
+                  className="text-accent-600 hover:text-accent-700 text-sm font-medium transition-colors"
+                  aria-label="Edit contact information">
+                  <span className="size-5">
+                    <FaEdit />
+                  </span>
+                </button>
+              </div>
+              <div className="space-y-1 text-sm text-neutral-700">
+                {isCompany ? (
+                  <>
+                    <div>
+                      <span className="font-medium">Company:</span>{" "}
+                      {formData.companyName}
+                    </div>
+                    {formData.companyInfo && (
+                      <div>
+                        <span className="font-medium">About:</span>{" "}
+                        {formData.companyInfo}
+                      </div>
+                    )}
+                    <div>
+                      <span className="font-medium">Contact:</span>{" "}
+                      {formData.contactName}
+                    </div>
+                  </>
+                ) : (
+                  <div>
+                    <span className="font-medium">Name:</span>{" "}
+                    {formData.firstName} {formData.lastName}
                   </div>
                 )}
-                <Elements stripe={stripePromise} options={{ clientSecret }}>
-                  <MembershipPaymentForm
-                    amount={selection.amount}
-                    onSuccess={handlePaymentSuccess}
-                  />
-                </Elements>
+                <div>
+                  <span className="font-medium">Email:</span> {formData.email}
+                </div>
+                {formData.phone && (
+                  <div>
+                    <span className="font-medium">Phone:</span> {formData.phone}
+                  </div>
+                )}
               </div>
-            </>
-          ) : null}
+            </div>
+
+            {/* Payment Form Section */}
+            <div>
+              <h3 className="font-semibold text-neutral-900 mb-4">
+                Payment Information
+              </h3>
+              {error && (
+                <div className="mb-4 bg-red-50 border border-red-200 rounded-xl p-4">
+                  <p className="text-sm text-red-800 font-semibold">{error}</p>
+                </div>
+              )}
+              <Elements stripe={stripePromise} options={{ clientSecret }}>
+                <MembershipPaymentForm
+                  amount={selection.amount}
+                  onSuccess={handlePaymentSuccess}
+                />
+              </Elements>
+            </div>
+          </>
+        ) : null}
       </div>
 
       {/* Sidebar - Hidden on mobile, visible on lg */}

@@ -4,8 +4,7 @@ import Title from "@/components/ui/Title";
 import Blockquote from "@/components/ui/Blockquote";
 import Bold from "@/components/ui/Bold";
 import ExpressiveAnchor from "@/components/ui/ExpressiveAnchor";
-
-const ASSET_VERSION = "v2";
+import { ASSET_VERSION } from "@/lib/environment";
 
 export default function AboutMissionSection() {
   return (

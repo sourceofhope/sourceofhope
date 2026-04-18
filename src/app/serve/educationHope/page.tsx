@@ -13,8 +13,8 @@ import {
   LanguageIcon,
 } from "@heroicons/react/20/solid";
 import Block from "@/components/layout/Block";
+import { ASSET_VERSION } from "@/lib/environment";
 
-const ASSET_VERSION = "v2";
 const CANONICAL_URL = "https://thesourceofhope.org/serve/education-hope";
 
 export const metadata: Metadata = {

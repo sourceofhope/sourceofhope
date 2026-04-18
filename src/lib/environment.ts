@@ -3,6 +3,8 @@ const PAYPAL_API_LOCATION: Record<string, string> = {
   development: "https://api.sandbox.paypal.com",
 };
 
+export const ASSET_VERSION = "v2";
+
 export function getEnvironment() {
   const config = {
     stripeSecretKey: process.env.STRIPE_SECRET_KEY,

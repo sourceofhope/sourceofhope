@@ -2,8 +2,7 @@
 
 import { useRef, useEffect, useState } from "react";
 import { LinkButton } from "@/components/ui/Button";
-
-const ASSET_VERSION = "v2";
+import { ASSET_VERSION } from "@/lib/environment";
 
 export default function HomeIntroductionSection() {
   const videoRef = useRef<HTMLVideoElement>(null);

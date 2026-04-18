@@ -7,8 +7,7 @@ import { LinkButton } from "@/components/ui/Button";
 import Heading from "../ui/Heading";
 import ParallaxSection from "../ui/parallax/ParallaxSection";
 import ParallaxLayer from "../ui/parallax/ParallaxLayer";
-
-const ASSET_VERSION = "v2";
+import { ASSET_VERSION } from "@/lib/environment";
 
 export default function Footer() {
   const pathname = usePathname();

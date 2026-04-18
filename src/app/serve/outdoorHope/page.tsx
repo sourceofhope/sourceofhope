@@ -8,8 +8,8 @@ import Bold from "@/components/ui/Bold";
 import ExpressiveAnchor from "@/components/ui/ExpressiveAnchor";
 import HighlightedText from "@/components/ui/HighlightedText";
 import Block from "@/components/layout/Block";
+import { ASSET_VERSION } from "@/lib/environment";
 
-const ASSET_VERSION = "v2";
 const CANONICAL_URL = "https://thesourceofhope.org/serve/outdoor-hope";
 
 export const metadata: Metadata = {

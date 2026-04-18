@@ -4,8 +4,8 @@ import MembersHeroSection from "@/components/members/MembersHeroSection";
 import MembersBenefitsSection from "@/components/members/MembersBenefitsSection";
 import MembersPlansSection from "@/components/members/MembersPlansSection";
 import MembersFAQSection from "@/components/members/MembersFAQSection";
+import { ASSET_VERSION } from "@/lib/environment";
 
-const ASSET_VERSION = "v2";
 const CANONICAL_URL = "https://thesourceofhope.org/members";
 
 export const metadata: Metadata = {

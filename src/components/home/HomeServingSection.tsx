@@ -4,8 +4,7 @@ import Title from "@/components/ui/Title";
 import ParallaxLayer from "../ui/parallax/ParallaxLayer";
 import ParallaxSection from "../ui/parallax/ParallaxSection";
 import Heading from "../ui/Heading";
-
-const ASSET_VERSION = "v2";
+import { ASSET_VERSION } from "@/lib/environment";
 
 export default function HomeServingSection() {
   return (

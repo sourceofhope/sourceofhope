@@ -3,8 +3,7 @@ import Emphasis from "@/components/ui/Emphasis";
 import ExpressiveAnchor from "@/components/ui/ExpressiveAnchor";
 import Blockquote from "@/components/ui/Blockquote";
 import PageSection from "@/components/ui/PageSection";
-
-const ASSET_VERSION = "v2";
+import { ASSET_VERSION } from "@/lib/environment";
 
 export default function HomeMissionSection() {
   return (

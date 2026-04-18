@@ -4,8 +4,7 @@ import Title from "@/components/ui/Title";
 import Emphasis from "@/components/ui/Emphasis";
 import ExpressiveLink from "@/components/ui/ExpressiveLink";
 import { ExpressiveNumber } from "@/components/ui/ExpressiveNumber";
-
-const ASSET_VERSION = "v2";
+import { ASSET_VERSION } from "@/lib/environment";
 
 export default function HomeImpactSection() {
   return (

@@ -9,8 +9,7 @@ import {
   XMarkIcon,
   ChevronRightIcon,
 } from "@heroicons/react/20/solid";
-
-const ASSET_VERSION = "v2";
+import { ASSET_VERSION } from "@/lib/environment";
 
 interface NavLink {
   label: string;

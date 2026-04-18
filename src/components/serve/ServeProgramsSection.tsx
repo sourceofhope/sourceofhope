@@ -5,8 +5,7 @@ import { MapPinIcon } from "@heroicons/react/20/solid";
 import ExpressiveAnchor from "@/components/ui/ExpressiveAnchor";
 import Title from "@/components/ui/Title";
 import Heading from "@/components/ui/Heading";
-
-const ASSET_VERSION = "v2";
+import { ASSET_VERSION } from "@/lib/environment";
 
 interface ServingArticleProps {
   src?: string;
