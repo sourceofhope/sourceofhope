@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { TrashIcon } from '@heroicons/react/24/outline';
-import Heading from '@/components/ui/Heading';
-import { CartItem } from '@/context/StoreCartContext';
+import { TrashIcon } from "@heroicons/react/24/outline";
+import Heading from "@/components/ui/Heading";
+import { CartItem } from "@/context/StoreCartContext";
 
 interface CartItemsSectionProps {
   items: CartItem[];
@@ -17,7 +17,7 @@ export default function CartItemsSection({
   removeItem,
   updateSize,
 }: CartItemsSectionProps) {
-  const sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
+  const sizes = ["XS", "S", "M", "L", "XL", "XXL"];
 
   return (
     <section className="">
@@ -26,16 +26,15 @@ export default function CartItemsSection({
 
         {items.map((item, index) => (
           <div
-            key={`${item.id}-${item.size || 'no-size'}-${index}`}
-            className="flex flex-col md:flex-row gap-5 p-5 border-2 border-neutral-200 rounded-xl hover:border-accent-500 transition-colors"
-          >
+            key={`${item.id}-${item.size || "no-size"}-${index}`}
+            className="flex flex-col md:flex-row gap-5 p-5 border-2 border-neutral-200 rounded-xl hover:border-accent-500 transition-colors">
             <div className="w-full hidden md:flex md:w-32 h-32 bg-neutral-200 rounded-lg items-center justify-center overflow-hidden">
               <img
                 src={item.image}
                 alt={item.name}
                 className="w-full h-full object-cover"
                 onError={(e) => {
-                  (e.target as HTMLImageElement).style.display = 'none';
+                  (e.target as HTMLImageElement).style.display = "none";
                   const parent = (e.target as HTMLImageElement).parentElement;
                   if (parent) {
                     parent.innerHTML =
@@ -47,11 +46,12 @@ export default function CartItemsSection({
             <div className="flex-1 space-y-2">
               <a
                 href={`/store/product/${item.slug}`}
-                className="!no-underline font-bold text-neutral-900 text-lg"
-              >
+                className="no-underline! font-bold text-neutral-900 text-lg">
                 {item.title}
               </a>
-              <p className="text-accent-600 font-semibold">${item.price.toFixed(2)}</p>
+              <p className="text-accent-600 font-semibold">
+                ${item.price.toFixed(2)}
+              </p>
 
               <div className="flex flex-wrap gap-4 items-center">
                 {item.size && (
@@ -62,8 +62,7 @@ export default function CartItemsSection({
                     <select
                       value={item.size}
                       onChange={(e) => updateSize(item.id, e.target.value)}
-                      className="border-2 border-neutral-300 rounded-lg px-3 py-1 focus:border-accent-500 focus:outline-none"
-                    >
+                      className="border-2 border-neutral-300 rounded-lg px-3 py-1 focus:border-accent-500 focus:outline-none">
                       {sizes.map((size) => (
                         <option key={size} value={size}>
                           {size}
@@ -81,8 +80,7 @@ export default function CartItemsSection({
                     <button
                       onClick={() => updateQuantity(item.id, item.quantity - 1)}
                       className="px-3 py-1 bg-neutral-100 hover:bg-neutral-200 font-bold transition-colors"
-                      aria-label="Decrease quantity"
-                    >
+                      aria-label="Decrease quantity">
                       −
                     </button>
                     <input
@@ -97,16 +95,14 @@ export default function CartItemsSection({
                     <button
                       onClick={() => updateQuantity(item.id, item.quantity + 1)}
                       className="px-3 py-1 bg-neutral-100 hover:bg-neutral-200 font-bold transition-colors"
-                      aria-label="Increase quantity"
-                    >
+                      aria-label="Increase quantity">
                       +
                     </button>
                   </div>
                   <button
                     onClick={() => removeItem(item.id)}
                     className="self-start md:hidden md:self-center p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-                    aria-label="Remove item"
-                  >
+                    aria-label="Remove item">
                     <TrashIcon className="w-6 h-6" />
                   </button>
                 </div>
@@ -118,8 +114,7 @@ export default function CartItemsSection({
             <button
               onClick={() => removeItem(item.id)}
               className="self-start hidden md:block md:self-center p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
-              aria-label="Remove item"
-            >
+              aria-label="Remove item">
               <TrashIcon className="w-6 h-6" />
             </button>
           </div>

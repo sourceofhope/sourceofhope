@@ -44,14 +44,11 @@ export function CarouselCard({ member }: CarouselCardProps) {
             loaded ? "opacity-100" : "opacity-0"
           }`}
         />
-
         <Link
           href={`/about/team/${member.slug.current}`}
           className="absolute inset-0 w-full h-full z-50 hidden md:block"
           onClick={(e) => e.stopPropagation()}
         />
-
-        {/* Gradient overlay with text */}
         <div className="absolute bottom-0 left-0 w-full p-5 bg-linear-to-t from-black/90 to-transparent rounded-b-2xl flex flex-col">
           <h2
             className={`md:line-clamp-1 text-md ${
@@ -59,26 +56,20 @@ export function CarouselCard({ member }: CarouselCardProps) {
             } transition-all duration-750 font-semibold text-center text-neutral-50`}>
             {member.name}
           </h2>
-
           <h3
             className={`md:line-clamp-1 text-sm ${
               (member.shortBio ?? member.bio) ? "lg:group-hover:text-xs" : ""
             } transition-all duration-750 font-semibold text-center text-neutral-300`}>
             {member.title}
           </h3>
-
-          <p className="text-sm hidden lg:block text-gray-200 mt-2 max-h-0 opacity-0 overflow-hidden transition-[height_opacity] duration-750 group-hover:max-h-70 group-hover:opacity-100">
+          <p className="text-sm hidden lg:block text-gray-200 mt-2 max-h-0 opacity-0 overflow-hidden transition-[height_opacity] duration-750 group-hover:max-h-70 group-hover:opacity-100 ease-in-out">
             {member.shortBio ?? member.bio}
           </p>
         </div>
-
-        {/* Arrow icon */}
         <div className="absolute right-5 top-5 p-1 rounded-full bg-black/70 text-neutral-50">
           <ArrowRightIcon className="w-4 h-4 transition-transform duration-750 group-hover:translate-x-0.5" />
         </div>
       </div>
-
-      {/* Mobile Overlay */}
       <Overlay active={active} setActive={setActive}>
         <div className="flex flex-col gap-3">
           <div className="flex justify-between items-center">
@@ -92,7 +83,7 @@ export function CarouselCard({ member }: CarouselCardProps) {
             </button>
           </div>
           <p className="text-sm leading-relaxed text-neutral-600">
-            {member.bio}
+            {member.shortBio}
           </p>
           <div className="flex justify-end w-fit">
             <ExpressiveAnchor

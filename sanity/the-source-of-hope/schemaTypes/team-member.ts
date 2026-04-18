@@ -1,33 +1,15 @@
 import {defineField, defineType} from 'sanity'
 
-export const teamImageType = defineType({
-  name: 'teamImage',
-  title: 'Team Image',
-  type: 'object',
-  fields: [
-    defineField({
-      name: 'sourceUrl',
-      title: 'Source URL',
-      type: 'string',
-    }),
-    defineField({
-      name: 'altText',
-      title: 'Alt Text',
-      type: 'string',
-    }),
-  ],
-})
-
 export const teamMemberType = defineType({
   name: 'teamMember',
   title: 'Team Member',
   type: 'document',
   fields: [
     defineField({
-      name: 'team',
-      title: 'Team',
+      name: 'teamGroup',
+      title: 'Team Group',
       type: 'reference',
-      to: [{type: 'team'}],
+      to: [{type: 'teamGroup'}],
       validation: (Rule) => Rule.required(),
     }),
     defineField({
@@ -51,6 +33,11 @@ export const teamMemberType = defineType({
       type: 'string',
     }),
     defineField({
+      name: 'shortBio',
+      title: 'Short Bio',
+      type: 'text',
+    }),
+    defineField({
       name: 'bio',
       title: 'Bio',
       type: 'text',
@@ -58,13 +45,24 @@ export const teamMemberType = defineType({
     defineField({
       name: 'image',
       title: 'Image',
-      type: 'teamImage',
+      type: 'image',
+      options: {
+        hotspot: true,
+      },
+      fields: [
+        defineField({
+          name: 'alt',
+          title: 'Alt Text',
+          type: 'string',
+        }),
+      ],
     }),
   ],
   preview: {
     select: {
       title: 'name',
       subtitle: 'title',
+      media: 'image',
     },
   },
 })

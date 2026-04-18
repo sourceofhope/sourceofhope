@@ -6,7 +6,7 @@ import MediaBlogPage, {
 import MediaNewsletterSection, {
   type MediaNewsletterPost,
 } from "@/components/media/MediaNewsletterSection";
-import { client } from "@/sanity/client";
+import { client } from "@/lib/client";
 
 const PUBLICATION_QUERY = `
 *[_type == "publication"] | order(date desc)[0...10] {

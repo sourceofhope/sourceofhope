@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import Heading from '@/components/ui/Heading';
-import HighlightedText from '@/components/ui/HighlightedText';
-import SimpleLink from '@/components/ui/SimpleLink';
-import { ArrowUpRightIcon } from '@heroicons/react/20/solid';
+import Heading from "@/components/ui/Heading";
+import HighlightedText from "@/components/ui/HighlightedText";
+import SimpleLink from "@/components/ui/SimpleLink";
+import { ArrowUpRightIcon } from "@heroicons/react/20/solid";
 
 export default function StorefrontFooterSection() {
   return (
@@ -11,9 +11,9 @@ export default function StorefrontFooterSection() {
       <div className="grid gap-5">
         <Heading>Shop Beyond Our Store</Heading>
         <p className="text-neutral-600">
-          We&apos;ve partnered with incredible community businesses who believe in
-          our mission. When you shop or book using the links below, a portion of
-          your purchase goes directly back to fund our programs: feeding
+          We&apos;ve partnered with incredible community businesses who believe
+          in our mission. When you shop or book using the links below, a portion
+          of your purchase goes directly back to fund our programs: feeding
           families, empowering students, and strengthening communities.
         </p>
       </div>
@@ -65,15 +65,15 @@ export default function StorefrontFooterSection() {
         <div className="grid gap-5">
           <Heading>Become a Partner Today</Heading>
           <p className="text-neutral-600">
-            Our <SimpleLink to="/connect">Community Partners</SimpleLink> receive exclusive
-            benefits, meaningful visibility, and the opportunity to make a
-            direct impact in the lives of individuals and families we serve. By
-            partnering with us, your business or organization aligns with a
-            mission rooted in hope, service, and community transformation.
-            Together, we can expand outreach, strengthen local initiatives, and
-            create lasting change. Join us today and be recognized as a leader
-            who invests not only in business growth, but in the well-being of
-            our community.
+            Our <SimpleLink to="/connect">Community Partners</SimpleLink>{" "}
+            receive exclusive benefits, meaningful visibility, and the
+            opportunity to make a direct impact in the lives of individuals and
+            families we serve. By partnering with us, your business or
+            organization aligns with a mission rooted in hope, service, and
+            community transformation. Together, we can expand outreach,
+            strengthen local initiatives, and create lasting change. Join us
+            today and be recognized as a leader who invests not only in business
+            growth, but in the well-being of our community.
           </p>
         </div>
       </div>
@@ -81,13 +81,7 @@ export default function StorefrontFooterSection() {
   );
 }
 
-function Step({
-  number,
-  text,
-}: {
-  number: string;
-  text: string;
-}) {
+function Step({ number, text }: { number: string; text: string }) {
   return (
     <div className="flex flex-col items-center gap-3 p-6 rounded-2xl bg-neutral-50 border border-neutral-200 shadow-sm">
       <div className="w-9 h-9 flex items-center justify-center rounded-full bg-accent-600 text-white font-semibold">
@@ -107,7 +101,7 @@ interface PartnerCardProps {
 
 function PartnerCard({ name, action, code, note }: PartnerCardProps) {
   return (
-    <a className="group relative flex flex-col justify-between gap-5 p-5 rounded-2xl bg-white border border-neutral-200 shadow-sm !no-underline">
+    <a className="group relative flex flex-col justify-between gap-5 p-5 rounded-2xl bg-white border border-neutral-200 shadow-sm no-underline!">
       <h4 className="text-lg font-semibold">{name}</h4>
       <div className="flex flex-col gap-2 text-sm text-neutral-600">
         <span className="text-neutral-950 font-medium cursor-pointer">
@@ -124,9 +118,7 @@ function PartnerCard({ name, action, code, note }: PartnerCardProps) {
         {note && <span className="text-neutral-500 italic">{note}</span>}
       </div>
       <div className="w-fit">
-        <div
-          className="text-sm md:text-md group inline-flex w-fit justify-between items-center gap-1 focus:outline-none text-accent-500 font-semibold"
-        >
+        <div className="text-sm md:text-md group inline-flex w-fit justify-between items-center gap-1 focus:outline-none text-accent-500 font-semibold">
           <span>Support the mission</span>
           <ArrowUpRightIcon
             className="w-[1em] h-[1em] transition-transform duration-500 group-hover:translate-x-1 group-hover:-translate-y-1"

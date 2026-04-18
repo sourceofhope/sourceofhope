@@ -3,16 +3,17 @@ import PageHeader from "@/components/layout/PageHeader";
 import PageSection from "@/components/ui/PageSection";
 import Title from "@/components/ui/Title";
 import Carousel from "@/components/ui/Carousel";
-import { client } from "@/sanity/client";
+
 import { type SanityDocument } from "next-sanity";
 import { CarouselCard } from "./CarouselCard";
+import { client } from "@/lib/client";
 
 interface TeamMember extends SanityDocument {
   _id: string;
   name: string;
   slug: { current: string };
   title?: string;
-  bio?: string;
+  shortBio?: string;
   image?: {
     sourceUrl?: string;
     altText?: string;
@@ -38,8 +39,11 @@ const TEAMS_WITH_MEMBERS_QUERY = `
     name,
     slug,
     title,
-    bio,
-    image,
+		shortBio,
+    "image": image{
+      "sourceUrl": asset->url,
+      "altText": alt
+    },
     team->{
       _id,
       name,

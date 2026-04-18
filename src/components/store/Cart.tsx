@@ -13,6 +13,7 @@ export default function Cart() {
   const [isHydrated, setIsHydrated] = useState(false);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsHydrated(true);
   }, []);
 
@@ -21,7 +22,7 @@ export default function Cart() {
   return (
     <div
       className={`
-        fixed right-5 md:right-10 z-[9999]
+        fixed right-5 md:right-10 z-9999
         transition-[top,bottom] duration-500 bottom-5
         ${bannerActive ? "md:top-14.5" : "md:top-4.5"}
       `}>

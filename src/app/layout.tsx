@@ -47,7 +47,12 @@ export const metadata: Metadata = {
   },
   authors: [{ name: "The Source of Hope" }],
   icons: {
-    icon: "/favicon.ico",
+    icon: [
+      { url: "/favicon.ico", sizes: "any" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+    ],
+    shortcut: "/favicon.ico",
     apple: "/apple-touch-icon.png",
   },
   manifest: "/site.webmanifest",
@@ -71,9 +76,12 @@ export default function RootLayout({
   };
 
   return (
-    <html lang="en" itemType="http://schema.org/WebPage">
+    <html
+      lang="en"
+      itemType="http://schema.org/WebPage"
+      className="bg-primary-900">
       <head>
-        <meta name="theme-color" content="#1b2b69" />
+        <meta name="theme-color" content="#0b1026" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link
           rel="preconnect"
@@ -90,7 +98,7 @@ export default function RootLayout({
         <GoogleTagManager gtmId="GTM-P9G4WGS3" />
       </head>
       <body
-        className={`${inter.variable} ${urbanist.variable} ${montserrat.variable} antialiased bg-primary-900 font-inter text-neutral-900`}>
+        className={`${inter.variable} ${urbanist.variable} ${montserrat.variable} antialiased bg-neutral-50 font-inter text-neutral-900`}>
         <noscript>
           <iframe
             src="https://www.googletagmanager.com/ns.html?id=GTM-P9G4WGS3"

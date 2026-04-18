@@ -65,10 +65,11 @@
 
 html {
   scroll-behavior: smooth;
+  background-color: var(--color-primary-900);
 }
 
 body {
-  background-color: rgb(245, 247, 251);
-  color: rgb(17, 24, 39);
+  background-color: var(--color-neutral-50);
+  color: var(--color-neutral-900);
   font-family: var(--font-inter);
 }

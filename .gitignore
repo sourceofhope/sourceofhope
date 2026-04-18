@@ -21,8 +21,9 @@ dist-ssr
 *.local
 
 # Editor directories and files
-.vscode/*
-.next/*
+.vscode/
+.sanity/
+.next/
 !.vscode/extensions.json
 .idea
 .DS_Store

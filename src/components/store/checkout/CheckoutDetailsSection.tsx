@@ -1,8 +1,12 @@
-'use client';
+/* eslint-disable @next/next/no-img-element */
+"use client";
 
-import Heading from '@/components/ui/Heading';
-import { CartItem } from '@/context/StoreCartContext';
-import { STANDARD_TAX_RATE, STANDARD_PROCESSING_RATE } from '@/context/StoreCartContext';
+import Heading from "@/components/ui/Heading";
+import { CartItem } from "@/context/StoreCartContext";
+import {
+  STANDARD_TAX_RATE,
+  STANDARD_PROCESSING_RATE,
+} from "@/context/StoreCartContext";
 
 interface CheckoutDetailsSectionProps {
   cart: CartItem[];
@@ -34,16 +38,15 @@ export default function CheckoutDetailsSection({
         {cart.map((item, index) => (
           <div
             key={`${item.id}-${item.size}-${index}`}
-            className="select-none flex gap-3 p-3 border-2 border-neutral-200 rounded-xl hover:border-accent-500 transition-colors"
-          >
-            <div className="w-16 h-16 bg-neutral-200 rounded-lg flex items-center justify-center overflow-hidden flex-shrink-0">
+            className="select-none flex gap-3 p-3 border-2 border-neutral-200 rounded-xl hover:border-accent-500 transition-colors">
+            <div className="w-16 h-16 bg-neutral-200 rounded-lg flex items-center justify-center overflow-hidden shrink-0">
               <img
                 src={item.image}
                 alt={item.title}
                 className="w-full h-full object-cover"
                 onError={(e) => {
                   const target = e.currentTarget;
-                  target.style.display = 'none';
+                  target.style.display = "none";
                   if (target.parentElement) {
                     target.parentElement.innerHTML =
                       '<span class="text-neutral-500 text-xs">No image</span>';
@@ -78,7 +81,7 @@ export default function CheckoutDetailsSection({
             <span className="text-neutral-600">Subtotal</span>
             <span className="text-xs text-neutral-500 mt-0.5">
               {getCartItemCount()} item
-              {getCartItemCount() !== 1 ? 's' : ''}
+              {getCartItemCount() !== 1 ? "s" : ""}
             </span>
           </div>
           <span className="font-semibold text-neutral-900">
@@ -96,7 +99,7 @@ export default function CheckoutDetailsSection({
             )}
           </div>
           <span className="font-semibold text-neutral-900">
-            {shippingCost > 0 ? `$${shippingCost.toFixed(2)}` : 'FREE'}
+            {shippingCost > 0 ? `$${shippingCost.toFixed(2)}` : "FREE"}
           </span>
         </div>
 

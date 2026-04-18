@@ -1,10 +1,16 @@
 import { type SanityDocument } from "next-sanity";
-import { client } from "@/sanity/client";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Image from "next/image";
+import { client } from "@/lib/client";
 
-const POST_QUERY = `*[_type == "teamMember" && slug.current == $slug][0]`;
+const POST_QUERY = `*[_type == "teamMember" && slug.current == $slug][0]{
+  ...,
+  "image": image{
+    "sourceUrl": asset->url,
+    "altText": alt
+  }
+}`;
 
 const options = { next: { revalidate: 30 } };
 
@@ -13,7 +19,11 @@ export default async function PostPage({
 }: {
   params: Promise<{ slug: string }>;
 }) {
-  const post = await client.fetch<SanityDocument>(POST_QUERY, await params, options);
+  const post = await client.fetch<SanityDocument>(
+    POST_QUERY,
+    await params,
+    options,
+  );
   if (!post) {
     notFound();
   }

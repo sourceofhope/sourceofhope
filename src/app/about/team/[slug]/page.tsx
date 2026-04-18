@@ -1,21 +1,22 @@
 import { Metadata } from "next";
 import PageHeader from "@/components/layout/PageHeader";
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
-import { client } from "@/sanity/client";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { SanityDocument } from "next-sanity";
+import { client } from "@/lib/client";
 
 interface TeamMember extends SanityDocument {
   name: string;
   slug: { current: string };
   title?: string;
   bio?: string;
+  shortBio?: string;
   image?: {
     sourceUrl?: string;
     altText?: string;
   };
-  team?: {
+  teamGroup?: {
     _id?: string;
     name?: string;
   };
@@ -27,8 +28,12 @@ const MEMBER_QUERY = `*[_type == "teamMember" && slug.current == $slug][0] {
   slug,
   title,
   bio,
-  image,
-  team->{
+	shortBio,
+  "image": image{
+    "sourceUrl": asset->url,
+    "altText": alt
+  },
+  teamGroup->{
     _id,
     name,
   }
@@ -102,10 +107,20 @@ export default async function TeamMember({
                   {member.title && (
                     <p className="mt-2 text-md font-medium text-neutral-600">
                       {member.title}
-                      {member.team?.name && <span>, {member.team.name}</span>}
+                      {member.teamGroup?.name && (
+                        <span>, {member.teamGroup.name}</span>
+                      )}
                     </p>
                   )}
                 </div>
+
+                {member.shortBio && (
+                  <div className="text-md prose prose-lg prose-neutral max-w-none">
+                    <p className="whitespace-pre-wrap font-semibold leading-relaxed text-neutral-700">
+                      {member.shortBio}
+                    </p>
+                  </div>
+                )}
 
                 {member.bio && (
                   <div className="text-md prose prose-lg prose-neutral max-w-none">
@@ -118,7 +133,7 @@ export default async function TeamMember({
                 <div className="pt-4">
                   <Link
                     href="/about/team"
-                    className="inline-flex items-center gap-2 font-medium text-primary-700 transition-colors duration-200 hover:text-primary-800 group">
+                    className="text-sm md:text-md inline-flex items-center gap-2 font-medium text-primary-700 transition-colors duration-200 hover:text-primary-800 group">
                     <ArrowLeftIcon className="h-5 w-5 transition-transform duration-300 group-hover:-translate-x-1" />
                     Back to Team
                   </Link>

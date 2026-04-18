@@ -1,5 +1,5 @@
-import { NextResponse } from 'next/server';
-import { client } from '@/sanity/client';
+import { NextResponse } from "next/server";
+import { client } from "../../../../../../studio/client";
 
 const PRODUCTS_BY_CATEGORY_QUERY = `
 *[_type == "product" && $categoryId in categories[]._ref] | order(_createdAt desc) {
@@ -26,15 +26,15 @@ const PRODUCTS_BY_CATEGORY_QUERY = `
 
 export async function GET(
   request: Request,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     const { id } = await params;
-    
+
     if (!id) {
       return NextResponse.json(
-        { error: 'Category ID is required' },
-        { status: 400 }
+        { error: "Category ID is required" },
+        { status: 400 },
       );
     }
 
@@ -44,10 +44,10 @@ export async function GET(
 
     return NextResponse.json(products);
   } catch (error) {
-    const message = error instanceof Error ? error.message : 'Unknown error';
+    const message = error instanceof Error ? error.message : "Unknown error";
     return NextResponse.json(
-      { error: 'Failed to fetch products by category', details: message },
-      { status: 500 }
+      { error: "Failed to fetch products by category", details: message },
+      { status: 500 },
     );
   }
 }

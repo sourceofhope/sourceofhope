@@ -1,5 +1,5 @@
-import { NextResponse } from 'next/server';
-import { client } from '@/sanity/client';
+import { NextResponse } from "next/server";
+import { client } from "../../../../studio/client";
 
 interface TeamMember {
   _id: string;
@@ -34,7 +34,10 @@ const TEAMS_WITH_MEMBERS_QUERY = `
     title,
     shortBio,
     bio,
-    image,
+    "image": image{
+      "sourceUrl": asset->url,
+      "altText": alt
+    },
     team->{
       _id,
       name,
@@ -56,7 +59,7 @@ function sortMembersByImage(members: TeamMember[]): TeamMember[] {
 export async function GET() {
   try {
     const teams = await client.fetch<Team[]>(TEAMS_WITH_MEMBERS_QUERY);
-    
+
     // Filter out teams with no members and sort members within each team
     const teamsWithMembers = teams
       .filter((team) => team.members.length > 0)
@@ -64,13 +67,13 @@ export async function GET() {
         ...team,
         members: sortMembersByImage(team.members),
       }));
-    
+
     return NextResponse.json(teamsWithMembers);
   } catch (error) {
-    const message = error instanceof Error ? error.message : 'Unknown error';
+    const message = error instanceof Error ? error.message : "Unknown error";
     return NextResponse.json(
-      { error: 'Failed to fetch team data', details: message },
-      { status: 500 }
+      { error: "Failed to fetch team data", details: message },
+      { status: 500 },
     );
   }
 }

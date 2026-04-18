@@ -1,5 +1,5 @@
-import { NextResponse } from 'next/server';
-import { client } from '@/sanity/client';
+import { NextResponse } from "next/server";
+import { client } from "../../../../studio/client";
 
 const PUBLICATION_QUERY = `
 *[_type == "publication"] | order(date desc) {
@@ -25,17 +25,17 @@ const PUBLICATION_QUERY = `
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
-    const perPage = parseInt(searchParams.get('per_page') || '12', 10);
-    
+    const perPage = parseInt(searchParams.get("per_page") || "12", 10);
+
     const publications = await client.fetch(PUBLICATION_QUERY);
     const limitedPublications = publications.slice(0, perPage);
-    
+
     return NextResponse.json(limitedPublications);
   } catch (error) {
-    const message = error instanceof Error ? error.message : 'Unknown error';
+    const message = error instanceof Error ? error.message : "Unknown error";
     return NextResponse.json(
-      { error: 'Failed to fetch publications', details: message },
-      { status: 500 }
+      { error: "Failed to fetch publications", details: message },
+      { status: 500 },
     );
   }
 }

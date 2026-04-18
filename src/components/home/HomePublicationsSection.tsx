@@ -3,7 +3,7 @@ import ExpressiveLink from "@/components/ui/ExpressiveLink";
 import ExpressiveAnchor from "@/components/ui/ExpressiveAnchor";
 import PageSection from "@/components/ui/PageSection";
 import Carousel from "@/components/ui/Carousel";
-import { client } from "@/sanity/client";
+import { client } from "@/lib/client";
 import HighlightedText from "../ui/HighlightedText";
 
 const ASSET_VERSION = "v2";
@@ -122,7 +122,9 @@ function PublicationCard({ post }: { post: Publication }) {
       <div className="flex flex-1 flex-col gap-4 p-6">
         <h3 className="text-lg font-bold text-neutral-900">{title}</h3>
 
-        <p className="line-clamp-3 text-sm leading-6 text-neutral-700">{summary}</p>
+        <p className="line-clamp-3 text-sm leading-6 text-neutral-700">
+          {summary}
+        </p>
 
         <div className="mt-auto">
           {post.acf?.url ? (
