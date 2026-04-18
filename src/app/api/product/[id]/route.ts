@@ -1,28 +1,5 @@
 import { NextResponse } from "next/server";
-import { client } from "../../../../../studio/client";
-
-const PRODUCT_BY_ID_QUERY = `
-*[_type == "product" && (externalId == $id || slug.current == $id)][0] {
-  "id": externalId,
-  "slug": slug.current,
-  "acf": {
-    "title": title,
-    "price": price,
-    "shortdescription": shortDescription,
-    "longdescription": longDescription,
-    "impact": impact,
-    "size": size
-  },
-  "_embedded": {
-    "wp:featuredmedia": [
-      {
-        "alt_text": featuredMedia.altText,
-        "source_url": featuredMedia.sourceUrl
-      }
-    ]
-  }
-}
-`;
+import { fetchProductById } from "@/lib/sanity-content";
 
 export async function GET(
   request: Request,
@@ -38,12 +15,7 @@ export async function GET(
       );
     }
 
-    // Try to parse as number for externalId lookup
-    const numericId = parseInt(id, 10);
-
-    const product = await client.fetch(PRODUCT_BY_ID_QUERY, {
-      id: isNaN(numericId) ? id : numericId,
-    });
+    const product = await fetchProductById(id);
 
     if (!product) {
       return NextResponse.json({ error: "Product not found" }, { status: 404 });

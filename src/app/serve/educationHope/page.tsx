@@ -1,7 +1,7 @@
 import { Metadata } from "next";
 import Title from "@/components/ui/Title";
 import Heading from "@/components/ui/Heading";
-import ExpressiveCard from "@/components/ui/ExpressiveCard";
+import ExpressiveCard from "@/components/ui/expressive/ExpressiveCard";
 import Carousel from "@/components/ui/Carousel";
 import { AnchorButton } from "@/components/ui/Button";
 import Bold from "@/components/ui/Bold";

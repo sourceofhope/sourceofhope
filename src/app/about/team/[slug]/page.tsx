@@ -3,43 +3,10 @@ import PageHeader from "@/components/layout/PageHeader";
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { SanityDocument } from "next-sanity";
-import { client } from "@/lib/client";
-
-interface TeamMember extends SanityDocument {
-  name: string;
-  slug: { current: string };
-  title?: string;
-  bio?: string;
-  shortBio?: string;
-  image?: {
-    sourceUrl?: string;
-    altText?: string;
-  };
-  teamGroup?: {
-    _id?: string;
-    name?: string;
-  };
-}
-
-const MEMBER_QUERY = `*[_type == "teamMember" && slug.current == $slug][0] {
-  _id,
-  name,
-  slug,
-  title,
-  bio,
-	shortBio,
-  "image": image{
-    "sourceUrl": asset->url,
-    "altText": alt
-  },
-  teamGroup->{
-    _id,
-    name,
-  }
-}`;
-
-const options = { next: { revalidate: 30 } };
+import {
+  fetchTeamMemberBySlug,
+  type SanityTeamMember as TeamMember,
+} from "@/lib/sanity-content";
 
 export async function generateMetadata({
   params,
@@ -47,11 +14,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const member = await client.fetch<TeamMember>(
-    MEMBER_QUERY,
-    { slug },
-    options,
-  );
+  const member = await fetchTeamMemberBySlug(slug);
 
   if (!member) {
     return {
@@ -71,11 +34,7 @@ export default async function TeamMember({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const member = await client.fetch<TeamMember>(
-    MEMBER_QUERY,
-    { slug },
-    options,
-  );
+  const member = await fetchTeamMemberBySlug(slug);
 
   if (!member) {
     notFound();

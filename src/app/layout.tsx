@@ -92,7 +92,7 @@ export default function RootLayout({
           type="application/ld+json"
           suppressHydrationWarning
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(schemaData),
+            __html: JSON.stringify(schemaData).replace(/</g, "\\u003c"),
           }}
         />
         <GoogleTagManager gtmId="GTM-P9G4WGS3" />

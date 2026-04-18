@@ -1,19 +1,24 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { Generator, EASE_IN_OUT } from "./DefaultGenerator";
 
 interface ExpressiveNumberProps {
   end: number;
   caption: string;
+  generator?: Generator;
   pre?: string;
   post?: string;
+  elapsed?: number;
 }
 
 export function ExpressiveNumber({
   end,
   caption,
+  generator = EASE_IN_OUT,
   pre = "",
   post = "",
+  elapsed = 5000,
 }: ExpressiveNumberProps) {
   const spanRef = useRef<HTMLSpanElement>(null);
   const hasAnimated = useRef(false);
@@ -24,13 +29,13 @@ export function ExpressiveNumber({
     const observer = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting && !hasAnimated.current) {
         hasAnimated.current = true;
-        animateNumber(spanRef.current!, end, 2000);
+        animateNumber(spanRef.current!, end, elapsed, generator);
       }
     });
 
     observer.observe(spanRef.current);
     return () => observer.disconnect();
-  }, [end]);
+  }, [end, generator, elapsed]);
 
   return (
     <div className="text-center">
@@ -47,16 +52,16 @@ export function ExpressiveNumber({
 function animateNumber(
   element: HTMLSpanElement,
   target: number,
-  duration: number
+  duration: number,
+  generator: Generator,
 ) {
-  const start = 0;
   const startTime = Date.now();
 
   const animate = () => {
     const elapsed = Date.now() - startTime;
     const progress = Math.min(elapsed / duration, 1);
-    const current = Math.floor(start + (target - start) * progress);
-    element.textContent = current.toLocaleString();
+    const generated = generator(progress) * target;
+    element.textContent = generated.toFixed(0);
 
     if (progress < 1) {
       requestAnimationFrame(animate);

@@ -1,50 +1,8 @@
 import { NextResponse } from "next/server";
-import { client } from "../../../../studio/client";
-
-interface TeamMember {
-  _id: string;
-  slug: { current: string };
-  name: string;
-  title?: string;
-  bio?: string;
-  image?: {
-    sourceUrl?: string;
-    altText?: string;
-  };
-}
-
-interface Team {
-  _id: string;
-  name: string;
-  slug: { current: string };
-  description?: string;
-  members: TeamMember[];
-}
-
-const TEAMS_WITH_MEMBERS_QUERY = `
-*[_type == "team"] {
-  _id,
-  name,
-  slug,
-  description,
-  "members": *[_type == "teamMember" && team._ref == ^._id] | order(name asc) {
-    _id,
-    name,
-    slug,
-    title,
-    shortBio,
-    bio,
-    "image": image{
-      "sourceUrl": asset->url,
-      "altText": alt
-    },
-    team->{
-      _id,
-      name,
-    }
-  }
-}
-`;
+import {
+  fetchTeamGroupsWithMembers,
+  type SanityTeamMember as TeamMember,
+} from "@/lib/sanity-content";
 
 // Helper function to sort members within a team (members with images first)
 function sortMembersByImage(members: TeamMember[]): TeamMember[] {
@@ -58,7 +16,7 @@ function sortMembersByImage(members: TeamMember[]): TeamMember[] {
 // /api/team-member route handler to fetch all teams with their members
 export async function GET() {
   try {
-    const teams = await client.fetch<Team[]>(TEAMS_WITH_MEMBERS_QUERY);
+    const teams = await fetchTeamGroupsWithMembers();
 
     // Filter out teams with no members and sort members within each team
     const teamsWithMembers = teams

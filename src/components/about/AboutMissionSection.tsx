@@ -3,7 +3,7 @@ import PageSection from "@/components/ui/PageSection";
 import Title from "@/components/ui/Title";
 import Blockquote from "@/components/ui/Blockquote";
 import Bold from "@/components/ui/Bold";
-import ExpressiveAnchor from "@/components/ui/ExpressiveAnchor";
+import ExpressiveAnchor from "@/components/ui/expressive/ExpressiveAnchor";
 import { ASSET_VERSION } from "@/lib/environment";
 
 export default function AboutMissionSection() {

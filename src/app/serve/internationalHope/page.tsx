@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import ExpressiveAnchor from "@/components/ui/ExpressiveAnchor";
+import ExpressiveAnchor from "@/components/ui/expressive/ExpressiveAnchor";
 import Carousel from "@/components/ui/Carousel";
 import Title from "@/components/ui/Title";
 import Heading from "@/components/ui/Heading";

@@ -3,6 +3,7 @@
 import { useRef, useEffect, useState } from "react";
 import { LinkButton } from "@/components/ui/Button";
 import { ASSET_VERSION } from "@/lib/environment";
+import Image from "next/image";
 
 export default function HomeIntroductionSection() {
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -33,14 +34,16 @@ export default function HomeIntroductionSection() {
             "linear-gradient(to bottom, white 80%, transparent 100%)",
           maskImage: "linear-gradient(to bottom, white 80%, transparent 100%)",
         }}>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={`/${ASSET_VERSION}/core/TSOH-Poster.webp`}
-          alt="The Source of Hope community impact"
-          className="h-full w-full object-cover brightness-75"
-          loading="eager"
-          decoding="sync"
-        />
+        <div className="relative h-full w-full">
+          <Image
+            src={`/${ASSET_VERSION}/core/TSOH-Poster.webp`}
+            alt="The Source of Hope community impact"
+            fill
+            priority
+            className="object-cover brightness-75"
+            sizes="100vw"
+          />
+        </div>
         {!videoFailed && (
           <div className="absolute inset-0">
             <video

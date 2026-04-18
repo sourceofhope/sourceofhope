@@ -2,7 +2,7 @@ import { type SanityDocument } from "next-sanity";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Image from "next/image";
-import { client } from "@/lib/client";
+import { client } from "@/lib/sanity-client";
 
 const POST_QUERY = `*[_type == "teamMember" && slug.current == $slug][0]{
   ...,

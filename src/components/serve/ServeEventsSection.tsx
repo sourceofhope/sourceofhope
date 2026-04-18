@@ -1,60 +1,21 @@
-"use client";
-
-import { useEffect, useState } from "react";
 import PageSection from "@/components/ui/PageSection";
 import Title from "@/components/ui/Title";
 import Heading from "@/components/ui/Heading";
 import Carousel from "@/components/ui/Carousel";
 import { AnchorButton } from "@/components/ui/Button";
-import { getFeaturedImage, getResponsiveImage } from "@/lib/image-utils";
-import { ASSET_VERSION } from "@/lib/environment";
+import {
+  type SanityEvent,
+  fetchFeaturedEvents,
+  fetchRecurringEvents,
+} from "@/lib/sanity-content";
 
-interface EventPost {
-  id: string;
-  acf?: {
-    title: string;
-    date: string;
-    location: string;
-    summary: string;
-    event_page: {
-      url: string;
-    };
-  };
-}
+const ASSET_VERSION = "v2";
 
-export default function ServeEventsSection() {
-  const [majorEvents, setMajorEvents] = useState<EventPost[] | null>(null);
-  const [recurringEvents, setRecurringEvents] = useState<EventPost[] | null>(
-    null,
-  );
-
-  useEffect(() => {
-    const fetchRecurringEvents = async () => {
-      try {
-        const response = await fetch("/api/event/recurring-event?per_page=3");
-        const data = await response.json();
-        setRecurringEvents(Array.isArray(data) ? data : data?.data || []);
-      } catch {
-        setRecurringEvents([]);
-      }
-    };
-
-    fetchRecurringEvents();
-  }, []);
-
-  useEffect(() => {
-    const fetchMajorEvents = async () => {
-      try {
-        const response = await fetch("/api/event/featured-event?per_page=12");
-        const data = await response.json();
-        setMajorEvents(Array.isArray(data) ? data : data?.data || []);
-      } catch {
-        setMajorEvents([]);
-      }
-    };
-
-    fetchMajorEvents();
-  }, []);
+export default async function ServeEventsSection() {
+  const [majorEvents, recurringEvents] = await Promise.all([
+    fetchFeaturedEvents(12),
+    fetchRecurringEvents(3),
+  ]);
 
   return (
     <PageSection>
@@ -68,13 +29,12 @@ export default function ServeEventsSection() {
         </div>
         <section className="grid gap-5 min-h-60">
           <Heading className="text-xl">Featured Events</Heading>
-          {!majorEvents && <div className="min-h-40 w-full"></div>}
-          {majorEvents && majorEvents.length === 0 && (
+          {majorEvents.length === 0 && (
             <p className="text-neutral-500 w-full text-center">
               No featured events available
             </p>
           )}
-          {majorEvents && majorEvents.length > 0 && (
+          {majorEvents.length > 0 && (
             <Carousel auto showProgress>
               {majorEvents.map((post) => (
                 <MajorEventCard key={post.id} post={post} />
@@ -84,13 +44,12 @@ export default function ServeEventsSection() {
         </section>
         <section className="grid gap-5 min-h-60">
           <Heading className="text-xl">Recurring Programs</Heading>
-          {!recurringEvents && <div className="min-h-40 w-full"></div>}
-          {recurringEvents && recurringEvents.length === 0 && (
+          {recurringEvents.length === 0 && (
             <p className="text-neutral-500 w-full text-center">
               No recurring events available
             </p>
           )}
-          {recurringEvents && recurringEvents.length > 0 && (
+          {recurringEvents.length > 0 && (
             <Carousel
               auto
               showProgress
@@ -106,18 +65,9 @@ export default function ServeEventsSection() {
   );
 }
 
-function MajorEventCard({ post }: { post: EventPost }) {
-  const [loaded, setLoaded] = useState(false);
-  const image = getFeaturedImage(post as any);
-  const src = getResponsiveImage(image, { width: 720 });
-
-  const eventTime = post.acf?.date ? new Date(post.acf.date).getTime() : NaN;
-  const isOutdated = Number.isFinite(eventTime)
-    ? eventTime < Date.now()
-    : false;
-
-  const eventDateStr = post.acf?.date
-    ? new Date(post.acf.date).toLocaleString("en-US", {
+function MajorEventCard({ post }: { post: SanityEvent }) {
+  const eventDateStr = post.date
+    ? new Date(post.date).toLocaleString("en-US", {
         weekday: "short",
         month: "short",
         day: "numeric",
@@ -130,21 +80,17 @@ function MajorEventCard({ post }: { post: EventPost }) {
   return (
     <div className="relative overflow-hidden rounded-2xl bg-white shadow-md transition-all duration-500">
       <div className="relative w-full overflow-hidden">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={src || `/${ASSET_VERSION}/core/placeholder.webp`}
-          alt={image?.alt_text || post.acf?.title || ""}
+          src={post.image?.sourceUrl || `/${ASSET_VERSION}/core/placeholder.webp`}
+          alt={post.image?.altText || post.title || ""}
           loading="lazy"
           decoding="async"
-          onLoad={() => setLoaded(true)}
-          className={`w-full h-auto object-contain transition-opacity duration-300 ${
-            loaded ? "opacity-100" : "opacity-0"
-          }`}
+          className="w-full h-auto object-contain"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
         <div className="absolute bottom-0 p-6 text-white space-y-2">
-          <h3 className="text-2xl font-semibold leading-tight">
-            {post.acf?.title}
-          </h3>
+          <h3 className="text-2xl font-semibold leading-tight">{post.title}</h3>
         </div>
       </div>
       <div className="p-6 grid gap-4">
@@ -152,12 +98,14 @@ function MajorEventCard({ post }: { post: EventPost }) {
           <span className="px-3 py-1 rounded-full bg-neutral-100 border">
             {eventDateStr}
           </span>
-          <span className="px-3 py-1 rounded-full bg-neutral-100 border">
-            {post.acf?.location}
-          </span>
+          {post.location && (
+            <span className="px-3 py-1 rounded-full bg-neutral-100 border">
+              {post.location}
+            </span>
+          )}
         </div>
-        <p className="text-neutral-700 line-clamp-3">{post.acf?.summary}</p>
-        {isOutdated ? (
+        <p className="text-neutral-700 line-clamp-3">{post.summary}</p>
+        {post.isOutdated ? (
           <div
             className="pointer-events-none select-none !no-underline group inline-flex items-center rounded-2xl px-10 py-5 text-neutral-950 justify-between bg-neutral-300 hover:bg-neutral-400 transition-all duration-700 font-semibold w-full"
             aria-label="Event Completed">
@@ -167,7 +115,7 @@ function MajorEventCard({ post }: { post: EventPost }) {
           </div>
         ) : (
           <AnchorButton
-            href={post.acf?.event_page?.url || "#"}
+            href={post.eventPage?.url || "#"}
             text="Register Now"
             className="w-full"
           />
@@ -177,18 +125,9 @@ function MajorEventCard({ post }: { post: EventPost }) {
   );
 }
 
-function CarouselCard({ post }: { post: EventPost }) {
-  const [loaded, setLoaded] = useState(false);
-  const image = getFeaturedImage(post as any);
-  const src = getResponsiveImage(image, { width: 420 });
-
-  const eventTime = post.acf?.date ? new Date(post.acf.date).getTime() : NaN;
-  const isOutdated = Number.isFinite(eventTime)
-    ? eventTime < Date.now()
-    : false;
-
-  const eventDateStr = post.acf?.date
-    ? new Date(post.acf.date).toLocaleString("en-US", {
+function CarouselCard({ post }: { post: SanityEvent }) {
+  const eventDateStr = post.date
+    ? new Date(post.date).toLocaleString("en-US", {
         weekday: "short",
         month: "short",
         day: "numeric",
@@ -201,32 +140,30 @@ function CarouselCard({ post }: { post: EventPost }) {
   return (
     <div className="group relative shrink-0 bg-white rounded-2xl overflow-hidden shadow-md">
       <div className="relative aspect-video">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={src || `/${ASSET_VERSION}/core/placeholder.webp`}
-          alt={image?.alt_text || post.acf?.title || ""}
+          src={post.image?.sourceUrl || `/${ASSET_VERSION}/core/placeholder.webp`}
+          alt={post.image?.altText || post.title || ""}
           loading="lazy"
           decoding="async"
-          onLoad={() => setLoaded(true)}
-          className={`absolute inset-0 w-full h-full object-contain ${
-            loaded ? "opacity-100" : "opacity-0"
-          }`}
+          className="absolute inset-0 w-full h-full object-contain"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-black/10 to-transparent"></div>
       </div>
       <div className="p-5 grid gap-3">
-        <Heading>{post.acf?.title}</Heading>
+        <Heading>{post.title}</Heading>
         <div className="flex flex-wrap gap-2 text-xs text-neutral-600">
           <span className="px-3 py-1 rounded-full bg-neutral-100 border">
             {eventDateStr}
           </span>
-          <span className="px-3 py-1 rounded-full bg-neutral-100 border">
-            {post.acf?.location}
-          </span>
+          {post.location && (
+            <span className="px-3 py-1 rounded-full bg-neutral-100 border">
+              {post.location}
+            </span>
+          )}
         </div>
-        <p className="text-sm text-neutral-600 line-clamp-3">
-          {post.acf?.summary}
-        </p>
-        {isOutdated ? (
+        <p className="text-sm text-neutral-600 line-clamp-3">{post.summary}</p>
+        {post.isOutdated ? (
           <div
             className="pointer-events-none select-none !no-underline group inline-flex items-center rounded-2xl px-10 py-5 text-neutral-950 justify-between bg-neutral-300 hover:bg-neutral-400 transition-all duration-700 font-semibold w-full"
             aria-label="Event Completed">
@@ -236,7 +173,7 @@ function CarouselCard({ post }: { post: EventPost }) {
           </div>
         ) : (
           <AnchorButton
-            href={post.acf?.event_page?.url || "#"}
+            href={post.eventPage?.url || "#"}
             text="Register Now"
             className="w-full"
           />

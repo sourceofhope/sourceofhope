@@ -1,5 +1,5 @@
 import Image from "next/image";
-import ExpressiveLink from "@/components/ui/ExpressiveLink";
+import ExpressiveLink from "@/components/ui/expressive/ExpressiveLink";
 import Title from "@/components/ui/Title";
 import ParallaxLayer from "../ui/parallax/ParallaxLayer";
 import ParallaxSection from "../ui/parallax/ParallaxSection";

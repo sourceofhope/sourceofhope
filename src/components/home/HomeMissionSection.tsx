@@ -1,26 +1,34 @@
 import Title from "@/components/ui/Title";
 import Emphasis from "@/components/ui/Emphasis";
-import ExpressiveAnchor from "@/components/ui/ExpressiveAnchor";
+import ExpressiveAnchor from "@/components/ui/expressive/ExpressiveAnchor";
 import Blockquote from "@/components/ui/Blockquote";
 import PageSection from "@/components/ui/PageSection";
+import Image from "next/image";
 import { ASSET_VERSION } from "@/lib/environment";
 
 export default function HomeMissionSection() {
   return (
-    <PageSection className="grid grid-flow-row md:grid-cols-[1fr_2fr] pt-5 pb-5 items-center w-full gap-10 md:gap-5 justify-items-end md:justify-between">
+    <PageSection className="grid grid-flow-row md:grid-cols-[1fr_2fr] pt-5 pb-10 items-center w-full gap-10 md:gap-5 justify-items-end md:justify-between">
       <div className="grid grid-flow-row gap-5 justify-items-center">
         <Title className="text-xlg md:hidden lg:text-xxlg font-urbanist text-center">
           Our Mission
         </Title>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={`/${ASSET_VERSION}/core/TSOH-Founder.webp`}
+        <Image
+          src={`/${ASSET_VERSION}/core/TSOH-Group.webp`}
           alt="The Source of Hope Founder, Quynh Chau Stone"
-          className="w-full h-full object-cover rounded-lg"
-          loading="lazy"
+          width={1200}
+          height={1600}
+          className=" object-cover rounded-lg"
+          style={{
+            WebkitMaskImage:
+              "linear-gradient(to bottom, white 60%, transparent 100%)",
+            maskImage:
+              "linear-gradient(to bottom, white 60%, transparent 100%)",
+          }}
+          sizes="(max-width: 768px) 100vw, 50vw"
         />
       </div>
-      <div className="grid gap-3 max-w-100 md:max-w-125 lg:max-w-150">
+      <div className="grid gap-3 max-w-100 md:max-w-150 lg:max-w-165">
         <Title className="hidden text-xlg md:block lg:text-xxlg pl-5 w-fit font-urbanist">
           Our Mission
         </Title>

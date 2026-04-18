@@ -3,7 +3,7 @@
 import Image from "next/image";
 import Title from "@/components/ui/Title";
 import Emphasis from "@/components/ui/Emphasis";
-import ExpressiveLink from "@/components/ui/ExpressiveLink";
+import ExpressiveLink from "@/components/ui/expressive/ExpressiveLink";
 import Link from "next/link";
 import { useState } from "react";
 import { ArrowRightIcon, XMarkIcon } from "@heroicons/react/20/solid";

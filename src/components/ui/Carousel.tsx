@@ -32,6 +32,7 @@ export default function Carousel({
     [children],
   );
 
+  const [isAuto, setIsAuto] = useState(auto);
   const [perView, setPerView] = useState(itemsPerView.base);
   const [index, setIndex] = useState(0);
 
@@ -61,14 +62,14 @@ export default function Carousel({
   }, [totalPages]);
 
   useEffect(() => {
-    if (!auto || totalPages <= 1) return;
+    if (!isAuto || totalPages <= 1) return;
 
     const id = window.setInterval(() => {
       setIndex((current) => (current + 1) % totalPages);
     }, 5000);
 
     return () => window.clearInterval(id);
-  }, [auto, totalPages]);
+  }, [isAuto, totalPages]);
 
   const next = () => setIndex((current) => (current + 1) % totalPages);
   const prev = () =>
@@ -130,7 +131,10 @@ export default function Carousel({
 
           {!hideControls ? (
             <button
-              onClick={next}
+              onClick={() => {
+                setIsAuto(false);
+                next();
+              }}
               aria-label="Next slide"
               className="rounded-full border border-neutral-300 bg-white p-2 text-neutral-800 shadow-sm transition hover:bg-neutral-100">
               <ChevronRightIcon className="h-5 w-5" />

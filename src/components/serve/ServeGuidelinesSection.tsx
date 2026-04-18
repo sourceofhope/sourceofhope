@@ -1,6 +1,6 @@
 import PageSection from "@/components/ui/PageSection";
 import Title from "@/components/ui/Title";
-import ExpressiveCard from "@/components/ui/ExpressiveCard";
+import ExpressiveCard from "@/components/ui/expressive/ExpressiveCard";
 import Link from "next/link";
 
 export default function ServeGuidelinesSection() {

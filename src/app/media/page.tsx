@@ -6,47 +6,7 @@ import MediaBlogPage, {
 import MediaNewsletterSection, {
   type MediaNewsletterPost,
 } from "@/components/media/MediaNewsletterSection";
-import { client } from "@/lib/client";
-
-const PUBLICATION_QUERY = `
-*[_type == "publication"] | order(date desc)[0...10] {
-  "id": externalId,
-  "acf": {
-    "title": title,
-    "date": date,
-    "summary": summary,
-    "url": url
-  },
-  "_embedded": {
-    "wp:featuredmedia": [
-      {
-        "alt_text": featuredMedia.altText,
-        "source_url": featuredMedia.sourceUrl
-      }
-    ]
-  }
-}
-`;
-
-const NEWSLETTER_QUERY = `
-*[_type == "newsletter"] | order(_createdAt desc)[0...5] {
-  "id": externalId,
-  "acf": {
-    "title": title,
-    "url": url
-  },
-  "_embedded": {
-    "wp:featuredmedia": [
-      {
-        "alt_text": featuredMedia.altText,
-        "source_url": featuredMedia.sourceUrl
-      }
-    ]
-  }
-}
-`;
-
-const options = { next: { revalidate: 30 } };
+import { fetchNewsletters, fetchPublications } from "@/lib/sanity-content";
 
 export const metadata: Metadata = {
   title: "Media | The Source of Hope",
@@ -68,8 +28,8 @@ export const metadata: Metadata = {
 
 export default async function Media() {
   const [posts, newsletters] = await Promise.all([
-    client.fetch<MediaBlogPost[]>(PUBLICATION_QUERY, {}, options),
-    client.fetch<MediaNewsletterPost[]>(NEWSLETTER_QUERY, {}, options),
+    fetchPublications(10) as Promise<MediaBlogPost[]>,
+    fetchNewsletters(5) as Promise<MediaNewsletterPost[]>,
   ]);
 
   return (

@@ -1,31 +1,9 @@
 import { NextResponse } from "next/server";
-import { client } from "../../../../studio/client";
-
-interface CheckoutProvider {
-  id: string;
-  providerId: string;
-  name: string;
-  description?: string;
-  enabled: boolean;
-  icon?: string;
-}
-
-const CHECKOUT_PROVIDERS_QUERY = `
-*[_type == "checkoutProvider"] | order(name asc) {
-  "id": _id,
-  providerId,
-  name,
-  description,
-  enabled,
-  icon
-}
-`;
+import { fetchCheckoutProviders } from "@/lib/sanity-content";
 
 export async function GET() {
   try {
-    const providers = await client.fetch<CheckoutProvider[]>(
-      CHECKOUT_PROVIDERS_QUERY,
-    );
+    const providers = await fetchCheckoutProviders();
 
     // Filter to only enabled providers
     const enabledProviders = providers.filter((provider) => provider.enabled);

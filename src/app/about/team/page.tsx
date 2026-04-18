@@ -4,55 +4,12 @@ import PageSection from "@/components/ui/PageSection";
 import Title from "@/components/ui/Title";
 import Carousel from "@/components/ui/Carousel";
 
-import { type SanityDocument } from "next-sanity";
 import { CarouselCard } from "./CarouselCard";
-import { client } from "@/lib/client";
-
-interface TeamMember extends SanityDocument {
-  _id: string;
-  name: string;
-  slug: { current: string };
-  title?: string;
-  shortBio?: string;
-  image?: {
-    sourceUrl?: string;
-    altText?: string;
-  };
-}
-
-interface Team extends SanityDocument {
-  _id: string;
-  name: string;
-  slug: { current: string };
-  description?: string;
-  members: TeamMember[];
-}
-
-const TEAMS_WITH_MEMBERS_QUERY = `
-*[_type == "team"] {
-  _id,
-  name,
-  slug,
-  description,
-  "members": *[_type == "teamMember" && team._ref == ^._id] | order(name asc) {
-    _id,
-    name,
-    slug,
-    title,
-		shortBio,
-    "image": image{
-      "sourceUrl": asset->url,
-      "altText": alt
-    },
-    team->{
-      _id,
-      name,
-    }
-  }
-}
-`;
-
-const options = { next: { revalidate: 30 } };
+import {
+  fetchTeamGroupsWithMembers,
+  type SanityTeamGroup,
+  type SanityTeamMember,
+} from "@/lib/sanity-content";
 
 // Define the preferred order of teams
 const TEAM_ORDER = [
@@ -76,11 +33,7 @@ export const metadata: Metadata = {
 
 async function getTeams() {
   try {
-    const teams = await client.fetch<Team[]>(
-      TEAMS_WITH_MEMBERS_QUERY,
-      {},
-      options,
-    );
+    const teams = await fetchTeamGroupsWithMembers();
     return teams
       .filter((team) => team.members.length > 0)
       .map((team) => ({
@@ -93,7 +46,7 @@ async function getTeams() {
 }
 
 // Helper function to sort teams by preferred order
-function sortTeamsByOrder(teams: Team[]): Team[] {
+function sortTeamsByOrder(teams: SanityTeamGroup[]): SanityTeamGroup[] {
   // Create a map for O(1) lookups instead of O(n) indexOf calls
   const teamIndexMap = new Map<string, number>();
   TEAM_ORDER.forEach((name, index) => {
@@ -192,7 +145,7 @@ export default async function Team() {
   );
 }
 
-function sortMembersByImage(members: TeamMember[]): TeamMember[] {
+function sortMembersByImage(members: SanityTeamMember[]): SanityTeamMember[] {
   return members.sort((a, b) => {
     const aHasImage = a.image?.sourceUrl ? 1 : 0;
     const bHasImage = b.image?.sourceUrl ? 1 : 0;
@@ -202,7 +155,7 @@ function sortMembersByImage(members: TeamMember[]): TeamMember[] {
 
 interface CarouselLayerProps {
   title: string;
-  members: TeamMember[];
+  members: SanityTeamMember[];
 }
 
 function CarouselLayer({ title, members }: CarouselLayerProps) {
@@ -229,7 +182,7 @@ function CarouselLayer({ title, members }: CarouselLayerProps) {
   );
 }
 
-function CarouselContent({ members }: { members: TeamMember[] }) {
+function CarouselContent({ members }: { members: SanityTeamMember[] }) {
   return (
     <Carousel itemsPerView={{ base: 1, md: 2, lg: 3 }} showProgress>
       {members.map((member) => (

@@ -7,20 +7,9 @@ import Heading from "@/components/ui/Heading";
 import Carousel from "@/components/ui/Carousel";
 import Blockquote from "@/components/ui/Blockquote";
 import HighlightedText from "@/components/ui/HighlightedText";
+import { type SanityNewsletter } from "@/lib/sanity-content";
 
-export interface MediaNewsletterPost {
-  id: number;
-  acf?: {
-    title: string;
-    url: string;
-  };
-  _embedded?: {
-    "wp:featuredmedia"?: Array<{
-      alt_text: string;
-      source_url: string;
-    }>;
-  };
-}
+export type MediaNewsletterPost = SanityNewsletter;
 
 export default function MediaNewsletterSection({
   newsletters,
@@ -119,17 +108,16 @@ export default function MediaNewsletterSection({
 
 function CarouselCard({ post }: { post: MediaNewsletterPost }) {
   const [loaded, setLoaded] = useState(false);
-  const image = post._embedded?.["wp:featuredmedia"]?.[0];
-  const src = image?.source_url;
+  const src = post.image?.sourceUrl;
 
   return (
     <a
-      href={post.acf?.url}
+      href={post.url}
       className="group h-full relative flex flex-col overflow-hidden rounded-2xl bg-neutral-900 shadow-md transition-all duration-500 hover:shadow-xl">
       <div className="relative aspect-[4/5] overflow-hidden">
         <img
           src={src || "/v2/core/placeholder.webp"}
-          alt={image?.alt_text || ""}
+          alt={post.image?.altText || post.title || ""}
           loading="lazy"
           decoding="async"
           onLoad={() => setLoaded(true)}
@@ -141,7 +129,7 @@ function CarouselCard({ post }: { post: MediaNewsletterPost }) {
       </div>
       <div className="relative flex flex-col gap-2 p-5 text-neutral-50">
         <h2 className="line-clamp-1 text-md font-semibold leading-tight transition-colors duration-300">
-          {post.acf?.title}
+          {post.title}
         </h2>
         <div className="w-fit text-sm font-semibold text-blue-400 group-hover:text-blue-300 transition-colors duration-300">
           Read newsletter

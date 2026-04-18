@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { XMarkIcon, ArrowRightIcon } from "@heroicons/react/20/solid";
 import Overlay from "@/components/ui/Overlay";
-import ExpressiveAnchor from "@/components/ui/ExpressiveAnchor";
+import ExpressiveAnchor from "@/components/ui/expressive/ExpressiveAnchor";
 import { type SanityDocument } from "next-sanity";
 
 interface TeamMember extends SanityDocument {

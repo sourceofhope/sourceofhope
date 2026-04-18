@@ -1,13 +1,14 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import Title from '@/components/ui/Title';
-import { useCartActions } from '@/context/StoreCartContext';
-import { useHeaderContext } from '@/context/HeaderContext';
-import Cart from '@/components/store/Cart';
-import ExpressCheckoutSection from '@/components/store/checkout/ExpressCheckoutSection';
-import SelfCheckoutSection from '@/components/store/checkout/SelfCheckoutSection';
-import CheckoutDetailsSection from '@/components/store/checkout/CheckoutDetailsSection';
+import { useEffect, useState } from "react";
+import Title from "@/components/ui/Title";
+import { useCartActions } from "@/context/StoreCartContext";
+import { useHeaderContext } from "@/context/HeaderContext";
+import Cart from "@/components/store/Cart";
+import ExpressCheckoutSection from "@/components/store/checkout/ExpressCheckoutSection";
+import SelfCheckoutSection from "@/components/store/checkout/SelfCheckoutSection";
+import CheckoutDetailsSection from "@/components/store/checkout/CheckoutDetailsSection";
+import Link from "next/link";
 
 export default function CheckoutPage() {
   const [isHydrated, setIsHydrated] = useState(false);
@@ -27,6 +28,7 @@ export default function CheckoutPage() {
   const setIsBlocking = headerContext?.setIsBlocking;
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setIsHydrated(true);
   }, []);
 
@@ -56,12 +58,11 @@ export default function CheckoutPage() {
             <p className="text-neutral-600 mb-6">
               Add some items to your cart to checkout.
             </p>
-            <a
+            <Link
               href="/store"
-              className="inline-block bg-accent-500 hover:bg-accent-600 text-white px-8 py-3 rounded-2xl transition-colors"
-            >
+              className="inline-block bg-accent-500 hover:bg-accent-600 text-white px-8 py-3 rounded-2xl transition-colors">
               Continue Shopping
-            </a>
+            </Link>
           </div>
         </section>
       ) : (

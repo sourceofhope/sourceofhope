@@ -1,11 +1,11 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-    images: {
+  images: {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "cms.thesourceofhope.org",
+        hostname: "cdn.sanity.io",
       },
     ],
   },

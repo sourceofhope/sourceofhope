@@ -93,7 +93,7 @@ const faqs = [
 
 export default function GivingFAQSection() {
   return (
-    <PageSection className="grid gap-8 rounded-3xl bg-neutral-50">
+    <PageSection className="grid gap-8 rounded-3xl bg-neutral-200">
       <div className="grid gap-1">
         <Heading>PLANNED GIVING</Heading>
         <Title>Frequently Asked Questions</Title>

@@ -1,53 +1,18 @@
 import Title from "@/components/ui/Title";
-import ExpressiveLink from "@/components/ui/ExpressiveLink";
-import ExpressiveAnchor from "@/components/ui/ExpressiveAnchor";
+import ExpressiveLink from "@/components/ui/expressive/ExpressiveLink";
+import ExpressiveAnchor from "@/components/ui/expressive/ExpressiveAnchor";
 import PageSection from "@/components/ui/PageSection";
 import Carousel from "@/components/ui/Carousel";
-import { client } from "@/lib/client";
+import {
+  fetchPublications,
+  type SanityPublication,
+} from "@/lib/sanity-content";
 import HighlightedText from "../ui/HighlightedText";
 import { ASSET_VERSION } from "@/lib/environment";
 
-interface Publication {
-  id: number;
-  acf?: {
-    title: string;
-    date: string;
-    summary: string;
-    url: string;
-  };
-  _embedded?: {
-    "wp:featuredmedia"?: Array<{
-      alt_text: string;
-      source_url: string;
-    }>;
-  };
-}
-
-const PUBLICATION_QUERY = `
-*[_type == "publication"] | order(date desc)[0...5] {
-  "id": externalId,
-  "acf": {
-    "title": title,
-    "date": date,
-    "summary": summary,
-    "url": url
-  },
-  "_embedded": {
-    "wp:featuredmedia": [
-      {
-        "alt_text": featuredMedia.altText,
-        "source_url": featuredMedia.sourceUrl
-      }
-    ]
-  }
-}
-`;
-
-const options = { next: { revalidate: 30 } };
-
 async function getPublications() {
   try {
-    return await client.fetch<Publication[]>(PUBLICATION_QUERY, {}, options);
+    return await fetchPublications(5);
   } catch {
     return [];
   }
@@ -92,11 +57,10 @@ export default async function HomePublicationsSection() {
   );
 }
 
-function PublicationCard({ post }: { post: Publication }) {
-  const image = post._embedded?.["wp:featuredmedia"]?.[0];
-  const title = post.acf?.title || "Publication";
+function PublicationCard({ post }: { post: SanityPublication }) {
+  const title = post.title || "Publication";
   const summary =
-    post.acf?.summary ||
+    post.summary ||
     "Stay connected with the latest stories, programs, and community impact from The Source of Hope.";
 
   return (
@@ -104,16 +68,18 @@ function PublicationCard({ post }: { post: Publication }) {
       <div className="relative h-64 overflow-hidden">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={image?.source_url || `/${ASSET_VERSION}/core/placeholder.webp`}
-          alt={image?.alt_text || title}
+          src={
+            post.image?.sourceUrl || `/${ASSET_VERSION}/core/placeholder.webp`
+          }
+          alt={post.image?.altText || title}
           className="h-full w-full object-cover transition duration-500"
           loading="lazy"
           decoding="async"
         />
 
-        {post.acf?.date && (
+        {post.date && (
           <div className="absolute left-4 top-4 rounded-full bg-black/70 px-3 py-1 text-xs font-semibold text-white backdrop-blur-sm">
-            {formatDate(post.acf.date)}
+            {formatDate(post.date)}
           </div>
         )}
       </div>
@@ -126,8 +92,8 @@ function PublicationCard({ post }: { post: Publication }) {
         </p>
 
         <div className="mt-auto">
-          {post.acf?.url ? (
-            <ExpressiveAnchor href={post.acf.url} className="font-semibold">
+          {post.url ? (
+            <ExpressiveAnchor href={post.url} className="font-semibold">
               Read more
             </ExpressiveAnchor>
           ) : (

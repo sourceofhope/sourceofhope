@@ -30,8 +30,7 @@ export default function ExpressiveAnchor({
       rel={rel}
       className={`${
         inText ? "w-fit mr-1" : "w-full"
-      } !no-underline text-sm md:text-md group inline-flex justify-between items-center gap-1 focus:outline-none ${className}`}
-    >
+      } no-underline! text-sm md:text-md group inline-flex justify-between items-center gap-1 focus:outline-none ${className}`}>
       <span>{children}</span>
       <ArrowUpRightIcon
         className="w-[1em] h-[1em] transition-transform duration-500 group-hover:translate-x-1 group-hover:-translate-y-1"

@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { ChevronDownIcon } from "@heroicons/react/20/solid";
-import Heading from "./Heading";
+import Heading from "../Heading";
 
 interface ExpressiveCardProps {
   title: string;
