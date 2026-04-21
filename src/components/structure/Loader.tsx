@@ -25,7 +25,7 @@ function Expander({ delay = "0s" }: { delay?: string }) {
   return (
     <div
       style={{ animationDelay: delay }}
-      className="bg-primary-700 rounded-2xl w-5 h-[10px] animate-[changeHeight_1.4s_ease-in-out_infinite]"
+      className="bg-primary-700 rounded-2xl w-5 h-2.5 animate-[changeHeight_1.4s_ease-in-out_infinite]"
     />
   );
 }

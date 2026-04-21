@@ -82,7 +82,7 @@ function HomeResourceCardInner({
         src={src}
         alt={caption}
         fill
-        onLoadingComplete={() => setLoaded(true)}
+        onLoad={() => setLoaded(true)}
         onError={(e) => (e.currentTarget.src = "/core/placeholder.webp")}
         className={`${
           loaded ? "opacity-100" : "opacity-0"

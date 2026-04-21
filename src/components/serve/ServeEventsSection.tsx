@@ -82,13 +82,15 @@ function MajorEventCard({ post }: { post: SanityEvent }) {
       <div className="relative w-full overflow-hidden">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={post.image?.sourceUrl || `/${ASSET_VERSION}/core/placeholder.webp`}
+          src={
+            post.image?.sourceUrl || `/${ASSET_VERSION}/core/placeholder.webp`
+          }
           alt={post.image?.altText || post.title || ""}
           loading="lazy"
           decoding="async"
           className="w-full h-auto object-contain"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
+        <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/20 to-transparent"></div>
         <div className="absolute bottom-0 p-6 text-white space-y-2">
           <h3 className="text-2xl font-semibold leading-tight">{post.title}</h3>
         </div>
@@ -107,7 +109,7 @@ function MajorEventCard({ post }: { post: SanityEvent }) {
         <p className="text-neutral-700 line-clamp-3">{post.summary}</p>
         {post.isOutdated ? (
           <div
-            className="pointer-events-none select-none !no-underline group inline-flex items-center rounded-2xl px-10 py-5 text-neutral-950 justify-between bg-neutral-300 hover:bg-neutral-400 transition-all duration-700 font-semibold w-full"
+            className="pointer-events-none select-none no-underline! group inline-flex items-center rounded-2xl px-10 py-5 text-neutral-950 justify-between bg-neutral-300 hover:bg-neutral-400 transition-all duration-700 font-semibold w-full"
             aria-label="Event Completed">
             <span className="flex w-full gap-3 items-center justify-center text-sm md:text-md">
               <span>Event Completed</span>
@@ -142,13 +144,15 @@ function CarouselCard({ post }: { post: SanityEvent }) {
       <div className="relative aspect-video">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={post.image?.sourceUrl || `/${ASSET_VERSION}/core/placeholder.webp`}
+          src={
+            post.image?.sourceUrl || `/${ASSET_VERSION}/core/placeholder.webp`
+          }
           alt={post.image?.altText || post.title || ""}
           loading="lazy"
           decoding="async"
           className="absolute inset-0 w-full h-full object-contain"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-black/10 to-transparent"></div>
+        <div className="absolute inset-0 bg-linear-to-t from-black/30 via-black/10 to-transparent"></div>
       </div>
       <div className="p-5 grid gap-3">
         <Heading>{post.title}</Heading>
@@ -165,7 +169,7 @@ function CarouselCard({ post }: { post: SanityEvent }) {
         <p className="text-sm text-neutral-600 line-clamp-3">{post.summary}</p>
         {post.isOutdated ? (
           <div
-            className="pointer-events-none select-none !no-underline group inline-flex items-center rounded-2xl px-10 py-5 text-neutral-950 justify-between bg-neutral-300 hover:bg-neutral-400 transition-all duration-700 font-semibold w-full"
+            className="pointer-events-none select-none no-underline! group inline-flex items-center rounded-2xl px-10 py-5 text-neutral-950 justify-between bg-neutral-300 hover:bg-neutral-400 transition-all duration-700 font-semibold w-full"
             aria-label="Event Completed">
             <span className="flex w-full gap-3 items-center justify-center text-sm md:text-md">
               <span>Event Completed</span>

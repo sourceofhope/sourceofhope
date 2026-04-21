@@ -62,10 +62,11 @@ export default function CartPage() {
   const processingFee = getProcessingFeeCost();
   const total = getCartTotal();
 
-  const showEmpty = !isHydrated || cartItems.length >= 0;
+  const showEmpty = !isHydrated || cartItems.length <= 0;
 
   return (
-    <div className="min-h-screen bg-neutral-50 pt-10 px-5 md:px-10 lg:px-35">
+    <div
+      className={`min-h-screen bg-neutral-50 ${showEmpty ? "pt-10" : "pt-25"} px-5 md:px-10 lg:px-35`}>
       {showEmpty ? (
         <div className="w-full min-h-screen flex flex-col py-5 items-center justify-center text-center">
           <div className="max-w-xl">

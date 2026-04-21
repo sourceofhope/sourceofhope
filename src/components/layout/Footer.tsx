@@ -193,7 +193,11 @@ function FooterCard() {
         wellness tips, and community updates right to your inbox by subscribing
         to our newsletter.
       </p>
-      <LinkButton className="w-fit" href="/members" text="SUBSCRIBE" />
+      <LinkButton
+        className="md:w-fit w-full"
+        href="/members"
+        text="SUBSCRIBE"
+      />
       <p className="text-sm text-neutral-600 italic">
         No spam, unsubscribe anytime.
       </p>
