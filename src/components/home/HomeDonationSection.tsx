@@ -1,0 +1,26 @@
+import { LinkButton } from "@/components/ui/Button";
+import Title from "@/components/ui/Title";
+import PageSection from "@/components/ui/PageSection";
+import { BanknotesIcon } from "@heroicons/react/20/solid";
+import { ServingCard } from "./HomeServingSection";
+
+export default function HomeDonationSection() {
+  return (
+    <PageSection className="py-10 min-h-100 px-5 lg:px-35 w-full h-full grid gap-15 items-center justify-items-center bg-accent-800 text-neutral-50">
+      <ServingCard className="md:hidden w-full max-w-105 bg-neutral-100" />
+      <article className="md:w-1/2 grid gap-5 justify-items-center text-balance text-center">
+        <BanknotesIcon className="w-20 h-20 text-neutral-50" />
+        <Title className="text-2xl md:text-3xl text-neutral-50">
+          INVEST IN HOLISTIC WELLNESS
+        </Title>
+        <p className="text-sm md:text-md lg:text-lg text-neutral-300">
+          Your generosity helps us bless the communities surrounding The Source
+          of Hope with love, support, and transformation.
+        </p>
+        <div className="w-fit pt-4">
+          <LinkButton href="/donate" text="DONATE NOW" />
+        </div>
+      </article>
+    </PageSection>
+  );
+}
