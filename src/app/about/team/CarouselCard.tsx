@@ -5,23 +5,10 @@ import Link from "next/link";
 import { XMarkIcon, ArrowRightIcon } from "@heroicons/react/20/solid";
 import Overlay from "@/components/ui/Overlay";
 import ExpressiveAnchor from "@/components/ui/expressive/ExpressiveAnchor";
-import { type SanityDocument } from "next-sanity";
-
-interface TeamMember extends SanityDocument {
-  _id: string;
-  name: string;
-  slug: { current: string };
-  title?: string;
-  shortBio?: string;
-  bio?: string;
-  image?: {
-    sourceUrl?: string;
-    altText?: string;
-  };
-}
+import { SanityTeamMember } from "@/lib/sanity-content";
 
 interface CarouselCardProps {
-  member: TeamMember;
+  member: SanityTeamMember;
 }
 
 export function CarouselCard({ member }: CarouselCardProps) {
