@@ -6,6 +6,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { HeaderProvider } from "@/context/HeaderContext";
 import { StoreCartProvider } from "@/context/StoreCartContext";
+import { Analytics } from "@vercel/analytics/next";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -107,6 +108,7 @@ export default function RootLayout({
             style={{ display: "none", visibility: "hidden" }}
           />
         </noscript>
+        <Analytics />
         <HeaderProvider>
           <StoreCartProvider>
             <Header />
