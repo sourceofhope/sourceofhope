@@ -81,6 +81,7 @@ function HomeResourceCardInner({
       <Image
         src={src}
         alt={caption}
+        sizes="100vw"
         fill
         onLoad={() => setLoaded(true)}
         onError={(e) => (e.currentTarget.src = "/core/placeholder.webp")}
