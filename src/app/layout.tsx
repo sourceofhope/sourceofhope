@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Urbanist, Montserrat } from "next/font/google";
-import { GoogleTagManager } from "@next/third-parties/google";
+import { GoogleTagManager, GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
@@ -96,6 +96,7 @@ export default function RootLayout({
           }}
         />
         <GoogleTagManager gtmId="GTM-P9G4WGS3" />
+        <GoogleAnalytics gaId="AW-10925214570" />
       </head>
       <body
         className={`${inter.variable} ${urbanist.variable} ${montserrat.variable} antialiased bg-neutral-50 font-inter text-neutral-900`}>
