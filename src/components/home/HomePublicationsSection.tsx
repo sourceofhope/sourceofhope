@@ -42,7 +42,9 @@ export default async function HomePublicationsSection() {
         </div>
 
         {posts.length === 0 && (
-          <p className="text-center text-neutral-500">No updates to display</p>
+          <p className="text-center w-full text-neutral-500">
+            No updates to display
+          </p>
         )}
 
         {posts.length > 0 && (
