@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useHeaderContext } from "@/context/HeaderContext";
@@ -62,6 +62,7 @@ export default function Header() {
   const [open, setOpen] = useState(false);
   const [bannerOpen, setBannerOpen] = useState(true);
   const pathname = usePathname();
+  const previousPathname = useRef(pathname);
 
   const header = useHeaderContext() ?? {};
   const { isBlocking = false, bannerActive = false } = header;
@@ -74,9 +75,21 @@ export default function Header() {
   }, []);
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setOpen(false);
-  }, [pathname]);
+    if (previousPathname.current === pathname) return;
+
+    previousPathname.current = pathname;
+
+    if (!open) return;
+
+    const activeItem = getHeaderLinks().find(
+      (item) => item.href === pathname && item.children?.length,
+    );
+
+    if (!activeItem) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setOpen(false);
+    }
+  }, [open, pathname]);
 
   return (
     <>
@@ -131,7 +144,11 @@ export default function Header() {
             <nav
               className="flex flex-col justify-end items-center px-5 pb-5 h-fit"
               aria-label="Mobile">
-              <HeaderNavigator isMobile={true} open={open} />
+              <HeaderNavigator
+                isMobile={true}
+                open={open}
+                setOpen={setOpen}
+              />
             </nav>
           )}
         </div>
@@ -209,13 +226,15 @@ function HeaderMenu({
 function HeaderNavigator({
   isMobile = false,
   open,
+  setOpen,
 }: {
   isMobile?: boolean;
   open?: boolean;
+  setOpen?: (value: boolean) => void;
 }) {
   const links = getHeaderLinks();
   return isMobile ? (
-    <MobileNavigator links={links} open={open ?? false} />
+    <MobileNavigator links={links} open={open ?? false} setOpen={setOpen} />
   ) : (
     <DesktopNavigator links={links} />
   );
@@ -316,7 +335,15 @@ function DesktopNavigatorItem({
   );
 }
 
-function MobileNavigator({ links, open }: { links: NavLink[]; open: boolean }) {
+function MobileNavigator({
+  links,
+  open,
+  setOpen,
+}: {
+  links: NavLink[];
+  open: boolean;
+  setOpen?: (value: boolean) => void;
+}) {
   interface StackItem {
     title: string;
     href: string | null;
@@ -396,11 +423,13 @@ function MobileNavigator({ links, open }: { links: NavLink[]; open: boolean }) {
               <Link
                 href={item.href}
                 className="no-underline! py-2.5 h-full w-full group font-bold inline-flex justify-between items-center gap-1"
-                onClick={(event) => {
+                onClick={() => {
                   if (hasChildren) {
-                    event.preventDefault();
                     openChildren(item);
+                    return;
                   }
+
+                  setOpen?.(false);
                 }}>
                 <span className="text-left">{item.label}</span>
                 <Icon>
