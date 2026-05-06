@@ -48,8 +48,8 @@ export default function CartPage() {
     updateCartItem(id, { quantity: newQuantity });
   };
 
-  const removeItem = (id: string) => {
-    removeFromCart(id);
+  const removeItem = (id: string, size?: string) => {
+    removeFromCart(id, size);
   };
 
   const updateSize = (id: string, newSize: string) => {
@@ -62,7 +62,7 @@ export default function CartPage() {
   const processingFee = getProcessingFeeCost();
   const total = getCartTotal();
 
-  const showEmpty = !isHydrated || cartItems.length >= 0;
+  const showEmpty = isHydrated && cartItems.length <= 0;
 
   return (
     <div className="min-h-screen bg-neutral-50 pt-10 px-5 md:px-10 lg:px-35">
