@@ -8,7 +8,7 @@ export const ASSET_VERSION = "v2";
 export function getEnvironment() {
   const config = {
     stripeSecretKey: process.env.STRIPE_SECRET_KEY,
-    stripeWebhookSecret: process.env.STRIPE_WEB_HOOK_SECRET,
+    stripeWebhookSecret: process.env.STRIPE_WEBHOOK_SECRET,
     stripePublishableKey: process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
     stripeSalesTaxRateId: process.env.STRIPE_SALES_TAX_RATE_ID,
 
