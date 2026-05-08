@@ -1,5 +1,5 @@
 const PAYPAL_API_LOCATION: Record<string, string> = {
-  production: "https://api.paypal.com/",
+  production: "https://api.paypal.com",
   development: "https://api.sandbox.paypal.com",
 };
 
