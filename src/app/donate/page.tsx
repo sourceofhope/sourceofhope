@@ -564,6 +564,26 @@ export default function DonatePage() {
               transactions are processed securely through Stripe. You will
               receive an email receipt upon successful payment.
             </p>
+             <p className="text-justify text-xs text-neutral-500 text-center leading-relaxed px-1">
+             Donations made to The Source of Hope are used solely to support charitable,
+             educational, wellness, and community outreach programs in accordance with
+             our nonprofit mission and applicable federal and state laws. Contributions
+             may not be used for the private benefit of any donor, individual, or organization,
+             including for non-tax-deductible memberships, event ticket purchases,
+             or legally binding personal pledges.
+            </p>
+            <p className="text-justify text-xs text-neutral-500 text-center leading-relaxed px-1">
+             The Source of Hope does not support or promote hate, violence, terrorism,
+              money laundering, discrimination, or any unlawful activities. All donated
+              funds are directed toward programs and services that serve the community
+              with dignity, compassion, and integrity.
+            </p>
+            <p className="text-justify text-xs text-neutral-500 text-center leading-relaxed px-1">
+            Please note that third-party fundraising platforms or payment processors may
+              charge processing or transaction fees, which may be disclosed at the time
+              of donation by the respective platform provider.
+            </p>
+            
           </div>
         </div>
       </div>
