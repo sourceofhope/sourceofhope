@@ -15,6 +15,7 @@ import {
 const TEAM_ORDER = [
   "Executive Board",
   "Director Board",
+  "EPP Summer 2026",
   "EPP Spring 2026",
   "EPP Fall 2025",
   "EPP Summer 2025",
