@@ -7,7 +7,7 @@ import { CartItem } from "@/context/StoreCartContext";
 interface CartItemsSectionProps {
   items: CartItem[];
   updateQuantity: (id: string, newQuantity: number) => void;
-  removeItem: (id: string) => void;
+  removeItem: (id: string, size?: string) => void;
   updateSize: (id: string, newSize: string) => void;
 }
 
@@ -100,7 +100,7 @@ export default function CartItemsSection({
                     </button>
                   </div>
                   <button
-                    onClick={() => removeItem(item.id)}
+                    onClick={() => removeItem(item.id, item.size)}
                     className="self-start md:hidden md:self-center p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                     aria-label="Remove item">
                     <TrashIcon className="w-6 h-6" />
@@ -112,7 +112,7 @@ export default function CartItemsSection({
               </p>
             </div>
             <button
-              onClick={() => removeItem(item.id)}
+              onClick={() => removeItem(item.id, item.size)}
               className="self-start hidden md:block md:self-center p-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
               aria-label="Remove item">
               <TrashIcon className="w-6 h-6" />

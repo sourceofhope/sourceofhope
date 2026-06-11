@@ -175,8 +175,10 @@ export function useCartActions() {
     );
   }
 
-  function removeFromCart(id: string) {
-    setCart((prev) => prev.filter((item) => item.id !== id));
+  function removeFromCart(id: string, size?: string) {
+    setCart((prev) =>
+      prev.filter((item) => !(item.id === id && (item.size || '') === (size || '')))
+    );
   }
 
   function clearCart() {
