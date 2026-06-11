@@ -1,7 +1,12 @@
-'use client';
+"use client";
 
 import { useState, useMemo } from "react";
-import { HeartIcon, CheckCircleIcon, ShieldCheckIcon, BuildingOffice2Icon } from "@heroicons/react/20/solid";
+import {
+  HeartIcon,
+  CheckCircleIcon,
+  ShieldCheckIcon,
+  BuildingOffice2Icon,
+} from "@heroicons/react/20/solid";
 import Title from "@/components/ui/Title";
 import Heading from "@/components/ui/Heading";
 import Bold from "@/components/ui/Bold";
@@ -255,7 +260,11 @@ function CustomAmountCard({ amount, onAmountChange, onJoin }: any) {
   );
 }
 
-function IndividualsMonthlySupportSection({ amount, onAmountChange, onJoin }: any) {
+function IndividualsMonthlySupportSection({
+  amount,
+  onAmountChange,
+  onJoin,
+}: any) {
   return (
     <div className="grid gap-5">
       <div className="grid gap-3">
@@ -381,7 +390,7 @@ function CompanyPlanCard({ plan, isSelected, onSelect, onJoin }: any) {
           <ul className="grid gap-2">
             {plan.makesPossible.map((line: string) => (
               <li key={line} className="flex items-start gap-2 text-sm">
-                <CheckCircleIcon className="w-5 h-5 text-green-600 shrink-0 mt-[1px]" />
+                <CheckCircleIcon className="w-5 h-5 text-green-600 shrink-0 mt-px" />
                 <span className="text-neutral-800">{line}</span>
               </li>
             ))}
@@ -477,7 +486,11 @@ function CompanyFeatureRow({ feature, plans }: any) {
   );
 }
 
-function CompanyPartnershipSection({ selectedId, onSelectId: setSelectedId, onJoin }: any) {
+function CompanyPartnershipSection({
+  selectedId,
+  onSelectId: setSelectedId,
+  onJoin,
+}: any) {
   const selectedPlan = useMemo(
     () => COMPANIES.find((p) => p.id === selectedId) ?? COMPANIES[0],
     [selectedId],
@@ -556,7 +569,7 @@ function CompanyPartnershipSection({ selectedId, onSelectId: setSelectedId, onJo
       </div>
 
       <div className="hidden lg:block overflow-x-auto">
-        <div className="min-w-[860px] grid grid-cols-[320px_repeat(3,1fr)] gap-2">
+        <div className="min-w-215 grid grid-cols-[320px_repeat(3,1fr)] gap-2">
           <div />
           {COMPANIES.map((p) => (
             <div
@@ -613,7 +626,8 @@ export default function MembersPlansSection() {
     makesPossible: string[];
   };
 
-  const [checkoutSelection, setCheckoutSelection] = useState<CheckoutSelection | null>(null);
+  const [checkoutSelection, setCheckoutSelection] =
+    useState<CheckoutSelection | null>(null);
   const [individualAmount, setIndividualAmount] = useState(75);
   const [selectedCompanyId, setSelectedCompanyId] = useState("partner");
 
