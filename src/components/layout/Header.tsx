@@ -31,7 +31,7 @@ const getHeaderLinks = (): NavLink[] => [
       { label: "EDUCATION FOR HOPE", href: "/serve/educationHope" },
       { label: "WELLNESS OF HOPE", href: "/serve/wellnessHope" },
       { label: "HOPE FOR THE OUTDOORS", href: "/serve/outdoorHope" },
-      { label: "INTERNATIONAL HOPE", href: "/serve/internationalHope" },
+      { label: "HOPE BEYOND BORDERS", href: "/serve/internationalHope" },
     ],
   },
   {
