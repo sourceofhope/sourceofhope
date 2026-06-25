@@ -100,7 +100,7 @@ export default function Footer() {
             </FooterColumn>
             <FooterColumn title="LOCATION">
               <p>
-                1108 W Parker Rd <br /> Ste 102 <br /> Plano, TX 75078
+                1108 W Parker Rd <br /> Ste 102 <br /> Plano, TX 75075
               </p>
             </FooterColumn>
             <FooterColumn title="QUICK LINKS">
