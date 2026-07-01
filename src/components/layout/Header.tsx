@@ -50,6 +50,14 @@ const getHeaderLinks = (): NavLink[] => [
   },
  //moved this to the About Label along with Team tag
 //{ label: "CONNECT", href: "/connect" },
+//moved PLANNED GIVING & QUICK DONATE labels from MEMBERS to a label of its own
+ {
+   label: "PLANNED GIVING", 
+   href: "/giving" ,
+   children: [
+    { label: "QUICK DONATE", href: "/donate"},
+   ],  
+ },
   {
     label: "MEDIA",
     href: "/media",
