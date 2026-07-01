@@ -39,14 +39,15 @@ const getHeaderLinks = (): NavLink[] => [
   },
   {
     label: "MEMBERS",
-    href: "/members",
-    children: [
-      { label: "PLANNED GIVING", href: "/giving" },
-      {
-        label: "QUICK DONATE",
-        href: "/donate",
-      },
-    ],
+    href: "/members"
+    // href: "/members",
+    // children: [
+    //   { label: "PLANNED GIVING", href: "/giving" },
+    //   {
+    //     label: "QUICK DONATE",
+    //     href: "/donate",
+    //   },
+    // ],
   },
  //moved this to the About Label along with Team tag
 //{ label: "CONNECT", href: "/connect" },
