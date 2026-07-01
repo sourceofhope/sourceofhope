@@ -21,7 +21,10 @@ const getHeaderLinks = (): NavLink[] => [
   {
     label: "ABOUT",
     href: "/about",
-    children: [{ label: "TEAM", href: "/about/team" }],
+    children: [
+      { label: "TEAM", href: "/about/team" },
+      { label: "CONNECT", href: "/connect" },
+    ],
   },
   {
     label: "SERVE",
@@ -36,16 +39,22 @@ const getHeaderLinks = (): NavLink[] => [
   },
   {
     label: "MEMBERS",
-    href: "/members",
-    children: [
-      { label: "PLANNED GIVING", href: "/giving" },
-      {
-        label: "QUICK DONATE",
-        href: "/donate",
-      },
-    ],
+    href: "/members"
+    //,
+    // children: [
+    //   { label: "PLANNED GIVING", href: "/giving" },
+    //   {
+    //     label: "QUICK DONATE",
+    //     href: "/donate",
+    //   },
+    // ],
   },
-  { label: "CONNECT", href: "/connect" },
+  
+  //{ label: "CONNECT", href: "/connect" },
+  label: "PLANNED GIVING", href: "/giving" },
+  children: [
+      { label: "QUICK DONATE", href: "/donate" },
+  ],
   {
     label: "MEDIA",
     href: "/media",
