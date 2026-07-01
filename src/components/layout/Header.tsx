@@ -21,7 +21,10 @@ const getHeaderLinks = (): NavLink[] => [
   {
     label: "ABOUT",
     href: "/about",
-    children: [{ label: "TEAM", href: "/about/team" }],
+    children: [
+      { label: "TEAM", href: "/about/team" },
+      { label: "CONNECT", href: "/connect" },
+    ],
   },
   {
     label: "SERVE",
@@ -45,7 +48,8 @@ const getHeaderLinks = (): NavLink[] => [
       },
     ],
   },
-  { label: "CONNECT", href: "/connect" },
+ //moved this to the About Label along with Team tag
+//{ label: "CONNECT", href: "/connect" },
   {
     label: "MEDIA",
     href: "/media",
