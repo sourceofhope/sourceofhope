@@ -99,14 +99,14 @@ export default function ServingHope() {
               </li>
             </ul>
           </article>
-          <!-- added this on 07/02/26 --?
-          <ServeEventsSection />
-
+          
           <AnchorButton
             text="SIGN UP"
             href="https://www.eventbrite.com/o/quynh-chau-stone-92264017613"
             className="md:hidden w-fit"
           />
+          <!-- added this on 07/02/26 -->
+          <ServeEventsSection />
         </article>
 
         <article className="grid gap-5">
