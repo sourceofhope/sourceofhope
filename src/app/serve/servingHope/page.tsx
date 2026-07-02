@@ -63,8 +63,7 @@ export default function ServingHope() {
             food to partner organizations, these programs aim to spread
             compassion, dignity, and hope.
           </p>
-        //added this on 07/02/26
-          <ServeEventsSection />
+        
           <article className="bg-neutral-50 rounded-2xl shadow-sm p-5 grid gap-2">
             <Heading className="border-b-2 border-neutral-300 pb-2">
               Why Volunteer With Us?
@@ -100,6 +99,8 @@ export default function ServingHope() {
               </li>
             </ul>
           </article>
+          <!-- added this on 07/02/26 --?
+          <ServeEventsSection />
 
           <AnchorButton
             text="SIGN UP"
@@ -212,9 +213,8 @@ export default function ServingHope() {
             </div>
           </div>
         </article>
-      </section>
-     
-    <ServeEventsSection />
+      </section>    
+    
     </>
   );
 }
