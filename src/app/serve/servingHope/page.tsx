@@ -213,7 +213,7 @@ export default function ServingHope() {
           </div>
         </article>
       </section>
-      //added this on 07/02/26
+      <!-- added this on 07/02/26 -->
     <ServeEventsSection />
     </>
   );
