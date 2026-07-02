@@ -14,7 +14,7 @@ import {
 } from "@heroicons/react/20/solid";
 import Block from "@/components/layout/Block";
 import { ASSET_VERSION } from "@/lib/environment";
-//added the following import on 07/02/26 for dispaly of Recurring Events 
+//added the following import on 07/02/26 for display of Recurring Events 
 import ServeEventsSection from "@/components/serve/ServeEventsSection";
 
 const CANONICAL_URL = "https://thesourceofhope.org/serve/serving-hope";
@@ -213,7 +213,7 @@ export default function ServingHope() {
           </div>
         </article>
       </section>
-      <!-- added this on 07/02/26 -->
+     
     <ServeEventsSection />
     </>
   );
