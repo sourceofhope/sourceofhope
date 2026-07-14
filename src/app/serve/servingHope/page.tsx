@@ -14,6 +14,8 @@ import {
 } from "@heroicons/react/20/solid";
 import Block from "@/components/layout/Block";
 import { ASSET_VERSION } from "@/lib/environment";
+//added the following import on 07/02/26 for display of Recurring Events 
+import ServeEventsSection from "@/components/serve/ServeEventsSection";
 
 const CANONICAL_URL = "https://thesourceofhope.org/serve/serving-hope";
 
@@ -61,7 +63,7 @@ export default function ServingHope() {
             food to partner organizations, these programs aim to spread
             compassion, dignity, and hope.
           </p>
-
+        
           <article className="bg-neutral-50 rounded-2xl shadow-sm p-5 grid gap-2">
             <Heading className="border-b-2 border-neutral-300 pb-2">
               Why Volunteer With Us?
@@ -97,12 +99,14 @@ export default function ServingHope() {
               </li>
             </ul>
           </article>
-
+          
           <AnchorButton
             text="SIGN UP"
             href="https://www.eventbrite.com/o/quynh-chau-stone-92264017613"
             className="md:hidden w-fit"
           />
+          
+          <ServeEventsSection />
         </article>
 
         <article className="grid gap-5">
@@ -209,7 +213,8 @@ export default function ServingHope() {
             </div>
           </div>
         </article>
-      </section>
+      </section>    
+    
     </>
   );
 }

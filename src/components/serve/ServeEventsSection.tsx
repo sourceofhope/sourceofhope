@@ -13,8 +13,8 @@ const ASSET_VERSION = "v2";
 
 export default async function ServeEventsSection() {
   const [majorEvents, recurringEvents] = await Promise.all([
-    fetchFeaturedEvents(12),
-    fetchRecurringEvents(3),
+    fetchFeaturedEvents(6),
+    fetchRecurringEvents(12),
   ]);
 
   return (
@@ -74,6 +74,7 @@ function MajorEventCard({ post }: { post: SanityEvent }) {
         year: "numeric",
         hour: "numeric",
         minute: "2-digit",
+        timeZone: "America/Chicago",
       })
     : "Date TBA";
 
@@ -136,6 +137,7 @@ function CarouselCard({ post }: { post: SanityEvent }) {
         year: "numeric",
         hour: "numeric",
         minute: "2-digit",
+        timeZone: "America/Chicago",
       })
     : "Date TBA";
 
