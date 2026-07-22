@@ -45,7 +45,7 @@ export default function PlannedGivingPage() {
         .join('\n');
 
       // Send to the same endpoint as the React component
-      const response = await fetch('https://www.thesourceofhope.org/api/email/send', {
+      const response = await fetch('/api/email/send', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
