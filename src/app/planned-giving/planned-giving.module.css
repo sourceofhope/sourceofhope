@@ -152,6 +152,7 @@
 /* Hero Section */
 .hero {
   padding: 64px 0 72px;
+  margin: 0;           
 }
 
 .heroGrid {
@@ -255,8 +256,11 @@
 }
 
 .phInner {
+  position: relative;    /* ← ADD THIS */
   text-align: center;
   opacity: 0.8;
+  width: 100%;
+  height: 100%;
 }
 
 .photo svg {
@@ -724,7 +728,7 @@
   flex-wrap: wrap;
   gap: 12px;
 }
-
+/*removed the animation effect on impact section as a separate JavaScript for the .in class when elements come into viewwas to be written for that*/
 /* Reveal Animation */
 .reveal {
   opacity: 0;
@@ -790,10 +794,6 @@
 }
 
 @media (max-width: 640px) {
-  body {
-    font-size: 16px;
-  }
-
   .wrap {
     padding: 0 20px;
   }
@@ -826,7 +826,7 @@
     grid-template-columns: 1fr;
   }
 
-  h1 {
+  .hero h1 {
     font-size: 46px;
   }
 
@@ -838,3 +838,22 @@
     padding: 44px 0;
   }
 }
+/*
+.storyMedia {
+  position: relative;           
+  border-radius: 24px;
+  overflow: hidden;
+  aspect-ratio: 4 / 4.4;
+  box-shadow: var(--shadow-md);
+}*/
+
+.storyMedia {
+  position: relative;
+  border-radius: 24px; 
+  overflow: hidden;
+  width: 100%;
+               
+  aspect-ratio: 1/ 1;           
+  box-shadow: var(--shadow-md);
+}
+
