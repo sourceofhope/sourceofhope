@@ -1,8 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styles from './planned-giving.module.css';
 import Image from "next/image";
+import { useHeaderContext } from "@/context/HeaderContext";
+
 
 export default function PlannedGivingPage() {
   const [status, setStatus] = useState('IDLE');
@@ -15,6 +17,15 @@ export default function PlannedGivingPage() {
     infoCheck: false,
     contactCheck: false,
   });
+
+  //added this on 07/28/2026 to dispaly the header correctly on this page
+  const header = useHeaderContext();
+  const setIsBlocking = header?.setIsBlocking;
+
+  useEffect(() => {
+    setIsBlocking?.(true);
+    return () => setIsBlocking?.(false);   // reset on navigate away
+  }, [setIsBlocking]);
 
   // Email validation
   const validateEmail = (email: string) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
