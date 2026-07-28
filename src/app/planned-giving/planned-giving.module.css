@@ -151,8 +151,9 @@
 
 /* Hero Section */
 .hero {
-  padding: 64px 0 72px;
-  margin: 0;           
+  padding: 104px 0 72px;   /* 80px md:h-20 header + 24px breathing room */
+  margin: 0;
+}        
 }
 
 .heroGrid {
@@ -803,8 +804,8 @@
   }
 
   .hero {
-    padding: 44px 0 52px;
-  }
+  padding: 84px 0 52px;    /* 60px h-15 mobile header + 24px */
+}
 
   .impactGrid {
     grid-template-columns: 1fr;
