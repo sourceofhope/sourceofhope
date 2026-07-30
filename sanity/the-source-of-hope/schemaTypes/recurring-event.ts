@@ -20,6 +20,11 @@ export const recurringEventType = defineType({
       name: 'date',
       title: 'Date',
       type: 'datetime',
+      //added the option for timezone on 07/08/26 
+      options: {
+        displayTimeZone: 'America/Chicago',
+        allowTimeZoneSwitch: false,
+      }, 
       validation: (Rule) => Rule.required(),
     }),
     defineField({
