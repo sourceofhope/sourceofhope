@@ -31,6 +31,7 @@ const COMPANIES = [
     recognition: [
       "Partner listing on website (optional)",
       "Quarterly partner impact update (optional)",
+      "Bronze sponsor pin",
     ],
     includes: {
       "Sustains monthly meal outreach": true,
@@ -54,6 +55,7 @@ const COMPANIES = [
       "Website partner listing (optional)",
       "Spotlight story (optional)",
       "Priority coordination for volunteer participation (optional)",
+      "Silver sponsor pin",
     ],
     includes: {
       "Sustains monthly meal outreach": true,
@@ -77,6 +79,7 @@ const COMPANIES = [
       "Website partner listing (optional)",
       "Spotlight story (optional)",
       "Co-hosted volunteer day (optional)",
+      "Gold sponsor pin",
     ],
     includes: {
       "Sustains monthly meal outreach": true,
