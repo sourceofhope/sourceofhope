@@ -349,7 +349,7 @@ export default function PlannedGivingPage() {
               <h3 className="text-lg font-bold text-blue-900 mb-3">Explore Your Legacy</h3>
               <p className="text-sm text-gray-600 max-w-xs mx-auto">Think about the impact you'd like to leave for future generations.</p>
               {/* Connector line */}
-              <div className="hidden lg:block absolute top-7 left-full w-12 h-0.5 bg-gradient-to-r from-blue-400 to-blue-300"></div>
+              {/* <div className="hidden lg:block absolute top-7 left-full w-12 h-0.5 bg-gradient-to-r from-blue-400 to-blue-300"></div> */}
             </div>
 
             {/* Step 2 */}
@@ -358,7 +358,7 @@ export default function PlannedGivingPage() {
               <h3 className="text-lg font-bold text-blue-900 mb-3">Have a Conversation</h3>
               <p className="text-sm text-gray-600 max-w-xs mx-auto">Reach out to us confidentially. We'll answer your questions and explain your options.</p>
               {/* Connector line */}
-              <div className="hidden lg:block absolute top-7 left-full w-12 h-0.5 bg-gradient-to-r from-blue-400 to-blue-300"></div>
+              {/* <div className="hidden lg:block absolute top-7 left-full w-12 h-0.5 bg-gradient-to-r from-blue-400 to-blue-300"></div> */}
             </div>
 
             {/* Step 3 */}
@@ -367,7 +367,7 @@ export default function PlannedGivingPage() {
               <h3 className="text-lg font-bold text-blue-900 mb-3">Meet With Your Attorney</h3>
               <p className="text-sm text-gray-600 max-w-xs mx-auto">Your attorney can help you include us in your will, trust, or estate plans.</p>
               {/* Connector line */}
-              <div className="hidden lg:block absolute top-7 left-full w-12 h-0.5 bg-gradient-to-r from-blue-400 to-blue-300"></div>
+              {/* <div className="hidden lg:block absolute top-7 left-full w-12 h-0.5 bg-gradient-to-r from-blue-400 to-blue-300"></div> */}
             </div>
 
             {/* Step 4 */}
