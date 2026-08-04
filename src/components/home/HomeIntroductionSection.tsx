@@ -73,15 +73,15 @@ export default function HomeIntroductionSection() {
           THE SOURCE OF HOPE
         </h2>
         <h2 className="text-neutral-50 font-urbanist text-md md:text-xlg font-bold line-clamp-2">
-          EMPOWERING AND PROVIDING HOPE THROUGH HEALTH AND WELLNESS
+          EMPOWERING AND PROVIDING HOPE THROUGH EDUCATION, HEALTH, AND WELLNESS
         </h2>
         <p className="hidden md:block text-neutral-300 text-justify text-sm">
-          We are a non-profit organization dedicated to providing holistic
-          health and wellness, education, and support to individuals in need.
+          We are a nonprofit organization dedicated to providing education, holistic
+          health and wellness, and support to individuals in need.
           Our team of volunteers is committed to serving the DFW community,
           including at-risk families, veterans, and first responders. Your
-          donation helps us ensure that those in need have access to health,
-          safety, and resources to live healthier, fulfilling lives.
+          donation helps ensure that those in need have access to essential health services,
+          safety resources, and the support they need to live healthier, more fulfilling lives.
         </p>
         <div className="flex gap-5 flex-col md:flex-row">
           <LinkButton className="w-fit" href="/donate" text="DONATE NOW" />
