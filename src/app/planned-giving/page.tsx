@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import Image from "next/image";
 import { useHeaderContext } from "@/context/HeaderContext";
+import PageHeader from "@/components/layout/PageHeader";
 //added this import to replace all the svg tags in the file
 import { 
   HeartIcon,
