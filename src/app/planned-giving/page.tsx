@@ -17,7 +17,6 @@ import {
 } from "@heroicons/react/24/solid";
 import { Metadata } from "next";
 import FormSection from "@/components/planned-giving/FormSection";
-import { useHeaderContext } from "@/context/HeaderContext";
 
 export const metadata: Metadata = {
 	title: "Planned Giving | The Source of Hope",
@@ -36,10 +35,6 @@ export const metadata: Metadata = {
 			"Leave a legacy of hope. Explore planned giving options with The Source of Hope and ensure your values live on for generations.",
 	},
 };
-
-const header = useHeaderContext();
-const setIsBlocking = header?.setIsBlocking;
-setIsBlocking?.(true);
 
 export default function PlannedGivingPage() {
 	return (
