@@ -117,8 +117,26 @@ export default function PlannedGivingPage() {
 
   return (
     <>
+		{/* added this function to keep consistent header image across all pages. */}
+
+    <>
+      <PageHeader src="/v2/servingHope/Carousel-7.webp">
+        <h2 className="font-bold text-neutral-50 text-4xl md:text-5xl">
+          PLANNED GIVING
+        </h2>
+        <p className="font-semibold text-neutral-200 text-sm">
+          LEAVE A LASTING LEGACY
+        </p>
+      </PageHeader>
+
+      {/* <GivingIntroSection />
+      <GivingFAQSection />
+      <GivingContactSection /> */}
+    </>
       {/* HERO SECTION */}
-      <section className="bg-white px-7 md:px-0 py-20 md:py-28">
+      {/* <section className="bg-white px-7 md:px-0 py-20 md:py-28"> */}
+		  {/* changed this to reduce the top padding between sections */}
+        <section className="bg-white px-7 md:px-0 pt-0 pb-20 md:pb-28">
         <div className="max-w-5xl mx-auto px-7">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-14 md:gap-14 items-center">
             <div>
@@ -501,7 +519,7 @@ export default function PlannedGivingPage() {
             <aside className="bg-gradient-to-b from-blue-900 to-blue-800 text-blue-50 rounded-2xl p-8 flex flex-col justify-center relative overflow-hidden">
               <span className="text-8xl leading-none text-teal-300 opacity-95 mb-2">&ldquo;</span>
               <blockquote className="text-xl font-medium leading-relaxed text-white mb-6">Give a man a fish and you feed him for a day. Teach him how to fish and you feed him for a lifetime.</blockquote>
-              <cite className="block text-sm text-blue-200 tracking-wide font-normal">&mdash; Traditional proverb</cite>
+              <cite className="block text-sm text-blue-200 tracking-wide font-normal">&mdash; Chinese proverb</cite>
               {/* <svg className="absolute right-0 bottom-0 w-32 h-32 text-teal-400 opacity-20" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M20 4c-9 0-15 5-15 13 0 1 .1 2 .3 3 .8-2.4 2.3-4.3 4.4-5.6C7 16 6 14 6 14s3 1 5-1c1.6-1.6 2-4 2-4s2.2.4 4-1.4C18.6 6 20 4 20 4Z"/>
               </svg> */}
