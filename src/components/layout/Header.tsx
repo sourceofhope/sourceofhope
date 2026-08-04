@@ -53,7 +53,7 @@ const getHeaderLinks = (): NavLink[] => [
 //{ label: "CONNECT", href: "/connect" },
 //moved PLANNED GIVING & QUICK DONATE labels from MEMBERS to a label of its own
  {
-   label: "PLANNED GIVING", 
+   label: "GIVING", 
    // changed from /giving to /planned-giving to match the new page route
    href: "/planned-giving" ,
    children: [
