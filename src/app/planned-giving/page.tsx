@@ -66,9 +66,6 @@ function HeroSection() {
 			<div className="max-w-5xl mx-auto px-7">
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-14 md:gap-14 items-center">
 					<div>
-						<p className="text-sm text-center font-bold tracking-widest text-blue-600 uppercase mb-4">
-							Planned Giving
-						</p>
 						<h1 className="text-5xl md:text-7xl font-bold text-blue-900 leading-tight mb-6">
 							<span className="whitespace-nowrap">Your Legacy.</span>
 							<br />
