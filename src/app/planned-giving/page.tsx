@@ -17,6 +17,7 @@ import {
 } from "@heroicons/react/24/solid";
 import { Metadata } from "next";
 import FormSection from "@/components/planned-giving/FormSection";
+import HeaderBlocker from "@/components/layout/HeaderBlocker";
 
 export const metadata: Metadata = {
 	title: "Planned Giving | The Source of Hope",
@@ -48,6 +49,7 @@ export default function PlannedGivingPage() {
 						LEAVE A LASTING LEGACY
 					</p>
 				</PageHeader>
+				<HeaderBlocker />
 			</>
 
 			<HeroSection />

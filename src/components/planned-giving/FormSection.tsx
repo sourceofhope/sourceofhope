@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 
 import { HeartIcon, SparklesIcon } from "@heroicons/react/24/solid";
-import { useHeaderContext } from "@/context/HeaderContext";
 
 export default function FormSection() {
 	const [status, setStatus] = useState("IDLE");
@@ -17,15 +16,6 @@ export default function FormSection() {
 		infoCheck: false,
 		contactCheck: false,
 	});
-
-	//added this on 07/28/2026 to display the header correctly on this page
-	const header = useHeaderContext();
-	const setIsBlocking = header?.setIsBlocking;
-
-	useEffect(() => {
-		setIsBlocking?.(true);
-		return () => setIsBlocking?.(false); // reset on navigate away
-	}, [setIsBlocking]);
 
 	// Email validation
 	const validateEmail = (email: string) =>
