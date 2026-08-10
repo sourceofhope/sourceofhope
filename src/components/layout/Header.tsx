@@ -60,6 +60,8 @@ const getHeaderLinks = (): NavLink[] => [
     { label: "QUICK DONATE", href: "/donate"},
    ],  
  },
+  //  added Events onto the main tab for the header navigation for easy access to the events page 08/05/26
+ { label: "EVENTS", href: "/events" },
   {
     label: "MEDIA",
     href: "/media",
