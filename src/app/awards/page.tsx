@@ -164,29 +164,29 @@ const timelineItems = [
 
 const galleryItems = [
 	{
-		src: "/v2/core/awards/awards-2024-uplifted.webp",
+		src: "/v2/core/awards-2024-uplifted.webp",
 		alt: "Recognized among Asian American community leaders",
 		year: "2024 · Uplifted Conference",
 		title: "Recognized among Asian American community leaders",
 		position: "50% 24%",
 	},
 	{
-		src: "/v2/core/awards/awards-2021-humanitarian.webp",
+		src: "/v2/core/awards-2021-humanitarian.webp",
 		alt: "“You Can Live Again” — honored for humanitarian service",
 		year: "2021 · Humanitarian Award",
 		title: "“You Can Live Again” — honored for humanitarian service",
 		position: "68% 42%",
 	},
 	{
-		src: "/v2/core/awards/awards-2020-presidential.webp",
+		src: "/v2/core/awards-2020-presidential.webp",
 		alt: "With the framed presidential certificate and medal",
 		year: "2020 · Presidential Volunteer Service Award",
 		title: "With the framed presidential certificate and medal",
 		position: "50% 40%",
 	},
 	{
-		frontSrc: "/v2/core/awards/awards-2020-each-moment-1.webp",
-		backSrc: "/v2/core/awards/awards-2020-each-moment-2.webp",
+		frontSrc: "/v2/core/awards-2020-each-moment-1.webp",
+		backSrc: "/v2/core/awards-2020-each-moment-2.webp",
 		alt: "Quynh Chau Stone at the Each Moment Matters Award",
 		year: "2020 · Each Moment Matters Award",
 		title: "Recognized with the Each Moment Matters Award",
@@ -196,15 +196,15 @@ const galleryItems = [
 		flip: true,
 	},
 	{
-		src: "/v2/core/awards/awards-2019-spirit.webp",
+		src: "/v2/core/awards-2019-spirit.webp",
 		alt: "Spirit Award — for community spirit and volunteer leadership",
 		year: "2019 · Junior League of Collin County",
 		title: "Spirit Award — for community spirit and volunteer leadership",
 		position: "50% 24%",
 	},
 	{
-		frontSrc: "/v2/core/awards/awards-2017-beyond-boundaries-1.webp",
-		backSrc: "/v2/core/awards/awards-2017-beyond-boundaries-2.webp",
+		frontSrc: "/v2/core/awards-2017-beyond-boundaries-1.webp",
+		backSrc: "/v2/core/awards-2017-beyond-boundaries-2.webp",
 		alt: "Beyond Boundaries Award at GDAACC Annual Awards 2017 with Governor Greg Abbott",
 		year: "2017 · GDAACC Annual Awards",
 		title: "Beyond Boundaries Award — presented alongside Governor Greg Abbott",
@@ -215,29 +215,29 @@ const galleryItems = [
 		flip: true,
 	},
 	{
-		src: "/v2/core/awards/awards-2016-women-that-soar.webp",
+		src: "/v2/core/awards-2016-women-that-soar.webp",
 		alt: "Accepting the Community Outreach Award on stage",
 		year: "2016 · Women That Soar",
 		title: "Accepting the Community Outreach Award on stage",
 		position: "50% 38%",
 	},
 	{
-		src: "/v2/core/awards/awards-2014-community-leadership.webp",
+		src: "/v2/core/awards-2014-community-leadership.webp",
 		alt: "2014 TCAACC Annual Banquet — Community Leadership Award",
 		year: "2014 · Community Leadership Award",
 		title: "Tarrant County Asian American Chamber of Commerce Annual Banquet",
 		position: "50% 40%",
 	},
 	{
-		src: "/v2/core/awards/awards-2018-migrant-women.webp",
+		src: "/v2/core/awards-2018-migrant-women.webp",
 		alt: "Celebrating the book's release",
 		year: "2018 · 50 Inspiring Voices of Migrant Women",
 		title: "Celebrating the book's release",
 		position: "50% 22%",
 	},
 	{
-		frontSrc: "/v2/core/awards/awards-2018-groundbreaker-1.webp",
-		backSrc: "/v2/core/awards/awards-2018-groundbreaker-2.webp",
+		frontSrc: "/v2/core/awards-2018-groundbreaker-1.webp",
+		backSrc: "/v2/core/awards-2018-groundbreaker-2.webp",
 		alt: "Accepting the Against The Grain Groundbreaker Award on stage",
 		year: "2018 · Against The Grain",
 		title: "Groundbreaker Award — accepting on stage",
@@ -248,8 +248,8 @@ const galleryItems = [
 		flip: true,
 	},
 	{
-		frontSrc: "/v2/core/awards/awards-2018-inspirique-1.webp",
-		backSrc: "/v2/core/awards/awards-2018-inspirique-2.webp",
+		frontSrc: "/v2/core/awards-2018-inspirique-1.webp",
+		backSrc: "/v2/core/awards-2018-inspirique-2.webp",
 		alt: "Quynh Chau Stone at the Inspirique Circle of Light Awards red carpet",
 		year: "2018 · Inspirique Circle of Light",
 		title: "Honored in Beverly Hills, California",
@@ -266,7 +266,7 @@ export default function AwardsPage() {
 	return (
 		<>
         <PageHeader
-        src="/v2/core/awards/awards-humanitarian-stage-light.webp"        
+        src="/v2/core/awards-humanitarian-stage-light.webp"        
         >
         <h2 className="font-bold text-neutral-50 text-4xl md:text-5xl">
             AWARDS &amp; RECOGNITION
@@ -324,7 +324,7 @@ function HeroSection() {
 
 					<div className="relative aspect-[4/5] rounded-3xl overflow-hidden border border-white/15 shadow-2xl bg-blue-900">
 						<Image
-							src="/v2/core/awards/awards-hero.webp"
+							src="/v2/core/awards-hero.webp"
 							alt="Quynh Chau Stone holding her 2020 Presidential Volunteer Service Award medal beside the framed certificate"
 							fill
 							sizes="(max-width: 768px) 100vw, 40vw"
