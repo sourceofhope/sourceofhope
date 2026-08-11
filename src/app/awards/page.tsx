@@ -162,7 +162,33 @@ const timelineItems = [
 	},
 ];
 
-const galleryItems = [
+type BaseGalleryItem = {
+	alt: string;
+	year: string;
+	title: string;
+	position: string;
+};
+
+type SingleGalleryItem = BaseGalleryItem & {
+	src: string;
+	flip?: false;
+};
+
+type FlipGalleryItem = BaseGalleryItem & {
+	frontSrc: string;
+	backSrc: string;
+	backTitle?: string;
+	backYear?: string;
+	backPosition?: string;
+	containBack?: boolean;
+	flip: true;
+};
+
+type GalleryItem = SingleGalleryItem | FlipGalleryItem;
+
+
+
+const galleryItems: GalleryItem[] = [
 	{
 		src: "/v2/core/awards-2024-uplifted.webp",
 		alt: "Recognized among Asian American community leaders",
@@ -520,10 +546,10 @@ function RecognitionGallery() {
 	);
 }
 
-type GalleryItem = (typeof galleryItems)[number];
+//type GalleryItem = (typeof galleryItems)[number];
 
-function GalleryCard({ item }: { item: GalleryItem }) {
-	if (!("src" in item)) return null;
+function GalleryCard({ item }: { item: SingleGalleryItem }) {
+	//if (!("src" in item)) return null;
 
 	return (
 		<figure className="relative aspect-[4/3] rounded-2xl overflow-hidden border border-gray-200 shadow-sm bg-blue-950">
@@ -545,8 +571,8 @@ function GalleryCard({ item }: { item: GalleryItem }) {
 	);
 }
 
-function FlipGalleryCard({ item }: { item: GalleryItem }) {
-	if (!("frontSrc" in item) || !item.backSrc) return null;
+function FlipGalleryCard({ item }: { item: FlipGalleryItem }) {
+	//if (!("frontSrc" in item) || !item.backSrc) return null;
 
 	return (
 		<div className="group relative aspect-[4/3] [perspective:1200px]">
