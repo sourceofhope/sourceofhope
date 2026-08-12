@@ -37,7 +37,7 @@ export const metadata: Metadata = {
 const timelineItems = [
 	{
 		year: "2024",
-		title: "Global Visionaries Convention — Champion of Change",
+		title: "Global Visionaries Convention - Champion of Change",
 		description:
 			"Recognized as a Champion of Change for sustained community leadership and advocacy.",
 		tag: "Champion of Change",
@@ -45,7 +45,7 @@ const timelineItems = [
 	},
 	{
 		year: "2024",
-		title: "Asian Hustle Network — Unsung Hero Award",
+		title: "Asian Hustle Network - Unsung Hero Award",
 		description: "Honored for quiet, tireless service to the community.",
 	},
 	{
@@ -81,7 +81,7 @@ const timelineItems = [
 	},
 	{
 		year: "2018",
-		title: "Featured & spotlighted — Women of All Cultures",
+		title: "Featured & spotlighted - Women of All Cultures",
 		description:
 			"Featured on PullCorpMedia’s platform during Women’s History Month, and on the 10-year anniversary of the Women That Soar Award, aired across TV stations in 12 major states.",
 	},
@@ -89,11 +89,11 @@ const timelineItems = [
 		year: "2018",
 		title: "“50 Inspiring Voices of Migrant Women”",
 		description:
-			"Featured in the book by Mireya Sula — foreword by Seema Malhotra, MP, with a contribution from Mary Ann Thompson Frenk.",
+			"Featured in the book by Mireya Sula - foreword by Seema Malhotra, MP, with a contribution from Mary Ann Thompson Frenk.",
 	},
 	{
 		year: "2018",
-		title: "Against The Grain — Groundbreaker Award",
+		title: "Against The Grain - Groundbreaker Award",
 		description:
 			"Honored for excellence in her career path, leadership that paved the way for others, and a servant’s heart for the community.",
 	},
@@ -113,7 +113,7 @@ const timelineItems = [
 		year: "2017",
 		title: "Audrey Kaplan Inspiring Women Award",
 		description:
-			"Southwest Jewish Congress — featured in The Dallas Morning News.",
+			"Southwest Jewish Congress - featured in The Dallas Morning News.",
 	},
 	{
 		year: "2016",
@@ -147,12 +147,12 @@ const timelineItems = [
 	},
 	{
 		year: "2013",
-		title: "GPCC — nominated in four categories",
+		title: "GPCC - nominated in four categories",
 		description: "Greater Plano Chamber of Commerce recognition.",
 	},
 	{
 		year: "2011",
-		title: "Plano Profiles — “Women in Business”",
+		title: "Plano Profiles - “Women in Business”",
 		description: "Featured in the magazine’s Women in Business edition.",
 	},
 	{
@@ -198,9 +198,9 @@ const galleryItems: GalleryItem[] = [
 	},
 	{
 		src: "/v2/core/awards-2021-humanitarian.webp",
-		alt: "“You Can Live Again” — honored for humanitarian service",
+		alt: "“You Can Live Again” - honored for humanitarian service",
 		year: "2021 · Humanitarian Award",
-		title: "“You Can Live Again” — honored for humanitarian service",
+		title: "“You Can Live Again” - honored for humanitarian service",
 		position: "68% 42%",
 	},
 	{
@@ -223,9 +223,9 @@ const galleryItems: GalleryItem[] = [
 	},
 	{
 		src: "/v2/core/awards-2019-spirit.webp",
-		alt: "Spirit Award — for community spirit and volunteer leadership",
+		alt: "Spirit Award - for community spirit and volunteer leadership",
 		year: "2019 · Junior League of Collin County",
-		title: "Spirit Award — for community spirit and volunteer leadership",
+		title: "Spirit Award - for community spirit and volunteer leadership",
 		position: "50% 24%",
 	},
 	{
@@ -233,7 +233,7 @@ const galleryItems: GalleryItem[] = [
 		backSrc: "/v2/core/awards-2017-beyond-boundaries-2.webp",
 		alt: "Beyond Boundaries Award at GDAACC Annual Awards 2017 with Governor Greg Abbott",
 		year: "2017 · GDAACC Annual Awards",
-		title: "Beyond Boundaries Award — presented alongside Governor Greg Abbott",
+		title: "Beyond Boundaries Award - presented alongside Governor Greg Abbott",
 		backTitle: "With Governor Greg Abbott and the State of Texas recognition",
 		backYear: "2017 · Beyond Boundaries",
 		position: "50% 42%",
@@ -249,7 +249,7 @@ const galleryItems: GalleryItem[] = [
 	},
 	{
 		src: "/v2/core/awards-2014-community-leadership.webp",
-		alt: "2014 TCAACC Annual Banquet — Community Leadership Award",
+		alt: "2014 TCAACC Annual Banquet - Community Leadership Award",
 		year: "2014 · Community Leadership Award",
 		title: "Tarrant County Asian American Chamber of Commerce Annual Banquet",
 		position: "50% 40%",
@@ -266,7 +266,7 @@ const galleryItems: GalleryItem[] = [
 		backSrc: "/v2/core/awards-2018-groundbreaker-2.webp",
 		alt: "Accepting the Against The Grain Groundbreaker Award on stage",
 		year: "2018 · Against The Grain",
-		title: "Groundbreaker Award — accepting on stage",
+		title: "Groundbreaker Award - accepting on stage",
 		backYear: "2018 · Groundbreaker Award",
 		backTitle: "Presented alongside fellow honorees",
 		position: "50% 20%",
@@ -291,15 +291,14 @@ const galleryItems: GalleryItem[] = [
 export default function AwardsPage() {
 	return (
 		<>
-        <PageHeader
-        src="/v2/core/awards-humanitarian-stage-light.webp"        
+         <PageHeader
+        src="/v2/core/awards-humanitarian-stage-light.webp"
+        className="!h-[340px] md:!h-[420px] lg:!h-[480px] xl:!h-[520px]"
         >
         <h2 className="font-bold text-neutral-50 text-4xl md:text-5xl">
             AWARDS &amp; RECOGNITION
         </h2>
-        <p className="font-semibold text-neutral-200 text-sm">
-            A LEGACY OF LEADERSHIP
-        </p>
+        
         </PageHeader>
 
 			<HeroSection />
@@ -318,16 +317,14 @@ function HeroSection() {
 			<div className="max-w-6xl mx-auto px-7">
 				<div className="grid grid-cols-1 md:grid-cols-[1.15fr_.85fr] gap-12 md:gap-14 items-center py-16 md:py-20">
 					<div>
-						<p className="text-sm uppercase tracking-[0.18em] font-semibold text-teal-300">
-							Awards &amp; Recognition
-						</p>
+						
 						<h1 className="text-5xl md:text-7xl font-bold leading-tight mt-5 mb-4">
 							A Legacy of
 							<br />
 							<span className="text-teal-300">Leadership</span>
 						</h1>
 						<p className="text-xl md:text-2xl italic text-teal-300 mb-6">
-							A lifetime of impact — earned one community at a time.
+							A lifetime of impact - earned one community at a time.
 						</p>
 						<p className="text-base text-blue-100 max-w-2xl mb-4">
 							For more than a decade, The Source of Hope and our president,{" "}
@@ -517,7 +514,7 @@ function RecognitionTimeline() {
 					<p className="text-sm md:text-[15px] text-blue-100 leading-relaxed">
 						Quynh Chau Stone was also nominated to serve on an exclusive{" "}
 						<strong className="text-white">City of Dallas board</strong> to
-						develop the Asian American Cultural Center of Dallas — endorsed by
+						develop the Asian American Cultural Center of Dallas - endorsed by
 						Mayor Mike Rawlings and Deputy Mayor Pro-Tem Monica Alonzo.
 					</p>
 				</div>
@@ -678,7 +675,7 @@ function RecognitionDetails() {
 							<DetailItem
 								icon={<BuildingOfficeIcon className="w-5 h-5" />}
 								title="City of Dallas Board Nomination"
-								text="Nominated to help develop the Asian American Cultural Center of Dallas — endorsed by Mayor Mike Rawlings and Deputy Mayor Pro-Tem Monica Alonzo."
+								text="Nominated to help develop the Asian American Cultural Center of Dallas - endorsed by Mayor Mike Rawlings and Deputy Mayor Pro-Tem Monica Alonzo."
 								accent
 							/>
 						</ul>
@@ -692,7 +689,7 @@ function RecognitionDetails() {
 							<HeartIcon className="w-7 h-7" />
 						</div>
 						<p className="text-sm md:text-base text-gray-700 leading-relaxed mb-5">
-							Awards are an honor — but our greatest achievement is the impact
+							Awards are an honor - but our greatest achievement is the impact
 							we create together. Every volunteer, donor, partner, and
 							supporter plays a vital role in bringing hope, healing, and
 							opportunity to our community.
@@ -752,7 +749,7 @@ function CallToAction() {
 						</div>
 						<div>
 							<h2 className="text-2xl md:text-3xl font-bold mb-2">
-								Together, we are creating lasting hope — one community at a
+								Together, we are creating lasting hope - one community at a
 								time.
 							</h2>
 							<p className="text-sm md:text-base text-blue-100">
@@ -763,7 +760,7 @@ function CallToAction() {
 					</div>
 
 					<a
-						href="/get-involved"
+						href="/members"
 						className="bg-white text-blue-900 px-8 py-3.5 rounded-full font-bold text-sm whitespace-nowrap hover:-translate-y-0.5 hover:shadow-lg transition-all"
 					>
 						Get involved
