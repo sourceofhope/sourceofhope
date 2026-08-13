@@ -16,6 +16,7 @@ const TEAM_ORDER = [
   "Executive Board",
   "Director Board",
   "EPP Summer 2026",
+  "Intern Summer 2026",
   "EPP Spring 2026",
   "EPP Fall 2025",
   "EPP Summer 2025",
@@ -24,6 +25,9 @@ const TEAM_ORDER = [
   "EPP Fall 2024",
   "EPP Summer 2024",
   "EPP Spring 2024",
+  "EPP Summer 2023",
+  "EPP Spring 2023",
+  "Chief of Staff 2017-2023",
 ];
 
 export const metadata: Metadata = {
