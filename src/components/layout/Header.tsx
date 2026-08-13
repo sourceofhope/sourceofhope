@@ -62,6 +62,8 @@ const getHeaderLinks = (): NavLink[] => [
  },
   //  added Events onto the main tab for the header navigation for easy access to the events page 08/05/26
  { label: "EVENTS", href: "/events" },
+  //  added Awards onto the main tab for the header navigation for easy access to the events page 08/10/26
+ { label: "AWARDS", href: "/awards" },
   {
     label: "MEDIA",
     href: "/media",
