@@ -148,7 +148,7 @@ const timelineItems = [
 	{
 		year: "2013",
 		title: "GPCC - nominated in four categories",
-		description: "Greater Plano Chamber of Commerce recognition.",
+		description: "Grand Prairie Chamber of Commerce recognition.",
 	},
 	{
 		year: "2011",
@@ -228,6 +228,41 @@ const galleryItems: GalleryItem[] = [
 		title: "Spirit Award - for community spirit and volunteer leadership",
 		position: "50% 24%",
 	},
+    {
+		frontSrc: "/v2/core/awards-2018-groundbreaker-1.webp",
+		backSrc: "/v2/core/awards-2018-groundbreaker-2.webp",
+		alt: "Accepting the Against The Grain Groundbreaker Award on stage",
+		year: "2018 · Against The Grain",
+		title: "Groundbreaker Award - accepting on stage",
+		backYear: "2018 · Groundbreaker Award",
+		backTitle: "Presented alongside fellow honorees",
+		position: "50% 20%",
+		backPosition: "50% 30%",
+		flip: true,
+	},
+    {
+		src: "/v2/core/awards-2018-migrant-women.webp",
+		alt: "Celebrating the book's release",
+		year: "2018 · 50 Inspiring Voices of Migrant Women",
+		title: "Celebrating the book's release",
+		position: "50% 22%",
+	},
+
+    {
+		frontSrc: "/v2/core/awards-2018-inspirique-1.webp",
+		backSrc: "/v2/core/awards-2018-inspirique-2.webp",
+		alt: "Quynh Chau Stone at the Inspirique Circle of Light Awards red carpet",
+		year: "2018 · Inspirique Circle of Light",
+		title: "Honored in Beverly Hills, California",
+		backYear: "2018 · Inspirique Circle of Light",
+		backTitle: "For her dedication to philanthropy and community service",
+		position: "50% 20%",
+		backPosition: "center",
+		flip: true,
+		containBack: true,
+	},
+
+
 	{
 		frontSrc: "/v2/core/awards-2017-beyond-boundaries-1.webp",
 		backSrc: "/v2/core/awards-2017-beyond-boundaries-2.webp",
@@ -254,39 +289,8 @@ const galleryItems: GalleryItem[] = [
 		title: "Tarrant County Asian American Chamber of Commerce Annual Banquet",
 		position: "50% 40%",
 	},
-	{
-		src: "/v2/core/awards-2018-migrant-women.webp",
-		alt: "Celebrating the book's release",
-		year: "2018 · 50 Inspiring Voices of Migrant Women",
-		title: "Celebrating the book's release",
-		position: "50% 22%",
-	},
-	{
-		frontSrc: "/v2/core/awards-2018-groundbreaker-1.webp",
-		backSrc: "/v2/core/awards-2018-groundbreaker-2.webp",
-		alt: "Accepting the Against The Grain Groundbreaker Award on stage",
-		year: "2018 · Against The Grain",
-		title: "Groundbreaker Award - accepting on stage",
-		backYear: "2018 · Groundbreaker Award",
-		backTitle: "Presented alongside fellow honorees",
-		position: "50% 20%",
-		backPosition: "50% 30%",
-		flip: true,
-	},
-	{
-		frontSrc: "/v2/core/awards-2018-inspirique-1.webp",
-		backSrc: "/v2/core/awards-2018-inspirique-2.webp",
-		alt: "Quynh Chau Stone at the Inspirique Circle of Light Awards red carpet",
-		year: "2018 · Inspirique Circle of Light",
-		title: "Honored in Beverly Hills, California",
-		backYear: "2018 · Inspirique Circle of Light",
-		backTitle: "For her dedication to philanthropy and community service",
-		position: "50% 20%",
-		backPosition: "center",
-		flip: true,
-		containBack: true,
-	},
-];
+	
+	];
 
 export default function AwardsPage() {
 	return (
