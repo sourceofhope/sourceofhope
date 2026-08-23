@@ -33,8 +33,8 @@ export default function MembersHeroSection() {
           . Membership is for supporters who want a consistent monthly impact.
         </Blockquote>
         <p>
-          Membership starts at as low as <Bold>$1/month</Bold>. Every tier helps
-          us <Bold>feed, educate, and restore hope</Bold> through our programs
+          {/* Membership starts at as low as <Bold>$1/month</Bold>. Every tier helps */}
+          Membership helps us <Bold>educate, feed, and restore hope</Bold> through our programs
           and community partners.
         </p>
       </div>

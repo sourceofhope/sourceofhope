@@ -273,7 +273,7 @@ function IndividualsMonthlySupportSection({
       <div className="grid gap-3">
         <Title className="text-balance">For individuals</Title>
         <p className="text-neutral-700 max-w-[80ch]">
-          Your monthly support sustains meals, wellness care, education, and
+          Your monthly support sustains education, meals, wellness care, and
           outreach. <Bold>There are no member perks</Bold>, just your consistent
           impact.
         </p>
