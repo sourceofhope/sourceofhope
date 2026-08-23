@@ -17,7 +17,7 @@ export default function MembersBenefitsSection() {
       <div className="grid grid-cols md:grid-cols-2 lg:grid-cols-4 gap-5 place-items-center">
         <Card
           title="Community Impact"
-          text="Support programs that deliver meals, wellness care, education, and essential services—creating lasting change.">
+          text="Support programs that deliver education, meals, wellness care, and essential services - creating lasting change.">
           <HeartIcon className="w-[4em] aspect-square bg-neutral-200 text-red-400 rounded-full shadow-sm p-3" />
         </Card>
 
