@@ -1,5 +1,4 @@
 import { Metadata } from "next";
-import Image from "next/image";
 import PageHeader from "@/components/layout/PageHeader";
 
 
@@ -43,14 +42,11 @@ export const metadata: Metadata = {
 export default function EventsPage() {
   return (
     <>
-      <PageHeader src="/v2/hope-run-for-hunger-2025.webp">
-        <h2 className="font-bold text-neutral-50 text-4xl md:text-5xl">
-          EVENTS
-        </h2>
-        <p className="font-semibold text-neutral-200 text-sm">
-          JOIN US IN MAKING A DIFFERENCE
-        </p>
-      </PageHeader>
+      <PageHeader
+        src="/v2/hope-run-for-hunger-2025.webp"
+        title="EVENTS"
+        subtitle="JOIN US IN MAKING A DIFFERENCE"
+      />
 
       <ServeEventsSection />
     </>

@@ -16,9 +16,9 @@ export async function GET(
 
     return NextResponse.json([]);
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Unknown error";
+    console.error(error);
     return NextResponse.json(
-      { error: "Failed to fetch products by category", details: message },
+      { error: "Failed to fetch products by category" },
       { status: 500 },
     );
   }

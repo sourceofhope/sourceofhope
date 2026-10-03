@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { HeartIcon, CheckCircleIcon } from "@heroicons/react/24/solid";
+import { CheckCircleIcon } from "@heroicons/react/24/solid";
 import { loadStripe } from "@stripe/stripe-js";
 import {
   Elements,
@@ -12,7 +12,15 @@ import {
 import Link from "next/link";
 import Title from "@/components/ui/Title";
 import Heading from "@/components/ui/Heading";
-import { useHeaderContext } from "@/context/HeaderContext";
+import PageHeader from "@/components/layout/PageHeader";
+import SectionHeading from "@/components/ui/SectionHeading";
+import { ASSET_VERSION } from "@/lib/environment";
+
+const DONATE_HEADER = {
+  src: `/${ASSET_VERSION}/servingHope/Carousel-3.webp`,
+  title: "DONATE",
+  subtitle: "EVERY GIFT CREATES HOPE",
+};
 
 const STANDARD_PROCESSING_RATE = 0.03;
 
@@ -129,16 +137,6 @@ export default function DonatePage() {
   const [loadError, setLoadError] = useState<string | null>(null);
   const [isSuccess, setIsSuccess] = useState(false);
   const [cooldownUntil, setCooldownUntil] = useState<number>(0);
-
-  const headerContext = useHeaderContext();
-  const setIsBlocking = headerContext?.setIsBlocking;
-
-  useEffect(() => {
-    if (setIsBlocking) {
-      setIsBlocking(true);
-      return () => setIsBlocking(false);
-    }
-  }, [setIsBlocking]);
 
   // Resolved donation amount
   const donationAmount =
@@ -260,7 +258,9 @@ export default function DonatePage() {
   // ── Success state ──────────────────────────────────────────────────────────
   if (isSuccess) {
     return (
-      <div className="min-h-screen bg-neutral-50 pt-25 px-5 flex items-center justify-center">
+      <>
+      <PageHeader {...DONATE_HEADER} />
+      <div className="px-5 pb-16 flex items-center justify-center">
         <div className="max-w-lg w-full bg-white rounded-3xl ring-1 ring-neutral-200 shadow-[0_8px_60px_-12px_rgba(0,0,0,0.18)] p-10 text-center">
           <div className="mx-auto mb-6 w-24 h-24 rounded-full bg-accent-500 flex items-center justify-center shadow-lg">
             <CheckCircleIcon className="w-12 h-12 text-white" />
@@ -286,26 +286,23 @@ export default function DonatePage() {
           </Link>
         </div>
       </div>
+      </>
     );
   }
 
   // ── Main form ──────────────────────────────────────────────────────────────
   return (
-    <div className="min-h-screen bg-neutral-50 pt-25 px-5 md:px-10 lg:px-20 pb-16">
-      <div className="px-0 lg:px-15">
-        {/* Page header */}
-        <div className="flex flex-col gap-1 mb-8">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-primary-50 flex items-center justify-center">
-              <HeartIcon className="w-5 h-5 text-accent-500" />
-            </div>
-            <Title>Make a Donation</Title>
-          </div>
-          <p className="text-neutral-600 leading-relaxed mt-2">
-            Your gift supports meals, wellness care, education, and community
-            outreach programs right here in our community.
-          </p>
-        </div>
+    <>
+    <PageHeader {...DONATE_HEADER} />
+    <div className="px-5 md:px-15 lg:px-35 pb-16">
+      <div>
+        <SectionHeading
+          className="mb-8"
+          eyebrow="Quick donate"
+          title="Make a Donation">
+          Your gift supports meals, wellness care, education, and community
+          outreach programs right here in our community.
+        </SectionHeading>
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
           {/* Left: amount + donor info */}
@@ -590,5 +587,6 @@ export default function DonatePage() {
         </div>
       </div>
     </div>
+    </>
   );
 }

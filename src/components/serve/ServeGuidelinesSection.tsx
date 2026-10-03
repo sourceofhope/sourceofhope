@@ -44,8 +44,13 @@ export default function ServeGuidelinesSection() {
           <li>If unsure of what to do, ask a team member for guidance</li>
         </ul>
         <p className="md:text-balance">
-          By signing up, you acknowledge and agree to our volunteer terms and
-          guidelines. Thank you for being the Source of Hope in our community!
+          By signing up, you acknowledge and agree to our{" "}
+          <Link
+            className="font-semibold text-accent-500"
+            href="/serve#volunteer-agreements">
+            volunteer agreement
+          </Link>{" "}
+          and guidelines. Thank you for being the Source of Hope in our community!
         </p>
       </ExpressiveCard>
       <ExpressiveCard className="grid gap-3" title="What should I bring?">
@@ -68,14 +73,16 @@ export default function ServeGuidelinesSection() {
       </ExpressiveCard>
       <ExpressiveCard className="grid gap-3" title="How do I sign up?">
         <p className="md:text-balance">
-          Signing up is simple! You can register through our online volunteer
-          form or reach out to us directly by email.
+          Signing up is simple! Choose an upcoming event, sign the volunteer
+          agreement for your program, or reach out to us directly by email.
         </p>
         <ul className="list-disc pl-5">
           <li>
-            Visit{" "}
-            <Link className="font-semibold text-accent-500" href="/volunteer">
-              thesourceofhope.org/volunteer
+            Download your{" "}
+            <Link
+              className="font-semibold text-accent-500"
+              href="/serve#volunteer-agreements">
+              volunteer agreement
             </Link>
           </li>
           <li>

@@ -38,42 +38,32 @@ const getHeaderLinks = (): NavLink[] => [
     ],
   },
   {
-    label: "MEMBERS",
-    href: "/members"
-    // href: "/members",
-    // children: [
-    //   { label: "PLANNED GIVING", href: "/giving" },
-    //   {
-    //     label: "QUICK DONATE",
-    //     href: "/donate",
-    //   },
-    // ],
+    label: "GIVING",
+    href: "/planned-giving",
+    children: [
+      { label: "PLANNED GIVING", href: "/planned-giving" },
+      { label: "MEMBERSHIPS", href: "/members" },
+      { label: "QUICK DONATE", href: "/donate" },
+    ],
   },
- //moved this to the About Label along with Team tag
-//{ label: "CONNECT", href: "/connect" },
-//moved PLANNED GIVING & QUICK DONATE labels from MEMBERS to a label of its own
- {
-   label: "GIVING", 
-   // changed from /giving to /planned-giving to match the new page route
-   href: "/planned-giving" ,
-   children: [
-    { label: "QUICK DONATE", href: "/donate"},
-   ],  
- },
-  //  added Events onto the main tab for the header navigation for easy access to the events page 08/05/26
- { label: "EVENTS", href: "/events" },
-  //  added Awards onto the main tab for the header navigation for easy access to the events page 08/10/26
- { label: "AWARDS", href: "/awards" },
+  { label: "EVENTS", href: "/events" },
   {
     label: "MEDIA",
     href: "/media",
     children: [
       { label: "PRESS", href: "/media/press" },
       { label: "PODCAST", href: "/media/podcast" },
+      { label: "AWARDS", href: "/media/awards" },
     ],
   },
   { label: "STORE", href: "/store" },
 ];
+
+/** True when `pathname` is `link` itself or one of its children. */
+const isActiveLink = (link: NavLink, pathname: string): boolean =>
+  pathname === link.href ||
+  pathname.startsWith(`${link.href}/`) ||
+  (link.children ?? []).some((child) => isActiveLink(child, pathname));
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -87,7 +77,7 @@ export default function Header() {
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 0);
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -135,19 +125,19 @@ export default function Header() {
                   isBlocking ? "text-primary-800" : "text-neutral-50"
                 }`
           }`}>
-        <section className="flex gap-5 h-15 md:h-20 w-full items-center justify-between px-5 lg:px-35">
+        <section className="flex gap-5 h-15 md:h-20 w-full items-center justify-between px-5 md:px-15 lg:px-35">
           <Link
             href="/"
             onClick={() => setOpen(false)}
             aria-label="Go Home"
             className="no-underline! h-full flex gap-5 flex-row items-center w-fit z-0 overflow-clip">
             <Favicon />
-            <h1 className="font-bold hidden lg:block whitespace-nowrap text-ellipsis overflow-hidden">
+            <span className="font-bold hidden lg:block whitespace-nowrap text-ellipsis overflow-hidden">
               THE SOURCE OF HOPE
-            </h1>
+            </span>
           </Link>
 
-          <nav className="hidden md:flex gap-3 z-10" aria-label="Primary">
+          <nav className="hidden md:flex z-10" aria-label="Primary">
             <HeaderNavigator />
           </nav>
 
@@ -196,7 +186,7 @@ function HeaderBanner({ onClose }: { onClose: () => void }) {
 
   return (
     <div
-      className="flex gap-3 justify-between md:justify-center h-15 md:h-10 items-center px-5 lg:px-35 bg-accent-500 border-b-2 text-neutral-50 border-accent-700 fixed top-0 left-0 right-0 z-9998 w-full overflow-hidden"
+      className="flex gap-3 justify-between md:justify-center h-15 md:h-10 items-center px-5 md:px-15 lg:px-35 bg-accent-500 border-b-2 text-neutral-50 border-accent-700 fixed top-0 left-0 right-0 z-9998 w-full overflow-hidden"
       role="region"
       aria-label="Site banner">
       <Link href={bannerLink} className="hover:underline font-semibold">
@@ -260,35 +250,38 @@ function HeaderNavigator({
 
 function DesktopNavigator({ links }: { links: NavLink[] }) {
   const [hovering, setHovering] = useState<string | null>(null);
+  const pathname = usePathname();
 
   return (
-    <nav className="flex flex-row gap-5">
-      {links.map(({ label, href, children }) => (
+    <div className="flex flex-row gap-4 lg:gap-6">
+      {links.map((link) => (
         <DesktopNavigatorItem
-          key={label}
-          label={label}
-          href={href}
+          key={link.label}
+          label={link.label}
+          href={link.href}
+          active={isActiveLink(link, pathname)}
           hovering={hovering}
           setHovering={setHovering}
           className={`
             py-2.5 h-full w-full font-bold
             ${
               hovering
-                ? hovering === label
+                ? hovering === link.label
                   ? "opacity-100"
                   : "opacity-80"
                 : ""
             }`}>
-          {children || []}
+          {link.children || []}
         </DesktopNavigatorItem>
       ))}
-    </nav>
+    </div>
   );
 }
 
 function DesktopNavigatorItem({
   label,
   href,
+  active,
   children,
   hovering,
   setHovering,
@@ -296,6 +289,7 @@ function DesktopNavigatorItem({
 }: {
   label: string;
   href: string;
+  active: boolean;
   children: NavLink[];
   hovering: string | null;
   setHovering: (value: string | null) => void;
@@ -305,29 +299,46 @@ function DesktopNavigatorItem({
   const hasChildren = children.length > 0;
 
   return (
-    <div className="w-full select-none relative">
+    <div
+      className="w-full select-none relative"
+      onFocus={() => setHovering(label)}
+      onBlur={(e) => {
+        if (!e.currentTarget.contains(e.relatedTarget as Node | null)) {
+          setHovering(null);
+        }
+      }}
+      onKeyDown={(e) => {
+        if (e.key === "Escape") setHovering(null);
+      }}>
       <Link
         href={href}
+        aria-current={active ? "page" : undefined}
+        aria-haspopup={hasChildren ? "true" : undefined}
+        aria-expanded={hasChildren ? isOpen : undefined}
         onMouseEnter={() => setHovering(label)}
         onMouseLeave={() => setHovering(null)}
-        className={`no-underline! group transition-[color_transform] ease-in-out duration-300 inline-flex w-full justify-between items-center gap-1 focus:outline-none ${className}`}>
-        <span>{label}</span>
-        <Icon>
-          <ChevronRightIcon
-            className={`w-6 h-6 transition-transform duration-500 ${
-              isOpen && hasChildren
-                ? "rotate-90"
-                : "rotate-0 group-hover:translate-x-1"
-            }`}
-            onClick={(e: React.MouseEvent) => {
-              if (!hasChildren) return;
-              e.preventDefault();
-              e.stopPropagation();
-              setHovering(isOpen ? null : label);
-            }}
-            aria-hidden="true"
-          />
-        </Icon>
+        className={`no-underline! group transition-[color_transform] ease-in-out duration-300 inline-flex w-full justify-between items-center gap-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-300 rounded-sm ${className}`}>
+        <span
+          className={`border-b-2 transition-colors duration-300 ${
+            active ? "border-current" : "border-transparent"
+          }`}>
+          {label}
+        </span>
+        {hasChildren && (
+          <Icon>
+            <ChevronRightIcon
+              className={`w-5 h-5 transition-transform duration-500 ${
+                isOpen ? "rotate-90" : "rotate-0 group-hover:translate-x-0.5"
+              }`}
+              onClick={(e: React.MouseEvent) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setHovering(isOpen ? null : label);
+              }}
+              aria-hidden="true"
+            />
+          </Icon>
+        )}
       </Link>
 
       {hasChildren && (
@@ -432,6 +443,22 @@ function MobileNavigator({
             </Icon>
           </button>
         )}
+
+        {current.href &&
+          !current.items.some((item) => item.href === current.href) && (
+            <Link
+              href={current.href}
+              className="no-underline! py-2.5 h-full w-full group font-bold inline-flex justify-between items-center gap-1"
+              onClick={() => setOpen?.(false)}>
+              <span className="text-left">{current.title} OVERVIEW</span>
+              <Icon>
+                <ChevronRightIcon
+                  className="w-6 h-6 transition-transform duration-500 rotate-0 group-hover:translate-x-1"
+                  aria-hidden="true"
+                />
+              </Icon>
+            </Link>
+          )}
 
         {current.items.map((item) => {
           const hasChildren = (item.children || []).length > 0;

@@ -16,6 +16,7 @@ import Block from "@/components/layout/Block";
 import { ASSET_VERSION } from "@/lib/environment";
 //added the following import on 07/02/26 for display of Recurring Events 
 import ServeEventsSection from "@/components/serve/ServeEventsSection";
+import ServeDocumentsSection from "@/components/serve/ServeDocumentsSection";
 
 const CANONICAL_URL = "https://thesourceofhope.org/serve/serving-hope";
 
@@ -213,7 +214,8 @@ export default function ServingHope() {
             </div>
           </div>
         </article>
-      </section>    
+      </section>
+      <ServeDocumentsSection only={["serving-hope"]} />
     
     </>
   );

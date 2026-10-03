@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
-import { getEnvironment } from '@/lib/environment';
+import { getEnvironment } from '@/lib/environment.server';
 import Stripe from 'stripe';
+import { rateLimit } from '@/lib/rate-limit';
 
 type MembershipPlanId = 'bronze' | 'silver' | 'gold' | 'individual' | 'partner' | 'sponsor' | 'champion';
 
@@ -17,7 +18,30 @@ type MembershipRequestBody = {
     phone?: string;
 };
 
-const membershipProducts: Record<MembershipPlanId, { id: string; name: string; description: string }> = {
+type MembershipProduct = {
+    id: string;
+    name: string;
+    description: string;
+    /**
+     * Fixed monthly price in cents. `null` means the member chooses the
+     * amount (individual plan); `undefined` means the plan is not currently
+     * offered and cannot be purchased.
+     */
+    priceCents?: number | null;
+};
+
+// Must match the prices shown in MembersPlansSection.
+const INDIVIDUAL_MIN_CENTS = 100;
+const INDIVIDUAL_MAX_CENTS = 1_000_000;
+const EMAIL_PATTERN = /^[^\s@<>"\\]{1,64}@[^\s@<>"\\]{1,255}\.[^\s@<>"\\]+$/;
+
+function asString(value: unknown, maxLength: number): string | undefined {
+    if (typeof value !== 'string') return undefined;
+    const trimmed = value.trim();
+    return trimmed ? trimmed.slice(0, maxLength) : undefined;
+}
+
+const membershipProducts: Record<MembershipPlanId, MembershipProduct> = {
     bronze: {
         id: 'prod_membership_bronze',
         name: 'Hope Advocate [Bronze Pin]',
@@ -37,21 +61,25 @@ const membershipProducts: Record<MembershipPlanId, { id: string; name: string; d
         id: 'prod_membership_individual',
         name: 'Monthly Individual Support',
         description: 'Individual monthly support - Recurring gift sustaining meals, wellness care, and education programs',
+        priceCents: null,
     },
     partner: {
         id: 'prod_membership_partner',
         name: 'Company Partner',
         description: 'Company Partner - Monthly partnership sustaining community outreach and program operations',
+        priceCents: 5_000,
     },
     sponsor: {
         id: 'prod_membership_sponsor',
         name: 'Program Sponsor',
         description: 'Program Sponsor - Monthly partnership expanding capacity and strengthening sustained service',
+        priceCents: 10_000,
     },
     champion: {
         id: 'prod_membership_champion',
         name: 'Impact Champion',
         description: 'Impact Champion - Monthly partnership underwriting major mission work across programs',
+        priceCents: 50_000,
     },
 };
 
@@ -76,6 +104,9 @@ export async function OPTIONS() {
 
 export async function POST(request: Request) {
     try {
+        const limited = rateLimit(request, 'membership', 5, 10 * 60 * 1000);
+        if (limited) return limited;
+
         const { stripeSecretKey } = getEnvironment();
 
         if (!stripeSecretKey) {
@@ -84,24 +115,21 @@ export async function POST(request: Request) {
 
         const stripe = new Stripe(stripeSecretKey, { apiVersion: '2022-11-15' } as any);
         const body = (await request.json()) as MembershipRequestBody;
-        const {
-            membershipPlanId,
-            membershipType,
-            amount,
-            firstName,
-            lastName,
-            companyName,
-            contactName,
-            companyInfo,
-            email,
-            phone,
-        } = body;
+        const membershipPlanId = body.membershipPlanId;
+        const membershipType = body.membershipType === 'company' ? 'company' : 'individual';
+        const firstName = asString(body.firstName, 100);
+        const lastName = asString(body.lastName, 100);
+        const companyName = asString(body.companyName, 200);
+        const contactName = asString(body.contactName, 200);
+        const companyInfo = asString(body.companyInfo, 450);
+        const email = asString(body.email, 254);
+        const phone = asString(body.phone, 30);
 
         const isCompanyMembership = membershipType === 'company';
 
         // Validate required fields
-        if (!membershipType || !amount || !email) {
-            return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
+        if (!email || !EMAIL_PATTERN.test(email)) {
+            return NextResponse.json({ error: 'A valid email address is required' }, { status: 400 });
         }
         if (isCompanyMembership && (!companyName || !contactName)) {
             return NextResponse.json(
@@ -116,33 +144,41 @@ export async function POST(request: Request) {
             );
         }
 
-        const productConfig = membershipProducts[membershipPlanId as MembershipPlanId];
-        if (!productConfig) {
+        const productConfig = Object.hasOwn(membershipProducts, membershipPlanId ?? '')
+            ? membershipProducts[membershipPlanId as MembershipPlanId]
+            : undefined;
+        if (!productConfig || productConfig.priceCents === undefined) {
             return NextResponse.json({ error: 'Invalid membership type' }, { status: 400 });
+        }
+
+        // Fixed-price plans always charge their listed price; only the
+        // individual plan lets the member choose an amount.
+        let unitAmountCents: number;
+        if (productConfig.priceCents === null) {
+            unitAmountCents = Math.round(Number(body.amount) * 100);
+            if (
+                !Number.isFinite(unitAmountCents) ||
+                unitAmountCents < INDIVIDUAL_MIN_CENTS ||
+                unitAmountCents > INDIVIDUAL_MAX_CENTS
+            ) {
+                return NextResponse.json({ error: 'Invalid membership amount' }, { status: 400 });
+            }
+        } else {
+            unitAmountCents = productConfig.priceCents;
         }
 
         const membershipName = productConfig.name;
 
-        // Find or create customer
+        // Find or create customer. Existing customer records are reused but
+        // never overwritten, since this endpoint is unauthenticated.
         let customer;
-        const existingCustomers = await (stripe.customers.search as any)({
-            query: `email:"${email}"`,
+        const existingCustomers = await stripe.customers.list({
+            email,
             limit: 1,
         });
 
         if (existingCustomers.data.length > 0) {
             customer = existingCustomers.data[0];
-            // Update customer info
-            customer = await stripe.customers.update(customer.id, {
-                name: isCompanyMembership ? companyName : `${firstName} ${lastName}`,
-                phone: phone || undefined,
-                metadata: {
-                    membership_type: membershipType,
-                    ...(isCompanyMembership
-                        ? { contact_name: contactName, company_info: companyInfo || '' }
-                        : {}),
-                },
-            });
         } else {
             customer = await stripe.customers.create({
                 email,
@@ -192,15 +228,13 @@ export async function POST(request: Request) {
             limit: 10,
         });
 
-        let price = prices.data.find(
-            (p) => p.unit_amount === Math.round(amount * 100)
-        );
+        let price = prices.data.find((p) => p.unit_amount === unitAmountCents);
 
         // If price doesn't exist, create it
         if (!price) {
             price = await stripe.prices.create({
                 product: product.id,
-                unit_amount: Math.round(amount * 100),
+                unit_amount: unitAmountCents,
                 currency: 'usd',
                 recurring: {
                     interval: 'month',
@@ -261,11 +295,9 @@ export async function POST(request: Request) {
         });
     } catch (error) {
         console.error('Membership subscription creation error:', error);
-        const details = error instanceof Error ? error.message : 'Unknown error';
         return NextResponse.json(
             {
                 error: 'Failed to create membership subscription',
-                details,
             },
             { status: 500 },
         );

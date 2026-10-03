@@ -1,14 +1,8 @@
 import { NextResponse } from 'next/server';
-import { getEnvironment } from '@/lib/environment';
+import { getEnvironment } from '@/lib/environment.server';
 import Stripe from 'stripe';
-
-type CheckoutItem = {
-    id?: string;
-    name?: string;
-    title?: string;
-    price?: number;
-    quantity?: number;
-};
+import { rateLimit } from '@/lib/rate-limit';
+import { PricingError, quoteStoreOrder, toCents } from '@/lib/store-pricing';
 
 type CheckoutAddress = {
     firstName?: string;
@@ -21,16 +15,31 @@ type CheckoutAddress = {
 };
 
 type CreateStripePaymentIntentBody = {
-    items?: CheckoutItem[];
+    items?: unknown;
     shippingMethod?: string;
-    shippingCost?: number;
-    taxAmount?: number;
     processingFee?: number;
     shippingAddress?: CheckoutAddress;
-    billingAddress?: CheckoutAddress;
-    totalAmount?: number | string;
     email?: string;
 };
+
+const EMAIL_PATTERN = /^[^\s@<>"]{1,64}@[^\s@<>"]{1,255}\.[^\s@<>"]+$/;
+
+/** Keep only short string fields from a client-supplied address. */
+function cleanAddress(address: unknown): CheckoutAddress | undefined {
+    if (!address || typeof address !== 'object') return undefined;
+    const source = address as Record<string, unknown>;
+    const pick = (key: keyof CheckoutAddress) =>
+        typeof source[key] === 'string' ? (source[key] as string).trim().slice(0, 200) : undefined;
+    return {
+        firstName: pick('firstName'),
+        lastName: pick('lastName'),
+        address: pick('address'),
+        city: pick('city'),
+        state: pick('state'),
+        zipCode: pick('zipCode'),
+        country: pick('country'),
+    };
+}
 
 /**
  * Create a Stripe Payment Intent
@@ -54,6 +63,9 @@ export async function OPTIONS() {
 
 export async function POST(request: Request) {
     try {
+        const limited = rateLimit(request, 'store-checkout', 10, 10 * 60 * 1000);
+        if (limited) return limited;
+
         const { stripeSecretKey } = getEnvironment();
 
         if (!stripeSecretKey) {
@@ -63,26 +75,19 @@ export async function POST(request: Request) {
         const stripe = new Stripe(stripeSecretKey);
 
         const body = (await request.json()) as CreateStripePaymentIntentBody;
-        const {
-            items,
-            shippingMethod,
-            shippingCost,
-            taxAmount,
-            processingFee,
-            shippingAddress,
-            totalAmount,
-            email,
-        } = body;
-
-        if (!items || !Array.isArray(items) || items.length === 0) {
-            return NextResponse.json({ error: 'Cart items are required' }, { status: 400 });
-        }
-
-        if (totalAmount === undefined || totalAmount === null || Number.isNaN(Number(totalAmount))) {
-            return NextResponse.json({ error: 'Total amount is required' }, { status: 400 });
-        }
-
-        const amountInCents = Math.round(Number(totalAmount) * 100);
+        // Prices, tax, shipping, and fees are computed on the server from the
+        // CMS; any amounts sent by the browser are ignored.
+        const quote = await quoteStoreOrder(body);
+        const shippingAddress = cleanAddress(body.shippingAddress);
+        const email =
+            typeof body.email === 'string' && EMAIL_PATTERN.test(body.email.trim())
+                ? body.email.trim()
+                : undefined;
+        const shippingMethod = quote.shippingMethod.id;
+        const shippingCost = quote.shipping;
+        const taxAmount = quote.tax;
+        const processingFee = quote.processingFee;
+        const amountInCents = toCents(quote.total);
 
         // Create/find a Stripe customer so we can attach a draft invoice that stores full line-item details.
         let customerId: string | undefined;
@@ -144,46 +149,42 @@ export async function POST(request: Request) {
             description: 'Pending checkout invoice',
         });
 
-        for (const item of items) {
-            const quantity = Math.max(1, Number(item.quantity || 1));
-            const unitAmount = Math.max(0, Math.round(Number(item.price || 0) * 100));
-            const description = item.name || item.title || item.id || 'Item';
-
+        for (const line of quote.lines) {
             await stripe.invoiceItems.create({
                 customer: customerId,
                 invoice: pendingInvoice.id,
-                description: `${description} x${quantity}`,
-                amount: unitAmount * quantity,
+                description: `${line.name}${line.size ? ` (${line.size})` : ''} x${line.quantity}`,
+                amount: toCents(line.unitPrice) * line.quantity,
                 currency: 'usd',
             });
         }
 
-        if (shippingCost && Number(shippingCost) > 0) {
+        if (shippingCost > 0) {
             await stripe.invoiceItems.create({
                 customer: customerId,
                 invoice: pendingInvoice.id,
                 description: `Shipping (${shippingMethod || 'standard'})`,
-                amount: Math.round(Number(shippingCost) * 100),
+                amount: toCents(shippingCost),
                 currency: 'usd',
             });
         }
 
-        if (taxAmount && Number(taxAmount) > 0) {
+        if (taxAmount > 0) {
             await stripe.invoiceItems.create({
                 customer: customerId,
                 invoice: pendingInvoice.id,
                 description: 'Tax',
-                amount: Math.round(Number(taxAmount) * 100),
+                amount: toCents(taxAmount),
                 currency: 'usd',
             });
         }
 
-        if (processingFee && Number(processingFee) > 0) {
+        if (processingFee > 0) {
             await stripe.invoiceItems.create({
                 customer: customerId,
                 invoice: pendingInvoice.id,
                 description: 'Processing fee',
-                amount: Math.round(Number(processingFee) * 100),
+                amount: toCents(processingFee),
                 currency: 'usd',
             });
         }
@@ -191,11 +192,11 @@ export async function POST(request: Request) {
         const metadata: Record<string, string> = {
             shipping_method: shippingMethod || 'standard',
             order_type: 'storefront',
-            items_count: String(items.length),
+            items_count: String(quote.lines.length),
             customer_email: email || '',
-            processing_fee: processingFee ? Number(processingFee).toFixed(2) : '0.00',
-            shipping_cost: shippingCost ? Number(shippingCost).toFixed(2) : '0.00',
-            tax_amount: taxAmount ? Number(taxAmount).toFixed(2) : '0.00',
+            processing_fee: processingFee.toFixed(2),
+            shipping_cost: shippingCost.toFixed(2),
+            tax_amount: taxAmount.toFixed(2),
             invoice_id: pendingInvoice.id,
             shipping_first_name: shippingAddress?.firstName || '',
             shipping_last_name: shippingAddress?.lastName || '',
@@ -241,14 +242,16 @@ export async function POST(request: Request) {
             clientSecret: paymentIntent.client_secret,
             paymentIntentId: paymentIntent.id,
             invoiceId: pendingInvoice.id,
+            amount: quote.total,
         });
     } catch (error) {
+        if (error instanceof PricingError) {
+            return NextResponse.json({ error: error.message }, { status: 400 });
+        }
         console.error('Payment Intent creation error:', error);
-        const details = error instanceof Error ? error.message : 'Unknown error';
         return NextResponse.json(
             {
                 error: 'Failed to create payment intent',
-                details,
             },
             { status: 500 },
         );

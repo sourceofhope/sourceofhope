@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getEnvironment } from '@/lib/environment';
+import { getEnvironment } from '@/lib/environment.server';
 import Stripe from 'stripe';
 
 export const runtime = 'nodejs';
@@ -50,6 +50,21 @@ export async function POST(request: Request) {
 
                 const refreshedInvoice = await stripe.invoices.retrieve(invoiceId);
 
+                // Never mark an order paid unless the payment covers it in full.
+                if (paymentIntent.amount_received < refreshedInvoice.total) {
+                    console.error(
+                        `Payment ${paymentIntent.id} (${paymentIntent.amount_received}) does not cover invoice ${invoiceId} (${refreshedInvoice.total})`,
+                    );
+                    await stripe.invoices.update(invoiceId, {
+                        metadata: {
+                            ...refreshedInvoice.metadata,
+                            checkout_status: 'amount_mismatch',
+                            payment_intent_id: paymentIntent.id,
+                        },
+                    });
+                    return NextResponse.json({ received: true });
+                }
+
                 if (refreshedInvoice.status !== 'paid') {
                     await stripe.invoices.pay(invoiceId, {
                         paid_out_of_band: true,
@@ -69,12 +84,10 @@ export async function POST(request: Request) {
         return NextResponse.json({ received: true });
     } catch (error) {
         console.error('Stripe webhook error:', error);
-        const details = error instanceof Error ? error.message : 'Unknown error';
 
         return NextResponse.json(
             {
                 error: 'Failed to process Stripe webhook',
-                details,
             },
             { status: 400 },
         );

@@ -58,6 +58,22 @@
     <loc>https://thesourceofhope.org/media/podcast</loc>
     <changefreq>monthly</changefreq>
   </url>
+  <url>
+    <loc>https://thesourceofhope.org/media/awards</loc>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://thesourceofhope.org/events</loc>
+    <changefreq>weekly</changefreq>
+  </url>
+  <url>
+    <loc>https://thesourceofhope.org/planned-giving</loc>
+    <changefreq>monthly</changefreq>
+  </url>
+  <url>
+    <loc>https://thesourceofhope.org/donate</loc>
+    <changefreq>monthly</changefreq>
+  </url>
 
   <url>
     <loc>https://thesourceofhope.org/members</loc>

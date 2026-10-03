@@ -9,9 +9,9 @@ export async function GET(request: Request) {
 
     return NextResponse.json(await fetchRecurringEvents(perPage));
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Unknown error";
+    console.error(error);
     return NextResponse.json(
-      { error: "Failed to fetch recurring events", details: message },
+      { error: "Failed to fetch recurring events" },
       { status: 500 },
     );
   }

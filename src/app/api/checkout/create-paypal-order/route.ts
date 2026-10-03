@@ -1,23 +1,7 @@
 import { NextResponse } from 'next/server';
-import {getEnvironment} from '@/lib/environment';
-// import { createPayPalSession } from '@/lib/paypal';
-
-type CheckoutItem = {
-  name?: string;
-  size?: string;
-  price: number;
-  quantity: number;
-};
-
-type CreatePaypalOrderBody = {
-  items: CheckoutItem[];
-  shippingMethod?: string;
-  shippingCost?: number;
-  taxAmount?: number;
-  processingFee?: number;
-  successUrl?: string;
-  cancelUrl?: string;
-};
+import { getEnvironment } from '@/lib/environment.server';
+import { rateLimit } from '@/lib/rate-limit';
+import { PricingError, getSiteOrigin, quoteStoreOrder } from '@/lib/store-pricing';
 
 type PaypalLink = {
   rel: string;
@@ -30,8 +14,6 @@ type PaypalOrderResponse = {
 };
 
 export async function GET() {
-    const { paypalApiUrl } = getEnvironment();
-    console.log(`PAYPAL API URL: ${paypalApiUrl}`);
     return NextResponse.json({ message: 'PayPal session endpoint is available. Use POST to create a session.' });
 }
 
@@ -46,16 +28,8 @@ export async function OPTIONS() {
 
 export async function POST(request: Request) {
     try {
-        const body = (await request.json()) as CreatePaypalOrderBody;
-        const {
-            items,
-            shippingMethod,
-            shippingCost,
-            taxAmount,
-            processingFee,
-            successUrl,
-            cancelUrl,
-        } = body;
+        const limited = rateLimit(request, 'store-checkout', 10, 10 * 60 * 1000);
+        if (limited) return limited;
 
         const { paypalClientId, paypalClientSecret, paypalApiUrl } = getEnvironment();
 
@@ -66,13 +40,10 @@ export async function POST(request: Request) {
             );
         }
 
-        if (!items || !Array.isArray(items) || items.length === 0) {
-            return NextResponse.json({ error: 'Cart items are required' }, { status: 400 });
-        }
-
-        if (!successUrl || !cancelUrl) {
-            return NextResponse.json({ error: 'Redirect URLs are required' }, { status: 400 });
-        }
+        // Prices, tax, shipping, and fees are computed on the server from the
+        // CMS; any amounts or URLs sent by the browser are ignored.
+        const quote = await quoteStoreOrder(await request.json());
+        const origin = getSiteOrigin(request);
 
         const auth = Buffer.from(`${paypalClientId}:${paypalClientSecret}`).toString('base64');
 
@@ -93,35 +64,29 @@ export async function POST(request: Request) {
 
         const { access_token } = (await tokenResponse.json()) as { access_token: string };
 
-        const paypalItems = items.map((item) => ({
-            name: item.name || 'Product',
-            description: item.size ? `Size: ${item.size}` : 'Product purchase',
+        const paypalItems = quote.lines.map((line) => ({
+            name: line.name.slice(0, 127),
+            description: line.size ? `Size: ${line.size}` : 'Product purchase',
             unit_amount: {
                 currency_code: 'USD',
-                value: Number(item.price).toFixed(2),
+                value: line.unitPrice.toFixed(2),
             },
-            quantity: String(item.quantity),
+            quantity: String(line.quantity),
         }));
 
-        if (processingFee && processingFee > 0) {
+        if (quote.processingFee > 0) {
             paypalItems.push({
                 name: 'Processing Fee Coverage (3%)',
                 description: 'Support the Mission — Cover Fees (3%)',
                 unit_amount: {
                     currency_code: 'USD',
-                    value: Number(processingFee).toFixed(2),
+                    value: quote.processingFee.toFixed(2),
                 },
                 quantity: '1',
             });
         }
 
-        const paypalItemTotal = paypalItems.reduce((sum, item) => {
-            return sum + Number(item.unit_amount.value) * Number(item.quantity);
-        }, 0);
-
-        const shipping = Number(shippingCost ?? 0);
-        const tax = Number(taxAmount ?? 0);
-        const totalAmount = paypalItemTotal + shipping + tax;
+        const itemTotal = quote.subtotal + quote.processingFee;
 
         const orderData = {
             intent: 'CAPTURE',
@@ -129,25 +94,25 @@ export async function POST(request: Request) {
                 {
                     amount: {
                         currency_code: 'USD',
-                        value: totalAmount.toFixed(2),
+                        value: quote.total.toFixed(2),
                         breakdown: {
                             item_total: {
                                 currency_code: 'USD',
-                                value: paypalItemTotal.toFixed(2),
+                                value: itemTotal.toFixed(2),
                             },
-                            shipping: { currency_code: 'USD', value: shipping.toFixed(2) },
-                            tax_total: { currency_code: 'USD', value: tax.toFixed(2) },
+                            shipping: { currency_code: 'USD', value: quote.shipping.toFixed(2) },
+                            tax_total: { currency_code: 'USD', value: quote.tax.toFixed(2) },
                         },
                     },
                     items: paypalItems,
                     shipping: {
-                        method: shippingMethod || 'Standard Shipping',
+                        method: quote.shippingMethod.name,
                     },
                 },
             ],
             application_context: {
-                return_url: successUrl,
-                cancel_url: cancelUrl,
+                return_url: `${origin}/store/success`,
+                cancel_url: `${origin}/store/checkout`,
                 brand_name: 'Source of Hope',
                 landing_page: 'NO_PREFERENCE',
                 user_action: 'PAY_NOW',
@@ -181,10 +146,12 @@ export async function POST(request: Request) {
             approvalUrl,
         });
     } catch (error) {
+        if (error instanceof PricingError) {
+            return NextResponse.json({ error: error.message }, { status: 400 });
+        }
         console.error('PayPal checkout error:', error);
-        const details = error instanceof Error ? error.message : 'Unknown error';
         return NextResponse.json(
-            { error: 'Failed to create PayPal checkout session', details },
+            { error: 'Failed to create PayPal checkout session' },
             { status: 500 },
         );
     }

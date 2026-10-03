@@ -1,11 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getEnvironment } from '@/lib/environment';
-import { checkRateLimit } from '@/lib/rate-limit';
+import { getEnvironment } from '@/lib/environment.server';
+import { rateLimit } from '@/lib/rate-limit';
 import Stripe from 'stripe';
 
 // 5 PaymentIntent creations per IP per 10 minutes.
 const RATE_LIMIT = 5;
 const RATE_WINDOW_MS = 10 * 60 * 1000;
+
+const PROCESSING_RATE = 0.03;
+const MAX_DONATION = 100_000;
+const EMAIL_PATTERN = /^[^\s@<>"]{1,64}@[^\s@<>"]{1,255}\.[^\s@<>"]+$/;
+
+function asString(value: unknown, maxLength: number): string | undefined {
+    if (typeof value !== 'string') return undefined;
+    const trimmed = value.trim();
+    return trimmed ? trimmed.slice(0, maxLength) : undefined;
+}
 
 type CreateDonationPaymentIntentBody = {
     amount?: number;
@@ -39,23 +49,8 @@ export async function OPTIONS() {
 export async function POST(request: NextRequest) {
     try {
         // ── Rate limiting ──────────────────────────────────────────────────
-        const ip =
-            request.headers.get('x-forwarded-for')?.split(',')[0].trim() ??
-            request.headers.get('x-real-ip') ??
-            'unknown';
-
-        const { allowed, retryAfterMs } = checkRateLimit(ip, RATE_LIMIT, RATE_WINDOW_MS);
-
-        if (!allowed) {
-            const retryAfterSec = Math.ceil(retryAfterMs / 1000);
-            return NextResponse.json(
-                { error: 'Too many requests. Please wait before trying again.' },
-                {
-                    status: 429,
-                    headers: { 'Retry-After': String(retryAfterSec) },
-                },
-            );
-        }
+        const limited = rateLimit(request, 'donation', RATE_LIMIT, RATE_WINDOW_MS);
+        if (limited) return limited;
 
         // ── Payment intent creation ────────────────────────────────────────
         const { stripeSecretKey } = getEnvironment();
@@ -66,14 +61,27 @@ export async function POST(request: NextRequest) {
         const stripe = new Stripe(stripeSecretKey);
 
         const body = (await request.json()) as CreateDonationPaymentIntentBody;
-        const { amount, processingFee, email, firstName, lastName, dedication, coverFee } = body;
+        const amount = Number(body.amount);
+        const coverFee = body.coverFee === true;
+        const email = asString(body.email, 254);
+        const firstName = asString(body.firstName, 100);
+        const lastName = asString(body.lastName, 100);
+        const dedication = asString(body.dedication, 500);
 
-        if (!amount || amount <= 0) {
+        if (!Number.isFinite(amount) || amount <= 0 || amount > MAX_DONATION) {
             return NextResponse.json({ error: 'A valid donation amount is required.' }, { status: 400 });
         }
 
+        if (email && !EMAIL_PATTERN.test(email)) {
+            return NextResponse.json({ error: 'A valid email address is required.' }, { status: 400 });
+        }
+
+        // The fee is computed here (same formula as the donate page) rather
+        // than trusted from the request.
         const donationAmountCents = Math.round(amount * 100);
-        const processingFeeCents = coverFee && processingFee ? Math.round(processingFee * 100) : 0;
+        const processingFeeCents = coverFee
+            ? Math.round(Number((amount * PROCESSING_RATE).toFixed(2)) * 100)
+            : 0;
         const totalCents = donationAmountCents + processingFeeCents;
 
         if (totalCents < 50) {
@@ -89,7 +97,7 @@ export async function POST(request: NextRequest) {
         if (email) metadata.customer_email = email;
         if (firstName) metadata.first_name = firstName;
         if (lastName) metadata.last_name = lastName;
-        if (dedication) metadata.dedication = dedication.slice(0, 500);
+        if (dedication) metadata.dedication = dedication;
 
         const paymentIntent = await stripe.paymentIntents.create({
             amount: totalCents,
@@ -103,9 +111,8 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ clientSecret: paymentIntent.client_secret });
     } catch (error) {
         console.error('Create donation payment intent error:', error);
-        const details = error instanceof Error ? error.message : 'Unknown error';
         return NextResponse.json(
-            { error: 'Failed to create donation payment intent', details },
+            { error: 'Failed to create donation payment intent' },
             { status: 500 },
         );
     }

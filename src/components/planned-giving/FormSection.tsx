@@ -2,271 +2,284 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { SparklesIcon } from "@heroicons/react/24/solid";
+import PageSection from "@/components/ui/PageSection";
+import SectionHeading from "@/components/ui/SectionHeading";
+import Heading from "@/components/ui/Heading";
+import { ASSET_VERSION } from "@/lib/environment";
 
-import { HeartIcon, SparklesIcon } from "@heroicons/react/24/solid";
+type Status = "IDLE" | "SUBMITTING" | "SUCCESS" | "ERROR";
+
+const EMPTY_FORM = {
+  fname: "",
+  lname: "",
+  email: "",
+  phone: "",
+  message: "",
+  infoCheck: false,
+  contactCheck: false,
+  // Honeypot: hidden from people, often filled in by bots.
+  website: "",
+};
+
+const INPUT_CLASS =
+  "w-full px-4 py-3 border-2 border-neutral-300 rounded-xl text-neutral-900 bg-neutral-50 placeholder-neutral-400 focus:outline-none focus:border-accent-500 transition-colors";
 
 export default function FormSection() {
-	const [status, setStatus] = useState("IDLE");
-	const [formData, setFormData] = useState({
-		fname: "",
-		lname: "",
-		email: "",
-		phone: "",
-		message: "",
-		infoCheck: false,
-		contactCheck: false,
-	});
+  const [status, setStatus] = useState<Status>("IDLE");
+  const [error, setError] = useState<string | null>(null);
+  const [formData, setFormData] = useState(EMPTY_FORM);
 
-	// Email validation
-	const validateEmail = (email: string) =>
-		/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const validateEmail = (email: string) =>
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-	// Form submission handler
-	const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault();
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setError(null);
 
-		// Validate
-		if (
-			!formData.fname ||
-			!formData.lname ||
-			!formData.email ||
-			!validateEmail(formData.email)
-		) {
-			alert("Please fill in all required fields with a valid email.");
-			return;
-		}
+    if (
+      !formData.fname.trim() ||
+      !formData.lname.trim() ||
+      !validateEmail(formData.email)
+    ) {
+      setError("Please fill in all required fields with a valid email.");
+      return;
+    }
 
-		setStatus("SUBMITTING");
+    setStatus("SUBMITTING");
 
-		try {
-			// Format message exactly like the React component
-			const messageLines = [
-				"Planned Giving Interest Form",
-				`Name: ${formData.fname} ${formData.lname}`,
-				`Email: ${formData.email}`,
-				formData.phone ? `Phone: ${formData.phone}` : null,
-				formData.message ? `Message: ${formData.message}` : null,
-				formData.infoCheck
-					? "Inquiry Type: Information about planned giving"
-					: null,
-				formData.contactCheck
-					? "Request: Please contact me to start a conversation"
-					: null,
-			]
-				.filter(Boolean)
-				.join("\n");
+    try {
+      const messageLines = [
+        "Planned Giving Interest Form",
+        `Name: ${formData.fname} ${formData.lname}`,
+        `Email: ${formData.email}`,
+        formData.phone ? `Phone: ${formData.phone}` : null,
+        formData.message ? `Message: ${formData.message}` : null,
+        formData.infoCheck
+          ? "Inquiry Type: Information about planned giving"
+          : null,
+        formData.contactCheck
+          ? "Request: Please contact me to start a conversation"
+          : null,
+      ]
+        .filter(Boolean)
+        .join("\n");
 
-			// Send to the same endpoint as the React component
-			const response = await fetch("/api/email/send", {
-				method: "POST",
-				headers: { "Content-Type": "application/json" },
-				body: JSON.stringify({
-					name: `${formData.fname} ${formData.lname}`.trim(),
-					email: formData.email,
-					message: messageLines,
-				}),
-			});
+      const response = await fetch("/api/email/send", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: `${formData.fname} ${formData.lname}`.trim(),
+          email: formData.email,
+          message: messageLines,
+          website: formData.website,
+        }),
+      });
 
-			if (!response.ok) {
-				throw new Error("Failed to send email");
-			}
+      if (!response.ok) {
+        throw new Error("Failed to send email");
+      }
 
-			// Success
-			alert(
-				"Thank you! We've received your inquiry. A member of our team will reach out to you soon.",
-			);
-			setFormData({
-				fname: "",
-				lname: "",
-				email: "",
-				phone: "",
-				message: "",
-				infoCheck: false,
-				contactCheck: false,
-			});
-			setStatus("SUCCESS");
-			setTimeout(() => setStatus("IDLE"), 3000);
-		} catch (error) {
-			console.error("Form submission error:", error);
-			alert("Something went wrong. Please try again or contact us directly.");
-			setStatus("ERROR");
-			setTimeout(() => setStatus("IDLE"), 3000);
-		}
-	};
+      setFormData(EMPTY_FORM);
+      setStatus("SUCCESS");
+    } catch (err) {
+      console.error("Form submission error:", err);
+      setError("Something went wrong. Please try again or contact us directly.");
+      setStatus("ERROR");
+    }
+  };
 
-	const handleInputChange = (field: string, value: any) => {
-		setFormData((prev) => ({
-			...prev,
-			[field]: value,
-		}));
-	};
+  const handleInputChange = (
+    field: keyof typeof EMPTY_FORM,
+    value: string | boolean,
+  ) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  };
 
-	return (
-		<section className="bg-white md:px-0 py-20 md:py-24" id="form-section">
-			<div className="max-w-5xl mx-auto px-7">
-				<div className="text-center mb-16">
-					<div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-14">
-						<div>
-							<h2 className="text-3xl md:text-4xl font-bold text-blue-900 mb-8">
-								A Legacy That Lives On
-							</h2>
-							<div className="flex items-center justify-center gap-3 mb-8">
-								<span className="w-12 h-0.5 bg-blue-400 opacity-55"></span>
-								{/* <svg className="w-4 h-4 text-blue-500" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 21s-7.5-4.7-7.5-10A4.5 4.5 0 0 1 12 8a4.5 4.5 0 0 1 7.5 3c0 5.3-7.5 10-7.5 10Z"/>
-                  </svg> */}
-								<HeartIcon className="w-4 h-4 text-blue-500" />
-								<span className="w-12 h-0.5 bg-blue-400 opacity-55"></span>
-							</div>
-							<p className="text-base text-gray-700 mb-4">
-								Your legacy is more than what you leave behind. It's the lives
-								you touch, the hope you inspire, and the future you help create.
-							</p>
-							<p className="text-base text-gray-700 mb-4">
-								The people we serve today, and the volunteers who serve
-								alongside us, are the living proof of what a legacy of hope can
-								build.
-							</p>
-							<p className="text-xl font-semibold text-blue-900">
-								Your story can be the reason someone else finds hope.
-							</p>
-						</div>
-						<div className="rounded-2xl overflow-hidden shadow-lg">
-							<div className="relative w-full h-96 bg-gradient-to-br from-gray-300 to-green-100">
-								<Image
-									src="/v2/plannedgiving/plannedgiving_storymedia.webp"
-									alt="storymedia-image"
-									fill
-									sizes="(max-width: 1000px) 100vw, (max-width: 1920px) 50vw, 600px"
-									loading="eager"
-									className="object-cover"
-								/>
-							</div>
-						</div>
-					</div>
-				</div>
+  return (
+    <PageSection className="py-15 gap-10">
+      <div id="form-section" className="scroll-mt-24" />
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+        <div className="grid gap-5">
+          <SectionHeading
+            eyebrow="Your story continues"
+            title="A Legacy That Lives On"
+          />
+          <div className="grid gap-4 text-neutral-600">
+            <p>
+              Your legacy is more than what you leave behind. It&apos;s the
+              lives you touch, the hope you inspire, and the future you help
+              create.
+            </p>
+            <p>
+              The people we serve today, and the volunteers who serve alongside
+              us, are the living proof of what a legacy of hope can build.
+            </p>
+            <p className="font-semibold text-primary-800">
+              Your story can be the reason someone else finds hope.
+            </p>
+          </div>
+        </div>
+        <div className="relative w-full h-80 md:h-96 rounded-2xl overflow-hidden shadow-md bg-neutral-200">
+          <Image
+            src={`/${ASSET_VERSION}/core/plannedgiving_storymedia.webp`}
+            alt="Volunteers serving the community together"
+            fill
+            sizes="(max-width: 1024px) 100vw, 50vw"
+            className="object-cover"
+          />
+        </div>
+      </div>
 
-				<div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-					{/* Form Card */}
-					<div className="md:col-span-2 bg-white border border-gray-200 rounded-2xl p-8 shadow-sm">
-						<div className="flex items-center gap-3 mb-4">
-							{/* <svg className="w-6 h-6 text-blue-500" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 3c-.5 2.8-2.2 4.6-5 5.4 2.1.4 3.7 1.6 4.6 3.6.9-2 2.5-3.2 4.6-3.6-2.8-.8-4.5-2.6-4.6-5.4Z"/>
-                </svg> */}
-							<SparklesIcon className="w-6 h-6 text-blue-500" />
-							<h3 className="text-2xl font-bold text-blue-900">
-								Let's Start a Conversation
-							</h3>
-						</div>
-						<p className="text-gray-600 text-base mb-6">
-							You don't need to have everything figured out today. We're here to
-							listen, answer your questions, and help you explore the
-							possibilities.
-						</p>
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+        <div className="lg:col-span-2 bg-neutral-50 rounded-2xl p-5 md:p-8 shadow-md">
+          <div className="flex items-center gap-3 mb-3">
+            <SparklesIcon
+              className="w-6 h-6 text-accent-500"
+              aria-hidden="true"
+            />
+            <Heading>Let&apos;s Start a Conversation</Heading>
+          </div>
+          <p className="text-neutral-600 text-sm md:text-md mb-6">
+            You don&apos;t need to have everything figured out today. We&apos;re
+            here to listen, answer your questions, and help you explore the
+            possibilities.
+          </p>
 
-						<form onSubmit={handleSubmit}>
-							<div className="grid grid-cols-2 gap-3 mb-3">
-								<input
-									type="text"
-									placeholder="First name"
-									aria-label="First name"
-									value={formData.fname}
-									onChange={(e) => handleInputChange("fname", e.target.value)}
-									required
-									className="w-full px-4 py-3 border border-gray-300 rounded-xl font-base text-gray-800 bg-blue-50 placeholder-gray-400 focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-colors"
-								/>
-								<input
-									type="text"
-									placeholder="Last name"
-									aria-label="Last name"
-									value={formData.lname}
-									onChange={(e) => handleInputChange("lname", e.target.value)}
-									required
-									className="w-full px-4 py-3 border border-gray-300 rounded-xl font-base text-gray-800 bg-blue-50 placeholder-gray-400 focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-colors"
-								/>
-							</div>
-							<div className="grid grid-cols-2 gap-3 mb-3">
-								<input
-									type="email"
-									placeholder="Email address"
-									aria-label="Email address"
-									value={formData.email}
-									onChange={(e) => handleInputChange("email", e.target.value)}
-									required
-									className="w-full px-4 py-3 border border-gray-300 rounded-xl font-base text-gray-800 bg-blue-50 placeholder-gray-400 focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-colors"
-								/>
-								<input
-									type="tel"
-									placeholder="Phone (optional)"
-									aria-label="Phone"
-									value={formData.phone}
-									onChange={(e) => handleInputChange("phone", e.target.value)}
-									className="w-full px-4 py-3 border border-gray-300 rounded-xl font-base text-gray-800 bg-blue-50 placeholder-gray-400 focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-colors"
-								/>
-							</div>
-							<textarea
-								placeholder="How can we help you?"
-								aria-label="Message"
-								value={formData.message}
-								onChange={(e) => handleInputChange("message", e.target.value)}
-								className="w-full px-4 py-3 border border-gray-300 rounded-xl font-base text-gray-800 bg-blue-50 placeholder-gray-400 focus:outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-colors mb-4 resize-none min-h-12"
-							/>
-							<label className="flex items-start gap-3 text-sm text-gray-600 mb-3 cursor-pointer">
-								<input
-									type="checkbox"
-									checked={formData.infoCheck}
-									onChange={(e) =>
-										handleInputChange("infoCheck", e.target.checked)
-									}
-									className="w-4 h-4 accent-blue-500 mt-0.5 flex-shrink-0 cursor-pointer"
-								/>
-								<span>I'd like information about planned giving.</span>
-							</label>
-							<label className="flex items-start gap-3 text-sm text-gray-600 mb-6 cursor-pointer">
-								<input
-									type="checkbox"
-									checked={formData.contactCheck}
-									onChange={(e) =>
-										handleInputChange("contactCheck", e.target.checked)
-									}
-									className="w-4 h-4 accent-blue-500 mt-0.5 flex-shrink-0 cursor-pointer"
-								/>
-								<span>Please contact me to start a conversation.</span>
-							</label>
-							<button
-								type="submit"
-								disabled={status === "SUBMITTING"}
-								className="w-full flex items-center justify-center gap-2 bg-blue-900 text-white px-6 py-3 rounded-full font-bold text-base shadow-lg hover:bg-blue-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
-							>
-								{/* <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 3c-.5 2.8-2.2 4.6-5 5.4 2.1.4 3.7 1.6 4.6 3.6.9-2 2.5-3.2 4.6-3.6-2.8-.8-4.5-2.6-4.6-5.4Z"/>
-                  </svg> */}
-								{status === "SUBMITTING"
-									? "Sending…"
-									: "Let's Talk About Your Legacy"}
-							</button>
-						</form>
-					</div>
+          {status === "SUCCESS" ? (
+            <p
+              role="status"
+              className="bg-accent-50 border border-accent-200 rounded-xl p-4 text-sm font-semibold text-accent-800">
+              Thank you! We&apos;ve received your inquiry. A member of our team
+              will reach out to you soon.
+            </p>
+          ) : (
+            <form onSubmit={handleSubmit} className="grid gap-3" noValidate>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <input
+                  type="text"
+                  placeholder="First name"
+                  aria-label="First name"
+                  autoComplete="given-name"
+                  maxLength={50}
+                  value={formData.fname}
+                  onChange={(e) => handleInputChange("fname", e.target.value)}
+                  required
+                  className={INPUT_CLASS}
+                />
+                <input
+                  type="text"
+                  placeholder="Last name"
+                  aria-label="Last name"
+                  autoComplete="family-name"
+                  maxLength={50}
+                  value={formData.lname}
+                  onChange={(e) => handleInputChange("lname", e.target.value)}
+                  required
+                  className={INPUT_CLASS}
+                />
+                <input
+                  type="email"
+                  placeholder="Email address"
+                  aria-label="Email address"
+                  autoComplete="email"
+                  maxLength={254}
+                  value={formData.email}
+                  onChange={(e) => handleInputChange("email", e.target.value)}
+                  required
+                  className={INPUT_CLASS}
+                />
+                <input
+                  type="tel"
+                  placeholder="Phone (optional)"
+                  aria-label="Phone"
+                  autoComplete="tel"
+                  maxLength={30}
+                  value={formData.phone}
+                  onChange={(e) => handleInputChange("phone", e.target.value)}
+                  className={INPUT_CLASS}
+                />
+              </div>
+              <textarea
+                placeholder="How can we help you?"
+                aria-label="Message"
+                maxLength={3000}
+                value={formData.message}
+                onChange={(e) => handleInputChange("message", e.target.value)}
+                className={`${INPUT_CLASS} resize-none min-h-28`}
+              />
+              <input
+                type="text"
+                name="website"
+                tabIndex={-1}
+                autoComplete="off"
+                aria-hidden="true"
+                value={formData.website}
+                onChange={(e) => handleInputChange("website", e.target.value)}
+                className="hidden"
+              />
+              <label className="flex items-start gap-3 text-sm text-neutral-600 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={formData.infoCheck}
+                  onChange={(e) =>
+                    handleInputChange("infoCheck", e.target.checked)
+                  }
+                  className="w-4 h-4 accent-accent-500 mt-0.5 shrink-0 cursor-pointer"
+                />
+                <span>I&apos;d like information about planned giving.</span>
+              </label>
+              <label className="flex items-start gap-3 text-sm text-neutral-600 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={formData.contactCheck}
+                  onChange={(e) =>
+                    handleInputChange("contactCheck", e.target.checked)
+                  }
+                  className="w-4 h-4 accent-accent-500 mt-0.5 shrink-0 cursor-pointer"
+                />
+                <span>Please contact me to start a conversation.</span>
+              </label>
 
-					{/* Quote Card */}
-					<aside className="bg-gradient-to-b from-blue-900 to-blue-800 text-blue-50 rounded-2xl p-8 flex flex-col justify-center relative overflow-hidden">
-						<span className="text-8xl leading-none text-teal-300 opacity-95 mb-2">
-							&ldquo;
-						</span>
-						<blockquote className="text-xl font-medium leading-relaxed text-white mb-6">
-							Give a man a fish and you feed him for a day. Teach him how to
-							fish and you feed him for a lifetime.
-						</blockquote>
-						<cite className="block text-sm text-blue-200 tracking-wide font-normal">
-							&mdash; Chinese proverb
-						</cite>
-						{/* <svg className="absolute right-0 bottom-0 w-32 h-32 text-teal-400 opacity-20" viewBox="0 0 24 24" fill="currentColor">
-                <path d="M20 4c-9 0-15 5-15 13 0 1 .1 2 .3 3 .8-2.4 2.3-4.3 4.4-5.6C7 16 6 14 6 14s3 1 5-1c1.6-1.6 2-4 2-4s2.2.4 4-1.4C18.6 6 20 4 20 4Z"/>
-              </svg> */}
-						<SparklesIcon className="absolute right-0 bottom-0 w-32 h-32 text-teal-400 opacity-20" />
-					</aside>
-				</div>
-			</div>
-		</section>
-	);
+              {error && (
+                <p
+                  role="alert"
+                  className="bg-red-50 border border-red-200 rounded-xl p-4 text-sm font-semibold text-red-800">
+                  {error}
+                </p>
+              )}
+
+              <button
+                type="submit"
+                disabled={status === "SUBMITTING"}
+                className="mt-3 w-full rounded-2xl px-10 py-5 bg-accent-500 hover:bg-accent-600 text-neutral-50 font-semibold text-sm md:text-md transition-all duration-700 disabled:bg-neutral-300 disabled:cursor-not-allowed">
+                {status === "SUBMITTING"
+                  ? "Sending…"
+                  : "LET'S TALK ABOUT YOUR LEGACY"}
+              </button>
+            </form>
+          )}
+        </div>
+
+        <aside className="relative overflow-hidden bg-primary-800 text-neutral-300 rounded-2xl p-5 md:p-8 flex flex-col justify-center shadow-md">
+          <span
+            aria-hidden="true"
+            className="font-serif text-8xl leading-none text-accent-300">
+            &ldquo;
+          </span>
+          <blockquote className="font-urbanist text-xlg font-medium text-neutral-50 mb-5">
+            Give a man a fish and you feed him for a day. Teach him how to fish
+            and you feed him for a lifetime.
+          </blockquote>
+          <cite className="block text-sm not-italic tracking-wide">
+            &mdash; Chinese proverb
+          </cite>
+          <SparklesIcon
+            aria-hidden="true"
+            className="absolute -right-4 -bottom-4 w-32 h-32 text-accent-300 opacity-15"
+          />
+        </aside>
+      </div>
+    </PageSection>
+  );
 }
