@@ -70,10 +70,31 @@ const getHeaderLinks = (): NavLink[] => [
  { label: "AWARDS", href: "/awards" },
 
  //  added Volunteer Consent Form onto the main tab for easy access to the form 10/05/26/
- { label: "VOLUNTEER CONSENT", href: "https://docs.google.com/forms/d/e/1FAIpQLSeLI2u4eJFk8IiAonYYe1kwi5b0-bibk2TP1HSh2-eWQxdtGw/viewform",
-   target: "_blank",
-   rel: "noopener noreferrer",
+//  { label: "VOLUNTEER CONSENT", href: "https://docs.google.com/forms/d/e/1FAIpQLSeLI2u4eJFk8IiAonYYe1kwi5b0-bibk2TP1HSh2-eWQxdtGw/viewform",
+//    target: "_blank",
+//    rel: "noopener noreferrer",
+//  },
+ // Updated 10/06/26: replaced Google Form with the 2 current waiver PDFs
+ {
+   label: "VOLUNTEER CONSENT",
+   href: "#",
+   children: [
+     {
+       label: "GENERAL VOLUNTEER AGREEMENT",
+       href: "/v2/forms/general-volunteering-agreement.pdf",
+       target: "_blank",
+       rel: "noopener noreferrer",
+     },
+     {
+       label: "SERVING HOPE VOLUNTEER AGREEMENT",
+       href: "/v2/forms/serving-hope-volunteer-agreement.pdf",
+       target: "_blank",
+       rel: "noopener noreferrer",
+     },
+   ],
  },
+
+
   {
     label: "MEDIA",
     href: "/media",
@@ -357,11 +378,13 @@ function DesktopNavigatorItem({
               ? "opacity-100 pointer-events-auto"
               : "opacity-0 -translate-y-1 pointer-events-none"
           } absolute hidden md:flex z-50 transition-[opacity_transform] delay-150 duration-300 bg-neutral-50 min-w-40 w-max rounded-lg p-3 py-5 shadow-md text-accent-800 flex-col font-semibold text-sm`}>
-          {children.map(({ label: childLabel, href: childHref }) => (
+          {children.map(({ label: childLabel, href: childHref, target: childTarget, rel: childRel }) => (
             <Link
               className="py-2.5 hover:bg-neutral-200 duration-300 transition-colors no-underline! px-3 rounded-md"
               key={childHref}
-              href={childHref}>
+              href={childHref}
+              target={childTarget}
+              rel={childRel}>                
               {childLabel}
             </Link>
           ))}
