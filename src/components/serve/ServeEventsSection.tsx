@@ -26,6 +26,11 @@ export default async function ServeEventsSection() {
             Join us at our upcoming gatherings, from major community
             celebrations to the events that make a difference every month.
           </p>
+          {/* Added the volunteer consent form on Oct 05, 2026 */}
+          <p className="text-neutral-600">
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSeLI2u4eJFk8IiAonYYe1kwi5b0-bibk2TP1HSh2-eWQxdtGw/viewform"
+            target="_blank" rel="noopener noreferrer">Volunteer Consent Form</a>
+          </p>
         </div>
         <section className="grid gap-5 min-h-60">
           <Heading className="text-xl">Featured Events</Heading>
