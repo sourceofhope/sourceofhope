@@ -34,14 +34,10 @@ export default async function Media() {
 
   return (
     <>
-      <PageHeader>
-        <h2 className="font-urbanist font-bold text-neutral-50 text-xxxlg">
-          MEDIA
-        </h2>
-        <p className="font-semibold text-neutral-200 text-sm">
-          OUR COMMUNITY CONTRIBUTION
-        </p>
-      </PageHeader>
+      <PageHeader
+        title="MEDIA"
+        subtitle="OUR COMMUNITY CONTRIBUTION"
+      />
       <MediaBlogPage posts={posts} />
       <MediaNewsletterSection newsletters={newsletters} />
     </>

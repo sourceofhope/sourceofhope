@@ -84,12 +84,7 @@ export default async function Team() {
   if (teamsWithMembers === null) {
     return (
       <>
-        <PageHeader>
-          <h1 className="font-urbanist font-bold text-neutral-50 text-xxxlg">
-            TEAM
-          </h1>
-          <p className="font-semibold text-neutral-200 text-sm">WHO WE ARE</p>
-        </PageHeader>
+        <PageHeader title="TEAM" subtitle="WHO WE ARE" />
         <section className="w-full md:justify-items-left items-center grid my-5 px-5 lg:px-35 min-h-screen">
           <div className="text-center">
             <h2 className="text-3xl font-bold font-urbanist mb-4">Team</h2>
@@ -107,12 +102,7 @@ export default async function Team() {
   if (sortedTeams.length === 0) {
     return (
       <>
-        <PageHeader>
-          <h1 className="font-urbanist font-bold text-neutral-50 text-xxxlg">
-            TEAM
-          </h1>
-          <p className="font-semibold text-neutral-200 text-sm">WHO WE ARE</p>
-        </PageHeader>
+        <PageHeader title="TEAM" subtitle="WHO WE ARE" />
         <section className="w-full md:justify-items-left items-center grid my-5 px-5 lg:px-35 min-h-screen">
           <div className="text-center">
             <h2 className="text-3xl font-bold font-urbanist mb-4">
@@ -129,12 +119,7 @@ export default async function Team() {
 
   return (
     <>
-      <PageHeader>
-        <h1 className="font-urbanist font-bold text-neutral-50 text-xxxlg">
-          TEAM
-        </h1>
-        <p className="font-semibold text-neutral-200 text-sm">WHO WE ARE</p>
-      </PageHeader>
+      <PageHeader title="TEAM" subtitle="WHO WE ARE" />
       <PageSection className="pt-5">
         <div className="grid gap-5">
           {sortedTeams.map((team) => (

@@ -26,14 +26,10 @@ export const metadata: Metadata = {
 export default function Podcast() {
   return (
     <>
-      <PageHeader>
-        <h1 className="font-urbanist text-xxxlg font-bold text-neutral-50">
-          PODCASTS & RADIO
-        </h1>
-        <p className="text-sm font-semibold text-neutral-200 md:text-base">
-          STORIES OF HOPE, WELLNESS, AND COMMUNITY IMPACT
-        </p>
-      </PageHeader>
+      <PageHeader
+        title="PODCASTS & RADIO"
+        subtitle="STORIES OF HOPE, WELLNESS, AND COMMUNITY IMPACT"
+      />
 
       <PageSection className="justify-items-center grid relative m-0 text-sm md:text-md lg:text-lg">
         <article className="grid gap-5">
