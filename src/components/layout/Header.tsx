@@ -15,6 +15,10 @@ interface NavLink {
   label: string;
   href: string;
   children?: NavLink[];
+  // Added on 10/06/26 for external links (e.g. Volunteer Consent Form) that should open in a new tab
+  target?: string;
+  // Added on 10/06/26 for external links (e.g. Volunteer Consent Form) that should open in a new tab
+  rel?: string;
 }
 
 const getHeaderLinks = (): NavLink[] => [
@@ -64,6 +68,12 @@ const getHeaderLinks = (): NavLink[] => [
  { label: "EVENTS", href: "/events" },
   //  added Awards onto the main tab for the header navigation for easy access to the events page 08/10/26
  { label: "AWARDS", href: "/awards" },
+
+ //  added Volunteer Consent Form onto the main tab for easy access to the form 10/05/26/
+ { label: "VOLUNTEER CONSENT", href: "https://docs.google.com/forms/d/e/1FAIpQLSeLI2u4eJFk8IiAonYYe1kwi5b0-bibk2TP1HSh2-eWQxdtGw/viewform",
+   target: "_blank",
+   rel: "noopener noreferrer",
+ },
   {
     label: "MEDIA",
     href: "/media",
@@ -263,11 +273,13 @@ function DesktopNavigator({ links }: { links: NavLink[] }) {
 
   return (
     <nav className="flex flex-row gap-5">
-      {links.map(({ label, href, children }) => (
+      {links.map(({ label, href, children, target, rel }) => (
         <DesktopNavigatorItem
           key={label}
           label={label}
           href={href}
+          target={target}
+          rel={rel} 
           hovering={hovering}
           setHovering={setHovering}
           className={`
@@ -293,6 +305,8 @@ function DesktopNavigatorItem({
   hovering,
   setHovering,
   className,
+  target,
+  rel,
 }: {
   label: string;
   href: string;
@@ -300,6 +314,8 @@ function DesktopNavigatorItem({
   hovering: string | null;
   setHovering: (value: string | null) => void;
   className?: string;
+  target?: string;
+  rel?: string;
 }) {
   const isOpen = hovering === label;
   const hasChildren = children.length > 0;
@@ -308,6 +324,8 @@ function DesktopNavigatorItem({
     <div className="w-full select-none relative">
       <Link
         href={href}
+        target={target}
+        rel={rel}
         onMouseEnter={() => setHovering(label)}
         onMouseLeave={() => setHovering(null)}
         className={`no-underline! group transition-[color_transform] ease-in-out duration-300 inline-flex w-full justify-between items-center gap-1 focus:outline-none ${className}`}>
@@ -440,6 +458,8 @@ function MobileNavigator({
             <div key={item.href} className="w-full">
               <Link
                 href={item.href}
+                target={item.target}
+                rel={item.rel}
                 className="no-underline! py-2.5 h-full w-full group font-bold inline-flex justify-between items-center gap-1"
                 onClick={() => {
                   if (hasChildren) {
