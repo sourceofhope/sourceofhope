@@ -23,10 +23,14 @@ export const metadata: Metadata = {
 export default function About() {
   return (
     <>
-      <PageHeader
-        title="ABOUT"
-        subtitle="EMPOWERING COMMUNITIES"
-      />
+      <PageHeader>
+        <h1 className="font-urbanist font-bold text-neutral-50 text-xxxlg">
+          ABOUT
+        </h1>
+        <p className="font-semibold text-neutral-200 text-sm">
+          EMPOWERING COMMUNITIES
+        </p>
+      </PageHeader>
       <AboutDescriptionSection />
       <AboutMissionSection />
       <AboutSummarySection />
