@@ -26,7 +26,7 @@ export default async function ServeEventsSection() {
             Join us at our upcoming gatherings, from major community
             celebrations to the events that make a difference every month.
           </p>
-          {/* Added the volunteer consent form on Oct 05, 2026 */}
+          {/* Added the volunteer consent form on Oct 05, 2026
           <p className="text-neutral-600">
             <a href="https://docs.google.com/forms/d/e/1FAIpQLSeLI2u4eJFk8IiAonYYe1kwi5b0-bibk2TP1HSh2-eWQxdtGw/viewform"
             target="_blank" rel="noopener noreferrer" 
@@ -35,7 +35,27 @@ export default async function ServeEventsSection() {
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
             </svg>
+          </p> */}
+          {/* Updated Oct 06, 2026: replaced Google Form with the 2 current waiver PDFs */}
+          <p className="text-neutral-600 flex flex-col gap-1">
+            <a href="/v2/forms/general-volunteering-agreement.pdf"
+            target="_blank" rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 text-blue-600 underline hover:text-blue-800 font-medium">
+            General Volunteer Agreement
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+            </a>
+            <a href="/v2/forms/serving-hope-volunteer-agreement.pdf"
+            target="_blank" rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 text-blue-600 underline hover:text-blue-800 font-medium">
+            Serving Hope Volunteer Agreement
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+            </a>
           </p>
+
         </div>
         <section className="grid gap-5 min-h-60">
           <Heading className="text-xl">Featured Events</Heading>
