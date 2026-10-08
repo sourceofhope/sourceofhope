@@ -3,6 +3,7 @@ import { getEnvironment } from '@/lib/environment.server';
 import Stripe from 'stripe';
 import { rateLimit } from '@/lib/rate-limit';
 import { PricingError, getSiteOrigin, quoteStoreOrder, toCents } from '@/lib/store-pricing';
+import { readJsonObject } from '@/lib/validation';
 
 function buildStripeShippingOptions(
     shippingName: string,
@@ -56,9 +57,14 @@ export async function POST(request: Request) {
 
         const stripe = new Stripe(stripeSecretKey);
 
+        const body = await readJsonObject(request);
+        if (!body) {
+            return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
+        }
+
         // Prices, tax, shipping, and fees are computed on the server from the
         // CMS; any amounts or URLs sent by the browser are ignored.
-        const quote = await quoteStoreOrder(await request.json());
+        const quote = await quoteStoreOrder(body);
         const origin = getSiteOrigin(request);
 
         const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = quote.lines.map((line) => ({

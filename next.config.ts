@@ -18,8 +18,10 @@ const securityHeaders = [
       'camera=(), microphone=(), geolocation=(), payment=(self "https://js.stripe.com" "https://www.paypal.com")',
   },
   {
+    // No includeSubDomains: some older subdomains may still be served over
+    // plain HTTP and would become unreachable.
     key: "Strict-Transport-Security",
-    value: "max-age=63072000; includeSubDomains",
+    value: "max-age=63072000",
   },
 ];
 

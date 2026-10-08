@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getEnvironment } from '@/lib/environment.server';
+import { rateLimit } from '@/lib/rate-limit';
 
 type PaypalOrderDetails = {
     status?: string;
@@ -17,6 +18,10 @@ type PaypalOrderDetails = {
  */
 export async function GET(request: Request) {
     try {
+        // 30 status lookups per IP per 10 minutes.
+        const limited = rateLimit(request, 'payment-status', 30, 10 * 60 * 1000);
+        if (limited) return limited;
+
         const { paypalClientId, paypalClientSecret, paypalApiUrl } = getEnvironment();
 
         if (!paypalClientId || !paypalClientSecret || !paypalApiUrl) {

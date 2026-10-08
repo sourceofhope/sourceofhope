@@ -3,6 +3,7 @@ import { getEnvironment } from '@/lib/environment.server';
 import Stripe from 'stripe';
 import { rateLimit } from '@/lib/rate-limit';
 import { PricingError, quoteStoreOrder, toCents } from '@/lib/store-pricing';
+import { readJsonObject } from '@/lib/validation';
 
 type CheckoutAddress = {
     firstName?: string;
@@ -20,6 +21,8 @@ type CreateStripePaymentIntentBody = {
     processingFee?: number;
     shippingAddress?: CheckoutAddress;
     email?: string;
+    /** The total the checkout page showed the customer. */
+    totalAmount?: number | string;
 };
 
 const EMAIL_PATTERN = /^[^\s@<>"]{1,64}@[^\s@<>"]{1,255}\.[^\s@<>"]+$/;
@@ -74,7 +77,11 @@ export async function POST(request: Request) {
 
         const stripe = new Stripe(stripeSecretKey);
 
-        const body = (await request.json()) as CreateStripePaymentIntentBody;
+        const body = (await readJsonObject(request)) as CreateStripePaymentIntentBody | null;
+        if (!body) {
+            return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
+        }
+
         // Prices, tax, shipping, and fees are computed on the server from the
         // CMS; any amounts sent by the browser are ignored.
         const quote = await quoteStoreOrder(body);
@@ -88,6 +95,16 @@ export async function POST(request: Request) {
         const taxAmount = quote.tax;
         const processingFee = quote.processingFee;
         const amountInCents = toCents(quote.total);
+
+        // The client's total is only used to make sure the customer is charged
+        // exactly what the checkout page showed them.
+        const shownTotal = Number(body.totalAmount);
+        if (!Number.isFinite(shownTotal) || toCents(shownTotal) !== amountInCents) {
+            return NextResponse.json(
+                { error: 'Prices in your cart have changed. Please remove and re-add your items, then try again.' },
+                { status: 409 },
+            );
+        }
 
         // Create/find a Stripe customer so we can attach a draft invoice that stores full line-item details.
         let customerId: string | undefined;

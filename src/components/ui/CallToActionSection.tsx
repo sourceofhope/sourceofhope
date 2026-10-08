@@ -19,7 +19,7 @@ export default function CallToActionSection({
   buttonText,
 }: CallToActionSectionProps) {
   return (
-    <section className="py-15 px-5 md:px-15 lg:px-35 w-full grid justify-items-center bg-accent-800 text-neutral-50">
+    <section className="py-15 px-5 lg:px-35 w-full grid justify-items-center bg-accent-800 text-neutral-50">
       <article className="md:w-2/3 lg:w-1/2 grid gap-5 justify-items-center text-balance text-center">
         <IconComponent className="w-16 h-16" aria-hidden="true" />
         <Title className="text-neutral-50">{title}</Title>

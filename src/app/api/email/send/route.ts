@@ -2,12 +2,14 @@ import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import { getEnvironment } from '@/lib/environment.server';
 import { rateLimit } from '@/lib/rate-limit';
+import { readJsonObject } from '@/lib/validation';
 
 // 3 messages per IP per 10 minutes.
 const RATE_LIMIT = 3;
 const RATE_WINDOW_MS = 10 * 60 * 1000;
 
 const MAX_NAME_LENGTH = 120;
+const MAX_EMAIL_LENGTH = 254;
 const MAX_MESSAGE_LENGTH = 5000;
 const EMAIL_PATTERN = /^[^\s@<>"]{1,64}@[^\s@<>"]{1,255}\.[^\s@<>"]+$/;
 
@@ -25,8 +27,15 @@ export async function POST(request: NextRequest) {
     const limited = rateLimit(request, 'email', RATE_LIMIT, RATE_WINDOW_MS);
     if (limited) return limited;
 
-    const body = await request.json().catch(() => null);
-    const { name, email, message, website } = (body ?? {}) as Record<string, unknown>;
+    const body = await readJsonObject(request);
+    if (!body) {
+      return NextResponse.json(
+        { success: false, error: 'Invalid request body' },
+        { status: 400 }
+      );
+    }
+
+    const { name, email, message, website } = body;
 
     // Honeypot field: real visitors never see or fill it. Pretend success.
     if (typeof website === 'string' && website.trim() !== '') {
@@ -48,7 +57,7 @@ export async function POST(request: NextRequest) {
     }
 
     const cleanEmail = email.trim();
-    if (!EMAIL_PATTERN.test(cleanEmail)) {
+    if (cleanEmail.length > MAX_EMAIL_LENGTH || !EMAIL_PATTERN.test(cleanEmail)) {
       return NextResponse.json(
         { success: false, error: 'Please provide a valid email address' },
         { status: 400 }

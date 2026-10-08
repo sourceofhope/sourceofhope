@@ -78,6 +78,16 @@ export default function ServeGuidelinesSection() {
         </p>
         <ul className="list-disc pl-5">
           <li>
+            Register on{" "}
+            <a
+              className="font-semibold text-accent-500"
+              href="https://www.eventbrite.com/o/quynh-chau-stone-92264017613"
+              target="_blank"
+              rel="noopener noreferrer">
+              our Eventbrite page
+            </a>
+          </li>
+          <li>
             Download your{" "}
             <Link
               className="font-semibold text-accent-500"
@@ -87,11 +97,11 @@ export default function ServeGuidelinesSection() {
           </li>
           <li>
             Or email us at{" "}
-            <Link
+            <a
               className="font-semibold text-accent-500"
               href="mailto:info@thesourceofhope.org?subject=Volunteer Sign-up">
               info@thesourceofhope.org
-            </Link>
+            </a>
           </li>
         </ul>
         <p className="md:text-balance">

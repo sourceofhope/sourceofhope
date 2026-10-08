@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getEnvironment } from '@/lib/environment.server';
 import { rateLimit } from '@/lib/rate-limit';
+import { readJsonObject } from '@/lib/validation';
 import Stripe from 'stripe';
 
 // 5 PaymentIntent creations per IP per 10 minutes.
@@ -60,7 +61,11 @@ export async function POST(request: NextRequest) {
 
         const stripe = new Stripe(stripeSecretKey);
 
-        const body = (await request.json()) as CreateDonationPaymentIntentBody;
+        const body = (await readJsonObject(request)) as CreateDonationPaymentIntentBody | null;
+        if (!body) {
+            return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
+        }
+
         const amount = Number(body.amount);
         const coverFee = body.coverFee === true;
         const email = asString(body.email, 254);
@@ -68,8 +73,15 @@ export async function POST(request: NextRequest) {
         const lastName = asString(body.lastName, 100);
         const dedication = asString(body.dedication, 500);
 
-        if (!Number.isFinite(amount) || amount <= 0 || amount > MAX_DONATION) {
+        if (!Number.isFinite(amount) || amount <= 0) {
             return NextResponse.json({ error: 'A valid donation amount is required.' }, { status: 400 });
+        }
+
+        if (amount > MAX_DONATION) {
+            return NextResponse.json(
+                { error: 'For donations over $100,000, please contact us directly.' },
+                { status: 400 },
+            );
         }
 
         if (email && !EMAIL_PATTERN.test(email)) {

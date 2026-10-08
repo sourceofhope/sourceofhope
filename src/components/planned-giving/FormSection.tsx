@@ -5,10 +5,9 @@ import Image from "next/image";
 import { SparklesIcon } from "@heroicons/react/24/solid";
 import PageSection from "@/components/ui/PageSection";
 import SectionHeading from "@/components/ui/SectionHeading";
-import Heading from "@/components/ui/Heading";
 import { ASSET_VERSION } from "@/lib/environment";
 
-type Status = "IDLE" | "SUBMITTING" | "SUCCESS" | "ERROR";
+type Status = "IDLE" | "SUBMITTING" | "SUCCESS" | "INVALID" | "ERROR";
 
 const EMPTY_FORM = {
   fname: "",
@@ -22,12 +21,12 @@ const EMPTY_FORM = {
   website: "",
 };
 
-const INPUT_CLASS =
-  "w-full px-4 py-3 border-2 border-neutral-300 rounded-xl text-neutral-900 bg-neutral-50 placeholder-neutral-400 focus:outline-none focus:border-accent-500 transition-colors";
+const inputClass =
+  "w-full px-4 py-2 border-2 border-neutral-300 rounded-lg bg-neutral-50 text-neutral-900 focus:border-accent-500 focus:outline-none";
+const labelClass = "text-sm font-semibold text-neutral-800";
 
 export default function FormSection() {
   const [status, setStatus] = useState<Status>("IDLE");
-  const [error, setError] = useState<string | null>(null);
   const [formData, setFormData] = useState(EMPTY_FORM);
 
   const validateEmail = (email: string) =>
@@ -35,14 +34,13 @@ export default function FormSection() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setError(null);
 
     if (
       !formData.fname.trim() ||
       !formData.lname.trim() ||
       !validateEmail(formData.email)
     ) {
-      setError("Please fill in all required fields with a valid email.");
+      setStatus("INVALID");
       return;
     }
 
@@ -82,9 +80,8 @@ export default function FormSection() {
 
       setFormData(EMPTY_FORM);
       setStatus("SUCCESS");
-    } catch (err) {
-      console.error("Form submission error:", err);
-      setError("Something went wrong. Please try again or contact us directly.");
+    } catch (error) {
+      console.error("Form submission error:", error);
       setStatus("ERROR");
     }
   };
@@ -94,18 +91,20 @@ export default function FormSection() {
     value: string | boolean,
   ) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
+    if (status !== "IDLE" && status !== "SUBMITTING") setStatus("IDLE");
   };
 
   return (
-    <PageSection className="py-15 gap-10">
-      <div id="form-section" className="scroll-mt-24" />
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+    <PageSection
+      id="form-section"
+      className="py-10 gap-10 text-sm md:text-md lg:text-lg">
+      <div className="grid gap-10 md:grid-cols-2 items-center">
         <div className="grid gap-5">
           <SectionHeading
             eyebrow="Your story continues"
             title="A Legacy That Lives On"
           />
-          <div className="grid gap-4 text-neutral-600">
+          <div className="grid gap-5 text-neutral-600">
             <p>
               Your legacy is more than what you leave behind. It&apos;s the
               lives you touch, the hope you inspire, and the future you help
@@ -115,168 +114,193 @@ export default function FormSection() {
               The people we serve today, and the volunteers who serve alongside
               us, are the living proof of what a legacy of hope can build.
             </p>
-            <p className="font-semibold text-primary-800">
-              Your story can be the reason someone else finds hope.
-            </p>
           </div>
+          <p className="font-semibold text-primary-800">
+            Your story can be the reason someone else finds hope.
+          </p>
         </div>
-        <div className="relative w-full h-80 md:h-96 rounded-2xl overflow-hidden shadow-md bg-neutral-200">
+        <div className="relative w-full aspect-square md:aspect-4/3 rounded-2xl overflow-hidden shadow-sm">
           <Image
-            src={`/${ASSET_VERSION}/core/plannedgiving_storymedia.webp`}
-            alt="Volunteers serving the community together"
+            src={`/${ASSET_VERSION}/plannedgiving/plannedgiving_storymedia.webp`}
+            alt="Three Source of Hope volunteers in aprons and gloves smiling together in a kitchen"
             fill
-            sizes="(max-width: 1024px) 100vw, 50vw"
+            sizes="(max-width: 768px) 100vw, 50vw"
             className="object-cover"
           />
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-        <div className="lg:col-span-2 bg-neutral-50 rounded-2xl p-5 md:p-8 shadow-md">
-          <div className="flex items-center gap-3 mb-3">
-            <SparklesIcon
-              className="w-6 h-6 text-accent-500"
-              aria-hidden="true"
-            />
-            <Heading>Let&apos;s Start a Conversation</Heading>
-          </div>
-          <p className="text-neutral-600 text-sm md:text-md mb-6">
-            You don&apos;t need to have everything figured out today. We&apos;re
-            here to listen, answer your questions, and help you explore the
-            possibilities.
-          </p>
-
-          {status === "SUCCESS" ? (
-            <p
-              role="status"
-              className="bg-accent-50 border border-accent-200 rounded-xl p-4 text-sm font-semibold text-accent-800">
-              Thank you! We&apos;ve received your inquiry. A member of our team
-              will reach out to you soon.
+      <div className="grid gap-5 md:grid-cols-3">
+        <div className="md:col-span-2 grid gap-5 rounded-2xl bg-neutral-100 p-5 md:p-8 shadow-sm">
+          <div className="grid gap-2">
+            <div className="flex items-center gap-3">
+              <SparklesIcon className="size-6 text-accent-500" aria-hidden="true" />
+              <h3 className="font-urbanist text-xlg font-semibold text-primary-800">
+                Let&apos;s Start a Conversation
+              </h3>
+            </div>
+            <p className="text-sm md:text-md text-neutral-600">
+              You don&apos;t need to have everything figured out today.
+              We&apos;re here to listen, answer your questions, and help you
+              explore the possibilities.
             </p>
-          ) : (
-            <form onSubmit={handleSubmit} className="grid gap-3" noValidate>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          </div>
+
+          <form onSubmit={handleSubmit} className="grid gap-4" noValidate>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="grid gap-1">
+                <label htmlFor="pg-first-name" className={labelClass}>
+                  First Name <span className="text-red-500">*</span>
+                </label>
                 <input
+                  id="pg-first-name"
                   type="text"
-                  placeholder="First name"
-                  aria-label="First name"
                   autoComplete="given-name"
                   maxLength={50}
                   value={formData.fname}
                   onChange={(e) => handleInputChange("fname", e.target.value)}
                   required
-                  className={INPUT_CLASS}
+                  className={inputClass}
                 />
+              </div>
+              <div className="grid gap-1">
+                <label htmlFor="pg-last-name" className={labelClass}>
+                  Last Name <span className="text-red-500">*</span>
+                </label>
                 <input
+                  id="pg-last-name"
                   type="text"
-                  placeholder="Last name"
-                  aria-label="Last name"
                   autoComplete="family-name"
                   maxLength={50}
                   value={formData.lname}
                   onChange={(e) => handleInputChange("lname", e.target.value)}
                   required
-                  className={INPUT_CLASS}
+                  className={inputClass}
                 />
+              </div>
+              <div className="grid gap-1">
+                <label htmlFor="pg-email" className={labelClass}>
+                  Email <span className="text-red-500">*</span>
+                </label>
                 <input
+                  id="pg-email"
                   type="email"
-                  placeholder="Email address"
-                  aria-label="Email address"
                   autoComplete="email"
+                  inputMode="email"
                   maxLength={254}
                   value={formData.email}
                   onChange={(e) => handleInputChange("email", e.target.value)}
                   required
-                  className={INPUT_CLASS}
+                  className={inputClass}
                 />
+              </div>
+              <div className="grid gap-1">
+                <label htmlFor="pg-phone" className={labelClass}>
+                  Phone{" "}
+                  <span className="text-neutral-400 font-normal">(optional)</span>
+                </label>
                 <input
+                  id="pg-phone"
                   type="tel"
-                  placeholder="Phone (optional)"
-                  aria-label="Phone"
                   autoComplete="tel"
                   maxLength={30}
                   value={formData.phone}
                   onChange={(e) => handleInputChange("phone", e.target.value)}
-                  className={INPUT_CLASS}
+                  className={inputClass}
                 />
               </div>
+            </div>
+            <div className="grid gap-1">
+              <label htmlFor="pg-message" className={labelClass}>
+                How can we help you?{" "}
+                <span className="text-neutral-400 font-normal">(optional)</span>
+              </label>
               <textarea
-                placeholder="How can we help you?"
-                aria-label="Message"
-                maxLength={3000}
+                id="pg-message"
+                rows={3}
+                maxLength={2000}
                 value={formData.message}
                 onChange={(e) => handleInputChange("message", e.target.value)}
-                className={`${INPUT_CLASS} resize-none min-h-28`}
+                className={`${inputClass} resize-none text-sm`}
               />
+            </div>
+            <input
+              type="text"
+              name="website"
+              tabIndex={-1}
+              autoComplete="off"
+              aria-hidden="true"
+              value={formData.website}
+              onChange={(e) => handleInputChange("website", e.target.value)}
+              className="hidden"
+            />
+            <label className="flex items-start gap-3 text-sm text-neutral-700 cursor-pointer">
               <input
-                type="text"
-                name="website"
-                tabIndex={-1}
-                autoComplete="off"
-                aria-hidden="true"
-                value={formData.website}
-                onChange={(e) => handleInputChange("website", e.target.value)}
-                className="hidden"
+                type="checkbox"
+                checked={formData.infoCheck}
+                onChange={(e) =>
+                  handleInputChange("infoCheck", e.target.checked)
+                }
+                className="mt-0.5 size-4 shrink-0 accent-accent-500 cursor-pointer"
               />
-              <label className="flex items-start gap-3 text-sm text-neutral-600 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={formData.infoCheck}
-                  onChange={(e) =>
-                    handleInputChange("infoCheck", e.target.checked)
-                  }
-                  className="w-4 h-4 accent-accent-500 mt-0.5 shrink-0 cursor-pointer"
-                />
-                <span>I&apos;d like information about planned giving.</span>
-              </label>
-              <label className="flex items-start gap-3 text-sm text-neutral-600 cursor-pointer">
-                <input
-                  type="checkbox"
-                  checked={formData.contactCheck}
-                  onChange={(e) =>
-                    handleInputChange("contactCheck", e.target.checked)
-                  }
-                  className="w-4 h-4 accent-accent-500 mt-0.5 shrink-0 cursor-pointer"
-                />
-                <span>Please contact me to start a conversation.</span>
-              </label>
-
-              {error && (
-                <p
-                  role="alert"
-                  className="bg-red-50 border border-red-200 rounded-xl p-4 text-sm font-semibold text-red-800">
-                  {error}
-                </p>
+              <span>I&apos;d like information about planned giving.</span>
+            </label>
+            <label className="flex items-start gap-3 text-sm text-neutral-700 cursor-pointer">
+              <input
+                type="checkbox"
+                checked={formData.contactCheck}
+                onChange={(e) =>
+                  handleInputChange("contactCheck", e.target.checked)
+                }
+                className="mt-0.5 size-4 shrink-0 accent-accent-500 cursor-pointer"
+              />
+              <span>Please contact me to start a conversation.</span>
+            </label>
+            <button
+              type="submit"
+              disabled={status === "SUBMITTING"}
+              className="w-full bg-accent-500 hover:bg-accent-600 disabled:bg-neutral-300 disabled:cursor-not-allowed text-neutral-50 font-bold py-4 px-6 rounded-xl transition-all duration-300">
+              {status === "SUBMITTING"
+                ? "Sending…"
+                : "Let's Talk About Your Legacy"}
+            </button>
+            <p role="status" aria-live="polite" className="text-sm empty:hidden">
+              {status === "SUCCESS" && (
+                <span className="text-accent-700 font-semibold">
+                  Thank you! We&apos;ve received your inquiry. A member of our
+                  team will reach out to you soon.
+                </span>
               )}
-
-              <button
-                type="submit"
-                disabled={status === "SUBMITTING"}
-                className="mt-3 w-full rounded-2xl px-10 py-5 bg-accent-500 hover:bg-accent-600 text-neutral-50 font-semibold text-sm md:text-md transition-all duration-700 disabled:bg-neutral-300 disabled:cursor-not-allowed">
-                {status === "SUBMITTING"
-                  ? "Sending…"
-                  : "LET'S TALK ABOUT YOUR LEGACY"}
-              </button>
-            </form>
-          )}
+              {status === "INVALID" && (
+                <span className="text-red-700 font-semibold">
+                  Please fill in your name and a valid email address.
+                </span>
+              )}
+              {status === "ERROR" && (
+                <span className="text-red-700 font-semibold">
+                  Something went wrong sending your message. Please try again,
+                  or email us at{" "}
+                  <a className="underline" href="mailto:info@thesourceofhope.org">
+                    info@thesourceofhope.org
+                  </a>
+                  .
+                </span>
+              )}
+            </p>
+          </form>
         </div>
 
-        <aside className="relative overflow-hidden bg-primary-800 text-neutral-300 rounded-2xl p-5 md:p-8 flex flex-col justify-center shadow-md">
-          <span
-            aria-hidden="true"
-            className="font-serif text-8xl leading-none text-accent-300">
-            &ldquo;
-          </span>
-          <blockquote className="font-urbanist text-xlg font-medium text-neutral-50 mb-5">
+        <aside className="relative overflow-hidden grid content-center gap-5 rounded-2xl bg-accent-800 p-5 md:p-8 text-neutral-50">
+          <blockquote className="border-l-4 border-accent-300 pl-5 font-urbanist text-xlg font-medium leading-snug">
             Give a man a fish and you feed him for a day. Teach him how to fish
             and you feed him for a lifetime.
           </blockquote>
-          <cite className="block text-sm not-italic tracking-wide">
+          <cite className="pl-6 text-sm not-italic text-neutral-300">
             &mdash; Chinese proverb
           </cite>
           <SparklesIcon
             aria-hidden="true"
-            className="absolute -right-4 -bottom-4 w-32 h-32 text-accent-300 opacity-15"
+            className="absolute -right-4 -bottom-4 size-32 text-accent-300 opacity-15"
           />
         </aside>
       </div>

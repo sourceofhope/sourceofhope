@@ -21,10 +21,10 @@ export default function Serve() {
         subtitle="MAKE AN IMPACT IN YOUR COMMUNITY"
       />
       <ServeShowcaseSection />
+      <ServeDocumentsSection />
       <ServeEventsSection />
       <ServeProgramsSection />
       <ServeDonationSection />
-      <ServeDocumentsSection />
       <ServeGuidelinesSection />
     </>
   );

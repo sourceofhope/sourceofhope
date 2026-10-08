@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { getEnvironment } from '@/lib/environment.server';
 import Stripe from 'stripe';
 import { rateLimit } from '@/lib/rate-limit';
+import { readJsonObject } from '@/lib/validation';
 
 type MembershipPlanId = 'bronze' | 'silver' | 'gold' | 'individual' | 'partner' | 'sponsor' | 'champion';
 
@@ -114,7 +115,11 @@ export async function POST(request: Request) {
         }
 
         const stripe = new Stripe(stripeSecretKey, { apiVersion: '2022-11-15' } as any);
-        const body = (await request.json()) as MembershipRequestBody;
+        const body = (await readJsonObject(request)) as MembershipRequestBody | null;
+        if (!body) {
+            return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
+        }
+
         const membershipPlanId = body.membershipPlanId;
         const membershipType = body.membershipType === 'company' ? 'company' : 'individual';
         const firstName = asString(body.firstName, 100);
@@ -290,7 +295,6 @@ export async function POST(request: Request) {
         return NextResponse.json({
             clientSecret: paymentIntent.client_secret,
             subscriptionId: subscription.id,
-            customerId: customer.id,
             invoiceId: (subscription.latest_invoice as any).id,
         });
     } catch (error) {

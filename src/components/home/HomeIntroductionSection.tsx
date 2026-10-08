@@ -39,9 +39,12 @@ function chooseVideoSources(): VideoSource[] | null {
       : `/${ASSET_VERSION}/core/TSOH-Hero-720.webm`;
 
   return [
-    { src: webm, type: "video/webm" },
+    { src: webm, type: 'video/webm; codecs="vp9"' },
     // H.264 fallback for browsers without VP9 WebM support (older Safari).
-    { src: `/${ASSET_VERSION}/core/TSOH-Hero-720.mp4`, type: "video/mp4" },
+    {
+      src: `/${ASSET_VERSION}/core/TSOH-Hero-720.mp4`,
+      type: 'video/mp4; codecs="avc1.64001F"',
+    },
   ];
 }
 
@@ -113,7 +116,8 @@ export default function HomeIntroductionSection() {
             src={POSTER_SRC}
             alt="The Source of Hope community impact"
             fill
-            priority
+            preload
+            fetchPriority="high"
             className="object-cover brightness-75"
             sizes="100vw"
           />
@@ -129,15 +133,24 @@ export default function HomeIntroductionSection() {
             className={`absolute inset-0 h-full w-full object-cover brightness-75 transition-opacity duration-700 ${
               videoReady ? "opacity-100" : "opacity-0"
             }`}
-            onPlaying={() => setVideoReady(true)}
-            onError={() => setVideoFailed(true)}>
-            {sources.map((source) => (
-              <source key={source.src} src={source.src} type={source.type} />
+            onPlaying={() => setVideoReady(true)}>
+            {sources.map((source, index) => (
+              <source
+                key={source.src}
+                src={source.src}
+                type={source.type}
+                // Source errors don't bubble to <video>; the last one failing means none can play.
+                onError={
+                  index === sources.length - 1
+                    ? () => setVideoFailed(true)
+                    : undefined
+                }
+              />
             ))}
           </video>
         )}
       </div>
-      <div className="relative z-10 w-full max-w-[80ch] md:max-w-[90ch] self-end grid gap-3 p-5 md:px-15 md:pb-15 lg:px-35">
+      <div className="relative z-10 w-full max-w-[80ch] md:max-w-[90ch] self-end grid gap-3 p-5 md:pb-15 lg:px-35">
         <p className="text-neutral-50 font-urbanist text-md md:text-lg font-semibold">
           THE SOURCE OF HOPE
         </p>

@@ -51,7 +51,7 @@ export default function AwardsGalleryCard({ item }: { item: GalleryItem }) {
           alt={item.alt}
           fill
           sizes={IMAGE_SIZES}
-          className="object-cover transition-transform duration-500 hover:scale-105"
+          className="object-cover transition-transform duration-500 hover:scale-105 motion-reduce:transition-none"
           style={{ objectPosition: item.position }}
         />
         <Caption year={item.year} title={item.title} />
@@ -74,7 +74,7 @@ function FlipCard({ item }: { item: FlipGalleryItem }) {
       aria-label={`${item.title} — show ${flipped ? "first" : "second"} photo`}
       className="group relative block w-full aspect-4/3 perspective-[1200px] text-left rounded-2xl focus:outline-none focus-visible:ring-4 focus-visible:ring-accent-300">
       <div
-        className={`absolute inset-0 transition-transform duration-700 transform-3d ${
+        className={`absolute inset-0 transition-transform duration-700 transform-3d motion-reduce:transition-none ${
           flipped
             ? "rotate-y-180"
             : "md:group-hover:rotate-y-180"

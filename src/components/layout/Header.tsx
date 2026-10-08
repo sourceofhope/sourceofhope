@@ -125,14 +125,14 @@ export default function Header() {
                   isBlocking ? "text-primary-800" : "text-neutral-50"
                 }`
           }`}>
-        <section className="flex gap-5 h-15 md:h-20 w-full items-center justify-between px-5 md:px-15 lg:px-35">
+        <section className="flex gap-5 h-15 md:h-20 w-full items-center justify-between px-5 lg:px-35">
           <Link
             href="/"
             onClick={() => setOpen(false)}
             aria-label="Go Home"
             className="no-underline! h-full flex gap-5 flex-row items-center w-fit z-0 overflow-clip">
             <Favicon />
-            <span className="font-bold hidden lg:block whitespace-nowrap text-ellipsis overflow-hidden">
+            <span className="font-bold hidden xl:block whitespace-nowrap">
               THE SOURCE OF HOPE
             </span>
           </Link>
@@ -186,7 +186,7 @@ function HeaderBanner({ onClose }: { onClose: () => void }) {
 
   return (
     <div
-      className="flex gap-3 justify-between md:justify-center h-15 md:h-10 items-center px-5 md:px-15 lg:px-35 bg-accent-500 border-b-2 text-neutral-50 border-accent-700 fixed top-0 left-0 right-0 z-9998 w-full overflow-hidden"
+      className="flex gap-3 justify-between md:justify-center h-15 md:h-10 items-center px-5 lg:px-35 bg-accent-500 border-b-2 text-neutral-50 border-accent-700 fixed top-0 left-0 right-0 z-9998 w-full overflow-hidden"
       role="region"
       aria-label="Site banner">
       <Link href={bannerLink} className="hover:underline font-semibold">
