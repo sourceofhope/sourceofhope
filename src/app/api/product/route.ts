@@ -5,9 +5,9 @@ export async function GET() {
   try {
     return NextResponse.json(await fetchProducts());
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Unknown error";
+    console.error("Failed to fetch products:", error);
     return NextResponse.json(
-      { error: "Failed to fetch products", details: message },
+      { error: "Failed to fetch products" },
       { status: 500 },
     );
   }

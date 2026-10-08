@@ -32,8 +32,15 @@ export async function POST(request: Request) {
             );
         }
 
+        // Signature verification needs the raw, unparsed body.
         const payload = await request.text();
-        const event = stripe.webhooks.constructEvent(payload, signature, stripeWebhookSecret);
+        let event: Stripe.Event;
+        try {
+            event = stripe.webhooks.constructEvent(payload, signature, stripeWebhookSecret);
+        } catch (error) {
+            console.error('Stripe webhook signature verification failed:', error);
+            return NextResponse.json({ error: 'Invalid signature.' }, { status: 400 });
+        }
 
         if (event.type === 'payment_intent.succeeded') {
             const paymentIntent = event.data.object as Stripe.PaymentIntent;
@@ -69,14 +76,11 @@ export async function POST(request: Request) {
         return NextResponse.json({ received: true });
     } catch (error) {
         console.error('Stripe webhook error:', error);
-        const details = error instanceof Error ? error.message : 'Unknown error';
 
+        // Non-2xx so Stripe retries the delivery.
         return NextResponse.json(
-            {
-                error: 'Failed to process Stripe webhook',
-                details,
-            },
-            { status: 400 },
+            { error: 'Failed to process Stripe webhook' },
+            { status: 500 },
         );
     }
 }

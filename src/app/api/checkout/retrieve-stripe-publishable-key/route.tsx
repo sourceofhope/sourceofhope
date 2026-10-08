@@ -32,12 +32,8 @@ export async function POST() {
     return NextResponse.json({ publishableKey: stripePublishableKey });
   } catch (error) {
     console.error('Retrieve Stripe publishable key error:', error);
-    const details = error instanceof Error ? error.message : 'Unknown error';
     return NextResponse.json(
-      {
-        error: 'Failed to retrieve Stripe publishable key',
-        details,
-      },
+      { error: 'Failed to retrieve Stripe publishable key' },
       { status: 500 },
     );
   }

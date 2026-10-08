@@ -1,6 +1,13 @@
 import { NextResponse } from 'next/server';
 import { getEnvironment } from '@/lib/environment';
+import { enforceRateLimit } from '@/lib/rate-limit';
 import Stripe from 'stripe';
+
+const PAYMENT_INTENT_ID_PATTERN = /^pi_[A-Za-z0-9]{1,250}$/;
+
+// 30 status lookups per IP per 10 minutes.
+const RATE_LIMIT = 30;
+const RATE_WINDOW_MS = 10 * 60 * 1000;
 
 /**
  * Get Stripe Payment Intent Status
@@ -8,6 +15,9 @@ import Stripe from 'stripe';
  */
 export async function GET(request: Request) {
     try {
+        const limited = enforceRateLimit(request, 'payment-status', RATE_LIMIT, RATE_WINDOW_MS);
+        if (limited) return limited;
+
         const { stripeSecretKey } = getEnvironment();
 
         if (!stripeSecretKey) {
@@ -19,6 +29,10 @@ export async function GET(request: Request) {
 
         if (!paymentIntentId) {
             return NextResponse.json({ error: 'Payment Intent ID is required' }, { status: 400 });
+        }
+
+        if (!PAYMENT_INTENT_ID_PATTERN.test(paymentIntentId)) {
+            return NextResponse.json({ error: 'Invalid Payment Intent ID' }, { status: 400 });
         }
 
         const stripe = new Stripe(stripeSecretKey);
@@ -37,12 +51,8 @@ export async function GET(request: Request) {
         });
     } catch (error) {
         console.error('Retrieve Payment Intent status error:', error);
-        const details = error instanceof Error ? error.message : 'Unknown error';
         return NextResponse.json(
-            {
-                error: 'Failed to retrieve Payment Intent status',
-                details,
-            },
+            { error: 'Failed to retrieve Payment Intent status' },
             { status: 500 },
         );
     }

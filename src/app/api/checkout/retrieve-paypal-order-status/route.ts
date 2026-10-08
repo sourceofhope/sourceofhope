@@ -1,5 +1,13 @@
 import { NextResponse } from 'next/server';
 import { getEnvironment } from '@/lib/environment';
+import { enforceRateLimit } from '@/lib/rate-limit';
+
+// PayPal order IDs are short alphanumeric tokens; anything else could alter the API path.
+const ORDER_ID_PATTERN = /^[A-Za-z0-9-]{1,64}$/;
+
+// 30 status lookups per IP per 10 minutes.
+const RATE_LIMIT = 30;
+const RATE_WINDOW_MS = 10 * 60 * 1000;
 
 type PaypalOrderDetails = {
     status?: string;
@@ -17,6 +25,9 @@ type PaypalOrderDetails = {
  */
 export async function GET(request: Request) {
     try {
+        const limited = enforceRateLimit(request, 'payment-status', RATE_LIMIT, RATE_WINDOW_MS);
+        if (limited) return limited;
+
         const { paypalClientId, paypalClientSecret, paypalApiUrl } = getEnvironment();
 
         if (!paypalClientId || !paypalClientSecret || !paypalApiUrl) {
@@ -28,6 +39,10 @@ export async function GET(request: Request) {
 
         if (!token) {
             return NextResponse.json({ error: 'PayPal token is required' }, { status: 400 });
+        }
+
+        if (!ORDER_ID_PATTERN.test(token)) {
+            return NextResponse.json({ error: 'Invalid PayPal token' }, { status: 400 });
         }
 
         const auth = Buffer.from(`${paypalClientId}:${paypalClientSecret}`).toString('base64');
@@ -47,7 +62,7 @@ export async function GET(request: Request) {
 
         const { access_token } = (await tokenResponse.json()) as { access_token: string };
 
-        const orderResponse = await fetch(`${paypalApiUrl}/v2/checkout/orders/${token}`, {
+        const orderResponse = await fetch(`${paypalApiUrl}/v2/checkout/orders/${encodeURIComponent(token)}`, {
             method: 'GET',
             headers: {
                 Authorization: `Bearer ${access_token}`,
@@ -72,12 +87,8 @@ export async function GET(request: Request) {
         });
     } catch (error) {
         console.error('Retrieve PayPal order status error:', error);
-        const details = error instanceof Error ? error.message : 'Unknown error';
         return NextResponse.json(
-            {
-                error: 'Failed to retrieve PayPal order status',
-                details,
-            },
+            { error: 'Failed to retrieve PayPal order status' },
             { status: 500 },
         );
     }

@@ -9,9 +9,9 @@ export async function GET(request: Request) {
 
     return NextResponse.json(await fetchNewsletters(perPage));
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Unknown error";
+    console.error("Failed to fetch newsletters:", error);
     return NextResponse.json(
-      { error: "Failed to fetch newsletters", details: message },
+      { error: "Failed to fetch newsletters" },
       { status: 500 },
     );
   }

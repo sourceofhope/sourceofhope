@@ -9,9 +9,9 @@ export async function GET(request: Request) {
 
     return NextResponse.json(await fetchPublications(perPage));
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Unknown error";
+    console.error("Failed to fetch publications:", error);
     return NextResponse.json(
-      { error: "Failed to fetch publications", details: message },
+      { error: "Failed to fetch publications" },
       { status: 500 },
     );
   }

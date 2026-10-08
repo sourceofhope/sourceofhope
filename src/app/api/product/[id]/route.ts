@@ -8,7 +8,7 @@ export async function GET(
   try {
     const { id } = await params;
 
-    if (!id) {
+    if (!id || id.length > 200) {
       return NextResponse.json(
         { error: "Product ID or slug is required" },
         { status: 400 },
@@ -23,9 +23,9 @@ export async function GET(
 
     return NextResponse.json(product);
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Unknown error";
+    console.error("Failed to fetch product:", error);
     return NextResponse.json(
-      { error: "Failed to fetch product", details: message },
+      { error: "Failed to fetch product" },
       { status: 500 },
     );
   }

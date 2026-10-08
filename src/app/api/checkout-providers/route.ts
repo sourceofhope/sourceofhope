@@ -13,12 +13,11 @@ export async function GET() {
       data: enabledProviders,
     });
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Unknown error";
+    console.error("Failed to fetch checkout providers:", error);
     return NextResponse.json(
       {
         success: false,
         error: "Failed to fetch checkout providers",
-        details: message,
       },
       { status: 500 },
     );

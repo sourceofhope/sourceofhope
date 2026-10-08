@@ -1,21 +1,25 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getEnvironment } from '@/lib/environment';
-import { checkRateLimit } from '@/lib/rate-limit';
+import { enforceRateLimit } from '@/lib/rate-limit';
+import {
+    MAX_EMAIL_LENGTH,
+    MAX_NAME_LENGTH,
+    isValidEmail,
+    parseAmount,
+    readJsonObject,
+    readString,
+} from '@/lib/validation';
 import Stripe from 'stripe';
 
 // 5 PaymentIntent creations per IP per 10 minutes.
 const RATE_LIMIT = 5;
 const RATE_WINDOW_MS = 10 * 60 * 1000;
 
-type CreateDonationPaymentIntentBody = {
-    amount?: number;
-    processingFee?: number;
-    email?: string;
-    firstName?: string;
-    lastName?: string;
-    dedication?: string;
-    coverFee?: boolean;
-};
+// Donation bounds in cents, and the fee rate used by the donate page.
+const MIN_DONATION_CENTS = 50;
+const MAX_DONATION_CENTS = 10_000_000; // $100,000
+const PROCESSING_FEE_RATE = 0.03;
+const MAX_DEDICATION_LENGTH = 500; // Stripe metadata limit
 
 /**
  * Create a Stripe Payment Intent for a donation
@@ -39,23 +43,8 @@ export async function OPTIONS() {
 export async function POST(request: NextRequest) {
     try {
         // ── Rate limiting ──────────────────────────────────────────────────
-        const ip =
-            request.headers.get('x-forwarded-for')?.split(',')[0].trim() ??
-            request.headers.get('x-real-ip') ??
-            'unknown';
-
-        const { allowed, retryAfterMs } = checkRateLimit(ip, RATE_LIMIT, RATE_WINDOW_MS);
-
-        if (!allowed) {
-            const retryAfterSec = Math.ceil(retryAfterMs / 1000);
-            return NextResponse.json(
-                { error: 'Too many requests. Please wait before trying again.' },
-                {
-                    status: 429,
-                    headers: { 'Retry-After': String(retryAfterSec) },
-                },
-            );
-        }
+        const limited = enforceRateLimit(request, 'donation', RATE_LIMIT, RATE_WINDOW_MS);
+        if (limited) return limited;
 
         // ── Payment intent creation ────────────────────────────────────────
         const { stripeSecretKey } = getEnvironment();
@@ -65,20 +54,48 @@ export async function POST(request: NextRequest) {
 
         const stripe = new Stripe(stripeSecretKey);
 
-        const body = (await request.json()) as CreateDonationPaymentIntentBody;
-        const { amount, processingFee, email, firstName, lastName, dedication, coverFee } = body;
+        const body = await readJsonObject(request);
+        if (!body) {
+            return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
+        }
 
-        if (!amount || amount <= 0) {
+        const amount = parseAmount(body.amount);
+        const coverFee = body.coverFee === true;
+        const email = readString(body.email, MAX_EMAIL_LENGTH);
+        const firstName = readString(body.firstName, MAX_NAME_LENGTH);
+        const lastName = readString(body.lastName, MAX_NAME_LENGTH);
+        const dedication = readString(body.dedication, MAX_DEDICATION_LENGTH);
+
+        if (amount === null || amount <= 0) {
             return NextResponse.json({ error: 'A valid donation amount is required.' }, { status: 400 });
         }
 
-        const donationAmountCents = Math.round(amount * 100);
-        const processingFeeCents = coverFee && processingFee ? Math.round(processingFee * 100) : 0;
-        const totalCents = donationAmountCents + processingFeeCents;
+        if (email === null || (email && !isValidEmail(email))) {
+            return NextResponse.json({ error: 'A valid email address is required.' }, { status: 400 });
+        }
 
-        if (totalCents < 50) {
+        if (firstName === null || lastName === null || dedication === null) {
+            return NextResponse.json({ error: 'One or more fields are invalid or too long.' }, { status: 400 });
+        }
+
+        const donationAmountCents = Math.round(amount * 100);
+
+        if (donationAmountCents < MIN_DONATION_CENTS) {
             return NextResponse.json({ error: 'Minimum donation amount is $0.50.' }, { status: 400 });
         }
+
+        if (donationAmountCents > MAX_DONATION_CENTS) {
+            return NextResponse.json(
+                { error: 'For donations over $100,000, please contact us directly.' },
+                { status: 400 },
+            );
+        }
+
+        // The fee is recomputed here (same rounding as the donate page); the client's value is ignored.
+        const processingFeeCents = coverFee
+            ? Math.round(Number((amount * PROCESSING_FEE_RATE).toFixed(2)) * 100)
+            : 0;
+        const totalCents = donationAmountCents + processingFeeCents;
 
         const metadata: Record<string, string> = {
             type: 'donation',
@@ -89,7 +106,7 @@ export async function POST(request: NextRequest) {
         if (email) metadata.customer_email = email;
         if (firstName) metadata.first_name = firstName;
         if (lastName) metadata.last_name = lastName;
-        if (dedication) metadata.dedication = dedication.slice(0, 500);
+        if (dedication) metadata.dedication = dedication;
 
         const paymentIntent = await stripe.paymentIntents.create({
             amount: totalCents,
@@ -103,9 +120,8 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ clientSecret: paymentIntent.client_secret });
     } catch (error) {
         console.error('Create donation payment intent error:', error);
-        const details = error instanceof Error ? error.message : 'Unknown error';
         return NextResponse.json(
-            { error: 'Failed to create donation payment intent', details },
+            { error: 'Failed to create donation payment intent' },
             { status: 500 },
         );
     }

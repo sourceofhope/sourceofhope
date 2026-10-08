@@ -1,36 +1,51 @@
 import { NextResponse } from 'next/server';
 import { getEnvironment } from '@/lib/environment';
+import { enforceRateLimit } from '@/lib/rate-limit';
+import { CartError, formatCents, priceCart, wantsProcessingFee } from '@/lib/store-checkout';
+import {
+    MAX_EMAIL_LENGTH,
+    MAX_NAME_LENGTH,
+    isValidEmail,
+    parseAmount,
+    readJsonObject,
+    readString,
+} from '@/lib/validation';
 import Stripe from 'stripe';
 
-type CheckoutItem = {
-    id?: string;
-    name?: string;
-    title?: string;
-    price?: number;
-    quantity?: number;
-};
+// 10 checkout initializations per IP per 10 minutes.
+const RATE_LIMIT = 10;
+const RATE_WINDOW_MS = 10 * 60 * 1000;
 
 type CheckoutAddress = {
-    firstName?: string;
-    lastName?: string;
-    address?: string;
-    city?: string;
-    state?: string;
-    zipCode?: string;
-    country?: string;
+    firstName: string;
+    lastName: string;
+    address: string;
+    city: string;
+    state: string;
+    zipCode: string;
+    country: string;
 };
 
-type CreateStripePaymentIntentBody = {
-    items?: CheckoutItem[];
-    shippingMethod?: string;
-    shippingCost?: number;
-    taxAmount?: number;
-    processingFee?: number;
-    shippingAddress?: CheckoutAddress;
-    billingAddress?: CheckoutAddress;
-    totalAmount?: number | string;
-    email?: string;
-};
+// Validates the optional shipping address; returns null if any field is invalid.
+function readAddress(value: unknown): CheckoutAddress | undefined | null {
+    if (value === undefined || value === null) return undefined;
+    if (typeof value !== 'object' || Array.isArray(value)) return null;
+
+    const raw = value as Record<string, unknown>;
+    const address = {
+        firstName: readString(raw.firstName, MAX_NAME_LENGTH),
+        lastName: readString(raw.lastName, MAX_NAME_LENGTH),
+        address: readString(raw.address, 200),
+        city: readString(raw.city, 100),
+        state: readString(raw.state, 100),
+        zipCode: readString(raw.zipCode, 20),
+        country: readString(raw.country, 100),
+    };
+
+    return Object.values(address).some((field) => field === null)
+        ? null
+        : (address as CheckoutAddress);
+}
 
 /**
  * Create a Stripe Payment Intent
@@ -54,6 +69,9 @@ export async function OPTIONS() {
 
 export async function POST(request: Request) {
     try {
+        const limited = enforceRateLimit(request, 'store-payment-intent', RATE_LIMIT, RATE_WINDOW_MS);
+        if (limited) return limited;
+
         const { stripeSecretKey } = getEnvironment();
 
         if (!stripeSecretKey) {
@@ -62,27 +80,50 @@ export async function POST(request: Request) {
 
         const stripe = new Stripe(stripeSecretKey);
 
-        const body = (await request.json()) as CreateStripePaymentIntentBody;
-        const {
-            items,
-            shippingMethod,
-            shippingCost,
-            taxAmount,
-            processingFee,
-            shippingAddress,
-            totalAmount,
-            email,
-        } = body;
-
-        if (!items || !Array.isArray(items) || items.length === 0) {
-            return NextResponse.json({ error: 'Cart items are required' }, { status: 400 });
+        const body = await readJsonObject(request);
+        if (!body) {
+            return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
         }
 
-        if (totalAmount === undefined || totalAmount === null || Number.isNaN(Number(totalAmount))) {
+        const email = readString(body.email, MAX_EMAIL_LENGTH);
+        if (email === null || (email && !isValidEmail(email))) {
+            return NextResponse.json({ error: 'A valid email address is required' }, { status: 400 });
+        }
+
+        const shippingAddress = readAddress(body.shippingAddress);
+        if (shippingAddress === null) {
+            return NextResponse.json({ error: 'Invalid shipping address' }, { status: 400 });
+        }
+
+        const totalAmount = parseAmount(body.totalAmount);
+        if (totalAmount === null) {
             return NextResponse.json({ error: 'Total amount is required' }, { status: 400 });
         }
 
-        const amountInCents = Math.round(Number(totalAmount) * 100);
+        // Every amount is computed server-side from the product catalog.
+        const cart = await priceCart(body.items, body.shippingMethod, wantsProcessingFee(body.processingFee));
+        const shippingMethod = cart.shippingMethod;
+
+        // The client's total is only used to make sure the customer is charged what they were shown.
+        if (Math.round(totalAmount * 100) !== cart.totalCents) {
+            return NextResponse.json(
+                { error: 'Prices in your cart have changed. Please remove and re-add your items, then try again.' },
+                { status: 409 },
+            );
+        }
+
+        const customerName = shippingAddress
+            ? `${shippingAddress.firstName} ${shippingAddress.lastName}`.trim()
+            : '';
+        const customerAddress = shippingAddress
+            ? {
+                line1: shippingAddress.address || undefined,
+                city: shippingAddress.city || undefined,
+                state: shippingAddress.state || undefined,
+                postal_code: shippingAddress.zipCode || undefined,
+                country: shippingAddress.country || 'US',
+            }
+            : undefined;
 
         // Create/find a Stripe customer so we can attach a draft invoice that stores full line-item details.
         let customerId: string | undefined;
@@ -97,18 +138,8 @@ export async function POST(request: Request) {
             } else {
                 const customer = await stripe.customers.create({
                     email,
-                    name: shippingAddress
-                        ? `${shippingAddress.firstName || ''} ${shippingAddress.lastName || ''}`.trim() || undefined
-                        : undefined,
-                    address: shippingAddress
-                        ? {
-                            line1: shippingAddress.address || undefined,
-                            city: shippingAddress.city || undefined,
-                            state: shippingAddress.state || undefined,
-                            postal_code: shippingAddress.zipCode || undefined,
-                            country: shippingAddress.country || 'US',
-                        }
-                        : undefined,
+                    name: customerName || undefined,
+                    address: customerAddress,
                 });
                 customerId = customer.id;
             }
@@ -116,18 +147,8 @@ export async function POST(request: Request) {
 
         if (!customerId) {
             const guestCustomer = await stripe.customers.create({
-                name: shippingAddress
-                    ? `${shippingAddress.firstName || ''} ${shippingAddress.lastName || ''}`.trim() || 'Guest Customer'
-                    : 'Guest Customer',
-                address: shippingAddress
-                    ? {
-                        line1: shippingAddress.address || undefined,
-                        city: shippingAddress.city || undefined,
-                        state: shippingAddress.state || undefined,
-                        postal_code: shippingAddress.zipCode || undefined,
-                        country: shippingAddress.country || 'US',
-                    }
-                    : undefined,
+                name: customerName || 'Guest Customer',
+                address: customerAddress,
             });
             customerId = guestCustomer.id;
         }
@@ -138,64 +159,60 @@ export async function POST(request: Request) {
             metadata: {
                 order_type: 'storefront',
                 checkout_status: 'pending',
-                customer_email: email || '',
-                shipping_method: shippingMethod || 'standard',
+                customer_email: email,
+                shipping_method: shippingMethod,
             },
             description: 'Pending checkout invoice',
         });
 
-        for (const item of items) {
-            const quantity = Math.max(1, Number(item.quantity || 1));
-            const unitAmount = Math.max(0, Math.round(Number(item.price || 0) * 100));
-            const description = item.name || item.title || item.id || 'Item';
-
+        for (const item of cart.items) {
             await stripe.invoiceItems.create({
                 customer: customerId,
                 invoice: pendingInvoice.id,
-                description: `${description} x${quantity}`,
-                amount: unitAmount * quantity,
+                description: `${item.name} x${item.quantity}`,
+                amount: item.unitAmountCents * item.quantity,
                 currency: 'usd',
             });
         }
 
-        if (shippingCost && Number(shippingCost) > 0) {
+        if (cart.shippingCents > 0) {
             await stripe.invoiceItems.create({
                 customer: customerId,
                 invoice: pendingInvoice.id,
-                description: `Shipping (${shippingMethod || 'standard'})`,
-                amount: Math.round(Number(shippingCost) * 100),
+                description: `Shipping (${shippingMethod})`,
+                amount: cart.shippingCents,
                 currency: 'usd',
             });
         }
 
-        if (taxAmount && Number(taxAmount) > 0) {
+        if (cart.taxCents > 0) {
             await stripe.invoiceItems.create({
                 customer: customerId,
                 invoice: pendingInvoice.id,
                 description: 'Tax',
-                amount: Math.round(Number(taxAmount) * 100),
+                amount: cart.taxCents,
                 currency: 'usd',
             });
         }
 
-        if (processingFee && Number(processingFee) > 0) {
+        if (cart.processingFeeCents > 0) {
             await stripe.invoiceItems.create({
                 customer: customerId,
                 invoice: pendingInvoice.id,
                 description: 'Processing fee',
-                amount: Math.round(Number(processingFee) * 100),
+                amount: cart.processingFeeCents,
                 currency: 'usd',
             });
         }
 
         const metadata: Record<string, string> = {
-            shipping_method: shippingMethod || 'standard',
+            shipping_method: shippingMethod,
             order_type: 'storefront',
-            items_count: String(items.length),
-            customer_email: email || '',
-            processing_fee: processingFee ? Number(processingFee).toFixed(2) : '0.00',
-            shipping_cost: shippingCost ? Number(shippingCost).toFixed(2) : '0.00',
-            tax_amount: taxAmount ? Number(taxAmount).toFixed(2) : '0.00',
+            items_count: String(cart.items.length),
+            customer_email: email,
+            processing_fee: formatCents(cart.processingFeeCents),
+            shipping_cost: formatCents(cart.shippingCents),
+            tax_amount: formatCents(cart.taxCents),
             invoice_id: pendingInvoice.id,
             shipping_first_name: shippingAddress?.firstName || '',
             shipping_last_name: shippingAddress?.lastName || '',
@@ -207,22 +224,22 @@ export async function POST(request: Request) {
         };
 
         const paymentIntent = await stripe.paymentIntents.create({
-            amount: amountInCents,
+            amount: cart.totalCents,
             currency: 'usd',
             customer: customerId,
             automatic_payment_methods: {
                 enabled: true,
             },
-            receipt_email: email,
+            receipt_email: email || undefined,
             metadata,
             shipping: shippingAddress
                 ? {
-                    name: `${shippingAddress.firstName || ''} ${shippingAddress.lastName || ''}`.trim(),
+                    name: customerName,
                     address: {
-                        line1: shippingAddress.address || '',
-                        city: shippingAddress.city || '',
-                        state: shippingAddress.state || '',
-                        postal_code: shippingAddress.zipCode || '',
+                        line1: shippingAddress.address,
+                        city: shippingAddress.city,
+                        state: shippingAddress.state,
+                        postal_code: shippingAddress.zipCode,
                         country: shippingAddress.country || 'US',
                     },
                 }
@@ -243,14 +260,11 @@ export async function POST(request: Request) {
             invoiceId: pendingInvoice.id,
         });
     } catch (error) {
+        if (error instanceof CartError) {
+            return NextResponse.json({ error: error.message }, { status: 400 });
+        }
+
         console.error('Payment Intent creation error:', error);
-        const details = error instanceof Error ? error.message : 'Unknown error';
-        return NextResponse.json(
-            {
-                error: 'Failed to create payment intent',
-                details,
-            },
-            { status: 500 },
-        );
+        return NextResponse.json({ error: 'Failed to create payment intent' }, { status: 500 });
     }
 }
