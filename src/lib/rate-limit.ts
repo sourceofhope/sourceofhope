@@ -1,25 +1,22 @@
+import { NextResponse } from "next/server";
+
 /**
  * Simple in-memory sliding-window rate limiter for Next.js API routes.
  *
  * NOTE: This is per-serverless-function-instance. It is sufficient for
- * low-traffic endpoints like payment-intent creation where the goal is to
- * slow down abuse rather than enforce hard global limits. For stricter
- * enforcement, replace the store with Redis (e.g. @vercel/kv).
+ * low-traffic endpoints where the goal is to slow down abuse rather than
+ * enforce hard global limits. For stricter enforcement, replace the store
+ * with Redis (e.g. @upstash/ratelimit).
  */
-
-import { NextResponse } from "next/server";
 
 interface RateLimitEntry {
   timestamps: number[];
-  windowMs: number;
 }
 
 const store = new Map<string, RateLimitEntry>();
 
-// Upper bound on tracked keys, and how often stale keys are swept.
+// Upper bound on tracked callers so a flood of unique keys can't exhaust memory.
 const MAX_KEYS = 10_000;
-const SWEEP_INTERVAL_MS = 60 * 1000;
-let lastSweep = 0;
 
 // Prune entries older than the window to keep memory bounded.
 function prune(entry: RateLimitEntry, windowMs: number, now: number) {
@@ -27,35 +24,10 @@ function prune(entry: RateLimitEntry, windowMs: number, now: number) {
   entry.timestamps = entry.timestamps.filter((t) => t > cutoff);
 }
 
-// Drop keys whose newest request has aged out of their window.
-function sweep(now: number) {
-  if (now - lastSweep < SWEEP_INTERVAL_MS) return;
-  lastSweep = now;
-
-  for (const [key, entry] of store) {
-    const newest = entry.timestamps[entry.timestamps.length - 1] ?? 0;
-    if (newest <= now - entry.windowMs) {
-      store.delete(key);
-    }
-  }
-}
-
-/**
- * Best-effort client IP for rate limiting. On Vercel the platform sets
- * `x-forwarded-for` / `x-real-ip`, so the first entry is the real client.
- */
-export function getClientIp(request: Request): string {
-  return (
-    request.headers.get("x-forwarded-for")?.split(",")[0].trim() ||
-    request.headers.get("x-real-ip")?.trim() ||
-    "unknown"
-  );
-}
-
 /**
  * Check whether the caller identified by `key` is within the allowed limit.
  *
- * @param key        Unique identifier for the caller (e.g. "route:IP").
+ * @param key        Unique identifier for the caller (e.g. IP address).
  * @param limit      Maximum number of requests allowed within `windowMs`.
  * @param windowMs   Sliding window duration in milliseconds.
  * @returns `{ allowed: boolean; retryAfterMs: number }`
@@ -66,16 +38,15 @@ export function checkRateLimit(
   windowMs: number,
 ): { allowed: boolean; retryAfterMs: number } {
   const now = Date.now();
-  sweep(now);
 
   let entry = store.get(key);
   if (!entry) {
-    // Evict the oldest key (Map keeps insertion order) if we are at capacity.
     if (store.size >= MAX_KEYS) {
+      // Evict the oldest-inserted key (Map preserves insertion order).
       const oldestKey = store.keys().next().value;
       if (oldestKey !== undefined) store.delete(oldestKey);
     }
-    entry = { timestamps: [], windowMs };
+    entry = { timestamps: [] };
     store.set(key, entry);
   }
 
@@ -92,10 +63,28 @@ export function checkRateLimit(
 }
 
 /**
- * Rate-limit the caller's IP within `scope` (e.g. "email"). Returns a 429
- * response when the limit is exceeded, otherwise null.
+ * Best-effort client IP. On Vercel `x-real-ip` is set by the platform; the
+ * right-most `x-forwarded-for` entry is the one added by our own proxy, so
+ * it can't be spoofed by the client the way the left-most entry can.
  */
-export function enforceRateLimit(
+export function getClientIp(request: Request): string {
+  const realIp = request.headers.get("x-real-ip")?.trim();
+  if (realIp) return realIp;
+
+  const forwarded = request.headers
+    .get("x-forwarded-for")
+    ?.split(",")
+    .map((part) => part.trim())
+    .filter(Boolean);
+
+  return forwarded?.at(-1) ?? "unknown";
+}
+
+/**
+ * Apply a per-IP limit for a named endpoint. Returns a 429 response when the
+ * caller is over the limit, or `null` when the request may proceed.
+ */
+export function rateLimit(
   request: Request,
   scope: string,
   limit: number,

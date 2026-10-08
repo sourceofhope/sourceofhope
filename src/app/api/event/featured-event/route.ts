@@ -9,7 +9,7 @@ export async function GET(request: Request) {
 
     return NextResponse.json(await fetchFeaturedEvents(perPage));
   } catch (error) {
-    console.error("Failed to fetch featured events:", error);
+    console.error(error);
     return NextResponse.json(
       { error: "Failed to fetch featured events" },
       { status: 500 },

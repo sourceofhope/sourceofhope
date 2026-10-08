@@ -9,7 +9,7 @@ export async function GET(request: Request) {
 
     return NextResponse.json(await fetchPublications(perPage));
   } catch (error) {
-    console.error("Failed to fetch publications:", error);
+    console.error(error);
     return NextResponse.json(
       { error: "Failed to fetch publications" },
       { status: 500 },

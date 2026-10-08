@@ -4,8 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import { SparklesIcon } from "@heroicons/react/24/solid";
 import PageSection from "@/components/ui/PageSection";
-import Title from "@/components/ui/Title";
-import Heading from "@/components/ui/Heading";
+import SectionHeading from "@/components/ui/SectionHeading";
 import { ASSET_VERSION } from "@/lib/environment";
 
 type Status = "IDLE" | "SUBMITTING" | "SUCCESS" | "INVALID" | "ERROR";
@@ -18,6 +17,8 @@ const EMPTY_FORM = {
   message: "",
   infoCheck: false,
   contactCheck: false,
+  // Honeypot: hidden from people, often filled in by bots.
+  website: "",
 };
 
 const inputClass =
@@ -69,6 +70,7 @@ export default function FormSection() {
           name: `${formData.fname} ${formData.lname}`.trim(),
           email: formData.email,
           message: messageLines,
+          website: formData.website,
         }),
       });
 
@@ -98,10 +100,10 @@ export default function FormSection() {
       className="py-10 gap-10 text-sm md:text-md lg:text-lg">
       <div className="grid gap-10 md:grid-cols-2 items-center">
         <div className="grid gap-5">
-          <div className="grid gap-1 justify-self-start">
-            <Heading>Your story</Heading>
-            <Title>A Legacy That Lives On</Title>
-          </div>
+          <SectionHeading
+            eyebrow="Your story continues"
+            title="A Legacy That Lives On"
+          />
           <div className="grid gap-5 text-neutral-600">
             <p>
               Your legacy is more than what you leave behind. It&apos;s the
@@ -154,7 +156,7 @@ export default function FormSection() {
                   id="pg-first-name"
                   type="text"
                   autoComplete="given-name"
-                  maxLength={80}
+                  maxLength={50}
                   value={formData.fname}
                   onChange={(e) => handleInputChange("fname", e.target.value)}
                   required
@@ -169,7 +171,7 @@ export default function FormSection() {
                   id="pg-last-name"
                   type="text"
                   autoComplete="family-name"
-                  maxLength={80}
+                  maxLength={50}
                   value={formData.lname}
                   onChange={(e) => handleInputChange("lname", e.target.value)}
                   required
@@ -222,6 +224,16 @@ export default function FormSection() {
                 className={`${inputClass} resize-none text-sm`}
               />
             </div>
+            <input
+              type="text"
+              name="website"
+              tabIndex={-1}
+              autoComplete="off"
+              aria-hidden="true"
+              value={formData.website}
+              onChange={(e) => handleInputChange("website", e.target.value)}
+              className="hidden"
+            />
             <label className="flex items-start gap-3 text-sm text-neutral-700 cursor-pointer">
               <input
                 type="checkbox"

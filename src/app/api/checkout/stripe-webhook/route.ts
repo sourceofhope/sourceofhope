@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getEnvironment } from '@/lib/environment';
+import { getEnvironment } from '@/lib/environment.server';
 import Stripe from 'stripe';
 
 export const runtime = 'nodejs';
@@ -32,15 +32,8 @@ export async function POST(request: Request) {
             );
         }
 
-        // Signature verification needs the raw, unparsed body.
         const payload = await request.text();
-        let event: Stripe.Event;
-        try {
-            event = stripe.webhooks.constructEvent(payload, signature, stripeWebhookSecret);
-        } catch (error) {
-            console.error('Stripe webhook signature verification failed:', error);
-            return NextResponse.json({ error: 'Invalid signature.' }, { status: 400 });
-        }
+        const event = stripe.webhooks.constructEvent(payload, signature, stripeWebhookSecret);
 
         if (event.type === 'payment_intent.succeeded') {
             const paymentIntent = event.data.object as Stripe.PaymentIntent;
@@ -56,6 +49,21 @@ export async function POST(request: Request) {
                 }
 
                 const refreshedInvoice = await stripe.invoices.retrieve(invoiceId);
+
+                // Never mark an order paid unless the payment covers it in full.
+                if (paymentIntent.amount_received < refreshedInvoice.total) {
+                    console.error(
+                        `Payment ${paymentIntent.id} (${paymentIntent.amount_received}) does not cover invoice ${invoiceId} (${refreshedInvoice.total})`,
+                    );
+                    await stripe.invoices.update(invoiceId, {
+                        metadata: {
+                            ...refreshedInvoice.metadata,
+                            checkout_status: 'amount_mismatch',
+                            payment_intent_id: paymentIntent.id,
+                        },
+                    });
+                    return NextResponse.json({ received: true });
+                }
 
                 if (refreshedInvoice.status !== 'paid') {
                     await stripe.invoices.pay(invoiceId, {
@@ -77,10 +85,11 @@ export async function POST(request: Request) {
     } catch (error) {
         console.error('Stripe webhook error:', error);
 
-        // Non-2xx so Stripe retries the delivery.
         return NextResponse.json(
-            { error: 'Failed to process Stripe webhook' },
-            { status: 500 },
+            {
+                error: 'Failed to process Stripe webhook',
+            },
+            { status: 400 },
         );
     }
 }

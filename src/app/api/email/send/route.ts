@@ -1,25 +1,30 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
-import { getEnvironment } from '@/lib/environment';
-import { enforceRateLimit } from '@/lib/rate-limit';
-import {
-  MAX_EMAIL_LENGTH,
-  MAX_NAME_LENGTH,
-  escapeHtml,
-  isValidEmail,
-  readJsonObject,
-  readString,
-} from '@/lib/validation';
+import { getEnvironment } from '@/lib/environment.server';
+import { rateLimit } from '@/lib/rate-limit';
+import { readJsonObject } from '@/lib/validation';
 
-// 5 contact-form submissions per IP per 10 minutes.
-const RATE_LIMIT = 5;
+// 3 messages per IP per 10 minutes.
+const RATE_LIMIT = 3;
 const RATE_WINDOW_MS = 10 * 60 * 1000;
 
+const MAX_NAME_LENGTH = 120;
+const MAX_EMAIL_LENGTH = 254;
 const MAX_MESSAGE_LENGTH = 5000;
+const EMAIL_PATTERN = /^[^\s@<>"]{1,64}@[^\s@<>"]{1,255}\.[^\s@<>"]+$/;
+
+/** Escape user input before placing it in the HTML email body. */
+function escapeHtml(value: string): string {
+  return value.replace(
+    /[&<>"']/g,
+    (char) =>
+      ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char]!,
+  );
+}
 
 export async function POST(request: NextRequest) {
   try {
-    const limited = enforceRateLimit(request, 'email', RATE_LIMIT, RATE_WINDOW_MS);
+    const limited = rateLimit(request, 'email', RATE_LIMIT, RATE_WINDOW_MS);
     if (limited) return limited;
 
     const body = await readJsonObject(request);
@@ -30,27 +35,38 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const name = readString(body.name, MAX_NAME_LENGTH);
-    const email = readString(body.email, MAX_EMAIL_LENGTH);
-    const message = readString(body.message, MAX_MESSAGE_LENGTH);
+    const { name, email, message, website } = body;
+
+    // Honeypot field: real visitors never see or fill it. Pretend success.
+    if (typeof website === 'string' && website.trim() !== '') {
+      return NextResponse.json({ success: true, message: 'Email sent successfully' });
+    }
 
     // Validate required fields
-    if (!name || !email || !message) {
+    if (
+      typeof name !== 'string' ||
+      typeof email !== 'string' ||
+      typeof message !== 'string' ||
+      !name.trim() ||
+      !message.trim()
+    ) {
       return NextResponse.json(
-        {
-          success: false,
-          error:
-            name === null || email === null || message === null
-              ? 'One or more fields are invalid or too long'
-              : 'Missing required fields: name, email, message',
-        },
+        { success: false, error: 'Missing required fields: name, email, message' },
         { status: 400 }
       );
     }
 
-    if (!isValidEmail(email)) {
+    const cleanEmail = email.trim();
+    if (cleanEmail.length > MAX_EMAIL_LENGTH || !EMAIL_PATTERN.test(cleanEmail)) {
       return NextResponse.json(
-        { success: false, error: 'A valid email address is required' },
+        { success: false, error: 'Please provide a valid email address' },
+        { status: 400 }
+      );
+    }
+
+    if (name.length > MAX_NAME_LENGTH || message.length > MAX_MESSAGE_LENGTH) {
+      return NextResponse.json(
+        { success: false, error: 'Message is too long' },
         { status: 400 }
       );
     }
@@ -66,23 +82,21 @@ export async function POST(request: NextRequest) {
     }
 
     const resend = new Resend(resendKey);
-
-    // Subject is a single header line, so collapse CR/LF and other whitespace.
-    const subjectName = name.replace(/\s+/g, ' ');
-    const htmlMessage = escapeHtml(message).replace(/\r?\n/g, '<br>');
+    const subjectName = name.replace(/[\r\n]+/g, ' ').trim();
 
     // Send email
-    const { data, error } = await resend.emails.send({
+    const { error } = await resend.emails.send({
       from: 'The Source of Hope <onboarding@resend.dev>',
       to: ['treasurer@thesourceofhope.org'],
-      replyTo: email,
+      replyTo: cleanEmail,
       subject: `New Contact Form Submission from ${subjectName}`,
+      text: `Name: ${subjectName}\nEmail: ${cleanEmail}\n\n${message}`,
       html: `
         <h2>New Contact Form Submission</h2>
-        <p><strong>Name:</strong> ${escapeHtml(name)}</p>
-        <p><strong>Email:</strong> ${escapeHtml(email)}</p>
+        <p><strong>Name:</strong> ${escapeHtml(subjectName)}</p>
+        <p><strong>Email:</strong> ${escapeHtml(cleanEmail)}</p>
         <p><strong>Message:</strong></p>
-        <p>${htmlMessage}</p>
+        <p>${escapeHtml(message).replace(/\r?\n/g, '<br>')}</p>
       `,
     });
 
@@ -96,7 +110,6 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      data,
       message: 'Email sent successfully',
     });
   } catch (error) {

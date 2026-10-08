@@ -1,25 +1,15 @@
 import { NextResponse } from 'next/server';
-import { getEnvironment } from '@/lib/environment';
-import { enforceRateLimit } from '@/lib/rate-limit';
-import {
-    CartError,
-    formatCents,
-    getStoreRedirectUrls,
-    priceCart,
-    wantsProcessingFee,
-} from '@/lib/store-checkout';
-import { readJsonObject } from '@/lib/validation';
+import { getEnvironment } from '@/lib/environment.server';
 import Stripe from 'stripe';
-
-// 10 checkout sessions per IP per 10 minutes.
-const RATE_LIMIT = 10;
-const RATE_WINDOW_MS = 10 * 60 * 1000;
+import { rateLimit } from '@/lib/rate-limit';
+import { PricingError, getSiteOrigin, quoteStoreOrder, toCents } from '@/lib/store-pricing';
+import { readJsonObject } from '@/lib/validation';
 
 function buildStripeShippingOptions(
-    shippingMethod: string,
-    shippingCents: number,
+    shippingName: string,
+    shippingCost: number,
 ): Stripe.Checkout.SessionCreateParams.ShippingOption[] {
-    if (shippingCents <= 0) {
+    if (shippingCost <= 0) {
         return [];
     }
 
@@ -28,10 +18,10 @@ function buildStripeShippingOptions(
             shipping_rate_data: {
                 type: 'fixed_amount',
                 fixed_amount: {
-                    amount: shippingCents,
+                    amount: toCents(shippingCost),
                     currency: 'usd',
                 },
-                display_name: shippingMethod,
+                display_name: shippingName,
             },
         },
     ];
@@ -56,7 +46,7 @@ export async function OPTIONS() {
 
 export async function POST(request: Request) {
     try {
-        const limited = enforceRateLimit(request, 'store-checkout', RATE_LIMIT, RATE_WINDOW_MS);
+        const limited = rateLimit(request, 'store-checkout', 10, 10 * 60 * 1000);
         if (limited) return limited;
 
         const { stripeSecretKey, stripeSalesTaxRateId } = getEnvironment();
@@ -65,37 +55,36 @@ export async function POST(request: Request) {
             return NextResponse.json({ error: 'Stripe is not configured.' }, { status: 500 });
         }
 
-        const stripe = new Stripe(stripeSecretKey, {
-
-        });
+        const stripe = new Stripe(stripeSecretKey);
 
         const body = await readJsonObject(request);
         if (!body) {
             return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
         }
 
-        // Every amount is computed server-side from the product catalog.
-        const cart = await priceCart(body.items, body.shippingMethod, wantsProcessingFee(body.processingFee));
-        const { successUrl, cancelUrl } = getStoreRedirectUrls(request);
+        // Prices, tax, shipping, and fees are computed on the server from the
+        // CMS; any amounts or URLs sent by the browser are ignored.
+        const quote = await quoteStoreOrder(body);
+        const origin = getSiteOrigin(request);
 
-        const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = cart.items.map((item) => ({
+        const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = quote.lines.map((line) => ({
             price_data: {
                 currency: 'usd',
                 product_data: {
-                    name: item.name,
-                    description: item.size ? `Size: ${item.size}` : undefined,
-                    images: item.image ? [item.image] : undefined,
+                    name: line.name,
+                    description: line.size ? `Size: ${line.size}` : undefined,
+                    images: line.image ? [line.image] : undefined,
                     metadata: {
-                        product_id: item.id,
-                        size: item.size || '',
+                        product_id: line.id,
+                        size: line.size || '',
                     },
                 },
-                unit_amount: item.unitAmountCents,
+                unit_amount: toCents(line.unitPrice),
             },
-            quantity: item.quantity,
+            quantity: line.quantity,
         }));
 
-        if (cart.taxCents > 0) {
+        if (quote.tax > 0) {
             lineItems.push({
                 price_data: {
                     currency: 'usd',
@@ -103,13 +92,13 @@ export async function POST(request: Request) {
                         name: 'Sales Tax',
                         description: 'State and local taxes',
                     },
-                    unit_amount: cart.taxCents,
+                    unit_amount: toCents(quote.tax),
                 },
                 quantity: 1,
             });
         }
 
-        if (cart.processingFeeCents > 0) {
+        if (quote.processingFee > 0) {
             lineItems.push({
                 price_data: {
                     currency: 'usd',
@@ -117,30 +106,28 @@ export async function POST(request: Request) {
                         name: 'Processing Support',
                         description: 'Supporting 100% of the mission (3%)',
                     },
-                    unit_amount: cart.processingFeeCents,
+                    unit_amount: toCents(quote.processingFee),
                 },
                 quantity: 1,
             });
         }
 
-        const shippingOptions = buildStripeShippingOptions(cart.shippingName, cart.shippingCents);
-
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
             line_items: lineItems,
             mode: 'payment',
-            success_url: `${successUrl}?session_id={CHECKOUT_SESSION_ID}`,
-            cancel_url: cancelUrl,
+            success_url: `${origin}/store/success?session_id={CHECKOUT_SESSION_ID}`,
+            cancel_url: `${origin}/store/checkout`,
             shipping_address_collection: {
                 allowed_countries: ['US'],
             },
-            shipping_options: shippingOptions,
+            shipping_options: buildStripeShippingOptions(quote.shippingMethod.name, quote.shipping),
             billing_address_collection: 'required',
             metadata: {
-                shipping_method: cart.shippingMethod,
+                shipping_method: quote.shippingMethod.id,
                 order_type: 'storefront',
                 stripe_tax_rate_id: stripeSalesTaxRateId || '',
-                ui_tax_amount: formatCents(cart.taxCents),
+                ui_tax_amount: quote.tax.toFixed(2),
             },
         });
 
@@ -149,11 +136,13 @@ export async function POST(request: Request) {
             sessionId: session.id,
         });
     } catch (error) {
-        if (error instanceof CartError) {
+        if (error instanceof PricingError) {
             return NextResponse.json({ error: error.message }, { status: 400 });
         }
-
         console.error('Stripe checkout error:', error);
-        return NextResponse.json({ error: 'Failed to create Stripe checkout session' }, { status: 500 });
+        return NextResponse.json(
+            { error: 'Failed to create Stripe checkout session' },
+            { status: 500 },
+        );
     }
 }

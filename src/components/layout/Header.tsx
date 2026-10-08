@@ -41,6 +41,7 @@ const getHeaderLinks = (): NavLink[] => [
     label: "GIVING",
     href: "/planned-giving",
     children: [
+      { label: "PLANNED GIVING", href: "/planned-giving" },
       { label: "MEMBERSHIPS", href: "/members" },
       { label: "QUICK DONATE", href: "/donate" },
     ],
@@ -58,6 +59,12 @@ const getHeaderLinks = (): NavLink[] => [
   { label: "STORE", href: "/store" },
 ];
 
+/** True when `pathname` is `link` itself or one of its children. */
+const isActiveLink = (link: NavLink, pathname: string): boolean =>
+  pathname === link.href ||
+  pathname.startsWith(`${link.href}/`) ||
+  (link.children ?? []).some((child) => isActiveLink(child, pathname));
+
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
@@ -70,7 +77,7 @@ export default function Header() {
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 0);
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -130,7 +137,7 @@ export default function Header() {
             </span>
           </Link>
 
-          <nav className="hidden md:flex gap-3 z-10" aria-label="Primary">
+          <nav className="hidden md:flex z-10" aria-label="Primary">
             <HeaderNavigator />
           </nav>
 
@@ -243,35 +250,38 @@ function HeaderNavigator({
 
 function DesktopNavigator({ links }: { links: NavLink[] }) {
   const [hovering, setHovering] = useState<string | null>(null);
+  const pathname = usePathname();
 
   return (
-    <nav className="flex flex-row gap-5">
-      {links.map(({ label, href, children }) => (
+    <div className="flex flex-row gap-4 lg:gap-6">
+      {links.map((link) => (
         <DesktopNavigatorItem
-          key={label}
-          label={label}
-          href={href}
+          key={link.label}
+          label={link.label}
+          href={link.href}
+          active={isActiveLink(link, pathname)}
           hovering={hovering}
           setHovering={setHovering}
           className={`
             py-2.5 h-full w-full font-bold
             ${
               hovering
-                ? hovering === label
+                ? hovering === link.label
                   ? "opacity-100"
                   : "opacity-80"
                 : ""
             }`}>
-          {children || []}
+          {link.children || []}
         </DesktopNavigatorItem>
       ))}
-    </nav>
+    </div>
   );
 }
 
 function DesktopNavigatorItem({
   label,
   href,
+  active,
   children,
   hovering,
   setHovering,
@@ -279,6 +289,7 @@ function DesktopNavigatorItem({
 }: {
   label: string;
   href: string;
+  active: boolean;
   children: NavLink[];
   hovering: string | null;
   setHovering: (value: string | null) => void;
@@ -288,29 +299,46 @@ function DesktopNavigatorItem({
   const hasChildren = children.length > 0;
 
   return (
-    <div className="w-full select-none relative">
+    <div
+      className="w-full select-none relative"
+      onFocus={() => setHovering(label)}
+      onBlur={(e) => {
+        if (!e.currentTarget.contains(e.relatedTarget as Node | null)) {
+          setHovering(null);
+        }
+      }}
+      onKeyDown={(e) => {
+        if (e.key === "Escape") setHovering(null);
+      }}>
       <Link
         href={href}
+        aria-current={active ? "page" : undefined}
+        aria-haspopup={hasChildren ? "true" : undefined}
+        aria-expanded={hasChildren ? isOpen : undefined}
         onMouseEnter={() => setHovering(label)}
         onMouseLeave={() => setHovering(null)}
-        className={`no-underline! group transition-[color_transform] ease-in-out duration-300 inline-flex w-full justify-between items-center gap-1 focus:outline-none ${className}`}>
-        <span>{label}</span>
-        <Icon>
-          <ChevronRightIcon
-            className={`w-6 h-6 transition-transform duration-500 ${
-              isOpen && hasChildren
-                ? "rotate-90"
-                : "rotate-0 group-hover:translate-x-1"
-            }`}
-            onClick={(e: React.MouseEvent) => {
-              if (!hasChildren) return;
-              e.preventDefault();
-              e.stopPropagation();
-              setHovering(isOpen ? null : label);
-            }}
-            aria-hidden="true"
-          />
-        </Icon>
+        className={`no-underline! group transition-[color_transform] ease-in-out duration-300 inline-flex w-full justify-between items-center gap-1 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent-300 rounded-sm ${className}`}>
+        <span
+          className={`border-b-2 transition-colors duration-300 ${
+            active ? "border-current" : "border-transparent"
+          }`}>
+          {label}
+        </span>
+        {hasChildren && (
+          <Icon>
+            <ChevronRightIcon
+              className={`w-5 h-5 transition-transform duration-500 ${
+                isOpen ? "rotate-90" : "rotate-0 group-hover:translate-x-0.5"
+              }`}
+              onClick={(e: React.MouseEvent) => {
+                e.preventDefault();
+                e.stopPropagation();
+                setHovering(isOpen ? null : label);
+              }}
+              aria-hidden="true"
+            />
+          </Icon>
+        )}
       </Link>
 
       {hasChildren && (
@@ -415,6 +443,22 @@ function MobileNavigator({
             </Icon>
           </button>
         )}
+
+        {current.href &&
+          !current.items.some((item) => item.href === current.href) && (
+            <Link
+              href={current.href}
+              className="no-underline! py-2.5 h-full w-full group font-bold inline-flex justify-between items-center gap-1"
+              onClick={() => setOpen?.(false)}>
+              <span className="text-left">{current.title} OVERVIEW</span>
+              <Icon>
+                <ChevronRightIcon
+                  className="w-6 h-6 transition-transform duration-500 rotate-0 group-hover:translate-x-1"
+                  aria-hidden="true"
+                />
+              </Icon>
+            </Link>
+          )}
 
         {current.items.map((item) => {
           const hasChildren = (item.children || []).length > 0;

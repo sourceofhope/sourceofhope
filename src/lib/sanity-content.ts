@@ -4,13 +4,9 @@ import { client } from "@/lib/sanity-client";
 
 const options = { next: { revalidate: 30 } };
 
-const MAX_LIMIT = 50;
-
-// Slice bounds are interpolated into GROQ, so only allow small positive integers.
-function toLimit(value: number, fallback: number) {
-  return Number.isInteger(value) && value > 0
-    ? Math.min(value, MAX_LIMIT)
-    : fallback;
+/** Keep list sizes sane: callers (including API query params) can't request 0, NaN, or huge pages. */
+function clampLimit(limit: number, fallback: number, max = 50) {
+  return Number.isFinite(limit) ? Math.min(Math.max(Math.trunc(limit), 1), max) : fallback;
 }
 
 export interface SanityImage {
@@ -157,7 +153,7 @@ const NEWSLETTER_FIELDS = `
 
 export async function fetchFeaturedEvents(limit = 12) {
   return client.fetch<SanityEvent[]>(
-    `*[_type == "featuredEvent"] | order(date desc)[0...${toLimit(limit, 12)}] { ${EVENT_FIELDS} }`,
+    `*[_type == "featuredEvent"] | order(date desc)[0...${clampLimit(limit, 12)}] { ${EVENT_FIELDS} }`,
     {},
     options,
   );
@@ -165,15 +161,14 @@ export async function fetchFeaturedEvents(limit = 12) {
 
 export async function fetchRecurringEvents(limit = 3) {
   return client.fetch<SanityEvent[]>(
-    `*[_type == "recurringEvent"] | order(date desc)[0...${toLimit(limit, 3)}] { ${EVENT_FIELDS} }`,
+    `*[_type == "recurringEvent"] | order(date desc)[0...${clampLimit(limit, 12)}] { ${EVENT_FIELDS} }`,
     {},
     options,
   );
 }
 
 export async function fetchProducts(limit?: number) {
-  const slice =
-    typeof limit === "number" ? `[0...${toLimit(limit, MAX_LIMIT)}]` : "";
+  const slice = typeof limit === "number" ? `[0...${clampLimit(limit, 12, 200)}]` : "";
 
   return client.fetch<SanityProduct[]>(
     `*[_type == "product"] | order(_createdAt desc) ${slice} { ${PRODUCT_FIELDS} }`,
@@ -194,7 +189,7 @@ export async function fetchProductById(id: string) {
 
 export async function fetchPublications(limit = 12) {
   return client.fetch<SanityPublication[]>(
-    `*[_type == "publication"] | order(date desc)[0...${toLimit(limit, 12)}] { ${PUBLICATION_FIELDS} }`,
+    `*[_type == "publication"] | order(date desc)[0...${clampLimit(limit, 12)}] { ${PUBLICATION_FIELDS} }`,
     {},
     options,
   );
@@ -202,7 +197,7 @@ export async function fetchPublications(limit = 12) {
 
 export async function fetchNewsletters(limit = 12) {
   return client.fetch<SanityNewsletter[]>(
-    `*[_type == "newsletter"] | order(_createdAt desc)[0...${toLimit(limit, 12)}] { ${NEWSLETTER_FIELDS} }`,
+    `*[_type == "newsletter"] | order(_createdAt desc)[0...${clampLimit(limit, 12)}] { ${NEWSLETTER_FIELDS} }`,
     {},
     options,
   );

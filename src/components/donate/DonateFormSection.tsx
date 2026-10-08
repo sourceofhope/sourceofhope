@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { HeartIcon, CheckCircleIcon } from "@heroicons/react/24/solid";
+import { CheckCircleIcon } from "@heroicons/react/24/solid";
 import { loadStripe } from "@stripe/stripe-js";
 import {
   Elements,
@@ -12,6 +12,7 @@ import {
 import Link from "next/link";
 import Title from "@/components/ui/Title";
 import Heading from "@/components/ui/Heading";
+import SectionHeading from "@/components/ui/SectionHeading";
 
 const STANDARD_PROCESSING_RATE = 0.03;
 
@@ -297,20 +298,13 @@ export default function DonateFormSection({
   return (
     <section className="w-full px-5 pb-10 lg:px-35">
       <div>
-        {/* Section heading */}
-        <div className="flex flex-col gap-1 mb-8">
-          <Heading>Quick donate</Heading>
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-primary-50 flex items-center justify-center">
-              <HeartIcon className="w-5 h-5 text-accent-500" />
-            </div>
-            <Title>Make a Donation</Title>
-          </div>
-          <p className="text-neutral-600 leading-relaxed mt-2">
-            Your gift supports meals, wellness care, education, and community
-            outreach programs right here in our community.
-          </p>
-        </div>
+        <SectionHeading
+          className="mb-8"
+          eyebrow="Quick donate"
+          title="Make a Donation">
+          Your gift supports meals, wellness care, education, and community
+          outreach programs right here in our community.
+        </SectionHeading>
 
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
           {/* Left: amount + donor info */}

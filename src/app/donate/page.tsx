@@ -39,7 +39,7 @@ export default async function DonatePage({
       <PageHeader
         src={`/${ASSET_VERSION}/servingHope/Carousel-3.webp`}
         title="DONATE"
-        subtitle="EVERY GIFT MAKES A DIFFERENCE"
+        subtitle="EVERY GIFT CREATES HOPE"
       />
       <DonateFormSection redirectSucceeded={redirect_status === "succeeded"} />
     </>

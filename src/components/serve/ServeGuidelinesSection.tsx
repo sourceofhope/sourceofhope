@@ -1,6 +1,7 @@
 import PageSection from "@/components/ui/PageSection";
 import Title from "@/components/ui/Title";
 import ExpressiveCard from "@/components/ui/expressive/ExpressiveCard";
+import Link from "next/link";
 
 export default function ServeGuidelinesSection() {
   return (
@@ -43,12 +44,13 @@ export default function ServeGuidelinesSection() {
           <li>If unsure of what to do, ask a team member for guidance</li>
         </ul>
         <p className="md:text-balance">
-          By signing up, you acknowledge and agree to our volunteer terms and
-          guidelines, including our{" "}
-          <a className="font-semibold text-accent-500" href="#volunteer-agreements">
-            volunteer agreements
-          </a>
-          . Thank you for being the Source of Hope in our community!
+          By signing up, you acknowledge and agree to our{" "}
+          <Link
+            className="font-semibold text-accent-500"
+            href="/serve#volunteer-agreements">
+            volunteer agreement
+          </Link>{" "}
+          and guidelines. Thank you for being the Source of Hope in our community!
         </p>
       </ExpressiveCard>
       <ExpressiveCard className="grid gap-3" title="What should I bring?">
@@ -71,8 +73,8 @@ export default function ServeGuidelinesSection() {
       </ExpressiveCard>
       <ExpressiveCard className="grid gap-3" title="How do I sign up?">
         <p className="md:text-balance">
-          Signing up is simple! You can register for an upcoming event online
-          or reach out to us directly by email.
+          Signing up is simple! Choose an upcoming event, sign the volunteer
+          agreement for your program, or reach out to us directly by email.
         </p>
         <ul className="list-disc pl-5">
           <li>
@@ -84,6 +86,14 @@ export default function ServeGuidelinesSection() {
               rel="noopener noreferrer">
               our Eventbrite page
             </a>
+          </li>
+          <li>
+            Download your{" "}
+            <Link
+              className="font-semibold text-accent-500"
+              href="/serve#volunteer-agreements">
+              volunteer agreement
+            </Link>
           </li>
           <li>
             Or email us at{" "}

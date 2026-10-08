@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getEnvironment } from '@/lib/environment';
+import { getEnvironment } from '@/lib/environment.server';
 
 /**
  * Retrieve the Stripe publishable key
@@ -33,7 +33,9 @@ export async function POST() {
   } catch (error) {
     console.error('Retrieve Stripe publishable key error:', error);
     return NextResponse.json(
-      { error: 'Failed to retrieve Stripe publishable key' },
+      {
+        error: 'Failed to retrieve Stripe publishable key',
+      },
       { status: 500 },
     );
   }

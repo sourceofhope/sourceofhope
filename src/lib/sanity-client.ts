@@ -1,7 +1,7 @@
 import "server-only";
 
 import { createClient } from "next-sanity";
-import { getEnvironment } from "@/lib/environment";
+import { getEnvironment } from "@/lib/environment.server";
 
 const { sanityProjectId, sanityDataset, sanityApiVersion, sanityApiReadToken } =
   getEnvironment();

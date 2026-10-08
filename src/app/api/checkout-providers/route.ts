@@ -13,7 +13,7 @@ export async function GET() {
       data: enabledProviders,
     });
   } catch (error) {
-    console.error("Failed to fetch checkout providers:", error);
+    console.error(error);
     return NextResponse.json(
       {
         success: false,

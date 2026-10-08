@@ -16,7 +16,7 @@ export async function GET(
 
     return NextResponse.json([]);
   } catch (error) {
-    console.error("Failed to fetch products by category:", error);
+    console.error(error);
     return NextResponse.json(
       { error: "Failed to fetch products by category" },
       { status: 500 },

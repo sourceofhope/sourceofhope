@@ -84,7 +84,10 @@ export default async function Team() {
   if (teamsWithMembers === null) {
     return (
       <>
-        <PageHeader title="TEAM" subtitle="WHO WE ARE" />
+        <PageHeader
+          title="TEAM"
+          subtitle="WHO WE ARE"
+        />
         <section className="w-full md:justify-items-left items-center grid my-5 px-5 lg:px-35 min-h-screen">
           <div className="text-center">
             <h2 className="text-3xl font-bold font-urbanist mb-4">Team</h2>
@@ -102,7 +105,10 @@ export default async function Team() {
   if (sortedTeams.length === 0) {
     return (
       <>
-        <PageHeader title="TEAM" subtitle="WHO WE ARE" />
+        <PageHeader
+          title="TEAM"
+          subtitle="WHO WE ARE"
+        />
         <section className="w-full md:justify-items-left items-center grid my-5 px-5 lg:px-35 min-h-screen">
           <div className="text-center">
             <h2 className="text-3xl font-bold font-urbanist mb-4">
@@ -119,7 +125,10 @@ export default async function Team() {
 
   return (
     <>
-      <PageHeader title="TEAM" subtitle="WHO WE ARE" />
+      <PageHeader
+        title="TEAM"
+        subtitle="WHO WE ARE"
+      />
       <PageSection className="pt-5">
         <div className="grid gap-5">
           {sortedTeams.map((team) => (
