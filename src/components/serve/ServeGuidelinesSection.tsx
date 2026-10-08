@@ -1,7 +1,6 @@
 import PageSection from "@/components/ui/PageSection";
 import Title from "@/components/ui/Title";
 import ExpressiveCard from "@/components/ui/expressive/ExpressiveCard";
-import Link from "next/link";
 
 export default function ServeGuidelinesSection() {
   return (
@@ -45,7 +44,11 @@ export default function ServeGuidelinesSection() {
         </ul>
         <p className="md:text-balance">
           By signing up, you acknowledge and agree to our volunteer terms and
-          guidelines. Thank you for being the Source of Hope in our community!
+          guidelines, including our{" "}
+          <a className="font-semibold text-accent-500" href="#volunteer-agreements">
+            volunteer agreements
+          </a>
+          . Thank you for being the Source of Hope in our community!
         </p>
       </ExpressiveCard>
       <ExpressiveCard className="grid gap-3" title="What should I bring?">
@@ -68,23 +71,27 @@ export default function ServeGuidelinesSection() {
       </ExpressiveCard>
       <ExpressiveCard className="grid gap-3" title="How do I sign up?">
         <p className="md:text-balance">
-          Signing up is simple! You can register through our online volunteer
-          form or reach out to us directly by email.
+          Signing up is simple! You can register for an upcoming event online
+          or reach out to us directly by email.
         </p>
         <ul className="list-disc pl-5">
           <li>
-            Visit{" "}
-            <Link className="font-semibold text-accent-500" href="/volunteer">
-              thesourceofhope.org/volunteer
-            </Link>
+            Register on{" "}
+            <a
+              className="font-semibold text-accent-500"
+              href="https://www.eventbrite.com/o/quynh-chau-stone-92264017613"
+              target="_blank"
+              rel="noopener noreferrer">
+              our Eventbrite page
+            </a>
           </li>
           <li>
             Or email us at{" "}
-            <Link
+            <a
               className="font-semibold text-accent-500"
               href="mailto:info@thesourceofhope.org?subject=Volunteer Sign-up">
               info@thesourceofhope.org
-            </Link>
+            </a>
           </li>
         </ul>
         <p className="md:text-balance">

@@ -5,6 +5,7 @@ import ServeProgramsSection from "@/components/serve/ServeProgramsSection";
 import ServeDonationSection from "@/components/serve/ServeDonationSection";
 import ServeEventsSection from "@/components/serve/ServeEventsSection";
 import ServeGuidelinesSection from "@/components/serve/ServeGuidelinesSection";
+import ServeAgreementsSection from "@/components/serve/ServeAgreementsSection";
 
 export const metadata: Metadata = {
   title: "Serve | The Source of Hope",
@@ -24,6 +25,7 @@ export default function Serve() {
       <ServeProgramsSection />
       <ServeDonationSection />
       <ServeGuidelinesSection />
+      <ServeAgreementsSection />
     </>
   );
 }
