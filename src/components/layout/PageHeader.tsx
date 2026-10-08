@@ -23,7 +23,8 @@ export default function PageHeader({
         src={src}
         alt=""
         fill
-        priority
+        preload
+        fetchPriority="high"
         sizes="100vw"
         style={{ objectPosition: position }}
         className="object-cover brightness-[.65] contrast-[1.1]

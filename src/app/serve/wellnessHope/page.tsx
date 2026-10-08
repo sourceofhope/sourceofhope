@@ -4,7 +4,7 @@ import Heading from "@/components/ui/Heading";
 import { AnchorButton } from "@/components/ui/Button";
 import Bold from "@/components/ui/Bold";
 import HighlightedText from "@/components/ui/HighlightedText";
-import Block from "@/components/layout/Block";
+import PageHeader from "@/components/layout/PageHeader";
 
 const ASSET_VERSION = "v2";
 const CANONICAL_URL = "https://thesourceofhope.org/serve/wellness-hope";
@@ -34,13 +34,12 @@ export const metadata: Metadata = {
 export default function WellnessHope() {
   return (
     <>
-      <Block />
-      <section className="w-full md:justify-items-left items-center grid gap-5 pt-25 p-5 lg:px-35 text-sm md:text-md lg:text-lg">
-        <div className="grid gap-3 justify-self-start justify-start">
-          <Title>Wellness of Hope</Title>
-          <Heading>Free Holistic Clinic Services</Heading>
-        </div>
-
+      <PageHeader
+        src={`/${ASSET_VERSION}/serve/WH-Banner.webp`}
+        title="WELLNESS OF HOPE"
+        subtitle="FREE HOLISTIC CLINIC SERVICES"
+      />
+      <section className="w-full md:justify-items-left items-center grid gap-5 p-5 lg:px-35 text-sm md:text-md lg:text-lg">
         <article className="grid gap-5">
           <p>
             <Bold>The Wellness of Hope</Bold> Clinic provides holistic

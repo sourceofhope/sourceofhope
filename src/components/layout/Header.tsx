@@ -38,38 +38,21 @@ const getHeaderLinks = (): NavLink[] => [
     ],
   },
   {
-    label: "MEMBERS",
-    href: "/members"
-    // href: "/members",
-    // children: [
-    //   { label: "PLANNED GIVING", href: "/giving" },
-    //   {
-    //     label: "QUICK DONATE",
-    //     href: "/donate",
-    //   },
-    // ],
+    label: "GIVING",
+    href: "/planned-giving",
+    children: [
+      { label: "MEMBERSHIPS", href: "/members" },
+      { label: "QUICK DONATE", href: "/donate" },
+    ],
   },
- //moved this to the About Label along with Team tag
-//{ label: "CONNECT", href: "/connect" },
-//moved PLANNED GIVING & QUICK DONATE labels from MEMBERS to a label of its own
- {
-   label: "GIVING", 
-   // changed from /giving to /planned-giving to match the new page route
-   href: "/planned-giving" ,
-   children: [
-    { label: "QUICK DONATE", href: "/donate"},
-   ],  
- },
-  //  added Events onto the main tab for the header navigation for easy access to the events page 08/05/26
- { label: "EVENTS", href: "/events" },
-  //  added Awards onto the main tab for the header navigation for easy access to the events page 08/10/26
- { label: "AWARDS", href: "/awards" },
+  { label: "EVENTS", href: "/events" },
   {
     label: "MEDIA",
     href: "/media",
     children: [
       { label: "PRESS", href: "/media/press" },
       { label: "PODCAST", href: "/media/podcast" },
+      { label: "AWARDS", href: "/media/awards" },
     ],
   },
   { label: "STORE", href: "/store" },
@@ -142,9 +125,9 @@ export default function Header() {
             aria-label="Go Home"
             className="no-underline! h-full flex gap-5 flex-row items-center w-fit z-0 overflow-clip">
             <Favicon />
-            <h1 className="font-bold hidden lg:block whitespace-nowrap text-ellipsis overflow-hidden">
+            <span className="font-bold hidden xl:block whitespace-nowrap">
               THE SOURCE OF HOPE
-            </h1>
+            </span>
           </Link>
 
           <nav className="hidden md:flex gap-3 z-10" aria-label="Primary">

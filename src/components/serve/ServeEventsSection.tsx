@@ -11,11 +11,17 @@ import {
 
 const ASSET_VERSION = "v2";
 
+// Fall back to the empty states below if the CMS is unreachable.
+async function getEvents(): Promise<[SanityEvent[], SanityEvent[]]> {
+  try {
+    return await Promise.all([fetchFeaturedEvents(6), fetchRecurringEvents(12)]);
+  } catch {
+    return [[], []];
+  }
+}
+
 export default async function ServeEventsSection() {
-  const [majorEvents, recurringEvents] = await Promise.all([
-    fetchFeaturedEvents(6),
-    fetchRecurringEvents(12),
-  ]);
+  const [majorEvents, recurringEvents] = await getEvents();
 
   return (
     <PageSection>

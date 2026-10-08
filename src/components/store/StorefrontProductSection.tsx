@@ -3,8 +3,16 @@ import Heading from "@/components/ui/Heading";
 import StorefrontProductCard from "@/components/store/StorefrontProductCard";
 import { fetchProducts } from "@/lib/sanity-content";
 
+async function getProducts() {
+  try {
+    return await fetchProducts();
+  } catch {
+    return [];
+  }
+}
+
 export default async function StorefrontProductSection() {
-  const products = await fetchProducts();
+  const products = await getProducts();
 
   return (
     <section className="w-full px-5 lg:px-35 pt-25 mb-10">

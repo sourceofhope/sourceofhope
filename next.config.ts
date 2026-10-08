@@ -28,6 +28,12 @@ const nextConfig: NextConfig = {
       },
     ],
   },
+  async redirects() {
+    return [
+      // Awards moved under Media.
+      { source: "/awards", destination: "/media/awards", permanent: true },
+    ];
+  },
   async headers() {
     return [
       {

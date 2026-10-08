@@ -77,7 +77,8 @@ export default function HomeIntroductionSection() {
           src={`/${ASSET_VERSION}/core/TSOH-Poster-Frame.webp`}
           alt="Runners crossing the start line at The Source of Hope's Hope Run for Hunger"
           fill
-          priority
+          preload
+          fetchPriority="high"
           className="object-cover brightness-75"
           sizes="100vw"
         />
@@ -96,11 +97,11 @@ export default function HomeIntroductionSection() {
             onPlaying={() => setVideoPlaying(true)}>
             <source
               src={`/${ASSET_VERSION}/core/TSOH-Poster-${videoSize}.webm`}
-              type="video/webm"
+              type='video/webm; codecs="vp9"'
             />
             <source
               src={`/${ASSET_VERSION}/core/TSOH-Poster-720.mp4`}
-              type="video/mp4"
+              type='video/mp4; codecs="avc1.640028"'
               onError={() => setVideoFailed(true)}
             />
           </video>

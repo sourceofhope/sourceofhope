@@ -26,11 +26,20 @@ export const metadata: Metadata = {
   },
 };
 
+// Fall back to empty lists if the CMS is unreachable.
+async function getMedia(): Promise<[MediaBlogPost[], MediaNewsletterPost[]]> {
+  try {
+    return await Promise.all([
+      fetchPublications(10) as Promise<MediaBlogPost[]>,
+      fetchNewsletters(5) as Promise<MediaNewsletterPost[]>,
+    ]);
+  } catch {
+    return [[], []];
+  }
+}
+
 export default async function Media() {
-  const [posts, newsletters] = await Promise.all([
-    fetchPublications(10) as Promise<MediaBlogPost[]>,
-    fetchNewsletters(5) as Promise<MediaNewsletterPost[]>,
-  ]);
+  const [posts, newsletters] = await getMedia();
 
   return (
     <>
