@@ -23,8 +23,9 @@ function chooseVideoSources(): VideoSource[] | null {
     return null;
   }
 
-  const connection = (navigator as Navigator & { connection?: NetworkInformation })
-    .connection;
+  const connection = (
+    navigator as Navigator & { connection?: NetworkInformation }
+  ).connection;
   if (
     connection?.saveData ||
     ["slow-2g", "2g", "3g"].includes(connection?.effectiveType ?? "")
@@ -32,7 +33,8 @@ function chooseVideoSources(): VideoSource[] | null {
     return null;
   }
 
-  const renderedWidth = window.innerWidth * Math.min(window.devicePixelRatio || 1, 2);
+  const renderedWidth =
+    window.innerWidth * Math.min(window.devicePixelRatio || 1, 2);
   const webm =
     renderedWidth > 1600
       ? `/${ASSET_VERSION}/core/TSOH-Hero-1080.webm`
@@ -49,6 +51,7 @@ function chooseVideoSources(): VideoSource[] | null {
 }
 
 export default function HomeIntroductionSection() {
+  const sectionRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [sources, setSources] = useState<VideoSource[] | null>(null);
   const [videoReady, setVideoReady] = useState(false);
@@ -61,7 +64,8 @@ export default function HomeIntroductionSection() {
 
     const start = () => {
       const schedule =
-        window.requestIdleCallback ?? ((cb: () => void) => window.setTimeout(cb, 200));
+        window.requestIdleCallback ??
+        ((cb: () => void) => window.setTimeout(cb, 200));
       idleHandle = schedule(() => setSources(chooseVideoSources()));
     };
 
@@ -150,19 +154,20 @@ export default function HomeIntroductionSection() {
         )}
       </div>
       <div className="relative z-10 w-full max-w-[80ch] md:max-w-[90ch] self-end grid gap-3 p-5 md:pb-15 lg:px-35">
-        <h2 className="text-neutral-50 font-urbanist text-md md:text-lg font-semibold">
+        <p className="text-neutral-50 font-urbanist text-md md:text-lg font-semibold">
           THE SOURCE OF HOPE
-        </h2>
-        <h2 className="text-neutral-50 font-urbanist text-md md:text-xlg font-bold line-clamp-2">
+        </p>
+        <h1 className="text-neutral-50 font-urbanist text-md md:text-xlg font-bold line-clamp-2">
           EMPOWERING AND PROVIDING HOPE THROUGH EDUCATION, HEALTH, AND WELLNESS
-        </h2>
+        </h1>
         <p className="hidden md:block text-neutral-300 text-justify text-sm">
-          We are a nonprofit organization dedicated to providing education, holistic
-          health and wellness, and support to individuals in need.
-          Our team of volunteers is committed to serving the DFW community,
+          We are a nonprofit organization dedicated to providing education,
+          holistic health and wellness, and support to individuals in need. Our
+          team of volunteers is committed to serving the DFW community,
           including at-risk families, veterans, and first responders. Your
-          donation helps ensure that those in need have access to essential health services,
-          safety resources, and the support they need to live healthier, more fulfilling lives.
+          donation helps ensure that those in need have access to essential
+          health services, safety resources, and the support they need to live
+          healthier, more fulfilling lives.
         </p>
         <div className="flex gap-5 flex-col md:flex-row">
           <LinkButton className="w-fit" href="/donate" text="DONATE NOW" />
