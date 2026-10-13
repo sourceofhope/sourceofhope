@@ -23,10 +23,12 @@ export const metadata: Metadata = {
 export default function Connect() {
   return (
     <>
-      <PageHeader
-        title="CONNECT"
-        subtitle="JOIN US TODAY"
-      />
+      <PageHeader>
+        <h1 className="font-urbanist font-bold text-neutral-50 text-xxxlg">
+          CONNECT
+        </h1>
+        <p className="font-semibold text-neutral-200 text-sm">JOIN US TODAY</p>
+      </PageHeader>
       <ConnectVolunteerSection />
       <ConnectMapSection />
       <ConnectCareersSection />

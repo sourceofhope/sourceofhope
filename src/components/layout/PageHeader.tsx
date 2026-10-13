@@ -24,8 +24,6 @@ interface PageHeaderProps {
  * styling their own headings.
  */
 export default function PageHeader({
-  title,
-  subtitle,
   src = `/${ASSET_VERSION}/core/TSOH-Family.webp`,
   position = "center",
   children,

@@ -33,11 +33,14 @@ export const metadata: Metadata = {
 export default function Members() {
   return (
     <>
-      <PageHeader
-        src={`/${ASSET_VERSION}/core/TSOH-Family.webp`}
-        title="MEMBERSHIPS"
-        subtitle="CONSISTENT SUPPORT FOR THE MISSION"
-      />
+      <PageHeader src={`/${ASSET_VERSION}/core/TSOH-Family.webp`}>
+        <h2 className="font-urbanist font-bold text-neutral-50 text-xxxlg">
+          MEMBERSHIPS
+        </h2>
+        <p className="font-semibold text-neutral-200 text-sm">
+          CONSISTENT SUPPORT FOR THE MISSION
+        </p>
+      </PageHeader>
 
       <MembersHeroSection />
       <MembersBenefitsSection />

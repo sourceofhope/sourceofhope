@@ -49,7 +49,6 @@ function chooseVideoSources(): VideoSource[] | null {
 }
 
 export default function HomeIntroductionSection() {
-  const sectionRef = useRef<HTMLElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [sources, setSources] = useState<VideoSource[] | null>(null);
   const [videoReady, setVideoReady] = useState(false);
@@ -151,12 +150,12 @@ export default function HomeIntroductionSection() {
         )}
       </div>
       <div className="relative z-10 w-full max-w-[80ch] md:max-w-[90ch] self-end grid gap-3 p-5 md:pb-15 lg:px-35">
-        <p className="text-neutral-50 font-urbanist text-md md:text-lg font-semibold">
+        <h2 className="text-neutral-50 font-urbanist text-md md:text-lg font-semibold">
           THE SOURCE OF HOPE
-        </p>
-        <h1 className="text-neutral-50 font-urbanist text-md md:text-xlg font-bold line-clamp-2">
+        </h2>
+        <h2 className="text-neutral-50 font-urbanist text-md md:text-xlg font-bold line-clamp-2">
           EMPOWERING AND PROVIDING HOPE THROUGH EDUCATION, HEALTH, AND WELLNESS
-        </h1>
+        </h2>
         <p className="hidden md:block text-neutral-300 text-justify text-sm">
           We are a nonprofit organization dedicated to providing education, holistic
           health and wellness, and support to individuals in need.

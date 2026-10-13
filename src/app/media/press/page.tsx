@@ -28,10 +28,14 @@ export const metadata: Metadata = {
 export default function PressPage() {
   return (
     <>
-      <PageHeader
-        title="PRESS"
-        subtitle="OUR COMMUNITY COVERAGE"
-      />
+      <PageHeader>
+        <h2 className="font-urbanist font-bold text-neutral-50 text-xxxlg">
+          PRESS
+        </h2>
+        <p className="font-semibold text-neutral-200 text-sm">
+          OUR COMMUNITY COVERAGE
+        </p>
+      </PageHeader>
       <PageSection className="justify-items-center grid gap-10 relative m-0 text-sm md:text-md lg:text-lg">
         <article className="grid gap-5">
           <Title>Our Press Coverage</Title>
