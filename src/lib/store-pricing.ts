@@ -32,7 +32,9 @@ export interface StoreQuote {
   total: number;
 }
 
-const round2 = (value: number) => Math.round(value * 100) / 100;
+// Same rounding as StoreCartContext (`parseFloat(x.toFixed(2))`); Math.round
+// differs from it by a cent on some tax/fee values.
+const round2 = (value: number) => parseFloat(value.toFixed(2));
 
 /** Convert a dollar amount to integer cents. */
 export const toCents = (value: number) => Math.round(value * 100);

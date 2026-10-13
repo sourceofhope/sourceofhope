@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { getEnvironment } from '@/lib/environment.server';
 import { rateLimit } from '@/lib/rate-limit';
 import { PricingError, getSiteOrigin, quoteStoreOrder } from '@/lib/store-pricing';
+import { readJsonObject } from '@/lib/validation';
 
 type PaypalLink = {
   rel: string;
@@ -40,9 +41,14 @@ export async function POST(request: Request) {
             );
         }
 
+        const body = await readJsonObject(request);
+        if (!body) {
+            return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
+        }
+
         // Prices, tax, shipping, and fees are computed on the server from the
         // CMS; any amounts or URLs sent by the browser are ignored.
-        const quote = await quoteStoreOrder(await request.json());
+        const quote = await quoteStoreOrder(body);
         const origin = getSiteOrigin(request);
 
         const auth = Buffer.from(`${paypalClientId}:${paypalClientSecret}`).toString('base64');

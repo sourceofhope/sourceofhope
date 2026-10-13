@@ -7,7 +7,7 @@ import Blockquote from "@/components/ui/Blockquote";
 import Bold from "@/components/ui/Bold";
 import ExpressiveAnchor from "@/components/ui/expressive/ExpressiveAnchor";
 import HighlightedText from "@/components/ui/HighlightedText";
-import Block from "@/components/layout/Block";
+import PageHeader from "@/components/layout/PageHeader";
 import { ASSET_VERSION } from "@/lib/environment";
 
 const CANONICAL_URL = "https://thesourceofhope.org/serve/outdoor-hope";
@@ -68,12 +68,13 @@ function CarouselCard({
 export default function OutdoorHope() {
   return (
     <>
-      <Block />
-      <section className="w-full md:justify-items-left items-center grid gap-5 pt-25 p-5 lg:px-35 text-sm md:text-md lg:text-lg">
-        <article className="grid gap-3 justify-self-start justify-start">
-          <Title>Hope For The Outdoors</Title>
-          <Heading>Teaching our Community</Heading>
-        </article>
+      <PageHeader
+        src={`/${ASSET_VERSION}/outdoorHope/OH-Carousel-1.webp`}
+        title="HOPE FOR THE OUTDOORS"
+        subtitle="TEACHING OUR COMMUNITY"
+        position="50% 40%"
+      />
+      <section className="w-full md:justify-items-left items-center grid gap-5 p-5 lg:px-35 text-sm md:text-md lg:text-lg">
         <article className="grid gap-5">
           <p>
             At <Bold>The Source of Hope</Bold>, we are excited to introduce{" "}

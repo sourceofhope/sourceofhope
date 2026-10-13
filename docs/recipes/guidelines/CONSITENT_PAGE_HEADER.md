@@ -8,8 +8,8 @@ Component:
 
 Key behavior:
 
-- full-width hero image (`next/image`, `priority`) with a bottom fade
-- fixed height, gutters (`px-5 md:px-15 lg:px-35`), and title typography so
+- full-width hero image (`next/image`, `preload`) with a bottom fade
+- fixed height, gutters (`px-5 lg:px-35`), and title typography so
   every page frames its title the same way
 - renders the page's single `<h1>` from the `title` prop
 - default hero image is versioned using `ASSET_VERSION`

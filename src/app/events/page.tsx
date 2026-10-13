@@ -1,23 +1,5 @@
 import { Metadata } from "next";
 import PageHeader from "@/components/layout/PageHeader";
-
-
-// import Title from "@/components/ui/Title";
-// import Heading from "@/components/ui/Heading";
-// import { AnchorButton } from "@/components/ui/Button";
-// import Carousel from "@/components/ui/Carousel";
-// import Icon from "@/components/ui/Icon";
-// import Bold from "@/components/ui/Bold";
-// import HighlightedText from "@/components/ui/HighlightedText";
-// import {
-//   HeartIcon,
-//   UserIcon,
-//   AcademicCapIcon,
-//   GlobeAmericasIcon,
-// } from "@heroicons/react/20/solid";
-// import Block from "@/components/layout/Block";
-// import { ASSET_VERSION } from "@/lib/environment";
-//added the following import on 07/02/26 for display of Recurring Events 
 import ServeEventsSection from "@/components/serve/ServeEventsSection";
 
 export const metadata: Metadata = {

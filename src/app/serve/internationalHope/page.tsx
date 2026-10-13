@@ -12,7 +12,7 @@ import {
 import Bold from "@/components/ui/Bold";
 import HighlightedText from "@/components/ui/HighlightedText";
 import Emphasis from "@/components/ui/Emphasis";
-import Block from "@/components/layout/Block";
+import PageHeader from "@/components/layout/PageHeader";
 import { ASSET_VERSION } from "@/lib/environment";
 
 const CANONICAL_URL = "https://thesourceofhope.org/serve/international-hope";
@@ -64,12 +64,12 @@ function CarouselCard({
 export default function InternationalHope() {
   return (
     <>
-      <Block />
-      <section className="w-full md:justify-items-left items-center grid gap-5 pt-25 p-5 lg:px-35 text-sm md:text-md lg:text-lg">
-        <article className="grid gap-3 justify-self-start justify-start">
-          <Title>International Partner Serving</Title>
-          <Heading>Extends our mission beyond borders</Heading>
-        </article>
+      <PageHeader
+        src={`/${ASSET_VERSION}/serve/IH-Banner.webp`}
+        title="INTERNATIONAL PARTNER SERVING"
+        subtitle="EXTENDS OUR MISSION BEYOND BORDERS"
+      />
+      <section className="w-full md:justify-items-left items-center grid gap-5 p-5 lg:px-35 text-sm md:text-md lg:text-lg">
         <article className="grid gap-3">
           <p>
             At <Bold>The Source of Hope</Bold>,{" "}

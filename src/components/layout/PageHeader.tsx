@@ -39,12 +39,13 @@ export default function PageHeader({
         alt=""
         aria-hidden="true"
         fill
-        priority
+        preload
+        fetchPriority="high"
         sizes="100vw"
         className="-z-10 object-cover brightness-[.6] contrast-[1.1] [mask-image:linear-gradient(to_bottom,white_82%,transparent_100%)]"
         style={{ objectPosition: position }}
       />
-      <div className="w-full grid gap-1 px-5 md:px-15 lg:px-35 pb-18 md:pb-22">
+      <div className="w-full grid gap-1 px-5 lg:px-35 pb-18 md:pb-22">
         {title && (
           <h1 className="font-urbanist font-bold text-neutral-50 text-xxlg md:text-xxxlg leading-tight text-balance">
             {title}

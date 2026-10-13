@@ -12,7 +12,7 @@ import {
   CalculatorIcon,
   LanguageIcon,
 } from "@heroicons/react/20/solid";
-import Block from "@/components/layout/Block";
+import PageHeader from "@/components/layout/PageHeader";
 import { ASSET_VERSION } from "@/lib/environment";
 
 const CANONICAL_URL = "https://thesourceofhope.org/serve/education-hope";
@@ -42,12 +42,12 @@ export const metadata: Metadata = {
 export default function EducationHope() {
   return (
     <>
-      <Block />
-      <section className="w-full md:justify-items-left items-center grid gap-5 pt-25 p-5 lg:px-35 text-sm md:text-md lg:text-lg">
-        <article className="grid gap-3 justify-self-start justify-start">
-          <Title>Education for Hope</Title>
-          <Heading>Teaching our Community</Heading>
-        </article>
+      <PageHeader
+        src={`/${ASSET_VERSION}/serve/EH-Banner.webp`}
+        title="EDUCATION FOR HOPE"
+        subtitle="TEACHING OUR COMMUNITY"
+      />
+      <section className="w-full md:justify-items-left items-center grid gap-5 p-5 lg:px-35 text-sm md:text-md lg:text-lg">
         <article className="grid gap-3">
           <p>
             <Bold>The Education For Hope</Bold> program offers tutoring

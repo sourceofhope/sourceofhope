@@ -99,7 +99,7 @@ function IntroductionSection() {
       <div className="relative w-full aspect-square md:aspect-auto md:h-96 rounded-2xl overflow-hidden shadow-md bg-neutral-200">
         <Image
           src={`/${ASSET_VERSION}/core/plannedgiving_hero.webp`}
-          alt="A family supported by The Source of Hope"
+          alt="A Source of Hope volunteer in a food-service glove speaking into a microphone"
           fill
           sizes="(max-width: 1024px) 100vw, 50vw"
           className="object-cover"

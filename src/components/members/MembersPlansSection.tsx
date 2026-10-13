@@ -279,7 +279,7 @@ function IndividualsMonthlySupportSection({
         </p>
       </div>
 
-      <div className="grid lg:grid-cols-[1fr_360px] gap-6 items-start">
+      <div className="grid xl:grid-cols-[1fr_360px] gap-6 items-start">
         <div className="grid md:grid-cols-3 gap-4">
           <CustomAmountCard
             amount={amount}
@@ -288,7 +288,7 @@ function IndividualsMonthlySupportSection({
           />
         </div>
 
-        <aside className="hidden lg:block sticky top-24">
+        <aside className="hidden xl:block sticky top-24">
           <div className="bg-neutral-100 rounded-2xl shadow-sm p-5 grid gap-3">
             <div className="flex items-start justify-between gap-3">
               <div className="grid gap-1">
@@ -331,7 +331,7 @@ function IndividualsMonthlySupportSection({
         <IndividualImpactEstimator amount={amount} />
       </div>
 
-      <div className="lg:hidden sticky bottom-3 z-10">
+      <div className="xl:hidden sticky bottom-3 z-10">
         <div className="bg-neutral-100 shadow-lg rounded-2xl p-4 flex items-center justify-between gap-3">
           <div className="grid">
             <p className="text-xs text-neutral-600">Selected</p>
@@ -424,7 +424,7 @@ function CompanyPlanCard({ plan, isSelected, onSelect, onJoin }: any) {
         className={`mt-auto w-full px-5 py-3 rounded-xl font-bold text-white transition-all duration-300 ${
           isSelected
             ? "bg-accent-500 hover:bg-accent-600 hover:shadow-lg"
-            : "bg-neutral-900 hover:shadow-lg"
+            : "bg-primary-800 hover:bg-primary-700 hover:shadow-lg"
         }`}>
         {isSelected ? "Selected" : "Select"}
       </button>
@@ -510,7 +510,7 @@ function CompanyPartnershipSection({
         </p>
       </div>
 
-      <div className="grid lg:grid-cols-[1fr_360px] gap-6 items-start">
+      <div className="grid xl:grid-cols-[1fr_360px] gap-6 items-start">
         <div className="grid md:grid-cols-3 gap-4">
           {COMPANIES.map((plan) => (
             <CompanyPlanCard
@@ -523,7 +523,7 @@ function CompanyPartnershipSection({
           ))}
         </div>
 
-        <aside className="hidden lg:block sticky top-24">
+        <aside className="hidden xl:block sticky top-24">
           <div className="bg-neutral-100 rounded-2xl shadow-sm p-5 grid gap-3">
             <div className="flex items-start justify-between gap-3">
               <div className="grid gap-1">
@@ -567,11 +567,11 @@ function CompanyPartnershipSection({
 
       <Heading>Partnership details</Heading>
 
-      <div className="grid gap-4 lg:hidden">
+      <div className="grid gap-4 xl:hidden">
         <SelectedCompanyIncludes plan={selectedPlan} />
       </div>
 
-      <div className="hidden lg:block overflow-x-auto">
+      <div className="hidden xl:block overflow-x-auto">
         <div className="min-w-215 grid grid-cols-[320px_repeat(3,1fr)] gap-2">
           <div />
           {COMPANIES.map((p) => (
@@ -579,7 +579,7 @@ function CompanyPartnershipSection({
               key={p.id}
               className={`rounded-xl p-3 text-center font-bold ${
                 selectedId === p.id
-                  ? "bg-neutral-900 text-white"
+                  ? "bg-primary-800 text-white"
                   : "bg-neutral-100"
               }`}>
               {p.name}
@@ -598,7 +598,7 @@ function CompanyPartnershipSection({
           ))}
         </div>
       </div>
-      <div className="lg:hidden sticky bottom-3 z-10">
+      <div className="xl:hidden sticky bottom-3 z-10">
         <div className="bg-neutral-100 shadow-lg rounded-2xl p-4 flex items-center justify-between gap-3">
           <div className="grid">
             <p className="text-xs text-neutral-600">Selected</p>
@@ -662,7 +662,7 @@ export default function MembersPlansSection() {
 
   if (checkoutSelection) {
     return (
-      <section className="w-full p-5 lg:px-20">
+      <section className="w-full p-5 lg:px-35">
         <MembersCheckoutSection
           selection={checkoutSelection}
           onBack={() => setCheckoutSelection(null)}
@@ -672,7 +672,7 @@ export default function MembersPlansSection() {
   }
 
   return (
-    <section className="grid gap-10 w-full p-5 lg:px-20">
+    <section className="grid gap-10 w-full p-5 lg:px-35">
       <IndividualsMonthlySupportSection
         amount={individualAmount}
         onAmountChange={setIndividualAmount}

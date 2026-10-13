@@ -8,7 +8,7 @@ export async function GET(
   try {
     const { id } = await params;
 
-    if (!id) {
+    if (!id || id.length > 200) {
       return NextResponse.json(
         { error: "Product ID or slug is required" },
         { status: 400 },

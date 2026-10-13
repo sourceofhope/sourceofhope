@@ -12,7 +12,7 @@ import {
   AcademicCapIcon,
   GlobeAmericasIcon,
 } from "@heroicons/react/20/solid";
-import Block from "@/components/layout/Block";
+import PageHeader from "@/components/layout/PageHeader";
 import { ASSET_VERSION } from "@/lib/environment";
 //added the following import on 07/02/26 for display of Recurring Events 
 import ServeEventsSection from "@/components/serve/ServeEventsSection";
@@ -45,13 +45,12 @@ export const metadata: Metadata = {
 export default function ServingHope() {
   return (
     <>
-      <Block />
-      <section className="w-full md:justify-items-left items-center grid gap-5 pt-25 p-5 lg:px-35 text-sm md:text-md lg:text-lg">
-        <div className="grid gap-3 justify-self-start justify-start">
-          <Title>Serving & Sharing Hope</Title>
-          <Heading>Monthly Feeding with Dignity</Heading>
-        </div>
-
+      <PageHeader
+        src={`/${ASSET_VERSION}/serve/SH-Banner.webp`}
+        title="SERVING & SHARING HOPE"
+        subtitle="MONTHLY FEEDING WITH DIGNITY"
+      />
+      <section className="w-full md:justify-items-left items-center grid gap-5 p-5 lg:px-35 text-sm md:text-md lg:text-lg">
         <article className="grid gap-5">
           <p>
             <Bold>Serving Hope</Bold> and <Bold>Sharing Hope</Bold> are two
@@ -107,9 +106,12 @@ export default function ServingHope() {
             className="md:hidden w-fit"
           />
           
-          <ServeEventsSection />
         </article>
+      </section>
 
+      <ServeEventsSection />
+
+      <section className="w-full md:justify-items-left items-center grid gap-5 p-5 lg:px-35 text-sm md:text-md lg:text-lg">
         <article className="grid gap-5">
           <Title>What Is The Program?</Title>
           <p>
