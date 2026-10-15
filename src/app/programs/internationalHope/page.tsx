@@ -15,7 +15,7 @@ import Emphasis from "@/components/ui/Emphasis";
 import PageHeader from "@/components/layout/PageHeader";
 import { ASSET_VERSION } from "@/lib/environment";
 
-const CANONICAL_URL = "https://thesourceofhope.org/serve/international-hope";
+const CANONICAL_URL = "https://thesourceofhope.org/programs/internationalHope";
 
 export const metadata: Metadata = {
   title: "International Partner Serving Program | The Source of Hope",

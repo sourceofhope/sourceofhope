@@ -14,11 +14,9 @@ import {
 } from "@heroicons/react/20/solid";
 import PageHeader from "@/components/layout/PageHeader";
 import { ASSET_VERSION } from "@/lib/environment";
-//added the following import on 07/02/26 for display of Recurring Events 
-import ServeEventsSection from "@/components/serve/ServeEventsSection";
-import ServeDocumentsSection from "@/components/serve/ServeDocumentsSection";
+import EventsDocumentsSection from "@/components/events/EventsDocumentsSection";
 
-const CANONICAL_URL = "https://thesourceofhope.org/serve/serving-hope";
+const CANONICAL_URL = "https://thesourceofhope.org/programs/servingHope";
 
 export const metadata: Metadata = {
   title: "Serving Hope & Sharing Hope | The Source of Hope",
@@ -108,8 +106,6 @@ export default function ServingHope() {
           
         </article>
       </section>
-
-      <ServeEventsSection />
 
       <section className="w-full md:justify-items-left items-center grid gap-5 p-5 lg:px-35 text-sm md:text-md lg:text-lg">
         <article className="grid gap-5">
@@ -217,7 +213,7 @@ export default function ServingHope() {
           </div>
         </article>
       </section>
-      <ServeDocumentsSection only={["serving-hope"]} />
+      <EventsDocumentsSection only={["serving-hope"]} />
     
     </>
   );

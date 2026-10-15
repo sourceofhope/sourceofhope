@@ -15,7 +15,7 @@ import {
 import PageHeader from "@/components/layout/PageHeader";
 import { ASSET_VERSION } from "@/lib/environment";
 
-const CANONICAL_URL = "https://thesourceofhope.org/serve/education-hope";
+const CANONICAL_URL = "https://thesourceofhope.org/programs/educationHope";
 
 export const metadata: Metadata = {
   title: "Education for Hope Program | The Source of Hope",

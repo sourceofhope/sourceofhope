@@ -2,7 +2,7 @@ import { LinkButton } from "@/components/ui/Button";
 import Title from "@/components/ui/Title";
 import { BanknotesIcon } from "@heroicons/react/20/solid";
 
-export default function ServeDonationSection() {
+export default function ProgramsDonationSection() {
   return (
     <section className="py-10 px-5 lg:px-35 w-full grid gap-15 items-center justify-items-center bg-accent-800 text-neutral-50">
       <article className="md:w-1/2 grid gap-5 justify-items-center text-balance text-center">

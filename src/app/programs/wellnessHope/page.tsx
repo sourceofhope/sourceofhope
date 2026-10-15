@@ -7,7 +7,7 @@ import HighlightedText from "@/components/ui/HighlightedText";
 import PageHeader from "@/components/layout/PageHeader";
 
 const ASSET_VERSION = "v2";
-const CANONICAL_URL = "https://thesourceofhope.org/serve/wellness-hope";
+const CANONICAL_URL = "https://thesourceofhope.org/programs/wellnessHope";
 
 export const metadata: Metadata = {
   title: "Wellness of Hope Program | The Source of Hope",

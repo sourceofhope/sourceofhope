@@ -10,7 +10,7 @@ import HighlightedText from "@/components/ui/HighlightedText";
 import PageHeader from "@/components/layout/PageHeader";
 import { ASSET_VERSION } from "@/lib/environment";
 
-const CANONICAL_URL = "https://thesourceofhope.org/serve/outdoor-hope";
+const CANONICAL_URL = "https://thesourceofhope.org/programs/outdoorHope";
 
 export const metadata: Metadata = {
   title: "Hope for the Great Outdoors Program | The Source of Hope",

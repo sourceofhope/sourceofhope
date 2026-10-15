@@ -3,7 +3,7 @@ import Title from "@/components/ui/Title";
 import ExpressiveCard from "@/components/ui/expressive/ExpressiveCard";
 import Link from "next/link";
 
-export default function ServeGuidelinesSection() {
+export default function ProgramsGuidelinesSection() {
   return (
     <PageSection className="gap-5 text-sm md:text-md lg:text-lg">
       <div className="grid gap-1 justify-self-start justify-start">
@@ -47,7 +47,7 @@ export default function ServeGuidelinesSection() {
           By signing up, you acknowledge and agree to our{" "}
           <Link
             className="font-semibold text-accent-500"
-            href="/serve#volunteer-agreements">
+            href="/events#volunteer-agreements">
             volunteer agreement
           </Link>{" "}
           and guidelines. Thank you for being the Source of Hope in our community!
@@ -91,7 +91,7 @@ export default function ServeGuidelinesSection() {
             Download your{" "}
             <Link
               className="font-semibold text-accent-500"
-              href="/serve#volunteer-agreements">
+              href="/events#volunteer-agreements">
               volunteer agreement
             </Link>
           </li>

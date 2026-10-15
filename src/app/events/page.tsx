@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 import PageHeader from "@/components/layout/PageHeader";
-import ServeEventsSection from "@/components/serve/ServeEventsSection";
+import EventsUpcomingSection from "@/components/events/EventsUpcomingSection";
+import EventsDocumentsSection from "@/components/events/EventsDocumentsSection";
 
 export const metadata: Metadata = {
   title: "Events | The Source of Hope",
@@ -33,7 +34,8 @@ export default function EventsPage() {
         </p>
       </PageHeader>
 
-      <ServeEventsSection />
+      <EventsUpcomingSection />
+      <EventsDocumentsSection />
     </>
   );
  }

@@ -55,7 +55,7 @@ export function ServingCard({ className }: ServingCardProps) {
         </li>
         <li>
           <ExpressiveLink
-            to="/serve/educationHope"
+            to="/programs/educationHope"
             className="rounded-2xl p-5 w-full grid justify-between transition-colors duration-500 hover:bg-neutral-200">
             Become a Tutor or Mentor
           </ExpressiveLink>

@@ -15,7 +15,7 @@ interface ServingArticleProps {
   side?: boolean;
 }
 
-export default function ServeProgramsSection() {
+export default function ProgramsListSection() {
   const left = true;
   const right = false;
 
@@ -81,7 +81,7 @@ export default function ServeProgramsSection() {
             <button className="w-fit font-semibold">
               <ExpressiveAnchor
                 className="text-sm md:text-md text-accent-500"
-                href="/serving-hope">
+                href="/programs/servingHope">
                 Volunteer at Our Next Event
               </ExpressiveAnchor>
             </button>
@@ -101,7 +101,7 @@ export default function ServeProgramsSection() {
             <button className="w-fit font-semibold">
               <ExpressiveAnchor
                 className="text-sm md:text-md text-accent-500"
-                href="/education-hope">
+                href="/programs/educationHope">
                 Become a Tutor
               </ExpressiveAnchor>
             </button>
@@ -126,7 +126,7 @@ export default function ServeProgramsSection() {
             <button className="w-fit font-semibold">
               <ExpressiveAnchor
                 className="text-sm md:text-md text-accent-500"
-                href="/wellness-hope">
+                href="/programs/wellnessHope">
                 Support Community Wellness
               </ExpressiveAnchor>
             </button>
@@ -150,7 +150,7 @@ export default function ServeProgramsSection() {
             <button className="w-fit font-semibold">
               <ExpressiveAnchor
                 className="text-sm md:text-md text-accent-500"
-                href="/sharing-hope">
+                href="/programs/servingHope">
                 Partner with Us
               </ExpressiveAnchor>
             </button>
@@ -171,7 +171,7 @@ export default function ServeProgramsSection() {
             <button className="w-fit font-semibold">
               <ExpressiveAnchor
                 className="text-sm md:text-md text-accent-500"
-                href="/outdoor-hope">
+                href="/programs/outdoorHope">
                 Join the Next Outdoor Experience
               </ExpressiveAnchor>
             </button>
@@ -192,7 +192,7 @@ export default function ServeProgramsSection() {
             <button className="w-fit font-semibold">
               <ExpressiveAnchor
                 className="text-sm md:text-md text-accent-500"
-                href="/international-hope">
+                href="/programs/internationalHope">
                 Learn About Global Outreach
               </ExpressiveAnchor>
             </button>

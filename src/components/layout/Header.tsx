@@ -27,14 +27,14 @@ const getHeaderLinks = (): NavLink[] => [
     ],
   },
   {
-    label: "SERVE",
-    href: "/serve",
+    label: "PROGRAMS",
+    href: "/programs",
     children: [
-      { label: "SERVING & SHARING HOPE", href: "/serve/servingHope" },
-      { label: "EDUCATION FOR HOPE", href: "/serve/educationHope" },
-      { label: "WELLNESS OF HOPE", href: "/serve/wellnessHope" },
-      { label: "HOPE FOR THE OUTDOORS", href: "/serve/outdoorHope" },
-      { label: "HOPE BEYOND BORDERS", href: "/serve/internationalHope" },
+      { label: "SERVING & SHARING HOPE", href: "/programs/servingHope" },
+      { label: "EDUCATION FOR HOPE", href: "/programs/educationHope" },
+      { label: "WELLNESS OF HOPE", href: "/programs/wellnessHope" },
+      { label: "HOPE FOR THE OUTDOORS", href: "/programs/outdoorHope" },
+      { label: "HOPE BEYOND BORDERS", href: "/programs/internationalHope" },
     ],
   },
   {

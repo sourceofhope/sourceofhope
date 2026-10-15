@@ -28,7 +28,7 @@ export const VOLUNTEER_DOCUMENTS = [
   },
 ];
 
-export default function ServeDocumentsSection({
+export default function EventsDocumentsSection({
   only,
 }: {
   /** Limit the list to specific document ids. */

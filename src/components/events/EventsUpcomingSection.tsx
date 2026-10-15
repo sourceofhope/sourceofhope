@@ -20,7 +20,7 @@ async function getEvents(): Promise<[SanityEvent[], SanityEvent[]]> {
   }
 }
 
-export default async function ServeEventsSection() {
+export default async function EventsUpcomingSection() {
   const [majorEvents, recurringEvents] = await getEvents();
 
   return (

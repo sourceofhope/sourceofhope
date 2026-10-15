@@ -43,6 +43,8 @@ const nextConfig: NextConfig = {
       // Awards now lives under Media.
       { source: "/awards", destination: "/media/awards", permanent: true },
       { source: "/giving", destination: "/planned-giving", permanent: true },
+      // Serve was renamed to Programs.
+      { source: "/serve/:path*", destination: "/programs/:path*", permanent: true },
     ];
   },
 };

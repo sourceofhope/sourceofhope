@@ -5,7 +5,7 @@ import Heading from '@/components/ui/Heading';
 import Blockquote from '@/components/ui/Blockquote';
 import Bold from '@/components/ui/Bold';
 
-export default function ServeShowcaseSection() {
+export default function ProgramsShowcaseSection() {
   return (
     <PageSection className="justify-items-center grid gap-5 text-sm md:text-md lg:text-lg">
       <div className="grid gap-1 justify-self-start justify-start">
