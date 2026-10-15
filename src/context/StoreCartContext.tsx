@@ -17,29 +17,13 @@ export interface CartItem {
   size?: string;
 }
 
-export const SHIPPING_OPTIONS = [
-  {
-    id: "standard",
-    name: "Standard Shipping",
-    time: "5-7 business days",
-    cost: 5.99,
-  },
-  {
-    id: "express",
-    name: "Express Shipping",
-    time: "2-3 business days",
-    cost: 12.99,
-  },
-  {
-    id: "overnight",
-    name: "Overnight Shipping",
-    time: "Next business day",
-    cost: 24.99,
-  },
-];
+import {
+  SHIPPING_OPTIONS,
+  STANDARD_TAX_RATE,
+  STANDARD_PROCESSING_RATE,
+} from "@/lib/store-constants";
 
-export const STANDARD_TAX_RATE = 0.0825;
-export const STANDARD_PROCESSING_RATE = 0.03;
+export { SHIPPING_OPTIONS, STANDARD_TAX_RATE, STANDARD_PROCESSING_RATE };
 
 interface StoreCartContextType {
   cart: CartItem[];

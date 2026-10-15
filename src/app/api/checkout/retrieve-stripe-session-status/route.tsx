@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
-import { getEnvironment } from '@/lib/environment';
+import { getEnvironment } from '@/lib/environment.server';
+import { rateLimit } from '@/lib/rate-limit';
 import Stripe from 'stripe';
 
 /**
@@ -8,6 +9,10 @@ import Stripe from 'stripe';
  */
 export async function GET(request: Request) {
     try {
+        // 30 status lookups per IP per 10 minutes.
+        const limited = rateLimit(request, 'payment-status', 30, 10 * 60 * 1000);
+        if (limited) return limited;
+
         const { stripeSecretKey } = getEnvironment();
 
         if (!stripeSecretKey) {
@@ -17,7 +22,7 @@ export async function GET(request: Request) {
         const { searchParams } = new URL(request.url);
         const sessionId = searchParams.get('session_id');
 
-        if (!sessionId) {
+        if (!sessionId || !/^cs_[A-Za-z0-9_]{10,200}$/.test(sessionId)) {
             return NextResponse.json({ error: 'Session ID is required' }, { status: 400 });
         }
 
@@ -32,11 +37,9 @@ export async function GET(request: Request) {
         });
     } catch (error) {
         console.error('Retrieve session status error:', error);
-        const details = error instanceof Error ? error.message : 'Unknown error';
         return NextResponse.json(
             {
                 error: 'Failed to retrieve session status',
-                details,
             },
             { status: 500 },
         );

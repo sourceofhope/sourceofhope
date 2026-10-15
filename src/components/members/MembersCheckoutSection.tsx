@@ -14,9 +14,9 @@ import {
 } from "@stripe/react-stripe-js";
 import { CheckCircleIcon, ShieldCheckIcon } from "@heroicons/react/20/solid";
 import { FaEdit, FaLock } from "react-icons/fa";
-import { getEnvironment } from "@/lib/environment";
-
-const stripePromise = loadStripe(getEnvironment().stripePublishableKey || "");
+const stripePromise = loadStripe(
+  process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || "",
+);
 
 function MembershipPaymentForm({ amount, onSuccess }: any) {
   const stripe = useStripe();

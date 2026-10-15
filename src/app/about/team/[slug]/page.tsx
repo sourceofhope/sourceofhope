@@ -42,16 +42,10 @@ export default async function TeamMember({
 
   return (
     <>
-      <PageHeader>
-        <h1 className="font-urbanist font-bold text-neutral-50 text-xxxlg">
-          {member.name.toUpperCase()}
-        </h1>
-        {member.title && (
-          <p className="font-semibold text-neutral-200 text-sm md:text-md">
-            {member.title}
-          </p>
-        )}
-      </PageHeader>
+      <PageHeader
+        title={member.name.toUpperCase()}
+        subtitle={member.title || undefined}
+      />
 
       <section className="w-full px-5 py-8 pb-20 lg:px-35">
         <div className="mx-auto max-w-7xl">

@@ -5,9 +5,9 @@ export async function GET() {
   try {
     return NextResponse.json(await fetchBannerEvents());
   } catch (error) {
-    const message = error instanceof Error ? error.message : "Unknown error";
+    console.error(error);
     return NextResponse.json(
-      { error: "Failed to fetch banner events", details: message },
+      { error: "Failed to fetch banner events" },
       { status: 500 },
     );
   }

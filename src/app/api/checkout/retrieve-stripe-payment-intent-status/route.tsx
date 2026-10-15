@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
-import { getEnvironment } from '@/lib/environment';
+import { getEnvironment } from '@/lib/environment.server';
+import { rateLimit } from '@/lib/rate-limit';
 import Stripe from 'stripe';
 
 /**
@@ -8,6 +9,10 @@ import Stripe from 'stripe';
  */
 export async function GET(request: Request) {
     try {
+        // 30 status lookups per IP per 10 minutes.
+        const limited = rateLimit(request, 'payment-status', 30, 10 * 60 * 1000);
+        if (limited) return limited;
+
         const { stripeSecretKey } = getEnvironment();
 
         if (!stripeSecretKey) {
@@ -17,7 +22,7 @@ export async function GET(request: Request) {
         const { searchParams } = new URL(request.url);
         const paymentIntentId = searchParams.get('payment_intent');
 
-        if (!paymentIntentId) {
+        if (!paymentIntentId || !/^pi_[A-Za-z0-9_]{10,200}$/.test(paymentIntentId)) {
             return NextResponse.json({ error: 'Payment Intent ID is required' }, { status: 400 });
         }
 
@@ -37,11 +42,9 @@ export async function GET(request: Request) {
         });
     } catch (error) {
         console.error('Retrieve Payment Intent status error:', error);
-        const details = error instanceof Error ? error.message : 'Unknown error';
         return NextResponse.json(
             {
                 error: 'Failed to retrieve Payment Intent status',
-                details,
             },
             { status: 500 },
         );
