@@ -71,9 +71,14 @@ export default function Carousel({
     return () => window.clearInterval(id);
   }, [isAuto, totalPages]);
 
-  const next = () => setIndex((current) => (current + 1) % totalPages);
-  const prev = () =>
+  const next = () => {
+    setIsAuto(false);
+    setIndex((current) => (current + 1) % totalPages);
+  };
+  const prev = () => {
+    setIsAuto(false);
     setIndex((current) => (current - 1 + totalPages) % totalPages);
+  };
 
   return (
     <div className={`w-full ${className}`}>
@@ -131,10 +136,7 @@ export default function Carousel({
 
           {!hideControls ? (
             <button
-              onClick={() => {
-                setIsAuto(false);
-                next();
-              }}
+              onClick={next}
               aria-label="Next slide"
               className="rounded-full border border-neutral-300 bg-white p-2 text-neutral-800 shadow-sm transition hover:bg-neutral-100">
               <ChevronRightIcon className="h-5 w-5" />
