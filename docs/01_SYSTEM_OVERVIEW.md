@@ -83,10 +83,16 @@ The website **pulls** content from Sanity when a page is generated and refreshes
 3. Components render the content on specific routes.
 4. Forms and checkout call the site's own `/api/...` routes, which talk to Stripe, PayPal, or Resend.
 
-```
-Visitor ──> Vercel ──> Next.js page ──reads──> Sanity
-                   └─> /api/... route ──> Stripe / PayPal / Resend
-Editor  ──> Sanity Studio ──publishes──> Sanity
+```mermaid
+flowchart LR
+    visitor([Visitor]) --> vercel[Vercel]
+    vercel --> page[Next.js page]
+    vercel --> api["/api/... route"]
+    page -- reads content --> sanity[(Sanity)]
+    api -- reads product prices --> sanity
+    api --> services[Stripe / PayPal / Resend]
+    editor([Editor]) --> studio[Sanity Studio]
+    studio -- publishes --> sanity
 ```
 
 ---

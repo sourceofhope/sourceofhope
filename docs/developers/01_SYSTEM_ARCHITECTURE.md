@@ -63,25 +63,45 @@ See `/docs/recipes/guidelines/SERVER_AND_CLIENT_COMPONENTS.md`.
 
 Page request:
 
-```
-Browser → Vercel → Next.js renders page (Server Components)
-                     └─ sanity-content.ts → Sanity API (cached, revalidated every 30 s)
-         ← HTML + client JavaScript for interactive parts
+```mermaid
+sequenceDiagram
+    participant B as Browser
+    participant V as Vercel
+    participant N as Next.js (Server Components)
+    participant S as Sanity API
+    B->>V: Request a page
+    V->>N: Render the page
+    N->>S: Query via sanity-content.ts
+    Note over N,S: Cached, revalidated every 30 s
+    S-->>N: Published content
+    N-->>B: HTML + client JavaScript for interactive parts
 ```
 
 Interactive request (checkout, form):
 
-```
-Client Component → fetch("/api/...") → Route Handler
-                                         ├─ rateLimit() / readJsonObject()
-                                         ├─ getEnvironment() (secrets)
-                                         └─ Stripe / PayPal / Resend / Sanity
+```mermaid
+sequenceDiagram
+    participant C as Client Component
+    participant R as Route Handler
+    participant X as Stripe / PayPal / Resend / Sanity
+    C->>R: fetch("/api/...")
+    R->>R: rateLimit() and readJsonObject()
+    R->>R: getEnvironment() for secrets
+    R->>X: Provider API call
+    X-->>R: Result
+    R-->>C: JSON response
 ```
 
 Payment confirmation:
 
-```
-Stripe → POST /api/checkout/stripe-webhook → finalize and mark invoice paid
+```mermaid
+sequenceDiagram
+    participant St as Stripe
+    participant W as POST /api/checkout/stripe-webhook
+    St->>W: payment_intent.succeeded
+    W->>W: Verify stripe-signature
+    W->>St: Finalize invoice and mark it paid
+    W-->>St: { received: true }
 ```
 
 ---

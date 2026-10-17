@@ -16,34 +16,37 @@ Top-level:
 
 ## `/src` Layout
 
-```
-/src
-  /app
-    layout.tsx                 root layout (providers, header, footer, analytics)
-    globals.css                Tailwind import + @theme tokens (colors, fonts, sizes)
-    page.tsx                   home page
-    [slug]/page.tsx            legacy team-member URL redirect
-    about/ connect/ donate/ events/ media/ members/ planned-giving/ programs/ store/
-    api/                       Route Handlers (see 06_API_ROUTES.md)
-  /components
-    <area>/                    page sections: about, awards, connect, donate, events, home,
-                               media, members, planned-giving, programs, store (+ cart, checkout)
-    layout/                    Header, Footer, PageHeader, HeaderBlocker
-    ui/                        shared primitives (buttons, PageSection, SectionHeading, Carousel,
-                               HookInput, HoneypotField, expressive/, parallax/, ...)
-    structure/Loader.tsx       full-screen loading indicator
-  /context
-    HeaderContext.tsx          header blocking + banner state
-    StoreCartContext.tsx       cart, shipping method, processing fee (localStorage)
-  /lib
-    environment.ts             ASSET_VERSION (client-safe)
-    environment.server.ts      getEnvironment(): all env vars (server-only)
-    sanity-client.ts           next-sanity client (server-only)
-    sanity-content.ts          GROQ queries + TypeScript types (server-only)
-    store-constants.ts         shipping options, tax and processing rates
-    store-pricing.ts           quoteStoreOrder() server-side pricing (server-only)
-    rate-limit.ts              per-IP rate limiting for API routes
-    validation.ts              readJsonObject() request body parsing
+```mermaid
+flowchart LR
+    src["/src"]
+
+    src --> app["/app"]
+    app --> layout["layout.tsx<br/>root layout: providers, header, footer, analytics"]
+    app --> globals["globals.css<br/>Tailwind import + @theme tokens: colors, fonts, sizes"]
+    app --> home["page.tsx<br/>home page"]
+    app --> legacy["[slug]/page.tsx<br/>legacy team-member URL redirect"]
+    app --> routes["about/ connect/ donate/ events/ media/<br/>members/ planned-giving/ programs/ store/"]
+    app --> api["api/<br/>Route Handlers, see 06_API_ROUTES.md"]
+
+    src --> components["/components"]
+    components --> area["&lt;area&gt;/<br/>page sections: about, awards, connect, donate, events, home,<br/>media, members, planned-giving, programs, store + cart, checkout"]
+    components --> layoutdir["layout/<br/>Header, Footer, PageHeader, HeaderBlocker"]
+    components --> ui["ui/<br/>shared primitives: buttons, PageSection, SectionHeading, Carousel,<br/>HookInput, HoneypotField, expressive/, parallax/, ..."]
+    components --> loader["structure/Loader.tsx<br/>full-screen loading indicator"]
+
+    src --> context["/context"]
+    context --> headerctx["HeaderContext.tsx<br/>header blocking + banner state"]
+    context --> cartctx["StoreCartContext.tsx<br/>cart, shipping method, processing fee in localStorage"]
+
+    src --> lib["/lib"]
+    lib --> env["environment.ts<br/>ASSET_VERSION, client-safe"]
+    lib --> envserver["environment.server.ts<br/>getEnvironment(): all env vars, server-only"]
+    lib --> sanityclient["sanity-client.ts<br/>next-sanity client, server-only"]
+    lib --> sanitycontent["sanity-content.ts<br/>GROQ queries + TypeScript types, server-only"]
+    lib --> storeconstants["store-constants.ts<br/>shipping options, tax and processing rates"]
+    lib --> storepricing["store-pricing.ts<br/>quoteStoreOrder() server-side pricing, server-only"]
+    lib --> ratelimit["rate-limit.ts<br/>per-IP rate limiting for API routes"]
+    lib --> validation["validation.ts<br/>readJsonObject() request body parsing"]
 ```
 
 Conventions:

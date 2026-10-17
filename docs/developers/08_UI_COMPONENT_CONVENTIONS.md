@@ -18,12 +18,13 @@ Root layout:
 
 Provides, in order: fonts, default metadata, JSON-LD, analytics, then
 
-```
-HeaderProvider
-  StoreCartProvider
-    Header
-    <main> page </main>
-    Footer
+```mermaid
+flowchart TD
+    layout["RootLayout (/src/app/layout.tsx)"] --> hp[HeaderProvider]
+    hp --> scp[StoreCartProvider]
+    scp --> header[Header]
+    scp --> main["main (page content)"]
+    scp --> footer[Footer]
 ```
 
 There is no separate error layout; 404s render inside this layout.

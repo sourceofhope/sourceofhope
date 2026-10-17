@@ -8,18 +8,19 @@ This map provides a high-level guide to the most important directories.
 
 ## Root Structure
 
-```
-/src
-  /app            routes: pages (page.tsx), API routes (api/**/route.ts), root layout
-  /components     page sections, layout chrome, reusable UI
-  /context        React context providers (header state, store cart)
-  /lib            server helpers: environment, Sanity queries, pricing, rate limiting
-/public           static files served as-is (images, video, PDFs, sitemap, favicons)
-/sanity
-  /the-source-of-hope   Sanity Studio (separate npm project, CMS schema)
-/docs             this documentation
-next.config.ts    redirects, security headers, image settings
-.env.template     list of required environment variables
+```mermaid
+flowchart LR
+    root([Repository root])
+    root --> src["/src"]
+    root --> public["/public<br/>static files served as-is: images, video, PDFs, sitemap, favicons"]
+    root --> sanity["/sanity/the-source-of-hope<br/>Sanity Studio: separate npm project, CMS schema"]
+    root --> docs["/docs<br/>this documentation"]
+    root --> nextconfig["next.config.ts<br/>redirects, security headers, image settings"]
+    root --> envtemplate[".env.template<br/>list of required environment variables"]
+    src --> app["/app<br/>routes: pages (page.tsx), API routes (api/.../route.ts), root layout"]
+    src --> components["/components<br/>page sections, layout chrome, reusable UI"]
+    src --> context["/context<br/>React context providers: header state, store cart"]
+    src --> lib["/lib<br/>server helpers: environment, Sanity queries, pricing, rate limiting"]
 ```
 
 ---
