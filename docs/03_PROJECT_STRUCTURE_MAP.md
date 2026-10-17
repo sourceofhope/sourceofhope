@@ -10,77 +10,96 @@ This map provides a high-level guide to the most important directories.
 
 ```
 /src
-/pages
-/components
-/sections
-/lib
-/api
+  /app            routes: pages (page.tsx), API routes (api/**/route.ts), root layout
+  /components     page sections, layout chrome, reusable UI
+  /context        React context providers (header state, store cart)
+  /lib            server helpers: environment, Sanity queries, pricing, rate limiting
+/public           static files served as-is (images, video, PDFs, sitemap, favicons)
+/sanity
+  /the-source-of-hope   Sanity Studio (separate npm project, CMS schema)
+/docs             this documentation
+next.config.ts    redirects, security headers, image settings
+.env.template     list of required environment variables
 ```
 
 ---
 
-## `/src/pages`
+## `/src/app`
 
-Contains all routed pages.
+Contains every route. Next.js uses **file-based routing**: the folder path is the URL.
 
-Each file here typically corresponds to a URL route, but this project **does not** rely on app routing.
+- `/src/app/page.tsx` → `/`
+- `/src/app/about/team/page.tsx` → `/about/team`
+- `/src/app/about/team/[slug]/page.tsx` → `/about/team/<any-slug>`
+- `/src/app/layout.tsx` wraps every page (header, footer, providers, analytics)
 
-If you are adding a new page or route, this is usually where it starts.
+API routes live here too:
+
+- `/src/app/api/email/send/route.ts` → `POST /api/email/send`
+
+If you are adding a new page or endpoint, this is where it starts.
 
 ---
 
 ## `/src/components`
 
-Reusable UI building blocks.
+Components are grouped by purpose:
 
-Examples:
+- `/src/components/<area>/` — sections used by one page or area, named `<Area><Name>Section.tsx` (for example `/src/components/programs/ProgramsShowcaseSection.tsx`)
+- `/src/components/layout/` — site chrome: `Header`, `Footer`, `PageHeader`, `HeaderBlocker`
+- `/src/components/ui/` — reusable primitives: buttons, `PageSection`, `SectionHeading`, `Carousel`, form inputs, and more
 
-- Buttons
-- Cards
-- Layout wrappers
-- Shared UI elements
-
-If multiple pages share the same UI, it should live here.
+If multiple pages share the same UI, it belongs in `/src/components/ui`.
 
 ---
 
-## `/src/pages/<page>/sections`
+## `/src/context`
 
-Page sections composed of components.
+Client-side state shared across pages:
 
-These are larger blocks used to build pages:
-
-- Hero sections
-- Content blocks
-- Map/contact sections
-- CMS-driven layouts
-
-Pages are often assembled from these.
+- `HeaderContext.tsx` — header appearance and banner state
+- `StoreCartContext.tsx` — store cart, shipping method, processing fee (saved in the browser)
 
 ---
 
 ## `/src/lib`
 
-Utility functions and API helpers.
+Utility and server-side modules.
 
-Examples:
+- `environment.ts` — values safe for the browser (`ASSET_VERSION`)
+- `environment.server.ts` — reads secrets from environment variables (server only)
+- `sanity-client.ts`, `sanity-content.ts` — the Sanity client and every CMS query
+- `store-constants.ts`, `store-pricing.ts` — shipping/tax/fee rates and server-side order pricing
+- `rate-limit.ts`, `validation.ts` — request protection for API routes
 
-- API base URL logic
-- Request helpers
-- Sanitization utilities
-- CMS data fetchers
+If you need to change how the site reads CMS content or prices an order, look here.
 
-If you need to change how the frontend talks to APIs or CMS, look here.
+---
+
+## `/public`
+
+Static files. Images and video are versioned under `/public/v2/...` (see `ASSET_VERSION`). The sitemap (`/public/sitemap.xml`) and `robots.txt` are hand-maintained here.
+
+---
+
+## `/sanity/the-source-of-hope`
+
+The Sanity Studio project. Content types are defined in `schemaTypes/`. It has its own `package.json` and is run and deployed separately from the website.
+
+---
 
 ## How to Navigate This Structure
 
 If you need to:
 
-- Add a page --> `/pages`
-- Reuse or change UI --> `/components`
-- Adjust a page block --> `/page/<page>/sections`
-- Modify API or CMS communication --> `/lib`
-- Fix form behavior --> `/api`
+- Add a page --> `/src/app/<route>/page.tsx`
+- Add or change a page section --> `/src/components/<area>/`
+- Reuse or change shared UI --> `/src/components/ui`
+- Change the header or footer --> `/src/components/layout`
+- Read new CMS content --> `/src/lib/sanity-content.ts`
+- Add a CMS content type --> `/sanity/the-source-of-hope/schemaTypes`
+- Fix form, checkout, or email behavior --> `/src/app/api`
+- Add a redirect or security header --> `/next.config.ts`
 
 ---
 

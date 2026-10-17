@@ -2,9 +2,9 @@
 
 **The Source of Hope (TSOH)** is a 501(c)(3) nonprofit organization dedicated to improving the lives of individuals and families.
 
-This repository powers our mission of spreading awareness for our mission: serving communities though education, wellness, and outreach.
+This repository powers thesourceofhope.org and our mission: serving communities through education, wellness, and outreach.
 
-This monorepo contains the front and backend used by the Source of Hope website. For full system documentation, see the `/docs` folder in the root of the project.
+It contains a single **Next.js** application (pages and API routes together) and the **Sanity Studio** used to edit site content. For full system documentation, see `/docs` — start with `/docs/00_START_HERE.md`.
 
 ---
 
@@ -26,21 +26,23 @@ We only ask that all contributions follow our values of professionalism, integri
 
 The website has three major parts:
 
-1. Frontend application (React + Vite)
-2. Headless CMS (content only)
-3. This API server (payments, forms, email)
+1. Pages — Next.js App Router (React 19, TypeScript, Tailwind CSS v4) in `/src/app`
+2. API routes — payments, donations, memberships, and email, in `/src/app/api`
+3. Headless CMS — Sanity, for events, team members, products, publications, and newsletters
 
-The frontend calls the API whenever a task requires security, payment processing, or server-side logic; the CMS is called for pulling content like event cards or team-member profiles.
+Pages read CMS content on the server. Forms and checkout call the site's own `/api/...` routes, which talk to Stripe, PayPal, and Resend. Everything deploys together on Vercel.
 
-| Failure                | What to do         |
-| ---------------------- | ------------------ |
-| Content is wrong       | Check the CMS      |
-| Layout is wrong        | Check the frontend |
-| Checkout or forms fail | Check this server  |
+| Failure                       | What to do                                  |
+| ----------------------------- | ------------------------------------------- |
+| Content is wrong              | Check Sanity Studio                         |
+| Layout or page wording wrong  | Check the page code in `/src`               |
+| Checkout or forms fail        | Check `/src/app/api` and environment variables |
 
 ---
 
 ## Quick Setup
+
+Requires Node.js 20.9 or newer.
 
 Clone the repository:
 
@@ -50,87 +52,100 @@ cd sourceofhope
 ```
 
 Install dependencies:
-```bash
-cd sourceofhope
-npm i --legacy-peer-deps
-```
 
 ```bash
-cd server
-npm i --legacy-peer-deps
+npm install
+# if npm reports peer dependency conflicts:
+npm install --legacy-peer-deps
 ```
 
 ## Configure environment variables
-Copy the .env template:
+
+Copy the template and fill in **test/sandbox** keys:
+
 ```bash
-cp .env.template .env
+cp .env.template .env.local
 ```
-Update the .env with test/sandbox api key or live/production api key 
 
+See `/docs/developers/11_ENVIRONMENT_VARIABLES.md` for every variable.
 
-## Running the Server & Frontend
-### Development (localhost)
+---
+
+## Running Locally
+
 ```bash
-cd sourceofhope
-npm run dev:client
-
-cd server
 npm run dev
 ```
 
-### Production (server)
+The site and its API run together at `http://localhost:3000`.
+
+Other scripts:
+
 ```bash
-npm build
+npm run lint    # ESLint
+npm run build   # production build (also type-checks)
+npm start       # serve the production build
 ```
 
-### Endpoints used by the Frontend
-The API Docs will be available at
-```
-http://localhost:3001/api/docs
+### Sanity Studio
+
+The Studio is a separate project:
+
+```bash
+cd sanity/the-source-of-hope
+npm install
+npm run dev     # http://localhost:3333
 ```
 
-Health check:
-```
-GET /api/health
-```
-Should return JSON: { status: "ok", message: "Source of Hope API is running" }
+### Health check
 
-
-### Stripe Checkout
 ```
-POST /api/checkout/create-stripe-session
+GET http://localhost:3000/api/health
 ```
 
-Creates a Stripe checkout session and returns a checkout URL.
+Should return JSON: `{ "status": "ok", "message": "Source of Hope API is running" }`
+
+---
+
+## Payments
+
+| Flow                    | Endpoint                                                  |
+| ----------------------- | --------------------------------------------------------- |
+| Store card checkout     | `POST /api/checkout/create-stripe-payment-intent`         |
+| Store Stripe Checkout   | `POST /api/checkout/create-stripe-checkout`               |
+| Store PayPal            | `POST /api/checkout/create-paypal-order`                  |
+| Donations               | `POST /api/checkout/create-donation-payment-intent`       |
+| Memberships             | `POST /api/checkout/create-membership-payment-intent`     |
+| Stripe webhook          | `POST /api/checkout/stripe-webhook`                       |
+
+Store prices, tax, shipping, and fees are always computed on the server from Sanity product data; the browser only sends product ids, quantities, sizes, and options.
+
+Stripe test cards (any future expiry date and any CVC):
 
 | Result  | Card Number           |
 | ------- | --------------------- |
 | Success | `4242 4242 4242 4242` |
 | Decline | `4000 0000 0000 0002` |
 
-Any future expiry date and any CVC.
+For PayPal, set `PAYPAL_API=development` and use sandbox buyer accounts from the PayPal Developer Dashboard.
 
-### PayPal Checkout
+Forward Stripe webhooks locally with the Stripe CLI:
+
+```bash
+stripe listen --forward-to localhost:3000/api/checkout/stripe-webhook
 ```
-POST /api/checkout/create-paypal-session
-```
 
-Creates a PayPal checkout session and returns a checkout URL.
+Full API reference: `/docs/developers/06_API_ROUTES.md`. Payment flows: `/docs/developers/10_PAYMENTS_AND_CHECKOUT.md`.
 
-#### Both endpoints use the same request structure from the frontend cart.
+---
 
-### PayPal Sandbox
+## Environments and Deployment
 
-Use sandbox buyer accounts from the PayPal Developer Dashboard.
+Vercel deploys from Git:
 
-## Environment Behavior
+| Branch        | Environment               |
+| ------------- | ------------------------- |
+| `development` | Development / staging     |
+| `production`  | Live site                 |
 
-The frontend automatically selects the correct API based on the domain:
-
-| Environment | API Used                    |
-| ----------- | --------------------------- |
-| Local       | `localhost:3001`            |
-| Development | `/dev/api (Vercel rewrite)` |
-| Production  | `/app/api (Vercel rewrite)` |
-
-This allows the same frontend code to work safely across environments.
+Open pull requests into `development`; release by merging `development` into `production`. Each Vercel environment has its own environment variables (test keys outside production). Details: `/docs/02_ENVIRONMENTS_AND_DEPLOY.md`.

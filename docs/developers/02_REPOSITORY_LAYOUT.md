@@ -1,54 +1,102 @@
 # Repository Layout
 
-This is a single repository with a frontend and an Express server.
+This is a single repository containing the Next.js website (pages and API routes) and the Sanity Studio project.
 
 Top-level:
 
-- `/src` Frontend (React + Vite)
-- `/server` Backend (Express)
+- `/src` Website source (pages, API routes, components, helpers)
+- `/public` Static files served from the site root
+- `/sanity/the-source-of-hope` Sanity Studio (separate npm project)
 - `/docs` Documentation
-
-Frontend conventions:
-
-- `/src/pages/<pageName>/...` contains page components
-- `/src/pages/<pageName>/sections/...` contains page-scoped sections
-- `/src/components/...` contains reusable UI and structure components
-
-Backend:
-
-- `/server/index.js` is the Express entrypoint
-- `/server/routes/checkout.js` checkout + payment endpoints
-- `/server/routes/email.js` email endpoint (Resend)
-- `/server/utility/environment.js` central environment accessors
+- `/next.config.ts` Redirects, security headers, image settings
+- `/.env.template` Environment variable template
+- `/eslint.config.mjs`, `/tsconfig.json`, `/postcss.config.mjs` Tooling
 
 ---
 
-## Root Scripts (package.json)
+## `/src` Layout
 
-The root package.json defines these scripts:
+```
+/src
+  /app
+    layout.tsx                 root layout (providers, header, footer, analytics)
+    globals.css                Tailwind import + @theme tokens (colors, fonts, sizes)
+    page.tsx                   home page
+    [slug]/page.tsx            legacy team-member URL redirect
+    about/ connect/ donate/ events/ media/ members/ planned-giving/ programs/ store/
+    api/                       Route Handlers (see 06_API_ROUTES.md)
+  /components
+    <area>/                    page sections: about, awards, connect, donate, events, home,
+                               media, members, planned-giving, programs, store (+ cart, checkout)
+    layout/                    Header, Footer, PageHeader, HeaderBlocker
+    ui/                        shared primitives (buttons, PageSection, SectionHeading, Carousel,
+                               HookInput, HoneypotField, expressive/, parallax/, ...)
+    structure/Loader.tsx       full-screen loading indicator
+  /context
+    HeaderContext.tsx          header blocking + banner state
+    StoreCartContext.tsx       cart, shipping method, processing fee (localStorage)
+  /lib
+    environment.ts             ASSET_VERSION (client-safe)
+    environment.server.ts      getEnvironment(): all env vars (server-only)
+    sanity-client.ts           next-sanity client (server-only)
+    sanity-content.ts          GROQ queries + TypeScript types (server-only)
+    store-constants.ts         shipping options, tax and processing rates
+    store-pricing.ts           quoteStoreOrder() server-side pricing (server-only)
+    rate-limit.ts              per-IP rate limiting for API routes
+    validation.ts              readJsonObject() request body parsing
+```
 
-- `dev:client`: runs Vite
-- `dev:server`: runs the Express server (watch mode) using `--prefix server`
-- `dev`: attempts to run both server and client
-- `build:client`: builds Vite and copies `dist/index.html` --> `dist/404.html` for static hosting fallbacks
-- `build:server`: installs server dependencies
-- `build`: builds client then installs server dependencies
-- `preview`: Vite preview
+Conventions:
 
-Note on `dev`:
-
-- The current `dev` script is defined as:
-  `start npm run dev:server && npm run dev:client`
-
-Depending on your OS/shell, you may want to run the server and client in separate terminals, or adjust to a parallel command runner.
+- Routes are folders under `/src/app`; the page file is always `page.tsx`.
+- Page sections are named `<Area><Name>Section.tsx` and live in `/src/components/<area>/`.
+- Components that only one route uses may sit beside the route (for example `/src/app/about/team/CarouselCard.tsx`).
+- Import from `/src` with the `@/` alias (`import PageSection from "@/components/ui/PageSection"`).
 
 ---
 
-## Server Scripts (server/package.json)
+## Root Scripts (`package.json`)
 
-Inside `/server`:
+- `dev`: `next dev` — local development server on `http://localhost:3000`
+- `build`: `next build` — production build (type-checks and fails on TypeScript errors)
+- `start`: `next start` — serve a production build locally
+- `lint`: `eslint` — Next.js core-web-vitals + TypeScript rules (`/eslint.config.mjs`)
+- `sanity`: `sanity dev` — note there is no Studio config at the repo root; run the Studio from its own folder instead (below)
 
-- `dev`: `node --watch index.js`
-- `start`: `node index.js`
+Requirements:
 
-The server runs on port 3001 by default.
+- Node.js 20.9 or newer (Next.js 16 requirement; Node 22 LTS works)
+- If `npm install` reports peer dependency conflicts, use `npm install --legacy-peer-deps`
+
+There is no automated test suite and no Prettier script; Prettier is installed as a dev dependency for editor use.
+
+---
+
+## Sanity Studio (`/sanity/the-source-of-hope`)
+
+A separate npm project with its own `package.json` and lockfile. The root `tsconfig.json` excludes it.
+
+- `sanity.config.ts` — Studio config (project id and dataset are hardcoded)
+- `sanity.cli.ts` — CLI config, deployment app id, auto-updates
+- `schemaTypes/*.ts` — content type definitions, registered in `schemaTypes/index.ts`
+
+Scripts (run inside that folder):
+
+- `npm run dev` — Studio at `http://localhost:3333`
+- `npm run build` — build the Studio
+- `npm run deploy` — deploy the hosted Studio (required after schema changes)
+
+See `/docs/developers/04_CMS_INTEGRATION.md`.
+
+---
+
+## `/public`
+
+- `/public/v2/core/` logos, hero images and video, placeholders, awards images
+- `/public/v2/<program>/` program carousels and tiles (servingHope, educationHope, wellnessHope, outdoorHope, internationalHope, sharingHope)
+- `/public/v2/serve/` program banners
+- `/public/v2/plannedgiving/` planned giving images
+- `/public/v2/documents/` downloadable PDFs (volunteer agreements)
+- `/public/sitemap.xml`, `/public/robots.txt`, favicons, `site.webmanifest`
+
+The `v2` segment is the `ASSET_VERSION`. See `/docs/recipes/fixes/UPDATE_STATIC_ASSETS.md`.
