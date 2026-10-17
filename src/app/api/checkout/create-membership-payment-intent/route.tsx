@@ -4,6 +4,10 @@ import Stripe from 'stripe';
 import { rateLimit } from '@/lib/rate-limit';
 import { readJsonObject } from '@/lib/validation';
 
+// With `expand: ['latest_invoice.payment_intent']` (API version 2022-11-15) the invoice
+// carries its expanded PaymentIntent; the SDK's current typings no longer include it.
+type InvoiceWithPaymentIntent = { id: string; payment_intent: Stripe.PaymentIntent };
+
 type MembershipPlanId = 'bronze' | 'silver' | 'gold' | 'individual' | 'partner' | 'sponsor' | 'champion';
 
 type MembershipRequestBody = {
@@ -114,7 +118,7 @@ export async function POST(request: Request) {
             return NextResponse.json({ error: 'Stripe configuration missing' }, { status: 500 });
         }
 
-        const stripe = new Stripe(stripeSecretKey, { apiVersion: '2022-11-15' } as any);
+        const stripe = new Stripe(stripeSecretKey, { apiVersion: '2022-11-15' as unknown as Stripe.LatestApiVersion });
         const body = (await readJsonObject(request)) as MembershipRequestBody | null;
         if (!body) {
             return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
@@ -202,7 +206,7 @@ export async function POST(request: Request) {
         let product;
         try {
             product = await stripe.products.retrieve(productConfig.id);
-        } catch (retrieveErr) {
+        } catch {
             // Product doesn't exist, try to create it
             try {
                 product = await stripe.products.create({
@@ -216,7 +220,7 @@ export async function POST(request: Request) {
                 });
             } catch (createErr) {
                 // If product already exists (race condition), retrieve it
-                const code = (createErr as any).code;
+                const code = (createErr as { code?: string }).code;
                 if (code === 'resource_already_exists') {
                     product = await stripe.products.retrieve(productConfig.id);
                 } else {
@@ -283,9 +287,10 @@ export async function POST(request: Request) {
             },
             expand: ['latest_invoice.payment_intent'],
             metadata: subscriptionMetadata,
-        } as any);
+        });
 
-        const paymentIntent = (subscription.latest_invoice as any).payment_intent;
+        const latestInvoice = subscription.latest_invoice as unknown as InvoiceWithPaymentIntent;
+        const paymentIntent = latestInvoice.payment_intent;
 
         // Propagate metadata to the PaymentIntent so it appears on the Stripe dashboard transaction view
         await stripe.paymentIntents.update(paymentIntent.id, {
@@ -295,7 +300,7 @@ export async function POST(request: Request) {
         return NextResponse.json({
             clientSecret: paymentIntent.client_secret,
             subscriptionId: subscription.id,
-            invoiceId: (subscription.latest_invoice as any).id,
+            invoiceId: latestInvoice.id,
         });
     } catch (error) {
         console.error('Membership subscription creation error:', error);
