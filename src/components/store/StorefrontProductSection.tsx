@@ -18,7 +18,7 @@ export default async function StorefrontProductSection() {
     <section className="w-full px-5 lg:px-35 pt-25 mb-10">
       <div className="mb-10 flex flex-col gap-5 max-w-2xl">
         <div className="grid gap-1">
-          <Title>Storefront</Title>
+          <Title as="h1">Storefront</Title>
           <Heading>Shop With Purpose</Heading>
         </div>
       </div>

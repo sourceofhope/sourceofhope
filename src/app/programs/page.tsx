@@ -14,14 +14,7 @@ export const metadata: Metadata = {
 export default function Programs() {
   return (
     <>
-      <PageHeader>
-        <h2 className="font-urbanist font-bold text-neutral-50 text-xxxlg">
-          PROGRAMS
-        </h2>
-        <p className="font-semibold text-neutral-200 text-sm">
-          MAKE AN IMPACT IN YOUR COMMUNITY
-        </p>
-      </PageHeader>
+      <PageHeader title="PROGRAMS" subtitle="MAKE AN IMPACT IN YOUR COMMUNITY" />
       <ProgramsShowcaseSection />
       <ProgramsListSection />
       <ProgramsDonationSection />

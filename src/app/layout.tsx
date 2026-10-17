@@ -71,9 +71,11 @@ export default function RootLayout({
     name: "The Source of Hope",
     url: "https://thesourceofhope.org",
     sameAs: [
-      "https://www.facebook.com/thesourceofhope",
-      "https://www.instagram.com/thesourceofhope",
+      "https://www.facebook.com/TheSourceOfHope",
+      "https://www.instagram.com/sourceofhope/",
       "https://www.linkedin.com/company/thesourceofhope",
+      "https://x.com/thesourceofhope",
+      "https://www.youtube.com/@thesourceofhope",
     ],
   };
 

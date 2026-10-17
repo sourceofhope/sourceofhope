@@ -74,7 +74,7 @@ export default function CartPage() {
               <ShoppingBagIcon className="w-10 h-10 text-accent-500" />
             </div>
 
-            <Title>Your Cart is Empty</Title>
+            <Title as="h1">Your Cart is Empty</Title>
             <p className="text-gray-700 leading-relaxed mb-10">
               You don&apos;t have any items in your shopping cart yet. Visit our
               Storefront to view our full selection.
@@ -90,7 +90,7 @@ export default function CartPage() {
       ) : (
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col gap-1">
-            <Title>Shopping Cart</Title>
+            <Title as="h1">Shopping Cart</Title>
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 mt-5 pb-5">
             <div className="lg:col-span-2">

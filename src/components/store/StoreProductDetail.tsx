@@ -93,7 +93,7 @@ export default function StoreProductDetail({
         </div>
 
         <div className="flex flex-col gap-3 self-start">
-          <Title>{product.title}</Title>
+          <Title as="h1">{product.title}</Title>
           <Heading>${priceValue.toFixed(2)}</Heading>
           <p className="text-gray-700 text-sm md:text-md">
             {product.shortDescription}

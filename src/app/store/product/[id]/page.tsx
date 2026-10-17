@@ -37,7 +37,7 @@ export default async function ProductPage({
               <HeartIcon className="w-10 h-10 text-accent-500" />
             </div>
 
-            <Title>We Can&apos;t Find That Product</Title>
+            <Title as="h1">We Can&apos;t Find That Product</Title>
             <p className="text-gray-700 leading-relaxed mb-10">
               We couldn&apos;t find the product you were looking for, but every
               visit here still supports our mission.
