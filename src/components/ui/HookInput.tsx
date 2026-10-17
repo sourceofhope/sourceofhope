@@ -1,7 +1,7 @@
 import { InputHTMLAttributes, forwardRef } from 'react';
-import { FieldError, FieldErrorsImpl, Merge } from 'react-hook-form';
+import { FieldError, FieldErrorsImpl, FieldValues, Merge } from 'react-hook-form';
 
-type ErrorType = FieldError | Merge<FieldError, FieldErrorsImpl<any>> | undefined;
+type ErrorType = FieldError | Merge<FieldError, FieldErrorsImpl<FieldValues>> | undefined;
 
 interface HookInputProps extends InputHTMLAttributes<HTMLInputElement> {
   title: string;

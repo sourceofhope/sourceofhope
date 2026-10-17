@@ -4,6 +4,7 @@ import {
   GlobeAltIcon,
   HeartIcon,
 } from "@heroicons/react/20/solid";
+import type { ReactNode } from "react";
 import Heading from "@/components/ui/Heading";
 import Title from "@/components/ui/Title";
 
@@ -43,7 +44,15 @@ export default function MembersBenefitsSection() {
   );
 }
 
-function Card({ title, text, children }: any) {
+function Card({
+  title,
+  text,
+  children,
+}: {
+  title: ReactNode;
+  text: ReactNode;
+  children?: ReactNode;
+}) {
   return (
     <article className="relative w-full flex flex-col gap-5 bg-neutral-100 shadow-sm p-5 rounded-2xl h-full">
       <div className="w-full grid justify-items-center">{children}</div>

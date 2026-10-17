@@ -2,10 +2,9 @@
 
 import Heading from "@/components/ui/Heading";
 import Title from "@/components/ui/Title";
-import Bold from "@/components/ui/Bold";
 import Link from "next/link";
 import { useState } from "react";
-import { loadStripe } from "@stripe/stripe-js";
+import { loadStripe, type PaymentIntent } from "@stripe/stripe-js";
 import {
   Elements,
   PaymentElement,
@@ -18,7 +17,23 @@ const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || "",
 );
 
-function MembershipPaymentForm({ amount, onSuccess }: any) {
+export type CheckoutSelection = {
+  type: "individual" | "company";
+  planId: string;
+  planName: string;
+  // The custom-amount input stores the raw text value, so this can be a string.
+  amount: number | string;
+  note: string;
+  makesPossible: string[];
+};
+
+function MembershipPaymentForm({
+  amount,
+  onSuccess,
+}: {
+  amount: number | string;
+  onSuccess: (paymentIntent: PaymentIntent) => void;
+}) {
   const stripe = useStripe();
   const elements = useElements();
   const [isProcessing, setIsProcessing] = useState(false);
@@ -105,7 +120,13 @@ function MembershipPaymentForm({ amount, onSuccess }: any) {
   );
 }
 
-function SuccessView({ selection, email }: any) {
+function SuccessView({
+  selection,
+  email,
+}: {
+  selection: CheckoutSelection;
+  email: string;
+}) {
   return (
     <div className="w-full max-w-2xl mx-auto bg-white rounded-2xl shadow-md p-8 text-center grid gap-5">
       <div className="flex items-center justify-center w-16 h-16 rounded-full bg-green-100 mx-auto">
@@ -154,7 +175,13 @@ function SuccessView({ selection, email }: any) {
   );
 }
 
-export default function MembersCheckoutSection({ selection, onBack }: any) {
+export default function MembersCheckoutSection({
+  selection,
+  onBack,
+}: {
+  selection: CheckoutSelection;
+  onBack: () => void;
+}) {
   const isCompany = selection.type === "company";
 
   type FormData = {
@@ -192,7 +219,6 @@ export default function MembersCheckoutSection({ selection, onBack }: any) {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [showContactForm, setShowContactForm] = useState(true);
 
   const validateEmail = (email: string) =>
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
@@ -256,21 +282,19 @@ export default function MembersCheckoutSection({ selection, onBack }: any) {
       }
 
       setClientSecret(intentData.clientSecret);
-      setShowContactForm(false);
-    } catch (err: any) {
-      setError(err.message || "An error occurred");
+    } catch (err) {
+      setError((err instanceof Error && err.message) || "An error occurred");
     } finally {
       setIsLoading(false);
     }
   };
 
   const handleEditContact = () => {
-    setShowContactForm(true);
     setClientSecret(null);
     setError(null);
   };
 
-  const handlePaymentSuccess = (paymentIntent: any) => {
+  const handlePaymentSuccess = () => {
     setIsSuccess(true);
   };
 

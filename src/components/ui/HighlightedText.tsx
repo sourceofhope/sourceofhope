@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState, ReactNode } from "react";
+import { useEffect, useRef, useState, ReactNode } from "react";
 
 const DefaultGenerator = {
   LINEAR: (t: number) => t,

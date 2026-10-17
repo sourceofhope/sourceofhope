@@ -84,7 +84,9 @@ function HomeResourceCardInner({
         sizes="100vw"
         fill
         onLoad={() => setLoaded(true)}
-        onError={(e) => (e.currentTarget.src = "/core/placeholder.webp")}
+        onError={(e) =>
+          (e.currentTarget.src = `/${ASSET_VERSION}/core/placeholder.webp`)
+        }
         className={`${
           loaded ? "opacity-100" : "opacity-0"
         } inset-0 w-full h-full object-cover transition-transform brightness-[.8] contrast-[1.1] bg-accent-900`}

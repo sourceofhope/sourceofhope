@@ -71,6 +71,27 @@ export default async function EventsUpcomingSection() {
   );
 }
 
+// Events without a registration link get a disabled notice instead of a
+// button that points nowhere.
+function RegisterButton({ url }: { url?: string | null }) {
+  const href = url?.trim();
+
+  if (!href) {
+    return (
+      <div
+        className="pointer-events-none select-none no-underline! inline-flex items-center rounded-2xl px-10 py-5 text-neutral-950 justify-between bg-neutral-300 font-semibold w-full"
+        role="status"
+        aria-label="Registration opening soon">
+        <span className="flex w-full gap-3 items-center justify-center text-sm md:text-md">
+          <span>Registration Opening Soon</span>
+        </span>
+      </div>
+    );
+  }
+
+  return <AnchorButton href={href} text="Register Now" className="w-full" />;
+}
+
 function MajorEventCard({ post }: { post: SanityEvent }) {
   const eventDateStr = post.date
     ? new Date(post.date).toLocaleString("en-US", {
@@ -123,11 +144,7 @@ function MajorEventCard({ post }: { post: SanityEvent }) {
             </span>
           </div>
         ) : (
-          <AnchorButton
-            href={post.eventPage?.url || "#"}
-            text="Register Now"
-            className="w-full"
-          />
+          <RegisterButton url={post.eventPage?.url} />
         )}
       </div>
     </div>
@@ -184,11 +201,7 @@ function CarouselCard({ post }: { post: SanityEvent }) {
             </span>
           </div>
         ) : (
-          <AnchorButton
-            href={post.eventPage?.url || "#"}
-            text="Register Now"
-            className="w-full"
-          />
+          <RegisterButton url={post.eventPage?.url} />
         )}
       </div>
     </div>
