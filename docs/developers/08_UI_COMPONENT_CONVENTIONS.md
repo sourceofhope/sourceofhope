@@ -111,7 +111,8 @@ Rules:
 - `Carousel` (client) — `auto`, `showProgress`, `hideControls`, `itemsPerView={{ base, md, lg }}`; autoplays every 5 seconds and stops for good once the visitor uses the controls
 - `ExpressiveCard` (client) — click-to-expand card
 - `ExpressiveNumber` (client) — animated count-up number
-- `Overlay`, `Takeover` (client) — portal-based modal layers
+- `Modal` (client) — accessible dialog on the native `<dialog>` element (`showModal()`): top layer above the header, Escape and backdrop close, focus returns to the trigger, page scroll locked by `html:has(dialog:modal)` in `globals.css`. Props: `open`, `onClose`, `labelledBy`, `children`, `className`. Use it for new modals.
+- `Overlay`, `Takeover` (client) — older portal-based layers (mobile bottom sheet, toast); they lack focus management, so prefer `Modal` for dialogs
 - `ParallaxSection`, `ParallaxLayer` (client) — scroll parallax (used by the Footer)
 - `Icon` — `aria-hidden` icon wrapper
 - `Loader` (`/src/components/structure/Loader.tsx`) — full-screen loading animation
@@ -127,7 +128,7 @@ Two form patterns exist today:
 - **react-hook-form + `HookInput`** — the contact form (`/src/components/connect/ConnectMapSection.tsx`). Preferred for new forms.
 - **Local state + plain inputs** — the planned giving form (`/src/components/planned-giving/FormSection.tsx`).
 
-`HookInput` (`/src/components/ui/HookInput.tsx`) is a `forwardRef` input with a visible label (`title`), an `error` prop for validation messages, and a `border` toggle. Spread `register("field", rules)` into it. Pick one pattern per form.
+`HookInput` (`/src/components/ui/HookInput.tsx`) is a `forwardRef` input with a visible label (`title`, linked to the input with `useId`), an `error` prop for validation messages (exposed through `aria-invalid` and `aria-describedby`), and a `border` toggle. Spread `register("field", rules)` into it. Pick one pattern per form.
 
 Every form that posts to `/api/email/send` must include the honeypot:
 

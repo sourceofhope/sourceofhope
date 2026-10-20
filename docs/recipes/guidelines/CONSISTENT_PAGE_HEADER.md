@@ -73,7 +73,7 @@ Rules:
 
 Some pages predate the `title`/`subtitle` props and pass hand-styled headings as `children`:
 
-- `/about`, `/connect`, `/programs`, `/media`, `/media/press`, `/media/podcast`, `/events`, `/members`
+- `/about`, `/connect`, `/programs`, `/media`, `/media/press`, `/media/podcast`, `/members`
 
 Several of these use an `<h2>`, which leaves the page without an `<h1>`. When you edit one of these pages, migrate it:
 

@@ -48,6 +48,7 @@ The health route doesn't touch any third-party service. It only proves the deplo
 | PayPal      | `NEXT_PUBLIC_PAYPAL_CLIENT_ID`, `PAYPAL_CLIENT_SECRET`, `PAYPAL_API`                   | Sandbox app, `PAYPAL_API=development` | Live app, `PAYPAL_API=production` | PayPal express checkout redirects to `sandbox.paypal.com` vs `paypal.com`                        |
 | Sanity      | `NEXT_PUBLIC_SANITY_PROJECT_ID`, `NEXT_PUBLIC_SANITY_DATASET`, `NEXT_PUBLIC_SANITY_API_VERSION`, `SANITY_API_READ_TOKEN` | `sgzdqn9z` / `production` | `sgzdqn9z` / `production` | `/events`, `/media`, `/store` show the same content as the Studio                                 |
 | Resend      | `RESEND_API_KEY`                                                                       | Optional. Any valid key sends real email. | The organization's key             | Submit the `/connect` form. It returns success and the email arrives at treasurer@thesourceofhope.org |
+| DocuSign    | `DOCUSIGN_*`, `WAIVER_SECRET`                                                          | Developer account, `DOCUSIGN_ENVIRONMENT=demo`, or unset | Production account, `DOCUSIGN_ENVIRONMENT=production` | "Sign online" appears on `/events`; demo envelopes carry a "demonstration" watermark. A completed signing emails info@thesourceofhope.org |
 
 Notes:
 

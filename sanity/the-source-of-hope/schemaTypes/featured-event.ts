@@ -1,4 +1,5 @@
 import {defineField, defineType} from 'sanity'
+import {eventDateFields, eventDetailFields} from './event-fields'
 
 export const featuredEventType = defineType({
   name: 'featuredEvent',
@@ -16,54 +17,8 @@ export const featuredEventType = defineType({
       type: 'string',
       validation: (Rule) => Rule.required(),
     }),
-    defineField({
-      name: 'date',
-      title: 'Date',
-      type: 'datetime',
-      description: 'Shown and entered in Central Time (America/Chicago), regardless of where you are editing.',
-      options: {
-        displayTimeZone: 'America/Chicago',
-        allowTimeZoneSwitch: false,
-      },
-      validation: (Rule) => Rule.required(),
-    }),
-    defineField({
-      name: 'location',
-      title: 'Location',
-      type: 'string',
-    }),
-    defineField({
-      name: 'summary',
-      title: 'Summary',
-      type: 'text',
-    }),
-    defineField({
-      name: 'eventPage',
-      title: 'Event Page',
-      type: 'object',
-      fields: [
-        defineField({
-          name: 'url',
-          title: 'URL',
-          type: 'url',
-        }),
-      ],
-    }),
-    defineField({
-      name: 'image',
-      title: 'Image',
-      type: 'image',
-      options: {
-        hotspot: true,
-      },
-      fields: [
-        defineField({
-          name: 'alt',
-          title: 'Alt Text',
-          type: 'string',
-        }),
-      ],
-    }),
+    ...eventDateFields,
+    ...eventDetailFields,
   ],
   preview: {
     select: {

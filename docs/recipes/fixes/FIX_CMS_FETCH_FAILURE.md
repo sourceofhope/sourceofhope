@@ -13,7 +13,7 @@ Pages and server components call the `fetch*` functions from `sanity-content.ts`
 
 - A section shows its empty state even though content exists in the Studio:
   - `/store`: "No products available"
-  - `/events`: "No featured events available" / "No recurring events available"
+  - `/events`: "No featured events are scheduled right now" / "Monthly program dates will be posted soon."
   - `/media`: "No blog posts to display" / "No newsletters to display"
   - Home page: "No updates to display"
   - `/about/team`: "Unable to load team data. Please try again later."
@@ -97,7 +97,7 @@ Team members only appear inside their team group (`teamGroup._ref`), and groups 
 
 ### A list limit hides items
 
-Fetchers clamp their limits (`clampLimit`, max 50 for most lists). `/events` shows 6 featured and 12 recurring events; the home page shows 5 publications; `/media` shows 10 publications and 5 newsletters.
+Fetchers clamp their limits (`clampLimit`, max 50 for most lists). `/events` shows up to 12 featured events (upcoming plus those ended within the last year) and 12 recurring events; the home page shows 5 publications; `/media` shows 10 publications and 5 newsletters.
 
 ---
 
