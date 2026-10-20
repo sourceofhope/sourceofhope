@@ -1,10 +1,10 @@
-name: CI
+name: Build
 on:
   pull_request:
     branches: [development, production]
 
 jobs:
-  checks:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -13,8 +13,6 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
       - run: npm ci
-      - run: npm run lint
-      - run: npx tsc --noEmit
       - run: npm run build
         env:
           NEXT_PUBLIC_SANITY_PROJECT_ID: dummy

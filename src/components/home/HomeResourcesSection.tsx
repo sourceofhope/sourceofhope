@@ -83,6 +83,8 @@ function HomeResourceCardInner({
         alt={caption}
         sizes="100vw"
         fill
+        loading="lazy"
+        decoding="async"
         onLoad={() => setLoaded(true)}
         onError={(e) =>
           (e.currentTarget.src = `/${ASSET_VERSION}/core/placeholder.webp`)
