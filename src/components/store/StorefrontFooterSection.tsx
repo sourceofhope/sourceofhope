@@ -4,6 +4,10 @@ import Heading from "@/components/ui/Heading";
 import HighlightedText from "@/components/ui/HighlightedText";
 import SimpleLink from "@/components/ui/SimpleLink";
 import { ArrowUpRightIcon } from "@heroicons/react/20/solid";
+import {
+  COMMUNITY_PARTNERS,
+  CommunityPartner,
+} from "@/lib/community-partners";
 
 export default function StorefrontFooterSection() {
   return (
@@ -36,31 +40,9 @@ export default function StorefrontFooterSection() {
           Featured Community Partners
         </h3>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-10">
-          <PartnerCard
-            name="12 Cuts Brazilian Steakhouse"
-            action="Reserve a Table"
-            code="SOURCEOFHOPE"
-          />
-          <PartnerCard
-            name="Local Spa & Beauty Services"
-            action="Visit Now"
-            code="HOPEGLOW"
-          />
-          <PartnerCard
-            name="Stone Global Realty"
-            action="Learn More"
-            note="Mention 'The Source of Hope' when booking"
-          />
-          <PartnerCard
-            name="Stone Construction"
-            action="Learn More"
-            note="Mention 'The Source of Hope' when booking"
-          />
-          <PartnerCard
-            name="Stone International Wellness Center"
-            action="Book Now"
-            code="HOPEWELLNESS10"
-          />
+          {COMMUNITY_PARTNERS.map((partner) => (
+            <PartnerCard key={partner.name} {...partner} />
+          ))}
         </div>
         <div className="grid gap-5">
           <Heading>Become a Partner Today</Heading>
@@ -92,21 +74,20 @@ function Step({ number, text }: { number: string; text: string }) {
   );
 }
 
-interface PartnerCardProps {
-  name: string;
-  action: string;
-  code?: string;
-  note?: string;
-}
-
-function PartnerCard({ name, action, code, note }: PartnerCardProps) {
+function PartnerCard({ name, action, code, note, url }: CommunityPartner) {
   return (
-    <a className="group relative flex flex-col justify-between gap-5 p-5 rounded-2xl bg-white border border-neutral-200 shadow-sm no-underline!">
+    <a
+      href={url}
+      target={url ? "_blank" : undefined}
+      rel={url ? "noopener noreferrer" : undefined}
+      className="group relative flex flex-col justify-between gap-5 p-5 rounded-2xl bg-white border border-neutral-200 shadow-sm no-underline!">
       <h4 className="text-lg font-semibold">{name}</h4>
       <div className="flex flex-col gap-2 text-sm text-neutral-600">
-        <span className="text-neutral-950 font-medium cursor-pointer">
-          {action}
-        </span>
+        {action && (
+          <span className="text-neutral-950 font-medium cursor-pointer">
+            {action}
+          </span>
+        )}
         {code && (
           <span className="font-semibold">
             Use code:{" "}

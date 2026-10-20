@@ -6,11 +6,14 @@ import {
   CheckCircleIcon,
   ShieldCheckIcon,
   BuildingOffice2Icon,
+  GiftIcon,
 } from "@heroicons/react/20/solid";
 import Title from "@/components/ui/Title";
 import Heading from "@/components/ui/Heading";
+import SectionHeading from "@/components/ui/SectionHeading";
 import Bold from "@/components/ui/Bold";
 import MembersCheckoutSection from "./MembersCheckoutSection";
+import { WELCOME_GIFT_MIN_MONTHLY } from "@/lib/community-partners";
 
 const IMPACT_MODEL = {
   dollarsPerMeal: 12.5,
@@ -21,85 +24,97 @@ const IMPACT_MODEL = {
 const COMPANIES = [
   {
     id: "partner",
-    name: "Company Partner",
+    name: "Neighborhood Sponsor",
     priceMonthly: 50,
+    audience: "For small and family-owned businesses",
     note: "Sustains community outreach and program operations.",
     makesPossible: [
       "Supports meals, outreach supplies, and volunteer coordination",
       "Helps keep wellness and education programs accessible",
     ],
     recognition: [
-      "Partner listing on website (optional)",
-      "Quarterly partner impact update (optional)",
+      "Website sponsor listing",
+      "Quarterly impact update",
+      "Feature your gift card or HOPE code",
       "Bronze sponsor pin",
     ],
     includes: {
       "Sustains monthly meal outreach": true,
-      "Supports wellness care access": true,
-      "Supports education/mentorship": true,
-      "Website partner listing (optional)": true,
-      "Spotlight story (optional)": false,
-      "Co-hosted volunteer day (optional)": false,
+      "Quarterly impact update": true,
+      "Website sponsor listing": true,
+      "Feature your gift card or HOPE code": true,
+      "Spotlight story": false,
+      "Priority volunteer scheduling": false,
+      "Co-hosted team volunteer day": false,
     },
   },
   {
     id: "sponsor",
     name: "Program Sponsor",
     priceMonthly: 100,
+    audience: "For growing businesses ready to do more",
     note: "Expands capacity and strengthens sustained service.",
     makesPossible: [
       "Helps fund higher-volume outreach and program growth",
       "Supports care pathways for underserved community members",
     ],
     recognition: [
-      "Website partner listing (optional)",
-      "Spotlight story (optional)",
-      "Priority coordination for volunteer participation (optional)",
+      "Everything in Neighborhood Sponsor",
+      "Spotlight story",
+      "Priority volunteer scheduling for your team",
       "Silver sponsor pin",
     ],
     includes: {
       "Sustains monthly meal outreach": true,
-      "Supports wellness care access": true,
-      "Supports education/mentorship": true,
-      "Website partner listing (optional)": true,
-      "Spotlight story (optional)": true,
-      "Co-hosted volunteer day (optional)": false,
+      "Quarterly impact update": true,
+      "Website sponsor listing": true,
+      "Feature your gift card or HOPE code": true,
+      "Spotlight story": true,
+      "Priority volunteer scheduling": true,
+      "Co-hosted team volunteer day": false,
     },
   },
   {
     id: "champion",
     name: "Impact Champion",
     priceMonthly: 500,
+    audience: "For companies leading community investment",
     note: "Helps underwrite major mission work across programs.",
     makesPossible: [
       "Helps underwrite recurring outreach, wellness, and education initiatives",
       "Strengthens rapid response for urgent community needs",
     ],
     recognition: [
-      "Website partner listing (optional)",
-      "Spotlight story (optional)",
-      "Co-hosted volunteer day (optional)",
+      "Everything in Program Sponsor",
+      "Co-hosted team volunteer day",
       "Gold sponsor pin",
     ],
     includes: {
       "Sustains monthly meal outreach": true,
-      "Supports wellness care access": true,
-      "Supports education/mentorship": true,
-      "Website partner listing (optional)": true,
-      "Spotlight story (optional)": true,
-      "Co-hosted volunteer day (optional)": true,
+      "Quarterly impact update": true,
+      "Website sponsor listing": true,
+      "Feature your gift card or HOPE code": true,
+      "Spotlight story": true,
+      "Priority volunteer scheduling": true,
+      "Co-hosted team volunteer day": true,
     },
   },
 ];
 
 const COMPANY_FEATURES = [
   "Sustains monthly meal outreach",
-  "Supports wellness care access",
-  "Supports education/mentorship",
-  "Website partner listing (optional)",
-  "Spotlight story (optional)",
-  "Co-hosted volunteer day (optional)",
+  "Quarterly impact update",
+  "Website sponsor listing",
+  "Feature your gift card or HOPE code",
+  "Spotlight story",
+  "Priority volunteer scheduling",
+  "Co-hosted team volunteer day",
 ];
+
+/** Estimated meals a fixed monthly gift supports over a year. */
+function mealsPerYear(priceMonthly: number) {
+  return Math.floor((priceMonthly * 12) / IMPACT_MODEL.dollarsPerMeal);
+}
 
 function ImpactStat({ icon, label, value, sublabel }: any) {
   return (
@@ -206,7 +221,7 @@ function CustomAmountCard({ amount, onAmountChange, onJoin }: any) {
       <div className="grid gap-1">
         <p className="text-xs font-semibold text-neutral-600 flex items-center gap-2">
           <HeartIcon className="w-4 h-4 text-neutral-600" />
-          Monthly Impact
+          Individual Sponsor
         </p>
         <Heading className="leading-tight">
           Give a custom monthly amount
@@ -255,6 +270,21 @@ function CustomAmountCard({ amount, onAmountChange, onJoin }: any) {
         ))}
       </div>
 
+      <p className="flex items-start gap-2 text-sm text-neutral-700">
+        <GiftIcon className="w-5 h-5 text-accent-500 shrink-0" />
+        {amount >= WELCOME_GIFT_MIN_MONTHLY ? (
+          <span>
+            Includes a welcome gift card from one of our Community Partners,
+            while supplies last.
+          </span>
+        ) : (
+          <span>
+            Give ${WELCOME_GIFT_MIN_MONTHLY}/mo or more to receive a welcome
+            gift card from one of our Community Partners.
+          </span>
+        )}
+      </p>
+
       <p className="text-xs text-neutral-600">
         This is a recurring monthly gift supporting a 501(c)(3) nonprofit
         mission.
@@ -271,11 +301,11 @@ function IndividualsMonthlySupportSection({
   return (
     <div className="grid gap-5">
       <div className="grid gap-3">
-        <Title className="text-balance">For individuals</Title>
+        <Title className="text-balance">For neighbors</Title>
         <p className="text-neutral-700 max-w-[80ch]">
-          Your monthly support sustains education, meals, wellness care, and
-          outreach. <Bold>There are no member perks</Bold>, just your consistent
-          impact.
+          Not a business? You can be a Community Sponsor too. Give any amount
+          each month, starting at <Bold>$1</Bold>, to sustain meals, wellness
+          care, and education across DFW.
         </p>
       </div>
 
@@ -292,7 +322,7 @@ function IndividualsMonthlySupportSection({
           <div className="bg-neutral-100 rounded-2xl shadow-sm p-5 grid gap-3">
             <div className="flex items-start justify-between gap-3">
               <div className="grid gap-1">
-                <Heading>Individual Membership</Heading>
+                <Heading>Individual Sponsor</Heading>
                 <p className="text-sm text-neutral-600">
                   Monthly • Cancel anytime
                 </p>
@@ -319,7 +349,7 @@ function IndividualsMonthlySupportSection({
               type="button"
               onClick={() => onJoin(amount)}
               className="w-full px-5 py-4 rounded-xl font-bold text-white text-lg transition-all duration-300 bg-accent-500 hover:bg-accent-600 hover:shadow-lg">
-              Support monthly
+              Become a sponsor
             </button>
 
             <p className="text-xs text-neutral-600">
@@ -336,7 +366,7 @@ function IndividualsMonthlySupportSection({
           <div className="grid">
             <p className="text-xs text-neutral-600">Selected</p>
             <p className="font-extrabold leading-tight">
-              Individual Membership
+              Individual Sponsor
             </p>
             <p className="text-sm text-neutral-600">
               ${Number(amount || 0).toFixed(0)}
@@ -347,7 +377,7 @@ function IndividualsMonthlySupportSection({
             type="button"
             onClick={() => onJoin(amount)}
             className="px-4 py-3 rounded-xl font-bold text-white bg-accent-500 hover:bg-accent-600">
-            Support
+            Sponsor
           </button>
         </div>
       </div>
@@ -371,7 +401,7 @@ function CompanyPlanCard({ plan, isSelected, onSelect, onJoin }: any) {
       <div className="grid gap-1">
         <p className="text-xs font-semibold text-neutral-600 flex items-center gap-2">
           <BuildingOffice2Icon className="w-4 h-4 text-neutral-600" />
-          Company Partnership
+          {plan.audience}
         </p>
         <Heading className="leading-tight">{plan.name}</Heading>
         <p className="text-sm text-neutral-600">{plan.note}</p>
@@ -385,10 +415,15 @@ function CompanyPlanCard({ plan, isSelected, onSelect, onJoin }: any) {
         <p className="text-xs text-neutral-600">Cancel anytime</p>
       </div>
 
+      <p className="rounded-xl bg-neutral-200 px-3 py-2 text-sm text-neutral-800">
+        About <Bold>{mealsPerYear(plan.priceMonthly)} meals a year</Bold>{" "}
+        (estimated)
+      </p>
+
       <div className="grid gap-3">
         <div className="grid gap-2">
           <p className="text-sm font-semibold text-neutral-800">
-            What this partnership makes possible
+            What this sponsorship makes possible
           </p>
           <ul className="grid gap-2">
             {plan.makesPossible.map((line: string) => (
@@ -402,7 +437,7 @@ function CompanyPlanCard({ plan, isSelected, onSelect, onJoin }: any) {
 
         <div className="grid gap-2">
           <p className="text-sm font-semibold text-neutral-800">
-            Recognition options (optional)
+            Recognition and perks (optional)
           </p>
           <ul className="grid gap-2">
             {plan.recognition.map((line: string) => (
@@ -500,13 +535,14 @@ function CompanyPartnershipSection({
   );
 
   return (
-    <div className="grid gap-5 mt-5">
+    <div className="grid gap-5">
       <div className="grid gap-3">
-        <Title className="text-balance">For companies</Title>
+        <Title className="text-balance">For businesses</Title>
         <p className="text-neutral-700 max-w-[85ch]">
-          Company partnerships help expand mission capacity, more meals served,
-          more accessible care, and more education support. Recognition options
-          are available, but the purpose is impact.
+          Choose the level that fits your business. Every level feeds families
+          every month, includes a welcome gift card from a Community Partner,
+          and lets you share your own gift card or HOPE code with our
+          community.
         </p>
       </div>
 
@@ -529,7 +565,7 @@ function CompanyPartnershipSection({
               <div className="grid gap-1">
                 <Heading>{selectedPlan.name}</Heading>
                 <p className="text-sm text-neutral-600">
-                  Company Partnership • Monthly
+                  Business Sponsorship • Monthly
                 </p>
               </div>
               <span className="inline-flex items-center gap-1 text-xs font-semibold px-2 py-1 rounded-full bg-neutral-200 text-neutral-900">
@@ -554,18 +590,24 @@ function CompanyPartnershipSection({
               type="button"
               onClick={() => onJoin(selectedPlan)}
               className="w-full px-5 py-4 rounded-xl font-bold text-white text-lg transition-all duration-300 bg-accent-500 hover:bg-accent-600 hover:shadow-lg">
-              Start partnership
+              Become a sponsor
             </button>
 
             <p className="text-xs text-neutral-600">
-              Recognition options are optional. Partnership funds help sustain
-              core programs.
+              Recognition is always optional. Need an invoice or an annual
+              gift?{" "}
+              <a
+                className="font-semibold text-accent-600 underline"
+                href="#partner-inquiry">
+                Talk with our team
+              </a>
+              .
             </p>
           </div>
         </aside>
       </div>
 
-      <Heading>Partnership details</Heading>
+      <Heading>Compare sponsorship levels</Heading>
 
       <div className="grid gap-4 xl:hidden">
         <SelectedCompanyIncludes plan={selectedPlan} />
@@ -611,7 +653,7 @@ function CompanyPartnershipSection({
             type="button"
             onClick={() => onJoin(selectedPlan)}
             className="px-4 py-3 rounded-xl font-bold text-white bg-accent-500 hover:bg-accent-600">
-            Partner
+            Sponsor
           </button>
         </div>
       </div>
@@ -662,7 +704,7 @@ export default function MembersPlansSection() {
 
   if (checkoutSelection) {
     return (
-      <section className="w-full p-5 lg:px-35">
+      <section id="plans" className="w-full p-5 lg:px-35 scroll-mt-25">
         <MembersCheckoutSection
           selection={checkoutSelection}
           onBack={() => setCheckoutSelection(null)}
@@ -672,16 +714,24 @@ export default function MembersPlansSection() {
   }
 
   return (
-    <section className="grid gap-10 w-full p-5 lg:px-35">
-      <IndividualsMonthlySupportSection
-        amount={individualAmount}
-        onAmountChange={setIndividualAmount}
-        onJoin={handleJoinIndividual}
-      />
+    <section
+      id="plans"
+      className="grid gap-10 w-full p-5 py-15 lg:px-35 scroll-mt-25">
+      <SectionHeading
+        eyebrow="Sponsorship levels"
+        title="Become a Community Sponsor">
+        Businesses choose a sponsorship level. Neighbors choose any monthly
+        amount. Every sponsor helps families across DFW every month.
+      </SectionHeading>
       <CompanyPartnershipSection
         selectedId={selectedCompanyId}
         onSelectId={setSelectedCompanyId}
         onJoin={handleJoinCompany}
+      />
+      <IndividualsMonthlySupportSection
+        amount={individualAmount}
+        onAmountChange={setIndividualAmount}
+        onJoin={handleJoinIndividual}
       />
     </section>
   );

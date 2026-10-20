@@ -1,6 +1,6 @@
 # Update Membership Plans
 
-The `/members` page sells monthly recurring memberships through Stripe subscriptions. Plan names and prices live in **two places that must agree**:
+The `/members` page ("Community Sponsors") sells monthly recurring sponsorships through Stripe subscriptions. Plan names and prices live in **two places that must agree**:
 
 1. **What visitors see**: `/src/components/members/MembersPlansSection.tsx`
 2. **What is charged**: `membershipProducts` in `/src/app/api/checkout/create-membership-payment-intent/route.tsx`
@@ -14,11 +14,15 @@ The server never trusts the price sent by the browser for fixed plans, so if the
 | Plan id      | Name                       | Type       | Price                       |
 | ------------ | -------------------------- | ---------- | --------------------------- |
 | `individual` | Monthly Individual Support | individual | Member chooses $1–$10,000/mo |
-| `partner`    | Company Partner            | company    | $50/mo                      |
+| `partner`    | Neighborhood Sponsor       | company    | $50/mo                      |
 | `sponsor`    | Program Sponsor            | company    | $100/mo                     |
 | `champion`   | Impact Champion            | company    | $500/mo                     |
 
 `bronze`, `silver`, and `gold` remain in `membershipProducts` as retired plans: they have no `priceCents`, so the API rejects them.
+
+The route only sets a Stripe product's name when it first creates the product. After renaming a plan, also rename the product in the Stripe Dashboard (Product catalog → `prod_membership_<id>`) so receipts show the new name. `partner` was renamed from "Company Partner" to "Neighborhood Sponsor" in October 2026.
+
+Partner businesses, welcome gift cards, and the Thanksgiving launch window are covered in `/docs/recipes/tutorials/UPDATE_COMMUNITY_PARTNERS.md`.
 
 ---
 

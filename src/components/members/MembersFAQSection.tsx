@@ -1,28 +1,37 @@
 import Title from "@/components/ui/Title";
 import Heading from "@/components/ui/Heading";
+import { WELCOME_GIFT_MIN_MONTHLY } from "@/lib/community-partners";
 
 const FAQ = [
   {
-    q: "Can I cancel anytime?",
-    a: "Yes. Membership is billed monthly and you can cancel anytime from your receipt email (and later, your member portal if enabled).",
+    q: "Who can become a Community Sponsor?",
+    a: "Any business, organization, or neighbor. Businesses choose a sponsorship level. Individuals give any monthly amount, starting at $1.",
   },
   {
-    q: "Is this a donation or a purchase?",
-    a: "It's a recurring contribution that supports our nonprofit mission. Your receipt will reflect the payment details for your records.",
+    q: "Is my sponsorship tax-deductible?",
+    a: "The Source of Hope is a 501(c)(3) nonprofit (EIN 46-2491772), so contributions are generally tax-deductible as allowed by law, less the value of any welcome gift you accept. You'll receive an emailed receipt. Please check with your tax advisor.",
   },
   {
-    q: "Do I get a pin or branded items?",
-    a: "Yes—members may receive branded thank-you items (seasonal/limited). Specific items can vary based on availability.",
+    q: "How do welcome gift cards work?",
+    a: `Our Community Partner businesses donate gift cards to thank new sponsors giving $${WELCOME_GIFT_MIN_MONTHLY} or more a month. After you join, our team reaches out with your welcome gift, while supplies last. Prefer that every dollar go to the mission? Just let us know.`,
   },
   {
-    q: "Can businesses join?",
-    a: "Absolutely. The Enterprise Partner tier is designed for businesses and organizations that want deeper collaboration and visibility.",
+    q: "How can my business donate gift cards or offer a HOPE code?",
+    a: "Use the form above and our team will follow up. Partners are featured on this page and our store page, and introduced to our supporters.",
+  },
+  {
+    q: "Can we pay by invoice or give annually?",
+    a: "Monthly card payments are set up right on this page. For an invoice, an annual gift, or an employee matching program, send us a note through the form above and our team will help.",
+  },
+  {
+    q: "Can I change or cancel anytime?",
+    a: "Yes. Email info@thesourceofhope.org anytime to change or cancel your monthly gift.",
   },
 ];
 
 export default function MembersFAQSection() {
   return (
-    <section className="grid gap-5 w-full p-5 lg:px-35">
+    <section className="grid gap-5 w-full p-5 pb-15 lg:px-35">
       <div className="grid gap-2">
         <Title>FAQ</Title>
         <p className="text-neutral-700 max-w-[75ch]">

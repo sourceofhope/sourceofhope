@@ -45,6 +45,8 @@ const nextConfig: NextConfig = {
       { source: "/giving", destination: "/planned-giving", permanent: true },
       // Serve was renamed to Programs.
       { source: "/serve/:path*", destination: "/programs/:path*", permanent: true },
+      // Short link for flyers and QR codes.
+      { source: "/sponsor", destination: "/members", permanent: false },
     ];
   },
 };

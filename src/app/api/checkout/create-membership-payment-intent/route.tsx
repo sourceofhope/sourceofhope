@@ -66,20 +66,20 @@ const membershipProducts: Record<MembershipPlanId, MembershipProduct> = {
     },
     partner: {
         id: 'prod_membership_partner',
-        name: 'Company Partner',
-        description: 'Company Partner - Monthly partnership sustaining community outreach and program operations',
+        name: 'Neighborhood Sponsor',
+        description: 'Neighborhood Sponsor - Monthly business sponsorship sustaining community outreach and program operations',
         priceCents: 5_000,
     },
     sponsor: {
         id: 'prod_membership_sponsor',
         name: 'Program Sponsor',
-        description: 'Program Sponsor - Monthly partnership expanding capacity and strengthening sustained service',
+        description: 'Program Sponsor - Monthly business sponsorship expanding capacity and strengthening sustained service',
         priceCents: 10_000,
     },
     champion: {
         id: 'prod_membership_champion',
         name: 'Impact Champion',
-        description: 'Impact Champion - Monthly partnership underwriting major mission work across programs',
+        description: 'Impact Champion - Monthly business sponsorship underwriting major mission work across programs',
         priceCents: 50_000,
     },
 };

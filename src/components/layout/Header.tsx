@@ -42,7 +42,7 @@ const getHeaderLinks = (): NavLink[] => [
     href: "/planned-giving",
     children: [
       { label: "PLANNED GIVING", href: "/planned-giving" },
-      { label: "MEMBERSHIPS", href: "/members" },
+      { label: "COMMUNITY SPONSORS", href: "/members" },
       { label: "QUICK DONATE", href: "/donate" },
     ],
   },

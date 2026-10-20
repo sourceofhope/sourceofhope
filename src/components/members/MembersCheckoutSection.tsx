@@ -14,6 +14,7 @@ import {
 } from "@stripe/react-stripe-js";
 import { CheckCircleIcon, ShieldCheckIcon } from "@heroicons/react/20/solid";
 import { FaEdit, FaLock } from "react-icons/fa";
+import { WELCOME_GIFT_MIN_MONTHLY } from "@/lib/community-partners";
 const stripePromise = loadStripe(
   process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || "",
 );
@@ -132,6 +133,12 @@ function SuccessView({ selection, email }: any) {
         <p className="text-sm text-neutral-600">
           A confirmation will be sent to <strong>{email}</strong>.
         </p>
+        {Number(selection.amount) >= WELCOME_GIFT_MIN_MONTHLY && (
+          <p className="text-sm text-neutral-600">
+            Watch your inbox: our team will reach out with your welcome gift
+            card from one of our Community Partners, while supplies last.
+          </p>
+        )}
       </div>
       <p className="text-xs text-neutral-500">
         You can manage or cancel your support at any time by contacting us.
@@ -145,9 +152,9 @@ function SuccessView({ selection, email }: any) {
         </Link>
         {/* eslint-disable-next-line -- This is an external link, so we use a regular anchor tag */}
         <a
-          href="/members"
+          href="/members#community-partners"
           className="px-6 py-3 rounded-xl font-bold text-neutral-900 bg-neutral-200 hover:bg-neutral-300 transition-colors text-sm">
-          Explore Memberships
+          Meet Our Community Partners
         </a>
       </div>
     </div>
@@ -604,8 +611,8 @@ export default function MembersCheckoutSection({ selection, onBack }: any) {
               <Heading>{selection.planName}</Heading>
               <p className="text-sm text-neutral-600">
                 {selection.type === "company"
-                  ? "Company Partnership"
-                  : "Individual Support"}{" "}
+                  ? "Business Sponsorship"
+                  : "Individual Sponsorship"}{" "}
                 • Monthly
               </p>
             </div>

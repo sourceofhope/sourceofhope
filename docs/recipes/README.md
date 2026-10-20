@@ -61,5 +61,6 @@ If you need background first, read `/docs/developers/00_START_HERE.md`.
 | `/docs/recipes/tutorials/ADD_A_CMS_CONTENT_TYPE.md` | Adding a new kind of content to Sanity and showing it on the site. |
 | `/docs/recipes/tutorials/ADD_AN_API_ROUTE.md` | Adding a new backend endpoint under `/src/app/api`. |
 | `/docs/recipes/tutorials/ADD_A_DOWNLOADABLE_DOCUMENT.md` | Offering a PDF for download, or updating or adding a volunteer agreement. |
+| `/docs/recipes/tutorials/UPDATE_COMMUNITY_PARTNERS.md` | Adding a Community Partner business, marking a Founding Sponsor or gift card partner, or changing the welcome gift threshold or launch deadline on `/members`. |
 | `/docs/recipes/tutorials/UPDATE_MEMBERSHIP_PLANS.md` | Changing membership plan names, prices, or tiers. |
 | `/docs/recipes/tutorials/CHANGE_SHIPPING_TAX_OR_FEES.md` | Changing shipping options, the sales tax rate, or the processing fee. |
