@@ -28,6 +28,10 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
   poweredByHeader: false,
   images: {
+    // AVIF first (much smaller than WebP), then WebP. Sanity image URLs are
+    // content-hashed, so optimized copies can be cached for a month.
+    formats: ["image/avif", "image/webp"],
+    minimumCacheTTL: 60 * 60 * 24 * 30,
     remotePatterns: [
       {
         protocol: "https",

@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import Image from "next/image";
 import Title from "@/components/ui/Title";
 import Heading from "@/components/ui/Heading";
 import ExpressiveCard from "@/components/ui/expressive/ExpressiveCard";
@@ -287,9 +288,11 @@ export default function EducationHope() {
 function CarouselCard({ src, alt }: { src: string; alt?: string }) {
   return (
     <div className="relative h-full group overflow-hidden rounded-2xl text-accent-background aspect-square">
-      <img
+      <Image
         src={src}
         alt={alt || "Education Hope"}
+        fill
+        sizes="(min-width: 1024px) 25vw, 80vw"
         className="w-full h-full object-cover transition-transform brightness-[.8] contrast-[1.1]"
       />
       <div className="absolute bottom-0 bg-gradient-to-t from-black/60 to-transparent rounded-2xl h-[60%] w-full text-left">

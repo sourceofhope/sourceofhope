@@ -19,11 +19,16 @@ export function getEnvironment() {
     paypalApiUrl: PAYPAL_API_LOCATION[process.env.PAYPAL_API || "development"],
 
     resendKey: process.env.RESEND_API_KEY,
+    // e.g. "The Source of Hope <no-reply@thesourceofhope.org>" once the domain is verified in Resend.
+    resendFromEmail:
+      process.env.RESEND_FROM_EMAIL ||
+      "The Source of Hope <onboarding@resend.dev>",
 
     sanityProjectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID,
     sanityDataset: process.env.NEXT_PUBLIC_SANITY_DATASET,
     sanityApiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION,
     sanityApiReadToken: process.env.SANITY_API_READ_TOKEN,
+    sanityRevalidateSecret: process.env.SANITY_REVALIDATE_SECRET,
   };
 
   return config;

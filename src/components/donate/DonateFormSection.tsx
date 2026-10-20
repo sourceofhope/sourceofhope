@@ -13,8 +13,8 @@ import Link from "next/link";
 import Title from "@/components/ui/Title";
 import Heading from "@/components/ui/Heading";
 import SectionHeading from "@/components/ui/SectionHeading";
+import { STANDARD_PROCESSING_RATE } from "@/lib/store-constants";
 
-const STANDARD_PROCESSING_RATE = 0.03;
 
 const PRESET_AMOUNTS = [25, 50, 100, 250, 500];
 
@@ -133,7 +133,7 @@ export default function DonateFormSection({
   const [isLoading, setIsLoading] = useState(false);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [isSuccess, setIsSuccess] = useState(redirectSucceeded);
-  const [cooldownUntil, setCooldownUntil] = useState<number>(0);
+  const [isCoolingDown, setIsCoolingDown] = useState(false);
 
   // Resolved donation amount
   const donationAmount =
@@ -159,6 +159,13 @@ export default function DonateFormSection({
     }
   }, [donationAmount, coverFee, clientSecret]);
 
+  // Re-enable the donate button 15s after a failed attempt.
+  useEffect(() => {
+    if (!isCoolingDown) return;
+    const timer = setTimeout(() => setIsCoolingDown(false), 15_000);
+    return () => clearTimeout(timer);
+  }, [isCoolingDown]);
+
   const processingFee = parseFloat(
     (donationAmount * STANDARD_PROCESSING_RATE).toFixed(2),
   );
@@ -172,7 +179,6 @@ export default function DonateFormSection({
     lastName.trim() !== "" &&
     /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-  const isCoolingDown = Date.now() < cooldownUntil;
 
   const handleAmountSelect = (amount: number) => {
     setSelectedAmount(amount);
@@ -236,7 +242,7 @@ export default function DonateFormSection({
     } finally {
       setIsLoading(false);
       // 15-second cooldown after every attempt to slow rapid re-clicking.
-      setCooldownUntil(Date.now() + 15_000);
+      setIsCoolingDown(true);
     }
   };
 

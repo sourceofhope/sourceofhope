@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import PageSection from "@/components/ui/PageSection";
 import Title from "@/components/ui/Title";
 import Heading from "@/components/ui/Heading";
@@ -115,11 +116,11 @@ function CarouselCard({ post }: { post: MediaNewsletterPost }) {
       href={post.url}
       className="group h-full relative flex flex-col overflow-hidden rounded-2xl bg-neutral-900 shadow-md transition-all duration-500 hover:shadow-xl">
       <div className="relative aspect-[4/5] overflow-hidden">
-        <img
+        <Image
           src={src || "/v2/core/placeholder.webp"}
           alt={post.image?.altText || post.title || ""}
-          loading="lazy"
-          decoding="async"
+          fill
+          sizes="(min-width: 1024px) 25vw, 80vw"
           onLoad={() => setLoaded(true)}
           className={`h-full w-full object-cover transition-opacity duration-700 ${
             loaded ? "opacity-100" : "opacity-0"

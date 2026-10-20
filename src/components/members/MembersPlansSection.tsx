@@ -10,6 +10,7 @@ import {
 import Title from "@/components/ui/Title";
 import Heading from "@/components/ui/Heading";
 import Bold from "@/components/ui/Bold";
+import { MEMBERSHIP_PRICES } from "@/lib/store-constants";
 import MembersCheckoutSection, {
   type CheckoutSelection,
 } from "./MembersCheckoutSection";
@@ -34,7 +35,7 @@ const COMPANIES: CompanyPlan[] = [
   {
     id: "partner",
     name: "Company Partner",
-    priceMonthly: 50,
+    priceMonthly: MEMBERSHIP_PRICES.partner,
     note: "Sustains community outreach and program operations.",
     makesPossible: [
       "Supports meals, outreach supplies, and volunteer coordination",
@@ -57,7 +58,7 @@ const COMPANIES: CompanyPlan[] = [
   {
     id: "sponsor",
     name: "Program Sponsor",
-    priceMonthly: 100,
+    priceMonthly: MEMBERSHIP_PRICES.sponsor,
     note: "Expands capacity and strengthens sustained service.",
     makesPossible: [
       "Helps fund higher-volume outreach and program growth",
@@ -81,7 +82,7 @@ const COMPANIES: CompanyPlan[] = [
   {
     id: "champion",
     name: "Impact Champion",
-    priceMonthly: 500,
+    priceMonthly: MEMBERSHIP_PRICES.champion,
     note: "Helps underwrite major mission work across programs.",
     makesPossible: [
       "Helps underwrite recurring outreach, wellness, and education initiatives",

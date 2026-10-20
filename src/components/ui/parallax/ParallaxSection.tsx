@@ -42,7 +42,6 @@ export default function ParallaxSection({
   }, []);
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     updateProgress();
 
     let ticking = false;

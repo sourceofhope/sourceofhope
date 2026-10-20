@@ -1,4 +1,5 @@
 import PageSection from "@/components/ui/PageSection";
+import Image from "next/image";
 import Title from "@/components/ui/Title";
 import Heading from "@/components/ui/Heading";
 import Carousel from "@/components/ui/Carousel";
@@ -108,14 +109,14 @@ function MajorEventCard({ post }: { post: SanityEvent }) {
   return (
     <div className="relative overflow-hidden rounded-2xl bg-white shadow-md transition-all duration-500">
       <div className="relative w-full overflow-hidden">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
+        <Image
           src={
             post.image?.sourceUrl || `/${ASSET_VERSION}/core/placeholder.webp`
           }
           alt={post.image?.altText || post.title || ""}
-          loading="lazy"
-          decoding="async"
+          width={1200}
+          height={800}
+          sizes="(min-width: 1024px) 33vw, 80vw"
           className="w-full h-auto object-contain"
         />
         <div className="absolute inset-0 bg-linear-to-t from-black/70 via-black/20 to-transparent"></div>
@@ -167,15 +168,14 @@ function CarouselCard({ post }: { post: SanityEvent }) {
   return (
     <div className="group relative shrink-0 bg-white rounded-2xl overflow-hidden shadow-md">
       <div className="relative aspect-video">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
+        <Image
           src={
             post.image?.sourceUrl || `/${ASSET_VERSION}/core/placeholder.webp`
           }
           alt={post.image?.altText || post.title || ""}
-          loading="lazy"
-          decoding="async"
-          className="absolute inset-0 w-full h-full object-contain"
+          fill
+          sizes="(min-width: 1024px) 25vw, 80vw"
+          className="object-contain"
         />
         <div className="absolute inset-0 bg-linear-to-t from-black/30 via-black/10 to-transparent"></div>
       </div>

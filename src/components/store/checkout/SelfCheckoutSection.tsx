@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { PencilIcon } from "@heroicons/react/24/solid";
 import { loadStripe, type PaymentIntent, type Stripe } from "@stripe/stripe-js";
 import {
@@ -129,6 +130,7 @@ export default function SelfCheckoutSection({
   processingFee,
   total,
 }: SelfCheckoutSectionProps) {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     email: "",
     firstName: "",
@@ -267,9 +269,7 @@ export default function SelfCheckoutSection({
 
   const handlePaymentSuccess = (paymentIntent: PaymentIntent) => {
     // Redirect to success page
-    if (typeof window !== "undefined") {
-      window.location.href = `/store/success?payment_intent=${paymentIntent.id}`;
-    }
+    router.push(`/store/success?payment_intent=${paymentIntent.id}`);
   };
 
   return (

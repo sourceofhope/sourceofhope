@@ -72,7 +72,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Initialize Resend with API key
-    const { resendKey } = getEnvironment();
+    const { resendKey, resendFromEmail } = getEnvironment();
     if (!resendKey) {
       console.error('RESEND_API_KEY not configured');
       return NextResponse.json(
@@ -86,7 +86,7 @@ export async function POST(request: NextRequest) {
 
     // Send email
     const { error } = await resend.emails.send({
-      from: 'The Source of Hope <onboarding@resend.dev>',
+      from: resendFromEmail,
       to: ['treasurer@thesourceofhope.org'],
       replyTo: cleanEmail,
       subject: `New Contact Form Submission from ${subjectName}`,

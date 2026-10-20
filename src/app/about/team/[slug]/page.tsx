@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import Image from "next/image";
 import PageHeader from "@/components/layout/PageHeader";
 import { ArrowLeftIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
@@ -97,14 +98,13 @@ export default async function TeamMember({
             {/* Image */}
             {member.image?.sourceUrl && (
               <aside className="order-1 lg:order-2">
-                <div className="overflow-hidden rounded-2xl bg-neutral-100 shadow-lg">
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
+                <div className="relative aspect-square overflow-hidden rounded-2xl bg-neutral-100 shadow-lg">
+                  <Image
                     src={member.image.sourceUrl}
                     alt={member.image.altText || member.name}
-                    loading="lazy"
-                    decoding="async"
-                    className="aspect-square w-full object-cover"
+                    fill
+                    sizes="(min-width: 1024px) 40vw, 100vw"
+                    className="object-cover"
                   />
                 </div>
               </aside>

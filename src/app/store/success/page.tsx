@@ -143,8 +143,12 @@ export default function CheckoutSuccessPage() {
     }
   }, []);
 
+  const purchaseHandledRef = useRef(false);
+
   useEffect(() => {
-    if (status === 'complete') {
+    // Run once per completed order; clearing the cart below changes the deps.
+    if (status === 'complete' && !purchaseHandledRef.current) {
+      purchaseHandledRef.current = true;
       const urlParams = new URLSearchParams(window.location.search);
       const transactionId =
         urlParams.get('session_id') || urlParams.get('token') || urlParams.get('payment_intent') || 'unknown';
@@ -174,7 +178,15 @@ export default function CheckoutSuccessPage() {
       clearCart();
       updateProcessingFee(false);
     }
-  }, [status]);
+  }, [
+    status,
+    cart,
+    clearCart,
+    getCartTotal,
+    getShippingCost,
+    getTaxCost,
+    updateProcessingFee,
+  ]);
 
   if (isLoading) {
     return (

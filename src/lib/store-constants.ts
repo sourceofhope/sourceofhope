@@ -24,5 +24,15 @@ export const SHIPPING_OPTIONS = [
   },
 ];
 
+/**
+ * Monthly company membership prices in whole dollars. The members page
+ * displays these and the membership API charges them.
+ */
+export const MEMBERSHIP_PRICES = {
+  partner: 50,
+  sponsor: 100,
+  champion: 500,
+} as const;
+
 export const STANDARD_TAX_RATE = 0.0825;
 export const STANDARD_PROCESSING_RATE = 0.03;

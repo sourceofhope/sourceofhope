@@ -2,7 +2,10 @@ import "server-only";
 
 import { client } from "@/lib/sanity-client";
 
-const options = { next: { revalidate: 30 } };
+// Cached for 30s at most; the Sanity webhook (/api/revalidate) clears the
+// "sanity" tag so published changes show up right away.
+export const SANITY_CACHE_TAG = "sanity";
+const options = { next: { revalidate: 30, tags: [SANITY_CACHE_TAG] } };
 
 /** Keep list sizes sane: callers (including API query params) can't request 0, NaN, or huge pages. */
 function clampLimit(limit: number, fallback: number, max = 50) {
@@ -78,6 +81,7 @@ export interface SanityTeamGroup {
   name: string;
   slug: { current: string };
   description?: string;
+  order?: number | null;
   members: SanityTeamMember[];
 }
 
@@ -210,6 +214,7 @@ export async function fetchTeamGroupsWithMembers() {
       name,
       slug,
       description,
+      order,
       "members": *[_type == "teamMember" && teamGroup._ref == ^._id] | order(name asc) {
         _id,
         name,

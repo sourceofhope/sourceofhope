@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import Image from "next/image";
 import Title from "@/components/ui/Title";
 import Heading from "@/components/ui/Heading";
 import { AnchorButton } from "@/components/ui/Button";
@@ -146,9 +147,11 @@ export default function WellnessHope() {
 
             <div className="flex flex-col gap-5">
               <div className="relative h-full w-full group overflow-hidden rounded-xl text-accent-background aspect-square shadow-lg">
-                <img
+                <Image
                   src={`/${ASSET_VERSION}/wellnessHope/WH-ResourceTile.webp`}
                   alt="Holistic wellness care"
+                  fill
+                  sizes="(min-width: 1024px) 33vw, 100vw"
                   className="w-full h-full object-cover brightness-[.85] contrast-[1.1]"
                 />
                 <div className="absolute bottom-0 h-[60%] w-full bg-gradient-to-t from-black/60 to-transparent rounded-xl">
@@ -185,9 +188,12 @@ function WellnessShowcaseCard({
 }) {
   return (
     <article className="relative w-full">
-      <img
+      <Image
         src={src}
         alt={alt || title}
+        width={800}
+        height={800}
+        sizes="(min-width: 1024px) 33vw, 100vw"
         className="w-full aspect-square bg-accent-900 rounded-2xl shadow-sm object-cover"
       />
       <div className="absolute flex bottom-0 p-5 px-10 h-1/4 w-full rounded-b-2xl bg-neutral-100 items-center justify-center">

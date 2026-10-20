@@ -1,4 +1,5 @@
 import Title from "@/components/ui/Title";
+import Image from "next/image";
 import ExpressiveLink from "@/components/ui/expressive/ExpressiveLink";
 import ExpressiveAnchor from "@/components/ui/expressive/ExpressiveAnchor";
 import PageSection from "@/components/ui/PageSection";
@@ -68,15 +69,14 @@ function PublicationCard({ post }: { post: SanityPublication }) {
   return (
     <article className="group flex h-full flex-col overflow-hidden rounded-3xl border border-neutral-200 bg-white transition duration-300">
       <div className="relative h-64 overflow-hidden">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
+        <Image
           src={
             post.image?.sourceUrl || `/${ASSET_VERSION}/core/placeholder.webp`
           }
           alt={post.image?.altText || title}
-          className="h-full w-full object-cover transition duration-500"
-          loading="lazy"
-          decoding="async"
+          fill
+          sizes="(min-width: 1024px) 33vw, 80vw"
+          className="object-cover transition duration-500"
         />
 
         {post.date && (

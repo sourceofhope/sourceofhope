@@ -139,10 +139,13 @@ function FooterParallax() {
     <>
       <ParallaxSection className="hidden md:block relative h-115 overflow-hidden">
         <ParallaxLayer layer={0} ratio={1}>
-          <img
+          <Image
             className="w-full overflow-hidden h-full object-cover brightness-[.8] contrast-[1.1]"
             src={`/${ASSET_VERSION}/core/TSOH-Family.webp`}
             alt=""
+            width={1920}
+            height={1080}
+            sizes="100vw"
           />
         </ParallaxLayer>
         <ParallaxLayer

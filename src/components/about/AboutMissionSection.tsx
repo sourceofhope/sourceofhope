@@ -50,6 +50,7 @@ export default function AboutMissionSection() {
           alt="The Source of Hope resource tile"
           width={450}
           height={450}
+          sizes="(min-width: 1024px) 450px, 90vw"
           className="block w-full aspect-square bg-accent-900 max-w-112.5 rounded-2xl object-cover object-center"
         />
       </article>

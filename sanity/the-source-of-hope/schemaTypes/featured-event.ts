@@ -20,6 +20,11 @@ export const featuredEventType = defineType({
       name: 'date',
       title: 'Date',
       type: 'datetime',
+      description: 'Shown and entered in Central Time (America/Chicago), regardless of where you are editing.',
+      options: {
+        displayTimeZone: 'America/Chicago',
+        allowTimeZoneSwitch: false,
+      },
       validation: (Rule) => Rule.required(),
     }),
     defineField({

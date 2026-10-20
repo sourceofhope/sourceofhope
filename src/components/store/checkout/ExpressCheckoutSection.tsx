@@ -124,7 +124,7 @@ export default function ExpressCheckoutSection({
       }
 
       if (data.url) {
-        window.location.href = data.url;
+        window.location.assign(data.url);
       } else {
         setError("Failed to create checkout session");
         setIsProcessing(false);
@@ -163,7 +163,7 @@ export default function ExpressCheckoutSection({
       }
 
       if (data.approvalUrl) {
-        window.location.href = data.approvalUrl;
+        window.location.assign(data.approvalUrl);
       } else {
         setError("Failed to create PayPal order");
         setIsProcessing(false);

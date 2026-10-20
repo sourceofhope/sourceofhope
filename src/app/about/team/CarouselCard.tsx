@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { XMarkIcon, ArrowRightIcon } from "@heroicons/react/20/solid";
 import Overlay from "@/components/ui/Overlay";
@@ -20,13 +21,12 @@ export function CarouselCard({ member }: CarouselCardProps) {
       <div
         onClick={() => setActive(true)}
         className="relative h-full min-h-80 w-full group overflow-hidden rounded-2xl aspect-square cursor-pointer">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
+        <Image
           src={member.image?.sourceUrl || "/v2/core/Member-Placeholder.webp"}
           alt={member.image?.altText || member.name}
+          fill
+          sizes="(min-width: 1024px) 25vw, (min-width: 768px) 33vw, 80vw"
           onLoad={() => setLoaded(true)}
-          loading="lazy"
-          decoding="async"
           className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-750 ${
             loaded ? "opacity-100" : "opacity-0"
           }`}

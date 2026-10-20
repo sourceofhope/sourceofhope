@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { CheckIcon, PlusIcon, XMarkIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
 import { useCartActions } from "@/context/StoreCartContext";
@@ -73,13 +74,12 @@ export default function StorefrontProductCard({
         href={`/store/product/${product.slug}`}
         className="group relative hidden md:flex flex-col no-underline! overflow-hidden rounded-2xl bg-primary-800 shadow-md transition-all duration-500 hover:shadow-xl">
         <div className="relative aspect-square overflow-hidden">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <Image
             src={src || "/v2/core/placeholder.webp"}
             alt={alt}
-            loading="lazy"
-            decoding="async"
-            className="h-full w-full object-cover transition-opacity duration-700 opacity-100"
+            fill
+            sizes="(min-width: 1024px) 30vw, (min-width: 768px) 45vw, 90vw"
+            className="object-cover transition-opacity duration-700 opacity-100"
           />
           <div className="absolute inset-0 bg-linear-to-t from-black/10 via-black/5 to-transparent" />
         </div>
@@ -103,13 +103,12 @@ export default function StorefrontProductCard({
         <div
           className="relative aspect-square overflow-hidden"
           onClick={handleAddToCart}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
+          <Image
             src={src || "/v2/core/placeholder.webp"}
             alt={alt}
-            loading="lazy"
-            decoding="async"
-            className="h-full w-full object-cover transition-opacity duration-700 opacity-100"
+            fill
+            sizes="(min-width: 1024px) 30vw, (min-width: 768px) 45vw, 90vw"
+            className="object-cover transition-opacity duration-700 opacity-100"
           />
           <div className="absolute inset-0 bg-linear-to-t from-black/10 via-black/5 to-transparent" />
         </div>

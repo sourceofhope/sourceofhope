@@ -59,6 +59,16 @@ function sortTeamsByOrder(teams: SanityTeamGroup[]): SanityTeamGroup[] {
   });
 
   return teams.sort((a, b) => {
+    // Editors can set a Display Order on each group in Sanity; numbered
+    // groups come first, then we fall back to TEAM_ORDER below.
+    const aOrder = typeof a.order === "number" ? a.order : null;
+    const bOrder = typeof b.order === "number" ? b.order : null;
+    if (aOrder !== null && bOrder !== null && aOrder !== bOrder) {
+      return aOrder - bOrder;
+    }
+    if (aOrder !== null && bOrder === null) return -1;
+    if (aOrder === null && bOrder !== null) return 1;
+
     const aIndex = teamIndexMap.get(a.name.toLowerCase().trim());
     const bIndex = teamIndexMap.get(b.name.toLowerCase().trim());
 

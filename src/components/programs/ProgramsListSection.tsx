@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useState, ReactNode } from "react";
+import Image from "next/image";
 import { MapPinIcon } from "@heroicons/react/20/solid";
 import ExpressiveAnchor from "@/components/ui/expressive/ExpressiveAnchor";
 import Title from "@/components/ui/Title";
@@ -240,11 +241,15 @@ function ServingArticle({
           filter: `brightness(calc(${brightness} * var(--base-padding)))`,
         } as React.CSSProperties
       }>
-      <img
-        className="hidden lg:block lg:absolute inset-0 h-full w-full object-cover brightness-[.8] contrast-[1.1] rounded-t-4xl"
-        src={src}
-        alt={caption}
-      />
+      {src && (
+        <Image
+          className="hidden lg:block lg:absolute inset-0 h-full w-full object-cover brightness-[.8] contrast-[1.1] rounded-t-4xl"
+          src={src}
+          alt={caption}
+          fill
+          sizes="100vw"
+        />
+      )}
       <ServingLayer title={title} caption={caption} side={side}>
         {children}
       </ServingLayer>
