@@ -1,94 +1,103 @@
 # Add a Downloadable Document
 
-This recipe covers offering a file (usually a PDF, such as a volunteer agreement) for visitors to download.
+This recipe covers offering a file (usually a PDF) for visitors to download, and updating the volunteer agreements, which can be downloaded and also signed online.
 
-Downloadable documents are static files served from `/public`, listed in one array, and rendered by a shared section:
+Static files are served from `/public`:
 
 - Files: `/public/v2/documents/`
-- List: `VOLUNTEER_DOCUMENTS` in `/src/components/events/EventsDocumentsSection.tsx`
-- Section: `EventsDocumentsSection` (heading "Volunteer Agreements", anchor `#volunteer-agreements`)
+- Waiver list: `WAIVERS` and `WAIVER_IDS` in `/src/lib/waivers.ts`
+- Section: `EventsDocumentsSection` (`/src/components/events/EventsDocumentsSection.tsx`, heading "Volunteer Agreements", anchor `#volunteer-agreements`)
 
-Where it is used today:
+Documents in the repository today:
 
-- `/events` shows all documents: `<EventsDocumentsSection />`
+- `/public/v2/documents/TSOH-Volunteer-Agreement.pdf` (General Volunteer Agreement)
+- `/public/v2/documents/TSOH-Serving-Hope-Volunteer-Agreement.pdf` (Serving Hope Volunteer Agreement)
+
+Where they are used:
+
+- `/events` shows both agreements: `<EventsDocumentsSection />`
 - `/programs/servingHope` shows only the Serving Hope agreement: `<EventsDocumentsSection only={["serving-hope"]} />`
+- The event details window links to the agreement chosen in the event's **Volunteer Waiver** field
+
+Each agreement always has a **Download PDF** link. When DocuSign is configured, a **Sign online** button appears next to it (see `/docs/recipes/guidelines/SET_UP_DOCUSIGN_WAIVERS.md`).
 
 ---
 
-## Important: Files Still Missing
+## Adding a Document That Is Not a Waiver
 
-`VOLUNTEER_DOCUMENTS` already links to two PDFs that are **not yet in the repository**:
+For a flyer, handbook, or form that is only downloaded, do not add it to `WAIVERS`: every waiver needs matching DocuSign templates.
 
-- `/public/v2/documents/TSOH-Volunteer-Agreement.pdf`
-- `/public/v2/documents/TSOH-Serving-Hope-Volunteer-Agreement.pdf`
-
-Until they are added, the download links on `/events` and `/programs/servingHope` return 404. Adding them with exactly these names fixes the links; no code change is needed.
-
----
-
-## 1) Add the File
-
-Put the file in `/public/v2/documents/` with a descriptive, URL-safe name:
-
-- `/public/v2/documents/TSOH-Youth-Volunteer-Waiver.pdf`
-
-Keep PDFs small (compress scans; a few hundred KB is typical). Files in `/public` are served as-is at the same path, e.g. `https://thesourceofhope.org/v2/documents/TSOH-Youth-Volunteer-Waiver.pdf`.
-
----
-
-## 2) Add It to the List
-
-In `/src/components/events/EventsDocumentsSection.tsx`:
+1. Put the file in `/public/v2/documents/` with a descriptive, URL-safe name, for example `/public/v2/documents/TSOH-Volunteer-Handbook.pdf`. Keep PDFs small (compress scans; a few hundred KB is typical).
+2. Link to it where it is needed, building the path with `ASSET_VERSION`:
 
 ```tsx
-export const VOLUNTEER_DOCUMENTS = [
+import { AnchorButton } from "@/components/ui/Button";
+import { ASSET_VERSION } from "@/lib/environment";
+
+<AnchorButton
+  text="DOWNLOAD THE HANDBOOK"
+  href={`/${ASSET_VERSION}/documents/TSOH-Volunteer-Handbook.pdf`}
+/>;
+```
+
+Files in `/public` are served as-is at the same path, e.g. `https://thesourceofhope.org/v2/documents/TSOH-Volunteer-Handbook.pdf`. Do not hardcode `/v2/`.
+
+---
+
+## Updating a Volunteer Agreement
+
+When the wording of an agreement changes:
+
+1. Overwrite the PDF in `/public/v2/documents/` with the **same file name**.
+2. Bump `WAIVER_REVISION` in `/src/lib/waivers.ts` (for example `"2027-03"`). Volunteers who signed the old revision online are then asked to sign again on their device.
+3. If DocuSign is configured, replace the document in both of that agreement's templates (adult and minor) in DocuSign, or create new templates and update the `DOCUSIGN_TEMPLATE_*` variables in every environment.
+4. Deploy.
+
+Browsers and CDNs may cache the old PDF for a while. If the new version must be seen immediately, give the file a new name (e.g. `...-2027.pdf`) and update its `href` in `WAIVERS`.
+
+---
+
+## Adding a New Volunteer Agreement
+
+A new agreement touches the website, the Studio, and DocuSign:
+
+1. Add the PDF to `/public/v2/documents/`.
+2. In `/src/lib/waivers.ts`, add the id to `WAIVER_IDS` and an entry to `WAIVERS`:
+
+```ts
+export const WAIVER_IDS = ["general", "serving-hope", "youth-sports"] as const;
+
+export const WAIVERS: Record<WaiverId, Waiver> = {
   // ...existing entries
-  {
-    id: "youth-waiver",
-    title: "Youth Volunteer Waiver",
-    description:
-      "Required for volunteers under 18, signed by a parent or guardian.",
-    href: `/${ASSET_VERSION}/documents/TSOH-Youth-Volunteer-Waiver.pdf`,
+  "youth-sports": {
+    id: "youth-sports",
+    title: "Youth Sports Volunteer Agreement",
+    shortTitle: "Youth Sports Agreement",
+    description: "Required for volunteers coaching youth sports programs.",
+    href: `/${ASSET_VERSION}/documents/TSOH-Youth-Sports-Volunteer-Agreement.pdf`,
   },
-];
+};
 ```
 
-- `id` is used for filtering with `only` and as the React key; keep it short and unique.
-- Build `href` with `ASSET_VERSION` (from `@/lib/environment`); do not hardcode `/v2/`.
+3. Run `npx tsc --noEmit`. TypeScript flags the other places keyed by waiver id, such as `docusignTemplates` in `/src/lib/environment.server.ts`. Add the two new `DOCUSIGN_TEMPLATE_*` variables there, to `isDocusignConfigured()` in `/src/lib/docusign.server.ts`, and to `/.env.template`.
+4. Add the option to the `waiver` field in `/sanity/the-source-of-hope/schemaTypes/event-fields.ts`, then deploy the Studio (`npm run deploy`).
+5. Build the adult and minor templates in DocuSign and set their ids in every environment.
+6. Update `/docs/creators/CONTENT_TYPES_REFERENCE.md` so editors know when to choose it.
 
----
-
-## 3) Show It Where Needed
-
-All documents (as on `/events`):
+`/events` lists every id in `WAIVER_IDS`; use `only` to show a subset elsewhere:
 
 ```tsx
-import EventsDocumentsSection from "@/components/events/EventsDocumentsSection";
-
-<EventsDocumentsSection />;
-```
-
-Only specific documents (as on `/programs/servingHope`):
-
-```tsx
-<EventsDocumentsSection only={["youth-waiver"]} />
+<EventsDocumentsSection only={["youth-sports"]} />
 ```
 
 To link to the section from elsewhere on a page, use `#volunteer-agreements` (e.g. `href="/events#volunteer-agreements"`).
 
 ---
 
-## Replacing a Document
+## Validation Checklist
 
-Overwrite the file in `/public/v2/documents/` with the **same file name** and deploy. No code change is needed.
-
-Browsers and CDNs may cache the old copy for a while. If an updated version must be seen immediately, give the new file a new name (e.g. `...-2027.pdf`) and update its `href`.
-
----
-
-## Validation checklist
-
-- Each download link opens or downloads the right file (no 404)
-- `/events` lists all documents; pages using `only` show just the intended ones
+- Each download link opens the right file (no 404)
+- `/events` lists all agreements; pages using `only` show just the intended ones
 - Titles and descriptions read correctly on mobile
 - The file opens on a phone and is a reasonable size
+- If DocuSign is configured, "Sign online" opens the new or updated template

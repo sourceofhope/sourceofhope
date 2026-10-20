@@ -26,7 +26,7 @@ Because paths are plain strings, use `next/link` with `href="/about/team"` and s
 | `/programs/wellnessHope`       | `/src/app/programs/wellnessHope/page.tsx`     |                                         |
 | `/programs/outdoorHope`        | `/src/app/programs/outdoorHope/page.tsx`      |                                         |
 | `/programs/internationalHope`  | `/src/app/programs/internationalHope/page.tsx`|                                         |
-| `/events`                      | `/src/app/events/page.tsx`                    | Sanity events + volunteer documents     |
+| `/events`                      | `/src/app/events/page.tsx`                    | Timeline, monthly programs, waivers; `?event=<key>` opens an event |
 | `/media`                       | `/src/app/media/page.tsx`                     | Sanity publications + newsletters       |
 | `/media/press`                 | `/src/app/media/press/page.tsx`               |                                         |
 | `/media/podcast`               | `/src/app/media/podcast/page.tsx`             |                                         |

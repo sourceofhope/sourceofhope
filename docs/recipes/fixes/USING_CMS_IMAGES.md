@@ -6,7 +6,9 @@ Images uploaded in Sanity Studio reach the site through the GROQ queries in `/sr
 const IMAGE_PROJECTION = `
   "image": image{
     "sourceUrl": asset->url,
-    "altText": alt
+    "altText": alt,
+    "width": asset->metadata.dimensions.width,
+    "height": asset->metadata.dimensions.height
   }
 `;
 ```
@@ -17,6 +19,8 @@ So every fetched document has an optional `image` of type `SanityImage`:
 interface SanityImage {
   sourceUrl?: string; // https://cdn.sanity.io/images/... (the original upload)
   altText?: string;   // the "Alt Text" field in the Studio
+  width?: number;     // original pixel dimensions, useful for aspect ratios
+  height?: number;
 }
 ```
 

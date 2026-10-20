@@ -17,7 +17,7 @@ Use a Server Component when the code:
 - exports `metadata` or `generateMetadata` (only Server Components can, so every `page.tsx` that sets SEO stays on the server)
 - only renders markup from props or constants
 
-Most pages and sections are Server Components: `PageHeader`, `PageSection`, `SectionHeading`, `EventsUpcomingSection`, `StorefrontProductSection`, and the program pages.
+Most pages and sections are Server Components: `PageHeader`, `PageSection`, `SectionHeading`, `EventsTimeline`, `EventsRecurringGrid`, `StorefrontProductSection`, and the program pages.
 
 ---
 
@@ -60,6 +60,8 @@ export default async function DonatePage({ searchParams }: { searchParams: Promi
 `DonateFormSection` is the only `"use client"` part. The page keeps its metadata and server rendering.
 
 Similarly, `/src/app/media/page.tsx` fetches publications on the server and passes them to the client `MediaBlogSection`.
+
+`/events` goes further: the timeline and program cards are Server Components, and each card wraps its server-rendered content in a tiny client `EventTrigger` button. The only larger client piece is `EventModalController`, rendered inside `<Suspense>` because it reads `useSearchParams()`. Without that boundary `next build` fails ("Missing Suspense boundary with useSearchParams"); with it, only the modal is client-rendered and the rest of the page stays static.
 
 ---
 

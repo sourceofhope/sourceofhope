@@ -32,7 +32,8 @@ Every fetcher calls `client.fetch(query, params, { next: { revalidate: 30 } })`,
 
 | Function                         | Document type      | Used by                                         |
 | -------------------------------- | ------------------ | ----------------------------------------------- |
-| `fetchFeaturedEvents(limit=12)`  | `featuredEvent`    | `/events` (6), `GET /api/event/featured-event`  |
+| `fetchTimelineEvents(limit=12)`  | `featuredEvent`    | `/events` timeline: upcoming plus those ended within the last year, oldest first |
+| `fetchFeaturedEvents(limit=12)`  | `featuredEvent`    | `GET /api/event/featured-event`                 |
 | `fetchRecurringEvents(limit=3)`  | `recurringEvent`   | `/events` (12), `GET /api/event/recurring-event`|
 | `fetchProducts(limit?)`          | `product`          | `/store`, `GET /api/product`                    |
 | `fetchProductById(id)`           | `product`          | `/store/product/[id]`, checkout pricing         |
@@ -48,7 +49,9 @@ Conventions in this file:
 - List sizes pass through `clampLimit()` (1–50 by default, up to 200 for products) so query-string values cannot request huge or invalid pages.
 - User-supplied values are passed as GROQ parameters (`$id`, `$slug`), never interpolated.
 - Records expose `id: coalesce(string(externalId), _id)`. `externalId` holds the legacy WordPress id for migrated content; new documents fall back to the Sanity `_id`.
-- Events include `isOutdated: dateTime(date) < dateTime(now())`; the UI shows "Event Completed" instead of a registration button.
+- Events also expose `key` (the Sanity `_id`, unique across types, used for `/events?event=<key>` deep links), the extra detail fields below, and `waiver` defaulted with `coalesce(waiver, "general")`.
+- `isOutdated` is `dateTime(coalesce(endDate, date)) < dateTime(now())`, so an event in progress isn't "over". Featured events past their end show as completed; recurring events never do (their date is the next occurrence).
+- `/src/lib/event-view.ts` turns events into display-ready view objects on the server (dates formatted in Central time by `/src/lib/format-date.ts`) before they reach client components.
 - `fetchProductById` matches `slug.current`, `externalId`, or `_id`, so product URLs keep working with any of them.
 
 ---
@@ -60,7 +63,9 @@ Images are projected with the shared `IMAGE_PROJECTION`:
 ```groq
 "image": image{
   "sourceUrl": asset->url,
-  "altText": alt
+  "altText": alt,
+  "width": asset->metadata.dimensions.width,
+  "height": asset->metadata.dimensions.height
 }
 ```
 
@@ -76,8 +81,8 @@ Schemas live in `/sanity/the-source-of-hope/schemaTypes/` and are registered in 
 | ------------------ | --------------------------------------------------------------------------- |
 | `teamMember`       | teamGroup* (reference), name*, slug*, title, shortBio, bio, image (+alt)    |
 | `teamGroup`        | name*, slug*, description                                                   |
-| `featuredEvent`    | externalId, title*, date*, location, summary, eventPage.url, image (+alt)   |
-| `recurringEvent`   | same as featured; date picker fixed to America/Chicago                      |
+| `featuredEvent`    | externalId, title*, date*, endDate, location, address, summary, description, program, waiver, eventPage.url, image (+alt); dates in America/Chicago |
+| `recurringEvent`   | same as featured, plus schedule                                             |
 | `product`          | externalId, title*, slug*, price, shortDescription, longDescription, impact, size, image (+alt) |
 | `publication`      | externalId, title*, date*, summary, url, image (+alt)                       |
 | `newsletter`       | externalId, title*, url*, image (+alt)                                      |
@@ -91,6 +96,7 @@ Behavior that depends on content:
 - **Team ordering** — `/about/team` sorts groups by the `TEAM_ORDER` array in `/src/app/about/team/page.tsx`. Groups not in the list sort after listed ones; groups without members are hidden; members with images sort first.
 - **Products** — a product without a positive `price` cannot be checked out. The CMS price is what customers are charged.
 - **Checkout providers** — express checkout dispatches on the `name` field exactly: `Stripe` or `PayPal`. `Google Pay` and `Apple Pay` buttons render but are not implemented. `icon` selects the button icon (`stripe`, `paypal`, `googlepay`, `applepay`). Setting `enabled` to false hides a button.
+- **Event waivers** — `waiver` is `general`, `serving-hope`, or `none`, and decides which volunteer agreement the event modal asks for (see `/src/lib/waivers.ts`). The shared event fields live in `/sanity/the-source-of-hope/schemaTypes/event-fields.ts`.
 - **Banner events** — stored and exposed at `GET /api/banner`, but the header banner does not read them yet (see `/docs/recipes/tutorials/ADD_OR_EDIT_GLOBAL_HEADER.md`).
 
 Editor-facing descriptions of each type: `/docs/creators/CONTENT_TYPES_REFERENCE.md`.

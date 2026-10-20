@@ -11,7 +11,7 @@ The `v2` folder name is the asset version. It is defined once as `ASSET_VERSION`
 | Folder | Contents |
 | ------ | -------- |
 | `/public/v2/core/` | Logo, favicon image, default hero (`TSOH-Family.webp`), placeholders, home page poster and hero video (`TSOH-Hero-720.webm`, `TSOH-Hero-1080.webm`, `TSOH-Hero-720.mp4`), awards images, planned giving images |
-| `/public/v2/documents/` | Downloadable PDFs (volunteer agreements). See `/docs/recipes/tutorials/ADD_A_DOWNLOADABLE_DOCUMENT.md`. |
+| `/public/v2/documents/` | Volunteer agreement PDFs (listed in `/src/lib/waivers.ts`). See `/docs/recipes/tutorials/ADD_A_DOWNLOADABLE_DOCUMENT.md`. |
 | `/public/v2/serve/` | Program banner images (the folder kept its old name after "Serve" became "Programs") |
 | `/public/v2/<program>/` | Carousel and tile images per program: `educationHope/`, `internationalHope/`, `outdoorHope/`, `servingHope/`, `sharingHope/`, `wellnessHope/` |
 | `/public/v2/plannedgiving/` | Planned giving images |
@@ -75,8 +75,7 @@ grep -rn 'const ASSET_VERSION' src
 
 At the time of writing this finds, among others:
 
-- `/src/app/events/page.tsx` (hero `src="/v2/hope-run-for-hunger-2025.webp"`)
-- `/src/components/events/EventsUpcomingSection.tsx` and `/src/app/programs/wellnessHope/page.tsx` (local `const ASSET_VERSION = "v2"`)
+- `/src/app/programs/wellnessHope/page.tsx` (local `const ASSET_VERSION = "v2"`)
 - Placeholder fallbacks in `/src/components/media/MediaBlogSection.tsx`, `/src/components/media/MediaNewsletterSection.tsx`, `/src/components/store/StorefrontProductCard.tsx`, and `/src/app/about/team/CarouselCard.tsx`
 
 Switch these to `import { ASSET_VERSION } from "@/lib/environment"` as you touch them. (Ignore PayPal API paths such as `/v2/checkout/orders` in the checkout routes; those are PayPal's API version, not an asset path.)

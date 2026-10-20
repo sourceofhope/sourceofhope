@@ -28,7 +28,7 @@ import { ASSET_VERSION } from "@/lib/environment";
 
 Rule:
 
-- Do not hardcode `/v2/...` in components. A few older files still do (for example the Events hero, and a local `ASSET_VERSION` constant in `EventsUpcomingSection`). Switch them to the import when you touch them.
+- Do not hardcode `/v2/...` in components. A few older files still do (for example a local `ASSET_VERSION` constant in `/src/app/programs/wellnessHope/page.tsx`). Switch them to the import when you touch them.
 
 ---
 

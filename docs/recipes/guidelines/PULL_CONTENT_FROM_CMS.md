@@ -15,7 +15,7 @@ If the content type doesn't exist in Sanity yet, add its schema first (see `/doc
 
 Available fetchers:
 
-- `fetchFeaturedEvents(limit = 12)`, `fetchRecurringEvents(limit = 3)`
+- `fetchTimelineEvents(limit = 12)` (featured events for the /events timeline), `fetchFeaturedEvents(limit = 12)`, `fetchRecurringEvents(limit = 3)`
 - `fetchProducts(limit?)`, `fetchProductById(id)` (accepts a slug, `externalId`, or `_id`)
 - `fetchPublications(limit = 12)`, `fetchNewsletters(limit = 12)`
 - `fetchTeamGroupsWithMembers()`, `fetchTeamMemberBySlug(slug)`
@@ -42,7 +42,7 @@ export async function fetchUpcomingFeaturedEvents(limit = 3) {
 
 Conventions in this file:
 
-- **Projection**: reuse the shared field fragments (`EVENT_FIELDS`, `PRODUCT_FIELDS`, `PUBLICATION_FIELDS`, `NEWSLETTER_FIELDS`, `IMAGE_PROJECTION`). Images are always projected as `image{ "sourceUrl": asset->url, "altText": alt }`.
+- **Projection**: reuse the shared field fragments (`EVENT_FIELDS`, `PRODUCT_FIELDS`, `PUBLICATION_FIELDS`, `NEWSLETTER_FIELDS`, `IMAGE_PROJECTION`). Images are always projected as `image{ "sourceUrl", "altText", "width", "height" }` (original URL, alt text, pixel dimensions).
 - **Ids**: list types project `"id": coalesce(string(externalId), _id)`, so legacy WordPress ids keep working.
 - **Limits**: always pass numeric limits through `clampLimit(limit, fallback, max = 50)`. Never interpolate anything else into a query.
 - **Parameters**: pass strings (slugs, ids) as GROQ parameters (`$slug`), as `fetchTeamMemberBySlug` does.
@@ -93,7 +93,7 @@ export default async function HomeUpcomingSection() {
 }
 ```
 
-This is the same pattern as `EventsUpcomingSection`, `HomePublicationsSection`, `StorefrontProductSection`, and `/src/app/media/page.tsx`.
+This is the same pattern as `HomePublicationsSection`, `StorefrontProductSection`, `/src/app/media/page.tsx`, and `/src/app/events/page.tsx` (which also maps events to view objects with `/src/lib/event-view.ts`).
 
 ---
 

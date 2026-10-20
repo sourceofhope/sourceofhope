@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import { getEnvironment } from '@/lib/environment.server';
 import { rateLimit } from '@/lib/rate-limit';
-import { readJsonObject } from '@/lib/validation';
+import { EMAIL_PATTERN, escapeHtml, readJsonObject } from '@/lib/validation';
 
 // 3 messages per IP per 10 minutes.
 const RATE_LIMIT = 3;
@@ -11,16 +11,6 @@ const RATE_WINDOW_MS = 10 * 60 * 1000;
 const MAX_NAME_LENGTH = 120;
 const MAX_EMAIL_LENGTH = 254;
 const MAX_MESSAGE_LENGTH = 5000;
-const EMAIL_PATTERN = /^[^\s@<>"]{1,64}@[^\s@<>"]{1,255}\.[^\s@<>"]+$/;
-
-/** Escape user input before placing it in the HTML email body. */
-function escapeHtml(value: string): string {
-  return value.replace(
-    /[&<>"']/g,
-    (char) =>
-      ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char]!,
-  );
-}
 
 export async function POST(request: NextRequest) {
   try {

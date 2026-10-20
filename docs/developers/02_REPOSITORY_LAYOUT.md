@@ -31,7 +31,7 @@ flowchart LR
     src --> components["/components"]
     components --> area["&lt;area&gt;/<br/>page sections: about, awards, connect, donate, events, home,<br/>media, members, planned-giving, programs, store + cart, checkout"]
     components --> layoutdir["layout/<br/>Header, Footer, PageHeader, HeaderBlocker"]
-    components --> ui["ui/<br/>shared primitives: buttons, PageSection, SectionHeading, Carousel,<br/>HookInput, HoneypotField, expressive/, parallax/, ..."]
+    components --> ui["ui/<br/>shared primitives: buttons, PageSection, SectionHeading, Carousel,<br/>HookInput, HoneypotField, Modal, expressive/, parallax/, ..."]
     components --> loader["structure/Loader.tsx<br/>full-screen loading indicator"]
 
     src --> context["/context"]
@@ -46,7 +46,10 @@ flowchart LR
     lib --> storeconstants["store-constants.ts<br/>shipping options, tax and processing rates"]
     lib --> storepricing["store-pricing.ts<br/>quoteStoreOrder() server-side pricing, server-only"]
     lib --> ratelimit["rate-limit.ts<br/>per-IP rate limiting for API routes"]
-    lib --> validation["validation.ts<br/>readJsonObject() request body parsing"]
+    lib --> validation["validation.ts<br/>readJsonObject(), EMAIL_PATTERN, escapeHtml(), cleanString()"]
+    lib --> eventview["event-view.ts + format-date.ts<br/>display-ready events, Central-time formatting"]
+    lib --> waivers["waivers.ts<br/>volunteer agreements, revision, signed-waiver cookie, client-safe"]
+    lib --> docusign["docusign.server.ts + waiver-session.server.ts<br/>DocuSign REST client, signed waiver session, server-only"]
 ```
 
 Conventions:

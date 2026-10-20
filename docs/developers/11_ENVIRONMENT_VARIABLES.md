@@ -59,7 +59,26 @@ Client id and secret must belong to the same PayPal app and mode as `PAYPAL_API`
 
 | Variable          | Used for                                |
 | ----------------- | --------------------------------------- |
-| `RESEND_API_KEY`  | Sending email from `/api/email/send`    |
+| `RESEND_API_KEY`  | Sending email from `/api/email/send` and the waiver-completed notice from `/api/waiver/webhook` |
+
+### DocuSign (volunteer waivers)
+
+Online waiver signing is off until every value below except `DOCUSIGN_BASE_URL` and `DOCUSIGN_CONNECT_HMAC_KEY` is set; until then the site offers only the PDF downloads. Setup: `/docs/recipes/guidelines/SET_UP_DOCUSIGN_WAIVERS.md`.
+
+| Variable                                | Used for                                                          |
+| --------------------------------------- | ----------------------------------------------------------------- |
+| `DOCUSIGN_INTEGRATION_KEY`              | JWT Grant login (the app's integration key)                       |
+| `DOCUSIGN_USER_ID`                      | The DocuSign user the site acts as                                |
+| `DOCUSIGN_ACCOUNT_ID`                   | The DocuSign account that owns the templates and envelopes       |
+| `DOCUSIGN_PRIVATE_KEY`                  | RSA private key for JWT Grant: PEM, PEM with `\n` escapes, or base64 of the PEM |
+| `DOCUSIGN_ENVIRONMENT`                  | `production` → `account.docusign.com`; anything else → the developer (demo) environment |
+| `DOCUSIGN_BASE_URL`                     | Optional REST base override; normally looked up from DocuSign's userinfo endpoint |
+| `DOCUSIGN_TEMPLATE_GENERAL_ADULT`       | Template id: General Volunteer Agreement, adult signer            |
+| `DOCUSIGN_TEMPLATE_GENERAL_MINOR`       | Template id: General Volunteer Agreement, minor plus guardian     |
+| `DOCUSIGN_TEMPLATE_SERVING_HOPE_ADULT`  | Template id: Serving Hope Volunteer Agreement, adult signer       |
+| `DOCUSIGN_TEMPLATE_SERVING_HOPE_MINOR`  | Template id: Serving Hope Volunteer Agreement, minor plus guardian |
+| `DOCUSIGN_CONNECT_HMAC_KEY`             | Verifying `/api/waiver/webhook` signatures (DocuSign Connect HMAC key) |
+| `WAIVER_SECRET`                         | Signing the short-lived waiver session cookie and deriving signer ids; any long random string |
 
 ### Sanity
 
@@ -92,6 +111,8 @@ Next.js sets `NODE_ENV` itself; do not set it manually.
 | PayPal client id/secret  | sandbox app          | sandbox app           | live app     |
 | `RESEND_API_KEY`         | optional             | yes                   | yes          |
 | Sanity variables         | same values          | same values           | same values  |
+| DocuSign variables       | developer account (`demo`) or unset | developer account (`demo`) | production account (`production`) |
+| `WAIVER_SECRET`          | any random string    | its own random string | its own random string |
 
 Verification steps: `/docs/recipes/guidelines/VERIFYING_ENVIRONMENT_CONFIGURATION.md`.
 
@@ -107,4 +128,6 @@ Verification steps: `/docs/recipes/guidelines/VERIFYING_ENVIRONMENT_CONFIGURATIO
 | `NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY` | Card forms cannot load Stripe.js                             |
 | `STRIPE_WEBHOOK_SECRET`         | Webhook returns 500; store invoices stay in draft                 |
 | PayPal values                   | PayPal button returns "PayPal is not configured"                  |
-| `RESEND_API_KEY`                | Forms return 500 "Email service not configured"                   |
+| `RESEND_API_KEY`                | Forms return 500 "Email service not configured"; waiver webhook skips the staff email (logged) |
+| Any required DocuSign value or `WAIVER_SECRET` | "Sign online" is hidden; `/api/waiver/start` returns 503; PDF downloads still work |
+| `DOCUSIGN_CONNECT_HMAC_KEY`     | Waiver webhook returns 500; signing still works but staff are not emailed |

@@ -68,17 +68,25 @@ Fix: Paste into a plain text editor first, tidy the line breaks, then paste into
 
 ## An Event Shows the Wrong Time
 
-Cause: The website shows event times in Central time. The **Featured Event** date picker uses the time zone of the computer you are editing on.
+Cause: Events created before the date picker was locked to Central time may have been entered in the editor's own time zone.
 
-Fix: Re-enter the time as Central time and publish. (The **Recurring Event** date picker is already locked to Central time.)
+Fix: Open the event, re-enter the start (and end) time as Central time, and publish. Both event date pickers are now locked to Central time.
 
 ---
 
-## An Event Says "Event Completed" Too Early
+## An Event Says "Completed" Too Early
 
-Cause: The event's date and time are in the past, often because the wrong year or time zone was entered.
+Cause: The featured event's end time (or start time, if there is no end) is in the past, often because the wrong year was entered.
 
-Fix: Correct the date and time and publish. For recurring events, set the date of the next occurrence.
+Fix: Correct the dates and publish. Recurring programs are never marked Completed; if a recurring program's date disappears, set it to the next occurrence.
+
+---
+
+## The Wrong Waiver Is Requested for an Event
+
+Cause: The event's **Volunteer Waiver** field was left on its default, **General Volunteer Agreement**.
+
+Fix: Choose **Serving Hope Volunteer Agreement (Cornerstone Kitchen)** for Cornerstone Kitchen meal service, or **None** for events without volunteers, then publish.
 
 ---
 

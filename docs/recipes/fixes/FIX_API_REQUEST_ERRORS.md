@@ -40,6 +40,8 @@ curl -s https://thesourceofhope.org/api/health
 | 500 | `... is not configured` | A required environment variable is missing in this environment. |
 | 500 | `Failed to ...` | Unexpected error; read the server logs. |
 | 502 | `Failed to send email` | Resend rejected the message. |
+| 502 | `We couldn't start online signing...` | DocuSign rejected or didn't answer a waiver request; the server log has DocuSign's message. |
+| 503 | `Online signing isn't available right now...` | DocuSign isn't configured in this environment (`/api/waiver/start` only). |
 
 ---
 
@@ -78,6 +80,7 @@ Common messages and what triggers them:
 | `create-donation-payment-intent` | `A valid donation amount is required.`, `Minimum donation amount is $0.50.`, `For donations over $100,000, please contact us directly.` | Amount out of range. |
 | `create-membership-payment-intent` | `Invalid membership type`, `Invalid membership amount`, name/company messages | See `/docs/recipes/fixes/FIX_PAYMENT_AND_WEBHOOK_ISSUES.md`. |
 | Status routes | `Session ID is required`, `Payment Intent ID is required`, `PayPal token is required` | The id is missing or doesn't match the expected format (`cs_...`, `pi_...`, PayPal `^[A-Z0-9]{8,32}$`). |
+| `/api/waiver/start` | `Unknown waiver`, `Please provide the volunteer's full name and a valid email.`, `Please provide the guardian's full name and a valid email.` | Waiver id not in `WAIVER_IDS`, name under 2 or over 120 characters, invalid email, or a minor without guardian details. |
 
 The honeypot is not an error: if the hidden `businessName` field is filled, `/api/email/send` returns `{ success: true }` and sends nothing. If test submissions "succeed" but no email arrives, make sure your test isn't filling that field.
 
@@ -100,8 +103,10 @@ Limits come from `rateLimit()` in `/src/lib/rate-limit.ts`. They apply per IP ad
 | `membership` | 5 | `POST /api/checkout/create-membership-payment-intent` |
 | `store-checkout` | 10 (shared) | `create-stripe-checkout`, `create-stripe-payment-intent`, `create-paypal-order` |
 | `payment-status` | 30 (shared) | `retrieve-stripe-session-status`, `retrieve-stripe-payment-intent-status`, `retrieve-paypal-order-status` |
+| `waiver` | 5 | `POST /api/waiver/start` |
+| `waiver-return` | 30 | `GET /api/waiver/return` |
 
-The publishable-key route, the Stripe webhook, and the content GET routes are not rate limited.
+The publishable-key route, the Stripe and DocuSign webhooks, and the content GET routes are not rate limited.
 
 During local testing the limit is easy to hit. The store is in memory, so restarting `npm run dev` clears it. Don't raise the limits to work around testing.
 

@@ -10,7 +10,7 @@ Where to look first:
 
 ---
 
-## 1) CMS sections are empty ("No products available", "No featured events available")
+## 1) CMS sections are empty ("No products available", "No featured events are scheduled right now")
 
 Cause:
 
@@ -160,15 +160,20 @@ Fix:
 
 ---
 
-## 11) Volunteer agreement download returns 404
+## 11) "Sign online" is missing, or online waiver signing fails
 
 Cause:
 
-- The PDFs referenced by `VOLUNTEER_DOCUMENTS` are not in `/public/v2/documents/` yet
+- One or more `DOCUSIGN_*` variables or `WAIVER_SECRET` is missing in that environment; the site then offers only the PDF downloads
+- The JWT consent was not granted, or the private key, user ID, or account ID belongs to a different DocuSign environment (demo vs production)
+- A template is missing the `Volunteer` or `Guardian` role (names must match exactly)
+- Staff emails don't arrive: `DOCUSIGN_CONNECT_HMAC_KEY` doesn't match the key in DocuSign Connect, the deployment is behind Vercel Deployment Protection, or `RESEND_API_KEY` is unset
 
 Fix:
 
-- Add `TSOH-Volunteer-Agreement.pdf` and `TSOH-Serving-Hope-Volunteer-Agreement.pdf` to `/public/v2/documents/` (see `/docs/recipes/tutorials/ADD_A_DOWNLOADABLE_DOCUMENT.md`)
+- Check the Vercel runtime logs for `/api/waiver/start`, `/api/waiver/return`, and `/api/waiver/webhook` (errors log DocuSign's message, never form data)
+- Follow the checklist and troubleshooting table in `/docs/recipes/guidelines/SET_UP_DOCUSIGN_WAIVERS.md`
+- The PDF downloads in `/public/v2/documents/` always work as a fallback
 
 ---
 
