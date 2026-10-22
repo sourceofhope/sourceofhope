@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { LockClosedIcon } from "@heroicons/react/24/solid";
 import Heading from "@/components/ui/Heading";
 import { CartItem } from "@/context/StoreCartContext";
 import {
@@ -37,7 +36,6 @@ const iconMap = {
 };
 
 export default function ExpressCheckoutSection({
-  total,
   items,
   processingFee,
   shippingMethod,
@@ -45,7 +43,6 @@ export default function ExpressCheckoutSection({
   taxAmount,
 }: ExpressCheckoutSectionProps) {
   const [isProcessing, setIsProcessing] = useState(false);
-  const [selectedMethod, setSelectedMethod] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [checkoutProviders, setCheckoutProviders] = useState<
     CheckoutProvider[]
@@ -81,7 +78,6 @@ export default function ExpressCheckoutSection({
 
   const handleExpressCheckout = async (method: string) => {
     setIsProcessing(true);
-    setSelectedMethod(method);
     setError(null);
 
     const successUrl = `${typeof window !== "undefined" ? window.location.origin : ""}/store/success`;
@@ -128,12 +124,12 @@ export default function ExpressCheckoutSection({
       }
 
       if (data.url) {
-        window.location.href = data.url;
+        window.location.assign(data.url);
       } else {
         setError("Failed to create checkout session");
         setIsProcessing(false);
       }
-    } catch (err) {
+    } catch {
       setError("Failed to process Stripe checkout");
       setIsProcessing(false);
     }
@@ -167,12 +163,12 @@ export default function ExpressCheckoutSection({
       }
 
       if (data.approvalUrl) {
-        window.location.href = data.approvalUrl;
+        window.location.assign(data.approvalUrl);
       } else {
         setError("Failed to create PayPal order");
         setIsProcessing(false);
       }
-    } catch (err) {
+    } catch {
       setError("Failed to process PayPal checkout");
       setIsProcessing(false);
     }

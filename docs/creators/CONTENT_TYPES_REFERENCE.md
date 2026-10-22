@@ -55,35 +55,49 @@ Good to know:
 
 ## Featured Event
 
-Where it appears: the **Featured Events** carousel on the Events page (thesourceofhope.org/events). Up to **6** featured events are shown, latest date first.
+Where it appears: the **Featured Events** timeline on the Events page (thesourceofhope.org/events). Upcoming events are listed soonest first under **Coming up**; the four most recent past events stay under **Recently completed** for a year. Clicking an event opens a details window with the description on the left and the image on the right.
 
 Fields:
 
 - **Title** (required) — event name.
-- **Date** (required) — the event's date and start time.
-- **Location** — where it takes place.
-- **Summary** — a few sentences describing the event. Long text is cut off on the card.
-- **Event Page → URL** — the registration or details link (for example an Eventbrite page). Used by the **Register Now** button. Always fill this in for upcoming events.
-- **Image** — the event's card image. A placeholder is shown if left empty.
+- **Start Date and Time** (required) — when the event begins, in Central time.
+- **End Date and Time** — optional. Shown as a time range (for example "9:00 AM – 1:00 PM Central"). Must be after the start.
+- **Location Name** — a short place name shown on the card, such as "Cornerstone Kitchen".
+- **Street Address** — optional. Adds a **Get directions** link (Google Maps) in the details window.
+- **Summary** — one or two sentences shown on the timeline card. Long text is cut off on the card.
+- **Full Description** — shown in the details window: what volunteers will do, who it serves, what to bring. Line breaks are kept. If empty, the summary is shown instead.
+- **Program** — optional tag linking to the matching program page.
+- **Volunteer Waiver** — which volunteer agreement the details window asks volunteers to sign before registering (see below). Defaults to **General Volunteer Agreement**.
+- **Registration Page → URL** — the registration link (for example an Eventbrite page). Used by the register button in the details window. Always fill this in for upcoming events; without it, the window says registration opens soon.
+- **Image** — the event's image. Landscape works best; the details window shows the whole image without cropping. A placeholder is shown if left empty.
+
+Choosing the Volunteer Waiver:
+
+- **General Volunteer Agreement** — most volunteer events.
+- **Serving Hope Volunteer Agreement (Cornerstone Kitchen)** — meal service and other Serving & Sharing Hope events at Cornerstone Kitchen.
+- **None** — events without volunteers, such as galas or fundraisers. The waiver request is hidden.
+
+Volunteers sign each agreement once; it covers every event after that. The register button is always shown, even before someone signs.
 
 Good to know:
 
-- Times on the website are always shown in **Central time**.
-- The date picker for featured events uses the time zone of the computer you are editing on. If you are not in Central time, double-check the time after publishing.
-- Once the event's date has passed, the button changes to **Event Completed** automatically. Unpublish old events when they are no longer useful.
+- Times are entered and shown in **Central time**; the date picker is locked to it.
+- An event is marked **Completed** once its end time has passed (or its start time, if there is no end). The waiver request and register button are then hidden. Events older than a year drop off the page automatically, but you can unpublish them sooner.
 
 ---
 
 ## Recurring Event
 
-Where it appears: the **Recurring Programs** carousel on the Events page. Up to **12** recurring events are shown, latest date first.
+Where it appears: the **Monthly Programs** grid on the Events page, up to **12** programs. Programs with an upcoming date are listed first, soonest first, then the rest alphabetically. Clicking a card opens the same details window as featured events.
 
-Fields: the same as **Featured Event**.
+Fields: the same as **Featured Event**, plus:
+
+- **Schedule** — how often it happens, for example "Second Saturday of every month, 10 AM to 1 PM". Shown on the card and in the details window. Recommended, because it stays correct between dates.
 
 Good to know:
 
-- The date picker for recurring events is locked to **Central time**, so the time you enter is the time shown on the website.
-- Use the date of the **next** occurrence. When that date passes the card shows **Event Completed**, so update the date after each occurrence.
+- Set **Start Date and Time** to the **next** occurrence. While that date is in the future, the card shows it (when there is no Schedule) and the details window shows "Next date".
+- Recurring programs are never marked Completed. Once the date passes, the date is simply hidden until you update it, so the Schedule keeps the card useful in the meantime.
 
 ---
 

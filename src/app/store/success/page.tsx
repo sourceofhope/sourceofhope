@@ -9,13 +9,6 @@ import { useHeaderContext } from '@/context/HeaderContext';
 
 type OrderStatus = 'complete' | 'open' | 'processing' | 'error' | null;
 
-interface StatusResponse {
-  status: string;
-  customer_email?: string;
-  amount?: number;
-  currency?: string;
-}
-
 export default function CheckoutSuccessPage() {
   const router = useRouter();
   const [status, setStatus] = useState<OrderStatus>(null);
@@ -72,6 +65,8 @@ export default function CheckoutSuccessPage() {
 
     // If no payment identifier, not a valid success page
     if (!sessionId && !paypalToken && !paymentIntent) {
+      // The URL and sessionStorage are only readable in the browser, after mount.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsLoading(false);
       return;
     }
@@ -148,17 +143,21 @@ export default function CheckoutSuccessPage() {
     }
   }, []);
 
+  const purchaseHandledRef = useRef(false);
+
   useEffect(() => {
-    if (status === 'complete') {
+    // Run once per completed order; clearing the cart below changes the deps.
+    if (status === 'complete' && !purchaseHandledRef.current) {
+      purchaseHandledRef.current = true;
       const urlParams = new URLSearchParams(window.location.search);
       const transactionId =
         urlParams.get('session_id') || urlParams.get('token') || urlParams.get('payment_intent') || 'unknown';
 
       // Google Analytics tracking
-      if (typeof window !== 'undefined' && (window as any).dataLayer) {
-        (window as any).dataLayer = (window as any).dataLayer || [];
-        (window as any).dataLayer.push({ ecommerce: null });
-        (window as any).dataLayer.push({
+      const dataLayerWindow = window as Window & { dataLayer?: unknown[] };
+      if (typeof window !== 'undefined' && dataLayerWindow.dataLayer) {
+        dataLayerWindow.dataLayer.push({ ecommerce: null });
+        dataLayerWindow.dataLayer.push({
           event: 'purchase',
           ecommerce: {
             transaction_id: transactionId,
@@ -179,7 +178,15 @@ export default function CheckoutSuccessPage() {
       clearCart();
       updateProcessingFee(false);
     }
-  }, [status]);
+  }, [
+    status,
+    cart,
+    clearCart,
+    getCartTotal,
+    getShippingCost,
+    getTaxCost,
+    updateProcessingFee,
+  ]);
 
   if (isLoading) {
     return (
@@ -216,9 +223,9 @@ export default function CheckoutSuccessPage() {
               />
             </svg>
           </div>
-          <Heading className="mb-4">Payment Processing</Heading>
+          <Heading as="h1" className="mb-4">Payment Processing</Heading>
           <p className="text-neutral-700 mb-6 text-sm md:text-md">
-            Your payment is being processed. You'll receive an email confirmation once it's complete.
+            Your payment is being processed. You&apos;ll receive an email confirmation once it&apos;s complete.
           </p>
           <button
             onClick={() => router.push('/')}
@@ -245,7 +252,7 @@ export default function CheckoutSuccessPage() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
           </div>
-          <Heading className="mb-4">Payment Error</Heading>
+          <Heading as="h1" className="mb-4">Payment Error</Heading>
           <p className="text-neutral-700 mb-6 text-sm md:text-md">
             There was an issue processing your payment. Please try again or contact support.
           </p>
@@ -275,27 +282,27 @@ export default function CheckoutSuccessPage() {
           <CheckCircleIcon className="w-12 h-12 text-green-600" />
         </div>
 
-        <Heading className="mb-4">Order Successful!</Heading>
+        <Heading as="h1" className="mb-4">Order Successful!</Heading>
 
         <p className="text-neutral-700 mb-6 text-sm md:text-md text-left">
-          Thank you for your purchase! We've received your order and will send you a confirmation email
+          Thank you for your purchase! We&apos;ve received your order and will send you a confirmation email
           shortly.
         </p>
 
         <div className="bg-neutral-200 border-2 border-accent-200 rounded-lg p-6 mb-8">
-          <h3 className="font-bold text-neutral-900 mb-2 text-sm md:text-md">What's Next?</h3>
+          <h3 className="font-bold text-neutral-900 mb-2 text-sm md:text-md">What&apos;s Next?</h3>
           <ul className="text-left text-neutral-700 space-y-1 text-sm md:text-md">
             <li className="flex items-start gap-2">
               <span className="text-accent-600 font-bold">•</span>
               <span>
-                You'll receive an order confirmation email with your receipt
+                You&apos;ll receive an order confirmation email with your receipt
                 {customerEmail && ` to: `}
                 <strong>{customerEmail}</strong>
               </span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-accent-600 font-bold">•</span>
-              <span>We'll send you shipping updates as your order is processed</span>
+              <span>We&apos;ll send you shipping updates as your order is processed</span>
             </li>
             <li className="flex items-start gap-2">
               <span className="text-accent-600 font-bold">•</span>

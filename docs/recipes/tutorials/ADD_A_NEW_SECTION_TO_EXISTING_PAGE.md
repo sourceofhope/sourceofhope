@@ -16,7 +16,7 @@ Examples:
 
 - `/src/components/about/AboutMissionSection.tsx`
 - `/src/components/programs/ProgramsShowcaseSection.tsx`
-- `/src/components/events/EventsUpcomingSection.tsx`
+- `/src/components/events/EventsIntroSection.tsx`
 
 For a new "Partners" block on the About page, create:
 

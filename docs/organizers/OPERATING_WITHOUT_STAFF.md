@@ -21,7 +21,7 @@ Wording on the pages themselves (for example the About and Programs pages) is pa
 
 At least once per month:
 
-- Check the Events page: past events show "Event Completed". Unpublish old ones and move recurring events to their next date.
+- Check the Events page: past featured events move to "Recently completed". Move recurring programs to their next date, and check that each event asks for the right volunteer waiver.
 - Check the home page "Latest Updates" and the Media page for recent publications.
 - Check the store: products, prices, and photos are current.
 - Check the Team page for people who have joined or left.

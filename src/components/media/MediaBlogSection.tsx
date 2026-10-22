@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import PageSection from "@/components/ui/PageSection";
 import Title from "@/components/ui/Title";
 import Heading from "@/components/ui/Heading";
@@ -44,11 +45,11 @@ function CarouselCard({ post }: { post: MediaBlogPost }) {
   return (
     <div className="group relative shrink-0 bg-white rounded-2xl overflow-hidden shadow-md">
       <div className="relative aspect-video">
-        <img
+        <Image
           src={src || "/v2/core/placeholder.webp"}
           alt={post.image?.altText || post.title || ""}
-          loading="lazy"
-          decoding="async"
+          fill
+          sizes="(min-width: 1024px) 33vw, 80vw"
           onLoad={() => setLoaded(true)}
           className={`absolute inset-0 w-full h-full object-cover ${
             loaded ? "opacity-100" : "opacity-0"

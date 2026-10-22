@@ -9,7 +9,7 @@ As an organizer or owner, you can manage the website's changing content without 
 You can safely:
 
 - Add, edit, and remove **team members** and **team groups** (Team page and profile pages)
-- Add and update **featured events** and **recurring events** (Events page)
+- Add and update **featured events** and **recurring events** (Events page), including their descriptions, registration links, and which **volunteer waiver** each event asks for
 - Post **publications** — news, articles, and press links (home page "Latest Updates" and the Media page)
 - Add **newsletter** issues (Media page)
 - Add and update **store products**, including their **prices**, descriptions, and photos

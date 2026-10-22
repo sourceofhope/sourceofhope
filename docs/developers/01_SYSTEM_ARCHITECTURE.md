@@ -12,7 +12,8 @@ External systems:
 - **Sanity** — headless CMS for editable content (project `sgzdqn9z`, dataset `production`)
 - **Stripe** — store self-checkout (Payment Element), hosted Stripe Checkout, donations, membership subscriptions, invoices
 - **PayPal** — store express checkout (Orders v2 API)
-- **Resend** — transactional email for the contact and planned-giving forms
+- **Resend** — transactional email for the contact and planned-giving forms, and the staff notice when a waiver is signed
+- **DocuSign eSignature** — embedded signing of the volunteer agreements, with a per-envelope Connect webhook (optional; off until configured)
 - **Vercel Analytics / Speed Insights**, **Google Tag Manager**, **Google Ads tag** — measurement
 
 There is no separate Express server, no CORS configuration, and no API routing domain. The browser always calls `/api/...` on the domain that served the page.
@@ -35,6 +36,7 @@ API routes (`/src/app/api`) handle:
 - Stripe webhook verification
 - PayPal order creation, status, and capture
 - Email sending (Resend) with honeypot spam filtering
+- DocuSign envelope creation, embedded signing links, signer status checks, and Connect webhook verification
 - Rate limiting and input validation
 
 Sanity handles:
@@ -53,7 +55,7 @@ Next.js renders components on the server by default.
 
 - **Server Components** (no directive) can read environment variables and call Sanity directly. Most pages and CMS-driven sections are Server Components.
 - **Client Components** start with `"use client"`. They are used for anything interactive: Header, Footer, Carousel, forms, cart, and checkout.
-- Server-only modules (`environment.server.ts`, `sanity-client.ts`, `sanity-content.ts`, `store-pricing.ts`) begin with `import "server-only"` so importing them from a Client Component fails the build.
+- Server-only modules (`environment.server.ts`, `sanity-client.ts`, `sanity-content.ts`, `store-pricing.ts`, `docusign.server.ts`, `waiver-session.server.ts`) begin with `import "server-only"` so importing them from a Client Component fails the build.
 
 See `/docs/recipes/guidelines/SERVER_AND_CLIENT_COMPONENTS.md`.
 
@@ -83,7 +85,7 @@ Interactive request (checkout, form):
 sequenceDiagram
     participant C as Client Component
     participant R as Route Handler
-    participant X as Stripe / PayPal / Resend / Sanity
+    participant X as Stripe / PayPal / Resend / DocuSign / Sanity
     C->>R: fetch("/api/...")
     R->>R: rateLimit() and readJsonObject()
     R->>R: getEnvironment() for secrets
@@ -103,6 +105,8 @@ sequenceDiagram
     W->>St: Finalize invoice and mark it paid
     W-->>St: { received: true }
 ```
+
+Volunteer waiver signing (`/api/waiver/start`, `/api/waiver/return`, `/api/waiver/webhook`) is diagrammed in `/docs/recipes/guidelines/SET_UP_DOCUSIGN_WAIVERS.md`.
 
 ---
 

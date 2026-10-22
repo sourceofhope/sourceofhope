@@ -42,8 +42,10 @@ A failing `next build` (TypeScript errors, a server-only import in a client comp
 
 Set every key from `/.env.template` in Vercel → **Settings → Environment Variables**, scoped per environment:
 
-- **Production** — live Stripe keys, `PAYPAL_API=production`, live webhook secret
-- **Preview / Development** — Stripe test keys, `PAYPAL_API=development` (sandbox), test webhook secret
+- **Production** — live Stripe keys, `PAYPAL_API=production`, live webhook secret, DocuSign production account (`DOCUSIGN_ENVIRONMENT=production`)
+- **Preview / Development** — Stripe test keys, `PAYPAL_API=development` (sandbox), test webhook secret, DocuSign developer account (`DOCUSIGN_ENVIRONMENT=demo`)
+
+Each environment needs its own `WAIVER_SECRET`. Until all DocuSign variables are set, online waiver signing stays hidden and the PDFs remain available.
 
 `NEXT_PUBLIC_*` values are inlined into browser JavaScript at build time. After changing any variable, **redeploy** for it to take effect.
 
@@ -69,11 +71,23 @@ and put the printed `whsec_...` secret in `.env.local`.
 
 ---
 
+## DocuSign Webhook
+
+The waiver routes register their webhook on each envelope, pointing at the deployment that created it (`https://<domain>/api/waiver/webhook`), so there is no endpoint to configure per environment. DocuSign must be able to reach that URL:
+
+- Vercel Deployment Protection blocks DocuSign on protected preview URLs. Test on an unprotected domain, or the staff email will not send (signing itself still works).
+- The Connect HMAC key in the matching DocuSign account must equal that environment's `DOCUSIGN_CONNECT_HMAC_KEY`.
+
+Setup and go-live steps: `/docs/recipes/guidelines/SET_UP_DOCUSIGN_WAIVERS.md`.
+
+---
+
 ## Post-Deploy Verification
 
 - `GET https://<domain>/api/health` returns `{ "status": "ok", ... }`
 - Home page loads, hero video or poster shows, no console errors
 - `/events`, `/media`, `/store`, `/about/team` show CMS content (not empty states)
+- On `/events`, an event opens in its modal and both volunteer agreement PDFs download; where DocuSign is configured, "Sign online" opens DocuSign
 - Header dropdowns and the mobile menu work
 - Contact form on `/connect` sends (production: confirm the email arrives)
 - On development: a test-card purchase completes and the success page shows "complete"
@@ -114,5 +128,6 @@ Be careful when changing:
 - `/src/app/layout.tsx` — wraps every page
 - `/src/lib/environment.server.ts` — every secret flows through it
 - `/src/app/api/checkout/**` — payments
+- `/src/app/api/waiver/**`, `/src/lib/docusign.server.ts` — volunteer waiver signing
 
 Validate with `npm run lint` and `npm run build` locally before pushing.

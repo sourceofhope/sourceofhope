@@ -35,7 +35,7 @@ This repository contains everything that powers the public website:
 The site supports the organization's work by helping visitors:
 
 - Learn about our programs: Serving and Sharing Hope, Education for Hope, Wellness of Hope, Hope for the Outdoors, and Hope Beyond Borders
-- Find and register for upcoming and recurring events
+- Find and register for upcoming and recurring events, and sign volunteer waivers online
 - Make one-time donations or become monthly members
 - Support the mission through the online store
 - Volunteer, partner with us, or explore planned giving
@@ -51,6 +51,7 @@ The site supports the organization's work by helping visitors:
 | Content          | Sanity (headless CMS)                                          |
 | Payments         | Stripe (cards, Checkout, subscriptions, invoices), PayPal      |
 | Email            | Resend                                                         |
+| E-signature      | DocuSign eSignature (volunteer waivers)                        |
 | Hosting          | Vercel                                                         |
 | Analytics        | Vercel Analytics and Speed Insights, Google Tag Manager        |
 
@@ -58,7 +59,7 @@ The site supports the organization's work by helping visitors:
 
 ## Architecture
 
-The pages and the backend live in one application and deploy together. Pages read published content from Sanity on the server. Forms and checkout call the site's own `/api` routes, which calculate every price on the server and communicate with Stripe, PayPal, and Resend.
+The pages and the backend live in one application and deploy together. Pages read published content from Sanity on the server. Forms, checkout, and waiver signing call the site's own `/api` routes, which calculate every price on the server and communicate with Stripe, PayPal, Resend, and DocuSign.
 
 ```mermaid
 flowchart LR
@@ -67,7 +68,7 @@ flowchart LR
     vercel --> api["/api routes"]
     page -- reads content --> sanity[(Sanity)]
     api -- reads product prices --> sanity
-    api --> services[Stripe / PayPal / Resend]
+    api --> services[Stripe / PayPal / Resend / DocuSign]
     editor([Staff and volunteers]) --> studio[Sanity Studio]
     studio -- publishes --> sanity
 ```

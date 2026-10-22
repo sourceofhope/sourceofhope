@@ -1,9 +1,10 @@
 "use client";
 
 import { useState, useEffect, useMemo, useRef } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useHeaderContext } from "@/context/HeaderContext";
+import { useHeaderContext, type Banner } from "@/context/HeaderContext";
 import {
   Bars3Icon,
   XMarkIcon,
@@ -73,7 +74,7 @@ export default function Header() {
   const previousPathname = useRef(pathname);
 
   const header = useHeaderContext() ?? {};
-  const { isBlocking = false, bannerActive = false } = header;
+  const { isBlocking = false, bannerActive = false, banner = null } = header;
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 0);
@@ -102,7 +103,7 @@ export default function Header() {
   return (
     <>
       {bannerActive && bannerOpen && (
-        <HeaderBanner onClose={() => setBannerOpen(false)} />
+        <HeaderBanner banner={banner} onClose={() => setBannerOpen(false)} />
       )}
       {isBlocking && bannerActive && bannerOpen ? (
         <div className="h-15 md:h-10" />
@@ -167,10 +168,11 @@ export default function Header() {
 
 function Favicon() {
   return (
-    // eslint-disable-next-line @next/next/no-img-element
-    <img
+    <Image
       src={`/${ASSET_VERSION}/core/TSOH-Favicon.webp`}
       alt="The Source of Hope"
+      width={48}
+      height={48}
       className="size-10 md:size-12 object-contain"
     />
   );
@@ -180,18 +182,36 @@ function Icon({ children }: { children: React.ReactNode }) {
   return <>{children}</>;
 }
 
-function HeaderBanner({ onClose }: { onClose: () => void }) {
-  const bannerText = "Donate Today!";
-  const bannerLink = "/donate";
+function HeaderBanner({
+  banner,
+  onClose,
+}: {
+  banner: Banner | null;
+  onClose: () => void;
+}) {
+  const bannerText = banner?.text ?? "";
+  const bannerLink = banner?.link ?? null;
 
   return (
     <div
       className="flex gap-3 justify-between md:justify-center h-15 md:h-10 items-center px-5 lg:px-35 bg-accent-500 border-b-2 text-neutral-50 border-accent-700 fixed top-0 left-0 right-0 z-9998 w-full overflow-hidden"
       role="region"
       aria-label="Site banner">
-      <Link href={bannerLink} className="hover:underline font-semibold">
-        {bannerText}
-      </Link>
+      {bannerLink?.startsWith("/") ? (
+        <Link href={bannerLink} className="hover:underline font-semibold">
+          {bannerText}
+        </Link>
+      ) : bannerLink ? (
+        <a
+          href={bannerLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:underline font-semibold">
+          {bannerText}
+        </a>
+      ) : (
+        <span className="font-semibold">{bannerText}</span>
+      )}
 
       <button
         type="button"

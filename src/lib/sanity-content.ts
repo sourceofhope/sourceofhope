@@ -2,7 +2,10 @@ import "server-only";
 
 import { client } from "@/lib/sanity-client";
 
-const options = { next: { revalidate: 30 } };
+// Cached for 30s at most; the Sanity webhook (/api/revalidate) clears the
+// "sanity" tag so published changes show up right away.
+export const SANITY_CACHE_TAG = "sanity";
+const options = { next: { revalidate: 30, tags: [SANITY_CACHE_TAG] } };
 
 /** Keep list sizes sane: callers (including API query params) can't request 0, NaN, or huge pages. */
 function clampLimit(limit: number, fallback: number, max = 50) {
@@ -12,16 +15,29 @@ function clampLimit(limit: number, fallback: number, max = 50) {
 export interface SanityImage {
   sourceUrl?: string;
   altText?: string;
+  width?: number;
+  height?: number;
 }
 
 export interface SanityEvent {
   id: string;
+  /** Sanity document id; unique across event types, so safe for deep links. */
+  key: string;
   externalId?: number;
   title: string;
   date?: string;
+  endDate?: string;
+  /** True once the event has ended (end date, or start date if none). */
   isOutdated?: boolean;
   location?: string;
+  address?: string;
   summary?: string;
+  description?: string;
+  program?: string;
+  /** Which volunteer waiver to ask for: "general", "serving-hope", or "none". */
+  waiver: string;
+  /** Recurring events only, e.g. "Second Saturday of every month". */
+  schedule?: string;
   eventPage?: {
     url?: string;
   };
@@ -78,6 +94,7 @@ export interface SanityTeamGroup {
   name: string;
   slug: { current: string };
   description?: string;
+  order?: number | null;
   members: SanityTeamMember[];
 }
 
@@ -102,7 +119,9 @@ export interface BannerEvent {
 const IMAGE_PROJECTION = `
   "image": image{
     "sourceUrl": asset->url,
-    "altText": alt
+    "altText": alt,
+    "width": asset->metadata.dimensions.width,
+    "height": asset->metadata.dimensions.height
   }
 `;
 
@@ -121,12 +140,19 @@ const PRODUCT_FIELDS = `
 
 const EVENT_FIELDS = `
   "id": coalesce(string(externalId), _id),
+  "key": _id,
   "externalId": externalId,
   "title": title,
   "date": date,
-  "isOutdated": dateTime(date) < dateTime(now()),
+  "endDate": endDate,
+  "isOutdated": dateTime(coalesce(endDate, date)) < dateTime(now()),
   "location": location,
+  "address": address,
   "summary": summary,
+  "description": description,
+  "program": program,
+  "waiver": coalesce(waiver, "general"),
+  "schedule": schedule,
   "eventPage": {
     "url": eventPage.url
   },
@@ -154,6 +180,19 @@ const NEWSLETTER_FIELDS = `
 export async function fetchFeaturedEvents(limit = 12) {
   return client.fetch<SanityEvent[]>(
     `*[_type == "featuredEvent"] | order(date desc)[0...${clampLimit(limit, 12)}] { ${EVENT_FIELDS} }`,
+    {},
+    options,
+  );
+}
+
+/**
+ * Featured events for the /events timeline: everything upcoming plus events
+ * that ended within the last year, oldest first.
+ */
+export async function fetchTimelineEvents(limit = 12) {
+  return client.fetch<SanityEvent[]>(
+    `*[_type == "featuredEvent" && dateTime(coalesce(endDate, date)) > dateTime(now()) - 60*60*24*365]
+      | order(date asc)[0...${clampLimit(limit, 12)}] { ${EVENT_FIELDS} }`,
     {},
     options,
   );
@@ -210,6 +249,7 @@ export async function fetchTeamGroupsWithMembers() {
       name,
       slug,
       description,
+      order,
       "members": *[_type == "teamMember" && teamGroup._ref == ^._id] | order(name asc) {
         _id,
         name,

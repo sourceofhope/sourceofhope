@@ -6,7 +6,7 @@ import HookInput from '@/components/ui/HookInput';
 import Heading from '@/components/ui/Heading';
 
 import { useRef, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useForm, type FieldValues } from 'react-hook-form';
 import {
   BuildingStorefrontIcon,
   EnvelopeIcon,
@@ -52,13 +52,6 @@ export default function ConnectMapSection() {
     formState: { errors },
     reset,
   } = useForm({ mode: 'onBlur' });
-
-  const message = {
-    IDLE: 'Send',
-    SUBMIT: 'Sending',
-    SUCCESS: 'Sent',
-    ERROR: 'Error',
-  };
 
   const isProcessing = status === formStatus.SUBMIT;
 
@@ -115,7 +108,7 @@ export default function ConnectMapSection() {
           </div>
         </article>
         <article className="w-full grid gap-5 row-start-1 md:row-start-auto h-full">
-          <form ref={formRef} className="grid w-full h-full" onSubmit={handleSubmit(onSubmit) as any}>
+          <form ref={formRef} className="grid w-full h-full" onSubmit={handleSubmit(onSubmit)}>
             <HoneypotField />
             <HookInput
               title="First name"
@@ -264,7 +257,7 @@ export default function ConnectMapSection() {
     </PageSection>
   );
 
-  async function onSubmit(formData: any) {
+  async function onSubmit(formData: FieldValues) {
     setStatus(formStatus.SUBMIT);
 
     try {

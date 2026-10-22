@@ -3,12 +3,12 @@ import { getEnvironment } from '@/lib/environment.server';
 import { rateLimit } from '@/lib/rate-limit';
 import { readJsonObject } from '@/lib/validation';
 import Stripe from 'stripe';
+import { STANDARD_PROCESSING_RATE } from '@/lib/store-constants';
 
 // 5 PaymentIntent creations per IP per 10 minutes.
 const RATE_LIMIT = 5;
 const RATE_WINDOW_MS = 10 * 60 * 1000;
 
-const PROCESSING_RATE = 0.03;
 const MAX_DONATION = 100_000;
 const EMAIL_PATTERN = /^[^\s@<>"]{1,64}@[^\s@<>"]{1,255}\.[^\s@<>"]+$/;
 
@@ -92,7 +92,7 @@ export async function POST(request: NextRequest) {
         // than trusted from the request.
         const donationAmountCents = Math.round(amount * 100);
         const processingFeeCents = coverFee
-            ? Math.round(Number((amount * PROCESSING_RATE).toFixed(2)) * 100)
+            ? Math.round(Number((amount * STANDARD_PROCESSING_RATE).toFixed(2)) * 100)
             : 0;
         const totalCents = donationAmountCents + processingFeeCents;
 

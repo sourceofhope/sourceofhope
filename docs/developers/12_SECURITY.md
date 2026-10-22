@@ -54,19 +54,33 @@ Email forms include a honeypot input (`/src/components/ui/HoneypotField.tsx`, fi
 
 - Positioned off-screen, `aria-hidden`, removed from the tab order, so people never fill it
 - Read from the DOM with `readHoneypot()` at submit time
-- `/api/email/send` returns a fake success and sends nothing when it is filled
+- `/api/email/send` returns a fake success and sends nothing when it is filled; `/api/waiver/start` returns the events page URL and creates no envelope
 
-Combined with the 3-per-10-minutes rate limit.
+Combined with the 3-per-10-minutes rate limit (5 per 10 minutes for waiver signing, since each envelope counts against the DocuSign plan).
 
 ---
 
-## 6. Error Messages
+## 6. Volunteer Waivers (DocuSign)
+
+The waiver routes (`/src/app/api/waiver/*`) handle personal details, so they follow extra rules:
+
+- **Minimal data** — the site sends only names and email addresses to DocuSign and stores none of it. Everything else (date of birth, emergency contact, signatures) is entered on DocuSign. Routes log DocuSign error messages, never request bodies or signer details.
+- **Signed session cookie** — `tsoh_waiver_flow` holds the envelope id and return path, HMAC-signed with `WAIVER_SECRET`, expires after 2 hours, and is `HttpOnly`, `SameSite=Lax`, `Secure` in production, and scoped to `/api/waiver`. A forged or expired cookie is rejected.
+- **Unguessable signer ids** — the embedded-signing `clientUserId` is derived from a random nonce in that cookie, so knowing an envelope id is not enough to open someone else's signing session.
+- **Status from DocuSign, not the redirect** — `/api/waiver/return` ignores DocuSign's `?event=` hint and asks the DocuSign API for each signer's status before reporting success.
+- **No open redirects** — the return path must match `^/[A-Za-z0-9/_-]{0,100}$` without `//`; event keys must match `^[A-Za-z0-9._-]{1,100}$`.
+- **Webhook signatures** — `/api/waiver/webhook` computes an HMAC-SHA256 over the raw body with `DOCUSIGN_CONNECT_HMAC_KEY` and compares it in constant time against every `X-DocuSign-Signature-N` header (so keys can be rotated). Unsigned or mismatched requests get 401. Envelope details in the staff email are fetched from DocuSign, not taken from the payload, and HTML-escaped.
+- **The `tsoh_waivers` cookie is a convenience only** — it is readable by scripts so the page can say "signed on this device", and a visitor can edit it. Nothing relies on it as proof; DocuSign holds the signed record.
+
+---
+
+## 7. Error Messages
 
 Routes return generic messages (`"Failed to create payment intent"`) and log the real error server-side with `console.error`. Do not return stack traces, provider error bodies, or configuration details to the browser. Validation messages that are safe for customers (`PricingError`) are the exception.
 
 ---
 
-## 7. HTTP Security Headers
+## 8. HTTP Security Headers
 
 Set for every response in `/next.config.ts`:
 
@@ -85,7 +99,7 @@ The CSP intentionally has no `script-src`/`connect-src` allow-lists yet, so Stri
 
 ---
 
-## 8. Dependencies
+## 9. Dependencies
 
 - Keep `next` patched; the upgrade to 16.3.8 fixed critical image-optimizer advisories.
 - Run `npm audit` periodically and before releases.
@@ -97,6 +111,7 @@ The CSP intentionally has no `script-src`/`connect-src` allow-lists yet, so Stri
 
 - [ ] `rateLimit()` with an appropriate scope and limit
 - [ ] `readJsonObject()` for POST bodies
+- [ ] Webhooks verify the provider's signature over the raw body before parsing
 - [ ] Every field type-checked, trimmed, and length-limited
 - [ ] Secrets via `getEnvironment()` with a "not configured" guard
 - [ ] No client-supplied prices, totals, or URLs

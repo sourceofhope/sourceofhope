@@ -39,6 +39,7 @@ If you need background first, read `/docs/developers/00_START_HERE.md`.
 | `/docs/recipes/guidelines/PULL_CONTENT_FROM_CMS.md` | Showing Sanity content on a page through `sanity-content.ts`. |
 | `/docs/recipes/guidelines/RUN_LOCALLY.md` | Setting up the site (and optionally Sanity Studio and Stripe webhooks) on your machine. |
 | `/docs/recipes/guidelines/SERVER_AND_CLIENT_COMPONENTS.md` | Deciding whether a component needs `"use client"` and what it may import. |
+| `/docs/recipes/guidelines/SET_UP_DOCUSIGN_WAIVERS.md` | Turning on online volunteer waiver signing: DocuSign account, templates, keys, webhook, and go-live. |
 | `/docs/recipes/guidelines/VERIFYING_ENVIRONMENT_CONFIGURATION.md` | Checking that an environment (local, development, production) has the right keys and services. |
 
 ---
@@ -59,6 +60,6 @@ If you need background first, read `/docs/developers/00_START_HERE.md`.
 | `/docs/recipes/tutorials/DISPLAY_CART_COUNT.md` | Showing the cart item count somewhere new. |
 | `/docs/recipes/tutorials/ADD_A_CMS_CONTENT_TYPE.md` | Adding a new kind of content to Sanity and showing it on the site. |
 | `/docs/recipes/tutorials/ADD_AN_API_ROUTE.md` | Adding a new backend endpoint under `/src/app/api`. |
-| `/docs/recipes/tutorials/ADD_A_DOWNLOADABLE_DOCUMENT.md` | Offering a PDF (such as a volunteer agreement) for download. |
+| `/docs/recipes/tutorials/ADD_A_DOWNLOADABLE_DOCUMENT.md` | Offering a PDF for download, or updating or adding a volunteer agreement. |
 | `/docs/recipes/tutorials/UPDATE_MEMBERSHIP_PLANS.md` | Changing membership plan names, prices, or tiers. |
 | `/docs/recipes/tutorials/CHANGE_SHIPPING_TAX_OR_FEES.md` | Changing shipping options, the sales tax rate, or the processing fee. |

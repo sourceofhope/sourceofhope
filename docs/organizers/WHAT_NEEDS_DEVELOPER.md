@@ -43,7 +43,8 @@ Most text and images on the website are written into the code, including:
 ## Other
 
 - Turning on a site-wide banner (the Banner Event content type is not currently connected to the website)
-- Adding or replacing the volunteer agreement PDFs
+- Replacing a volunteer agreement PDF or adding a new agreement (the matching DocuSign templates change too)
+- Setting up or changing online waiver signing (DocuSign account, templates, and keys)
 - Changing the home page video or any other video on the site
 - Fixing broken layouts
 - Performance or speed issues

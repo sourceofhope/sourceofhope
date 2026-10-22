@@ -1,8 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { PencilIcon } from "@heroicons/react/24/solid";
-import { loadStripe } from "@stripe/stripe-js";
+import { loadStripe, type PaymentIntent, type Stripe } from "@stripe/stripe-js";
 import {
   Elements,
   PaymentElement,
@@ -23,27 +24,15 @@ interface SelfCheckoutSectionProps {
   total: number;
 }
 
-interface CheckoutAddress {
-  firstName?: string;
-  lastName?: string;
-  address?: string;
-  city?: string;
-  state?: string;
-  zipCode?: string;
-  country?: string;
-}
-
 interface PaymentFormProps {
   clientSecret: string;
   total: number;
   processingFee: number;
-  onSuccess: (paymentIntent: any) => void;
+  onSuccess: (paymentIntent: PaymentIntent) => void;
 }
 
 function PaymentForm({
-  clientSecret,
   total,
-  processingFee,
   onSuccess,
 }: PaymentFormProps) {
   const stripe = useStripe();
@@ -134,7 +123,6 @@ function PaymentForm({
 
 export default function SelfCheckoutSection({
   cart,
-  getCartItemCount,
   subtotal,
   shippingMethod,
   shippingCost,
@@ -142,6 +130,7 @@ export default function SelfCheckoutSection({
   processingFee,
   total,
 }: SelfCheckoutSectionProps) {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     email: "",
     firstName: "",
@@ -154,7 +143,7 @@ export default function SelfCheckoutSection({
     phone: "",
   });
 
-  const [stripePromise, setStripePromise] = useState<any>(null);
+  const [stripePromise, setStripePromise] = useState<Stripe | null>(null);
   const [clientSecret, setClientSecret] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -278,11 +267,9 @@ export default function SelfCheckoutSection({
     setError(null);
   };
 
-  const handlePaymentSuccess = (paymentIntent: any) => {
+  const handlePaymentSuccess = (paymentIntent: PaymentIntent) => {
     // Redirect to success page
-    if (typeof window !== "undefined") {
-      window.location.href = `/store/success?payment_intent=${paymentIntent.id}`;
-    }
+    router.push(`/store/success?payment_intent=${paymentIntent.id}`);
   };
 
   return (

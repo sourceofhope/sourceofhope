@@ -1,8 +1,8 @@
-/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import Heading from "@/components/ui/Heading";
 import { CartItem } from "@/context/StoreCartContext";
+import CartThumbnail from "@/components/store/cart/CartThumbnail";
 import {
   STANDARD_TAX_RATE,
   STANDARD_PROCESSING_RATE,
@@ -39,19 +39,12 @@ export default function CheckoutDetailsSection({
           <div
             key={`${item.id}-${item.size}-${index}`}
             className="select-none flex gap-3 p-3 border-2 border-neutral-200 rounded-xl hover:border-accent-500 transition-colors">
-            <div className="w-16 h-16 bg-neutral-200 rounded-lg flex items-center justify-center overflow-hidden shrink-0">
-              <img
+            <div className="w-16 h-16 relative bg-neutral-200 rounded-lg flex items-center justify-center overflow-hidden shrink-0">
+              <CartThumbnail
                 src={item.image}
-                alt={item.title}
-                className="w-full h-full object-cover"
-                onError={(e) => {
-                  const target = e.currentTarget;
-                  target.style.display = "none";
-                  if (target.parentElement) {
-                    target.parentElement.innerHTML =
-                      '<span class="text-neutral-500 text-xs">No image</span>';
-                  }
-                }}
+                alt={item.title ?? item.name}
+                sizes="64px"
+                fallbackClassName="text-neutral-500 text-xs"
               />
             </div>
             <div className="flex-1 min-w-0">

@@ -1,4 +1,5 @@
 import { Metadata } from "next";
+import Image from "next/image";
 import ExpressiveAnchor from "@/components/ui/expressive/ExpressiveAnchor";
 import Carousel from "@/components/ui/Carousel";
 import Title from "@/components/ui/Title";
@@ -52,9 +53,11 @@ function CarouselCard({
 		relative h-full
 		group overflow-hidden rounded-xl text-accent-background aspect-square
 	">
-      <img
+      <Image
         src={src}
-        alt={alt}
+        alt={alt ?? ""}
+        fill
+        sizes="(min-width: 1024px) 25vw, 80vw"
         className="inset-0 w-full h-full object-cover transition-transform brightness-[.8] contrast-[1.1]"
       />
     </div>

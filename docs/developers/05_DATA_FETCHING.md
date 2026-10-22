@@ -26,14 +26,14 @@ async function getEvents(): Promise<SanityEvent[]> {
 
 export default async function EventsSection() {
   const events = await getEvents();
-  if (events.length === 0) return <p>No featured events available</p>;
+  if (events.length === 0) return <p>No featured events are scheduled right now.</p>;
   return <ul>{events.map((e) => <li key={e.id}>{e.title}</li>)}</ul>;
 }
 ```
 
 Examples in the codebase:
 
-- `/src/components/events/EventsUpcomingSection.tsx`
+- `/src/app/events/page.tsx` (fetches events once, formats them with `/src/lib/event-view.ts`, and passes view objects to the timeline, grid, and modal)
 - `/src/components/home/HomePublicationsSection.tsx`
 - `/src/components/store/StorefrontProductSection.tsx`
 - `/src/app/media/page.tsx` (fetches, then passes arrays to client sections as props)
@@ -100,6 +100,7 @@ Current client callers:
 | `/src/components/store/checkout/SelfCheckoutSection.tsx`   | publishable key, `create-stripe-payment-intent`                    |
 | `/src/components/store/checkout/ExpressCheckoutSection.tsx`| `/api/checkout-providers`, `create-stripe-checkout`, `create-paypal-order` |
 | `/src/app/store/success/page.tsx`                          | `retrieve-stripe-session-status`, `retrieve-paypal-order-status`, `retrieve-stripe-payment-intent-status` |
+| `/src/components/events/WaiverSignForm.tsx`                | `POST /api/waiver/start`, then a full-page redirect to DocuSign |
 
 Full request/response details: `/docs/developers/06_API_ROUTES.md`.
 
@@ -109,3 +110,5 @@ Full request/response details: `/docs/developers/06_API_ROUTES.md`.
 
 - The store cart, shipping method, and fee opt-in live in `StoreCartContext` and are saved to `localStorage` (`sourceofhope_cart`, `sourceofhope_shipping`, `sourceofhope_processing`).
 - Cart prices shown in the browser are for display only; checkout routes recompute totals from Sanity.
+- `tsoh_waivers` (readable cookie, set by `/api/waiver/return`) records which volunteer agreements were signed online on this device; `useSignedWaivers()` reads it with `useSyncExternalStore`.
+- The open event on `/events` lives in the URL (`?event=<key>`), updated with `window.history.pushState`/`replaceState`, which Next.js keeps in sync with `useSearchParams()`.

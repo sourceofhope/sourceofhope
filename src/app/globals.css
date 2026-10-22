@@ -40,6 +40,7 @@
   /* Font Families */
   --font-urbanist: "Urbanist", Helvetica, Arial, sans-serif;
   --font-inter: "Inter", Helvetica, Arial, sans-serif;
+  --font-montserrat: "Montserrat", Helvetica, Arial, sans-serif;
 
   /* Font Sizes */
   --text-xxxxlg: 4rem;
@@ -72,4 +73,20 @@ body {
   background-color: var(--color-neutral-50);
   color: var(--color-neutral-900);
   font-family: var(--font-inter);
+}
+
+/* Lock page scrolling while a modal <dialog> is open (see components/ui/Modal.tsx). */
+html:has(dialog:modal) {
+  overflow: hidden;
+}
+
+@keyframes modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.5rem) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }

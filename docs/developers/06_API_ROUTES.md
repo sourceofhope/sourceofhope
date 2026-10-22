@@ -39,6 +39,8 @@ Per client IP, per serverless instance, 10-minute sliding windows. Routes sharin
 | `membership`     | 5     | `POST /api/checkout/create-membership-payment-intent`                             |
 | `store-checkout` | 10    | `create-stripe-checkout`, `create-stripe-payment-intent`, `create-paypal-order`   |
 | `payment-status` | 30    | `retrieve-stripe-session-status`, `retrieve-stripe-payment-intent-status`, `retrieve-paypal-order-status` |
+| `waiver`         | 5     | `POST /api/waiver/start`                                                          |
+| `waiver-return`  | 30    | `GET /api/waiver/return`                                                          |
 
 Over the limit: `429 { "error": "Too many requests. Please wait before trying again." }` with a `Retry-After` header (seconds).
 
@@ -149,6 +151,56 @@ Most checkout routes also answer `GET` with an availability message and `OPTIONS
 Handles `payment_intent.succeeded` only: finalizes the draft invoice referenced by `metadata.invoice_id`, then marks it paid out of band — unless the amount received is less than the invoice total, in which case it sets `metadata.checkout_status = "amount_mismatch"` and stops.
 
 Returns `{ received: true }`, or `400` when verification or processing fails. Setup: `/docs/developers/07_DEPLOYMENT.md`.
+
+---
+
+## Volunteer Waivers (DocuSign)
+
+Online signing of the volunteer agreements through DocuSign embedded signing. All three routes do nothing useful until the `DOCUSIGN_*` variables and `WAIVER_SECRET` are set (see `/docs/recipes/guidelines/SET_UP_DOCUSIGN_WAIVERS.md`). Code: `/src/app/api/waiver/*`, `/src/lib/docusign.server.ts`, `/src/lib/waiver-session.server.ts`.
+
+### `POST /api/waiver/start`
+
+Body:
+
+```json
+{
+  "waiverId": "general",
+  "eventKey": "abc123",
+  "returnPath": "/events",
+  "name": "Jordan Rivera",
+  "email": "jordan@example.com",
+  "minor": true,
+  "guardian": { "name": "Casey Rivera", "email": "casey@example.com", "signsHere": true },
+  "businessName": ""
+}
+```
+
+- `waiverId`: `general` or `serving-hope`. `eventKey` (optional) is the Sanity `_id` of the event to reopen afterwards. `returnPath` (optional, same-origin path) defaults to `/events`.
+- `guardian` is required when `minor` is true. `signsHere: false` makes DocuSign email the guardian instead of signing on the same device.
+- `businessName` is the honeypot; when filled, the route pretends success and creates nothing.
+- Creates an envelope from the matching template (adult or minor), with a per-envelope webhook pointing at this deployment's `/api/waiver/webhook`, and returns `{ url }`: a one-time DocuSign signing link the browser opens immediately.
+- If this browser has an unfinished envelope for the same signer details (flow cookie), it issues a new signing link for that envelope instead of creating another one.
+- Sets the `tsoh_waiver_flow` cookie (HttpOnly, signed, path `/api/waiver`, 2 hours).
+
+Responses: `200 { url }`, `400 { error }` (invalid input or non-JSON body), `429`, `503` (DocuSign not configured), `502` (DocuSign request failed; details only in the server log, never the request body).
+
+### `GET /api/waiver/return`
+
+DocuSign's `returnUrl`. Reads the flow cookie, then asks DocuSign for the signers' status (DocuSign's `?event=` value is only a hint and is never trusted). Redirects (303) to the return path with `?event=<eventKey>&waiver=<status>`, or `?waiver=<status>#volunteer-agreements` when no event was open:
+
+| `waiver=` | Meaning |
+| --------- | ------- |
+| `complete` | Every signer finished; also sets the `tsoh_waivers` cookie (not HttpOnly, 1 year, e.g. `general:2026-09`) |
+| `guardian-pending` | Volunteer signed; DocuSign emailed the guardian |
+| `cancel` / `incomplete` | Not finished; signing again resumes the same envelope |
+| `decline` | A signer declined (DocuSign voids the envelope) |
+| `error` | Missing or invalid flow cookie, or DocuSign unreachable |
+
+When the volunteer has signed and a guardian is signing on the same device, it redirects straight to the guardian's signing link instead.
+
+### `POST /api/waiver/webhook`
+
+Registered on each envelope (`eventNotification`, JSON, `envelope-completed`, HMAC). Verifies HMAC-SHA256 of the raw body against every `X-DocuSign-Signature-N` header using `DOCUSIGN_CONNECT_HMAC_KEY` (401 if none match). On `envelope-completed`, it reads the envelope from DocuSign (not from the payload) and emails `info@thesourceofhope.org` through Resend with the waiver, volunteer name and email, guardian name, and completion time. The email uses an idempotency key per envelope, so repeated deliveries send one email. Returns `{ received: true }`, or 500 so DocuSign retries if the email fails.
 
 ---
 

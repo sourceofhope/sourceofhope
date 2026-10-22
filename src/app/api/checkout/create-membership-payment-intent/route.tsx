@@ -3,6 +3,11 @@ import { getEnvironment } from '@/lib/environment.server';
 import Stripe from 'stripe';
 import { rateLimit } from '@/lib/rate-limit';
 import { readJsonObject } from '@/lib/validation';
+import { MEMBERSHIP_PRICES } from '@/lib/store-constants';
+
+// With `expand: ['latest_invoice.payment_intent']` (API version 2022-11-15) the invoice
+// carries its expanded PaymentIntent; the SDK's current typings no longer include it.
+type InvoiceWithPaymentIntent = { id: string; payment_intent: Stripe.PaymentIntent };
 
 type MembershipPlanId = 'bronze' | 'silver' | 'gold' | 'individual' | 'partner' | 'sponsor' | 'champion';
 
@@ -31,7 +36,7 @@ type MembershipProduct = {
     priceCents?: number | null;
 };
 
-// Must match the prices shown in MembersPlansSection.
+// Fixed plan prices come from MEMBERSHIP_PRICES (shared with MembersPlansSection).
 const INDIVIDUAL_MIN_CENTS = 100;
 const INDIVIDUAL_MAX_CENTS = 1_000_000;
 const EMAIL_PATTERN = /^[^\s@<>"\\]{1,64}@[^\s@<>"\\]{1,255}\.[^\s@<>"\\]+$/;
@@ -68,19 +73,19 @@ const membershipProducts: Record<MembershipPlanId, MembershipProduct> = {
         id: 'prod_membership_partner',
         name: 'Company Partner',
         description: 'Company Partner - Monthly partnership sustaining community outreach and program operations',
-        priceCents: 5_000,
+        priceCents: MEMBERSHIP_PRICES.partner * 100,
     },
     sponsor: {
         id: 'prod_membership_sponsor',
         name: 'Program Sponsor',
         description: 'Program Sponsor - Monthly partnership expanding capacity and strengthening sustained service',
-        priceCents: 10_000,
+        priceCents: MEMBERSHIP_PRICES.sponsor * 100,
     },
     champion: {
         id: 'prod_membership_champion',
         name: 'Impact Champion',
         description: 'Impact Champion - Monthly partnership underwriting major mission work across programs',
-        priceCents: 50_000,
+        priceCents: MEMBERSHIP_PRICES.champion * 100,
     },
 };
 
@@ -114,7 +119,7 @@ export async function POST(request: Request) {
             return NextResponse.json({ error: 'Stripe configuration missing' }, { status: 500 });
         }
 
-        const stripe = new Stripe(stripeSecretKey, { apiVersion: '2022-11-15' } as any);
+        const stripe = new Stripe(stripeSecretKey, { apiVersion: '2022-11-15' as unknown as Stripe.LatestApiVersion });
         const body = (await readJsonObject(request)) as MembershipRequestBody | null;
         if (!body) {
             return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
@@ -202,7 +207,7 @@ export async function POST(request: Request) {
         let product;
         try {
             product = await stripe.products.retrieve(productConfig.id);
-        } catch (retrieveErr) {
+        } catch {
             // Product doesn't exist, try to create it
             try {
                 product = await stripe.products.create({
@@ -216,7 +221,7 @@ export async function POST(request: Request) {
                 });
             } catch (createErr) {
                 // If product already exists (race condition), retrieve it
-                const code = (createErr as any).code;
+                const code = (createErr as { code?: string }).code;
                 if (code === 'resource_already_exists') {
                     product = await stripe.products.retrieve(productConfig.id);
                 } else {
@@ -283,9 +288,10 @@ export async function POST(request: Request) {
             },
             expand: ['latest_invoice.payment_intent'],
             metadata: subscriptionMetadata,
-        } as any);
+        });
 
-        const paymentIntent = (subscription.latest_invoice as any).payment_intent;
+        const latestInvoice = subscription.latest_invoice as unknown as InvoiceWithPaymentIntent;
+        const paymentIntent = latestInvoice.payment_intent;
 
         // Propagate metadata to the PaymentIntent so it appears on the Stripe dashboard transaction view
         await stripe.paymentIntents.update(paymentIntent.id, {
@@ -295,7 +301,7 @@ export async function POST(request: Request) {
         return NextResponse.json({
             clientSecret: paymentIntent.client_secret,
             subscriptionId: subscription.id,
-            invoiceId: (subscription.latest_invoice as any).id,
+            invoiceId: latestInvoice.id,
         });
     } catch (error) {
         console.error('Membership subscription creation error:', error);

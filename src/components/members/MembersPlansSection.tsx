@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, type ReactNode } from "react";
 import {
   HeartIcon,
   CheckCircleIcon,
@@ -10,7 +10,10 @@ import {
 import Title from "@/components/ui/Title";
 import Heading from "@/components/ui/Heading";
 import Bold from "@/components/ui/Bold";
-import MembersCheckoutSection from "./MembersCheckoutSection";
+import { MEMBERSHIP_PRICES } from "@/lib/store-constants";
+import MembersCheckoutSection, {
+  type CheckoutSelection,
+} from "./MembersCheckoutSection";
 
 const IMPACT_MODEL = {
   dollarsPerMeal: 12.5,
@@ -18,11 +21,21 @@ const IMPACT_MODEL = {
   dollarsPerStudentSupport: 40,
 };
 
-const COMPANIES = [
+interface CompanyPlan {
+  id: string;
+  name: string;
+  priceMonthly: number;
+  note: string;
+  makesPossible: string[];
+  recognition: string[];
+  includes: Record<string, boolean>;
+}
+
+const COMPANIES: CompanyPlan[] = [
   {
     id: "partner",
     name: "Company Partner",
-    priceMonthly: 50,
+    priceMonthly: MEMBERSHIP_PRICES.partner,
     note: "Sustains community outreach and program operations.",
     makesPossible: [
       "Supports meals, outreach supplies, and volunteer coordination",
@@ -45,7 +58,7 @@ const COMPANIES = [
   {
     id: "sponsor",
     name: "Program Sponsor",
-    priceMonthly: 100,
+    priceMonthly: MEMBERSHIP_PRICES.sponsor,
     note: "Expands capacity and strengthens sustained service.",
     makesPossible: [
       "Helps fund higher-volume outreach and program growth",
@@ -69,7 +82,7 @@ const COMPANIES = [
   {
     id: "champion",
     name: "Impact Champion",
-    priceMonthly: 500,
+    priceMonthly: MEMBERSHIP_PRICES.champion,
     note: "Helps underwrite major mission work across programs.",
     makesPossible: [
       "Helps underwrite recurring outreach, wellness, and education initiatives",
@@ -101,7 +114,17 @@ const COMPANY_FEATURES = [
   "Co-hosted volunteer day (optional)",
 ];
 
-function ImpactStat({ icon, label, value, sublabel }: any) {
+function ImpactStat({
+  icon,
+  label,
+  value,
+  sublabel,
+}: {
+  icon: ReactNode;
+  label: string;
+  value: ReactNode;
+  sublabel: string;
+}) {
   return (
     <div className="bg-neutral-100 rounded-2xl p-5 shadow-sm grid gap-2">
       <div className="flex items-center gap-2 text-neutral-700">
@@ -117,7 +140,13 @@ function ImpactStat({ icon, label, value, sublabel }: any) {
   );
 }
 
-function IndividualImpactEstimator({ amount }: { amount: number }) {
+function IndividualImpactEstimator({
+  amount: rawAmount,
+}: {
+  amount: number | string;
+}) {
+  const amount = Number(rawAmount);
+
   const formatNumber = (n: number) => {
     return new Intl.NumberFormat("en-US", { maximumFractionDigits: 0 }).format(
       n,
@@ -198,7 +227,13 @@ function IndividualImpactEstimator({ amount }: { amount: number }) {
   );
 }
 
-function CustomAmountCard({ amount, onAmountChange, onJoin }: any) {
+function CustomAmountCard({
+  amount,
+  onAmountChange,
+}: {
+  amount: number | string;
+  onAmountChange: (value: number | string) => void;
+}) {
   return (
     <article
       className="relative w-full flex flex-col gap-5 shadow-sm p-5 rounded-2xl h-full transition-all duration-200 cursor-pointer bg-neutral-100 md:col-span-3
@@ -212,7 +247,7 @@ function CustomAmountCard({ amount, onAmountChange, onJoin }: any) {
           Give a custom monthly amount
         </Heading>
         <p className="text-sm text-neutral-600">
-          Choose what's sustainable for you. Every amount helps.
+          Choose what&apos;s sustainable for you. Every amount helps.
         </p>
       </div>
 
@@ -267,7 +302,11 @@ function IndividualsMonthlySupportSection({
   amount,
   onAmountChange,
   onJoin,
-}: any) {
+}: {
+  amount: number | string;
+  onAmountChange: (value: number | string) => void;
+  onJoin: (amount: number | string) => void;
+}) {
   return (
     <div className="grid gap-5">
       <div className="grid gap-3">
@@ -284,7 +323,6 @@ function IndividualsMonthlySupportSection({
           <CustomAmountCard
             amount={amount}
             onAmountChange={onAmountChange}
-            onJoin={() => onJoin(amount)}
           />
         </div>
 
@@ -355,7 +393,15 @@ function IndividualsMonthlySupportSection({
   );
 }
 
-function CompanyPlanCard({ plan, isSelected, onSelect, onJoin }: any) {
+function CompanyPlanCard({
+  plan,
+  isSelected,
+  onSelect,
+}: {
+  plan: CompanyPlan;
+  isSelected: boolean;
+  onSelect: () => void;
+}) {
   return (
     <article
       className={`relative w-full flex flex-col gap-4 shadow-sm p-5 rounded-2xl h-full transition-all duration-200 cursor-pointer bg-neutral-100
@@ -364,7 +410,7 @@ function CompanyPlanCard({ plan, isSelected, onSelect, onJoin }: any) {
       onClick={onSelect}
       role="button"
       tabIndex={0}
-      onKeyDown={(e: any) => {
+      onKeyDown={(e: React.KeyboardEvent<HTMLElement>) => {
         if (e.key === "Enter" || e.key === " ") onSelect();
       }}
       aria-pressed={isSelected}>
@@ -417,9 +463,9 @@ function CompanyPlanCard({ plan, isSelected, onSelect, onJoin }: any) {
 
       <button
         type="button"
-        onClick={(e: any) => {
+        onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
           e.stopPropagation();
-          isSelected ? null : onSelect();
+          if (!isSelected) onSelect();
         }}
         className={`mt-auto w-full px-5 py-3 rounded-xl font-bold text-white transition-all duration-300 ${
           isSelected
@@ -432,7 +478,7 @@ function CompanyPlanCard({ plan, isSelected, onSelect, onJoin }: any) {
   );
 }
 
-function SelectedCompanyIncludes({ plan }: any) {
+function SelectedCompanyIncludes({ plan }: { plan: CompanyPlan }) {
   return (
     <div className="bg-neutral-100 rounded-2xl p-5 shadow-sm grid gap-3">
       <div className="flex items-start justify-between gap-3">
@@ -468,13 +514,19 @@ function SelectedCompanyIncludes({ plan }: any) {
   );
 }
 
-function CompanyFeatureRow({ feature, plans }: any) {
+function CompanyFeatureRow({
+  feature,
+  plans,
+}: {
+  feature: string;
+  plans: CompanyPlan[];
+}) {
   return (
     <>
       <div className="rounded-xl p-3 bg-neutral-100 font-semibold text-sm">
         {feature}
       </div>
-      {plans.map((p: any) => (
+      {plans.map((p) => (
         <div
           key={p.id + feature}
           className="rounded-xl p-3 bg-neutral-50 grid place-items-center">
@@ -493,7 +545,11 @@ function CompanyPartnershipSection({
   selectedId,
   onSelectId: setSelectedId,
   onJoin,
-}: any) {
+}: {
+  selectedId: string;
+  onSelectId: (id: string) => void;
+  onJoin: (plan: CompanyPlan) => void;
+}) {
   const selectedPlan = useMemo(
     () => COMPANIES.find((p) => p.id === selectedId) ?? COMPANIES[0],
     [selectedId],
@@ -518,7 +574,6 @@ function CompanyPartnershipSection({
               plan={plan}
               isSelected={selectedId === plan.id}
               onSelect={() => setSelectedId(plan.id)}
-              onJoin={() => onJoin(plan)}
             />
           ))}
         </div>
@@ -620,21 +675,12 @@ function CompanyPartnershipSection({
 }
 
 export default function MembersPlansSection() {
-  type CheckoutSelection = {
-    type: "individual" | "company";
-    planId: string;
-    planName: string;
-    amount: number;
-    note: string;
-    makesPossible: string[];
-  };
-
   const [checkoutSelection, setCheckoutSelection] =
     useState<CheckoutSelection | null>(null);
-  const [individualAmount, setIndividualAmount] = useState(75);
+  const [individualAmount, setIndividualAmount] = useState<number | string>(75);
   const [selectedCompanyId, setSelectedCompanyId] = useState("partner");
 
-  const handleJoinIndividual = (amount: number) => {
+  const handleJoinIndividual = (amount: number | string) => {
     setCheckoutSelection({
       type: "individual",
       planId: "individual",
@@ -649,7 +695,7 @@ export default function MembersPlansSection() {
     });
   };
 
-  const handleJoinCompany = (plan: any) => {
+  const handleJoinCompany = (plan: CompanyPlan) => {
     setCheckoutSelection({
       type: "company",
       planId: plan.id,

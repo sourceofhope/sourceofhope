@@ -42,16 +42,15 @@ export default function ParallaxSection({
   }, []);
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    updateProgress();
-
+    // Measure on the next frame rather than synchronously inside the effect
+    let frameId = requestAnimationFrame(updateProgress);
     let ticking = false;
 
     const onScroll = () => {
       if (ticking) return;
 
       ticking = true;
-      requestAnimationFrame(() => {
+      frameId = requestAnimationFrame(() => {
         updateProgress();
         ticking = false;
       });
@@ -65,6 +64,7 @@ export default function ParallaxSection({
     window.addEventListener("resize", onResize);
 
     return () => {
+      cancelAnimationFrame(frameId);
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onResize);
     };

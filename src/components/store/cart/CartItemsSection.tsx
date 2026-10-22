@@ -3,6 +3,7 @@
 import { TrashIcon } from "@heroicons/react/24/outline";
 import Heading from "@/components/ui/Heading";
 import { CartItem } from "@/context/StoreCartContext";
+import CartThumbnail from "@/components/store/cart/CartThumbnail";
 
 interface CartItemsSectionProps {
   items: CartItem[];
@@ -28,20 +29,8 @@ export default function CartItemsSection({
           <div
             key={`${item.id}-${item.size || "no-size"}-${index}`}
             className="flex flex-col md:flex-row gap-5 p-5 border-2 border-neutral-200 rounded-xl hover:border-accent-500 transition-colors">
-            <div className="w-full hidden md:flex md:w-32 h-32 bg-neutral-200 rounded-lg items-center justify-center overflow-hidden">
-              <img
-                src={item.image}
-                alt={item.name}
-                className="w-full h-full object-cover"
-                onError={(e) => {
-                  (e.target as HTMLImageElement).style.display = "none";
-                  const parent = (e.target as HTMLImageElement).parentElement;
-                  if (parent) {
-                    parent.innerHTML =
-                      '<span class="text-neutral-500 text-sm">No image</span>';
-                  }
-                }}
-              />
+            <div className="w-full hidden md:flex md:w-32 h-32 relative bg-neutral-200 rounded-lg items-center justify-center overflow-hidden">
+              <CartThumbnail src={item.image} alt={item.name} sizes="128px" />
             </div>
             <div className="flex-1 space-y-2">
               <a

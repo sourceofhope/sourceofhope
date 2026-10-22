@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://thesourceofhope.org/sitemap.xml
