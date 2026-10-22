@@ -36,7 +36,7 @@ export default function ConnectVolunteerSection() {
           Volunteering with The Source of Hope is more than lending a hand—it&apos;s
           about showing up with compassion, consistency, and care. If you&apos;re
           ready to serve your community in a tangible way, we invite you to{" "}
-          <SimpleLink to="/serve">
+          <SimpleLink to="/programs">
             explore current volunteer opportunities
           </SimpleLink>{" "}
           and join us in building hope together.

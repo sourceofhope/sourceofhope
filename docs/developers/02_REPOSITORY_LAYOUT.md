@@ -1,54 +1,105 @@
 # Repository Layout
 
-This is a single repository with a frontend and an Express server.
+This is a single repository containing the Next.js website (pages and API routes) and the Sanity Studio project.
 
 Top-level:
 
-- `/src` Frontend (React + Vite)
-- `/server` Backend (Express)
+- `/src` Website source (pages, API routes, components, helpers)
+- `/public` Static files served from the site root
+- `/sanity/the-source-of-hope` Sanity Studio (separate npm project)
 - `/docs` Documentation
-
-Frontend conventions:
-
-- `/src/pages/<pageName>/...` contains page components
-- `/src/pages/<pageName>/sections/...` contains page-scoped sections
-- `/src/components/...` contains reusable UI and structure components
-
-Backend:
-
-- `/server/index.js` is the Express entrypoint
-- `/server/routes/checkout.js` checkout + payment endpoints
-- `/server/routes/email.js` email endpoint (Resend)
-- `/server/utility/environment.js` central environment accessors
+- `/next.config.ts` Redirects, security headers, image settings
+- `/.env.template` Environment variable template
+- `/eslint.config.mjs`, `/tsconfig.json`, `/postcss.config.mjs` Tooling
 
 ---
 
-## Root Scripts (package.json)
+## `/src` Layout
 
-The root package.json defines these scripts:
+```mermaid
+flowchart LR
+    src["/src"]
 
-- `dev:client`: runs Vite
-- `dev:server`: runs the Express server (watch mode) using `--prefix server`
-- `dev`: attempts to run both server and client
-- `build:client`: builds Vite and copies `dist/index.html` --> `dist/404.html` for static hosting fallbacks
-- `build:server`: installs server dependencies
-- `build`: builds client then installs server dependencies
-- `preview`: Vite preview
+    src --> app["/app"]
+    app --> layout["layout.tsx<br/>root layout: providers, header, footer, analytics"]
+    app --> globals["globals.css<br/>Tailwind import + @theme tokens: colors, fonts, sizes"]
+    app --> home["page.tsx<br/>home page"]
+    app --> legacy["[slug]/page.tsx<br/>legacy team-member URL redirect"]
+    app --> routes["about/ connect/ donate/ events/ media/<br/>members/ planned-giving/ programs/ store/"]
+    app --> api["api/<br/>Route Handlers, see 06_API_ROUTES.md"]
 
-Note on `dev`:
+    src --> components["/components"]
+    components --> area["&lt;area&gt;/<br/>page sections: about, awards, connect, donate, events, home,<br/>media, members, planned-giving, programs, store + cart, checkout"]
+    components --> layoutdir["layout/<br/>Header, Footer, PageHeader, HeaderBlocker"]
+    components --> ui["ui/<br/>shared primitives: buttons, PageSection, SectionHeading, Carousel,<br/>HookInput, HoneypotField, expressive/, parallax/, ..."]
+    components --> loader["structure/Loader.tsx<br/>full-screen loading indicator"]
 
-- The current `dev` script is defined as:
-  `start npm run dev:server && npm run dev:client`
+    src --> context["/context"]
+    context --> headerctx["HeaderContext.tsx<br/>header blocking + banner state"]
+    context --> cartctx["StoreCartContext.tsx<br/>cart, shipping method, processing fee in localStorage"]
 
-Depending on your OS/shell, you may want to run the server and client in separate terminals, or adjust to a parallel command runner.
+    src --> lib["/lib"]
+    lib --> env["environment.ts<br/>ASSET_VERSION, client-safe"]
+    lib --> envserver["environment.server.ts<br/>getEnvironment(): all env vars, server-only"]
+    lib --> sanityclient["sanity-client.ts<br/>next-sanity client, server-only"]
+    lib --> sanitycontent["sanity-content.ts<br/>GROQ queries + TypeScript types, server-only"]
+    lib --> storeconstants["store-constants.ts<br/>shipping options, tax and processing rates"]
+    lib --> storepricing["store-pricing.ts<br/>quoteStoreOrder() server-side pricing, server-only"]
+    lib --> ratelimit["rate-limit.ts<br/>per-IP rate limiting for API routes"]
+    lib --> validation["validation.ts<br/>readJsonObject() request body parsing"]
+```
+
+Conventions:
+
+- Routes are folders under `/src/app`; the page file is always `page.tsx`.
+- Page sections are named `<Area><Name>Section.tsx` and live in `/src/components/<area>/`.
+- Components that only one route uses may sit beside the route (for example `/src/app/about/team/CarouselCard.tsx`).
+- Import from `/src` with the `@/` alias (`import PageSection from "@/components/ui/PageSection"`).
 
 ---
 
-## Server Scripts (server/package.json)
+## Root Scripts (`package.json`)
 
-Inside `/server`:
+- `dev`: `next dev` — local development server on `http://localhost:3000`
+- `build`: `next build` — production build (type-checks and fails on TypeScript errors)
+- `start`: `next start` — serve a production build locally
+- `lint`: `eslint` — Next.js core-web-vitals + TypeScript rules (`/eslint.config.mjs`)
+- `sanity`: `sanity dev` — note there is no Studio config at the repo root; run the Studio from its own folder instead (below)
 
-- `dev`: `node --watch index.js`
-- `start`: `node index.js`
+Requirements:
 
-The server runs on port 3001 by default.
+- Node.js 20.9 or newer (Next.js 16 requirement; Node 22 LTS works)
+- If `npm install` reports peer dependency conflicts, use `npm install --legacy-peer-deps`
+
+There is no automated test suite and no Prettier script; Prettier is installed as a dev dependency for editor use.
+
+---
+
+## Sanity Studio (`/sanity/the-source-of-hope`)
+
+A separate npm project with its own `package.json` and lockfile. The root `tsconfig.json` excludes it.
+
+- `sanity.config.ts` — Studio config (project id and dataset are hardcoded)
+- `sanity.cli.ts` — CLI config, deployment app id, auto-updates
+- `schemaTypes/*.ts` — content type definitions, registered in `schemaTypes/index.ts`
+
+Scripts (run inside that folder):
+
+- `npm run dev` — Studio at `http://localhost:3333`
+- `npm run build` — build the Studio
+- `npm run deploy` — deploy the hosted Studio (required after schema changes)
+
+See `/docs/developers/04_CMS_INTEGRATION.md`.
+
+---
+
+## `/public`
+
+- `/public/v2/core/` logos, hero images and video, placeholders, awards images
+- `/public/v2/<program>/` program carousels and tiles (servingHope, educationHope, wellnessHope, outdoorHope, internationalHope, sharingHope)
+- `/public/v2/serve/` program banners
+- `/public/v2/plannedgiving/` planned giving images
+- `/public/v2/documents/` downloadable PDFs (volunteer agreements)
+- `/public/sitemap.xml`, `/public/robots.txt`, favicons, `site.webmanifest`
+
+The `v2` segment is the `ASSET_VERSION`. See `/docs/recipes/fixes/UPDATE_STATIC_ASSETS.md`.

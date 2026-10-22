@@ -5,6 +5,7 @@ import Image from "next/image";
 import { SparklesIcon } from "@heroicons/react/24/solid";
 import PageSection from "@/components/ui/PageSection";
 import SectionHeading from "@/components/ui/SectionHeading";
+import HoneypotField, { readHoneypot } from "@/components/ui/HoneypotField";
 import { ASSET_VERSION } from "@/lib/environment";
 
 type Status = "IDLE" | "SUBMITTING" | "SUCCESS" | "INVALID" | "ERROR";
@@ -17,8 +18,6 @@ const EMPTY_FORM = {
   message: "",
   infoCheck: false,
   contactCheck: false,
-  // Honeypot: hidden from people, often filled in by bots.
-  website: "",
 };
 
 const inputClass =
@@ -34,6 +33,7 @@ export default function FormSection() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const businessName = readHoneypot(e.currentTarget);
 
     if (
       !formData.fname.trim() ||
@@ -70,7 +70,7 @@ export default function FormSection() {
           name: `${formData.fname} ${formData.lname}`.trim(),
           email: formData.email,
           message: messageLines,
-          website: formData.website,
+          businessName,
         }),
       });
 
@@ -224,16 +224,7 @@ export default function FormSection() {
                 className={`${inputClass} resize-none text-sm`}
               />
             </div>
-            <input
-              type="text"
-              name="website"
-              tabIndex={-1}
-              autoComplete="off"
-              aria-hidden="true"
-              value={formData.website}
-              onChange={(e) => handleInputChange("website", e.target.value)}
-              className="hidden"
-            />
+            <HoneypotField />
             <label className="flex items-start gap-3 text-sm text-neutral-700 cursor-pointer">
               <input
                 type="checkbox"

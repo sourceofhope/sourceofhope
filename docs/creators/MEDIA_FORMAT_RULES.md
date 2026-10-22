@@ -2,21 +2,25 @@
 
 Following these rules prevents broken layouts, slow page loads, and poor performance on the website.
 
-Large, unoptimized media is the most common reason pages load slowly.
+Large, unoptimized images are the most common reason pages load slowly.
 
-Always optimize media **before** uploading to the CMS.
+**The website shows images exactly as you upload them.** Nothing is resized or compressed automatically. A 6 MB phone photo is sent to every visitor as a 6 MB download. Always optimize images **before** uploading to the Studio.
 
 ---
 
 ## Image Size Guidelines
 
-Use these standard dimensions before uploading:
+Resize to these dimensions before uploading:
 
-- Hero / banner images: 1600 × 900
-- Standard content images: 1200 × 800
-- Square images: 1000 × 1000
+| Use                                 | Shape     | Size                  |
+| ----------------------------------- | --------- | --------------------- |
+| Team member headshot                | Square    | 800 × 800 to 1000 × 1000 |
+| Event card (featured or recurring)  | Landscape | about 1200 wide       |
+| Publication card                    | Landscape | about 1200 wide       |
+| Newsletter cover                    | Landscape | about 1200 wide       |
+| Product photo                       | Square    | about 1000 × 1000     |
 
-Do not upload images larger than necessary. The CMS does not automatically optimize large files.
+Keep each file under **300 KB** whenever possible.
 
 ---
 
@@ -24,18 +28,28 @@ Do not upload images larger than necessary. The CMS does not automatically optim
 
 Use: https://squoosh.app
 
-This webapp is useful for changing file formats and compressing image to target sizes with a before-after preview.
+This free web app resizes images, changes their format, and compresses them, with a before/after preview.
 
 ### Steps
 
-1. Open the image in Squoosh
-2. Resize the image to the correct dimensions listed above
-3. Use MozJPEG or WebP compression
-4. Reduce quality until the file size is under **300 KB** when possible
-5. Download the optimized version
-6. Upload that version to the CMS
+1. Open the image in Squoosh.
+2. Resize it to the size listed above.
+3. Choose **WebP** (or MozJPEG) compression.
+4. Lower the quality until the file is under **300 KB**, stopping before the image looks blurry or blocky.
+5. Download the optimized version.
+6. Upload that version to the Studio.
 
 This step is required for every image.
+
+---
+
+## Uploading an Image in the Studio
+
+1. Open the document (team member, event, product, and so on).
+2. In the **Image** field, upload your optimized file (or drag it in).
+3. Fill in **Alt Text**: a short, plain description of what the image shows, for example "Volunteers serving meals at the community center". Never leave it empty.
+4. Optional: use the crop/hotspot tool to mark the most important part of the image (such as a person's face).
+5. Click **Publish**.
 
 ---
 
@@ -45,8 +59,8 @@ Use descriptive names:
 
 Good:
 
-serving-hope-volunteers.jpg
-wellness-clinic-treatment.jpg
+serving-hope-volunteers.webp
+wellness-clinic-treatment.webp
 
 Avoid:
 
@@ -55,48 +69,11 @@ photo1.png
 
 ---
 
-## Uploading Images
+## Videos
 
-1. Go to **Media → Add New**
-2. Upload the optimized image
-3. Use this image in pages or posts
-4. Always set a **Featured Image** for pages and posts
+Videos **cannot** be uploaded through the Studio.
 
----
+- To share a video, upload it to YouTube or Vimeo, then put the link in a URL field — for example a **Publication**'s URL.
+- Videos that play directly on the website (such as the home page background video) are managed by developers. Contact a developer if one needs to change.
 
-## Video Rules (Very Important)
-
-Large videos will severely slow down the website if not prepared correctly.
-
-### Video Requirements Before Upload
-
-- Maximum length: **20 seconds**
-- Resolution: **720p**
-- File size: as small as possible (target under **5 MB**)
-- Format: MP4 or WEBM
-
----
-
-## How to Prepare Videos
-
-Before uploading:
-
-1. Export the video at **720p**
-2. Trim the video to under **20 seconds**
-3. Compress the video using a video compressor if needed
-4. Confirm the file size is small before uploading
-
-Do not upload raw videos directly from a phone or camera.
-
----
-
-## Embedding Videos (Preferred Method)
-
-Whenever possible, upload videos to YouTube or Vimeo and embed them instead of uploading directly to the CMS.
-
-To embed:
-
-1. Copy the video URL
-2. Paste it into the editor on its own line
-
-This keeps the website fast.
+If you prepare a video for a developer to add, export it at **720p**, keep it under **20 seconds**, and keep the file as small as possible (target under **5 MB**). Do not send raw videos straight from a phone or camera.

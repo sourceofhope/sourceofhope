@@ -5,7 +5,7 @@ import Title from '@/components/ui/Title';
 import HookInput from '@/components/ui/HookInput';
 import Heading from '@/components/ui/Heading';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import {
   BuildingStorefrontIcon,
@@ -15,6 +15,7 @@ import {
   XCircleIcon,
 } from '@heroicons/react/20/solid';
 import HighlightedText from '@/components/ui/HighlightedText';
+import HoneypotField, { readHoneypot } from '@/components/ui/HoneypotField';
 
 const formStatus = {
   IDLE: 'IDLE',
@@ -23,7 +24,12 @@ const formStatus = {
   SUCCESS: 'SUCCESS',
 };
 
-async function sendEmail(emailData: { name: string; email: string; message: string }) {
+async function sendEmail(emailData: {
+  name: string;
+  email: string;
+  message: string;
+  businessName: string;
+}) {
   const response = await fetch('/api/email/send', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
@@ -39,6 +45,7 @@ async function sendEmail(emailData: { name: string; email: string; message: stri
 
 export default function ConnectMapSection() {
   const [status, setStatus] = useState(formStatus.IDLE);
+  const formRef = useRef<HTMLFormElement>(null);
   const {
     register,
     handleSubmit,
@@ -108,7 +115,8 @@ export default function ConnectMapSection() {
           </div>
         </article>
         <article className="w-full grid gap-5 row-start-1 md:row-start-auto h-full">
-          <form className="grid w-full h-full" onSubmit={handleSubmit(onSubmit) as any}>
+          <form ref={formRef} className="grid w-full h-full" onSubmit={handleSubmit(onSubmit) as any}>
+            <HoneypotField />
             <HookInput
               title="First name"
               type="text"
@@ -264,6 +272,7 @@ export default function ConnectMapSection() {
         name: `${formData.fname} ${formData.lname}`,
         email: formData.email,
         message: `Phone: ${formData.phone || 'Not provided'}\n\n${formData.msg}`,
+        businessName: readHoneypot(formRef.current),
       });
 
       setStatus(formStatus.SUCCESS);

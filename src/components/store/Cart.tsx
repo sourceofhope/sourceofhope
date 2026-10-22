@@ -35,7 +35,7 @@ export default function Cart() {
           bg-primary-800 text-white
           hover:scale-105 transition-transform
         "
-        aria-label={`Shopping cart with ${cartItemCount} items`}>
+        aria-label={`Shopping cart with ${cartItemCount > 99 ? "99+" : cartItemCount} items`}>
         <ShoppingBagIcon className="w-7 h-7" />
       </Link>
       <div
@@ -43,7 +43,7 @@ export default function Cart() {
           cartItemCount > 0 ? "" : "hidden"
         } absolute inset-0 -left-2 -top-2 rounded-full select-none bg-primary-400 size-7 overflow-hidden aspect-square text-center text-neutral-50 text-sm p-1`}>
         <p className="size-full text-sm flex items-center justify-center font-bold">
-          {cartItemCount}
+          {cartItemCount > 99 ? "99+" : cartItemCount}
         </p>
       </div>
     </div>

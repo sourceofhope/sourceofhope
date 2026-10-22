@@ -1,91 +1,118 @@
 # Add a Child Route
 
-This recipe covers adding a child route under an existing parent, such as:
+This recipe covers adding a page underneath an existing section, such as:
 
 - `/about/<child>`
-- `/serve/<child>`
+- `/programs/<child>`
 - `/media/<child>`
 - `/store/<child>`
 
-This project models children inside `ROUTES.<parent>.children`.
+Routing is file-based (Next.js App Router). A child route is a folder inside the parent's folder in `/src/app` with its own `page.tsx`. There is no central route table to update.
 
 ---
 
-## Add the Child Segment in routes.jsx
+## Create the Route Folder
 
-Example: Add `/about/partners`
-
-In `/src/routes.jsx`:
-
-```js
-about: {
-  path: "about",
-  children: {
-    team: "team",
-    member: "team/:memberSlug",
-    partners: "partners",
-  },
-},
-```
-
-After this, `CANONICAL.about.partners` will exist as:
-
-absolute: `/about/partners`
-
-relative: `about/partners`
-
----
-
-## Create the Page Component
+Example: add `/about/partners`.
 
 Create:
 
-`/src/pages/about/PartnersPage.jsx`
+`/src/app/about/partners/page.tsx`
 
-Or, if you prefer to keep child pages grouped:
-
-`/src/pages/about/partners/PartnersPage.jsx`
-
-Either is acceptable, but be consistent within the /about folder.
+The folder name is the URL segment, and it is case-sensitive. Existing program pages use camelCase segments (`/programs/servingHope`), so match the naming of the siblings you are adding next to.
 
 ---
 
-## Register the Route in the Router
+## Implement the Page
 
-Import the page, then add:
+```tsx
+import { Metadata } from "next";
+import PageHeader from "@/components/layout/PageHeader";
+import AboutPartnersSection from "@/components/about/AboutPartnersSection";
 
-```js
-{
-  path: CANONICAL.about.partners.relative,
-  element: <PartnersPage />,
+export const metadata: Metadata = {
+  title: "Partners | The Source of Hope",
+  description:
+    "Meet the organizations that partner with The Source of Hope across Dallas–Fort Worth.",
+};
+
+export default function PartnersPage() {
+  return (
+    <>
+      <PageHeader title="PARTNERS" subtitle="STRONGER TOGETHER" />
+      <AboutPartnersSection />
+    </>
+  );
 }
 ```
 
+Notes:
+
+- Every page exports its own `metadata` (see `/docs/recipes/tutorials/ADD_OR_UPDATE_PAGE_SEO.md`).
+- Page sections live in `/src/components/<area>/` and are named `<Area><Name>Section.tsx`. For an `/about` child, that is `/src/components/about/`.
+- Build each section on `PageSection` (see `/docs/recipes/guidelines/CONSISTENT_PAGE_LAYOUT.md`).
+- Pages are Server Components by default. Only add `"use client"` to the pieces that need it (see `/docs/recipes/guidelines/SERVER_AND_CLIENT_COMPONENTS.md`).
+
 ---
 
-## Update Header Dropdown
+## Dynamic Child Routes
 
-If this child route should show under `ABOUT`, update the `ABOUT` item’s children array in HeaderNavigator.
+For one page per CMS record, use a bracketed folder, as `/src/app/about/team/[slug]/page.tsx` does:
 
-Example:
+```tsx
+export default async function PartnerPage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  // fetch the record, call notFound() from "next/navigation" if it is missing
+}
+```
 
-```js
+In Next.js 16, `params` is a Promise and must be awaited.
+
+---
+
+## Add It to the Header Dropdown
+
+If the page should appear under `ABOUT`, add it to that entry's `children` in `getHeaderLinks()` in `/src/components/layout/Header.tsx`:
+
+```tsx
 {
   label: "ABOUT",
-  route: CANONICAL.about,
+  href: "/about",
   children: [
-    { label: "TEAM", route: CANONICAL.about.team },
-    { label: "PARTNERS", route: CANONICAL.about.partners },
+    { label: "TEAM", href: "/about/team" },
+    { label: "PARTNERS", href: "/about/partners" },
+    { label: "CONNECT", href: "/connect" },
   ],
 },
 ```
 
+See `/docs/recipes/guidelines/CHANGE_NAVIGATION_MENU.md` for menu behavior.
+
+---
+
+## Add It to the Sitemap
+
+`/public/sitemap.xml` is a static, hand-maintained file. Add an entry next to its parent:
+
+```xml
+<url>
+  <loc>https://thesourceofhope.org/about/partners</loc>
+  <changefreq>monthly</changefreq>
+</url>
+```
+
+---
+
 ## Validate
 
-Confirm all of these work:
+Run `npm run dev` and confirm:
 
-- Clicking the new link
-
-- Refreshing the browser on the child route
-
-- Navigating between the parent and child without layout shift
+- `http://localhost:3000/about/partners` renders with the standard header and footer
+- The new dropdown item works on desktop (hover and keyboard) and in the mobile menu
+- The `ABOUT` item shows as active (underlined) while on the child page
+- A hard refresh on the child URL works
+- `npm run lint` and `npm run build` pass
