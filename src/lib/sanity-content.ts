@@ -12,16 +12,27 @@ function clampLimit(limit: number, fallback: number, max = 50) {
 export interface SanityImage {
   sourceUrl?: string;
   altText?: string;
+  width?: number;
+  height?: number;
 }
 
 export interface SanityEvent {
   id: string;
+  /** Sanity document id; unique across event types, so safe for deep links. */
+  key: string;
   externalId?: number;
   title: string;
   date?: string;
+  endDate?: string;
+  /** True once the event has ended (end date, or start date if none). */
   isOutdated?: boolean;
   location?: string;
+  address?: string;
   summary?: string;
+  description?: string;
+  program?: string;
+  /** Recurring events only, e.g. "Second Saturday of every month". */
+  schedule?: string;
   eventPage?: {
     url?: string;
   };
@@ -102,7 +113,9 @@ export interface BannerEvent {
 const IMAGE_PROJECTION = `
   "image": image{
     "sourceUrl": asset->url,
-    "altText": alt
+    "altText": alt,
+    "width": asset->metadata.dimensions.width,
+    "height": asset->metadata.dimensions.height
   }
 `;
 
@@ -121,12 +134,18 @@ const PRODUCT_FIELDS = `
 
 const EVENT_FIELDS = `
   "id": coalesce(string(externalId), _id),
+  "key": _id,
   "externalId": externalId,
   "title": title,
   "date": date,
-  "isOutdated": dateTime(date) < dateTime(now()),
+  "endDate": endDate,
+  "isOutdated": dateTime(coalesce(endDate, date)) < dateTime(now()),
   "location": location,
+  "address": address,
   "summary": summary,
+  "description": description,
+  "program": program,
+  "schedule": schedule,
   "eventPage": {
     "url": eventPage.url
   },
@@ -154,6 +173,19 @@ const NEWSLETTER_FIELDS = `
 export async function fetchFeaturedEvents(limit = 12) {
   return client.fetch<SanityEvent[]>(
     `*[_type == "featuredEvent"] | order(date desc)[0...${clampLimit(limit, 12)}] { ${EVENT_FIELDS} }`,
+    {},
+    options,
+  );
+}
+
+/**
+ * Featured events for the /events timeline: everything upcoming plus events
+ * that ended within the last year, oldest first.
+ */
+export async function fetchTimelineEvents(limit = 12) {
+  return client.fetch<SanityEvent[]>(
+    `*[_type == "featuredEvent" && dateTime(coalesce(endDate, date)) > dateTime(now()) - 60*60*24*365]
+      | order(date asc)[0...${clampLimit(limit, 12)}] { ${EVENT_FIELDS} }`,
     {},
     options,
   );
