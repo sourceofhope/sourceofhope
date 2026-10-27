@@ -1,63 +1,131 @@
-# CMS Integration
+# CMS Integration (Sanity)
 
-The CMS is a WordPress instance exposed via WP REST API.
+Editable content lives in **Sanity** (project `sgzdqn9z`, dataset `production`). Editors use **Sanity Studio**; the website reads published content with GROQ queries.
 
-Frontend CMS access is centralized in:
+All website-side CMS access is centralized in two server-only modules:
 
-- `/src/cms` (helper module)
+- `/src/lib/sanity-client.ts` — creates the client
+- `/src/lib/sanity-content.ts` — every query, projection, and TypeScript type
 
-The base WP REST API URL is:
-
-- `https://cms.thesourceofhope.org/wp-json/wp/v2`
-
----
-
-## fetchContent
-
-`fetchContent(endpoint, options)` constructs requests as:
-
-- `${CMS_HOME_URL}${endpoint}`
-
-It always:
-
-- sends JSON headers
-- throws with detailed error text when the CMS returns a non-OK response
-
-Guidelines:
-
-- Endpoint must begin with `/`
-- Use `_embed` when you need featured media or embedded objects
+Do not create Sanity clients or write GROQ elsewhere.
 
 ---
 
-## Featured Media Helpers
+## The Client
 
-Featured images are extracted via `_embedded`:
+`/src/lib/sanity-client.ts` uses `createClient` from `next-sanity` with values from `getEnvironment()`:
 
-- `getFeaturedImage(post)` returns `post._embedded["wp:featuredmedia"][0]` if present.
+- `projectId` — `NEXT_PUBLIC_SANITY_PROJECT_ID`
+- `dataset` — `NEXT_PUBLIC_SANITY_DATASET`
+- `apiVersion` — `NEXT_PUBLIC_SANITY_API_VERSION`
+- `token` — `SANITY_API_READ_TOKEN` (optional)
+- `useCdn: !token` — the CDN is used unless a token is set
+- `perspective: "published"` — drafts are never returned
 
-Responsive images should be selected through:
-
-- `getResponsiveImage(image, { width })`
-
-This chooses the smallest WP image size with width >= requested width, and falls back to the original `source_url`.
+If the project id is missing, `createClient` throws when the module loads and any page that imports it fails to build.
 
 ---
 
-## CMS-Driven Header Banner
+## Queries (`sanity-content.ts`)
 
-The Header fetches banner configuration from the CMS using:
+Every fetcher calls `client.fetch(query, params, { next: { revalidate: 30 } })`, so results are cached and refreshed at most every 30 seconds.
 
-- `fetchContent("/banner-configuration?per_page=1&_embed")`
+| Function                         | Document type      | Used by                                         |
+| -------------------------------- | ------------------ | ----------------------------------------------- |
+| `fetchFeaturedEvents(limit=12)`  | `featuredEvent`    | `/events` (6), `GET /api/event/featured-event`  |
+| `fetchRecurringEvents(limit=3)`  | `recurringEvent`   | `/events` (12), `GET /api/event/recurring-event`|
+| `fetchProducts(limit?)`          | `product`          | `/store`, `GET /api/product`                    |
+| `fetchProductById(id)`           | `product`          | `/store/product/[id]`, checkout pricing         |
+| `fetchPublications(limit=12)`    | `publication`      | Home (5), `/media` (10)                         |
+| `fetchNewsletters(limit=12)`     | `newsletter`       | `/media` (5)                                    |
+| `fetchTeamGroupsWithMembers()`   | `teamGroup` + `teamMember` | `/about/team`, `GET /api/team-member`   |
+| `fetchTeamMemberBySlug(slug)`    | `teamMember`       | `/about/team/[slug]`, `/[slug]` redirect        |
+| `fetchCheckoutProviders()`       | `checkoutProvider` | `GET /api/checkout-providers`                   |
+| `fetchBannerEvents()`            | `bannerEvent`      | `GET /api/banner` (not displayed on the site)   |
 
-Activation depends on:
+Conventions in this file:
 
-- local dismiss state (`bannerOpen`)
-- CMS field `acf.enabled`
-- CMS field `acf.expires` compared to `Date.now()`
+- List sizes pass through `clampLimit()` (1–50 by default, up to 200 for products) so query-string values cannot request huge or invalid pages.
+- User-supplied values are passed as GROQ parameters (`$id`, `$slug`), never interpolated.
+- Records expose `id: coalesce(string(externalId), _id)`. `externalId` holds the legacy WordPress id for migrated content; new documents fall back to the Sanity `_id`.
+- Events include `isOutdated: dateTime(date) < dateTime(now())`; the UI shows "Event Completed" instead of a registration button.
+- `fetchProductById` matches `slug.current`, `externalId`, or `_id`, so product URLs keep working with any of them.
 
-Banner is rendered as a fixed top strip, and Header positioning adjusts while active.
+---
 
-Implication:
+## Images
 
-- CMS banner configuration changes affect global page layout and vertical offsets.
+Images are projected with the shared `IMAGE_PROJECTION`:
+
+```groq
+"image": image{
+  "sourceUrl": asset->url,
+  "altText": alt
+}
+```
+
+`sourceUrl` is the **original uploaded file** on `cdn.sanity.io`. Components render it with a plain `<img>` and fall back to `/${ASSET_VERSION}/core/placeholder.webp`. There is no automatic resizing today, so editors must upload optimized images (see `/docs/creators/MEDIA_FORMAT_RULES.md`). `cdn.sanity.io` is already allowed in `images.remotePatterns` if you want to move to `next/image` or `@sanity/image-url` (installed, currently unused). See `/docs/recipes/fixes/USING_CMS_IMAGES.md`.
+
+---
+
+## Content Types (Studio Schemas)
+
+Schemas live in `/sanity/the-source-of-hope/schemaTypes/` and are registered in `index.ts`. Required fields are marked `*`.
+
+| Type               | Fields                                                                      |
+| ------------------ | --------------------------------------------------------------------------- |
+| `teamMember`       | teamGroup* (reference), name*, slug*, title, shortBio, bio, image (+alt)    |
+| `teamGroup`        | name*, slug*, description                                                   |
+| `featuredEvent`    | externalId, title*, date*, location, summary, eventPage.url, image (+alt)   |
+| `recurringEvent`   | same as featured; date picker fixed to America/Chicago                      |
+| `product`          | externalId, title*, slug*, price, shortDescription, longDescription, impact, size, image (+alt) |
+| `publication`      | externalId, title*, date*, summary, url, image (+alt)                       |
+| `newsletter`       | externalId, title*, url*, image (+alt)                                      |
+| `checkoutProvider` | providerId* (lowercase), name*, description, enabled*, icon                 |
+| `bannerEvent`      | enabled, text, link.url, expires                                            |
+
+Images use `hotspot: true` and an `alt` sub-field.
+
+Behavior that depends on content:
+
+- **Team ordering** — `/about/team` sorts groups by the `TEAM_ORDER` array in `/src/app/about/team/page.tsx`. Groups not in the list sort after listed ones; groups without members are hidden; members with images sort first.
+- **Products** — a product without a positive `price` cannot be checked out. The CMS price is what customers are charged.
+- **Checkout providers** — express checkout dispatches on the `name` field exactly: `Stripe` or `PayPal`. `Google Pay` and `Apple Pay` buttons render but are not implemented. `icon` selects the button icon (`stripe`, `paypal`, `googlepay`, `applepay`). Setting `enabled` to false hides a button.
+- **Banner events** — stored and exposed at `GET /api/banner`, but the header banner does not read them yet (see `/docs/recipes/tutorials/ADD_OR_EDIT_GLOBAL_HEADER.md`).
+
+Editor-facing descriptions of each type: `/docs/creators/CONTENT_TYPES_REFERENCE.md`.
+
+---
+
+## Running and Deploying the Studio
+
+```bash
+cd sanity/the-source-of-hope
+npm install
+npm run dev      # http://localhost:3333
+npm run deploy   # publish the hosted Studio after schema changes
+```
+
+Schema changes do not alter existing documents. If you rename a field, update the projection in `sanity-content.ts` and migrate or re-enter existing content.
+
+Use the Studio's **Vision** tool to test GROQ queries against real data.
+
+Adding a new type end to end: `/docs/recipes/tutorials/ADD_A_CMS_CONTENT_TYPE.md`.
+
+---
+
+## Resilience
+
+Sanity can be slow or unreachable. Server Components that read CMS data wrap the call and return an empty value on failure:
+
+```tsx
+async function getPublications() {
+  try {
+    return await fetchPublications(5);
+  } catch {
+    return [];
+  }
+}
+```
+
+The component then renders an empty state ("No updates to display"). Follow this pattern for every new CMS-driven section so outages never break a page or a build.

@@ -35,10 +35,10 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const { name, email, message, website } = body;
+    const { name, email, message, businessName } = body;
 
     // Honeypot field: real visitors never see or fill it. Pretend success.
-    if (typeof website === 'string' && website.trim() !== '') {
+    if (typeof businessName === 'string' && businessName.trim() !== '') {
       return NextResponse.json({ success: true, message: 'Email sent successfully' });
     }
 

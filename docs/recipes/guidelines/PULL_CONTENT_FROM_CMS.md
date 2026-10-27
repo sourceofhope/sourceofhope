@@ -1,74 +1,135 @@
 # Pull Content from the CMS
 
-CMS access is centralized through:
+All Sanity reads go through one server-only module:
 
-- `fetchContent(endpoint, options)` in `/src/cms`
+- `/src/lib/sanity-content.ts`: every GROQ query, its projection, and its TypeScript type
+- `/src/lib/sanity-client.ts`: the configured `next-sanity` client (used only by the module above)
 
-CMS base:
+Pages and sections never build Sanity URLs or call the client directly. They call a fetcher from `sanity-content.ts`.
 
-- `https://cms.thesourceofhope.org/wp-json/wp/v2`
-
-Do not construct CMS URLs manually.
+If the content type doesn't exist in Sanity yet, add its schema first (see `/docs/recipes/tutorials/ADD_A_CMS_CONTENT_TYPE.md`).
 
 ---
 
-## Fetch Posts or Custom Post Types
+## Use an Existing Fetcher
 
-Example:
+Available fetchers:
 
-```jsx
-import { fetchContent } from "@/cms";
+- `fetchFeaturedEvents(limit = 12)`, `fetchRecurringEvents(limit = 3)`
+- `fetchProducts(limit?)`, `fetchProductById(id)` (accepts a slug, `externalId`, or `_id`)
+- `fetchPublications(limit = 12)`, `fetchNewsletters(limit = 12)`
+- `fetchTeamGroupsWithMembers()`, `fetchTeamMemberBySlug(slug)`
+- `fetchCheckoutProviders()`, `fetchBannerEvents()`
 
-const posts = await fetchContent("/posts?per_page=10&_embed");
+Each one returns typed data (`SanityEvent`, `SanityProduct`, `SanityPublication`, and so on) exported from the same file.
+
+---
+
+## Add a New Fetcher
+
+Example: only events that haven't happened yet. Add this to `/src/lib/sanity-content.ts`, next to the other event fetchers:
+
+```ts
+export async function fetchUpcomingFeaturedEvents(limit = 3) {
+  return client.fetch<SanityEvent[]>(
+    `*[_type == "featuredEvent" && dateTime(date) >= dateTime(now())]
+      | order(date asc)[0...${clampLimit(limit, 3)}] { ${EVENT_FIELDS} }`,
+    {},
+    options,
+  );
+}
 ```
 
-Guidelines:
+Conventions in this file:
 
-Always include \_embed if you need featured images.
+- **Projection**: reuse the shared field fragments (`EVENT_FIELDS`, `PRODUCT_FIELDS`, `PUBLICATION_FIELDS`, `NEWSLETTER_FIELDS`, `IMAGE_PROJECTION`). Images are always projected as `image{ "sourceUrl": asset->url, "altText": alt }`.
+- **Ids**: list types project `"id": coalesce(string(externalId), _id)`, so legacy WordPress ids keep working.
+- **Limits**: always pass numeric limits through `clampLimit(limit, fallback, max = 50)`. Never interpolate anything else into a query.
+- **Parameters**: pass strings (slugs, ids) as GROQ parameters (`$slug`), as `fetchTeamMemberBySlug` does.
+- **Caching**: pass the shared `options` (`{ next: { revalidate: 30 } }`), so content refreshes within about 30 seconds.
+- **Types**: export an interface for any new shape and pass it as the `client.fetch<T>()` generic.
 
-Prefer server-side pagination parameters when listing content (per_page, page).
+The client reads the `published` perspective, so drafts never appear on the site.
 
-## Featured Images
+---
 
-When `_embed` is present, use:
+## Use It From a Server Component
 
-```jsx
-import { getFeaturedImage } from "@/cms";
+Fetch in a Server Component (no `"use client"`), wrapped in `try/catch`. If Sanity is unreachable, the page and the build still succeed and show an empty state:
 
-const image = getFeaturedImage(post);
+```tsx
+import PageSection from "@/components/ui/PageSection";
+import SectionHeading from "@/components/ui/SectionHeading";
+import {
+  fetchUpcomingFeaturedEvents,
+  type SanityEvent,
+} from "@/lib/sanity-content";
+
+async function getEvents(): Promise<SanityEvent[]> {
+  try {
+    return await fetchUpcomingFeaturedEvents(3);
+  } catch {
+    return [];
+  }
+}
+
+export default async function HomeUpcomingSection() {
+  const events = await getEvents();
+
+  return (
+    <PageSection>
+      <SectionHeading eyebrow="Join us" title="Upcoming Events" />
+      {events.length === 0 ? (
+        <p className="text-neutral-500 text-center">No upcoming events</p>
+      ) : (
+        <ul className="grid gap-5 md:grid-cols-3">
+          {events.map((event) => (
+            <li key={event.id}>{event.title}</li>
+          ))}
+        </ul>
+      )}
+    </PageSection>
+  );
+}
 ```
 
-## Responsive Image Selection
+This is the same pattern as `EventsUpcomingSection`, `HomePublicationsSection`, `StorefrontProductSection`, and `/src/app/media/page.tsx`.
 
-Use:
+---
 
-```jsx
-import { getResponsiveImage } from "@/cms";
+## Passing Data to Client Components
 
-const url = getResponsiveImage(image, { width: 800 });
+If the content needs interactivity (a carousel, an add-to-cart button), fetch in the server component and pass plain data down as props:
+
+```tsx
+// Server component
+const posts = await getPublications();
+return <MediaBlogSection posts={posts} />;
 ```
 
-This returns the smallest available WordPress size with width >= requested width.
+In the client component, import only the type:
 
-Rule:
+```tsx
+"use client";
 
-Do not always render `image.source_url` if sizes exist.
+import type { SanityPublication } from "@/lib/sanity-content";
+```
 
-## Common CMS Endpoints Used by This Project
+A value import (`import { fetchPublications } ...`) in a `"use client"` file fails the build, because `sanity-content.ts` is `server-only`. See `/docs/recipes/guidelines/SERVER_AND_CLIENT_COMPONENTS.md`.
 
-The header banner uses: `/banner-configuration?per_page=1&_embed`
+---
 
-This endpoint is expected to return an array; Header uses the first entry.
+## Only Add an API Route If the Browser Must Fetch It
 
-## Error Handling
+Pages don't need `/api` routes to read CMS content. Add a route handler under `/src/app/api/` only when client-side code has to request data after the page loads. Express checkout loading `/api/checkout-providers` is the one case today.
 
-fetchContent throws a detailed error when res.ok is false:
+See `/docs/recipes/tutorials/ADD_AN_API_ROUTE.md`.
 
-- includes status code
-- includes raw response text
+---
 
-If a CMS call fails:
+## Validation checklist
 
-- verify the endpoint path
-- verify the CMS is reachable
-- verify authentication requirements (most public endpoints should not require auth)
+- The new query returns what you expect in the Studio's Vision tool (the `@sanity/vision` plugin).
+- The page renders the content, and edits published in the Studio show up within about 30 seconds.
+- Set `NEXT_PUBLIC_SANITY_DATASET` in `.env.local` to a dataset that doesn't exist and restart `npm run dev`. The section should show its empty state instead of crashing. (Revert afterwards.)
+- No client component imports runtime values from `sanity-content.ts`.

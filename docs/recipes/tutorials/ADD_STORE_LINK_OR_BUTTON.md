@@ -1,56 +1,74 @@
 # Add a Store Link or Button
 
-This recipe covers adding links/buttons that navigate to storefront pages without touching checkout logic.
+This recipe covers adding links and buttons that navigate to storefront pages without touching cart or checkout logic.
 
-Storefront routes are defined in `/src/routes.jsx` under:
-
-- `CANONICAL.storefront`
-
-Common destinations:
-
-- Store landing: `CANONICAL.storefront.absolute` → `/store`
-- Cart: `CANONICAL.storefront.cart.absolute` → `/store/cart`
-- Checkout: `CANONICAL.storefront.checkout.absolute` → `/store/checkout`
-- Product detail: `CANONICAL.storefront.product.absolute` → `/store/product/:productSlug`
-
-Rule:
-
-- Do not hardcode `/store/...` strings. Always use CANONICAL routes.
+Routes are file-based, so store links are plain `href` strings.
 
 ---
 
-## Option A: Use LinkButton (Internal Navigation)
+## Store URLs
 
-Use when you want a styled button that routes internally.
+| Destination    | URL                        | Route file                              |
+| -------------- | -------------------------- | --------------------------------------- |
+| Store landing  | `/store`                   | `/src/app/store/page.tsx`               |
+| Product detail | `/store/product/<slug>`    | `/src/app/store/product/[id]/page.tsx`  |
+| Cart           | `/store/cart`              | `/src/app/store/cart/page.tsx`          |
+| Checkout       | `/store/checkout`          | `/src/app/store/checkout/page.tsx`      |
 
-```jsx
+Notes:
+
+- The product page accepts the product's Sanity slug (preferred), its legacy `externalId`, or its Sanity `_id`. Use the slug for any link you write.
+- `/store/success` is only for payment returns from Stripe and PayPal. It reads `session_id`, `token`, or `payment_intent` from the URL and clears the cart, so never link to it directly.
+
+---
+
+## Option A: LinkButton (Call to Action)
+
+A styled internal button:
+
+```tsx
 import { LinkButton } from "@/components/ui/Button";
-import { CANONICAL } from "@/routes";
 
-<LinkButton text="SHOP" to={CANONICAL.storefront.absolute} />;
+<LinkButton text="SHOP" href="/store" />;
 ```
 
-Option B: Use ExpressiveLink (Inline / List Navigation)
+Pass `full` to make it fill its container.
 
-```jsx
+---
+
+## Option B: ExpressiveLink (Inline / List Navigation)
+
+```tsx
 import ExpressiveLink from "@/components/ui/expressive/ExpressiveLink";
-import { CANONICAL } from "@/routes";
 
-<ExpressiveLink to={CANONICAL.storefront.absolute}>
-  Visit the Store
-</ExpressiveLink>;
+<ExpressiveLink to="/store">Visit the Store</ExpressiveLink>;
 ```
 
-Option C: Use NavLink (Custom Styling)
+Note that `ExpressiveLink` takes `to`, not `href`.
 
-```jsx
-import { NavLink } from "react-router-dom";
-import { CANONICAL } from "@/routes";
+---
 
-<NavLink to={CANONICAL.storefront.cart.absolute}>Cart</NavLink>;
+## Option C: next/link (Custom Styling)
+
+```tsx
+import Link from "next/link";
+
+<Link href="/store/cart" className="font-semibold text-accent-700 hover:underline">
+  View Cart
+</Link>;
 ```
 
-Validation Checklist
+Link to a specific product by slug:
 
-- Link navigates correctly from anywhere on the site
-- Refreshing /store and /store/cart works in production (static host relies on 404.html fallback)
+```tsx
+<Link href={`/store/product/${product.slug}`}>{product.title}</Link>
+```
+
+---
+
+## Validation checklist
+
+- Each link navigates correctly from anywhere on the site (header, footer, mobile)
+- Refreshing `/store`, `/store/cart`, and a product page works
+- Product links use the slug and land on the right product (not the "We Can't Find That Product" page)
+- No link points at `/store/success`

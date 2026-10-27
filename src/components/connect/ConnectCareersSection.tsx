@@ -104,7 +104,7 @@ export default function ConnectCareersSection() {
             </Blockquote>
             <p>
               Learn more about serving your community through our{" "}
-              <SimpleLink to="/serve">
+              <SimpleLink to="/programs">
                 volunteer programs
               </SimpleLink>{" "}
               or explore how our education and wellness initiatives support

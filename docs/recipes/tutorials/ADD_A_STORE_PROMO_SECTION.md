@@ -2,69 +2,80 @@
 
 This recipe covers adding a marketing-only promo section that links into the store.
 
-This is intentionally static and does not:
+It is intentionally static and does not:
 
 - fetch products
 - render product grids
-- run checkout logic
+- touch the cart or checkout logic
 
 It is safe to use on any page.
 
 ---
 
-## Create a Section Component
+## Create the Section Component
 
-Example:
+Create the section in the folder of the page that will show it, following the `<Area><Name>Section.tsx` convention. For the home page:
 
-`/src/pages/home/sections/StorePromoSection.jsx`
+- `/src/components/home/HomeStorePromoSection.tsx`
 
-Use `PageSection` for consistent spacing.
-
-```jsx
-import PageSection from "@/components/layout/PageSection";
+```tsx
+import PageSection from "@/components/ui/PageSection";
+import SectionHeading from "@/components/ui/SectionHeading";
 import { LinkButton } from "@/components/ui/Button";
-import Heading from "@/components/ui/text/Heading";
-import { CANONICAL } from "@/routes";
 
-export default function StorePromoSection() {
+export default function HomeStorePromoSection() {
   return (
-    <PageSection className="gap-5">
-      <Heading>Shop to Support the Mission</Heading>
-      <p>
+    <PageSection>
+      <SectionHeading eyebrow="Shop with purpose" title="Support the Mission">
         Every purchase supports The Source of Hope programs and community work.
-      </p>
-      <LinkButton text="VISIT THE STORE" to={CANONICAL.storefront.absolute} />
+      </SectionHeading>
+      <div className="w-fit">
+        <LinkButton text="VISIT THE STORE" href="/store" />
+      </div>
     </PageSection>
   );
 }
 ```
 
+If the same promo is needed on several pages, move it to `/src/components/ui/` and give it a neutral name (e.g. `StorePromoSection.tsx`).
+
+---
+
 ## Mount It on a Page
 
-Import and render inside the page component:
+Import it in the page and place it in order:
 
-```jsx
-import StorePromoSection from "./sections/StorePromoSection";
+```tsx
+// /src/app/page.tsx
+import HomeStorePromoSection from "@/components/home/HomeStorePromoSection";
 
-export default function HomePage() {
+export default async function Home() {
   return (
     <>
-      <StorePromoSection />
+      {/* ...existing sections */}
+      <HomeStorePromoSection />
     </>
   );
 }
 ```
 
-## Optional: Add a Direct Link to Cart
+---
+
+## Optional: Link Directly to the Cart
 
 Only if required:
 
-```jsx
-<LinkButton text="VIEW CART" to={CANONICAL.storefront.cart.absolute} />
+```tsx
+<LinkButton text="VIEW CART" href="/store/cart" />
 ```
 
-Validation Checklist
+The full list of store URLs is in `/docs/recipes/tutorials/ADD_STORE_LINK_OR_BUTTON.md`.
 
-- Promo renders consistently on mobile/desktop
-- Button uses `CANONICAL` routes
-- No product data fetching is introduced
+---
+
+## Validation checklist
+
+- Promo renders consistently on mobile and desktop and lines up with neighboring sections
+- Button navigates to `/store` (and `/store/cart` if added)
+- No product fetching, cart context, or `"use client"` was introduced
+- `npm run lint` passes

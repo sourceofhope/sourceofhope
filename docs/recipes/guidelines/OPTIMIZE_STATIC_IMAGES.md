@@ -1,61 +1,93 @@
 # Optimize and Version Static Images
 
-Static frontend assets are versioned through:
+Static frontend assets live in `/public` under a versioned folder:
 
-- `ASSET_VERSION` in `/src/routes.jsx`
+- `/public/v2/...`, served at `/v2/...`
 
-Images are referenced like:
+The version segment comes from `ASSET_VERSION`, which is exported by `/src/lib/environment.ts` (safe to import in server and client components):
 
-- `/${ASSET_VERSION}/core/TSOH-Family.webp`
-
-This pattern prevents stale caches after replacing assets.
+```ts
+export const ASSET_VERSION = "v2";
+```
 
 ---
 
-## Use ASSET_VERSION for all static image paths
+## Use ASSET_VERSION for All Static Paths
 
-Example:
+```tsx
+import Image from "next/image";
+import { ASSET_VERSION } from "@/lib/environment";
 
-```jsx
-import { ASSET_VERSION } from "@/routes";
-
-<img src={`/${ASSET_VERSION}/core/TSOH-Logo.webp`} alt="" />;
+<Image
+  src={`/${ASSET_VERSION}/core/TSOH-Logo.webp`}
+  alt="The Source of Hope Logo"
+  width={80}
+  height={80}
+/>;
 ```
 
 Rule:
 
-Do not hardcode `/v2/...` paths in components.
+- Do not hardcode `/v2/...` in components. A few older files still do (for example the Events hero, and a local `ASSET_VERSION` constant in `EventsUpcomingSection`). Switch them to the import when you touch them.
 
-## When to bump ASSET_VERSION
+---
 
-Bump ASSET_VERSION when:
+## Prefer next/image for Local Files
 
-- you replaced image files but kept filenames the same
+For files in `/public`, `next/image`:
 
-- you need to force cache invalidation globally
+- serves resized versions for each screen size, based on `sizes` or `width`
+- converts to modern formats when the browser supports them
+- lazy-loads by default
+- reserves space so the layout doesn't shift (see `/docs/recipes/guidelines/AVOIDING_LAYOUT_SHIFT_WITH_IMAGES.md`)
 
-Example:
+`PageHeader`, the Footer logo, and Planned Giving use it.
 
-`v2` --> `v3`
+Plain `<img>` (the Header favicon, CMS images) gets the file exactly as stored, so those files must already be small.
 
-This requires that the hosting environment contains the corresponding folder structure.
+---
 
-## Image format guidance
+## Image Format Guidance
 
-Preferred format:
+Preferred:
 
-`.webp` for most photographic or mixed content
+- `.webp` for photos and mixed content
+- source files sized close to their largest rendered size (heroes about 1600px wide)
 
 Avoid:
 
-- shipping large `.png` photos when `.webp` is available
+- large `.png` photos
+- uncompressed JPEGs
+- images thousands of pixels wider than they are displayed
 
-- uncompressed JPEGs for hero images
+See `/docs/recipes/guidelines/CREATING_AN_IMAGE.md` for size targets and the Squoosh workflow.
 
-Validation checklist
+---
 
-- Updated assets appear immediately after deployment (no stale caching).
+## Replacing an Image
 
-- All asset references resolve (no 404s under the new ASSET_VERSION path).
+The simplest safe replacement is a **new file name** (for example `TSOH-Family-2026.webp`) and an updated reference. A new URL can't be served stale from any cache.
 
-- Hero/header/footer images load correctly on first paint.
+If you must keep the same file name, Vercel serves the new file after the next deploy. Browsers or proxies that cached the old URL may show the old image until their cache expires.
+
+---
+
+## When to Bump ASSET_VERSION
+
+Bump it only when many assets were replaced in place and you need every static URL to change at once.
+
+1. Copy `/public/v2` to `/public/v3`, then replace the files you're updating.
+2. Change `ASSET_VERSION` to `"v3"` in `/src/lib/environment.ts`.
+3. Search `/src` for hardcoded `/v2/` paths and fix them.
+4. Remove `/public/v2` in a later release, once nothing references it.
+
+Code and assets deploy together on Vercel, so they can't drift apart. But if the code says `v3` and `/public/v3` is missing a file, that image returns 404.
+
+---
+
+## Validation checklist
+
+- Every referenced asset resolves (no 404s in the Network tab).
+- Hero, header favicon, and footer logo load on first paint.
+- New files are `.webp` and reasonably sized.
+- A search for `"/v2/` in `/src` doesn't turn up new hardcoded paths.
