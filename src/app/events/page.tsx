@@ -38,7 +38,7 @@ export const metadata: Metadata = {
 // Fall back to the empty states if the CMS is unreachable.
 async function getEvents(): Promise<[SanityEvent[], SanityEvent[]]> {
   try {
-    return await Promise.all([fetchTimelineEvents(12), fetchRecurringEvents(12)]);
+    return await Promise.all([fetchTimelineEvents(4, 2), fetchRecurringEvents(12)]);
   } catch {
     return [[], []];
   }

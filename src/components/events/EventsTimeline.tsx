@@ -4,15 +4,14 @@ import SectionHeading from "@/components/ui/SectionHeading";
 import EventTrigger from "@/components/events/EventTrigger";
 import type { EventView } from "@/lib/event-view";
 
-const MAX_PAST = 4;
-
 /**
  * Featured events as a vertical timeline: upcoming events in date order, then
- * the most recent completed ones (dimmed). Items open the details modal.
+ * the most recent completed ones. The server already limits and orders both
+ * lists. Items open the details modal.
  */
 export default function EventsTimeline({ events }: { events: EventView[] }) {
   const upcoming = events.filter((event) => !event.isCompleted);
-  const past = events.filter((event) => event.isCompleted).reverse().slice(0, MAX_PAST);
+  const past = events.filter((event) => event.isCompleted);
 
   return (
     <PageSection id="featured-events" className="py-10 text-sm md:text-md lg:text-lg">
@@ -36,7 +35,7 @@ export default function EventsTimeline({ events }: { events: EventView[] }) {
             </p>
           )}
           {past.length > 0 && (
-            <TimelineGroup title="Recently completed" events={past} muted />
+            <TimelineGroup title="Recently completed" events={past} completed />
           )}
         </div>
       )}
@@ -47,11 +46,11 @@ export default function EventsTimeline({ events }: { events: EventView[] }) {
 function TimelineGroup({
   title,
   events,
-  muted = false,
+  completed = false,
 }: {
   title: string;
   events: EventView[];
-  muted?: boolean;
+  completed?: boolean;
 }) {
   return (
     <section aria-label={title} className="grid gap-6">
@@ -60,12 +59,10 @@ function TimelineGroup({
       </h3>
       <ol className="relative grid max-w-4xl gap-8 border-l-2 border-neutral-300 ml-2 md:ml-28">
         {events.map((event) => (
-          <li key={event.key} className={`relative pl-6 md:pl-8 ${muted ? "opacity-75" : ""}`}>
+          <li key={event.key} className="relative pl-6 md:pl-8">
             <span
               aria-hidden="true"
-              className={`absolute -left-[9px] top-5 size-4 rounded-full border-2 border-accent-500 ${
-                muted ? "bg-neutral-50" : "bg-accent-500 ring-4 ring-accent-200"
-              }`}
+              className="absolute -left-[9px] top-5 size-4 rounded-full border-2 border-accent-500 bg-accent-500 ring-4 ring-accent-200"
             />
             {event.dateParts && (
               <p className="mb-2 font-urbanist font-semibold text-primary-800 md:absolute md:-left-28 md:top-2 md:mb-0 md:w-20 md:text-right">
@@ -100,7 +97,7 @@ function TimelineGroup({
                     <span className="line-clamp-2 text-sm text-neutral-700">{event.summary}</span>
                   )}
                   <span className="mt-1 inline-flex items-center gap-1 text-sm font-semibold text-accent-600">
-                    {muted ? "View recap" : "View details"}
+                    {completed ? "View recap" : "View details"}
                     <ArrowRightIcon
                       className="size-4 transition-transform duration-300 group-hover:translate-x-1"
                       aria-hidden="true"

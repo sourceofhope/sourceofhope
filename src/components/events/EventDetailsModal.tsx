@@ -135,11 +135,12 @@ export default function EventDetailsModal({ event, titleId }: EventDetailsModalP
         )}
 
         <footer className="flex flex-wrap items-center gap-3">
-          {event.isCompleted ? (
+          {event.isCompleted && (
             <p className="text-neutral-600">
               This event has ended. Thank you to everyone who joined us!
             </p>
-          ) : event.registerUrl ? (
+          )}
+          {event.registerUrl ? (
             <a
               href={event.registerUrl}
               target="_blank"
@@ -152,6 +153,7 @@ export default function EventDetailsModal({ event, titleId }: EventDetailsModalP
               />
             </a>
           ) : (
+            !event.isCompleted && (
             <p className="text-neutral-600">
               Registration opens soon. Check back, or email{" "}
               <a className="font-semibold text-accent-600" href="mailto:info@thesourceofhope.org">
@@ -159,6 +161,7 @@ export default function EventDetailsModal({ event, titleId }: EventDetailsModalP
               </a>
               .
             </p>
+            )
           )}
         </footer>
       </div>

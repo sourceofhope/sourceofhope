@@ -179,16 +179,24 @@ export async function fetchFeaturedEvents(limit = 12) {
 }
 
 /**
- * Featured events for the /events timeline: everything upcoming plus events
- * that ended within the last year, oldest first.
+ * Featured events for the /events timeline: the next upcoming events in date
+ * order, then the most recently completed ones, newest first.
  */
-export async function fetchTimelineEvents(limit = 12) {
-  return client.fetch<SanityEvent[]>(
-    `*[_type == "featuredEvent" && dateTime(coalesce(endDate, date)) > dateTime(now()) - 60*60*24*365]
-      | order(date asc)[0...${clampLimit(limit, 12)}] { ${EVENT_FIELDS} }`,
+export async function fetchTimelineEvents(upcomingLimit = 4, pastLimit = 2) {
+  const { upcoming, past } = await client.fetch<{
+    upcoming: SanityEvent[];
+    past: SanityEvent[];
+  }>(
+    `{
+      "upcoming": *[_type == "featuredEvent" && dateTime(coalesce(endDate, date)) >= dateTime(now())]
+        | order(date asc)[0...${clampLimit(upcomingLimit, 4)}] { ${EVENT_FIELDS} },
+      "past": *[_type == "featuredEvent" && dateTime(coalesce(endDate, date)) < dateTime(now())]
+        | order(date desc)[0...${clampLimit(pastLimit, 2)}] { ${EVENT_FIELDS} }
+    }`,
     {},
     options,
   );
+  return [...upcoming, ...past];
 }
 
 export async function fetchRecurringEvents(limit = 3) {
