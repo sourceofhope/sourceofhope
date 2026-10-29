@@ -207,6 +207,27 @@ export async function fetchRecurringEvents(limit = 3) {
   );
 }
 
+/**
+ * Monthly program cards for /events: the next upcoming programs (soonest
+ * first, programs without a date last), then the most recent past ones.
+ */
+export async function fetchRecurringCards(upcomingLimit = 4, pastLimit = 2) {
+  const { upcoming, past } = await client.fetch<{
+    upcoming: SanityEvent[];
+    past: SanityEvent[];
+  }>(
+    `{
+      "upcoming": *[_type == "recurringEvent" && (!defined(coalesce(endDate, date)) || dateTime(coalesce(endDate, date)) >= dateTime(now()))]
+        | order(coalesce(date, "9999-12-31T00:00:00Z") asc)[0...${clampLimit(upcomingLimit, 4)}] { ${EVENT_FIELDS} },
+      "past": *[_type == "recurringEvent" && dateTime(coalesce(endDate, date)) < dateTime(now())]
+        | order(date desc)[0...${clampLimit(pastLimit, 2)}] { ${EVENT_FIELDS} }
+    }`,
+    {},
+    options,
+  );
+  return [...upcoming, ...past];
+}
+
 export async function fetchProducts(limit?: number) {
   const slice = typeof limit === "number" ? `[0...${clampLimit(limit, 12, 200)}]` : "";
 

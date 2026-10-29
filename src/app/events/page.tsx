@@ -9,11 +9,11 @@ import EventsRecurringGrid from "@/components/events/EventsRecurringGrid";
 import EventsDocumentsSection from "@/components/events/EventsDocumentsSection";
 import EventModalController from "@/components/events/EventModalController";
 import {
-  fetchRecurringEvents,
+  fetchRecurringCards,
   fetchTimelineEvents,
   type SanityEvent,
 } from "@/lib/sanity-content";
-import { sortRecurringEvents, toEventView } from "@/lib/event-view";
+import { toEventView } from "@/lib/event-view";
 import { ASSET_VERSION } from "@/lib/environment";
 
 const DESCRIPTION =
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
 // Fall back to the empty states if the CMS is unreachable.
 async function getEvents(): Promise<[SanityEvent[], SanityEvent[]]> {
   try {
-    return await Promise.all([fetchTimelineEvents(4, 2), fetchRecurringEvents(12)]);
+    return await Promise.all([fetchTimelineEvents(4, 2), fetchRecurringCards(4, 2)]);
   } catch {
     return [[], []];
   }
@@ -47,9 +47,7 @@ async function getEvents(): Promise<[SanityEvent[], SanityEvent[]]> {
 export default async function EventsPage() {
   const [featured, recurring] = await getEvents();
   const timeline = featured.map((event) => toEventView(event, "featured"));
-  const monthly = sortRecurringEvents(recurring).map((event) =>
-    toEventView(event, "recurring"),
-  );
+  const monthly = recurring.map((event) => toEventView(event, "recurring"));
 
   return (
     <>

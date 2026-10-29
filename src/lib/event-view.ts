@@ -94,13 +94,3 @@ export function toEventView(event: SanityEvent, kind: EventView["kind"]): EventV
         },
   };
 }
-
-/** Recurring events with an upcoming date first (soonest first), then the rest by title. */
-export function sortRecurringEvents(events: SanityEvent[]): SanityEvent[] {
-  const upcoming = (event: SanityEvent) => Boolean(event.date) && !event.isOutdated;
-  return [...events].sort((a, b) => {
-    if (upcoming(a) !== upcoming(b)) return upcoming(a) ? -1 : 1;
-    if (upcoming(a)) return (a.date ?? "").localeCompare(b.date ?? "");
-    return a.title.localeCompare(b.title);
-  });
-}
