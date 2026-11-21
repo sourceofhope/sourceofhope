@@ -14,6 +14,12 @@ thesourceofhope.org is a single **Next.js** application hosted on **Vercel**. Th
 
 ---
 
+## Relaunch In Progress
+
+A full relaunch (UI/UX refresh, the Get Help · Volunteer · Give Action Hub, and a Staff Portal) is being built on the `v2` branch and will ship as one release. The plan, design spec and decision records live in `/docs/plan/README.md`. The rest of this documentation describes the **current** site until the relaunch ships.
+
+---
+
 ## Choose Your Path
 
 ### Developers
