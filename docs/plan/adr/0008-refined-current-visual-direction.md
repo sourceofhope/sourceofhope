@@ -22,4 +22,25 @@ The project lead wants to keep TSOH's clean, professional look and stay reputabl
 
 ## Mockup
 
-*Link and approval date to be recorded by slice 0.10.*
+**Mockup:** [TSOH Relaunch Visual Direction](https://claude.ai/artifact/QE1iCT8nWmfhNEE2giCFiH), published 2026-11-23. It is private to the project lead's account until shared.
+
+It has seven boards:
+- tokens and rules
+- homepage (desktop and phone)
+- the phone menu
+- the Hub on a phone (Volunteer, "Who's coming?")
+- event details (desktop)
+- the Give amount step (desktop)
+
+**Proposed values, to confirm on approval** (these settle the spec's *(mockup)* items):
+- **Page:** max width 1240 px with 40 px gutters (desktop).
+- **Header:** a solid white header on every page, 72 px desktop and 60 px phone. The dove mark sits beside a typeset name on desktop; the dove alone on phones.
+- **Hero:** a split layout (text left, photo right, 12 px corners), with no text over the photo.
+- **Type:** h1 54 px (home hero), 36 px (pages); body 18 px desktop, 16 px phone.
+- **Corners:** buttons 8 px; fields and badges 4 px; dialogs 12 px.
+- **Semantic colors:** success `#1F7A4D`, warning `#92400E`, danger `#B42318`, info `#165E96`; muted text `#4B5563`.
+- **Custom gift minimum:** $5 (not shown; unchanged).
+
+**Approval:** *pending: project lead to approve, or comment on the boards.*
+
+Photo findings: [research/PHOTO_AUDIT.md](../research/PHOTO_AUDIT.md).

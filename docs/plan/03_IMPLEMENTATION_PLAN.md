@@ -105,7 +105,7 @@ Phases 1 and 2 can overlap, as can 5 and 4. The project lead may approve overlap
 | 0.5 | Done (2026-11-23) | **Vercel UI SDK chosen** (pinned `0.1.0-beta.16`), with React Aria Components as a proven fallback. Both passed all 14 automated checks; UI SDK is lighter (87 KB vs 113 KB compressed) but beta. Scorecard and guardrails in [ADR-0003](adr/0003-component-foundation-wrappers.md#spike-result-2026-11-23); spike code on branch `refresh-0.5-component-spike` |
 | 0.6, 0.8, 0.9 | Waiting on 0.4 | Need Supabase, DocuSign and Eventbrite test accounts |
 | 0.7 | Done (2026-11-23) | next-intl 4.16 with root params, `/es` prefix over `es-US` formatting, no detection, a `/staff` root outside `[locale]`, explicit locale in route handlers, a pseudo-locale generator. **Rich text works in Sanity field-level localized arrays**, so field-level is used for everything. Details in [ADR-0004](adr/0004-localization-ready-english-first.md#spike-result-07-2026-11-23); spike code on branch `refresh-0.7-i18n-spike` |
-| 0.10 | Not started | |
+| 0.10 | Waiting on project lead approval | Photo audit done ([PHOTO_AUDIT.md](research/PHOTO_AUDIT.md)): Serving Hope strong; Education and Outdoors have no hero-quality photos; **Wellness has no authentic photos** (current ones look like stock). Mockup published ([ADR-0008](adr/0008-refined-current-visual-direction.md#mockup)) |
 
 ## Phase 1 · Design system and shell
 
