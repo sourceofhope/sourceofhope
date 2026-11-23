@@ -1,8 +1,8 @@
 # 03 · Implementation Plan
 
-**Status:** Approved baseline, 2026-11-21. There are no dates: phases run in dependency order, and each phase is reviewed by the project lead on the `v2` preview before the next starts.
+**Status:** Approved baseline, 2026-11-21. There are no dates: phases run in dependency order, and each phase is reviewed by the project lead on the `refresh` preview before the next starts.
 
-Each **slice** below is one PR into `v2` (split further if it grows past a comfortable review). Acceptance criteria are the minimum to merge. Every PR also meets the [Definition of done](#definition-of-done).
+Each **slice** below is one reviewable commit (or a small series of commits) on `refresh`, split further if it grows past a comfortable review. Acceptance criteria are the minimum to land it. Every slice also meets the [Definition of done](#definition-of-done).
 
 ## Phase status
 
@@ -45,8 +45,8 @@ Phases 1 and 2 can overlap, as can 5 and 4. The project lead may approve overlap
 
 ### Branching and merging
 
-- `v2` is cut from `development` at the start of Phase 0. Feature branches are named `v2/<slice>-<short-name>` (e.g. `v2/1.4-dialog-primitives`) and merge into `v2` by squash.
-- **Weekly:** merge `development` into `v2`. Pages that v2 has already rebuilt take v2's version. Bug fixes to logic still in use are ported by hand.
+- `refresh` was cut from `development` (2026-11-21). Slices are committed directly on `refresh`; a short-lived branch (`refresh-<slice>-<short-name>`) is optional for larger or riskier slices and merges back by squash.
+- **Weekly:** merge `development` into `refresh`. Pages that v2 has already rebuilt take v2's version. Bug fixes to logic still in use are ported by hand.
 - **Current site:** keeps shipping from `development` → `production` as today. Changes there should be limited to content and fixes while v2 is in progress.
 - **Commit titles** follow the repo's existing Title Case style ("Add Hub URL Contract And Parser").
 
@@ -81,8 +81,8 @@ Phases 1 and 2 can overlap, as can 5 and 4. The project lead may approve overlap
 
 | Slice | Deliverable | Acceptance criteria |
 |---|---|---|
-| 0.1 | `v2` branch; new Vercel project; preview domain `next.thesourceofhope.org` behind deployment protection | `v2` and PR previews deploy. Not publicly reachable. Environment matrix recorded in [02 §10](02_SYSTEM_DESIGN.md#10-environments-and-configuration) |
-| 0.2 | CI (GitHub Actions) for PRs into `v2`: install, lint, `typecheck`, Vitest, build, Playwright smoke against the preview, dependency audit gate. New npm scripts `typecheck`, `test`, `test:e2e` | Required checks on `v2`. Fails on a lint or type error and on new critical or high advisories |
+| 0.1 | `refresh` branch; new Vercel project; preview domain `next.thesourceofhope.org` behind deployment protection | `refresh` and PR previews deploy. Not publicly reachable. Environment matrix recorded in [02 §10](02_SYSTEM_DESIGN.md#10-environments-and-configuration) |
+| 0.2 | CI (GitHub Actions) for PRs into `refresh`: install, lint, `typecheck`, Vitest, build, Playwright smoke against the preview, dependency audit gate. New npm scripts `typecheck`, `test`, `test:e2e` | Required checks on `refresh`. Fails on a lint or type error and on new critical or high advisories |
 | 0.3 | Dependency upgrades for the 23 production advisories, with compatibility notes | `npm audit --omit=dev` shows no critical or high. Existing pages build and smoke-test |
 | 0.4 | Accounts and data: Sanity `staging` dataset (copy of `production`); Sanity non-profit plan application *(TSOH owner)*; Supabase staging project; Stripe test, PayPal sandbox, DocuSign developer, Eventbrite test org, Constant Contact test list, Resend domain | Credentials live only in Vercel environment settings and local `.env.local`. Nothing in the repo |
 | 0.5 | **Spike: component foundation.** Build the Hub dialog and mobile takeover, language Select, Spanish DatePicker, and Field + Combobox in **Vercel UI SDK** and in **React Aria Components** (throwaway branch) | Scorecard in [ADR-0003](adr/0003-component-foundation-wrappers.md): axe, manual VoiceOver/NVDA, localization, styling control, bundle size, API stability, agent ergonomics. **Rule:** choose UI SDK unless it fails a must-have (WCAG 2.2 AA behavior, a required component, localization readiness). Wrapper API sketched |
@@ -92,7 +92,7 @@ Phases 1 and 2 can overlap, as can 5 and 4. The project lead may approve overlap
 | 0.9 | **Spike: Eventbrite.** Create and publish a free event with an RSVP ticket by API; attendee webhook vs polling; ticket quantity updates; written confirmation from Eventbrite support that the intake pattern is acceptable | [ADR-0006](adr/0006-internal-registration-source-of-truth.md) updated. If the pattern isn't allowed, switch to the ADR's fallback (no Eventbrite; Google event results + Facebook) |
 | 0.10 | **Photo audit and visual-direction mockup.** Inventory usable, consent-cleared photos per page slot and flag gaps. Make one private mockup: token sheet, homepage, event card and details, Give amount step, mobile header and menu, Hub mobile takeover | Project lead approves. Mockup link recorded in [ADR-0008](adr/0008-refined-current-visual-direction.md). All *(mockup)* values in the spec resolved |
 
-**Exit:** spikes recorded, mockup approved, CI green on `v2`.
+**Exit:** spikes recorded, mockup approved, CI green on `refresh`.
 
 ## Phase 1 · Design system and shell
 
@@ -108,7 +108,7 @@ Phases 1 and 2 can overlap, as can 5 and 4. The project lead may approve overlap
 | 1.6 | Shell: desktop header, About menu, mobile bar + Sheet menu with action tiles, footer (newsletter field placeholder), skip link, root layouts, `not-found`, `error`, `loading` | e2e: header keyboard navigation, mobile menu trap and Escape, skip link, focus never hidden under the sticky header |
 | 1.7 | Localization plumbing in the app: next-intl from spike 0.7, `messages/en.json`, `src/lib/format.ts`, metadata and hreflang helpers, `ENABLED_LOCALES`, language dropdown (hidden with one locale), key-parity check, pseudo-locale build | CI key-parity check. Dropdown hidden. Pseudo-locale styleguide screenshot shows no overflow |
 
-**Exit:** styleguide complete, axe clean, shell live on every `v2` route (legacy pages render inside it until rebuilt).
+**Exit:** styleguide complete, axe clean, shell live on every `refresh` route (legacy pages render inside it until rebuilt).
 
 ## Phase 2 · Data and content foundation
 

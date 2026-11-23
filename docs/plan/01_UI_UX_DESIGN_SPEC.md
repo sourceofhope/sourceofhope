@@ -760,4 +760,4 @@ English is the only visible language at launch ([ADR-0004](adr/0004-localization
 - [ ] Copy follows §13. Names match the glossary. No hard-coded strings outside message files and Sanity.
 - [ ] Labels fit at 1.5× length (pseudo-localized screenshot in the PR for new components).
 - [ ] No personal data in URLs, analytics events or logs.
-- [ ] Screenshots (mobile and desktop) attached to the PR for review on the `v2` preview.
+- [ ] Screenshots (mobile and desktop) attached to the PR for review on the `refresh` preview.

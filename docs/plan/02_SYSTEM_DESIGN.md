@@ -366,7 +366,7 @@ Run daily by the retention job. "Delete" means removing personal fields and keep
 | Environment | Vercel | Sanity dataset | Database | Payments and integrations |
 |---|---|---|---|---|
 | Local | `next dev` | `staging` | Supabase local (CLI) or the staging project | Stripe test, PayPal sandbox, DocuSign demo, Eventbrite test event in a private test org **(spike)**, Constant Contact test list, Resend test domain |
-| v2 preview | New v2 project, preview deployments of `v2` and PRs into it. Domain `next.thesourceofhope.org` behind Vercel deployment protection | `staging` | Supabase staging project | Same as local |
+| v2 preview | New v2 project, preview deployments of `refresh` and PRs into it. Domain `next.thesourceofhope.org` behind Vercel deployment protection | `staging` | Supabase staging project | Same as local |
 | v2 production (pre-cutover) | v2 project production deployment, reachable at `staff.thesourceofhope.org` for the staff soft launch. Public routes are password-protected and `noindex` until cutover | `production-v2` | Supabase production project | Live keys. Webhook endpoints registered but filtered by `app=v2` metadata |
 | v2 production (after cutover) | Apex and `www` domains moved to the v2 project | `production-v2` | Supabase production | Live |
 | Current site | Existing project, `development` → `production` | `production` (untouched by v2) | — | Live (until cutover) |

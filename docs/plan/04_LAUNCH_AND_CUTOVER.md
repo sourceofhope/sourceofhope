@@ -41,7 +41,7 @@ Visitors see nothing new. Staff work on production data.
 3. Publish upcoming TSOH events to Eventbrite from the portal. Retire any manually created Eventbrite listings for the same events.
 4. Watch the Eventbrite intake: RSVPs import, `finish` emails go out, and matches appear for review.
 5. Generate campaign links and QR codes for the next print and social pieces. Until cutover these point to Hub states that only resolve after the public switch, so date the print run accordingly, or use links to the current site until then.
-6. Collect staff feedback. Fixes go through normal PRs into `v2`.
+6. Collect staff feedback. Fixes go through normal PRs into `refresh`.
 
 ## 4. Dress rehearsal (Phase 9.3)
 
@@ -82,7 +82,7 @@ Pick a low-traffic weekday morning (Central time), outside any event's sign-up c
 | | 6. Submit the new sitemap in Google Search Console |
 | T+1 h | Check the webhook ledger, job runs, email delivery and error logs |
 | T+1 day | Review analytics funnels, error rates and staff feedback |
-| T+14 days | Rollback window ends: archive the old Vercel project (keep it restorable), merge `v2` into `production`, reset the branch model, rewrite `docs/developers/` and the README |
+| T+14 days | Rollback window ends: archive the old Vercel project (keep it restorable), merge `refresh` into `production`, reset the branch model, rewrite `docs/developers/` and the README |
 
 ## 6. Rollback
 
@@ -105,7 +105,7 @@ Pick a low-traffic weekday morning (Central time), outside any event's sign-up c
 
 - **Stabilization (two weeks):**
   - Daily check of the webhook ledger, `job_runs`, Resend bounces and the error logs.
-  - Hotfixes go through PRs into `production` (after the merge) or `v2` (before it).
+  - Hotfixes go through PRs into `production` (after the merge) or `refresh` (before it).
 - **First month:** review Core Web Vitals field data, Hub funnel drop-offs and staff pain points. Feed them into a post-launch backlog.
 - **Next candidates** (not committed):
   - Spanish, if deferred.

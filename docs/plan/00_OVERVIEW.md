@@ -54,9 +54,9 @@ We are rebuilding thesourceofhope.org on its current stack (Next.js 16, Tailwind
 
 ## How the release works
 
-- All work lands on a long-lived **`v2`** branch with its own preview domain, a **staging** Sanity dataset, a staging Supabase project and sandbox credentials ([ADR-0001](adr/0001-single-release-on-v2-branch.md)).
-- The current site keeps running from `development` → `production` as it does today. `development` is merged into `v2` weekly so fixes carry forward.
-- The project lead reviews each phase on the `v2` preview before the next phase starts.
+- All work lands on a long-lived **`refresh`** branch with its own preview domain, a **staging** Sanity dataset, a staging Supabase project and sandbox credentials ([ADR-0001](adr/0001-single-release-on-v2-branch.md)).
+- The current site keeps running from `development` → `production` as it does today. `development` is merged into `refresh` weekly so fixes carry forward.
+- The project lead reviews each phase on the `refresh` preview before the next phase starts.
 - Before the public switch, staff use the portal on the **production** database (staff soft launch), then run one real event end to end (dress rehearsal).
 - The public cutover moves the domain to the v2 deployment. Rollback points it back to the old deployment, whose Sanity dataset is never touched.
 - There are no hard dates. Phases are ordered by dependency.
@@ -73,7 +73,7 @@ Every settled decision, with where it is specified. "Spec" = [01_UI_UX_DESIGN_SP
 | Refresh depth: **evolve**. Keep brand marks; rebuild design system, IA and key journeys | Spec §1 |
 | One visual direction ("refined current"), approved as a mockup in Phase 0, then designed in code | [ADR-0008](adr/0008-refined-current-visual-direction.md) |
 | Everything ships as one public release; no year-end change freeze (current site continues independently) | [ADR-0001](adr/0001-single-release-on-v2-branch.md) |
-| `v2` branch, preview domain, staging dataset and database, sandbox keys; in-flight branches `feature/membership-launch` and `sid-development` are ignored | [ADR-0001](adr/0001-single-release-on-v2-branch.md) |
+| `refresh` branch, preview domain, staging dataset and database, sandbox keys; in-flight branches `feature/membership-launch` and `sid-development` are ignored | [ADR-0001](adr/0001-single-release-on-v2-branch.md) |
 | Project lead reviews every phase on the preview; no deadlines | Implementation plan |
 | Staff soft launch on the production database before the public switch | [04_LAUNCH_AND_CUTOVER.md](04_LAUNCH_AND_CUTOVER.md) |
 | Launch gate: exit criteria, dress rehearsal, payment matrix, accessibility audit, performance budgets, runbook with rehearsed rollback | [04_LAUNCH_AND_CUTOVER.md](04_LAUNCH_AND_CUTOVER.md) |
@@ -174,5 +174,5 @@ Every settled decision, with where it is specified. "Spec" = [01_UI_UX_DESIGN_SP
 | Intake door | Eventbrite's role: people RSVP there, we import them as incomplete sign-ups, and they finish on our site |
 | Partner event | An event run by a partner. We list it; sign-up is the partner's link |
 | Cutoff | The moment (default 24 h before start, Central time) when unsigned registrations leave the active roster |
-| `v2` | The long-lived branch and deployment for this release |
+| `refresh` | The long-lived branch and deployment for this release |
 | `production-v2` | The new Sanity dataset the relaunched site reads; the old `production` dataset stays untouched for rollback |

@@ -22,7 +22,7 @@ A non-technical summary for staff and the board lives as a shared doc (linked fr
 
 | ADR | Decision |
 |---|---|
-| [0001](adr/0001-single-release-on-v2-branch.md) | One public release, built on a long-lived `v2` branch with its own environments |
+| [0001](adr/0001-single-release-on-v2-branch.md) | One public release, built on a long-lived `refresh` branch with its own environments |
 | [0002](adr/0002-query-param-action-hub.md) | The Action Hub is a query-param overlay that opens on any page, with no page fallback |
 | [0003](adr/0003-component-foundation-wrappers.md) | Component foundation: Vercel UI SDK preferred, React Aria Components fallback, decided by spike; pages only import our wrappers |
 | [0004](adr/0004-localization-ready-english-first.md) | English at launch, localization-ready, translate-once; next-intl; Sanity field-level shape |
@@ -33,7 +33,7 @@ A non-technical summary for staff and the board lives as a shared doc (linked fr
 
 ## Rules for anyone (human or agent) working from this plan
 
-- Work in the phase order in [03_IMPLEMENTATION_PLAN.md](03_IMPLEMENTATION_PLAN.md). Each slice is one reviewable PR into `v2`.
+- Work in the phase order in [03_IMPLEMENTATION_PLAN.md](03_IMPLEMENTATION_PLAN.md). Each slice is one reviewable commit (or small series) on `refresh`.
 - If an implementation choice contradicts a document here, stop and update the document (or write a new ADR) in the same PR. The plan and the code must not drift.
 - Never put personal data, signing tokens, access tokens or secrets in source control, logs, analytics, query strings or Sanity.
 - Status of each phase is tracked in the Phase table in [03_IMPLEMENTATION_PLAN.md](03_IMPLEMENTATION_PLAN.md#phase-status).
