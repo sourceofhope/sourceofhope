@@ -40,3 +40,6 @@ dist-ssr
 coverage
 test-results
 playwright-report
+
+# Generated pseudo-locale messages (npm run i18n:pseudo)
+messages/en-XA.json

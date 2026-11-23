@@ -1,0 +1,28 @@
+{
+  "UI": {
+    "close": "Close",
+    "dismiss": "Dismiss",
+    "menu": "Menu",
+    "closeMenu": "Close menu",
+    "skipToContent": "Skip to content",
+    "opensInNewTab": "(opens in a new tab)",
+    "loading": "Loading…",
+    "working": "Working…",
+    "optional": "optional",
+    "pauseVideo": "Pause background video",
+    "playVideo": "Play background video",
+    "pauseAnimation": "Pause moving content",
+    "playAnimation": "Play moving content",
+    "previous": "Previous",
+    "next": "Next",
+    "slideOf": "{current} of {total}",
+    "previousMonth": "Previous month",
+    "nextMonth": "Next month",
+    "chooseDate": "Choose date",
+    "clear": "Clear",
+    "showMore": "Show more",
+    "showLess": "Show less",
+    "language": "Language",
+    "errorSummary": "{count, plural, one {There is # problem with this form.} other {There are # problems with this form.}}"
+  }
+}

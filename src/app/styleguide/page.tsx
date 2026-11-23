@@ -18,7 +18,7 @@ export default function StyleguidePage() {
   if (!isStyleguideEnabled()) notFound();
 
   return (
-    <div className="mx-auto flex max-w-page flex-col gap-12 px-4 pt-32 pb-section md:px-8 lg:px-10">
+    <main id="main" className="mx-auto flex max-w-page flex-col gap-12 px-4 py-section md:px-8 lg:px-10">
       <header className="flex flex-col gap-3 border-b border-line pb-8">
         <p className="text-xs font-semibold uppercase tracking-wide text-info">Design system</p>
         <h1 className="font-heading text-4xl font-bold">Styleguide</h1>
@@ -49,6 +49,6 @@ export default function StyleguidePage() {
           <Component />
         </section>
       ))}
-    </div>
+    </main>
   );
 }

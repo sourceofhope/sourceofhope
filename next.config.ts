@@ -1,4 +1,8 @@
 import type { NextConfig } from "next";
+import createNextIntlPlugin from "next-intl/plugin";
+
+// Wires src/i18n/request.ts into every server render (ADR-0004).
+const withNextIntl = createNextIntlPlugin();
 
 // Baseline security headers applied to every response. The CSP below only
 // sets directives that can't break third-party embeds (Stripe, PayPal, GTM,
@@ -49,4 +53,4 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+export default withNextIntl(nextConfig);

@@ -10,7 +10,7 @@ import tsoh from "./eslint/tsoh-plugin.mjs";
  */
 const LEGACY_FILES = [
   "src/app/api/checkout/create-membership-payment-intent/route.tsx",
-  "src/app/store/success/page.tsx",
+  "src/app/\\[locale\\]/\\(legacy\\)/store/success/page.tsx",
   "src/components/connect/ConnectMapSection.tsx",
   "src/components/donate/DonateFormSection.tsx",
   "src/components/members/**",
@@ -26,6 +26,9 @@ const UI = "src/components/ui/**";
 const LAYOUT = "src/components/layout/**";
 const FEATURES = "src/features/**";
 const NEW_ROUTES = ["src/app/\\[locale\\]/**", "src/app/(staff)/**"];
+// Pages not rebuilt yet live in the (legacy) route group (no URL effect) and
+// are exempt from new-code rules until Phase 3 moves them out.
+const LEGACY_ROUTES = ["src/app/\\[locale\\]/\\(legacy\\)/**"];
 const STYLEGUIDE = "src/app/styleguide/**";
 const NEW_CODE = [UI, LAYOUT, FEATURES, ...NEW_ROUTES, STYLEGUIDE];
 // Product code that renders user-facing text (styleguide is a dev tool).
@@ -40,6 +43,10 @@ const ban = {
   layout: { group: ["@/components/layout", "@/components/layout/*"], message: "ui primitives can't depend on layout (layers flow down, ADR-0009 §1)." },
   features: { group: ["@/features", "@/features/*"], message: "This layer can't depend on features (ADR-0009 §1)." },
   app: { group: ["@/app/*"], message: "Components never import from routes (ADR-0009 §1)." },
+  nextLink: {
+    group: ["next/link"],
+    message: "Use the locale-aware Link from @/i18n/navigation (or TextLink/LinkButton), so Spanish visitors stay on Spanish pages.",
+  },
 };
 const restrict = (...patterns) => ["error", { patterns }];
 
@@ -58,14 +65,19 @@ const eslintConfig = defineConfig([
 
   // ── Layers, one direction (ADR-0009 §1) ───────────────────────────────────
   { files: ["src/**"], rules: { "no-restricted-imports": restrict(ban.library) } },
-  { files: [UI], rules: { "no-restricted-imports": restrict(ban.legacy, ban.layout, ban.features, ban.app) } },
-  { files: [LAYOUT], rules: { "no-restricted-imports": restrict(ban.legacy, ban.library, ban.features, ban.app) } },
-  { files: [FEATURES], rules: { "no-restricted-imports": restrict(ban.legacy, ban.library, ban.app) } },
-  { files: [...NEW_ROUTES, STYLEGUIDE], rules: { "no-restricted-imports": restrict(ban.legacy, ban.library) } },
+  { files: [UI], rules: { "no-restricted-imports": restrict(ban.legacy, ban.layout, ban.features, ban.app, ban.nextLink) } },
+  { files: [LAYOUT], rules: { "no-restricted-imports": restrict(ban.legacy, ban.library, ban.features, ban.app, ban.nextLink) } },
+  { files: [FEATURES], rules: { "no-restricted-imports": restrict(ban.legacy, ban.library, ban.app, ban.nextLink) } },
+  {
+    files: [...NEW_ROUTES, STYLEGUIDE],
+    ignores: LEGACY_ROUTES,
+    rules: { "no-restricted-imports": restrict(ban.legacy, ban.library, ban.nextLink) },
+  },
 
   // ── Tokens, buttons, links (ADR-0009 §3, §5) ──────────────────────────────
   {
     files: NEW_CODE,
+    ignores: LEGACY_ROUTES,
     plugins: { tsoh },
     rules: {
       "tsoh/design-tokens": "error",
@@ -85,7 +97,7 @@ const eslintConfig = defineConfig([
   // ── No hard-coded user-facing text (ADR-0009 §6) ──────────────────────────
   {
     files: PRODUCT_UI.map((g) => g.replace(/\*\*$/, "**/*.tsx")),
-    ignores: ["**/*.test.tsx"],
+    ignores: ["**/*.test.tsx", ...LEGACY_ROUTES],
     rules: {
       "react/jsx-no-literals": [
         "error",
