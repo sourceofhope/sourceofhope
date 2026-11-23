@@ -38,14 +38,14 @@ These are acceptance criteria, not suggestions. A PR that breaks one is not merg
 - No pill badges above heroes ("✨ New", "Now live").
 - No oversized rounded cards (`rounded-2xl` and above) with soft drop shadows everywhere. Radius comes only from tokens (§5.4).
 - No bento grids or asymmetric collage layouts used for decoration.
-- No auto-advancing carousels, parallax, scroll-jacking or counters that animate from zero.
+- No auto-advancing carousels, parallax, scroll-jacking or counters that animate from zero. **Exceptions, decided by the project lead on 2026-11-23:** the homepage sponsor strip (a constant-speed loop with a pause control) and the hero video's shrink on scroll. Both are specified in §5.8.
 - No stock photography and no AI-generated images or illustrations.
 - No text baked into images.
 
 ### Copy
 
-- No slogan taglines ("Empowering communities, one meal at a time").
-- Banned words in UI copy: *unlock, elevate, empower, seamless, journey, transform, revolutionize, game-changing, cutting-edge, delve*.
+- Taglines appear **only in the homepage hero**, which keeps today's: "Empowering and providing hope through education, health, and wellness." Nowhere else gets a tagline or slogan ("Empowering communities, one meal at a time").
+- Banned words in UI copy outside the hero tagline: *unlock, elevate, empower, seamless, journey, transform, revolutionize, game-changing, cutting-edge, delve*.
 - No three-part tagline stacks ("Feed. Teach. Heal.") and no rhetorical-question headings.
 - Headings name the section ("Upcoming events", not "Join the movement").
 - Concrete over abstract: "353,000 meals served since 2014", not "countless lives touched". Every number has a source and an as-of date.
@@ -153,7 +153,7 @@ All tokens live in `src/app/globals.css` under Tailwind v4 `@theme`. Components 
 ### 5.6 Imagery and photography
 
 - **Real TSOH photos only.** Aspect ratios: 16:9 (heroes), 4:3 (cards), 1:1 (team avatars), 3:2 (program galleries).
-- **Text over photos** sits on a flat tint (`primary-900` at about 55%) or in a solid caption band below the image. No gradient fades.
+- **Text over photos and the hero video** sits on a flat tint (`primary-900` at about 60%) or in a solid caption band below the image. No gradient fades. Hero text must hold 4.5:1 against the brightest frame of the video once tinted; check this whenever the video is replaced.
 - **Every image goes through the `Image` wrapper** (next/image). `alt` is required, or `decorative` must be set explicitly. Alt text describes the content ("Volunteers plating meals at Cornerstone Kitchen"), not "image" or the program name.
 - **Consent:**
   - Volunteer sign-up includes a photo-consent checkbox. Guardian consent covers minors.
@@ -183,10 +183,16 @@ All tokens live in `src/app/globals.css` under Tailwind v4 `@theme`. Components 
   - Disclosure height animation.
   - The menu sheet.
 - **Under `prefers-reduced-motion: reduce`:** no transforms or translations. Opacity changes only, at `--duration-fast` or less.
-- **Hero video:**
-  - Muted, looped and `aria-hidden`, with a visible **Pause/Play** button.
-  - Skipped (poster only) for reduced motion, Save-Data or slow connections. This matches today's behavior.
-- **Removed:** parallax, the highlighter sweep (`HighlightedText`), the scroll-animated sticky program panels, auto-advancing carousels, hover font-size growth (`Emphasis`), and count-up numbers.
+- **Hero video** (a core part of the site; the file is swapped manually by the project lead):
+  - **Full-bleed background** on first view, with the eyebrow, tagline, intro and actions on top (flat tint, §5.6).
+  - Muted, looped and `aria-hidden`, with a visible **Pause/Play** button. It pauses automatically when off screen.
+  - **On scroll**, it eases from full width into a card inset 40px from each side with 12px corners, then scrolls away with the page. The scale is driven by scroll position (CSS scroll-driven animation, or a passive, rAF-throttled listener). It never blocks or hijacks scrolling.
+  - With reduced motion, Save-Data or a slow connection: no shrink and no video; the poster image shows. This matches today's skip behavior.
+- **Sponsor strip** (homepage, under the hero):
+  - Logos loop horizontally at constant speed (one cycle about 40s) using a CSS transform on a duplicated list. The duplicate is `aria-hidden`.
+  - It pauses on hover, on keyboard focus inside it, and with a visible **Pause/Play** button (WCAG 2.2.2).
+  - With reduced motion, it doesn't move; logos sit in a static row that can be scrolled sideways.
+- **Removed:** parallax, the highlighter sweep (`HighlightedText`), the scroll-animated sticky program panels, auto-advancing photo carousels, hover font-size growth (`Emphasis`), and count-up numbers.
 
 ## 6. Components
 
@@ -532,15 +538,18 @@ Known services today, to be confirmed and completed as content in Sanity:
 
 ### 10.1 Home
 
-1. **Hero:** real photo or the muted video with a Pause button. One plain headline saying what TSOH does and where *(content task: final headline)*. Three actions: **Get Help · Volunteer · Give**.
-2. **Impact numbers:** 4–5 `Stat`s with real values and "as of {year}".
-3. **Upcoming events:** the next three, each with Volunteer and Open-to-the-public badges and Details (opens the Hub).
-4. **Programs:** five cards linking to program pages.
-5. **Latest story:** the newest publication, plus "More news".
-6. **Partners and sponsors:** a logo strip linking to `/about/partners`.
+1. **Hero:**
+   - The full-bleed background video, which shrinks on scroll (§5.8).
+   - Today's copy, unchanged: the eyebrow "The Source of Hope", the tagline "Empowering and providing hope through education, health, and wellness", and the intro paragraph (desktop only, as today).
+   - Actions: **Give · Volunteer · Get Help**.
+2. **Sponsor strip:** "Our sponsors", with logos in a constant-speed loop (§5.8). Every sponsor is shown equally, with no tiers. The list is **static, in code** (`src/content/sponsors.ts`: name, logo path, optional link), not in Sanity. The logos are placeholders until the project lead supplies the files.
+3. **Impact numbers:** 4–5 `Stat`s with real values and "as of {year}".
+4. **Upcoming events:** the next three, each with Volunteer and Open-to-the-public badges and Details (opens the Hub).
+5. **Programs:** five cards linking to program pages.
+6. **Latest story:** the newest publication, plus "More news".
 7. Footer.
 
-Removed: the duplicate donate band, the "Get Involved" parallax card and the auto-carousel.
+Removed: the duplicate donate band, the "Get Involved" parallax card and the auto-advancing photo carousel. Section headings stay plain ("Upcoming events", "Our programs"), with no taglines.
 
 ### 10.2 Programs index
 
@@ -587,7 +596,7 @@ Each event emits schema.org `Event` structured data for Google's event results. 
 ### 10.8 Partners & Sponsors, Careers, Contact
 
 - **Partners & Sponsors** (`Content`):
-  - Partner logo directory, shared with the Store's "Shop beyond our store" section.
+  - Sponsor logos from the same static list as the homepage strip (`src/content/sponsors.ts`), shown as a grid.
   - Community Sponsor tiers summary, with **Become a sponsor** (opens Give → Business).
   - Partner-event note.
 - **Careers** (`Content`): open roles or a Handshake link.

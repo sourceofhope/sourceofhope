@@ -33,7 +33,8 @@ flowchart LR
 
 | Data | System of record | Notes |
 |---|---|---|
-| Editorial content: programs, services (Get Help), pages, FAQs, team, publications, newsletter archive, products, partner directory, sponsor tiers, site settings, impact numbers | **Sanity** (`production-v2`) | Public by design. Never holds personal data |
+| Editorial content: programs, services (Get Help), pages, FAQs, team, publications, newsletter archive, products, sponsor tiers, site settings, impact numbers | **Sanity** (`production-v2`) | Public by design. Never holds personal data |
+| Sponsor logos (homepage strip, Partners & Sponsors page) | **Code**: `src/content/sponsors.ts` + `public/` logo files | Static by decision (2026-11-23); changed through a commit |
 | Events, shifts, guest and volunteer info, publications, campaign links | **PostgreSQL** | Staff-entered through the portal. Images stored as Sanity assets |
 | People, parties, registrations, agreements status, check-ins | **PostgreSQL** | Private. RLS denies anonymous access |
 | Signed agreement documents | **DocuSign** | We store envelope IDs, template versions and status, not documents |

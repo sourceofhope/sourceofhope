@@ -10,7 +10,7 @@ Only events, team, products, publications and newsletter issues live in Sanity t
 ## Decision
 
 - Editorial copy moves into **structured** Sanity types with fixed fields:
-  - program, service (Get Help), ourStory, plannedGiving, sponsorTiers, faq, partner;
+  - program, service (Get Help), ourStory, plannedGiving, sponsorTiers, faq;
   - siteSettings: contact details, impact stats with as-of dates, the meals-per-dollar ratio, the glossary.
 - Templates decide the layout. Editors fill fields; they do not arrange blocks.
 - **UI chrome** (buttons, nav labels, form messages, Hub step titles) stays in code message files.
