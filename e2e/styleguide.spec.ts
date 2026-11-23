@@ -11,6 +11,30 @@ test.describe("styleguide", () => {
     expect(await axeViolations(page, "#tokens")).toEqual([]);
   });
 
+  for (const id of ["text", "buttons", "content"]) {
+    test(`section "${id}" has no WCAG A/AA violations`, async ({ page }) => {
+      await page.goto("/styleguide");
+      await expect(page.locator(`#${id}`)).toBeVisible();
+      expect(await axeViolations(page, `#${id}`)).toEqual([]);
+    });
+  }
+
+  test("keyboard focus shows a visible ring on buttons and links", async ({ page }) => {
+    await page.goto("/styleguide");
+    const button = page.locator("#buttons").getByRole("button", { name: "Give $50" }).first();
+    await button.focus();
+    await page.keyboard.press("Tab");
+    await page.keyboard.press("Shift+Tab");
+    await expect(button).toBeFocused();
+    const ring = await button.evaluate((el) => getComputedStyle(el).boxShadow);
+    expect(ring).not.toBe("none");
+    const link = page.locator("#text").getByRole("link", { name: "TextLink to Our Story" });
+    await link.focus();
+    await page.keyboard.press("Tab");
+    await page.keyboard.press("Shift+Tab");
+    expect(await link.evaluate((el) => getComputedStyle(el).boxShadow)).not.toBe("none");
+  });
+
   test("every semantic color token exists as a CSS variable at runtime", async ({ page }) => {
     await page.goto("/styleguide");
     const missing = await page.evaluate(() => {
