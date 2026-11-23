@@ -139,7 +139,7 @@ Every settled decision, with where it is specified. "Spec" = [01_UI_UX_DESIGN_SP
 
 | Item | Why it matters | Resolve by |
 |---|---|---|
-| Vercel UI SDK vs React Aria Components scorecard | Picks the component foundation | Spike 0.5 |
+| ~~Vercel UI SDK vs React Aria Components scorecard~~ | **Resolved 2026-11-23:** UI SDK chosen ([ADR-0003](adr/0003-component-foundation-wrappers.md#spike-result-2026-11-23)) | Spike 0.5 |
 | Supabase Auth + RLS with Next.js 16 server actions and route handlers | Confirms ADR-0005 | Spike 0.6 |
 | Eventbrite: free RSVP listing that feeds our sign-up is allowed; attendee webhook vs polling; API create/publish for free events | Confirms ADR-0006 | Spike 0.9 + Eventbrite support |
 | DocuSign embedded ("focused view") signing inside our dialog; one session covering a guardian and their minors; Connect webhooks | Shapes the Volunteer flow | Spike 0.8 |
