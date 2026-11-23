@@ -1,13 +1,13 @@
 "use client";
 
 import Image from "next/image";
-import Title from "@/components/ui/Title";
-import Emphasis from "@/components/ui/Emphasis";
-import ExpressiveLink from "@/components/ui/expressive/ExpressiveLink";
+import Title from "@/components/legacy/ui/Title";
+import Emphasis from "@/components/legacy/ui/Emphasis";
+import ExpressiveLink from "@/components/legacy/ui/expressive/ExpressiveLink";
 import Link from "next/link";
 import { useState } from "react";
 import { ArrowRightIcon, XMarkIcon } from "@heroicons/react/20/solid";
-import Overlay from "../ui/Overlay";
+import Overlay from "@/components/legacy/ui/Overlay";
 import { ASSET_VERSION } from "@/lib/environment";
 
 interface ResourceCardProps {

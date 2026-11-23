@@ -2,9 +2,9 @@
 
 import { useRef, useEffect, useState, ReactNode } from "react";
 import { MapPinIcon } from "@heroicons/react/20/solid";
-import ExpressiveAnchor from "@/components/ui/expressive/ExpressiveAnchor";
-import Title from "@/components/ui/Title";
-import Heading from "@/components/ui/Heading";
+import ExpressiveAnchor from "@/components/legacy/ui/expressive/ExpressiveAnchor";
+import Title from "@/components/legacy/ui/Title";
+import Heading from "@/components/legacy/ui/Heading";
 import { ASSET_VERSION } from "@/lib/environment";
 
 interface ServingArticleProps {

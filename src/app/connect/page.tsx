@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import PageHeader from "@/components/layout/PageHeader";
+import PageHeader from "@/components/legacy/layout/PageHeader";
 import ConnectVolunteerSection from "@/components/connect/ConnectVolunteerSection";
 import ConnectMapSection from "@/components/connect/ConnectMapSection";
 import ConnectCareersSection from "@/components/connect/ConnectCareersSection";

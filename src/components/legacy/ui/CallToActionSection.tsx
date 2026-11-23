@@ -1,6 +1,6 @@
 import { ComponentType, ReactNode, SVGProps } from "react";
-import { LinkButton } from "@/components/ui/Button";
-import Title from "@/components/ui/Title";
+import { LinkButton } from "@/components/legacy/ui/Button";
+import Title from "@/components/legacy/ui/Title";
 
 interface CallToActionSectionProps {
   icon: ComponentType<SVGProps<SVGSVGElement>>;

@@ -74,7 +74,7 @@ body {
   font-family: var(--font-inter);
 }
 
-/* Lock page scrolling while a modal <dialog> is open (see components/ui/Modal.tsx). */
+/* Lock page scrolling while a modal <dialog> is open (see components/legacy/ui/Modal.tsx). */
 html:has(dialog:modal) {
   overflow: hidden;
 }

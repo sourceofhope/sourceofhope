@@ -30,6 +30,7 @@ A non-technical summary for staff and the board lives as a shared doc (linked fr
 | [0006](adr/0006-internal-registration-source-of-truth.md) | Our system owns every TSOH event registration; Eventbrite is an intake door; partner events link out |
 | [0007](adr/0007-structured-sanity-content.md) | Editorial copy moves into structured Sanity types; no free-form page builder |
 | [0008](adr/0008-refined-current-visual-direction.md) | Light-only "refined current" visual direction with written never-rules |
+| [0009](adr/0009-component-architecture.md) | Component architecture: one-way layers, primitive anatomy, one props vocabulary, a definition of done |
 
 ## Rules for anyone (human or agent) working from this plan
 

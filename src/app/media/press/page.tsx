@@ -1,11 +1,11 @@
 import { Metadata } from "next";
 import { ReactNode } from "react";
-import PageHeader from "@/components/layout/PageHeader";
-import PageSection from "@/components/ui/PageSection";
-import Title from "@/components/ui/Title";
-import Heading from "@/components/ui/Heading";
-import Bold from "@/components/ui/Bold";
-import HighlightedText from "@/components/ui/HighlightedText";
+import PageHeader from "@/components/legacy/layout/PageHeader";
+import PageSection from "@/components/legacy/ui/PageSection";
+import Title from "@/components/legacy/ui/Title";
+import Heading from "@/components/legacy/ui/Heading";
+import Bold from "@/components/legacy/ui/Bold";
+import HighlightedText from "@/components/legacy/ui/HighlightedText";
 
 export const metadata: Metadata = {
   title: "Press & Media | The Source of Hope",

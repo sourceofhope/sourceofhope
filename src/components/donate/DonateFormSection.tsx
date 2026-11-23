@@ -10,9 +10,9 @@ import {
   useElements,
 } from "@stripe/react-stripe-js";
 import Link from "next/link";
-import Title from "@/components/ui/Title";
-import Heading from "@/components/ui/Heading";
-import SectionHeading from "@/components/ui/SectionHeading";
+import Title from "@/components/legacy/ui/Title";
+import Heading from "@/components/legacy/ui/Heading";
+import SectionHeading from "@/components/legacy/ui/SectionHeading";
 
 const STANDARD_PROCESSING_RATE = 0.03;
 

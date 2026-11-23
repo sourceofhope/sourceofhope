@@ -14,7 +14,7 @@ const LEGACY_FILES = [
   "src/components/donate/DonateFormSection.tsx",
   "src/components/members/**",
   "src/components/store/checkout/SelfCheckoutSection.tsx",
-  "src/components/ui/HookInput.tsx",
+  "src/components/legacy/ui/HookInput.tsx",
 ];
 
 const eslintConfig = defineConfig([

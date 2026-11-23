@@ -1,6 +1,6 @@
-import PageSection from "@/components/ui/PageSection";
-import Title from "@/components/ui/Title";
-import ExpressiveCard from "@/components/ui/expressive/ExpressiveCard";
+import PageSection from "@/components/legacy/ui/PageSection";
+import Title from "@/components/legacy/ui/Title";
+import ExpressiveCard from "@/components/legacy/ui/expressive/ExpressiveCard";
 import Link from "next/link";
 
 export default function ProgramsGuidelinesSection() {

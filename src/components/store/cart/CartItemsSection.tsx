@@ -1,7 +1,7 @@
 "use client";
 
 import { TrashIcon } from "@heroicons/react/24/outline";
-import Heading from "@/components/ui/Heading";
+import Heading from "@/components/legacy/ui/Heading";
 import { CartItem } from "@/context/StoreCartContext";
 
 interface CartItemsSectionProps {

@@ -1,13 +1,13 @@
-import Title from "@/components/ui/Title";
-import ExpressiveLink from "@/components/ui/expressive/ExpressiveLink";
-import ExpressiveAnchor from "@/components/ui/expressive/ExpressiveAnchor";
-import PageSection from "@/components/ui/PageSection";
-import Carousel from "@/components/ui/Carousel";
+import Title from "@/components/legacy/ui/Title";
+import ExpressiveLink from "@/components/legacy/ui/expressive/ExpressiveLink";
+import ExpressiveAnchor from "@/components/legacy/ui/expressive/ExpressiveAnchor";
+import PageSection from "@/components/legacy/ui/PageSection";
+import Carousel from "@/components/legacy/ui/Carousel";
 import {
   fetchPublications,
   type SanityPublication,
 } from "@/lib/sanity-content";
-import HighlightedText from "../ui/HighlightedText";
+import HighlightedText from "@/components/legacy/ui/HighlightedText";
 import { ASSET_VERSION } from "@/lib/environment";
 
 async function getPublications() {

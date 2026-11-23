@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
-import Heading from "@/components/ui/Heading";
-import Title from "@/components/ui/Title";
+import Heading from "@/components/legacy/ui/Heading";
+import Title from "@/components/legacy/ui/Title";
 
 interface SectionHeadingProps {
   /** Small uppercase label above the title. */

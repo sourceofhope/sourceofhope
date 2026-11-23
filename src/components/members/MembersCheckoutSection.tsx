@@ -1,8 +1,8 @@
 "use client";
 
-import Heading from "@/components/ui/Heading";
-import Title from "@/components/ui/Title";
-import Bold from "@/components/ui/Bold";
+import Heading from "@/components/legacy/ui/Heading";
+import Title from "@/components/legacy/ui/Title";
+import Bold from "@/components/legacy/ui/Bold";
 import Link from "next/link";
 import { useState } from "react";
 import { loadStripe } from "@stripe/stripe-js";

@@ -3,8 +3,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import { XMarkIcon, ArrowRightIcon } from "@heroicons/react/20/solid";
-import Overlay from "@/components/ui/Overlay";
-import ExpressiveAnchor from "@/components/ui/expressive/ExpressiveAnchor";
+import Overlay from "@/components/legacy/ui/Overlay";
+import ExpressiveAnchor from "@/components/legacy/ui/expressive/ExpressiveAnchor";
 import { SanityTeamMember } from "@/lib/sanity-content";
 
 interface CarouselCardProps {

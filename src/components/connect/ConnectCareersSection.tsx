@@ -1,11 +1,11 @@
-import PageSection from "@/components/ui/PageSection";
-import Title from "@/components/ui/Title";
-import Heading from "@/components/ui/Heading";
-import { AnchorButton, LinkButton } from "@/components/ui/Button";
-import Bold from "@/components/ui/Bold";
-import Blockquote from "@/components/ui/Blockquote";
-import HighlightedText from "@/components/ui/HighlightedText";
-import SimpleLink from "@/components/ui/SimpleLink";
+import PageSection from "@/components/legacy/ui/PageSection";
+import Title from "@/components/legacy/ui/Title";
+import Heading from "@/components/legacy/ui/Heading";
+import { AnchorButton, LinkButton } from "@/components/legacy/ui/Button";
+import Bold from "@/components/legacy/ui/Bold";
+import Blockquote from "@/components/legacy/ui/Blockquote";
+import HighlightedText from "@/components/legacy/ui/HighlightedText";
+import SimpleLink from "@/components/legacy/ui/SimpleLink";
 
 export default function ConnectCareersSection() {
   return (

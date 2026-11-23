@@ -1,11 +1,11 @@
 import Image from "next/image";
 import { Metadata } from "next";
-import PageHeader from "@/components/layout/PageHeader";
-import PageSection from "@/components/ui/PageSection";
-import SectionHeading from "@/components/ui/SectionHeading";
-import Heading from "@/components/ui/Heading";
-import HighlightedText from "@/components/ui/HighlightedText";
-import { LinkButton } from "@/components/ui/Button";
+import PageHeader from "@/components/legacy/layout/PageHeader";
+import PageSection from "@/components/legacy/ui/PageSection";
+import SectionHeading from "@/components/legacy/ui/SectionHeading";
+import Heading from "@/components/legacy/ui/Heading";
+import HighlightedText from "@/components/legacy/ui/HighlightedText";
+import { LinkButton } from "@/components/legacy/ui/Button";
 import FormSection from "@/components/planned-giving/FormSection";
 import { ASSET_VERSION } from "@/lib/environment";
 import {

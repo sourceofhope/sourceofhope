@@ -3,11 +3,11 @@
 import { useState } from "react";
 import Image from "next/image";
 import { CheckIcon, PlusIcon } from "@heroicons/react/20/solid";
-import Title from "@/components/ui/Title";
-import Heading from "@/components/ui/Heading";
-import { LinkButton } from "@/components/ui/Button";
+import Title from "@/components/legacy/ui/Title";
+import Heading from "@/components/legacy/ui/Heading";
+import { LinkButton } from "@/components/legacy/ui/Button";
 import { useCartActions } from "@/context/StoreCartContext";
-import Takeover from "@/components/ui/Takeover";
+import Takeover from "@/components/legacy/ui/Takeover";
 import { type SanityProduct } from "@/lib/sanity-content";
 
 interface StoreProductDetailProps {

@@ -1,9 +1,9 @@
-import PageSection from "@/components/ui/PageSection";
-import Title from "@/components/ui/Title";
-import Bold from "@/components/ui/Bold";
-import Blockquote from "@/components/ui/Blockquote";
-import Emphasis from "@/components/ui/Emphasis";
-import SimpleLink from "@/components/ui/SimpleLink";
+import PageSection from "@/components/legacy/ui/PageSection";
+import Title from "@/components/legacy/ui/Title";
+import Bold from "@/components/legacy/ui/Bold";
+import Blockquote from "@/components/legacy/ui/Blockquote";
+import Emphasis from "@/components/legacy/ui/Emphasis";
+import SimpleLink from "@/components/legacy/ui/SimpleLink";
 
 export default function ConnectVolunteerSection() {
   return (

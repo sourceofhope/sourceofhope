@@ -1,9 +1,9 @@
-import PageSection from "@/components/ui/PageSection";
-import HighlightedText from "@/components/ui/HighlightedText";
-import Title from "@/components/ui/Title";
-import Bold from "@/components/ui/Bold";
-import Emphasis from "@/components/ui/Emphasis";
-import Heading from "@/components/ui/Heading";
+import PageSection from "@/components/legacy/ui/PageSection";
+import HighlightedText from "@/components/legacy/ui/HighlightedText";
+import Title from "@/components/legacy/ui/Title";
+import Bold from "@/components/legacy/ui/Bold";
+import Emphasis from "@/components/legacy/ui/Emphasis";
+import Heading from "@/components/legacy/ui/Heading";
 
 export default function AboutDescriptionSection() {
   return (

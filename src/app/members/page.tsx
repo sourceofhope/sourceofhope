@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import PageHeader from "@/components/layout/PageHeader";
+import PageHeader from "@/components/legacy/layout/PageHeader";
 import MembersHeroSection from "@/components/members/MembersHeroSection";
 import MembersBenefitsSection from "@/components/members/MembersBenefitsSection";
 import MembersPlansSection from "@/components/members/MembersPlansSection";

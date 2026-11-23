@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { LockClosedIcon } from "@heroicons/react/24/solid";
-import Heading from "@/components/ui/Heading";
+import Heading from "@/components/legacy/ui/Heading";
 import { CartItem } from "@/context/StoreCartContext";
 import {
   FaPaypal,

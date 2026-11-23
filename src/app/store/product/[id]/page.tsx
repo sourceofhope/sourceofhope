@@ -1,9 +1,9 @@
 import { HeartIcon } from "@heroicons/react/20/solid";
-import Title from "@/components/ui/Title";
-import { LinkButton } from "@/components/ui/Button";
+import Title from "@/components/legacy/ui/Title";
+import { LinkButton } from "@/components/legacy/ui/Button";
 import Cart from "@/components/store/Cart";
-import Loader from "@/components/structure/Loader";
-import HeaderBlocker from "@/components/layout/HeaderBlocker";
+import Loader from "@/components/legacy/structure/Loader";
+import HeaderBlocker from "@/components/legacy/layout/HeaderBlocker";
 import StoreProductDetail from "@/components/store/StoreProductDetail";
 import { fetchProductById } from "@/lib/sanity-content";
 

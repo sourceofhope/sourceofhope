@@ -1,8 +1,8 @@
-import Title from "@/components/ui/Title";
-import Emphasis from "@/components/ui/Emphasis";
-import ExpressiveAnchor from "@/components/ui/expressive/ExpressiveAnchor";
-import Blockquote from "@/components/ui/Blockquote";
-import PageSection from "@/components/ui/PageSection";
+import Title from "@/components/legacy/ui/Title";
+import Emphasis from "@/components/legacy/ui/Emphasis";
+import ExpressiveAnchor from "@/components/legacy/ui/expressive/ExpressiveAnchor";
+import Blockquote from "@/components/legacy/ui/Blockquote";
+import PageSection from "@/components/legacy/ui/PageSection";
 import Image from "next/image";
 import { ASSET_VERSION } from "@/lib/environment";
 

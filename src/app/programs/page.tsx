@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import PageHeader from "@/components/layout/PageHeader";
+import PageHeader from "@/components/legacy/layout/PageHeader";
 import ProgramsShowcaseSection from "@/components/programs/ProgramsShowcaseSection";
 import ProgramsListSection from "@/components/programs/ProgramsListSection";
 import ProgramsDonationSection from "@/components/programs/ProgramsDonationSection";

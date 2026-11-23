@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import PageSection from "@/components/ui/PageSection";
-import Title from "@/components/ui/Title";
-import Heading from "@/components/ui/Heading";
-import Carousel from "@/components/ui/Carousel";
-import { AnchorButton } from "@/components/ui/Button";
+import PageSection from "@/components/legacy/ui/PageSection";
+import Title from "@/components/legacy/ui/Title";
+import Heading from "@/components/legacy/ui/Heading";
+import Carousel from "@/components/legacy/ui/Carousel";
+import { AnchorButton } from "@/components/legacy/ui/Button";
 import { type SanityPublication } from "@/lib/sanity-content";
 
 export type MediaBlogPost = SanityPublication;

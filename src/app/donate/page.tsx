@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import PageHeader from "@/components/layout/PageHeader";
+import PageHeader from "@/components/legacy/layout/PageHeader";
 import DonateFormSection from "@/components/donate/DonateFormSection";
 import { ASSET_VERSION } from "@/lib/environment";
 

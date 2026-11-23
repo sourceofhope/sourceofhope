@@ -2,9 +2,9 @@ import {
   ArrowDownTrayIcon,
   DocumentTextIcon,
 } from "@heroicons/react/24/outline";
-import PageSection from "@/components/ui/PageSection";
-import SectionHeading from "@/components/ui/SectionHeading";
-import Heading from "@/components/ui/Heading";
+import PageSection from "@/components/legacy/ui/PageSection";
+import SectionHeading from "@/components/legacy/ui/SectionHeading";
+import Heading from "@/components/legacy/ui/Heading";
 import { ASSET_VERSION } from "@/lib/environment";
 
 /**

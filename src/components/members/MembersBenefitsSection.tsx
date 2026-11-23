@@ -4,8 +4,8 @@ import {
   GlobeAltIcon,
   HeartIcon,
 } from "@heroicons/react/20/solid";
-import Heading from "@/components/ui/Heading";
-import Title from "@/components/ui/Title";
+import Heading from "@/components/legacy/ui/Heading";
+import Title from "@/components/legacy/ui/Title";
 
 export default function MembersBenefitsSection() {
   return (

@@ -1,9 +1,9 @@
 import { Metadata } from "next";
-import PageHeader from "@/components/layout/PageHeader";
-import PageSection from "@/components/ui/PageSection";
-import Title from "@/components/ui/Title";
-import Heading from "@/components/ui/Heading";
-import Blockquote from "@/components/ui/Blockquote";
+import PageHeader from "@/components/legacy/layout/PageHeader";
+import PageSection from "@/components/legacy/ui/PageSection";
+import Title from "@/components/legacy/ui/Title";
+import Heading from "@/components/legacy/ui/Heading";
+import Blockquote from "@/components/legacy/ui/Blockquote";
 
 export const metadata: Metadata = {
   title: "Podcasts & Radio | The Source of Hope",

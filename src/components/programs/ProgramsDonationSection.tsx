@@ -1,5 +1,5 @@
-import { LinkButton } from "@/components/ui/Button";
-import Title from "@/components/ui/Title";
+import { LinkButton } from "@/components/legacy/ui/Button";
+import Title from "@/components/legacy/ui/Title";
 import { BanknotesIcon } from "@heroicons/react/20/solid";
 
 export default function ProgramsDonationSection() {

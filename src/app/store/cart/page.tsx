@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { ShoppingBagIcon } from "@heroicons/react/20/solid";
-import Title from "@/components/ui/Title";
-import { LinkButton } from "@/components/ui/Button";
+import Title from "@/components/legacy/ui/Title";
+import { LinkButton } from "@/components/legacy/ui/Button";
 import { useCartActions, SHIPPING_OPTIONS } from "@/context/StoreCartContext";
 import { useHeaderContext } from "@/context/HeaderContext";
 import CartItemsSection from "@/components/store/cart/CartItemsSection";

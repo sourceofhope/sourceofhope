@@ -1,9 +1,9 @@
 import Image from "next/image";
-import ExpressiveLink from "@/components/ui/expressive/ExpressiveLink";
-import Title from "@/components/ui/Title";
-import ParallaxLayer from "../ui/parallax/ParallaxLayer";
-import ParallaxSection from "../ui/parallax/ParallaxSection";
-import Heading from "../ui/Heading";
+import ExpressiveLink from "@/components/legacy/ui/expressive/ExpressiveLink";
+import Title from "@/components/legacy/ui/Title";
+import ParallaxLayer from "@/components/legacy/ui/parallax/ParallaxLayer";
+import ParallaxSection from "@/components/legacy/ui/parallax/ParallaxSection";
+import Heading from "@/components/legacy/ui/Heading";
 import { ASSET_VERSION } from "@/lib/environment";
 
 export default function HomeServingSection() {

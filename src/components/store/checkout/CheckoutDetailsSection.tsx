@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import Heading from "@/components/ui/Heading";
+import Heading from "@/components/legacy/ui/Heading";
 import { CartItem } from "@/context/StoreCartContext";
 import {
   STANDARD_TAX_RATE,

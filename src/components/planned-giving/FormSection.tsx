@@ -3,9 +3,9 @@
 import { useState } from "react";
 import Image from "next/image";
 import { SparklesIcon } from "@heroicons/react/24/solid";
-import PageSection from "@/components/ui/PageSection";
-import SectionHeading from "@/components/ui/SectionHeading";
-import HoneypotField, { readHoneypot } from "@/components/ui/HoneypotField";
+import PageSection from "@/components/legacy/ui/PageSection";
+import SectionHeading from "@/components/legacy/ui/SectionHeading";
+import HoneypotField, { readHoneypot } from "@/components/legacy/ui/HoneypotField";
 import { ASSET_VERSION } from "@/lib/environment";
 
 type Status = "IDLE" | "SUBMITTING" | "SUCCESS" | "INVALID" | "ERROR";

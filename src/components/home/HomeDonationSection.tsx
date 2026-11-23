@@ -1,6 +1,6 @@
-import { LinkButton } from "@/components/ui/Button";
-import Title from "@/components/ui/Title";
-import PageSection from "@/components/ui/PageSection";
+import { LinkButton } from "@/components/legacy/ui/Button";
+import Title from "@/components/legacy/ui/Title";
+import PageSection from "@/components/legacy/ui/PageSection";
 import { BanknotesIcon } from "@heroicons/react/20/solid";
 import { ServingCard } from "./HomeServingSection";
 

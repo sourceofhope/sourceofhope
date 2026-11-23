@@ -1,18 +1,18 @@
 import { Metadata } from "next";
-import Title from "@/components/ui/Title";
-import Heading from "@/components/ui/Heading";
-import ExpressiveCard from "@/components/ui/expressive/ExpressiveCard";
-import Carousel from "@/components/ui/Carousel";
-import { AnchorButton } from "@/components/ui/Button";
-import Bold from "@/components/ui/Bold";
-import HighlightedText from "@/components/ui/HighlightedText";
-import Icon from "@/components/ui/Icon";
+import Title from "@/components/legacy/ui/Title";
+import Heading from "@/components/legacy/ui/Heading";
+import ExpressiveCard from "@/components/legacy/ui/expressive/ExpressiveCard";
+import Carousel from "@/components/legacy/ui/Carousel";
+import { AnchorButton } from "@/components/legacy/ui/Button";
+import Bold from "@/components/legacy/ui/Bold";
+import HighlightedText from "@/components/legacy/ui/HighlightedText";
+import Icon from "@/components/legacy/ui/Icon";
 import {
   AcademicCapIcon,
   CalculatorIcon,
   LanguageIcon,
 } from "@heroicons/react/20/solid";
-import PageHeader from "@/components/layout/PageHeader";
+import PageHeader from "@/components/legacy/layout/PageHeader";
 import { ASSET_VERSION } from "@/lib/environment";
 
 const CANONICAL_URL = "https://thesourceofhope.org/programs/educationHope";

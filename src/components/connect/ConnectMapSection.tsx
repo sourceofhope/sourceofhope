@@ -1,9 +1,9 @@
 'use client';
 
-import PageSection from '@/components/ui/PageSection';
-import Title from '@/components/ui/Title';
-import HookInput from '@/components/ui/HookInput';
-import Heading from '@/components/ui/Heading';
+import PageSection from '@/components/legacy/ui/PageSection';
+import Title from '@/components/legacy/ui/Title';
+import HookInput from '@/components/legacy/ui/HookInput';
+import Heading from '@/components/legacy/ui/Heading';
 
 import { useRef, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -14,8 +14,8 @@ import {
   CheckCircleIcon,
   XCircleIcon,
 } from '@heroicons/react/20/solid';
-import HighlightedText from '@/components/ui/HighlightedText';
-import HoneypotField, { readHoneypot } from '@/components/ui/HoneypotField';
+import HighlightedText from '@/components/legacy/ui/HighlightedText';
+import HoneypotField, { readHoneypot } from '@/components/legacy/ui/HoneypotField';
 
 const formStatus = {
   IDLE: 'IDLE',

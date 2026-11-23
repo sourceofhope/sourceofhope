@@ -1,8 +1,8 @@
 import { Suspense } from "react";
 import { Metadata } from "next";
 import { HeartIcon } from "@heroicons/react/24/outline";
-import PageHeader from "@/components/layout/PageHeader";
-import CallToActionSection from "@/components/ui/CallToActionSection";
+import PageHeader from "@/components/legacy/layout/PageHeader";
+import CallToActionSection from "@/components/legacy/ui/CallToActionSection";
 import EventsIntroSection from "@/components/events/EventsIntroSection";
 import EventsTimeline from "@/components/events/EventsTimeline";
 import EventsRecurringGrid from "@/components/events/EventsRecurringGrid";

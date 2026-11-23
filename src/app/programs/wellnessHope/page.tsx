@@ -1,10 +1,10 @@
 import { Metadata } from "next";
-import Title from "@/components/ui/Title";
-import Heading from "@/components/ui/Heading";
-import { AnchorButton } from "@/components/ui/Button";
-import Bold from "@/components/ui/Bold";
-import HighlightedText from "@/components/ui/HighlightedText";
-import PageHeader from "@/components/layout/PageHeader";
+import Title from "@/components/legacy/ui/Title";
+import Heading from "@/components/legacy/ui/Heading";
+import { AnchorButton } from "@/components/legacy/ui/Button";
+import Bold from "@/components/legacy/ui/Bold";
+import HighlightedText from "@/components/legacy/ui/HighlightedText";
+import PageHeader from "@/components/legacy/layout/PageHeader";
 
 const ASSET_VERSION = "v2";
 const CANONICAL_URL = "https://thesourceofhope.org/programs/wellnessHope";

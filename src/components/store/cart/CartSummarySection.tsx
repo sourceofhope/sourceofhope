@@ -1,6 +1,6 @@
 'use client';
 
-import Heading from '@/components/ui/Heading';
+import Heading from '@/components/legacy/ui/Heading';
 import { STANDARD_PROCESSING_RATE, STANDARD_TAX_RATE } from '@/context/StoreCartContext';
 
 interface CartSummarySectionProps {

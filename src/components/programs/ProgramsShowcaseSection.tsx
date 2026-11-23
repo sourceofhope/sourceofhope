@@ -1,9 +1,9 @@
-import PageSection from '@/components/ui/PageSection';
-import Emphasis from '@/components/ui/Emphasis';
-import Title from '@/components/ui/Title';
-import Heading from '@/components/ui/Heading';
-import Blockquote from '@/components/ui/Blockquote';
-import Bold from '@/components/ui/Bold';
+import PageSection from '@/components/legacy/ui/PageSection';
+import Emphasis from '@/components/legacy/ui/Emphasis';
+import Title from '@/components/legacy/ui/Title';
+import Heading from '@/components/legacy/ui/Heading';
+import Blockquote from '@/components/legacy/ui/Blockquote';
+import Bold from '@/components/legacy/ui/Bold';
 
 export default function ProgramsShowcaseSection() {
   return (

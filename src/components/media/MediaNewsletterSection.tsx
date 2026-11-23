@@ -1,12 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import PageSection from "@/components/ui/PageSection";
-import Title from "@/components/ui/Title";
-import Heading from "@/components/ui/Heading";
-import Carousel from "@/components/ui/Carousel";
-import Blockquote from "@/components/ui/Blockquote";
-import HighlightedText from "@/components/ui/HighlightedText";
+import PageSection from "@/components/legacy/ui/PageSection";
+import Title from "@/components/legacy/ui/Title";
+import Heading from "@/components/legacy/ui/Heading";
+import Carousel from "@/components/legacy/ui/Carousel";
+import Blockquote from "@/components/legacy/ui/Blockquote";
+import HighlightedText from "@/components/legacy/ui/HighlightedText";
 import { type SanityNewsletter } from "@/lib/sanity-content";
 
 export type MediaNewsletterPost = SanityNewsletter;

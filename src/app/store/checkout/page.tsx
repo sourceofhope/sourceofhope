@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Title from "@/components/ui/Title";
+import Title from "@/components/legacy/ui/Title";
 import { useCartActions } from "@/context/StoreCartContext";
 import { useHeaderContext } from "@/context/HeaderContext";
 import Cart from "@/components/store/Cart";

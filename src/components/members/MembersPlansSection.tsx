@@ -7,9 +7,9 @@ import {
   ShieldCheckIcon,
   BuildingOffice2Icon,
 } from "@heroicons/react/20/solid";
-import Title from "@/components/ui/Title";
-import Heading from "@/components/ui/Heading";
-import Bold from "@/components/ui/Bold";
+import Title from "@/components/legacy/ui/Title";
+import Heading from "@/components/legacy/ui/Heading";
+import Bold from "@/components/legacy/ui/Bold";
 import MembersCheckoutSection from "./MembersCheckoutSection";
 
 const IMPACT_MODEL = {

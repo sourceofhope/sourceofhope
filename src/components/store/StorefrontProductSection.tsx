@@ -1,5 +1,5 @@
-import Title from "@/components/ui/Title";
-import Heading from "@/components/ui/Heading";
+import Title from "@/components/legacy/ui/Title";
+import Heading from "@/components/legacy/ui/Heading";
 import StorefrontProductCard from "@/components/store/StorefrontProductCard";
 import { fetchProducts } from "@/lib/sanity-content";
 

@@ -6,8 +6,8 @@ import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { GoogleTagManager, GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
+import Header from "@/components/legacy/layout/Header";
+import Footer from "@/components/legacy/layout/Footer";
 
 const inter = Inter({
   variable: "--font-inter",

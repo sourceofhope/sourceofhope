@@ -1,9 +1,9 @@
-import PageSection from "@/components/ui/PageSection";
-import Title from "@/components/ui/Title";
-import Bold from "@/components/ui/Bold";
-import HighlightedText from "@/components/ui/HighlightedText";
-import { AnchorButton, LinkButton } from "@/components/ui/Button";
-import Emphasis from "@/components/ui/Emphasis";
+import PageSection from "@/components/legacy/ui/PageSection";
+import Title from "@/components/legacy/ui/Title";
+import Bold from "@/components/legacy/ui/Bold";
+import HighlightedText from "@/components/legacy/ui/HighlightedText";
+import { AnchorButton, LinkButton } from "@/components/legacy/ui/Button";
+import Emphasis from "@/components/legacy/ui/Emphasis";
 
 export default function AboutSummarySection() {
   return (

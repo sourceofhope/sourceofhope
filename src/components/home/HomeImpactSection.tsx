@@ -1,10 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import Title from "@/components/ui/Title";
-import Emphasis from "@/components/ui/Emphasis";
-import ExpressiveLink from "@/components/ui/expressive/ExpressiveLink";
-import { ExpressiveNumber } from "@/components/ui/expressive/ExpressiveNumber";
+import Title from "@/components/legacy/ui/Title";
+import Emphasis from "@/components/legacy/ui/Emphasis";
+import ExpressiveLink from "@/components/legacy/ui/expressive/ExpressiveLink";
+import { ExpressiveNumber } from "@/components/legacy/ui/expressive/ExpressiveNumber";
 import { ASSET_VERSION } from "@/lib/environment";
 
 export default function HomeImpactSection() {

@@ -1,10 +1,10 @@
 import Link from "next/link";
-import HighlightedText from "@/components/ui/HighlightedText";
-import Blockquote from "@/components/ui/Blockquote";
-import Bold from "@/components/ui/Bold";
-import Heading from "@/components/ui/Heading";
-import Title from "@/components/ui/Title";
-import PageSection from "@/components/ui/PageSection";
+import HighlightedText from "@/components/legacy/ui/HighlightedText";
+import Blockquote from "@/components/legacy/ui/Blockquote";
+import Bold from "@/components/legacy/ui/Bold";
+import Heading from "@/components/legacy/ui/Heading";
+import Title from "@/components/legacy/ui/Title";
+import PageSection from "@/components/legacy/ui/PageSection";
 
 export default function MembersHeroSection() {
   return (

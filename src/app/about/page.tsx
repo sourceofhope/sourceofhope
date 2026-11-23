@@ -1,5 +1,5 @@
 import { Metadata } from "next";
-import PageHeader from "@/components/layout/PageHeader";
+import PageHeader from "@/components/legacy/layout/PageHeader";
 import AboutDescriptionSection from "@/components/about/AboutDescriptionSection";
 import AboutMissionSection from "@/components/about/AboutMissionSection";
 import AboutSummarySection from "@/components/about/AboutSummarySection";

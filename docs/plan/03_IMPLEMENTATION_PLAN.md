@@ -109,10 +109,13 @@ Phases 1 and 2 can overlap, as can 5 and 4. The project lead may approve overlap
 
 ## Phase 1 · Design system and shell
 
-**Goal:** every token, primitive and template exists, is accessible and is visible in `/styleguide`. The new shell wraps every route.
+**Goal:** every token, primitive and template exists, is accessible and is visible in `/styleguide`. The new shell wraps every route. Everything follows [ADR-0009](adr/0009-component-architecture.md) (layers, anatomy, props vocabulary, definition of done).
+
+**Order:** 1.0 → 1.1 → 1.2 → **1.7** → 1.3 → 1.4 → 1.5 → 1.6. Localization plumbing comes before the primitives, so built-in labels come from message files from the first component (ADR-0009 §6).
 
 | Slice | Deliverable | Acceptance criteria |
 |---|---|---|
+| 1.0 | Component architecture ([ADR-0009](adr/0009-component-architecture.md)). Move legacy `src/components/{ui,layout,structure}` to `src/components/legacy/` so the new system owns the canonical paths. UI SDK and `tailwind-variants` pinned | Build, lint, types and tests pass. Every page renders exactly as before |
 | 1.1 | Tokens in `globals.css` (semantic colors, type scale, spacing, radius, shadows, motion, z-index); fonts (Urbanist + Inter, latin, variable); Montserrat removed; `/styleguide` route (dev and preview only) with a tokens page | Contrast script passes for every text and surface pair. `/styleguide` returns 404 in production builds |
 | 1.2 | **Lint guardrails:** no Tailwind default palette, banned radius classes, arbitrary-value allowlist, no raw internal `<a>`, buttons need `type`, no component-library imports outside `ui/`, no literal UI strings in components | CI fails on violations. Enforced on new code immediately and site-wide at the end of Phase 3 |
 | 1.3 | Primitives part 1: Button family, TextLink, ExternalLink, HubLink, IconButton, Image, Badge, Card and LinkCard, Stat, Spinner, Skeleton, EmptyState, Alert, SkipLink, VisuallyHidden | In the styleguide. Prop contracts unit-tested (e.g. `IconButton` requires `label`, `Image` requires `alt` or `decorative`). axe clean |

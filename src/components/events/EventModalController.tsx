@@ -1,7 +1,7 @@
 "use client";
 
 import { useSearchParams } from "next/navigation";
-import Modal from "@/components/ui/Modal";
+import Modal from "@/components/legacy/ui/Modal";
 import EventDetailsModal from "@/components/events/EventDetailsModal";
 import { EVENT_PARAM, closeEvent } from "@/components/events/event-url";
 import type { EventView } from "@/lib/event-view";

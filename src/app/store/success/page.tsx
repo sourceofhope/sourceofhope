@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { CheckCircleIcon } from '@heroicons/react/24/solid';
-import Heading from '@/components/ui/Heading';
+import Heading from '@/components/legacy/ui/Heading';
 import { useCartActions } from '@/context/StoreCartContext';
 import { useHeaderContext } from '@/context/HeaderContext';
 

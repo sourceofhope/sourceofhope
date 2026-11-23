@@ -1,9 +1,9 @@
 import Image from "next/image";
-import PageSection from "@/components/ui/PageSection";
-import Title from "@/components/ui/Title";
-import Blockquote from "@/components/ui/Blockquote";
-import Bold from "@/components/ui/Bold";
-import ExpressiveAnchor from "@/components/ui/expressive/ExpressiveAnchor";
+import PageSection from "@/components/legacy/ui/PageSection";
+import Title from "@/components/legacy/ui/Title";
+import Blockquote from "@/components/legacy/ui/Blockquote";
+import Bold from "@/components/legacy/ui/Bold";
+import ExpressiveAnchor from "@/components/legacy/ui/expressive/ExpressiveAnchor";
 import { ASSET_VERSION } from "@/lib/environment";
 
 export default function AboutMissionSection() {

@@ -1,6 +1,6 @@
 import { ArrowRightIcon, CalendarDaysIcon, MapPinIcon } from "@heroicons/react/20/solid";
-import PageSection from "@/components/ui/PageSection";
-import SectionHeading from "@/components/ui/SectionHeading";
+import PageSection from "@/components/legacy/ui/PageSection";
+import SectionHeading from "@/components/legacy/ui/SectionHeading";
 import EventTrigger from "@/components/events/EventTrigger";
 import type { EventView } from "@/lib/event-view";
 

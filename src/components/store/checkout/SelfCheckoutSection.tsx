@@ -9,7 +9,7 @@ import {
   useStripe,
   useElements,
 } from "@stripe/react-stripe-js";
-import Heading from "@/components/ui/Heading";
+import Heading from "@/components/legacy/ui/Heading";
 import { CartItem } from "@/context/StoreCartContext";
 
 interface SelfCheckoutSectionProps {

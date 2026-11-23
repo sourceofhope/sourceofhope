@@ -1,18 +1,18 @@
 import { Metadata } from "next";
-import Title from "@/components/ui/Title";
-import Heading from "@/components/ui/Heading";
-import { AnchorButton } from "@/components/ui/Button";
-import Carousel from "@/components/ui/Carousel";
-import Icon from "@/components/ui/Icon";
-import Bold from "@/components/ui/Bold";
-import HighlightedText from "@/components/ui/HighlightedText";
+import Title from "@/components/legacy/ui/Title";
+import Heading from "@/components/legacy/ui/Heading";
+import { AnchorButton } from "@/components/legacy/ui/Button";
+import Carousel from "@/components/legacy/ui/Carousel";
+import Icon from "@/components/legacy/ui/Icon";
+import Bold from "@/components/legacy/ui/Bold";
+import HighlightedText from "@/components/legacy/ui/HighlightedText";
 import {
   HeartIcon,
   UserIcon,
   AcademicCapIcon,
   GlobeAmericasIcon,
 } from "@heroicons/react/20/solid";
-import PageHeader from "@/components/layout/PageHeader";
+import PageHeader from "@/components/legacy/layout/PageHeader";
 import { ASSET_VERSION } from "@/lib/environment";
 import EventsDocumentsSection from "@/components/events/EventsDocumentsSection";
 

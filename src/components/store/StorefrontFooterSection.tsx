@@ -1,8 +1,8 @@
 "use client";
 
-import Heading from "@/components/ui/Heading";
-import HighlightedText from "@/components/ui/HighlightedText";
-import SimpleLink from "@/components/ui/SimpleLink";
+import Heading from "@/components/legacy/ui/Heading";
+import HighlightedText from "@/components/legacy/ui/HighlightedText";
+import SimpleLink from "@/components/legacy/ui/SimpleLink";
 import { ArrowUpRightIcon } from "@heroicons/react/20/solid";
 
 export default function StorefrontFooterSection() {

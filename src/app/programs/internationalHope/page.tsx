@@ -1,18 +1,18 @@
 import { Metadata } from "next";
-import ExpressiveAnchor from "@/components/ui/expressive/ExpressiveAnchor";
-import Carousel from "@/components/ui/Carousel";
-import Title from "@/components/ui/Title";
-import Heading from "@/components/ui/Heading";
-import Icon from "@/components/ui/Icon";
+import ExpressiveAnchor from "@/components/legacy/ui/expressive/ExpressiveAnchor";
+import Carousel from "@/components/legacy/ui/Carousel";
+import Title from "@/components/legacy/ui/Title";
+import Heading from "@/components/legacy/ui/Heading";
+import Icon from "@/components/legacy/ui/Icon";
 import {
   GlobeEuropeAfricaIcon,
   HeartIcon,
   LanguageIcon,
 } from "@heroicons/react/20/solid";
-import Bold from "@/components/ui/Bold";
-import HighlightedText from "@/components/ui/HighlightedText";
-import Emphasis from "@/components/ui/Emphasis";
-import PageHeader from "@/components/layout/PageHeader";
+import Bold from "@/components/legacy/ui/Bold";
+import HighlightedText from "@/components/legacy/ui/HighlightedText";
+import Emphasis from "@/components/legacy/ui/Emphasis";
+import PageHeader from "@/components/legacy/layout/PageHeader";
 import { ASSET_VERSION } from "@/lib/environment";
 
 const CANONICAL_URL = "https://thesourceofhope.org/programs/internationalHope";

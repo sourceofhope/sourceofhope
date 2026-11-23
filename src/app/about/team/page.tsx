@@ -1,8 +1,8 @@
 import { Metadata } from "next";
-import PageHeader from "@/components/layout/PageHeader";
-import PageSection from "@/components/ui/PageSection";
-import Title from "@/components/ui/Title";
-import Carousel from "@/components/ui/Carousel";
+import PageHeader from "@/components/legacy/layout/PageHeader";
+import PageSection from "@/components/legacy/ui/PageSection";
+import Title from "@/components/legacy/ui/Title";
+import Carousel from "@/components/legacy/ui/Carousel";
 
 import { CarouselCard } from "./CarouselCard";
 import {

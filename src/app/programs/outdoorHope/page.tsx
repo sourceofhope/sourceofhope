@@ -1,13 +1,13 @@
 import { Metadata } from "next";
-import Carousel from "@/components/ui/Carousel";
-import Title from "@/components/ui/Title";
-import Heading from "@/components/ui/Heading";
-import ExpressiveCard from "@/components/ui/expressive/ExpressiveCard";
-import Blockquote from "@/components/ui/Blockquote";
-import Bold from "@/components/ui/Bold";
-import ExpressiveAnchor from "@/components/ui/expressive/ExpressiveAnchor";
-import HighlightedText from "@/components/ui/HighlightedText";
-import PageHeader from "@/components/layout/PageHeader";
+import Carousel from "@/components/legacy/ui/Carousel";
+import Title from "@/components/legacy/ui/Title";
+import Heading from "@/components/legacy/ui/Heading";
+import ExpressiveCard from "@/components/legacy/ui/expressive/ExpressiveCard";
+import Blockquote from "@/components/legacy/ui/Blockquote";
+import Bold from "@/components/legacy/ui/Bold";
+import ExpressiveAnchor from "@/components/legacy/ui/expressive/ExpressiveAnchor";
+import HighlightedText from "@/components/legacy/ui/HighlightedText";
+import PageHeader from "@/components/legacy/layout/PageHeader";
 import { ASSET_VERSION } from "@/lib/environment";
 
 const CANONICAL_URL = "https://thesourceofhope.org/programs/outdoorHope";

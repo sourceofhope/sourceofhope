@@ -4,10 +4,10 @@ import { useState } from "react";
 import { CheckIcon, PlusIcon, XMarkIcon } from "@heroicons/react/20/solid";
 import Link from "next/link";
 import { useCartActions } from "@/context/StoreCartContext";
-import Overlay from "@/components/ui/Overlay";
-import ExpressiveLink from "@/components/ui/expressive/ExpressiveLink";
-import Takeover from "@/components/ui/Takeover";
-import Heading from "@/components/ui/Heading";
+import Overlay from "@/components/legacy/ui/Overlay";
+import ExpressiveLink from "@/components/legacy/ui/expressive/ExpressiveLink";
+import Takeover from "@/components/legacy/ui/Takeover";
+import Heading from "@/components/legacy/ui/Heading";
 import { type SanityProduct } from "@/lib/sanity-content";
 
 interface StorefrontProductCardProps {

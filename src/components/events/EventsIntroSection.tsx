@@ -3,8 +3,8 @@ import {
   DocumentCheckIcon,
   TicketIcon,
 } from "@heroicons/react/24/outline";
-import PageSection from "@/components/ui/PageSection";
-import SectionHeading from "@/components/ui/SectionHeading";
+import PageSection from "@/components/legacy/ui/PageSection";
+import SectionHeading from "@/components/legacy/ui/SectionHeading";
 
 const EVENTBRITE_URL = "https://www.eventbrite.com/o/quynh-chau-stone-92264017613";
 

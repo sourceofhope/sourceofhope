@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { LinkButton } from "@/components/ui/Button";
+import { LinkButton } from "@/components/legacy/ui/Button";
 import Heading from "../ui/Heading";
 import ParallaxSection from "../ui/parallax/ParallaxSection";
 import ParallaxLayer from "../ui/parallax/ParallaxLayer";

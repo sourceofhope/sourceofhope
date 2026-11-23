@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useEffect, useState } from "react";
-import { LinkButton } from "@/components/ui/Button";
+import { LinkButton } from "@/components/legacy/ui/Button";
 import { ASSET_VERSION } from "@/lib/environment";
 import Image from "next/image";
 

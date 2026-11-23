@@ -1,6 +1,6 @@
 'use client';
 
-import Heading from '@/components/ui/Heading';
+import Heading from '@/components/legacy/ui/Heading';
 
 interface ShippingOption {
   id: string;
