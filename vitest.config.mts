@@ -11,7 +11,7 @@ export default defineConfig({
     },
   },
   test: {
-    include: ["src/**/*.test.ts", "src/**/*.test.tsx"],
+    include: ["src/**/*.test.ts", "src/**/*.test.tsx", "eslint/**/*.test.ts"],
     environment: "node",
     // Every date in the product is shown in Central time; run tests in a
     // different zone so a missing timeZone option fails loudly.

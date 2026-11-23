@@ -132,8 +132,9 @@ Phases 1 and 2 can overlap, as can 5 and 4. The project lead may approve overlap
 |---|---|---|
 | 1.0 | Done (2026-11-23) | [ADR-0009](adr/0009-component-architecture.md); legacy components moved to `src/components/legacy/`; UI SDK `0.1.0-beta.16` and `tailwind-variants` `4.0.2` pinned (its built-in merge engine replaces `tailwind-merge`) |
 | 1.1 | Done (2026-11-23) | Semantic tokens in `globals.css` as `@theme static` (every token always available as a CSS variable). Variable Inter and Urbanist through `next/font` on `<html>`; Montserrat and 27 static weights dropped. `/styleguide` registry with the tokens section. Contrast checked in CI (26 pairs), tokens checked at runtime, and `tv` merge rules tested. Playwright and axe added; CI now builds and runs e2e on desktop and phone |
-| 1.2 | Next | |
-| 1.7, 1.3–1.6 | Not started | |
+| 1.2 | Done (2026-11-23) | Local ESLint plugin `tsoh/design-tokens` (`eslint/tsoh-plugin.mjs`, 36 unit tests) rejects default-palette colors, raw scale steps, radius above `rounded-lg`, arbitrary values and deprecated legacy tokens. Layer import rules (ui ↛ layout/features/app; only `ui` may import the UI SDK or `tailwind-variants`; new code ↛ legacy), `react/button-has-type`, no raw internal `<a href="/…">`, and no hard-coded JSX text in product components. Scoped to new code; widened to all of `src/` in slice 3.9. A probe file confirmed all 13 violations fire |
+| 1.7 | Next | Runs before 1.3 (ADR-0009 §6) |
+| 1.3–1.6 | Not started | |
 
 ## Phase 2 · Data and content foundation
 
