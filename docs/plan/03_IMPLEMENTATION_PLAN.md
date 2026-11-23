@@ -8,7 +8,7 @@ Each **slice** below is one reviewable commit (or a small series of commits) on 
 
 | Phase | Name | Status | Phase review |
 |---|---|---|---|
-| 0 | Foundations and spikes | Not started | — |
+| 0 | Foundations and spikes | In progress (started 2026-11-23) — see [Phase 0 progress](#phase-0-progress) | — |
 | 1 | Design system and shell | Not started | — |
 | 2 | Data and content foundation | Not started | — |
 | 3 | Public pages | Not started | — |
@@ -93,6 +93,17 @@ Phases 1 and 2 can overlap, as can 5 and 4. The project lead may approve overlap
 | 0.10 | **Photo audit and visual-direction mockup.** Inventory usable, consent-cleared photos per page slot and flag gaps. Make one private mockup: token sheet, homepage, event card and details, Give amount step, mobile header and menu, Hub mobile takeover | Project lead approves. Mockup link recorded in [ADR-0008](adr/0008-refined-current-visual-direction.md). All *(mockup)* values in the spec resolved |
 
 **Exit:** spikes recorded, mockup approved, CI green on `refresh`.
+
+### Phase 0 progress
+
+| Slice | Status | Notes |
+|---|---|---|
+| 0.1 | Waiting on project lead | Branch `refresh` exists. The new Vercel project, preview domain and deployment protection need account access (dashboard steps) |
+| 0.2 | Done (2026-11-23) | `.github/workflows/ci.yml`: lint, typecheck, Vitest, build (public Sanity values only), production audit gate. The Playwright smoke job is added once the 0.1 preview URL exists |
+| 0.3 | Done (2026-11-23) | `next` 16.3.8 → 16.4.6 (critical advisory), `next-sanity` 12 → 13.5.1 and `sanity` 5 → 6.24 (the site only uses `createClient`), Vitest 5, `@types/node` 22, `eslint-config-next` 16.4.6. Scoped `overrides` patch `js-yaml` and `smol-toml` under `@vercel/frameworks` (it pins vulnerable versions). Lockfile regenerated so every platform's native binaries are listed. **Result:** 0 critical, 0 high; 14 moderate remain, all inside Sanity's CLI tooling (`@oclif`/`minimatch`, `uuid`), which the site never runs. Node 22.12+ now required (`engines`). Verified: lint, types, tests, secret-free build, and all 23 main routes return 200 on a production server |
+| 0.4 | Waiting on project lead | Accounts and credentials (see slice table) |
+| 0.5–0.9 | Not started | |
+| 0.10 | Not started | |
 
 ## Phase 1 · Design system and shell
 

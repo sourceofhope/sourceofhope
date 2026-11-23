@@ -70,7 +70,7 @@ The Studio at `/sanity/the-source-of-hope` is a separate npm project and is excl
 ## 3) Install failures
 
 - `ERESOLVE` / peer dependency conflicts: install with `npm install --legacy-peer-deps`. If Vercel hits the same error, set the project's Install Command to `npm install --legacy-peer-deps` (or commit an `.npmrc` containing `legacy-peer-deps=true`).
-- Node version: Next.js 16 needs Node 20.9 or newer. Node 22 LTS works. The repo has no `engines` field, so set the Node.js version in Vercel's project settings if a build complains.
+- Node version: the repo needs Node 22.12 or newer (`engines` in `package.json`). Vercel picks a matching Node.js version from that field.
 
 ---
 

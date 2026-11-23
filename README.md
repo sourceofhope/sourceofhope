@@ -88,7 +88,7 @@ A full overview is in [docs/01_SYSTEM_OVERVIEW.md](docs/01_SYSTEM_OVERVIEW.md).
 
 ### Prerequisites
 
-- Node.js 20.9 or newer
+- Node.js 22.12 or newer
 - npm
 - Optional: the [Stripe CLI](https://docs.stripe.com/stripe-cli) for testing payment webhooks
 

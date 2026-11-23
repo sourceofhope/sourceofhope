@@ -68,7 +68,7 @@ Conventions:
 
 Requirements:
 
-- Node.js 20.9 or newer (Next.js 16 requirement; Node 22 LTS works)
+- Node.js 22.12 or newer (required by the test tooling; Node 24 LTS also works)
 - If `npm install` reports peer dependency conflicts, use `npm install --legacy-peer-deps`
 
 There is no automated test suite and no Prettier script; Prettier is installed as a dev dependency for editor use.

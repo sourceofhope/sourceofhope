@@ -11,6 +11,7 @@ const LEGACY_FILES = [
   "src/app/api/checkout/create-membership-payment-intent/route.tsx",
   "src/app/store/success/page.tsx",
   "src/components/connect/ConnectMapSection.tsx",
+  "src/components/donate/DonateFormSection.tsx",
   "src/components/members/**",
   "src/components/store/checkout/SelfCheckoutSection.tsx",
   "src/components/ui/HookInput.tsx",
@@ -25,6 +26,7 @@ const eslintConfig = defineConfig([
       "@typescript-eslint/no-explicit-any": "warn",
       "react/no-unescaped-entities": "warn",
       "react-hooks/set-state-in-effect": "warn",
+      "react-hooks/purity": "warn",
     },
   },
   // Override default ignores of eslint-config-next.

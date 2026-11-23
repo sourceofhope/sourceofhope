@@ -8,7 +8,7 @@ The Sanity Studio (the CMS editing interface) is a separate npm project in `/san
 
 ## Prerequisites
 
-- Node.js 20.9 or newer (Next.js 16 requirement; Node 22 LTS works)
+- Node.js 22.12 or newer (required by the test tooling; Node 24 LTS also works)
 - npm
 - Optional: the [Stripe CLI](https://docs.stripe.com/stripe-cli) for testing webhooks
 
