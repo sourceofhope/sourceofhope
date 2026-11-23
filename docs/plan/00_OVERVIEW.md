@@ -144,7 +144,7 @@ Every settled decision, with where it is specified. "Spec" = [01_UI_UX_DESIGN_SP
 | Eventbrite: free RSVP listing that feeds our sign-up is allowed; attendee webhook vs polling; API create/publish for free events | Confirms ADR-0006 | Spike 0.9 + Eventbrite support |
 | DocuSign embedded ("focused view") signing inside our dialog; one session covering a guardian and their minors; Connect webhooks | Shapes the Volunteer flow | Spike 0.8 |
 | Constant Contact API v3 OAuth setup and list add | Newsletter sign-up | Phase 4 |
-| Rich text inside Sanity field-level localized arrays | Shapes the content model | Spike 0.7 |
+| ~~Rich text inside Sanity field-level localized arrays~~ | **Resolved 2026-11-23:** works; field-level for everything ([ADR-0004](adr/0004-localization-ready-english-first.md#spike-result-07-2026-11-23)) | Spike 0.7 |
 | PayPal locale code (`es_US` vs `es_XC`) | Only if Spanish is enabled | Phase 8 |
 | Scheduler choice for reminders, cutoff and retention jobs (Vercel Cron vs Supabase cron) | Phase 6 | Spike 0.6 |
 

@@ -337,11 +337,12 @@ Run daily by the retention job. "Delete" means removing personal fields and keep
 ([ADR-0004](adr/0004-localization-ready-english-first.md); research in [research/LOCALIZATION_RESEARCH.md](research/LOCALIZATION_RESEARCH.md))
 
 - **Routing:**
-  - next-intl 4.x with `localePrefix: 'as-needed'`. English URLs are unchanged, and other locales live under `/es/…`.
+  - next-intl 4.x. Locales are full tags (`en-US`, `es-US`), so `Intl` formats correctly. URLs use short custom prefixes via `localePrefix: {mode: 'as-needed', prefixes: {'es-US': '/es'}}`. English URLs are unchanged, and Spanish lives under `/es/…`.
   - `localeDetection: false`: no Accept-Language or IP redirects. An explicit choice is remembered in a long-lived cookie.
-  - `/staff`, `/api`, `/link` and `/styleguide` are excluded from locale routing.
+  - `/staff`, `/api`, `/link` and `/styleguide` are excluded from locale routing. The Staff Portal is its own root layout, outside `[locale]`.
   - The root-level legacy `[slug]` route moves under `[locale]`.
-- **Enabled locales:** `ENABLED_LOCALES=en` at launch. Adding `es` turns on routing, the dropdown, hreflang and translation jobs. No code changes.
+  - All verified in spike 0.7 ([ADR-0004](adr/0004-localization-ready-english-first.md#spike-result-07-2026-11-23)).
+- **Enabled locales:** `NEXT_PUBLIC_ENABLED_LOCALES=en-US` at launch. Adding `es-US` turns on routing, the dropdown, hreflang and translation jobs. No code changes. `en-XA` (pseudo-locale) is enabled only locally and in CI.
 - **Server routes:** route handlers and server actions receive `locale` explicitly in the request body (`next/root-params` doesn't reach them).
 - **UI strings:** in `messages/<locale>.json` with ICU syntax. CI fails on missing or extra keys, and a pseudo-locale build catches overflow.
 - **Sanity:**

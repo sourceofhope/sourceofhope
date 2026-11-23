@@ -104,7 +104,7 @@ Phases 1 and 2 can overlap, as can 5 and 4. The project lead may approve overlap
 | 0.4 | Waiting on project lead | Accounts and credentials (see slice table) |
 | 0.5 | Done (2026-11-23) | **Vercel UI SDK chosen** (pinned `0.1.0-beta.16`), with React Aria Components as a proven fallback. Both passed all 14 automated checks; UI SDK is lighter (87 KB vs 113 KB compressed) but beta. Scorecard and guardrails in [ADR-0003](adr/0003-component-foundation-wrappers.md#spike-result-2026-11-23); spike code on branch `refresh-0.5-component-spike` |
 | 0.6, 0.8, 0.9 | Waiting on 0.4 | Need Supabase, DocuSign and Eventbrite test accounts |
-| 0.7 | Not started | |
+| 0.7 | Done (2026-11-23) | next-intl 4.16 with root params, `/es` prefix over `es-US` formatting, no detection, a `/staff` root outside `[locale]`, explicit locale in route handlers, a pseudo-locale generator. **Rich text works in Sanity field-level localized arrays**, so field-level is used for everything. Details in [ADR-0004](adr/0004-localization-ready-english-first.md#spike-result-07-2026-11-23); spike code on branch `refresh-0.7-i18n-spike` |
 | 0.10 | Not started | |
 
 ## Phase 1 · Design system and shell
@@ -119,7 +119,7 @@ Phases 1 and 2 can overlap, as can 5 and 4. The project lead may approve overlap
 | 1.4 | Primitives part 2: Dialog, Sheet, Menu, Select, Tabs, Disclosure/Accordion, RadioGroup/RadioCards, Toast, the Field family (react-hook-form + zod), Steps, Carousel (manual), VideoHero, YouTubeEmbed | Playwright keyboard and focus tests per component: focus trap, Escape, focus return, arrow keys, inert background. Reduced-motion snapshot. Wrappers take every built-in accessible label from message files (test). Manual VoiceOver and NVDA pass on the styleguide ([ADR-0003](adr/0003-component-foundation-wrappers.md) guardrail 5) |
 | 1.5 | Page templates (Landing, Content, Program, Listing, Detail, Utility), PageHeader, SectionHeading, CTA band | Demo of each template in the styleguide. A test asserts exactly one `h1` per template |
 | 1.6 | Shell: desktop header, About menu, mobile bar + Sheet menu with action tiles, footer (newsletter field placeholder), skip link, root layouts, `not-found`, `error`, `loading` | e2e: header keyboard navigation, mobile menu trap and Escape, skip link, focus never hidden under the sticky header |
-| 1.7 | Localization plumbing in the app: next-intl from spike 0.7, `messages/en.json`, `src/lib/format.ts`, metadata and hreflang helpers, `ENABLED_LOCALES`, language dropdown (hidden with one locale), key-parity check, pseudo-locale build | CI key-parity check. Dropdown hidden. Pseudo-locale styleguide screenshot shows no overflow |
+| 1.7 | Localization plumbing in the app: next-intl setup from spike 0.7 (routes under `[locale]`, `(staff)` root, proxy, `request.ts`), `messages/en-US.json`, `src/lib/format.ts`, metadata and hreflang helpers, `NEXT_PUBLIC_ENABLED_LOCALES`, language dropdown (hidden with one locale), key-parity check, pseudo-locale script (`@formatjs/icu-messageformat-parser` as an explicit dev dependency) | CI key-parity check. Dropdown hidden. Pseudo-locale styleguide screenshot shows no overflow |
 
 **Exit:** styleguide complete, axe clean, shell live on every `refresh` route (legacy pages render inside it until rebuilt).
 
@@ -227,7 +227,7 @@ Phases 1 and 2 can overlap, as can 5 and 4. The project lead may approve overlap
 | 8.2 | Accessibility audit: manual VoiceOver and NVDA on header and menu, event details, Get Help, Volunteer with party, Give one-time and monthly, portal check-in and roster | Audit report in `docs/plan/research/`. All AA failures fixed |
 | 8.3 | Performance: budgets on Home, Events, Program, Hub open; JS per route; image and font audit | Budgets met on mobile lab runs. Field data monitored after launch |
 | 8.4 | Content completion: parked content tasks entered in Sanity, photo gaps filled, legal pages approved, copy review against the never-rules | The [overview](00_OVERVIEW.md#parked-content-tasks-tsoh-owned-needed-before-launch) checklist is complete |
-| 8.5 | **Optional Spanish pass:** translation module, cache and glossary; one run for messages, Sanity and event texts; automated checks (coverage, glossary, overflow, back-translation spot check on top journeys). If it passes: professional legal translation, Spanish DocuSign templates, Stripe and PayPal locales, email templates, Spanish copies of external Google Forms, then enable `es` | Pass → `ENABLED_LOCALES=en,es`. Fail → stays `en`, and launch proceeds without waiting |
+| 8.5 | **Optional Spanish pass:** translation module, cache and glossary; one run for messages, Sanity and event texts; automated checks (coverage, glossary, overflow, back-translation spot check on top journeys). If it passes: professional legal translation, Spanish DocuSign templates, Stripe and PayPal locales, email templates, Spanish copies of external Google Forms, then enable `es` | Pass → `NEXT_PUBLIC_ENABLED_LOCALES=en-US,es-US`. Fail → stays `en-US`, and launch proceeds without waiting |
 
 **Exit:** the launch gate in [04_LAUNCH_AND_CUTOVER.md](04_LAUNCH_AND_CUTOVER.md) is satisfied except the dress rehearsal, which happens in Phase 9.
 

@@ -24,7 +24,7 @@ All items must be checked before the public cutover is scheduled.
 
 1. Create the Supabase **production** project: run migrations, enable RLS checks, back up, and confirm point-in-time recovery.
 2. Create the `production-v2` Sanity dataset and run the content migration in **dry run**, then for real. Review the diff report.
-3. Set the v2 Vercel project's production environment variables (live keys, production database, `production-v2`, `ENABLED_LOCALES`).
+3. Set the v2 Vercel project's production environment variables (live keys, production database, `production-v2`, `NEXT_PUBLIC_ENABLED_LOCALES`).
 4. Attach `staff.thesourceofhope.org` to the v2 production deployment. Public routes there are password-protected and `noindex`. `/staff` is open to invited staff.
 5. Register **v2 webhook endpoints** with Stripe, PayPal, DocuSign Connect and Eventbrite. Until cutover, v2 handlers process only objects tagged `app=v2`.
 6. **Audit the current site's Stripe webhook handler** and decide, in writing, which app handles **existing** monthly memberships after cutover (renewal invoices, cancellations, receipts). No subscriber may get two receipts or none.
