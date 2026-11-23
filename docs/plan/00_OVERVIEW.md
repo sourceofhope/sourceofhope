@@ -87,7 +87,7 @@ Every settled decision, with where it is specified. "Spec" = [01_UI_UX_DESIGN_SP
 | Light only, public site and portal | Spec §5 |
 | Written never-rules for visuals and copy (no decorative gradients, glass, glows, sparkles, slogan taglines…) | Spec §3 |
 | Retire parallax, highlighter sweep, scroll-animated panels, auto-advancing photo carousels, hover font growth, squashed eyebrows; counters render real values server-side | Spec §5.8 |
-| Homepage hero stays a full-bleed background video with the current tagline (taglines only there) and shrinks on scroll. A constant-speed sponsor strip sits under it, with a static list in code and no tiers. Both have pause controls and reduced-motion fallbacks (decided 2026-11-23) | Spec §3, §5.8, §10.1 |
+| Homepage hero stays a full-bleed background video with the current tagline (taglines only there) and shrinks on scroll. The homepage header starts transparent and turns solid as the video becomes a card. A constant-speed sponsor strip sits under the hero, with a static list in code and no tiers. Pause controls and reduced-motion fallbacks throughout. Mockup approved (2026-11-23) | Spec §3, §5.8, §8.2, §10.1 |
 | Components: Vercel UI SDK preferred, React Aria Components fallback, chosen by Phase 0 spike; pages import only our `ui/` wrappers | [ADR-0003](adr/0003-component-foundation-wrappers.md) |
 | Action Hub = one query-param overlay openable from any page; no page fallback; steps are history entries; payment redirects return to the overlay | [ADR-0002](adr/0002-query-param-action-hub.md), Spec §9, System §3 |
 | Hub shell: tabs Get Help · Volunteer · Give on a flow's first step only; step header, progress and fixed action bar after that; event details use the same shell | Spec §9.2 |

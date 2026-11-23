@@ -1,6 +1,6 @@
 # 01 · UI/UX Design Spec
 
-**Status:** Approved baseline, 2026-11-21. Values marked *(mockup)* are confirmed or adjusted when the project lead approves the Phase 0 visual-direction mockup, then frozen in `src/app/globals.css`.
+**Status:** Approved baseline, 2026-11-21. The visual-direction mockup was **approved 2026-11-23** ([ADR-0008](adr/0008-refined-current-visual-direction.md#mockup)), and its values are locked below. Slice 1.1 freezes them in `src/app/globals.css`.
 
 This spec says how the relaunched site looks, reads and behaves. Data and API details live in [02_SYSTEM_DESIGN.md](02_SYSTEM_DESIGN.md). The order of work lives in [03_IMPLEMENTATION_PLAN.md](03_IMPLEMENTATION_PLAN.md).
 
@@ -82,20 +82,22 @@ All tokens live in `src/app/globals.css` under Tailwind v4 `@theme`. Components 
 
 **Semantic tokens** (new). Components use these, not raw scale steps:
 
-| Token | Use | Maps to *(mockup)* |
+| Token | Use | Value (approved) |
 |---|---|---|
-| `--color-surface` | Page background | `neutral-50` (white) |
-| `--color-surface-muted` | Alternating section bands, table stripes | a light neutral step |
-| `--color-surface-inverse` | Footer, dark bands | `primary-900` |
-| `--color-text` | Body text | `primary-900` |
-| `--color-text-muted` | Secondary text | a neutral step ≥ 4.5:1 on surface |
-| `--color-text-inverse` | Text on inverse surfaces | white |
-| `--color-border` | Dividers, input borders | a neutral step ≥ 3:1 for inputs |
-| `--color-action` | Primary buttons, links | `accent-500` (white text on it = 4.86:1) |
-| `--color-action-hover` | Hover/pressed | `accent-600` |
-| `--color-focus` | Focus ring | `accent-500`, 2px ring + 2px offset |
-| `--color-success` / `-warning` / `-danger` / `-info` | Status text, icons, alerts | values chosen in slice 1.1, each ≥ 4.5:1 on surface |
-| `--color-*-subtle` | Status backgrounds | light tints of the above |
+| `--color-surface` | Page background | `neutral-50` `#FFFFFF` |
+| `--color-surface-muted` | Alternating section bands, story card, step tiles | `primary-50` `#F5F7FB` |
+| `--color-surface-inverse` | Footer, dark bands | `primary-900` `#0B1026` |
+| `--color-text` | Body text | `primary-900` `#0B1026` |
+| `--color-text-muted` | Secondary text, dates, hints | `neutral-600` `#4B5563` (7.6:1) |
+| `--color-text-inverse` | Text on inverse surfaces | `#FFFFFF`; muted inverse `primary-200` `#C2C9E0` |
+| `--color-border` | Decorative dividers and card outlines only | `neutral-300` `#D9DCE1` |
+| `--color-border-input` | Input, select and checkbox edges (WCAG 1.4.11, ≥ 3:1) | `neutral-500` `#6B7280` (4.8:1) |
+| `--color-action` | Primary buttons, links | `accent-500` `#1B75BC` (white text on it = 4.86:1) |
+| `--color-action-hover` | Hover/pressed | `accent-600` `#165E96` |
+| `--color-focus` | Focus ring | `accent-500`, 2px ring + 2px offset; white ring on the hero video and dark bands |
+| `--color-success` / `-warning` / `-danger` / `-info` | Status text, icons, alerts | `#1F7A4D` / `#92400E` / `#B42318` / `#165E96` (each ≥ 4.5:1 on white) |
+| `--color-*-subtle` | Status and badge backgrounds | open to public `#DFF2F1` on `#12466F`; volunteers `#E6EBF5` on `#1B2B69`; neutral `#F0F1F3` on `#374151`; full or danger `#FBE9E7` on `#8A1C12` |
+| `--color-hero-tint` | Flat tint over the hero video and photos | `primary-900` at 60% |
 
 **Contrast rules:** body text ≥ 4.5:1; large text (≥ 24px, or ≥ 18.66px bold) ≥ 3:1; UI boundaries and icons that carry meaning ≥ 3:1. Color is never the only signal (status badges always have a word).
 
@@ -108,7 +110,7 @@ All tokens live in `src/app/globals.css` under Tailwind v4 `@theme`. Components 
 
 - Montserrat is removed. Load through `next/font` with the `latin` subset only (it covers Spanish). Prefer the variable font files, so the 27 declared weights become about 6.
 - The redundant preconnect to fonts.googleapis.com is removed (`next/font` self-hosts).
-- **Type scale:** the custom names (`md`, `xlg`, `xxlg`, `xxxlg`, `xxxxlg`) are replaced by Tailwind's standard scale, redefined in `@theme` *(mockup)*:
+- **Type scale:** the custom names (`md`, `xlg`, `xxlg`, `xxxlg`, `xxxxlg`) are replaced by Tailwind's standard scale, redefined in `@theme` (approved):
 
 | Token | Size / line height | Typical use |
 |---|---|---|
@@ -128,8 +130,9 @@ All tokens live in `src/app/globals.css` under Tailwind v4 `@theme`. Components 
 ### 5.3 Spacing and layout
 
 - Spacing uses Tailwind's 4px base. Only the scale steps in the allowlist are allowed (lint). Off-grid one-offs like `h-115` and `min-w-215` go.
-- **Container:** page max width 1200px *(mockup)*. Gutters 20px (< md), 32px (md), 48px (≥ lg).
-- **Section rhythm:** three tokens, `--space-section-sm` (48px), `--space-section` (72px) and `--space-section-lg` (96px) *(mockup)*. Sections never set their own padding.
+- **Container:** page max width 1240px (approved). Gutters 16px (< md), 32px (md), 40px (≥ lg).
+- **Section rhythm:** three tokens, `--space-section-sm` (48px), `--space-section` (72px) and `--space-section-lg` (96px). Sections never set their own padding.
+- **Hero heights:** home hero 760px desktop and 600px on phones (`min(100svh, …)`).
 - **Breakpoints:** Tailwind defaults (`sm` 640, `md` 768, `lg` 1024, `xl` 1280). Design and test mobile first at 360px wide.
 - **Grids:** 12-column at ≥ lg; cards in 1 / 2 / 3 columns. No asymmetric decorative grids.
 
@@ -274,7 +277,13 @@ Program URL slugs stay as they are, to keep existing links. `/media/press` and `
 [Logo]  Programs  Events  About▾  Store            🌐 English▾   Get Help   [Volunteer]  [■ Give ■]
 ```
 
-- **Height and behavior:** solid surface background, 72px tall, sticky, with a 1px bottom border. One header style on every page, which removes `HeaderBlocker`, `HeaderContext` and the transparent-over-hero variant *(mockup)*.
+- **Height and behavior:** 72px tall (60px on phones), sticky, with a solid surface background and a 1px bottom border on every page **except the homepage**.
+- **Homepage variant (approved 2026-11-23):**
+  - The header starts **transparent** over the hero video: white text, white-outline Volunteer, blue Give, white focus ring.
+  - It turns solid at the moment the hero video finishes easing into its inset card (§5.8), so the header appears to lift off the video. Background, text color and border fade over `--duration-base`.
+  - From then on it stays solid while sticky. Under reduced motion, the switch is instant.
+  - Header text keeps 4.5:1 over the tinted video.
+- **Implementation:** a `variant="overlay"` prop on the header, driven by the hero's scroll progress. This replaces the old `HeaderBlocker` and `HeaderContext`, which are removed.
 - **About ▾** contains: Our Story · Team · Awards · News & Media · Partners & Sponsors · Careers · Contact.
 - **Actions:** **Get Help** is a tertiary (text) button with an icon; **Volunteer** is secondary (outline); **Give** is primary (filled). All three open the Hub.
 - **Language dropdown:** hidden while only one language is enabled (§8.6).
@@ -486,7 +495,7 @@ Known services today, to be confirmed and completed as content in Sanity:
 **One-time and Monthly:** steps `amount` → `details` → `payment` → `done`.
 
 1. **Amount.**
-   - Presets: one-time **$25 / $50 / $100 / $250**, default $100; monthly **$15 / $25 / $50 / $100**, default $25. A custom amount field (minimum $5 *(mockup)*).
+   - Presets: one-time **$25 / $50 / $100 / $250**, default $100; monthly **$15 / $25 / $50 / $100**, default $25. A custom amount field (minimum $5).
    - Impact line under the selection: "About {n} meals". The ratio is staff-editable in Sanity *(content task)*.
    - Optional **Direct my gift to:** select with "Where it's needed most" (default) and the five programs. Program pages pre-select their program.
    - Optional disclosure **Give in honor or memory of someone:** honor or memory, plus a name. No honoree notification at launch.

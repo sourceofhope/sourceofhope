@@ -1,6 +1,6 @@
 # ADR-0008: Light-only "refined current" visual direction with written never-rules
 
-- **Status:** Accepted (mockup approval pending slice 0.10)
+- **Status:** Accepted. Mockup approved by the project lead on 2026-11-23
 - **Date:** 2026-11-21
 
 ## Context
@@ -29,7 +29,7 @@ The project lead wants to keep TSOH's clean, professional look and stay reputabl
 
 **Mockup:** [TSOH Relaunch Visual Direction](https://claude.ai/artifact/QE1iCT8nWmfhNEE2giCFiH), published 2026-11-23. It is private to the project lead's account until shared.
 
-It has seven boards:
+It has eight boards (the eighth, "after scrolling", was added with the review changes):
 - tokens and rules
 - homepage (desktop and phone)
 - the phone menu
@@ -39,7 +39,7 @@ It has seven boards:
 
 **Proposed values, to confirm on approval** (these settle the spec's *(mockup)* items):
 - **Page:** max width 1240 px with 40 px gutters (desktop).
-- **Header:** a solid white header on every page, 72 px desktop and 60 px phone. The dove mark sits beside a typeset name on desktop; the dove alone on phones.
+- **Header:** 72 px desktop and 60 px phone, with the dove mark beside a typeset name on desktop and the dove alone on phones. It is solid white on every page except the homepage, where it starts transparent over the hero video and turns solid as the video eases into its card (added in review, 2026-11-23).
 - **Hero (revised 2026-11-23 after the project lead's review):**
   - The full-bleed background video stays, with text on a flat tint and the current tagline kept.
   - It shrinks into a card on scroll.
@@ -50,6 +50,6 @@ It has seven boards:
 - **Semantic colors:** success `#1F7A4D`, warning `#92400E`, danger `#B42318`, info `#165E96`; muted text `#4B5563`.
 - **Custom gift minimum:** $5 (not shown; unchanged).
 
-**Approval:** *pending: project lead to approve, or comment on the boards.*
+**Approval:** approved 2026-11-23, with the review changes recorded above (full-bleed hero video kept, hero-only tagline, sponsor strip under the hero, homepage header transparent until scroll). Locked values are in the spec ([§5](../01_UI_UX_DESIGN_SPEC.md#5-visual-foundation), [§8.2](../01_UI_UX_DESIGN_SPEC.md#82-desktop-header)). While locking them, input borders were moved to a darker token (`#6B7280`, 4.8:1), because the mockup's `#A0A5AD` failed WCAG 1.4.11.
 
 Photo findings: [research/PHOTO_AUDIT.md](../research/PHOTO_AUDIT.md).
