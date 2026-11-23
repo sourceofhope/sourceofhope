@@ -35,3 +35,8 @@ dist-ssr
 
 # TypeScript incremental build info
 *.tsbuildinfo
+
+# Test output
+coverage
+test-results
+playwright-report

@@ -1,0 +1,63 @@
+# CI for the relaunch (docs/plan/03_IMPLEMENTATION_PLAN.md, slice 0.2).
+# Runs on every push to `refresh` and on pull requests into it.
+name: CI
+
+on:
+  push:
+    branches: [refresh]
+  pull_request:
+    branches: [refresh]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  NODE_VERSION: "22"
+  NEXT_TELEMETRY_DISABLED: "1"
+
+jobs:
+  checks:
+    name: Lint, types and unit tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm test
+
+  build:
+    name: Production build
+    runs-on: ubuntu-latest
+    env:
+      # Public values only (the project ID is also in the Studio config).
+      # Pages prerender from Sanity at build time; no secrets are needed.
+      NEXT_PUBLIC_SANITY_PROJECT_ID: sgzdqn9z
+      NEXT_PUBLIC_SANITY_DATASET: production
+      NEXT_PUBLIC_SANITY_API_VERSION: "2026-04-10"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+
+  audit:
+    name: Dependency audit (production, high and above)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+      - run: npm audit --omit=dev --audit-level=high
