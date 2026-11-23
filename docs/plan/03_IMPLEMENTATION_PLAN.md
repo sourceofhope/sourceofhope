@@ -9,7 +9,7 @@ Each **slice** below is one reviewable commit (or a small series of commits) on 
 | Phase | Name | Status | Phase review |
 |---|---|---|---|
 | 0 | Foundations and spikes | In progress (started 2026-11-23) — see [Phase 0 progress](#phase-0-progress) | — |
-| 1 | Design system and shell | Not started | — |
+| 1 | Design system and shell | In progress (started 2026-11-23); see [Phase 1 progress](#phase-1-progress) | — |
 | 2 | Data and content foundation | Not started | — |
 | 3 | Public pages | Not started | — |
 | 4 | Action Hub | Not started | — |
@@ -125,6 +125,15 @@ Phases 1 and 2 can overlap, as can 5 and 4. The project lead may approve overlap
 | 1.7 | Localization plumbing in the app: next-intl setup from spike 0.7 (routes under `[locale]`, `(staff)` root, proxy, `request.ts`), `messages/en-US.json`, `src/lib/format.ts`, metadata and hreflang helpers, `NEXT_PUBLIC_ENABLED_LOCALES`, language dropdown (hidden with one locale), key-parity check, pseudo-locale script (`@formatjs/icu-messageformat-parser` as an explicit dev dependency) | CI key-parity check. Dropdown hidden. Pseudo-locale styleguide screenshot shows no overflow |
 
 **Exit:** styleguide complete, axe clean, shell live on every `refresh` route (legacy pages render inside it until rebuilt).
+
+### Phase 1 progress
+
+| Slice | Status | Notes |
+|---|---|---|
+| 1.0 | Done (2026-11-23) | [ADR-0009](adr/0009-component-architecture.md); legacy components moved to `src/components/legacy/`; UI SDK `0.1.0-beta.16` and `tailwind-variants` `4.0.2` pinned (its built-in merge engine replaces `tailwind-merge`) |
+| 1.1 | Done (2026-11-23) | Semantic tokens in `globals.css` as `@theme static` (every token always available as a CSS variable). Variable Inter and Urbanist through `next/font` on `<html>`; Montserrat and 27 static weights dropped. `/styleguide` registry with the tokens section. Contrast checked in CI (26 pairs), tokens checked at runtime, and `tv` merge rules tested. Playwright and axe added; CI now builds and runs e2e on desktop and phone |
+| 1.2 | Next | |
+| 1.7, 1.3–1.6 | Not started | |
 
 ## Phase 2 · Data and content foundation
 

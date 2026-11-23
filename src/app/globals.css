@@ -1,7 +1,23 @@
+/*
+ * Design tokens for The Source of Hope.
+ * Source of truth: docs/plan/01_UI_UX_DESIGN_SPEC.md §5 (approved 2026-11-23)
+ * and docs/plan/adr/0009-component-architecture.md.
+ *
+ * Components use the SEMANTIC tokens (surface, ink, muted, line, input,
+ * action, focus, status, tones). Raw scales exist so the semantic tokens can
+ * point at them; new code should not use scale steps directly.
+ */
+
+/* The UI SDK adds a little CSS in this layer; declaring it first makes our
+   styles win over it wherever the page puts them. */
+@layer ui-sdk;
+
 @import "tailwindcss";
 
-@theme {
-  /* Primary Colors */
+/* `static`: emit every token as a CSS variable, even ones no utility uses yet,
+   so var(--color-*) always resolves (styleguide, hero tint, inline styles). */
+@theme static {
+  /* ── Brand scales ─────────────────────────────────────────────────────── */
   --color-primary-50: #f5f7fb;
   --color-primary-100: #e6ebf5;
   --color-primary-200: #c2c9e0;
@@ -13,7 +29,6 @@
   --color-primary-800: #141f49;
   --color-primary-900: #0b1026;
 
-  /* Accent Colors */
   --color-accent-50: #f2faf9;
   --color-accent-100: #dff2f1;
   --color-accent-200: #b5d9d8;
@@ -25,7 +40,6 @@
   --color-accent-800: #0c304b;
   --color-accent-900: #061724;
 
-  /* Neutral Colors */
   --color-neutral-50: #ffffff;
   --color-neutral-100: #f9fafb;
   --color-neutral-200: #f0f1f3;
@@ -36,24 +50,118 @@
   --color-neutral-700: #374151;
   --color-neutral-800: #1f2937;
   --color-neutral-900: #111827;
+  --color-neutral-950: #030712;
 
-  /* Font Families */
-  --font-urbanist: "Urbanist", Helvetica, Arial, sans-serif;
-  --font-inter: "Inter", Helvetica, Arial, sans-serif;
+  /* ── Semantic colors (spec §5.1) ──────────────────────────────────────── */
+  --color-surface: var(--color-neutral-50);
+  --color-surface-muted: var(--color-primary-50);
+  --color-surface-inverse: var(--color-primary-900);
+  --color-surface-inverse-raised: var(--color-primary-800);
 
-  /* Font Sizes */
-  --text-xxxxlg: 4rem;
-  --text-xxxlg: 3rem;
-  --text-xxlg: 2rem;
-  --text-xlg: 1.5rem;
-  --text-lg: 1.25rem;
-  --text-md: 1rem;
-  --text-sm: 0.875rem;
+  --color-ink: var(--color-primary-900);
+  --color-ink-soft: var(--color-neutral-700);
+  --color-muted: var(--color-neutral-600);
+  --color-on-inverse: var(--color-neutral-50);
+  --color-on-inverse-muted: var(--color-primary-200);
+
+  --color-line: var(--color-neutral-300);
+  --color-line-soft: var(--color-neutral-200);
+  --color-input: var(--color-neutral-500);
+  --color-line-inverse: var(--color-primary-700);
+
+  --color-action: var(--color-accent-500);
+  --color-action-hover: var(--color-accent-600);
+  --color-focus: var(--color-accent-500);
+  --color-focus-inverse: var(--color-neutral-50);
+
+  --color-success: #1f7a4d;
+  --color-warning: #92400e;
+  --color-danger: #b42318;
+  --color-info: var(--color-accent-600);
+  --color-success-subtle: #e7f4ec;
+  --color-warning-subtle: #fdf3e2;
+  --color-danger-subtle: #fbe9e7;
+  --color-info-subtle: var(--color-primary-100);
+
+  /* Badge tones: background + text pairs, each ≥ 4.5:1. */
+  --color-tone-public: var(--color-accent-100);
+  --color-tone-public-ink: var(--color-accent-700);
+  --color-tone-volunteer: var(--color-primary-100);
+  --color-tone-volunteer-ink: var(--color-primary-700);
+  --color-tone-neutral: var(--color-neutral-200);
+  --color-tone-neutral-ink: var(--color-neutral-700);
+  --color-tone-danger: var(--color-danger-subtle);
+  --color-tone-danger-ink: #8a1c12;
+
+  --color-hero-tint: rgb(11 16 38 / 0.6);
+  --color-scrim: rgb(11 16 38 / 0.55);
+
+  /* ── Type (spec §5.2) ─────────────────────────────────────────────────── */
+  /* next/font exposes --nf-inter / --nf-urbanist on <html> (root layout). */
+  --font-sans: var(--nf-inter), "Inter", Helvetica, Arial, sans-serif;
+  --font-heading: var(--nf-urbanist), "Urbanist", Helvetica, Arial, sans-serif;
+
   --text-xs: 0.75rem;
+  --text-xs--line-height: 1rem;
+  --text-sm: 0.875rem;
+  --text-sm--line-height: 1.25rem;
+  --text-base: 1rem;
+  --text-base--line-height: 1.5rem;
+  --text-lg: 1.125rem;
+  --text-lg--line-height: 1.75rem;
+  --text-xl: 1.25rem;
+  --text-xl--line-height: 1.75rem;
+  --text-2xl: 1.5rem;
+  --text-2xl--line-height: 2rem;
+  --text-3xl: 1.875rem;
+  --text-3xl--line-height: 2.25rem;
+  --text-4xl: 2.25rem;
+  --text-4xl--line-height: 2.5rem;
+  --text-5xl: clamp(2.5rem, 5vw, 3.5rem);
+  --text-5xl--line-height: 1.06;
+
+  /* ── Layout (spec §5.3) ───────────────────────────────────────────────── */
+  --container-page: 77.5rem; /* 1240px → max-w-page */
+  --container-prose: 70ch; /* body text cap → max-w-prose */
+  --spacing-section-sm: 3rem; /* 48px */
+  --spacing-section: 4.5rem; /* 72px */
+  --spacing-section-lg: 6rem; /* 96px */
+
+  /* ── Radius (spec §5.4): only these three plus rounded-full ───────────── */
+  --radius-sm: 0.25rem; /* inputs, badges */
+  --radius-md: 0.5rem; /* buttons, cards */
+  --radius-lg: 0.75rem; /* dialogs, the Hub, large media */
+
+  /* ── Elevation (spec §5.5) ────────────────────────────────────────────── */
+  --shadow-raised: 0 2px 8px rgb(11 16 38 / 0.08);
+  --shadow-overlay: 0 12px 40px rgb(11 16 38 / 0.25);
+
+  /* ── Motion (spec §5.8) ───────────────────────────────────────────────── */
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+
+  /* ── Deprecated: legacy names kept only so legacy pages render until
+        slice 3.9 deletes them. Lint forbids these in new code. ─────────── */
+  --font-urbanist: var(--nf-urbanist), "Urbanist", Helvetica, Arial, sans-serif;
+  --font-inter: var(--nf-inter), "Inter", Helvetica, Arial, sans-serif;
+  --text-md: 1rem;
+  --text-xlg: 1.5rem;
+  --text-xxlg: 2rem;
+  --text-xxxlg: 3rem;
+  --text-xxxxlg: 4rem;
 }
 
 :root {
-  /* Spacing */
+  /* Durations and stacking aren't theme namespaces in Tailwind v4; use them
+     as duration-(--duration-base), z-(--z-header). */
+  --duration-fast: 120ms;
+  --duration-base: 200ms;
+  --duration-slow: 300ms;
+  --z-header: 50;
+  --z-overlay: 100;
+  --z-toast: 200;
+  --header-height: 4.5rem; /* 72px */
+
+  /* Deprecated legacy spacing (slice 3.9 removes). */
   --spacing-15: 3.75rem;
   --spacing-35: 8.75rem;
 
@@ -63,22 +171,37 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+@media (max-width: 47.99rem) {
+  :root {
+    --header-height: 3.75rem; /* 60px on phones */
+  }
+}
+
 html {
-  scroll-behavior: smooth;
-  background-color: var(--color-primary-900);
+  background-color: var(--color-surface-inverse);
+  /* Keep focused elements clear of the sticky header (WCAG 2.4.11). */
+  scroll-padding-top: calc(var(--header-height) + 1rem);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
 }
 
 body {
-  background-color: var(--color-neutral-50);
-  color: var(--color-neutral-900);
-  font-family: var(--font-inter);
+  background-color: var(--color-surface);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
 }
 
-/* Lock page scrolling while a modal <dialog> is open (see components/legacy/ui/Modal.tsx). */
+/* Lock page scrolling while a modal <dialog> is open (legacy Modal; the UI SDK
+   handles its own dialogs). */
 html:has(dialog:modal) {
   overflow: hidden;
 }
 
+/* Legacy animation used by components/legacy/ui/Modal.tsx (slice 3.9 removes). */
 @keyframes modal-in {
   from {
     opacity: 0;

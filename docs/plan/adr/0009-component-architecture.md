@@ -24,7 +24,7 @@ src/app/**                   routes: compose templates + features, fetch data, n
   - `layout` imports `ui`.
   - `features` import `ui` and `layout`, and never another feature's internals; shared pieces move down into `ui` or `layout`.
   - Lint enforces this (slice 1.2).
-- **Only `src/components/ui/` may import `@ui-sdk/*`, `tailwind-variants` or `tailwind-merge`.** Everything else uses our components.
+- **Only `src/components/ui/` may import `@ui-sdk/*` or `tailwind-variants`.** Everything else uses our components.
 - **Legacy code** moves to `src/components/legacy/` (slice 1.0) and is deleted in slice 3.9. New code must never import from `legacy`.
 
 ### 2. Anatomy of a primitive
@@ -44,7 +44,7 @@ Import paths are always `@/components/ui/<name>`. There is no package-wide barre
 
 ### 3. Styling
 
-- **Variants come from one tool:** `tailwind-variants` (`tv`) recipes, using `slots` for multi-part components (Dialog, Field, Tabs). `tailwind-merge` is configured once in `src/components/ui/lib/tv.ts` with our custom token names. No `clsx` string-building in components.
+- **Variants come from one tool:** `tailwind-variants` (`tv`) recipes, using `slots` for multi-part components (Dialog, Field, Tabs). Class merging uses the merge engine built into tailwind-variants v4, configured once in `src/components/ui/lib/tv.ts` with our custom token names. There is no separate `tailwind-merge` package. No `clsx` string-building in components.
 - **Token classes only:** the semantic tokens from spec §5.1 (`bg-surface`, `text-muted`, `border-input`, `bg-action`, …). No default Tailwind palette, raw hex, `rounded-xl`+, or off-scale arbitrary values (lint, slice 1.2).
 - **State styling uses the UI SDK's data attributes** (`data-open:`, `data-selected:`, `data-invalid:`, `data-disabled:`) and `focus-visible:`. Never mirror library state in React state just to style it.
 - **`className` on a primitive is for placement only:** margin, grid or flex placement, width. Never color, type or radius. Reviews reject anything else; if a new look is needed, it becomes a variant.

@@ -10,7 +10,8 @@
     "sanity": "sanity dev",
     "typecheck": "next typegen && tsc --noEmit",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
@@ -33,10 +34,11 @@
     "sanity": "^6.24.0",
     "stripe": "^20.4.1",
     "styled-components": "^6.4.0",
-    "tailwind-merge": "3.7.1",
     "tailwind-variants": "4.0.2"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.14.0",
+    "@playwright/test": "^1.65.1",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^22.20.5",
     "@types/react": "^19",

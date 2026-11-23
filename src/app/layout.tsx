@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Urbanist, Montserrat } from "next/font/google";
+import { Inter, Urbanist } from "next/font/google";
 import { HeaderProvider } from "@/context/HeaderContext";
 import { StoreCartProvider } from "@/context/StoreCartContext";
 import { Analytics } from "@vercel/analytics/next";
@@ -9,23 +9,10 @@ import "./globals.css";
 import Header from "@/components/legacy/layout/Header";
 import Footer from "@/components/legacy/layout/Footer";
 
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
-});
-
-const urbanist = Urbanist({
-  variable: "--font-urbanist",
-  subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
-});
-
-const montserrat = Montserrat({
-  variable: "--font-montserrat",
-  subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
-});
+// Variable fonts (one file each instead of 27 static weights). The CSS
+// variables sit on <html> so the theme tokens in globals.css can read them.
+const inter = Inter({ variable: "--nf-inter", subsets: ["latin"], display: "swap" });
+const urbanist = Urbanist({ variable: "--nf-urbanist", subsets: ["latin"], display: "swap" });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://thesourceofhope.org"),
@@ -81,15 +68,9 @@ export default function RootLayout({
     <html
       lang="en"
       itemType="http://schema.org/WebPage"
-      className="bg-primary-900">
+      className={`${inter.variable} ${urbanist.variable} bg-surface-inverse`}>
       <head>
         <meta name="theme-color" content="#0b1026" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link
-          rel="preconnect"
-          href="https://fonts.gstatic.com"
-          crossOrigin="anonymous"
-        />
         <script
           type="application/ld+json"
           suppressHydrationWarning
@@ -101,7 +82,7 @@ export default function RootLayout({
         <GoogleAnalytics gaId="AW-10925214570" />
       </head>
       <body
-        className={`${inter.variable} ${urbanist.variable} ${montserrat.variable} antialiased bg-neutral-50 font-inter text-neutral-900`}>
+        className="antialiased bg-surface font-sans text-ink">
         <noscript>
           <iframe
             src="https://www.googletagmanager.com/ns.html?id=GTM-P9G4WGS3"
