@@ -12,7 +12,7 @@ export const tv = createTV({
         // Custom theme keys that must merge with Tailwind's built-ins in the
         // same group (e.g. a `shadow-overlay` override replaces `shadow-raised`).
         shadow: ["raised", "overlay"],
-        container: ["page", "prose"],
+        container: ["page", "prose", "dialog"],
         spacing: ["section-sm", "section", "section-lg"],
       },
     },

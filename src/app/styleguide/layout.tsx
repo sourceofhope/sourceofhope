@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
+import { ToastRegion } from "@/components/ui/toast";
 import { fontVariables } from "../fonts";
 import "../globals.css";
 
@@ -14,7 +15,10 @@ export default function StyleguideRootLayout({ children }: { children: React.Rea
   return (
     <html lang="en-US" className={fontVariables}>
       <body className="bg-surface font-sans text-ink antialiased">
-        <NextIntlClientProvider>{children}</NextIntlClientProvider>
+        <NextIntlClientProvider>
+          {children}
+          <ToastRegion />
+        </NextIntlClientProvider>
       </body>
     </html>
   );

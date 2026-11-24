@@ -123,6 +123,10 @@
   /* ── Layout (spec §5.3) ───────────────────────────────────────────────── */
   --container-page: 77.5rem; /* 1240px → max-w-page */
   --container-prose: 70ch; /* body text cap → max-w-prose */
+  --container-dialog: 40rem; /* 640px: the Hub and dialogs → max-w-dialog */
+
+  /* Sponsor strip (spec §5.8): constant speed, one loop per duration. */
+  --animate-marquee: marquee var(--marquee-duration, 40s) linear infinite;
   --spacing-section-sm: 3rem; /* 48px */
   --spacing-section: 4.5rem; /* 72px */
   --spacing-section-lg: 6rem; /* 96px */
@@ -160,6 +164,7 @@
   --z-overlay: 100;
   --z-toast: 200;
   --header-height: 4.5rem; /* 72px */
+  --dialog-max-height: 85vh; /* use as max-h-(--dialog-max-height) */
 
   /* Deprecated legacy spacing (slice 3.9 removes). */
   --spacing-15: 3.75rem;
@@ -193,6 +198,25 @@ body {
   background-color: var(--color-surface);
   color: var(--color-ink);
   font-family: var(--font-sans);
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+/* Pause any animation (marquee on hover, focus or the pause button). */
+@utility animation-paused {
+  animation-play-state: paused;
+}
+
+/* Carousels and the sponsor strip scroll without a visible scrollbar. */
+@utility scrollbar-none {
+  scrollbar-width: none;
 }
 
 /* Lock page scrolling while a modal <dialog> is open (legacy Modal; the UI SDK

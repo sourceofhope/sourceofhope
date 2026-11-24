@@ -1,6 +1,9 @@
 import type { ComponentType } from "react";
 import { ButtonsSection } from "./buttons";
 import { ContentSection } from "./content";
+import { FormsSection } from "./forms";
+import { MediaSection } from "./media";
+import { OverlaysSection } from "./overlays";
 import { TextSection } from "./text";
 import { TokensSection } from "./tokens";
 
@@ -34,5 +37,23 @@ export const SECTIONS: StyleguideSection[] = [
     title: "Content",
     summary: "Badge, Alert, Card + CardLink, Image, Stat, Skeleton, Spinner, EmptyState.",
     Component: ContentSection,
+  },
+  {
+    id: "overlays",
+    title: "Overlays and disclosure",
+    summary: "Dialog (dialog, takeover, Sheet), Menu, Tabs (underline, pill), Accordion, Disclosure, Toast.",
+    Component: OverlaysSection,
+  },
+  {
+    id: "forms",
+    title: "Forms",
+    summary: "useZodForm with Field, Input, Textarea, Select, RadioCards, Checkbox, ErrorSummary; Steps.",
+    Component: FormsSection,
+  },
+  {
+    id: "media",
+    title: "Media",
+    summary: "VideoHero, Marquee (sponsor strip), Carousel, YouTubeEmbed.",
+    Component: MediaSection,
   },
 ];
