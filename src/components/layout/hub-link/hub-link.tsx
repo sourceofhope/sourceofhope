@@ -1,7 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { HandRaisedIcon, HeartIcon, LifebuoyIcon } from "@heroicons/react/24/outline";
+import { GiftIcon, HandRaisedIcon, HeartIcon } from "@heroicons/react/24/outline";
 import { LinkButton, type LinkButtonProps } from "@/components/ui/button";
 import { Card, CardLink } from "@/components/ui/card";
 import { TextLink } from "@/components/ui/link";
@@ -23,7 +23,7 @@ export function useHubHref(params: HubParams) {
   return { pathname, query };
 }
 
-export const HUB_ICONS = { help: LifebuoyIcon, volunteer: HandRaisedIcon, give: HeartIcon } as const;
+export const HUB_ICONS = { help: HeartIcon, volunteer: HandRaisedIcon, give: GiftIcon } as const;
 
 type HubLinkButtonProps = Omit<LinkButtonProps, "href"> & { hub: HubParams; withIcon?: boolean };
 
