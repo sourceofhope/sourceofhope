@@ -1,5 +1,9 @@
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
+import { assertEnv } from "./src/lib/env";
+
+// Fail a deployed build early when configuration is missing (02 §10).
+assertEnv();
 
 // Wires src/i18n/request.ts into every server render (ADR-0004).
 const withNextIntl = createNextIntlPlugin();
