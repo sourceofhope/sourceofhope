@@ -1,9 +1,9 @@
-import type { ComponentProps } from "react";
+import type { ComponentProps, ReactNode } from "react";
 import { useTranslations } from "next-intl";
 import { ArrowUpRightIcon } from "@heroicons/react/20/solid";
 import { Link } from "@/i18n/navigation";
 import { VisuallyHidden } from "../visually-hidden";
-import { linkStyles, type LinkStyleProps } from "./link.styles";
+import { iconLinkStyles, linkStyles, navLinkStyles, type LinkStyleProps } from "./link.styles";
 
 /** TextLink: an internal link in text (locale-aware). For external sites use ExternalLink. */
 export type TextLinkProps = ComponentProps<typeof Link> & LinkStyleProps;
@@ -37,6 +37,43 @@ export function ExternalLink({ href, newTab, surface, quiet, className, children
       {children}
       {isWeb ? <ArrowUpRightIcon aria-hidden="true" /> : null}
       {newTab ? <VisuallyHidden> {t("opensInNewTab")}</VisuallyHidden> : null}
+    </a>
+  );
+}
+
+/**
+ * NavLink: a link in site navigation (header, menu sheet). Pass `current`
+ * for the page or section you're in; it sets `aria-current="page"`.
+ */
+export type NavLinkProps = ComponentProps<typeof Link> & { current?: boolean; surface?: "default" | "inverse"; size?: "md" | "lg" };
+
+export function NavLink({ current, surface, size, className, ...props }: NavLinkProps) {
+  return <Link {...props} aria-current={current ? "page" : undefined} className={navLinkStyles({ surface, size, class: className })} />;
+}
+
+/**
+ * IconLink: an icon-only link to another site (social profiles). `label`
+ * is required and becomes the accessible name.
+ */
+export type IconLinkProps = {
+  href: `https://${string}`;
+  label: string;
+  icon: ReactNode;
+  surface?: "default" | "inverse";
+  newTab?: boolean;
+};
+
+export function IconLink({ href, label, icon, surface, newTab }: IconLinkProps) {
+  const t = useTranslations("UI");
+  return (
+    <a
+      href={href}
+      target={newTab ? "_blank" : undefined}
+      rel={newTab ? "noopener noreferrer" : undefined}
+      aria-label={newTab ? `${label} ${t("opensInNewTab")}` : label}
+      className={iconLinkStyles({ surface })}
+    >
+      {icon}
     </a>
   );
 }

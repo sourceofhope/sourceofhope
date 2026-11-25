@@ -1,3 +1,3 @@
-export { ExternalLink, TextLink } from "./link";
-export type { ExternalLinkProps, TextLinkProps } from "./link";
-export { linkStyles } from "./link.styles";
+export { ExternalLink, IconLink, NavLink, TextLink } from "./link";
+export type { ExternalLinkProps, IconLinkProps, NavLinkProps, TextLinkProps } from "./link";
+export { iconLinkStyles, linkStyles, navLinkStyles } from "./link.styles";

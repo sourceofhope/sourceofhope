@@ -39,5 +39,75 @@
       "gallery": "Gallery",
       "faq": "Questions and answers"
     }
+  },
+  "Shell": {
+    "mainNav": "Main",
+    "footerNav": "Footer",
+    "openMenu": "Open menu",
+    "nav": {
+      "programs": "Programs",
+      "allPrograms": "All programs",
+      "events": "Events",
+      "about": "About",
+      "store": "Store"
+    },
+    "about": {
+      "story": "Our Story",
+      "team": "Team",
+      "awards": "Awards",
+      "media": "News & Media",
+      "partners": "Partners & Sponsors",
+      "careers": "Careers",
+      "contact": "Contact"
+    },
+    "programs": {
+      "servingHope": "Serving and Sharing Hope",
+      "educationHope": "Education for Hope",
+      "wellnessHope": "Wellness of Hope",
+      "outdoorHope": "Hope for the Outdoors",
+      "internationalHope": "Hope Beyond Borders"
+    },
+    "actions": {
+      "help": "Get Help",
+      "volunteer": "Volunteer",
+      "give": "Give",
+      "sponsors": "Community Sponsors"
+    },
+    "actionHints": {
+      "help": "Food, events and services",
+      "volunteer": "Find a shift that fits",
+      "give": "Once, monthly or as a business"
+    },
+    "footer": {
+      "about": "A Plano, Texas nonprofit serving families through education, health and wellness programs.",
+      "candid": "Candid transparency seal for The Source of Hope",
+      "getInvolved": "Get involved",
+      "organization": "Organization",
+      "contact": "Contact",
+      "follow": "Follow us",
+      "newsletter": "Newsletter",
+      "newsletterText": "News and upcoming events, about once a month.",
+      "email": "Email address",
+      "signUp": "Sign up",
+      "emailInvalid": "Enter an email address like name@example.com.",
+      "newsletterPending": "Newsletter sign-up isn't connected yet. Email us to join the list.",
+      "copyright": "© {year} {name}",
+      "ein": "EIN {ein}",
+      "privacy": "Privacy",
+      "terms": "Terms",
+      "candidProfile": "Our profile on Candid"
+    },
+    "notFound": {
+      "title": "Page not found",
+      "lead": "We couldn't find that page. It may have moved, or the link may be wrong.",
+      "home": "Go to the homepage",
+      "events": "See upcoming events"
+    },
+    "error": {
+      "title": "Something went wrong",
+      "lead": "Sorry, this page didn't load. Please try again.",
+      "retry": "Try again",
+      "contact": "If it keeps happening, call <phone></phone> or email <email></email>."
+    }
   }
 }

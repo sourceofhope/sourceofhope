@@ -4,14 +4,15 @@ import { getLocale } from "next-intl/server";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
+import { ToastRegion } from "@/components/ui/toast";
 import { routing } from "@/i18n/routing";
 import { fontVariables } from "../fonts";
 import "../globals.css";
 
 /*
  * Root layout for every public page. It owns <html>, fonts, translations and
- * analytics only; page chrome (header, footer) comes from the group layouts:
- * (legacy) for pages not yet rebuilt, and the new shell from slice 1.6.
+ * analytics, and the one toast region. Page chrome (header, footer) comes from
+ * the group layouts: (legacy) for pages not yet rebuilt, (site) for rebuilt ones.
  */
 
 export function generateStaticParams() {
@@ -90,7 +91,10 @@ export default async function LocaleRootLayout({ children }: { children: React.R
         </noscript>
         <Analytics />
         <SpeedInsights />
-        <NextIntlClientProvider>{children}</NextIntlClientProvider>
+        <NextIntlClientProvider>
+          {children}
+          <ToastRegion />
+        </NextIntlClientProvider>
       </body>
     </html>
   );

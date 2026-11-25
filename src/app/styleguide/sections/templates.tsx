@@ -33,6 +33,24 @@ export function TemplatesSection() {
 
       <div className="flex flex-col gap-3">
         <Heading level={3} size="xl">
+          Site shell
+        </Heading>
+        <p className="max-w-prose text-muted">
+          Header, phone menu and footer around a page. The homepage header starts transparent over the hero; every other
+          page uses the solid one.
+        </p>
+        <ul className="flex flex-wrap gap-6">
+          <li>
+            <TextLink href="/styleguide/shell">Shell with the homepage overlay header</TextLink>
+          </li>
+          <li>
+            <TextLink href="/this-page-does-not-exist">Shell with the solid header (a real 404)</TextLink>
+          </li>
+        </ul>
+      </div>
+
+      <div className="flex flex-col gap-3">
+        <Heading level={3} size="xl">
           SectionHeading
         </Heading>
         <p className="max-w-prose text-muted">Shown here at h2 inside the styleguide; on pages, Section renders it for you.</p>

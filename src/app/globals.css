@@ -164,6 +164,8 @@
   --z-overlay: 100;
   --z-toast: 200;
   --header-height: 4.5rem; /* 72px */
+  /* Home hero (spec §5.3): 760px, never taller than the screen. min-h-(--hero-min-height) */
+  --hero-min-height: min(100svh, 47.5rem);
   --dialog-max-height: 85vh; /* use as max-h-(--dialog-max-height) */
 
   /* Deprecated legacy spacing (slice 3.9 removes). */
@@ -179,6 +181,7 @@
 @media (max-width: 47.99rem) {
   :root {
     --header-height: 3.75rem; /* 60px on phones */
+    --hero-min-height: min(100svh, 37.5rem); /* 600px on phones */
   }
 }
 

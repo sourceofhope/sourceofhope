@@ -22,6 +22,11 @@ const disclosureStyles = tv({
     ],
     heading: "m-0 text-lg",
     panel: "pb-4 text-ink-soft",
+    rowTrigger: [
+      "flex min-h-12 w-full items-center justify-between gap-4 text-left text-lg font-semibold text-ink",
+      "[&_svg]:size-5 [&_svg]:shrink-0 [&_svg]:transition-transform data-open:[&_svg]:rotate-180 motion-reduce:[&_svg]:transition-none",
+      focusRing.default,
+    ],
     inlineTrigger: [
       "inline-flex min-h-11 items-center gap-1 font-semibold text-action underline underline-offset-4",
       "[&_svg]:size-5 [&_svg]:transition-transform data-open:[&_svg]:rotate-180 motion-reduce:[&_svg]:transition-none",
@@ -67,11 +72,22 @@ export function AccordionItem({ value, title, level, children }: AccordionItemPr
  * Disclosure: one show/hide toggle in running content ("How volunteering
  * works", "Give in honor or memory of someone"). Replaces ExpressiveCard.
  */
-export function Disclosure({ label, children, defaultOpen }: { label: ReactNode; children: ReactNode; defaultOpen?: boolean }) {
+export function Disclosure({
+  label,
+  children,
+  defaultOpen,
+  look = "inline",
+}: {
+  label: ReactNode;
+  children: ReactNode;
+  defaultOpen?: boolean;
+  /** `inline` in running text; `row` for a full-width group in a menu (the phone menu's Programs). */
+  look?: "inline" | "row";
+}) {
   const s = disclosureStyles();
   return (
     <Collapsible defaultOpen={defaultOpen}>
-      <CollapsibleTrigger className={s.inlineTrigger()}>
+      <CollapsibleTrigger className={look === "row" ? s.rowTrigger() : s.inlineTrigger()}>
         {label}
         <ChevronDownIcon aria-hidden="true" />
       </CollapsibleTrigger>
