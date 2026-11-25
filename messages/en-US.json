@@ -28,5 +28,16 @@
     "showLess": "Show less",
     "language": "Language",
     "errorSummary": "{count, plural, one {There is # problem with this form.} other {There are # problems with this form.}}"
+  },
+  "Layout": {
+    "program": {
+      "about": "What it is",
+      "audience": "Who it serves",
+      "schedule": "When and where",
+      "events": "Upcoming events",
+      "help": "How to help",
+      "gallery": "Gallery",
+      "faq": "Questions and answers"
+    }
   }
 }

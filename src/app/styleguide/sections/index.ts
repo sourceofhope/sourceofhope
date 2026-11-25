@@ -4,6 +4,7 @@ import { ContentSection } from "./content";
 import { FormsSection } from "./forms";
 import { MediaSection } from "./media";
 import { OverlaysSection } from "./overlays";
+import { TemplatesSection } from "./templates";
 import { TextSection } from "./text";
 import { TokensSection } from "./tokens";
 
@@ -55,5 +56,11 @@ export const SECTIONS: StyleguideSection[] = [
     title: "Media",
     summary: "VideoHero, Marquee (sponsor strip), Carousel, YouTubeEmbed.",
     Component: MediaSection,
+  },
+  {
+    id: "templates",
+    title: "Templates",
+    summary: "Landing, Content, Program, Listing, Detail, Utility; SectionHeading and CtaBand.",
+    Component: TemplatesSection,
   },
 ];
