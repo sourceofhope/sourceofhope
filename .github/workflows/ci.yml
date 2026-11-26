@@ -63,6 +63,28 @@ jobs:
             test-results/
           retention-days: 7
 
+  database:
+    name: Database migrations and policy tests
+    runs-on: ubuntu-latest
+    env:
+      # Placeholder so config.toml's env() reference resolves; CI never calls the hook.
+      SUPABASE_AUTH_HOOK_SECRET: "v1,whsec_Y2ktcGxhY2Vob2xkZXItbm90LWEtc2VjcmV0"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: npm
+      - run: npm ci
+      # Postgres only, then apply every migration and the seed from scratch.
+      - run: npx supabase db start
+      - run: npx supabase db reset
+      # RLS lockdown, append-only audit log, party and event invariants (pgTAP).
+      - run: npx supabase test db
+      # The committed types must match the schema.
+      - run: npx supabase gen types typescript --db-url postgresql://postgres:postgres@127.0.0.1:54322/postgres --schema public > src/lib/db/types.ts
+      - run: git diff --exit-code -- src/lib/db/types.ts
+
   audit:
     name: Dependency audit (production, high and above)
     runs-on: ubuntu-latest

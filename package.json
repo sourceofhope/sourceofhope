@@ -13,7 +13,12 @@
     "test:watch": "vitest",
     "test:e2e": "playwright test",
     "i18n:pseudo": "node scripts/pseudo-locale.mjs",
-    "i18n:check": "node scripts/check-messages.mjs"
+    "i18n:check": "node scripts/check-messages.mjs",
+    "db:start": "supabase start -x studio,imgproxy,storage-api,realtime,edge-runtime,logflare,vector,supavisor",
+    "db:stop": "supabase stop",
+    "db:reset": "supabase db reset",
+    "db:test": "supabase test db",
+    "db:types": "supabase gen types typescript --db-url postgresql://postgres:postgres@127.0.0.1:54322/postgres --schema public > src/lib/db/types.ts"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
