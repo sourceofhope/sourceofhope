@@ -20,7 +20,7 @@ export default defineConfig({
         resolve: { alias },
         test: {
           name: "unit",
-          include: ["src/**/*.test.ts", "eslint/**/*.test.ts"],
+          include: ["src/**/*.test.ts", "eslint/**/*.test.ts", "scripts/**/*.test.ts"],
           environment: "node",
           env,
         },
