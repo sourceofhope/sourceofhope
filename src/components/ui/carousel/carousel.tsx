@@ -51,7 +51,8 @@ export function Carousel({ label, children }: CarouselProps) {
   const slides = Children.toArray(children);
   return (
     <SdkCarousel aria-label={label} className={s.root()}>
-      <CarouselViewport className={s.viewport()}>
+      {/* Focusable from the server render, so the scroll area is keyboard-reachable before hydration. */}
+      <CarouselViewport tabIndex={0} className={s.viewport()}>
         <CarouselContent className={s.content()}>
           {slides.map((slide, index) => (
             // Slides are static children; their order is their identity.

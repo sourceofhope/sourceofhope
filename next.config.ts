@@ -35,6 +35,10 @@ const securityHeaders = [
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  // Forwarding browser console output into .next/dev/logs makes the dev
+  // file watcher rebuild and reload the page on every log line (a reload
+  // loop in `next dev`). Errors still appear in the browser console.
+  logging: { browserToTerminal: false },
   images: {
     remotePatterns: [
       {
