@@ -109,5 +109,37 @@
       "retry": "Try again",
       "contact": "If it keeps happening, call <phone></phone> or email <email></email>."
     }
+  },
+  "Staff": {
+    "signIn": {
+      "title": "Staff sign-in",
+      "lead": "Enter your work email. We'll send you a link to sign in.",
+      "email": "Work email",
+      "submit": "Email me a sign-in link",
+      "sent": "If that email belongs to a staff account, a sign-in link is on its way. It works for one hour.",
+      "invalid": "Enter an email address like name@thesourceofhope.org.",
+      "tooMany": "Too many tries. Wait a few minutes and try again.",
+      "linkProblem": "That sign-in link didn't work. It may have expired or already been used. Ask for a new one."
+    },
+    "overview": {
+      "title": "Hello, {name}",
+      "lead": "The Staff Portal arrives in a later phase. You're signed in.",
+      "denied": "You don't have access to that page. Ask an admin if you need it.",
+      "security": "Security settings",
+      "signOut": "Sign out"
+    },
+    "security": {
+      "title": "Two-step sign-in",
+      "lead": "Some permissions need a code from an authenticator app each time you sign in.",
+      "setUp": "Set up an authenticator app",
+      "scan": "Scan this code with your authenticator app, then enter the 6-digit code it shows.",
+      "secret": "Can't scan? Enter this key instead: {secret}",
+      "code": "6-digit code",
+      "verify": "Verify",
+      "verified": "Two-step sign-in is on for this session.",
+      "needCode": "Enter the code from your authenticator app to continue.",
+      "wrongCode": "That code didn't work. Check the time on your device and try again.",
+      "back": "Back to the overview"
+    }
   }
 }

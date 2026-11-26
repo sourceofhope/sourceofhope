@@ -47,6 +47,8 @@ export const LATER_SCHEMA = z.object({
   CONSTANT_CONTACT_API_KEY: nonEmpty.optional(),
   STAFF_EMAIL_INQUIRIES: z.email().optional(),
   DATABASE_URL: nonEmpty.optional(),
+  /** Local only: the Supabase CLI's Mailpit inbox, used when there is no Resend key in development. */
+  MAILPIT_URL: url.optional(),
 });
 
 export const ENV_SCHEMA = DEPLOYED_SCHEMA.partial().extend(LATER_SCHEMA.shape);
