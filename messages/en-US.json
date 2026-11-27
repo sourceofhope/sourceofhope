@@ -293,5 +293,22 @@
     "talk": "Talk to us first",
     "partnerEventsTitle": "Partner events",
     "partnerEventsText": "Some events on our calendar are run by partner organizations. We list them so you can find them, and sign-up happens on the partner's site."
+  },
+  "Media": {
+    "title": "News & Media",
+    "lead": "Stories from our programs, press coverage, our podcast and the newsletter archive.",
+    "meta": "News, press, podcast and newsletters from The Source of Hope.",
+    "stories": "Stories and updates",
+    "storiesEmpty": "New stories are on the way.",
+    "press": "Press",
+    "pressLead": "Television segments and interviews about our work.",
+    "podcast": "Podcast and radio",
+    "listen": "Listen on Spotify",
+    "watch": "Watch on YouTube",
+    "radioLabel": "In Vietnamese",
+    "newsletters": "Newsletter archive",
+    "newsletterOpen": "Read the issue",
+    "signupTitle": "Get the newsletter",
+    "signupText": "News and upcoming events, about once a month."
   }
 }

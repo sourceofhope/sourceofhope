@@ -9,7 +9,7 @@ import { expect, test } from "@playwright/test";
 const LEGACY_PAGES = [
   "/", "/about", "/about/team", "/programs", "/programs/servingHope", "/programs/educationHope",
   "/programs/wellnessHope", "/programs/outdoorHope", "/programs/internationalHope", "/events", "/media",
-  "/media/awards", "/media/press", "/media/podcast", "/members", "/donate", "/planned-giving",
+  "/media/awards", "/members", "/donate", "/planned-giving",
   "/store", "/store/cart", "/store/checkout",
 ];
 

@@ -66,6 +66,9 @@ const nextConfig: NextConfig = {
       // Connect split into Contact and Careers (spec §8.5).
       { source: "/connect", destination: "/contact", permanent: true },
       { source: "/:prefix(es|pseudo)/connect", destination: "/:prefix/contact", permanent: true },
+      // Press and Podcast became sections of News & Media.
+      { source: "/media/press", destination: "/media#press", permanent: true },
+      { source: "/media/podcast", destination: "/media#podcast", permanent: true },
     ];
   },
 };

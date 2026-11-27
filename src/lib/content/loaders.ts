@@ -185,3 +185,16 @@ export async function getTeamMember(slug: string, locale = "en"): Promise<{ memb
   if (!raw?.name) return null;
   return { member: toMember(raw, locale), groupName: text(raw.groupName, locale), colleagues: raw.colleagues.map((m) => toMember(m, locale)) };
 }
+
+export type NewsletterIssue = { title: string; date: string | null; url: string; image: ContentImage | null };
+
+/** The newsletter archive, newest first. */
+export async function getNewsletters(limit = 12, locale = "en"): Promise<NewsletterIssue[]> {
+  const raw = await fetchContent<{ title: unknown; date?: string; url?: string; image: Parameters<typeof toContentImage>[0] }[]>(
+    `*[_type == "newsletter" && defined(url)] | order(coalesce(date, _createdAt) desc) [0...$limit] { title, date, url, "image": image ${IMAGE_PROJECTION} }`,
+    { limit },
+  );
+  return (raw ?? [])
+    .map((n) => ({ title: text(n.title, locale) ?? "", date: n.date ?? null, url: n.url!, image: toContentImage(n.image, locale) }))
+    .filter((n) => n.title && /^https?:\/\//.test(n.url));
+}
