@@ -25,7 +25,7 @@ describe("SiteFooter", () => {
 });
 
 describe("NewsletterForm", () => {
-  it("checks the address, then says sign-up isn't connected until Phase 2", async () => {
+  it("checks the address, then says sign-up isn't connected until slice 4.7", async () => {
     const user = userEvent.setup();
     renderWithIntl(<NewsletterForm />);
     await user.click(screen.getByRole("button", { name: "Sign up" }));

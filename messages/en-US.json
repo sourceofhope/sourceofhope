@@ -95,7 +95,8 @@
       "ein": "EIN {ein}",
       "privacy": "Privacy",
       "terms": "Terms",
-      "candidProfile": "Our profile on Candid"
+      "candidProfile": "Our profile on Candid",
+      "newsletterPrivacy": "We use your email only to send the newsletter. <link>Privacy Policy</link>"
     },
     "notFound": {
       "title": "Page not found",
@@ -362,5 +363,14 @@
     "checking": "Checking your order…",
     "noOrderTitle": "No order to show",
     "noOrderText": "This page shows your order after checkout."
+  },
+  "Legal": {
+    "privacyTitle": "Privacy Policy",
+    "termsTitle": "Terms of Use",
+    "updated": "Last updated {date}",
+    "pending": "This is a draft pending review by The Source of Hope. It describes how the site works today.",
+    "privacyMeta": "How The Source of Hope collects, uses and protects personal information.",
+    "termsMeta": "The terms for using thesourceofhope.org, giving and shopping.",
+    "contents": "On this page"
   }
 }

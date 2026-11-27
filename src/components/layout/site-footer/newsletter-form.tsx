@@ -6,11 +6,12 @@ import { z } from "zod";
 import { Alert } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { Field, Input, useZodForm } from "@/components/ui/field";
+import { TextLink } from "@/components/ui/link";
 
 export type NewsletterFormProps = {
   /**
    * Adds the address to the Constant Contact list (spec §9.9). Wired in
-   * Phase 2; until then the form validates and says sign-up isn't connected.
+   * slice 4.7; until then the form validates and says sign-up isn't connected.
    */
   subscribe?: (email: string) => Promise<void>;
 };
@@ -44,6 +45,7 @@ export function NewsletterForm({ subscribe }: NewsletterFormProps) {
           </Button>
         </div>
       </div>
+      <p className="text-sm text-muted">{t.rich("newsletterPrivacy", { link: (chunks) => <TextLink href="/privacy">{chunks}</TextLink> })}</p>
       {notice ? <Alert tone="info">{notice}</Alert> : null}
     </form>
   );
