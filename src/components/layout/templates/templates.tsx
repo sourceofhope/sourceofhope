@@ -182,11 +182,11 @@ export function DetailTemplate({ back, title, eyebrow, meta, media, children, re
  * Utility (cart, checkout, success, 404, 500): a short heading and focused
  * content in a narrow column. No PageHeader band, no decoration.
  */
-export function UtilityTemplate({ title, lead, children }: { title: string; lead?: ReactNode; children?: ReactNode }) {
+export function UtilityTemplate({ title, lead, children, width = "prose" }: { title: string; lead?: ReactNode; children?: ReactNode; width?: "prose" | "page" }) {
   return (
     <Main>
       <div className="py-section">
-        <Container width="prose">
+        <Container width={width}>
           <div className="flex flex-col gap-4">
             <Heading level={1} size="3xl">
               {title}

@@ -89,11 +89,10 @@ export function Checkbox({ label, description, error, ...props }: CheckboxProps)
             <CheckIcon aria-hidden="true" />
           </CheckboxIndicator>
         </SdkCheckbox>
-        <span className="flex flex-col gap-0.5">
-          <span>{label}</span>
-          {description ? <FieldDescription className={f.description()}>{description}</FieldDescription> : null}
-        </span>
+        <span>{label}</span>
       </FieldLabel>
+      {/* Outside the label, so it describes the checkbox instead of becoming part of its name. */}
+      {description ? <FieldDescription className={f.description({ class: "-mt-2 pl-8" })}>{description}</FieldDescription> : null}
       {error ? (
         <FieldError match className={f.error()}>
           <ExclamationCircleIcon aria-hidden="true" />

@@ -7,6 +7,7 @@ import { NavLink } from "@/components/ui/link";
 import { usePathname } from "@/i18n/navigation";
 import { Container } from "../container";
 import { HubLinkButton } from "../hub-link";
+import { CartIndicator } from "./cart-indicator";
 import { LanguageSelect } from "./language-select";
 import { Logo } from "./logo";
 import { MobileMenu } from "./mobile-menu";
@@ -119,6 +120,7 @@ export function SiteHeader({ overlay: overlayProp }: SiteHeaderProps) {
             <div className="hidden lg:block">
               <LanguageSelect />
             </div>
+            <CartIndicator surface={surface} />
             <HubLinkButton hub={{ action: "help" }} variant="tertiary" surface={surface} withIcon className="max-sm:px-2">
               {t("actions.help")}
             </HubLinkButton>

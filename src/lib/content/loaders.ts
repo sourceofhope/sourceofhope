@@ -198,3 +198,60 @@ export async function getNewsletters(limit = 12, locale = "en"): Promise<Newslet
     .map((n) => ({ title: text(n.title, locale) ?? "", date: n.date ?? null, url: n.url!, image: toContentImage(n.image, locale) }))
     .filter((n) => n.title && /^https?:\/\//.test(n.url));
 }
+
+export type Product = {
+  id: string;
+  slug: string;
+  title: string;
+  price: number;
+  shortDescription: string | null;
+  description: string[];
+  impact: string | null;
+  sizes: string[];
+  images: ContentImage[];
+};
+
+type RawProduct = {
+  _id: string;
+  externalId?: number;
+  slug?: string;
+  title: unknown;
+  price: number;
+  shortDescription: unknown;
+  longDescription: unknown;
+  impact: unknown;
+  size?: string;
+  sizes?: string[];
+  image: Parameters<typeof toContentImage>[0];
+  images: Parameters<typeof toContentImage>[0][] | null;
+};
+
+const PRODUCT_PROJECTION = `{ _id, externalId, "slug": slug.current, title, price, shortDescription, longDescription, impact, size, sizes, "image": image ${IMAGE_PROJECTION}, "images": images[] ${IMAGE_PROJECTION} }`;
+
+function toProduct(p: RawProduct, locale: string): Product | null {
+  const title = text(p.title, locale);
+  if (!title || typeof p.price !== "number") return null;
+  const images = [...(p.images ?? []), p.image].map((i) => toContentImage(i, locale)).filter((i): i is ContentImage => i !== null);
+  return {
+    id: p.externalId != null ? String(p.externalId) : p._id,
+    slug: p.slug ?? p._id,
+    title,
+    price: p.price,
+    shortDescription: text(p.shortDescription, locale),
+    description: paragraphs(p.longDescription, locale),
+    impact: text(p.impact, locale),
+    sizes: p.sizes?.length ? p.sizes : p.size ? p.size.split(/[,/]/).map((s) => s.trim()).filter(Boolean) : [],
+    images,
+  };
+}
+
+export async function getProducts(locale = "en"): Promise<Product[]> {
+  const raw = await fetchContent<RawProduct[]>(`*[_type == "product"] | order(_createdAt desc) [0...60] ${PRODUCT_PROJECTION}`);
+  return (raw ?? []).map((p) => toProduct(p, locale)).filter((p): p is Product => p !== null);
+}
+
+/** One product by slug, legacy numeric id or document id (today's URLs use any of them). */
+export async function getProduct(id: string, locale = "en"): Promise<Product | null> {
+  const raw = await fetchContent<RawProduct | null>(`*[_type == "product" && (slug.current == $id || string(externalId) == $id || _id == $id)][0] ${PRODUCT_PROJECTION}`, { id });
+  return raw ? toProduct(raw, locale) : null;
+}

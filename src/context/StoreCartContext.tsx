@@ -2,7 +2,7 @@
 
 import { createContext, useContext, ReactNode, useState, useEffect, Dispatch, SetStateAction } from "react";
 
-const CART_STORAGE_KEY = "sourceofhope_cart";
+import { CART_CHANGED_EVENT, CART_STORAGE_KEY } from "@/lib/store/cart-keys";
 const SHIPPING_STORAGE_KEY = "sourceofhope_shipping";
 const PROCESSING_FEE_KEY = "sourceofhope_processing";
 
@@ -88,6 +88,8 @@ export function StoreCartProvider({ children }: { children: ReactNode }) {
     if (typeof window === 'undefined') return;
     try {
       localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
+      // The header's cart indicator listens for this (it lives outside this provider).
+      window.dispatchEvent(new Event(CART_CHANGED_EVENT));
     } catch (error) {
       console.error("Failed to save cart to localStorage:", error);
     }
