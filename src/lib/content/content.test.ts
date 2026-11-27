@@ -40,3 +40,19 @@ describe("content images", () => {
     expect(sanityAssetUrl("file-abc", "p1", "x")).toBeNull();
   });
 });
+
+describe("team group order", () => {
+  it("puts leadership first, then cohorts newest first", async () => {
+    const { sortTeamGroups } = await import("./loaders");
+    const names = ["EPP Spring 2025", "Chief of Staff", "EPP Summer 2026", "Director Board", "EPP Spring 2026", "EPP Fall 2024", "Intern Summer 2026"];
+    expect(sortTeamGroups(names.map((name) => ({ name }))).map((g) => g.name)).toEqual([
+      "Chief of Staff",
+      "Director Board",
+      "EPP Summer 2026",
+      "Intern Summer 2026",
+      "EPP Spring 2026",
+      "EPP Spring 2025",
+      "EPP Fall 2024",
+    ]);
+  });
+});

@@ -201,5 +201,31 @@
     "eventsEmpty": "No upcoming events for this program right now. New dates are posted about a month ahead.",
     "seeAllEvents": "See all events",
     "galleryPhoto": "Photo {n} of {total}"
+  },
+  "About": {
+    "storyTitle": "Our Story",
+    "storyLead": "We meet people where they are, and walk with them toward a life of purpose.",
+    "storyMeta": "The mission, vision and story of The Source of Hope, a Plano, Texas nonprofit.",
+    "mission": "Our mission",
+    "vision": "Our vision",
+    "story": "Who we are",
+    "howWeWork": "How we work",
+    "team": "Meet our team",
+    "teamText": "The volunteers, board members and students who run The Source of Hope.",
+    "candid": "See our profile on Candid",
+    "ctaTitle": "Be part of the story",
+    "ctaText": "Volunteer at an event, or give once or monthly.",
+    "teamTitle": "Our team",
+    "teamLead": "The people who keep our programs running, from our board to our student cohorts.",
+    "teamMeta": "Meet the board, staff and student volunteers of The Source of Hope.",
+    "teamEmptyTitle": "Team profiles are coming soon",
+    "allTeam": "All team members",
+    "moreTeam": "More from {group}",
+    "readProfile": "Read profile",
+    "awardsTitle": "Awards & Recognition",
+    "awardsLead": "A legacy of leadership and service, recognized by community, business and civic organizations.",
+    "awardsMeta": "Awards and recognition for The Source of Hope and its founder.",
+    "highlights": "Highlights",
+    "timeline": "Every award"
   }
 }

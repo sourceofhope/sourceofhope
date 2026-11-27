@@ -18,25 +18,32 @@ export const HEADER_SOLID_SENTINEL_ID = "header-solid-sentinel";
 /**
  * In overlay mode the header is transparent until the hero is scrolled
  * past: until the sentinel element passes under the header, or (with no
- * sentinel) as soon as the page scrolls at all.
+ * sentinel) as soon as the page scrolls at all. The sentinel is looked up
+ * on every check, because the page can stream in after the header hydrates.
+ * One rAF-throttled passive listener; it never blocks scrolling.
  */
 function useSolidAfterHero(enabled: boolean, header: React.RefObject<HTMLElement | null>) {
   const [solid, setSolid] = useState(false);
   useEffect(() => {
     if (!enabled) return;
-    const sentinel = document.getElementById(HEADER_SOLID_SENTINEL_ID);
-    if (sentinel) {
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const sentinel = document.getElementById(HEADER_SOLID_SENTINEL_ID);
       const height = header.current?.offsetHeight ?? 72;
-      const observer = new IntersectionObserver(([entry]) => setSolid(entry.boundingClientRect.top < height), {
-        rootMargin: `-${height}px 0px 0px 0px`,
-      });
-      observer.observe(sentinel);
-      return () => observer.disconnect();
-    }
-    const onScroll = () => setSolid(window.scrollY > 8);
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+      setSolid(sentinel ? sentinel.getBoundingClientRect().top < height : window.scrollY > 8);
+    };
+    const schedule = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+      cancelAnimationFrame(frame);
+    };
   }, [enabled, header]);
   return solid;
 }

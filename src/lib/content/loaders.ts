@@ -1,5 +1,6 @@
 import "server-only";
 import { FALLBACK_PROGRAMS, PROGRAM_KEYS, type ProgramContent, type ProgramKey } from "@/content/programs";
+import { FALLBACK_OUR_STORY } from "@/content/our-story";
 import { FALLBACK_IMPACT, type ImpactStat } from "@/content/site";
 import type { PublicEvent } from "@/lib/db/public-events";
 import { IMAGE_PROJECTION, sanityAssetUrl, toContentImage, type ContentImage } from "./image";
@@ -113,4 +114,74 @@ export async function getRecurringPrograms(locale = "en"): Promise<RecurringProg
   return (raw ?? [])
     .map((r) => ({ id: r._id, title: text(r.title, locale) ?? "", cadence: text(r.cadence, locale), location: r.location ?? null, summary: text(r.summary, locale), image: toContentImage(r.image, locale) }))
     .filter((r) => r.title);
+}
+
+export type OurStory = { mission: string; vision: string; story: string[]; howWeWork: string[] };
+
+export async function getOurStory(locale = "en"): Promise<OurStory> {
+  const raw = await fetchContent<{ mission: unknown; vision: unknown; history: unknown; howWeWork: unknown } | null>(`*[_type == "ourStory"][0]{ mission, vision, history, howWeWork }`);
+  const story = paragraphs(raw?.history, locale);
+  const howWeWork = paragraphs(raw?.howWeWork, locale);
+  return {
+    mission: text(raw?.mission, locale) ?? FALLBACK_OUR_STORY.mission,
+    vision: text(raw?.vision, locale) ?? FALLBACK_OUR_STORY.vision,
+    story: story.length ? story : [...FALLBACK_OUR_STORY.story],
+    howWeWork: howWeWork.length ? howWeWork : [...FALLBACK_OUR_STORY.howWeWork],
+  };
+}
+
+export type TeamMember = { slug: string; name: string; title: string | null; shortBio: string | null; bio: string[]; image: ContentImage | null; groupSlug: string };
+export type TeamGroup = { slug: string; name: string; description: string | null; members: TeamMember[] };
+
+type RawMember = { name: string; slug?: string; title: unknown; shortBio: unknown; bio: unknown; image: Parameters<typeof toContentImage>[0]; group?: string };
+type RawGroup = { name: unknown; internalName?: string; slug?: string; description: unknown; members: RawMember[] };
+
+const MEMBER_PROJECTION = `{ name, "slug": slug.current, title, shortBio, bio, "image": image ${IMAGE_PROJECTION}, "group": teamGroup->slug.current }`;
+
+const toMember = (m: RawMember, locale: string): TeamMember => ({
+  slug: m.slug ?? "",
+  name: m.name,
+  title: text(m.title, locale),
+  shortBio: text(m.shortBio, locale),
+  bio: paragraphs(m.bio, locale),
+  image: toContentImage(m.image, locale),
+  groupSlug: m.group ?? "",
+});
+
+/**
+ * Leadership groups first, then cohorts newest first ("EPP Summer 2026"
+ * before "EPP Spring 2026"). Empty groups are hidden.
+ */
+export function sortTeamGroups<T extends { name: string }>(groups: T[]): T[] {
+  const SEASON: Record<string, number> = { fall: 3, summer: 2, spring: 1, winter: 0 };
+  const rank = (name: string) => {
+    const year = /\b(20\d{2})\b/.exec(name)?.[1];
+    if (!year) return [0, 0, 0] as const;
+    const season = Object.entries(SEASON).find(([k]) => name.toLowerCase().includes(k))?.[1] ?? 0;
+    return [1, -Number(year), -season] as const;
+  };
+  return [...groups].sort((a, b) => {
+    const [ra, rb] = [rank(a.name), rank(b.name)];
+    for (let i = 0; i < 3; i += 1) if (ra[i] !== rb[i]) return ra[i] - rb[i];
+    return a.name.localeCompare(b.name);
+  });
+}
+
+export async function getTeam(locale = "en"): Promise<TeamGroup[]> {
+  const raw = await fetchContent<RawGroup[]>(
+    `*[_type == "teamGroup"]{ name, internalName, "slug": slug.current, description, "members": *[_type == "teamMember" && references(^._id) && defined(slug.current)] | order(coalesce(order, 99) asc, name asc) ${MEMBER_PROJECTION} }`,
+  );
+  const groups = (raw ?? [])
+    .map((g) => ({ slug: g.slug ?? "", name: text(g.name, locale) ?? g.internalName ?? "", description: text(g.description, locale), members: g.members.map((m) => toMember(m, locale)) }))
+    .filter((g) => g.name && g.members.length > 0);
+  return sortTeamGroups(groups);
+}
+
+export async function getTeamMember(slug: string, locale = "en"): Promise<{ member: TeamMember; groupName: string | null; colleagues: TeamMember[] } | null> {
+  const raw = await fetchContent<(RawMember & { groupName: unknown; colleagues: RawMember[] }) | null>(
+    `*[_type == "teamMember" && slug.current == $slug][0]{ ..., "slug": slug.current, "image": image ${IMAGE_PROJECTION}, "group": teamGroup->slug.current, "groupName": teamGroup->name, "colleagues": *[_type == "teamMember" && references(^.teamGroup._ref) && slug.current != $slug && defined(slug.current)] | order(coalesce(order, 99) asc, name asc) [0...3] ${MEMBER_PROJECTION} }`,
+    { slug },
+  );
+  if (!raw?.name) return null;
+  return { member: toMember(raw, locale), groupName: text(raw.groupName, locale), colleagues: raw.colleagues.map((m) => toMember(m, locale)) };
 }
