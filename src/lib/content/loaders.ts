@@ -96,3 +96,21 @@ export function eventImage(event: PublicEvent): ContentImage {
   const program = FALLBACK_PROGRAMS.find((p) => p.key === event.programKey);
   return program ? { ...program.image, alt: "" } : DEFAULT_EVENT_IMAGE;
 }
+
+export type RecurringProgram = { id: string; title: string; cadence: string | null; location: string | null; summary: string | null; image: ContentImage | null };
+
+type RawRecurring = { _id: string; title: unknown; cadence?: unknown; location?: string; summary: unknown; image: Parameters<typeof toContentImage>[0] };
+
+/**
+ * "Every month" on the Events page. v2 `recurringProgram` documents when
+ * they exist. Today's `recurringEvent` documents are monthly copies of the
+ * same program, so only the newest one stands in until editors create them.
+ */
+export async function getRecurringPrograms(locale = "en"): Promise<RecurringProgram[]> {
+  const projection = `{ _id, title, cadence, location, summary, "image": image ${IMAGE_PROJECTION} }`;
+  const v2 = await fetchContent<RawRecurring[]>(`*[_type == "recurringProgram"] | order(coalesce(order, 99) asc, internalName asc) [0...8] ${projection}`);
+  const raw = v2?.length ? v2 : await fetchContent<RawRecurring[]>(`*[_type == "recurringEvent"] | order(date desc) [0...1] ${projection}`);
+  return (raw ?? [])
+    .map((r) => ({ id: r._id, title: text(r.title, locale) ?? "", cadence: text(r.cadence, locale), location: r.location ?? null, summary: text(r.summary, locale), image: toContentImage(r.image, locale) }))
+    .filter((r) => r.title);
+}

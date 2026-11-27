@@ -169,10 +169,37 @@
       "partner": "Partner event"
     },
     "details": "Details",
-    "at": "{date} · {time}"
+    "at": "{date} · {time}",
+    "title": "Events",
+    "lead": "Meal services, volunteer shifts and community events. Choose an event to see details, sign up or get directions.",
+    "metaDescription": "Upcoming events from The Source of Hope in Dallas–Fort Worth: meal services, volunteer shifts and community events.",
+    "filterLabel": "Show events",
+    "filters": {
+      "all": "All",
+      "volunteer": "Volunteer",
+      "public": "Open to the public",
+      "partner": "Partner events"
+    },
+    "emptyTitle": "No events match right now",
+    "emptyText": "We post events about a month ahead. Try another filter, or check back soon.",
+    "showAll": "Show all events",
+    "everyMonth": "Every month",
+    "everyMonthLead": "Programs that run on a regular schedule.",
+    "recent": "Recent events",
+    "recentToggle": "Show the last {count} events"
   },
   "Programs": {
     "learnMore": "Learn more",
-    "readStory": "Read the story"
+    "readStory": "Read the story",
+    "indexTitle": "Our programs",
+    "indexLead": "Five programs, one mission: education, health and wellness for our neighbors in Dallas–Fort Worth and beyond.",
+    "indexMetaDescription": "Serving and Sharing Hope, Education for Hope, Wellness of Hope, Hope for the Outdoors and Hope Beyond Borders.",
+    "helpLead": "Volunteer at an event, or give to support {program}.",
+    "volunteer": "Volunteer",
+    "give": "Give to this program",
+    "getHelp": "Get help from this program",
+    "eventsEmpty": "No upcoming events for this program right now. New dates are posted about a month ahead.",
+    "seeAllEvents": "See all events",
+    "galleryPhoto": "Photo {n} of {total}"
   }
 }

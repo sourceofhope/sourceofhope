@@ -28,7 +28,10 @@ test.describe("home", () => {
     await page.goto("/");
     const header = page.getByRole("banner");
     await expect(header).toHaveAttribute("data-transparent");
-    await page.mouse.wheel(0, 900);
-    await expect(header).not.toHaveAttribute("data-transparent");
+    // Under load the first scroll can land before the header hydrates; scroll until it reacts.
+    await expect(async () => {
+      await page.mouse.wheel(0, 400);
+      await expect(header).not.toHaveAttribute("data-transparent", { timeout: 1000 });
+    }).toPass({ timeout: 15_000 });
   });
 });

@@ -10,7 +10,7 @@ import { usePathname } from "@/i18n/navigation";
 export type HubAction = "help" | "volunteer" | "give";
 
 /** What the Hub opens to (spec §9). `type`, `need`, `event` and `program` pre-select a step. */
-export type HubParams = { action: HubAction; type?: string; need?: string; event?: string; program?: string };
+export type HubParams = { action: HubAction; type?: string; need?: string; event?: string; program?: string; designation?: string };
 
 /**
  * The Hub opens from a query string on the current page (`?action=give`),

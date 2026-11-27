@@ -37,6 +37,23 @@ async function queryUpcoming(locale: string, programKey: string | null, limit: n
   return data.map((row) => toPublicEvent(row, locale)).filter((e): e is PublicEvent => e !== null);
 }
 
+async function queryRecent(locale: string, limit: number): Promise<PublicEvent[]> {
+  if (!isDatabaseConfigured()) return [];
+  const { data, error } = await db()
+    .from("events")
+    .select(SELECT)
+    .eq("status", "published")
+    .lt("ends_at", new Date().toISOString())
+    .order("starts_at", { ascending: false })
+    .limit(limit)
+    .returns<EventRow[]>();
+  if (error) {
+    log.error("recent events query failed", { error: error.message });
+    return [];
+  }
+  return data.map((row) => toPublicEvent(row, locale)).filter((e): e is PublicEvent => e !== null);
+}
+
 async function queryBySlug(slug: string, locale: string): Promise<PublicEvent | null> {
   if (!isDatabaseConfigured()) return null;
   const { data, error } = await db().from("events").select(SELECT).eq("slug", slug).eq("status", "published").maybeSingle<EventRow>();
@@ -54,6 +71,12 @@ export const getUpcomingEvents = unstable_cache(
 
 /** One published event by slug (the Hub's `?event=` and JSON-LD). */
 export const getEventBySlug = unstable_cache((slug: string, locale = "en") => queryBySlug(slug, locale), ["events:by-slug"], {
+  tags: [EVENTS_TAG],
+  revalidate: 300,
+});
+
+/** The most recent past events, newest first (the Events page's "Recent"). */
+export const getRecentEvents = unstable_cache((options: { locale?: string; limit?: number } = {}) => queryRecent(options.locale ?? "en", options.limit ?? 6), ["events:recent"], {
   tags: [EVENTS_TAG],
   revalidate: 300,
 });
