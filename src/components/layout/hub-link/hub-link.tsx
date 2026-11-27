@@ -23,6 +23,12 @@ export function useHubHref(params: HubParams) {
   return { pathname, query };
 }
 
+/** An event's details in the Hub (`?event=slug`, spec §9.4); the Hub picks the side from context. */
+export function useEventHref(slug: string) {
+  const pathname = usePathname();
+  return { pathname, query: { event: slug } };
+}
+
 export const HUB_ICONS = { help: HeartIcon, volunteer: HandRaisedIcon, give: GiftIcon } as const;
 
 type HubLinkButtonProps = Omit<LinkButtonProps, "href"> & { hub: HubParams; withIcon?: boolean };

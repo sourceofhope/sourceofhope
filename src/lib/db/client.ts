@@ -1,6 +1,6 @@
 import "server-only";
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
-import { requireEnv } from "@/lib/env.server";
+import { env, requireEnv } from "@/lib/env.server";
 import type { Database } from "./types";
 
 /*
@@ -13,6 +13,12 @@ import type { Database } from "./types";
 export type Db = SupabaseClient<Database>;
 
 let client: Db | undefined;
+
+/** Public pages degrade to their empty states when there's no database (CI, previews before 0.1). */
+export function isDatabaseConfigured(): boolean {
+  const { NEXT_PUBLIC_SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY } = env();
+  return Boolean(NEXT_PUBLIC_SUPABASE_URL && SUPABASE_SERVICE_ROLE_KEY);
+}
 
 export function db(): Db {
   client ??= createClient<Database>(requireEnv("NEXT_PUBLIC_SUPABASE_URL"), requireEnv("SUPABASE_SERVICE_ROLE_KEY"), {

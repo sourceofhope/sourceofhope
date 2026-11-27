@@ -141,5 +141,38 @@
       "wrongCode": "That code didn't work. Check the time on your device and try again.",
       "back": "Back to the overview"
     }
+  },
+  "Home": {
+    "metaTitle": "The Source of Hope · Education, health and wellness in Dallas–Fort Worth",
+    "metaDescription": "A Plano, Texas nonprofit serving families through education, health and wellness programs. Get help, volunteer or give.",
+    "hero": {
+      "eyebrow": "The Source of Hope",
+      "title": "Empowering and providing hope through education, health, and wellness",
+      "intro": "We are a nonprofit organization dedicated to providing education, holistic health and wellness, and support to individuals in need. Our team of volunteers is committed to serving the DFW community, including at-risk families, veterans, and first responders."
+    },
+    "sponsors": "Our sponsors",
+    "impact": "Our impact",
+    "impactAsOf": "As of {date}",
+    "events": "Upcoming events",
+    "eventsAll": "See all events",
+    "eventsEmptyTitle": "New dates are on the way",
+    "eventsEmptyText": "We post events about a month ahead. Check back soon, or see what's coming up on the Events page.",
+    "programs": "Our programs",
+    "programsAll": "All programs",
+    "story": "Latest story",
+    "storyMore": "More news"
+  },
+  "Events": {
+    "badges": {
+      "public": "Open to the public",
+      "volunteer": "Volunteers needed",
+      "partner": "Partner event"
+    },
+    "details": "Details",
+    "at": "{date} · {time}"
+  },
+  "Programs": {
+    "learnMore": "Learn more",
+    "readStory": "Read the story"
   }
 }

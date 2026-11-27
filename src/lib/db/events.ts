@@ -1,6 +1,7 @@
 import "server-only";
 import { unstable_cache } from "next/cache";
-import { db } from "./client";
+import { createLogger } from "@/lib/platform/log";
+import { db, isDatabaseConfigured } from "./client";
 import { toPublicEvent, type EventRow, type PublicEvent } from "./public-events";
 
 /*
@@ -21,15 +22,23 @@ const SELECT = `
   event_shifts (id, label, starts_at, ends_at, capacity)
 `;
 
+const log = createLogger("db.events");
+
 async function queryUpcoming(locale: string, programKey: string | null, limit: number): Promise<PublicEvent[]> {
+  if (!isDatabaseConfigured()) return [];
   let query = db().from("events").select(SELECT).eq("status", "published").gte("ends_at", new Date().toISOString()).order("starts_at").limit(limit);
   if (programKey) query = query.eq("program_key", programKey);
   const { data, error } = await query.returns<EventRow[]>();
-  if (error) throw new Error(`events query failed: ${error.message}`);
+  // A public page shows its empty state rather than an error when the database is down.
+  if (error) {
+    log.error("events query failed", { error: error.message });
+    return [];
+  }
   return data.map((row) => toPublicEvent(row, locale)).filter((e): e is PublicEvent => e !== null);
 }
 
 async function queryBySlug(slug: string, locale: string): Promise<PublicEvent | null> {
+  if (!isDatabaseConfigured()) return null;
   const { data, error } = await db().from("events").select(SELECT).eq("slug", slug).eq("status", "published").maybeSingle<EventRow>();
   if (error) throw new Error(`event query failed: ${error.message}`);
   return data ? toPublicEvent(data, locale) : null;
