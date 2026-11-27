@@ -63,6 +63,9 @@ const nextConfig: NextConfig = {
       { source: "/giving", destination: "/planned-giving", permanent: true },
       // Serve was renamed to Programs.
       { source: "/serve/:path*", destination: "/programs/:path*", permanent: true },
+      // Connect split into Contact and Careers (spec §8.5).
+      { source: "/connect", destination: "/contact", permanent: true },
+      { source: "/:prefix(es|pseudo)/connect", destination: "/:prefix/contact", permanent: true },
     ];
   },
 };

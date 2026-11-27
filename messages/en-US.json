@@ -227,5 +227,71 @@
     "awardsMeta": "Awards and recognition for The Source of Hope and its founder.",
     "highlights": "Highlights",
     "timeline": "Every award"
+  },
+  "Contact": {
+    "title": "Contact",
+    "lead": "Questions about programs, events or giving? Send us a message, call or stop by.",
+    "meta": "Contact The Source of Hope in Plano, Texas: phone, email, address and a contact form.",
+    "formTitle": "Send us a message",
+    "detailsTitle": "Visit or call",
+    "directions": "Get directions",
+    "phone": "Phone",
+    "email": "Email",
+    "address": "Address",
+    "fields": {
+      "name": "Full name",
+      "email": "Email",
+      "phone": "Phone",
+      "topic": "Topic",
+      "topicPlaceholder": "Choose a topic",
+      "message": "Message",
+      "company": "Company (leave blank)"
+    },
+    "topics": {
+      "general": "General question",
+      "help": "Getting help",
+      "volunteer": "Volunteering",
+      "giving": "Giving or sponsorship",
+      "media": "Media or partnerships",
+      "other": "Something else"
+    },
+    "errors": {
+      "name": "Enter your name.",
+      "email": "Enter an email address like name@example.com.",
+      "phone": "Enter a phone number like (469) 969-0244, or leave it blank.",
+      "topic": "Choose a topic.",
+      "message": "Write a message of at least 10 characters.",
+      "messageLong": "Keep your message under 2,000 characters."
+    },
+    "submit": "Send message",
+    "privacy": "We use your details only to reply to you. <link>Privacy Policy</link>",
+    "sent": "Thanks. We got your message and will reply by email.",
+    "failed": "We couldn't send your message. Please try again, or email us at {email}.",
+    "tooMany": "Too many messages from this connection. Please wait a few minutes and try again."
+  },
+  "Careers": {
+    "title": "Careers",
+    "lead": "Internships, work-study roles and volunteer positions for people who want their work to serve a greater purpose.",
+    "meta": "Internships, work-study and volunteer roles at The Source of Hope.",
+    "rolesTitle": "Open roles",
+    "rolesText": "We post internships and work-study roles on Handshake. Students and recent graduates can apply there.",
+    "handshake": "See open roles on Handshake",
+    "workStudyTitle": "Federal work-study",
+    "workStudyText": "We partner with the University of Texas at Dallas on paid federal work-study positions in logistics, technology, wellness programs and more.",
+    "volunteerTitle": "Volunteer",
+    "volunteerText": "Not looking for a role? Volunteer at an upcoming event.",
+    "volunteer": "Volunteer"
+  },
+  "Partners": {
+    "title": "Partners & Sponsors",
+    "lead": "The businesses and organizations who make our programs possible.",
+    "meta": "The sponsors and partners of The Source of Hope, and how to become a Community Sponsor.",
+    "sponsorsTitle": "Our sponsors",
+    "becomeTitle": "Become a Community Sponsor",
+    "becomeText": "Businesses support our programs with a monthly sponsorship. Sponsors are listed here and in our sponsor strip.",
+    "become": "Become a sponsor",
+    "talk": "Talk to us first",
+    "partnerEventsTitle": "Partner events",
+    "partnerEventsText": "Some events on our calendar are run by partner organizations. We list them so you can find them, and sign-up happens on the partner's site."
   }
 }

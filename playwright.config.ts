@@ -22,5 +22,9 @@ export default defineConfig({
     url: `http://localhost:${PORT}/api/health`,
     reuseExistingServer: !process.env.CI,
     timeout: 120_000,
+    // Tests never send real email: blank any Resend key a local .env holds
+    // (process env wins over .env files), so form submissions take the
+    // "couldn't send" path deterministically.
+    env: { ...(process.env as Record<string, string>), RESEND_API_KEY: "", MAILPIT_URL: "", EMAIL_FROM: "" },
   },
 });
