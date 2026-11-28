@@ -41,14 +41,14 @@ export const PRIVACY: readonly LegalSection[] = [
     title: "Who can see it",
     paragraphs: [
       "Inside TSOH, each staff member sees only what their role needs. For example, volunteer phone numbers are visible only to staff who coordinate volunteers. Every view of sensitive records, every export and every change to access is logged.",
-      "Service providers handle data for us under their own privacy terms: Vercel (website hosting and analytics), Supabase (our database), Resend (email delivery), Stripe and PayPal (payments), DocuSign (volunteer agreements), Eventbrite (event listings), Constant Contact (newsletter), Sanity (website content) and Google Tag Manager and Google Analytics (site analytics).",
+      "Service providers handle data for us under their own privacy terms: Vercel (website hosting and analytics), Supabase (our database), Resend (email delivery), Stripe and PayPal (payments), DocuSign (volunteer agreements), Eventbrite (event listings), Constant Contact (newsletter), Sanity (website content) and Google (Tag Manager, Analytics and Ads, on our pages only).",
     ],
   },
   {
     id: "cookies",
     title: "Cookies and analytics",
     paragraphs: [
-      "We use a short-lived cookie when you open a link we emailed you, so we can show your sign-up without asking you to log in, and cookies that keep staff signed in. We measure visits with Vercel Analytics and Google Analytics. We don't use advertising or retargeting pixels.",
+      "We use a short-lived cookie when you open a link we emailed you, so we can show your sign-up without asking you to log in, and cookies that keep staff signed in. We measure visits with Vercel Analytics and Google Analytics, and our pages carry a Google Ads tag that measures our ads. None of Google's tags run while you use Get Help, Volunteer or Give, and we never send them your name, email or any other personal details.",
     ],
   },
   {

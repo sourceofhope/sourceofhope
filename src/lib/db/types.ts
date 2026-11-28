@@ -552,6 +552,11 @@ isOneToOne: false
             "rate_limit_hit":
 { Args: { "p_key": string,"p_window_seconds": number,"p_window_start": string }; Returns: number
                            },
+"shift_spots_taken":
+{ Args: { "p_event_ids": (string)[] }; Returns: {
+              "shift_id": string,"taken": number
+            }[]
+                           },
 "webhook_claim":
 { Args: { "p_external_event_id": string,"p_provider": string,"p_type": string }; Returns: {
               "attempts": number,"is_new": boolean,"status": string

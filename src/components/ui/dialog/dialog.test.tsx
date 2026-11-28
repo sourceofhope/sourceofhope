@@ -1,7 +1,7 @@
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import { renderWithIntl, screen, waitFor } from "../../../../test/render";
-import { Dialog } from "./dialog";
+import { Dialog, DialogCloseButton, DialogHeading } from "./dialog";
 
 describe("Dialog", () => {
   it("opens from its trigger, is named by its title and returns focus on Escape", async () => {
@@ -43,6 +43,20 @@ describe("Dialog", () => {
     );
     expect(screen.getByText("Footer")).toBeInTheDocument();
     await user.click(screen.getByRole("button", { name: "Close" }));
-    expect(onOpenChange).toHaveBeenCalledWith(false);
+    expect(onOpenChange).toHaveBeenCalledWith(false, "close");
+  });
+
+  it("bare: children compose the panel; the heading names the dialog", () => {
+    renderWithIntl(
+      <Dialog bare open>
+        <DialogHeading id="t" focusable>
+          Get Help
+        </DialogHeading>
+        <DialogCloseButton />
+      </Dialog>,
+    );
+    expect(screen.getByRole("dialog", { name: "Get Help" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { name: "Get Help" })).toHaveAttribute("tabindex", "-1");
+    expect(screen.getByRole("button", { name: "Close" })).toBeInTheDocument();
   });
 });

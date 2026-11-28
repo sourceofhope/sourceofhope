@@ -5,28 +5,33 @@ import { GiftIcon, HandRaisedIcon, HeartIcon } from "@heroicons/react/24/outline
 import { LinkButton, type LinkButtonProps } from "@/components/ui/button";
 import { Card, CardLink } from "@/components/ui/card";
 import { TextLink } from "@/components/ui/link";
+import { handleHubLinkClick } from "@/lib/hub-history";
+import { hubQuery, type HubAction, type HubState } from "@/lib/hub-url";
 import { usePathname } from "@/i18n/navigation";
 
-export type HubAction = "help" | "volunteer" | "give";
-
-/** What the Hub opens to (spec §9). `type`, `need`, `event` and `program` pre-select a step. */
-export type HubParams = { action: HubAction; type?: string; need?: string; event?: string; program?: string; designation?: string };
+/** A door of the Hub (spec §9.1); `type`, `need`, `event` and `designation` pre-select a step. */
+export type HubParams = Extract<HubState, { action: HubAction }>;
 
 /**
  * The Hub opens from a query string on the current page (`?action=give`),
  * so every Hub link is a real link: it works with modifier-click, copy link
- * and without JavaScript, and the Hub reads it on load (Phase 2).
+ * and without JavaScript. A plain click opens the Hub in place
+ * (`useHubLink`), keeping the page's UTMs and remembering the opener.
  */
-export function useHubHref(params: HubParams) {
+export function useHubHref(state: HubState) {
   const pathname = usePathname();
-  const query = Object.fromEntries(Object.entries(params).filter(([, value]) => value !== undefined)) as Record<string, string>;
-  return { pathname, query };
+  return { pathname, query: hubQuery(state) };
+}
+
+/** `href` and `onClick` for any link that opens the Hub. */
+export function useHubLink(state: HubState) {
+  const href = useHubHref(state);
+  return { href, onClick: (event: React.MouseEvent<HTMLElement>) => handleHubLinkClick(event, state) };
 }
 
 /** An event's details in the Hub (`?event=slug`, spec §9.4); the Hub picks the side from context. */
-export function useEventHref(slug: string) {
-  const pathname = usePathname();
-  return { pathname, query: { event: slug } };
+export function useEventLink(slug: string, view?: "guest" | "volunteer") {
+  return useHubLink({ action: "event", event: slug, view });
 }
 
 export const HUB_ICONS = { help: HeartIcon, volunteer: HandRaisedIcon, give: GiftIcon } as const;
@@ -35,10 +40,10 @@ type HubLinkButtonProps = Omit<LinkButtonProps, "href"> & { hub: HubParams; with
 
 /** HubLinkButton: Give, Volunteer and Get Help as buttons (header, CTA bands). */
 export function HubLinkButton({ hub, withIcon, children, ...props }: HubLinkButtonProps) {
-  const href = useHubHref(hub);
+  const link = useHubLink(hub);
   const Icon = HUB_ICONS[hub.action];
   return (
-    <LinkButton {...props} href={href}>
+    <LinkButton {...props} {...link}>
       {withIcon ? <Icon aria-hidden="true" /> : null}
       {children}
     </LinkButton>
@@ -47,9 +52,9 @@ export function HubLinkButton({ hub, withIcon, children, ...props }: HubLinkButt
 
 /** HubTextLink: a Hub action as a plain link (footer lists). */
 export function HubTextLink({ hub, children, surface }: { hub: HubParams; children: ReactNode; surface?: "default" | "inverse" }) {
-  const href = useHubHref(hub);
+  const link = useHubLink(hub);
   return (
-    <TextLink href={href} surface={surface} quiet>
+    <TextLink {...link} surface={surface} quiet>
       {children}
     </TextLink>
   );
@@ -57,7 +62,7 @@ export function HubTextLink({ hub, children, surface }: { hub: HubParams; childr
 
 /** HubTile: a large Hub action with an icon and a hint (the phone menu sheet). */
 export function HubTile({ hub, label, hint, onNavigate }: { hub: HubParams; label: string; hint: string; onNavigate?: () => void }) {
-  const href = useHubHref(hub);
+  const link = useHubLink(hub);
   const Icon = HUB_ICONS[hub.action];
   return (
     <Card as="li" interactive>
@@ -66,7 +71,13 @@ export function HubTile({ hub, label, hint, onNavigate }: { hub: HubParams; labe
           <Icon />
         </span>
         <span className="flex flex-col">
-          <CardLink href={href} onClick={onNavigate}>
+          <CardLink
+            href={link.href}
+            onClick={(event) => {
+              link.onClick(event);
+              onNavigate?.();
+            }}
+          >
             {label}
           </CardLink>
           <span className="text-sm text-muted">{hint}</span>

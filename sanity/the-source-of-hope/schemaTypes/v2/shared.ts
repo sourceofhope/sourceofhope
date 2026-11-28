@@ -22,7 +22,7 @@ export const PROGRAM_KEYS = [
 export const NEED_CATEGORIES = [
   {title: 'Food', value: 'food'},
   {title: 'Health care', value: 'health'},
-  {title: 'Tutoring & school', value: 'school'},
+  {title: 'Tutoring & school', value: 'education'},
   {title: 'Outdoor programs', value: 'outdoors'},
 ]
 

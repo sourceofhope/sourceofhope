@@ -3,8 +3,9 @@ import { NextIntlClientProvider } from "next-intl";
 import { getLocale } from "next-intl/server";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
-import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
 import { ToastRegion } from "@/components/ui/toast";
+import { GTM_ID, MarketingTags } from "@/features/analytics/marketing-tags";
+import { ActionHub } from "@/features/hub/action-hub";
 import { routing } from "@/i18n/routing";
 import { fontVariables } from "../fonts";
 import "../globals.css";
@@ -19,7 +20,6 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
-const GTM_ID = "GTM-P9G4WGS3";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://thesourceofhope.org"),
@@ -77,8 +77,6 @@ export default async function LocaleRootLayout({ children }: { children: React.R
           suppressHydrationWarning
           dangerouslySetInnerHTML={{ __html: JSON.stringify(ORGANIZATION_SCHEMA).replace(/</g, "\\u003c") }}
         />
-        <GoogleTagManager gtmId={GTM_ID} />
-        <GoogleAnalytics gaId="AW-10925214570" />
       </head>
       <body className="bg-surface font-sans text-ink antialiased">
         <noscript>
@@ -90,10 +88,12 @@ export default async function LocaleRootLayout({ children }: { children: React.R
             style={{ display: "none", visibility: "hidden" }}
           />
         </noscript>
+        <MarketingTags />
         <Analytics />
         <SpeedInsights />
         <NextIntlClientProvider>
           {children}
+          <ActionHub />
           <ToastRegion />
         </NextIntlClientProvider>
       </body>

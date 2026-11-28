@@ -7,7 +7,7 @@
 
 export const PROGRAM_KEYS = ["servingHope", "educationHope", "wellnessHope", "outdoorHope", "internationalHope"] as const;
 export type ProgramKey = (typeof PROGRAM_KEYS)[number];
-export type NeedKey = "food" | "health" | "school" | "outdoors";
+export type NeedKey = "food" | "health" | "education" | "outdoors";
 
 export type ProgramContent = {
   key: ProgramKey;
@@ -51,7 +51,7 @@ export const FALLBACK_PROGRAMS: readonly ProgramContent[] = [
     schedule: null,
     image: photo("/v2/educationHope/Carousel-1.webp", "A student working with a tutor"),
     gallery: [2, 3, 4, 5].map((n) => photo(`/v2/educationHope/Carousel-${n}.webp`, `Education for Hope photo ${n}`)),
-    participantNeed: "school",
+    participantNeed: "education",
   },
   {
     key: "wellnessHope",

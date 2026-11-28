@@ -44,6 +44,8 @@ jobs:
       NEXT_PUBLIC_SANITY_PROJECT_ID: sgzdqn9z
       NEXT_PUBLIC_SANITY_DATASET: production
       NEXT_PUBLIC_SANITY_API_VERSION: "2026-04-10"
+      # Placeholder so config.toml's env() reference resolves; CI never calls the hook.
+      SUPABASE_AUTH_HOOK_SECRET: "v1,whsec_Y2ktcGxhY2Vob2xkZXItbm90LWEtc2VjcmV0"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -51,6 +53,14 @@ jobs:
           node-version: ${{ env.NODE_VERSION }}
           cache: npm
       - run: npm ci
+      # The Hub reads seeded events (supabase/seed.sql) from a local stack.
+      - run: npx supabase start -x studio,imgproxy,storage-api,realtime,edge-runtime,logflare,vector,supavisor
+      - name: Point the app at the local database (the CLI's public demo keys)
+        run: |
+          npx supabase status -o env \
+            | grep -E '^(API_URL|ANON_KEY|SERVICE_ROLE_KEY)=' \
+            | sed -e 's/^API_URL=/NEXT_PUBLIC_SUPABASE_URL=/' -e 's/^ANON_KEY=/NEXT_PUBLIC_SUPABASE_ANON_KEY=/' -e 's/^SERVICE_ROLE_KEY=/SUPABASE_SERVICE_ROLE_KEY=/' \
+            | tr -d '"' >> "$GITHUB_ENV"
       - run: npm run build
       - run: npx playwright install --with-deps chromium
       - run: npm run test:e2e

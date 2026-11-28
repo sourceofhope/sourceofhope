@@ -60,12 +60,12 @@ insert into public.event_shifts (id, event_id, label, starts_at, ends_at, capaci
    date_trunc('day', now()) + interval '24 days 17 hours', date_trunc('day', now()) + interval '24 days 20 hours', 15);
 
 -- 4. Partner: listed on our site; sign-up happens on the partner's site.
-insert into public.events (id, slug, status, ownership, partner_name, partner_signup_url, starts_at, ends_at, venue_name, address, open_to_public, published_at)
+insert into public.events (id, slug, status, ownership, partner_name, partner_signup_url, starts_at, ends_at, venue_name, address, open_to_public, need_categories, published_at)
 values (
   '00000000-0000-4000-8000-000000000004', 'partner-health-fair', 'published', 'partner',
   'Partner organization (sample)', 'https://example.org/health-fair',
   date_trunc('day', now()) + interval '31 days 15 hours', date_trunc('day', now()) + interval '31 days 20 hours',
-  'Community center (sample)', 'Plano, TX', true, now()
+  'Community center (sample)', 'Plano, TX', true, '{health}', now()
 );
 insert into public.event_texts (event_id, locale, title, summary, guest_who, guest_cost)
 values (

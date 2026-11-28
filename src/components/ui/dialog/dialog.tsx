@@ -20,9 +20,9 @@ export type DialogProps = {
   /** Controlled open state (the Hub drives this from the URL). */
   open?: boolean;
   defaultOpen?: boolean;
-  onOpenChange?: (open: boolean) => void;
-  /** Accessible name. Always required; hide it visually with `hideTitle`. */
-  title: ReactNode;
+  onOpenChange?: (open: boolean, reason: DialogCloseReason) => void;
+  /** Accessible name. Required unless `bare`, where a DialogHeading names it. */
+  title?: ReactNode;
   hideTitle?: boolean;
   description?: ReactNode;
   layout?: DialogLayout;
@@ -34,8 +34,24 @@ export type DialogProps = {
   trigger?: ReactElement;
   /** Escape and backdrop presses close it. Turn off while a payment runs. */
   dismissible?: boolean;
+  /** Whether a backdrop press closes it (the Hub allows it on door landings only). */
+  closeOnOutsidePress?: boolean;
+  /** Where focus goes on open: a selector, element or function. Default: the first focusable element. */
+  initialFocus?: string | (() => HTMLElement | null | undefined);
+  /** Where focus goes on close. Default: the trigger. */
+  finalFocus?: () => HTMLElement | null | undefined;
+  /**
+   * `bare`: render only the children inside the panel; they compose the
+   * header, body and footer with DialogHeading and DialogCloseButton (the Hub).
+   */
+  bare?: boolean;
   children: ReactNode;
 };
+
+/** Why it wants to close, for controlled dialogs that sync with the URL. */
+export type DialogCloseReason = "close" | "escape" | "outside" | "back" | "other";
+
+const REASONS: Record<string, DialogCloseReason> = { "close-press": "close", "escape-key": "escape", "outside-press": "outside", back: "back" };
 
 /**
  * Dialog: the one modal for everything (spec §6). Focus moves in and is
@@ -54,6 +70,10 @@ export function Dialog({
   footer,
   trigger,
   dismissible = true,
+  closeOnOutsidePress,
+  initialFocus,
+  finalFocus,
+  bare,
   children,
 }: DialogProps) {
   const t = useTranslations("UI");
@@ -65,14 +85,19 @@ export function Dialog({
       open={open}
       defaultOpen={defaultOpen}
       dismissible={dismissible}
+      closeOnOutsidePress={closeOnOutsidePress}
       onOpenChange={(next, details) => {
         if (!next && details.reason === "swipe") return details.cancel();
-        onOpenChange?.(next);
+        onOpenChange?.(next, REASONS[details.reason] ?? "other");
       }}
     >
       {trigger ? <DialogTrigger render={trigger} /> : null}
       <DialogBackdrop className={s.backdrop()} />
-      <DialogContent className={s.content()}>
+      <DialogContent className={s.content()} initialFocus={initialFocus} finalFocus={finalFocus}>
+        {bare ? (
+          children
+        ) : (
+          <>
         <div className={s.header()}>
           <div className={s.titleGroup()}>
             {hideTitle ? <VisuallyHidden>{titleNode}</VisuallyHidden> : null}
@@ -88,8 +113,29 @@ export function Dialog({
         </div>
         <div className={s.body()}>{children}</div>
         {footer ? <div className={s.footer()}>{footer}</div> : null}
+          </>
+        )}
       </DialogContent>
     </SdkDialog>
+  );
+}
+
+/** DialogHeading: the dialog's accessible name, for `bare` dialogs. Focusable so the Hub can move focus to it. */
+export function DialogHeading({ id, children, focusable }: { id?: string; children: ReactNode; focusable?: boolean }) {
+  return (
+    <DialogTitle id={id} tabIndex={focusable ? -1 : undefined} className={dialogStyles().title({ class: "outline-none" })}>
+      {children}
+    </DialogTitle>
+  );
+}
+
+/** DialogCloseButton: the ✕, for `bare` dialogs. */
+export function DialogCloseButton() {
+  const t = useTranslations("UI");
+  return (
+    <DialogClose aria-label={t("close")} className={buttonStyles({ variant: "tertiary", iconOnly: true, class: "shrink-0" })}>
+      <XMarkIcon aria-hidden="true" />
+    </DialogClose>
   );
 }
 

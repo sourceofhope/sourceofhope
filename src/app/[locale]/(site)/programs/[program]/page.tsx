@@ -50,7 +50,7 @@ export default async function ProgramPage({ params }: Props) {
 
   const helpButtons = (surface: "default" | "inverse" = "default") => (
     <>
-      <HubLinkButton hub={{ action: "volunteer", program: key }} surface={surface}>
+      <HubLinkButton hub={{ action: "volunteer" }} surface={surface}>
         {t("volunteer")}
       </HubLinkButton>
       <HubLinkButton hub={{ action: "give", designation: key }} variant="secondary" surface={surface}>

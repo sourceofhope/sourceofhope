@@ -1,2 +1,2 @@
-export { HUB_ICONS, HubLinkButton, HubTextLink, HubTile, useEventHref, useHubHref } from "./hub-link";
-export type { HubAction, HubParams } from "./hub-link";
+export { HUB_ICONS, HubLinkButton, HubTextLink, HubTile, useEventLink, useHubHref, useHubLink } from "./hub-link";
+export type { HubParams } from "./hub-link";

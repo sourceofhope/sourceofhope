@@ -1,6 +1,7 @@
 import "server-only";
 import { FALLBACK_PROGRAMS, PROGRAM_KEYS, type ProgramContent, type ProgramKey } from "@/content/programs";
 import { FALLBACK_OUR_STORY } from "@/content/our-story";
+import { FALLBACK_SERVICES, type HelpService, type HowToStart } from "@/content/services";
 import { FALLBACK_IMPACT, type ImpactStat } from "@/content/site";
 import type { PublicEvent } from "@/lib/db/public-events";
 import { IMAGE_PROJECTION, sanityAssetUrl, toContentImage, type ContentImage } from "./image";
@@ -254,4 +255,52 @@ export async function getProducts(locale = "en"): Promise<Product[]> {
 export async function getProduct(id: string, locale = "en"): Promise<Product | null> {
   const raw = await fetchContent<RawProduct | null>(`*[_type == "product" && (slug.current == $id || string(externalId) == $id || _id == $id)][0] ${PRODUCT_PROJECTION}`, { id });
   return raw ? toProduct(raw, locale) : null;
+}
+
+type RawService = {
+  slug: string;
+  need: HelpService["need"];
+  program: ProgramKey | null;
+  name: unknown;
+  summary: unknown;
+  whoFor: unknown;
+  when: unknown;
+  address: string | null;
+  bring: unknown;
+  cost: unknown;
+  howToStart: HowToStart;
+  applyUrl: string | null;
+  languages: string[] | null;
+};
+
+/** Get Help services (spec §9.5), ordered within each need. Built-in services fill in until Sanity has them. */
+export async function getServices(locale = "en"): Promise<HelpService[]> {
+  const raw = await fetchContent<RawService[]>(
+    `*[_type == "service" && defined(slug.current)] | order(order asc) { "slug": slug.current, need, program, name, summary, whoFor, when, address, bring, cost, howToStart, "applyUrl": applyLink.url, languages }`,
+  );
+  const services = (raw ?? [])
+    .map((s): HelpService | null => {
+      const name = text(s.name, locale);
+      const summary = text(s.summary, locale);
+      if (!name || !summary) return null;
+      const applyUrl = s.applyUrl?.startsWith("https://") ? (s.applyUrl as `https://${string}`) : null;
+      return {
+        slug: s.slug,
+        need: s.need,
+        program: s.program,
+        name,
+        summary,
+        whoFor: text(s.whoFor, locale) ?? "",
+        when: text(s.when, locale),
+        address: s.address,
+        bring: text(s.bring, locale),
+        cost: text(s.cost, locale),
+        // "Apply online" without a link would be a dead end: fall back to calling.
+        howToStart: s.howToStart === "apply" && !applyUrl ? "call" : s.howToStart,
+        applyUrl,
+        languages: s.languages ?? [],
+      };
+    })
+    .filter((s): s is HelpService => s !== null);
+  return services.length ? services : [...FALLBACK_SERVICES];
 }

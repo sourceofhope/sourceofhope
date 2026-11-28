@@ -408,5 +408,138 @@
     "freeShipping": "Free",
     "feeLine": "Card processing (3%)",
     "taxLine": "Estimated tax ({rate}%)"
+  },
+  "Hub": {
+    "doors": "Choose what you'd like to do",
+    "door": {
+      "help": "Get Help",
+      "volunteer": "Volunteer",
+      "give": "Give"
+    },
+    "back": "Back",
+    "tryAgain": "Try again",
+    "loadFailedTitle": "Something went wrong",
+    "loadFailed": "We couldn't load this. Check your connection and try again.",
+    "event": {
+      "notFoundTitle": "We couldn't find that event",
+      "notFoundText": "It may have ended or been removed. See what's coming up on our events page.",
+      "seeEvents": "See all events",
+      "directions": "Get directions",
+      "sides": "Event information",
+      "guest": "For guests",
+      "volunteer": "For volunteers",
+      "justCome": "No sign-up needed. Just come.",
+      "whoFor": "Who it's for",
+      "bring": "What to bring",
+      "cost": "Cost",
+      "languages": "Languages spoken",
+      "accessibility": "Accessibility",
+      "shifts": "Shifts",
+      "spotsLeft": "{count, plural, one {# spot left} other {# spots left}}",
+      "full": "Full",
+      "minAge": "Volunteers must be {age} or older.",
+      "accompany": "Volunteers under {age} come with an adult from their group on the same shift.",
+      "agreement": "Everyone signs our volunteer agreement when they sign up.",
+      "agreementAddendum": "Everyone signs our volunteer agreement and the Serving Hope addendum when they sign up.",
+      "expect": "What to expect",
+      "wear": "What to wear",
+      "volunteerCta": "Volunteer at this event",
+      "closed": "Sign-ups for this event have closed.",
+      "partnerNote": "This event is hosted by {partner}. Sign-up happens on their site.",
+      "partnerSignup": "Sign up on {partner}",
+      "addToCalendar": "Add to calendar",
+      "copyLink": "Copy link",
+      "copied": "Link copied.",
+      "copyFailed": "We couldn't copy the link. You can copy it from the address bar."
+    },
+    "help": {
+      "door": "Get Help",
+      "title": "What do you need?",
+      "intro": "Choose one. We'll show you what we offer and when.",
+      "needLabel": "I need help with",
+      "needError": "Choose what you need help with.",
+      "needs": {
+        "food": "Food",
+        "health": "Health care",
+        "education": "Tutoring & school",
+        "outdoors": "Outdoor programs",
+        "other": "Something else"
+      },
+      "continue": "Continue",
+      "otherTitle": "Help with other needs",
+      "otherText": "<call>Dial 211</call> or visit <site>211texas.org</site> for help with housing, bills, food and more.",
+      "emergencyLabel": "Emergency numbers",
+      "emergency": "In an emergency, call <emergency>911</emergency>. In a mental-health crisis, call or text <crisis>988</crisis>. For other needs, dial <other>211</other>.",
+      "results": {
+        "food": "Free food",
+        "health": "Health care",
+        "education": "Tutoring and school",
+        "outdoors": "Outdoor programs"
+      },
+      "services": "What we offer",
+      "events": "Upcoming events",
+      "next": "Next: {date} · {time}",
+      "details": "Details",
+      "noneTitle": "Nothing listed right now",
+      "noneText": "Call us at {phone}, or dial 211 for other help near you.",
+      "notFound": "We couldn't find that",
+      "justCome": "No sign-up needed. Just come.",
+      "whoFor": "Who it's for",
+      "when": "When",
+      "where": "Where",
+      "bring": "What to bring",
+      "cost": "Cost",
+      "languages": "Languages offered",
+      "questions": "Questions?",
+      "call": "Call {phone}",
+      "apply": "Apply online",
+      "email": "Email us",
+      "detailsFor": "Details: {name}",
+      "applyNewTab": "Apply online (opens in a new tab)"
+    },
+    "volunteer": {
+      "door": "Volunteer",
+      "title": "Choose an event",
+      "intro": "Pick an event with open shifts. You can bring family and friends.",
+      "howItWorks": "How volunteering works",
+      "spotsLeft": "{count, plural, one {# spot left} other {# spots left}}",
+      "full": "Full",
+      "closed": "Sign-ups closed",
+      "details": "Details",
+      "choose": "Choose",
+      "emptyTitle": "No volunteer shifts are open right now.",
+      "emptyText": "New events are added every month. Join our newsletter to hear first.",
+      "seePrograms": "See our programs",
+      "notFound": "We couldn't find that event",
+      "signupSoonTitle": "Online sign-up is coming soon",
+      "signupSoon": "Until then, call us at {phone} or email {email} to sign up for a shift.",
+      "detailsFor": "Details: {name}",
+      "chooseFor": "Choose: {name}"
+    },
+    "give": {
+      "title": "How would you like to give?",
+      "intro": "Every gift helps us serve more families.",
+      "typeLabel": "Type of gift",
+      "typeError": "Choose a type of gift.",
+      "continue": "Continue",
+      "types": {
+        "once": {
+          "label": "One-time",
+          "hint": "A single gift by card, bank or PayPal."
+        },
+        "monthly": {
+          "label": "Monthly",
+          "hint": "A gift every month. Change or cancel any time."
+        },
+        "planned": {
+          "label": "Planned giving",
+          "hint": "Gifts in a will, beneficiary designations and more."
+        },
+        "business": {
+          "label": "As a business",
+          "hint": "Become a Community Sponsor."
+        }
+      }
+    }
   }
 }

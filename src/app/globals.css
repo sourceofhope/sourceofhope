@@ -168,10 +168,6 @@
   --hero-min-height: min(100svh, 47.5rem);
   --dialog-max-height: 85vh; /* use as max-h-(--dialog-max-height) */
 
-  /* Deprecated legacy spacing (slice 3.9 removes). */
-  --spacing-15: 3.75rem;
-  --spacing-35: 8.75rem;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -222,20 +218,11 @@ body {
   scrollbar-width: none;
 }
 
-/* Lock page scrolling while a modal <dialog> is open (legacy Modal; the UI SDK
-   handles its own dialogs). */
-html:has(dialog:modal) {
-  overflow: hidden;
+/* Phone takeovers (the Hub) keep their header and action bar clear of the
+   notch and home indicator (spec §9.3). */
+@utility pt-safe {
+  padding-top: max(0.75rem, env(safe-area-inset-top));
 }
-
-/* Legacy animation used by components/legacy/ui/Modal.tsx (slice 3.9 removes). */
-@keyframes modal-in {
-  from {
-    opacity: 0;
-    transform: translateY(0.5rem) scale(0.98);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
+@utility pb-safe {
+  padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
 }
