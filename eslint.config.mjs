@@ -3,36 +3,18 @@ import nextVitals from "eslint-config-next/core-web-vitals";
 import nextTs from "eslint-config-next/typescript";
 import tsoh from "./eslint/tsoh-plugin.mjs";
 
-/**
- * Legacy files that the relaunch replaces entirely (deleted in slice 3.9 of
- * docs/plan/03_IMPLEMENTATION_PLAN.md). Their existing errors are downgraded
- * to warnings so CI can be strict for all new code. Do not add files here.
- */
-const LEGACY_FILES = [
-  "src/app/api/checkout/create-membership-payment-intent/route.tsx",
-  "src/app/\\[locale\\]/\\(legacy\\)/store/success/page.tsx",
-  "src/components/connect/ConnectMapSection.tsx",
-  "src/components/donate/DonateFormSection.tsx",
-  "src/components/members/**",
-  "src/components/store/checkout/SelfCheckoutSection.tsx",
-  "src/components/legacy/ui/HookInput.tsx",
-];
-
 /*
- * Design-system guardrails (ADR-0009). They apply to NEW code only; legacy
- * code is deleted in slice 3.9, when these globs widen to all of src/.
+ * Design-system guardrails (ADR-0009), on all of src/ since slice 3.9
+ * deleted the legacy code.
  */
 const UI = "src/components/ui/**";
 const LAYOUT = "src/components/layout/**";
 const FEATURES = "src/features/**";
-const NEW_ROUTES = ["src/app/\\[locale\\]/**", "src/app/(staff)/**"];
-// Pages not rebuilt yet live in the (legacy) route group (no URL effect) and
-// are exempt from new-code rules until Phase 3 moves them out.
-const LEGACY_ROUTES = ["src/app/\\[locale\\]/\\(legacy\\)/**"];
-const STYLEGUIDE = "src/app/styleguide/**";
-const NEW_CODE = [UI, LAYOUT, FEATURES, ...NEW_ROUTES, STYLEGUIDE];
-// Product code that renders user-facing text (styleguide is a dev tool).
-const PRODUCT_UI = [UI, LAYOUT, FEATURES, ...NEW_ROUTES];
+const ROUTES = ["src/app/**"];
+const ALL_CODE = ["src/**"];
+// Product code that renders user-facing text: words come from messages or
+// Sanity. The styleguide is a dev tool; emails are rendered server-side text.
+const PRODUCT_UI = [UI, LAYOUT, FEATURES, "src/app/\[locale\]/**", "src/app/(staff)/**"];
 
 const ban = {
   legacy: { group: ["@/components/legacy", "@/components/legacy/*"], message: "New code never imports legacy components (ADR-0009 §1)." },
@@ -53,31 +35,18 @@ const restrict = (...patterns) => ["error", { patterns }];
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
-  {
-    files: LEGACY_FILES,
-    rules: {
-      "@typescript-eslint/no-explicit-any": "warn",
-      "react/no-unescaped-entities": "warn",
-      "react-hooks/set-state-in-effect": "warn",
-      "react-hooks/purity": "warn",
-    },
-  },
 
   // ── Layers, one direction (ADR-0009 §1) ───────────────────────────────────
   { files: ["src/**"], rules: { "no-restricted-imports": restrict(ban.library) } },
   { files: [UI], rules: { "no-restricted-imports": restrict(ban.legacy, ban.layout, ban.features, ban.app, ban.nextLink) } },
   { files: [LAYOUT], rules: { "no-restricted-imports": restrict(ban.legacy, ban.library, ban.features, ban.app, ban.nextLink) } },
   { files: [FEATURES], rules: { "no-restricted-imports": restrict(ban.legacy, ban.library, ban.app, ban.nextLink) } },
-  {
-    files: [...NEW_ROUTES, STYLEGUIDE],
-    ignores: LEGACY_ROUTES,
-    rules: { "no-restricted-imports": restrict(ban.legacy, ban.library, ban.nextLink) },
-  },
+  { files: ROUTES, rules: { "no-restricted-imports": restrict(ban.legacy, ban.library, ban.nextLink) } },
+  { files: ["src/context/**", "src/lib/**"], rules: { "no-restricted-imports": restrict(ban.legacy, ban.library, ban.nextLink) } },
 
   // ── Tokens, buttons, links (ADR-0009 §3, §5) ──────────────────────────────
   {
-    files: NEW_CODE,
-    ignores: LEGACY_ROUTES,
+    files: ALL_CODE,
     plugins: { tsoh },
     rules: {
       "tsoh/design-tokens": "error",
@@ -97,7 +66,7 @@ const eslintConfig = defineConfig([
   // ── No hard-coded user-facing text (ADR-0009 §6) ──────────────────────────
   {
     files: PRODUCT_UI.map((g) => g.replace(/\*\*$/, "**/*.tsx")),
-    ignores: ["**/*.test.tsx", ...LEGACY_ROUTES],
+    ignores: ["**/*.test.tsx"],
     rules: {
       "react/jsx-no-literals": [
         "error",

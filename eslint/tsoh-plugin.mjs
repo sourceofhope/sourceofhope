@@ -78,4 +78,6 @@ const designTokens = {
   },
 };
 
-export default { meta: { name: "tsoh" }, rules: { "design-tokens": designTokens } };
+const tsohPlugin = { meta: { name: "tsoh" }, rules: { "design-tokens": designTokens } };
+
+export default tsohPlugin;

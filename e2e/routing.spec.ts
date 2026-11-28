@@ -6,10 +6,10 @@ import { expect, test } from "@playwright/test";
  * Request-level checks run once (desktop project).
  */
 
-const LEGACY_PAGES = [
+const PAGES = [
   "/", "/about", "/about/team", "/programs", "/programs/servingHope", "/programs/educationHope",
   "/programs/wellnessHope", "/programs/outdoorHope", "/programs/internationalHope", "/events", "/media",
-  "/media/awards", "/members", "/donate", "/planned-giving",
+  "/media/awards", "/about/partners", "/careers", "/contact", "/privacy", "/terms",
   "/store", "/store/cart", "/store/checkout",
 ];
 
@@ -18,8 +18,8 @@ test.describe("locale routing", () => {
     test.skip(testInfo.project.name !== "desktop", "request-level checks run once");
   });
 
-  for (const path of LEGACY_PAGES) {
-    test(`${path} renders in English at its unchanged URL`, async ({ request }) => {
+  for (const path of PAGES) {
+    test(`${path} renders in English at its URL`, async ({ request }) => {
       const res = await request.get(path, { maxRedirects: 0 });
       expect(res.status()).toBe(200);
       const html = await res.text();
@@ -52,17 +52,11 @@ test.describe("locale routing", () => {
   });
 
   test("legacy team-member URLs still redirect to the profile", async ({ request }) => {
-    const groups = await (await request.get("/api/team-member")).json();
-    const slug: string | undefined = groups?.[0]?.members?.[0]?.slug?.current;
+    const html = await (await request.get("/about/team")).text();
+    const slug = /href="\/about\/team\/([^"/]+)"/.exec(html)?.[1];
     test.skip(!slug, "no team members in the dataset");
     const res = await request.get(`/${slug}`, { maxRedirects: 0 });
     expect(res.status()).toBe(308);
     expect(res.headers()["location"]).toMatch(new RegExp(`/about/team/${slug}$`));
-  });
-
-  test("the styleguide has its own shell, outside locale routing", async ({ request }) => {
-    const html = await (await request.get("/styleguide")).text();
-    expect(html).toMatch(/<html[^>]*lang="en-US"/);
-    expect(html).not.toContain("THE SOURCE OF HOPE</span>"); // no legacy header
   });
 });

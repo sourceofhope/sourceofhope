@@ -372,5 +372,41 @@
     "privacyMeta": "How The Source of Hope collects, uses and protects personal information.",
     "termsMeta": "The terms for using thesourceofhope.org, giving and shopping.",
     "contents": "On this page"
+  },
+  "Checkout": {
+    "express": "Express checkout",
+    "expressText": "Pay with a saved account in a few seconds.",
+    "loadingProviders": "Loading payment options…",
+    "providersFailed": "We couldn't load the payment options. Please refresh the page.",
+    "payWith": "Pay with {provider}",
+    "secure": "Payments are handled securely by Stripe and PayPal. We never see your card details.",
+    "details": "Your details",
+    "contact": "Contact",
+    "shippingAddress": "Shipping address",
+    "fields": {
+      "email": "Email",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "address": "Street address",
+      "city": "City",
+      "state": "State",
+      "zip": "ZIP code"
+    },
+    "errors": {
+      "email": "Enter an email address like name@example.com.",
+      "required": "This field is required.",
+      "zip": "Enter a 5-digit ZIP code."
+    },
+    "continue": "Continue to payment",
+    "edit": "Edit details",
+    "payment": "Payment",
+    "pay": "Pay {total}",
+    "failed": "We couldn't start the payment. Please try again.",
+    "paymentFailed": "Your payment didn't go through. Please check your details and try again.",
+    "items": "Items",
+    "qty": "Qty {quantity}",
+    "freeShipping": "Free",
+    "feeLine": "Card processing (3%)",
+    "taxLine": "Estimated tax ({rate}%)"
   }
 }

@@ -57,18 +57,30 @@ const nextConfig: NextConfig = {
     return [{ source: "/:path*", headers: securityHeaders }];
   },
   async redirects() {
+    // Spec §8.5: permanent (308); Next keeps the incoming query string, so UTMs survive.
+    // Retired giving pages open the matching Give door of the Hub on the homepage.
+    const prefixes = ["", "/:prefix(es|pseudo)"];
+    const to = (prefix: string, path: string) => (prefix ? `/:prefix${path === "/" ? "" : path}` : path);
+    const pairs: [string, string][] = [
+      ["/donate", "/?action=give&type=once"],
+      ["/members", "/?action=give&type=monthly"],
+      ["/sponsor", "/?action=give&type=business"],
+      ["/planned-giving", "/?action=give&type=planned"],
+      ["/giving", "/?action=give&type=planned"],
+      ["/connect", "/contact"],
+      ["/media/press", "/media#press"],
+      ["/media/podcast", "/media#podcast"],
+      ["/awards", "/media/awards"],
+    ];
     return [
-      // Awards now lives under Media.
-      { source: "/awards", destination: "/media/awards", permanent: true },
-      { source: "/giving", destination: "/planned-giving", permanent: true },
+      ...pairs.flatMap(([source, destination]) =>
+        prefixes.map((prefix) => {
+          const [path, rest = ""] = destination.split(/(?=[?#])/);
+          return { source: `${prefix}${source}`, destination: `${to(prefix, path)}${rest}` || "/", permanent: true };
+        }),
+      ),
       // Serve was renamed to Programs.
       { source: "/serve/:path*", destination: "/programs/:path*", permanent: true },
-      // Connect split into Contact and Careers (spec §8.5).
-      { source: "/connect", destination: "/contact", permanent: true },
-      { source: "/:prefix(es|pseudo)/connect", destination: "/:prefix/contact", permanent: true },
-      // Press and Podcast became sections of News & Media.
-      { source: "/media/press", destination: "/media#press", permanent: true },
-      { source: "/media/podcast", destination: "/media#podcast", permanent: true },
     ];
   },
 };

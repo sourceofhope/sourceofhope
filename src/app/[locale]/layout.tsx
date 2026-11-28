@@ -23,7 +23,7 @@ const GTM_ID = "GTM-P9G4WGS3";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://thesourceofhope.org"),
-  title: "The Source of Hope",
+  title: { default: "The Source of Hope", template: "%s · The Source of Hope" },
   description:
     "The Source of Hope is a nonprofit empowering communities through food, education, and holistic wellness programs.",
   robots: "index, follow",
@@ -33,6 +33,7 @@ export const metadata: Metadata = {
     title: "The Source of Hope",
     description: "Empowering communities through food, wellness, and education.",
     siteName: "The Source of Hope",
+    images: [{ url: "/v2/core/TSOH-Group.webp", width: 1200, height: 800, alt: "Volunteers and families at a Source of Hope event" }],
   },
   twitter: {
     card: "summary_large_image",
